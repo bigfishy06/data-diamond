@@ -6,19 +6,8 @@
 
 const REPO_NAME = 'Hope';
 
-// Works out the base path dynamically from the current URL
 function getBase() {
-  // e.g. https://bigfishy06.github.io/Hope/index.html
-  // we want https://bigfishy06.github.io/Hope/
-  const path = window.location.pathname; // /Hope/index.html or /Hope/team.html
-  const parts = path.split('/');
-  // Find the repo segment and return everything up to and including it
-  const repoIndex = parts.indexOf(REPO_NAME);
-  if (repoIndex !== -1) {
-    return parts.slice(0, repoIndex + 1).join('/') + '/';
-  }
-  // fallback
-  return '/Hope/';
+  return 'https://bigfishy06.github.io/Hope/';
 }
 
 let DATA = null;
