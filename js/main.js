@@ -59,7 +59,9 @@ function parseCSV(text, statType) {
   const delim = lines[0].includes('\t') ? '\t' : ',';
   console.log(statType, 'delimiter:', delim === '\t' ? 'TAB' : 'COMMA');
   const headers = lines[0].split(delim).map(h => h.trim().replace(/^\uFEFF/, ''));
-  console.log(statType, 'headers:', headers.slice(0, 6));
+  console.log(statType, 'header count:', headers.length);
+  console.log(statType, 'first 5 headers:', JSON.stringify(headers.slice(0,5)));
+  console.log(statType, 'all headers:', JSON.stringify(headers));
   const players = [];
   for (let i = 1; i < lines.length; i++) {
     const row = lines[i].split(delim).map(v => v.trim());
