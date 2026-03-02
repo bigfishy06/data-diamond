@@ -4,10 +4,8 @@
    Teams from data/stats.json
 ================================================ */
 
-const REPO_NAME = 'BIG-FISHY';
-const STATS_PATH  = 'data/stats.json';
-const HITTERS_PATH  = 'data/hitters.csv';
-const PITCHERS_PATH = 'data/pitchers.csv';
+const REPO_NAME = 'Hope';
+const ROOT = '/Hope/';
 
 let DATA = null; // { teams, players, zoneConfig }
 
@@ -32,27 +30,34 @@ function getCurrentPage() {
 }
 
 function getBase() {
-  const p = window.location.pathname;
-  return (p.endsWith('/team.html') || p.endsWith('/player.html')) ? '../' : '';
+  return ROOT;
 }
 
 // ─── LOAD ALL DATA ────────────────────────────────
 async function loadAll() {
   try {
-    const base = getBase();
     const [statsRes, hittersRes, pitchersRes] = await Promise.all([
-      fetch(base + STATS_PATH),
-      fetch(base + HITTERS_PATH),
-      fetch(base + PITCHERS_PATH)
+      fetch(ROOT + 'data/stats.json'),
+      fetch(ROOT + 'data/hitters.csv'),
+      fetch(ROOT + 'data/pitchers.csv')
     ]);
 
-    const stats    = await statsRes.json();
+    if (!statsRes.ok)    throw new Error('stats.json failed: '    + statsRes.status);
+    if (!hittersRes.ok)  throw new Error('hitters.csv failed: '   + hittersRes.status);
+    if (!pitchersRes.ok) throw new Error('pitchers.csv failed: '  + pitchersRes.status);
+
+    const stats       = await statsRes.json();
     const hittersCsv  = await hittersRes.text();
     const pitchersCsv = await pitchersRes.text();
+
+    console.log('hitters.csv loaded, rows:', hittersCsv.trim().split('\n').length - 1);
+    console.log('pitchers.csv loaded, rows:', pitchersCsv.trim().split('\n').length - 1);
 
     const hitters  = parseCSV(hittersCsv,  'hitting');
     const pitchers = parseCSV(pitchersCsv, 'pitching');
     const players  = [...hitters, ...pitchers];
+
+    console.log('Total players parsed:', players.length);
 
     return {
       teams:      stats.teams,
@@ -60,7 +65,7 @@ async function loadAll() {
       players
     };
   } catch (e) {
-    console.error('Failed to load data:', e);
+    console.error('loadAll failed:', e);
     return null;
   }
 }
