@@ -5,15 +5,23 @@
 ================================================ */
 
 const REPO_NAME = 'Hope';
-<<<<<<< HEAD
-const ROOT = '/Hope/';
-=======
-const STATS_PATH  = 'data/stats.json';
-const HITTERS_PATH  = 'data/hitters.csv';
-const PITCHERS_PATH = 'data/pitchers.csv';
->>>>>>> 7236de1a6962071512fa302918958276aed8d417
 
-let DATA = null; // { teams, players, zoneConfig }
+// Works out the base path dynamically from the current URL
+function getBase() {
+  // e.g. https://bigfishy06.github.io/Hope/index.html
+  // we want https://bigfishy06.github.io/Hope/
+  const path = window.location.pathname; // /Hope/index.html or /Hope/team.html
+  const parts = path.split('/');
+  // Find the repo segment and return everything up to and including it
+  const repoIndex = parts.indexOf(REPO_NAME);
+  if (repoIndex !== -1) {
+    return parts.slice(0, repoIndex + 1).join('/') + '/';
+  }
+  // fallback
+  return '/Hope/';
+}
+
+let DATA = null;
 
 // ─── INIT ─────────────────────────────────────────
 async function init() {
@@ -35,44 +43,28 @@ function getCurrentPage() {
   return 'index';
 }
 
-function getBase() {
-<<<<<<< HEAD
-  return ROOT;
-=======
-  const p = window.location.pathname;
-  // Find the repo root by looking for /Hope/
-  const match = p.match(/^(\/Hope\/)/);
-  const root = match ? match[1] : '/Hope/';
-  if (p.endsWith('/team.html') || p.endsWith('/player.html')) {
-    return root;
-  }
-  return root;
->>>>>>> 7236de1a6962071512fa302918958276aed8d417
-}
-
 // ─── LOAD ALL DATA ────────────────────────────────
 async function loadAll() {
   try {
-<<<<<<< HEAD
-=======
-    const base = '/Hope/';
->>>>>>> 7236de1a6962071512fa302918958276aed8d417
+    const base = getBase();
+    console.log('Loading data from base:', base);
+
     const [statsRes, hittersRes, pitchersRes] = await Promise.all([
-      fetch(ROOT + 'data/stats.json'),
-      fetch(ROOT + 'data/hitters.csv'),
-      fetch(ROOT + 'data/pitchers.csv')
+      fetch(base + 'data/stats.json'),
+      fetch(base + 'data/hitters.csv'),
+      fetch(base + 'data/pitchers.csv')
     ]);
 
-    if (!statsRes.ok)    throw new Error('stats.json failed: '    + statsRes.status);
-    if (!hittersRes.ok)  throw new Error('hitters.csv failed: '   + hittersRes.status);
-    if (!pitchersRes.ok) throw new Error('pitchers.csv failed: '  + pitchersRes.status);
+    if (!statsRes.ok)    throw new Error('stats.json failed: '   + statsRes.status);
+    if (!hittersRes.ok)  throw new Error('hitters.csv failed: '  + hittersRes.status);
+    if (!pitchersRes.ok) throw new Error('pitchers.csv failed: ' + pitchersRes.status);
 
     const stats       = await statsRes.json();
     const hittersCsv  = await hittersRes.text();
     const pitchersCsv = await pitchersRes.text();
 
-    console.log('hitters.csv loaded, rows:', hittersCsv.trim().split('\n').length - 1);
-    console.log('pitchers.csv loaded, rows:', pitchersCsv.trim().split('\n').length - 1);
+    console.log('hitters.csv rows:', hittersCsv.trim().split('\n').length - 1);
+    console.log('pitchers.csv rows:', pitchersCsv.trim().split('\n').length - 1);
 
     const hitters  = parseCSV(hittersCsv,  'hitting');
     const pitchers = parseCSV(pitchersCsv, 'pitching');
@@ -80,11 +72,7 @@ async function loadAll() {
 
     console.log('Total players parsed:', players.length);
 
-    return {
-      teams:      stats.teams,
-      zoneConfig: stats.zoneConfig,
-      players
-    };
+    return { teams: stats.teams, zoneConfig: stats.zoneConfig, players };
   } catch (e) {
     console.error('loadAll failed:', e);
     return null;
