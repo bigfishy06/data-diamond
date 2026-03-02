@@ -101,19 +101,23 @@ function parseCSV(text, statType) {
 }
 
 function resolveTeamId(raw) {
-  if (!raw) return '';
-  const s = raw.toLowerCase().trim();
-  if (DATA && DATA.teams) {
-    const direct  = DATA.teams.find(t => t.id === s);
-    if (direct) return direct.id;
-    const abbr    = DATA.teams.find(t => t.abbreviation.toLowerCase() === s);
-    if (abbr) return abbr.id;
-    const partial = DATA.teams.find(t =>
-      t.name.toLowerCase().includes(s) || s.includes(t.name.toLowerCase().split(' ')[0])
-    );
-    if (partial) return partial.id;
-  }
-  return s;
+  if (!raw) return 'unk';
+  const s = raw.trim().toLowerCase();
+  const map = {
+    'barrie baycats': 'bar',
+    'brantford red sox': 'bra',
+    'chatham-kent barnstormers': 'ckb',
+    'guelph royals': 'gue',
+    'hamilton cardinals': 'ham',
+    'kitchener panthers': 'kit',
+    'london majors': 'lon',
+    'toronto maple leafs': 'tor',
+    'welland jackfish': 'wel',
+    'bar': 'bar', 'bra': 'bra', 'ckb': 'ckb',
+    'gue': 'gue', 'ham': 'ham', 'kit': 'kit',
+    'lon': 'lon', 'tor': 'tor', 'wel': 'wel'
+  };
+  return map[s] || 'unk';
 }
 
 function initIndex() {
