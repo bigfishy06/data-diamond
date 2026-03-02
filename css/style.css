@@ -11,9 +11,9 @@
   --bg-4: #172030;
   --border: rgba(255,255,255,0.07);
   --border-bright: rgba(255,255,255,0.14);
-  --gold: #E8C84A;
-  --gold-dim: rgba(232,200,74,0.15);
-  --gold-mid: rgba(232,200,74,0.4);
+   --gold: #FFB81C;
+   --gold-dim: rgba(255,184,28,0.15);
+   --gold-mid: rgba(255,184,28,0.4);
   --text: #e8edf5;
   --text-dim: #6b7d94;
   --text-mid: #9aafc4;
@@ -188,8 +188,8 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(232,200,74,0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(91,154,244,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,184,28,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(0,61,165,0.04) 0%, transparent 60%),
     var(--bg);
 }
 
@@ -201,9 +201,9 @@ a { color: inherit; text-decoration: none; }
   width: 600px;
   height: 300px;
   background: 
-    linear-gradient(to top, rgba(232,200,74,0.04) 0%, transparent 100%);
+    linear-gradient(to top, rgba(255,184,28,0.04) 0%, transparent 100%);
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  border: 1px solid rgba(232,200,74,0.08);
+  border: 1px solid rgba(255,184,28,0.08);
 }
 
 .hero-content {
