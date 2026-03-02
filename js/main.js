@@ -1,9 +1,9 @@
 /* v4 - 2026-03-02 - DATA DIAMOND main.js */
 
-const REPO_NAME = 'Hope';
+const REPO_NAME = 'data-diamond';
 
 function getBase() {
-  return 'https://bigfishy06.github.io/Hope/';
+  return 'https://bigfishy06.github.io/data-diamond/';
 }
 
 let DATA = null;
