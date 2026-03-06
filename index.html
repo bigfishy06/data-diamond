@@ -11,9 +11,8 @@
   }
 
   async function checkAuth() {
-    if (sessionStorage.getItem(key) === 'ok') return;
+    if (sessionStorage.getItem(key) === 'ok' || localStorage.getItem(key) === 'ok') return;
 
-    // Inject overlay
     const overlay = document.createElement('div');
     overlay.id = 'auth-overlay';
     overlay.innerHTML = `
@@ -51,9 +50,7 @@
           font-size:28px;letter-spacing:0.05em;
           color:#fff;
         }
-        #auth-overlay .auth-logo-text em {
-          color:#FFB81C;font-style:normal;
-        }
+        #auth-overlay .auth-logo-text em { color:#FFB81C;font-style:normal; }
         #auth-overlay h2 {
           font-family:'Bebas Neue',sans-serif;
           font-size:13px;letter-spacing:0.15em;
@@ -61,10 +58,8 @@
           margin:0 0 32px;
           text-transform:uppercase;
         }
-        #auth-overlay .auth-input-wrap {
-          position:relative;margin-bottom:16px;
-        }
-        #auth-overlay input {
+        #auth-overlay .auth-input-wrap { position:relative;margin-bottom:16px; }
+        #auth-overlay input[type="password"] {
           width:100%;box-sizing:border-box;
           padding:14px 16px;
           background:rgba(255,255,255,0.04);
@@ -76,11 +71,48 @@
           outline:none;
           transition:border-color 0.2s;
         }
-        #auth-overlay input:focus {
+        #auth-overlay input[type="password"]:focus {
           border-color:rgba(255,184,28,0.5);
           background:rgba(255,184,28,0.03);
         }
-        #auth-overlay input::placeholder { color:rgba(255,255,255,0.2); }
+        #auth-overlay input[type="password"]::placeholder { color:rgba(255,255,255,0.2); }
+        #auth-overlay .remember-wrap {
+          display:flex;align-items:center;justify-content:flex-start;
+          gap:10px;
+          margin-bottom:20px;
+          cursor:pointer;
+        }
+        #auth-overlay .remember-wrap input[type="checkbox"] {
+          appearance:none;-webkit-appearance:none;
+          width:18px;height:18px;
+          border:1px solid rgba(255,184,28,0.4);
+          border-radius:3px;
+          background:rgba(255,255,255,0.04);
+          cursor:pointer;
+          position:relative;
+          flex-shrink:0;
+          transition:background 0.2s, border-color 0.2s;
+        }
+        #auth-overlay .remember-wrap input[type="checkbox"]:checked {
+          background:#FFB81C;
+          border-color:#FFB81C;
+        }
+        #auth-overlay .remember-wrap input[type="checkbox"]:checked::after {
+          content:'';
+          position:absolute;
+          left:4px;top:1px;
+          width:5px;height:9px;
+          border:2px solid #080c12;
+          border-top:none;border-left:none;
+          transform:rotate(45deg);
+        }
+        #auth-overlay .remember-label {
+          font-family:'Inter',sans-serif;
+          font-size:13px;
+          color:rgba(255,255,255,0.45);
+          cursor:pointer;
+          user-select:none;
+        }
         #auth-overlay button {
           width:100%;padding:14px;
           background:#FFB81C;
@@ -114,6 +146,10 @@
         <div class="auth-input-wrap">
           <input type="password" id="auth-input" placeholder="Enter password" autocomplete="off" />
         </div>
+        <label class="remember-wrap">
+          <input type="checkbox" id="auth-remember" />
+          <span class="remember-label">Remember me on this device</span>
+        </label>
         <button id="auth-btn">Enter</button>
         <div class="auth-error" id="auth-error"></div>
       </div>
@@ -123,10 +159,15 @@
 
     return new Promise(resolve => {
       async function attempt() {
-        const pwd  = document.getElementById('auth-input').value;
-        const hash = await sha256(pwd);
+        const pwd      = document.getElementById('auth-input').value;
+        const remember = document.getElementById('auth-remember').checked;
+        const hash     = await sha256(pwd);
         if (hash === HASH) {
-          sessionStorage.setItem(key, 'ok');
+          if (remember) {
+            localStorage.setItem(key, 'ok');
+          } else {
+            sessionStorage.setItem(key, 'ok');
+          }
           overlay.style.opacity = '0';
           overlay.style.transition = 'opacity 0.4s';
           setTimeout(() => overlay.remove(), 400);
