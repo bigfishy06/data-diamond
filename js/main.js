@@ -294,7 +294,7 @@ function renderPitchingLeaderboards(container) {
       if (s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking') p.k++;
       if (s.outcome === 'Walk' || s.outcome === 'Intentional Walk') p.bb++;
       if (['Single','Double','Triple','Home Run'].includes(s.outcome)) p.hits++;
-      if (['Called Strike','Swinging Strike','Foul'].includes(s.outcome)) p.strikes++;
+      if (['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome)) p.strikes++;
       if (s.outcome === 'Ball') p.balls++;
     });
   });
@@ -602,7 +602,7 @@ function renderPlayerDetail(name, type, content) {
     const tot = sc.length;
     const ks  = sc.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
     const bbs = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
-    const strPct = tot > 0 ? Math.round(sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul'].includes(s.outcome); }).length / tot * 100) : 0;
+    const strPct = tot > 0 ? Math.round(sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length / tot * 100) : 0;
     [['PITCHES', tot], ['K', ks], ['BB', bbs], ['STR%', strPct + '%']].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
@@ -668,7 +668,7 @@ function renderOverview(name, type, sum, pitch) {
     const tot = sc.length;
     const ks  = sc.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
     const bbs = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
-    const str = sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul'].includes(s.outcome); }).length;
+    const str = sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
     const inZone = sc.filter(function(s) { return s.x >= -1 && s.x <= 1 && s.y >= 0 && s.y <= 1; }).length;
     const bars = [
       { lbl: 'K%',   val: fmt1(ks/tot*100) + '%',   pct: ks/tot },
@@ -724,7 +724,7 @@ function renderSeasonStats(name, type, sum, pitch) {
     const tot = sc.length;
     const ks  = sc.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
     const bbs = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
-    const str = sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul'].includes(s.outcome); }).length;
+    const str = sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
     const swStr = sc.filter(function(s) { return s.outcome === 'Swinging Strike'; }).length;
     const calStr = sc.filter(function(s) { return s.outcome === 'Called Strike'; }).length;
     const inZone = sc.filter(function(s) { return s.x >= -1 && s.x <= 1 && s.y >= 0 && s.y <= 1; }).length;
@@ -879,7 +879,7 @@ function renderZone(name, type, pitch, container) {
     if (filter === 'hit')       return ['Single','Double','Triple','Home Run'].includes(o);
     if (filter === 'strikeout') return o === 'Strikeout Swinging' || o === 'Strikeout Looking';
     if (filter === 'ball')      return o === 'Ball';
-    if (filter === 'strike')    return ['Called Strike','Swinging Strike','Foul'].includes(o);
+    if (filter === 'strike')    return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(o);
     if (filter === 'out')       return ['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out'].includes(o);
     return true;
   }
@@ -963,7 +963,7 @@ function renderZone(name, type, pitch, container) {
     // Draw dots back-to-front (balls/strikes behind, hits/ks on top)
     var layers = [
       filtered.filter(function(s){ return ['Ball'].includes(s.outcome); }),
-      filtered.filter(function(s){ return ['Called Strike','Swinging Strike','Foul'].includes(s.outcome); }),
+      filtered.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }),
       filtered.filter(function(s){ return ['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out'].includes(s.outcome); }),
       filtered.filter(function(s){ return ['Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }),
       filtered.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }),
@@ -1091,7 +1091,7 @@ function renderSplits(name, type, pitch) {
     if (s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking') typeMap[t].k++;
     if (['Single','Double','Triple','Home Run'].includes(s.outcome)) typeMap[t].hit++;
     if (s.outcome === 'Ball') typeMap[t].ball++;
-    if (['Called Strike','Swinging Strike','Foul'].includes(s.outcome)) typeMap[t].strike++;
+    if (['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome)) typeMap[t].strike++;
   });
 
   const total = points.length;
@@ -1162,7 +1162,7 @@ function buildPitcherListTable(names) {
     const tot = pts.length;
     const ks  = pts.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
     const bbs = pts.filter(function(s) { return s.outcome === 'Walk'; }).length;
-    const str = pts.filter(function(s) { return ['Called Strike','Swinging Strike','Foul'].includes(s.outcome); }).length;
+    const str = pts.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + name + '" data-type="pitcher">' + name + '</a></td>' +
       '<td>' + tot + '</td>' +
