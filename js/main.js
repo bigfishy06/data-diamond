@@ -177,10 +177,21 @@ function buildHomeTeamsGrid() {
   const grid = document.getElementById('teams-grid');
   if (!grid) return;
   TEAMS.forEach(function(team, i) {
-    const playerCount = DATA.summary.filter(function(p) {
+    const batterCount = DATA.summary.filter(function(p) {
       const t = resolveTeam(p.batter_team);
       return t && t.id === team.id;
     }).length;
+    // Count pitchers: those who faced batters from OTHER teams
+    const pitcherNames = new Set();
+    DATA.pitches.forEach(function(bp) {
+      if (!bp.scatter) return;
+      const bSum = getSummaryPlayer(bp.batter);
+      if (!bSum) return;
+      const bt = resolveTeam(bSum.batter_team);
+      if (!bt || bt.id === team.id) return; // batter is on this team, skip
+      bp.scatter.forEach(function(s) { if (s.pitcher) pitcherNames.add(s.pitcher); });
+    });
+    const playerCount = batterCount + pitcherNames.size;
     const card = document.createElement('div');
     card.className = 'team-card fade-up';
     card.style.setProperty('--team-color', team.primaryColor);
