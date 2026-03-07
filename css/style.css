@@ -392,6 +392,38 @@ body {
 .zone-stat-val { font-family: var(--font-display); font-size: 28px; color: var(--gold); }
 .zone-stat-lbl { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
 
+/* ── ZONE TOOLTIP ────────────────────────────────── */
+.zone-tooltip {
+  position: absolute;
+  background: var(--bg-4);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  min-width: 160px;
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.zt-pitch {
+  font-family: var(--font-display);
+  font-size: 16px; letter-spacing: 1px;
+  color: var(--gold); margin-bottom: 6px;
+}
+.zt-row {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-mid); padding: 2px 0;
+  border-bottom: 1px solid rgba(255,184,28,0.05);
+}
+.zt-row:last-of-type { border-bottom: none; }
+.zt-row span:first-child { color: var(--text-dim); }
+.zt-row span:last-child  { color: var(--text); text-align: right; }
+.zt-coords {
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--text-dim); margin-top: 6px;
+  letter-spacing: 0.5px;
+}
+
 /* ── PITCH MIX ───────────────────────────────────── */
 .pitch-mix-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));

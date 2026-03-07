@@ -749,8 +749,8 @@ function renderSeasonStats(name, type, sum, pitch) {
 
 // ── STRIKE ZONE TAB ───────────────────────────────
 function renderZone(name, type, pitch, container) {
-  // Get scatter points — for pitcher, find their pitches across all batters
-  let points = [];
+  // Collect scatter points
+  var points = [];
   if (type === 'batter' && pitch && pitch.scatter) {
     points = pitch.scatter.filter(function(s) { return s.x != null && s.y != null; });
   } else if (type === 'pitcher') {
@@ -767,123 +767,300 @@ function renderZone(name, type, pitch, container) {
     return;
   }
 
-  const PITCH_TYPES = ['All', 'Fastball', 'Breaking Ball', 'Offspeed'];
-  const OUTCOMES    = ['All', 'Strike', 'Ball', 'Hit', 'Out'];
+  // Unique pitch types in data
+  var typeSet = {};
+  points.forEach(function(s) { if (s.type) typeSet[s.type] = true; });
+  var PITCH_TYPES = ['All'].concat(Object.keys(typeSet).sort());
+
+  // Outcome result filter options
+  var RESULT_FILTERS = [
+    { lbl: 'All',       val: 'all'       },
+    { lbl: 'Hits',      val: 'hit'       },
+    { lbl: 'Outs',      val: 'out'       },
+    { lbl: 'Strikeouts',val: 'strikeout' },
+    { lbl: 'Balls',     val: 'ball'      },
+    { lbl: 'Strikes',   val: 'strike'    }
+  ];
+
+  // Stats
+  var totalPts   = points.length;
+  var inZone     = points.filter(function(s){ return s.x>=-1&&s.x<=1&&s.y>=0&&s.y<=1; }).length;
+  var ks         = points.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
+  var hits       = points.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+  var swStr      = points.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
+  var chases     = points.filter(function(s){ return (s.x<-1||s.x>1||s.y<0||s.y>1)&&(s.outcome==='Swinging Strike'||s.outcome==='Foul'); }).length;
 
   container.innerHTML =
-    '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Strike Zone</span>' +
-    '<span class="stat-card-subtitle">' + points.length + ' pitches</span></div>' +
+    '<div class="stat-card">' +
+    '<div class="stat-card-header"><span class="stat-card-title">Strike Zone</span>' +
+    '<span class="stat-card-subtitle">' + totalPts + ' pitches plotted</span></div>' +
     '<div class="zone-container">' +
+
+    // Pitch type filters
+    '<div style="margin-bottom:12px">' +
+    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Pitch Type</div>' +
     '<div class="zone-controls" id="zone-type-filters">' +
     PITCH_TYPES.map(function(t) {
-      return '<button class="zone-filter-btn' + (t === 'All' ? ' active' : '') + '" data-filter="' + t + '">' + t + '</button>';
-    }).join('') + '</div>' +
+      return '<button class="zone-filter-btn' + (t==='All'?' active':'') + '" data-filter="' + t + '">' + t + '</button>';
+    }).join('') + '</div></div>' +
+
+    // Result filters
+    '<div style="margin-bottom:20px">' +
+    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Result</div>' +
+    '<div class="zone-controls" id="zone-result-filters">' +
+    RESULT_FILTERS.map(function(r) {
+      return '<button class="zone-filter-btn' + (r.val==='all'?' active':'') + '" data-result="' + r.val + '">' + r.lbl + '</button>';
+    }).join('') + '</div></div>' +
+
+    // Main layout: canvas + sidebar
     '<div class="zone-wrap">' +
-    '<div class="zone-canvas-wrap"><canvas id="zone-canvas" width="300" height="320"></canvas></div>' +
-    '<div>' +
-    '<div class="zone-legend">' +
-    '<div class="legend-item"><div class="legend-dot" style="background:#4ade80"></div>Hit</div>' +
-    '<div class="legend-item"><div class="legend-dot" style="background:#f87171"></div>Out / K</div>' +
-    '<div class="legend-item"><div class="legend-dot" style="background:#FFB81C"></div>Strike (no contact)</div>' +
-    '<div class="legend-item"><div class="legend-dot" style="background:#6b7a9a"></div>Ball</div>' +
+    '<div class="zone-canvas-wrap" style="position:relative">' +
+    '<canvas id="zone-canvas" width="360" height="400"></canvas>' +
+    '<div id="zone-tooltip" class="zone-tooltip hidden"></div>' +
     '</div>' +
+    '<div style="flex:1;min-width:160px">' +
+
+    // Legend
+    '<div class="zone-legend" style="margin-bottom:20px">' +
+    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Legend</div>' +
+    '<div class="legend-item"><div class="legend-dot" style="background:#4ade80"></div>Hit</div>' +
+    '<div class="legend-item"><div class="legend-dot" style="background:#f87171"></div>Out / Strikeout</div>' +
+    '<div class="legend-item"><div class="legend-dot" style="background:#FFB81C"></div>Strike (no contact)</div>' +
+    '<div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div>Ball</div>' +
+    '<div class="legend-item"><div class="legend-dot" style="background:#c084fc"></div>Walk / HBP</div>' +
+    '</div>' +
+
+    // Zone stats
     '<div class="zone-stats-grid">' +
-    '<div class="zone-stat-box"><div class="zone-stat-val">' + points.length + '</div><div class="zone-stat-lbl">Pitches</div></div>' +
-    '<div class="zone-stat-box"><div class="zone-stat-val">' + points.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length + '</div><div class="zone-stat-lbl">Strikeouts</div></div>' +
-    '<div class="zone-stat-box"><div class="zone-stat-val">' + fmt1(points.filter(function(s){return s.x>=-1&&s.x<=1&&s.y>=0&&s.y<=1;}).length / points.length * 100) + '%</div><div class="zone-stat-lbl">Zone%</div></div>' +
-    '<div class="zone-stat-box"><div class="zone-stat-val">' + points.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length + '</div><div class="zone-stat-lbl">Hits</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val">' + totalPts + '</div><div class="zone-stat-lbl">Pitches</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val">' + fmt1(inZone/totalPts*100) + '%</div><div class="zone-stat-lbl">Zone%</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val">' + ks + '</div><div class="zone-stat-lbl">Strikeouts</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val">' + hits + '</div><div class="zone-stat-lbl">Hits</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val">' + swStr + '</div><div class="zone-stat-lbl">Swinging K</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val">' + chases + '</div><div class="zone-stat-lbl">Chases</div></div>' +
     '</div></div></div></div></div>';
 
-  let activeFilter = 'All';
+  // ── Canvas drawing ──────────────────────────────
+  var activeType   = 'All';
+  var activeResult = 'all';
+
+  // Coordinate system:
+  // Data: x = -1 (left edge) to +1 (right edge), y = 0 (bottom) to 1 (top)
+  // Full plot range: x = -2.5 to 2.5, y = -0.8 to 1.5
+  var X_MIN = -2.5, X_MAX = 2.5;
+  var Y_MIN = -0.8, Y_MAX = 1.5;
+
+  var canvas = document.getElementById('zone-canvas');
+  var ctx    = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var PAD_L = 36, PAD_R = 16, PAD_T = 16, PAD_B = 36;
+  var PW = W - PAD_L - PAD_R;
+  var PH = H - PAD_T - PAD_B;
+
+  function toCanvasX(x) { return PAD_L + ((x - X_MIN) / (X_MAX - X_MIN)) * PW; }
+  function toCanvasY(y) { return PAD_T + PH - ((y - Y_MIN) / (Y_MAX - Y_MIN)) * PH; }
+  function fromCanvasX(cx) { return X_MIN + ((cx - PAD_L) / PW) * (X_MAX - X_MIN); }
+  function fromCanvasY(cy) { return Y_MIN + (PH - (cy - PAD_T)) / PH * (Y_MAX - Y_MIN); }
 
   function dotColor(s) {
-    if (['Single','Double','Triple','Home Run'].includes(s.outcome)) return '#4ade80';
-    if (['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Caught Stealing'].includes(s.outcome)) return '#f87171';
-    if (s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking') return '#f87171';
-    if (s.outcome === 'Called Strike' || s.outcome === 'Swinging Strike' || s.outcome === 'Foul') return '#FFB81C';
-    return '#4a5568';
+    var o = s.outcome || '';
+    if (['Single','Double','Triple','Home Run'].includes(o))                                    return '#4ade80';
+    if (['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Caught Stealing'].includes(o)) return '#f87171';
+    if (o === 'Strikeout Swinging' || o === 'Strikeout Looking')                                return '#f87171';
+    if (o === 'Called Strike' || o === 'Swinging Strike' || o === 'Foul')                       return '#FFB81C';
+    if (o === 'Ball')                                                                            return '#60a5fa';
+    if (o === 'Walk' || o === 'Intentional Walk' || o === 'Hit By Pitch')                       return '#c084fc';
+    return '#6b7a9a';
   }
 
-  function drawZone(filter) {
-    const canvas = document.getElementById('zone-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const W = canvas.width, H = canvas.height;
-    const PAD = 30;
-    const ZW = W - PAD * 2, ZH = H - PAD * 2;
+  function resultMatch(s, filter) {
+    if (filter === 'all') return true;
+    var o = s.outcome || '';
+    if (filter === 'hit')       return ['Single','Double','Triple','Home Run'].includes(o);
+    if (filter === 'strikeout') return o === 'Strikeout Swinging' || o === 'Strikeout Looking';
+    if (filter === 'ball')      return o === 'Ball';
+    if (filter === 'strike')    return ['Called Strike','Swinging Strike','Foul'].includes(o);
+    if (filter === 'out')       return ['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out'].includes(o);
+    return true;
+  }
 
+  function drawZone() {
     ctx.clearRect(0, 0, W, H);
 
     // Background
     ctx.fillStyle = '#0e1525';
     ctx.fillRect(0, 0, W, H);
 
-    // Grid lines
-    ctx.strokeStyle = 'rgba(255,184,28,0.06)';
+    // Subtle grid lines
+    ctx.strokeStyle = 'rgba(255,184,28,0.05)';
     ctx.lineWidth = 1;
-    for (let i = 0; i <= 4; i++) {
-      const x = PAD + (i/4) * ZW;
-      const y = PAD + (i/4) * ZH;
-      ctx.beginPath(); ctx.moveTo(x, PAD); ctx.lineTo(x, PAD+ZH); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(PAD, y); ctx.lineTo(PAD+ZW, y); ctx.stroke();
-    }
+    [-2, -1, 0, 1, 2].forEach(function(xv) {
+      var cx = toCanvasX(xv);
+      ctx.beginPath(); ctx.moveTo(cx, PAD_T); ctx.lineTo(cx, PAD_T + PH); ctx.stroke();
+    });
+    [-0.5, 0, 0.5, 1.0].forEach(function(yv) {
+      var cy = toCanvasY(yv);
+      ctx.beginPath(); ctx.moveTo(PAD_L, cy); ctx.lineTo(PAD_L + PW, cy); ctx.stroke();
+    });
 
-    // Strike zone box (x: -1 to 1, y: 0 to 1)
-    function toCanvasX(x) { return PAD + ((x + 1.8) / 3.6) * ZW; }
-    function toCanvasY(y) { return PAD + ZH - ((y + 0.5) / 2.0) * ZH; }
+    // Home plate indicator at bottom center
+    var plateY = toCanvasY(Y_MIN + 0.05);
+    var plateCx = toCanvasX(0);
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    ctx.beginPath();
+    ctx.moveTo(plateCx, plateY - 4);
+    ctx.lineTo(plateCx - 8, plateY + 4);
+    ctx.lineTo(plateCx + 8, plateY + 4);
+    ctx.closePath();
+    ctx.fill();
 
-    const zx1 = toCanvasX(-1), zx2 = toCanvasX(1);
-    const zy1 = toCanvasY(1),  zy2 = toCanvasY(0);
-    ctx.strokeStyle = 'rgba(255,184,28,0.5)';
-    ctx.lineWidth = 1.5;
-    ctx.strokeRect(zx1, zy1, zx2 - zx1, zy2 - zy1);
+    // Strike zone box fill
+    var zx1 = toCanvasX(-1), zx2 = toCanvasX(1);
+    var zy1 = toCanvasY(1),  zy2 = toCanvasY(0);
+    ctx.fillStyle = 'rgba(255,184,28,0.03)';
+    ctx.fillRect(zx1, zy1, zx2-zx1, zy2-zy1);
 
-    // Zone thirds
-    ctx.strokeStyle = 'rgba(255,184,28,0.15)';
-    ctx.lineWidth = 0.5;
-    for (let i = 1; i < 3; i++) {
-      const x = zx1 + (i/3) * (zx2-zx1);
-      const y = zy1 + (i/3) * (zy2-zy1);
-      ctx.beginPath(); ctx.moveTo(x, zy1); ctx.lineTo(x, zy2); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(zx1, y); ctx.lineTo(zx2, y); ctx.stroke();
+    // Strike zone border
+    ctx.strokeStyle = 'rgba(255,184,28,0.7)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(zx1, zy1, zx2-zx1, zy2-zy1);
+
+    // Inner 3x3 grid
+    ctx.strokeStyle = 'rgba(255,184,28,0.18)';
+    ctx.lineWidth = 0.8;
+    for (var i = 1; i < 3; i++) {
+      var xi = zx1 + (i/3)*(zx2-zx1);
+      var yi = zy1 + (i/3)*(zy2-zy1);
+      ctx.beginPath(); ctx.moveTo(xi, zy1); ctx.lineTo(xi, zy2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(zx1, yi); ctx.lineTo(zx2, yi); ctx.stroke();
     }
 
     // Axis labels
     ctx.fillStyle = '#4a5568';
+    ctx.font = '10px DM Mono, monospace';
+    ctx.textAlign = 'center';
+    [-2, -1, 0, 1, 2].forEach(function(xv) {
+      ctx.fillText(xv, toCanvasX(xv), H - 10);
+    });
+    ctx.textAlign = 'right';
+    [-0.5, 0, 0.5, 1.0].forEach(function(yv) {
+      ctx.fillText(yv.toFixed(1), PAD_L - 6, toCanvasY(yv) + 4);
+    });
+
+    // Zone label
+    ctx.fillStyle = 'rgba(255,184,28,0.25)';
     ctx.font = '9px DM Mono, monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('INSIDE', PAD + ZW * 0.15, H - 8);
-    ctx.fillText('OUTSIDE', PAD + ZW * 0.85, H - 8);
+    ctx.fillText('STRIKE ZONE', toCanvasX(0), zy1 - 6);
 
-    // Filter points
-    const filtered = points.filter(function(s) {
-      if (filter === 'All') return true;
-      return s.pitch_type === filter;
+    // Filter and draw dots
+    var filtered = points.filter(function(s) {
+      var typeOk = (activeType === 'All') || (s.type === activeType);
+      var resOk  = resultMatch(s, activeResult);
+      return typeOk && resOk;
     });
 
-    // Draw dots
-    filtered.forEach(function(s) {
-      const cx = toCanvasX(s.x);
-      const cy = toCanvasY(s.y);
-      const color = dotColor(s);
-      ctx.beginPath();
-      ctx.arc(cx, cy, 4, 0, Math.PI * 2);
-      ctx.fillStyle = color + 'cc';
-      ctx.fill();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 0.5;
-      ctx.stroke();
+    // Draw dots back-to-front (balls/strikes behind, hits/ks on top)
+    var layers = [
+      filtered.filter(function(s){ return ['Ball'].includes(s.outcome); }),
+      filtered.filter(function(s){ return ['Called Strike','Swinging Strike','Foul'].includes(s.outcome); }),
+      filtered.filter(function(s){ return ['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out'].includes(s.outcome); }),
+      filtered.filter(function(s){ return ['Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }),
+      filtered.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }),
+      filtered.filter(function(s){ return ['Walk','Intentional Walk','Hit By Pitch'].includes(s.outcome); })
+    ];
+
+    layers.forEach(function(layer) {
+      layer.forEach(function(s) {
+        var cx = toCanvasX(s.x);
+        var cy = toCanvasY(s.y);
+        var color = dotColor(s);
+        ctx.beginPath();
+        ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
+        ctx.fillStyle = color + 'bb';
+        ctx.fill();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      });
     });
+
+    // Count label
+    ctx.fillStyle = 'rgba(106,123,154,0.6)';
+    ctx.font = '10px DM Mono, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(filtered.length + ' / ' + totalPts + ' pitches shown', PAD_L, H - 10);
   }
 
-  drawZone('All');
+  drawZone();
 
-  document.getElementById('zone-type-filters').querySelectorAll('.zone-filter-btn').forEach(function(btn) {
+  // ── Tooltip on hover ───────────────────────────
+  var tooltip = document.getElementById('zone-tooltip');
+
+  canvas.addEventListener('mousemove', function(e) {
+    var rect = canvas.getBoundingClientRect();
+    var mx = (e.clientX - rect.left) * (W / rect.width);
+    var my = (e.clientY - rect.top)  * (H / rect.height);
+    var dx = fromCanvasX(mx);
+    var dy = fromCanvasY(my);
+
+    // Find nearest point within 12px
+    var best = null, bestDist = Infinity;
+    var filtered = points.filter(function(s) {
+      var typeOk = (activeType === 'All') || (s.type === activeType);
+      var resOk  = resultMatch(s, activeResult);
+      return typeOk && resOk;
+    });
+    filtered.forEach(function(s) {
+      var px = toCanvasX(s.x), py = toCanvasY(s.y);
+      var dist = Math.sqrt((mx-px)*(mx-px) + (my-py)*(my-py));
+      if (dist < bestDist && dist < 14) { bestDist = dist; best = s; }
+    });
+
+    if (best) {
+      canvas.style.cursor = 'pointer';
+      var ttx = toCanvasX(best.x), tty = toCanvasY(best.y);
+      // Offset tooltip so it doesn't cover dot
+      var offX = ttx > W * 0.65 ? -180 : 12;
+      var offY = tty > H * 0.65 ? -110 : 8;
+      tooltip.style.left = (ttx + offX) + 'px';
+      tooltip.style.top  = (tty + offY) + 'px';
+      tooltip.innerHTML =
+        '<div class="zt-pitch">' + (best.type || 'Unknown') + '</div>' +
+        '<div class="zt-row"><span>Outcome</span><span>' + (best.outcome || '—') + '</span></div>' +
+        '<div class="zt-row"><span>Count</span><span>' + (best.count || '—') + '</span></div>' +
+        '<div class="zt-row"><span>Pitcher</span><span>' + (best.pitcher || '—') + '</span></div>' +
+        (best.contact ? '<div class="zt-row"><span>Contact</span><span>' + best.contact + '</span></div>' : '') +
+        (best.spray   ? '<div class="zt-row"><span>Spray</span><span>'   + best.spray   + '</span></div>' : '') +
+        '<div class="zt-coords">x: ' + (best.x != null ? best.x.toFixed(3) : '—') + '  y: ' + (best.y != null ? best.y.toFixed(3) : '—') + '</div>';
+      tooltip.classList.remove('hidden');
+    } else {
+      canvas.style.cursor = 'default';
+      tooltip.classList.add('hidden');
+    }
+  });
+
+  canvas.addEventListener('mouseleave', function() {
+    tooltip.classList.add('hidden');
+    canvas.style.cursor = 'default';
+  });
+
+  // ── Filter buttons ─────────────────────────────
+  container.querySelectorAll('#zone-type-filters .zone-filter-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      document.querySelectorAll('#zone-type-filters .zone-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      container.querySelectorAll('#zone-type-filters .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
-      activeFilter = btn.dataset.filter;
-      drawZone(activeFilter);
+      activeType = btn.dataset.filter;
+      drawZone();
+    });
+  });
+
+  container.querySelectorAll('#zone-result-filters .zone-filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      container.querySelectorAll('#zone-result-filters .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeResult = btn.dataset.result;
+      drawZone();
     });
   });
 }
