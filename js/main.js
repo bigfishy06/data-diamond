@@ -615,13 +615,13 @@ function renderPlayerDetail(name, type, content) {
   function activateTab(t) {
     tabs.forEach(function(tb) { tb.classList.toggle('active', tb.dataset.tab === t); });
     tabContent.innerHTML = '';
-    const panel = document.createElement('div');
+    var panel = document.createElement('div');
     panel.className = 'fade-up';
     if (t === 'overview') panel.innerHTML = renderOverview(name, type, sum, pitch);
     if (t === 'season')   panel.innerHTML = renderSeasonStats(name, type, sum, pitch);
-    if (t === 'zone')     renderZone(name, type, pitch, panel);
     if (t === 'splits')   panel.innerHTML = renderSplits(name, type, pitch);
     tabContent.appendChild(panel);
+    if (t === 'zone')     renderZone(name, type, pitch, panel);
     setTimeout(function() {
       panel.querySelectorAll('.sbr-fill').forEach(function(el) {
         if (el.dataset.width) el.style.width = el.dataset.width;
