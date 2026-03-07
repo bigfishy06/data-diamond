@@ -88,6 +88,14 @@ function getPitchPlayer(name) {
 function getSummaryPlayer(name) {
   return DATA.summary.find(function(p) { return p.batter === name; }) || null;
 }
+function getPitcherScatter(name) {
+  var pts = [];
+  DATA.pitches.forEach(function(bp) {
+    if (!bp.scatter) return;
+    bp.scatter.forEach(function(s) { if (s.pitcher === name) pts.push(s); });
+  });
+  return pts;
+}
 function getAllBatters() {
   const names = new Set();
   DATA.summary.forEach(function(p) { names.add(p.batter); });
@@ -451,10 +459,11 @@ function renderTeamDetail(teamId, content) {
           const bSum = getSummaryPlayer(bp.batter);
           if (bSum) {
             const bt = resolveTeam(bSum.batter_team);
-            // pitcher's team = opponent of batter
-            if (bt && bt.id !== teamId) return;
+            // pitcher belongs to the opposing team of the batter
+            // so to find THIS team's pitchers, find pitchers who
+            // faced batters from OTHER teams
+            if (bt && bt.id !== teamId) pitcherSet.add(s.pitcher);
           }
-          pitcherSet.add(s.pitcher);
         });
       });
       if (!pitcherSet.size) {
@@ -558,7 +567,24 @@ function renderPlayerList(content) {
 function renderPlayerDetail(name, type, content) {
   const sum   = getSummaryPlayer(name);
   const pitch = getPitchPlayer(name);
-  const team  = sum ? resolveTeam(sum.batter_team) : null;
+
+  // For pitchers, build scatter from all batters data
+  let pitchData = pitch;
+  if (type === 'pitcher') {
+    const pts = [];
+    DATA.pitches.forEach(function(bp) {
+      if (!bp.scatter) return;
+      bp.scatter.forEach(function(s) { if (s.pitcher === name) pts.push(s); });
+    });
+    pitchData = pts.length ? { batter: name, scatter: pts } : null;
+  }
+
+  // Resolve team: for batters use summary, for pitchers use pitcher_team from scatter
+  let team = sum ? resolveTeam(sum.batter_team) : null;
+  if (!team && type === 'pitcher' && pitchData && pitchData.scatter && pitchData.scatter.length) {
+    const pt = pitchData.scatter[0].pitcher_team;
+    if (pt) team = resolveTeam(pt);
+  }
 
   document.title = name + ' — Data Diamond';
 
@@ -597,8 +623,8 @@ function renderPlayerDetail(name, type, content) {
     [['AVG', fmt3(sum.AVG)], ['OPS', fmt3(sum.OPS)], ['HR', fmtN(sum.HR)], ['K', fmtN(sum.K)]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
-  } else if (type === 'pitcher' && pitch && pitch.scatter) {
-    const sc  = pitch.scatter;
+  } else if (type === 'pitcher' && pitchData && pitchData.scatter) {
+    const sc  = pitchData.scatter;
     const tot = sc.length;
     const ks  = sc.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
     const bbs = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
@@ -617,11 +643,11 @@ function renderPlayerDetail(name, type, content) {
     tabContent.innerHTML = '';
     var panel = document.createElement('div');
     panel.className = 'fade-up';
-    if (t === 'overview') panel.innerHTML = renderOverview(name, type, sum, pitch);
-    if (t === 'season')   panel.innerHTML = renderSeasonStats(name, type, sum, pitch);
-    if (t === 'splits')   panel.innerHTML = renderSplits(name, type, pitch);
+    if (t === 'overview') panel.innerHTML = renderOverview(name, type, sum, pitchData);
+    if (t === 'season')   panel.innerHTML = renderSeasonStats(name, type, sum, pitchData);
+    if (t === 'splits')   panel.innerHTML = renderSplits(name, type, pitchData);
     tabContent.appendChild(panel);
-    if (t === 'zone')     renderZone(name, type, pitch, panel);
+    if (t === 'zone')     renderZone(name, type, pitchData, panel);
     setTimeout(function() {
       panel.querySelectorAll('.sbr-fill').forEach(function(el) {
         if (el.dataset.width) el.style.width = el.dataset.width;
