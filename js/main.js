@@ -933,7 +933,7 @@ function renderZone(name, type, pitch, container) {
 
   // Coordinate ranges: scatter shows full field, grid/heatmap zooms to zone
   var SCATTER_BOUNDS = { xMin:-2.5, xMax:2.5,  yMin:-0.8, yMax:1.5  };
-  var CLEAN_BOUNDS   = { xMin:-1.85, xMax:1.85, yMin:-0.52, yMax:1.52 };
+  var CLEAN_BOUNDS   = { xMin:-1.85, xMax:1.85, yMin:-0.65, yMax:1.65 };
   var X_MIN = SCATTER_BOUNDS.xMin, X_MAX = SCATTER_BOUNDS.xMax;
   var Y_MIN = SCATTER_BOUNDS.yMin, Y_MAX = SCATTER_BOUNDS.yMax;
 
