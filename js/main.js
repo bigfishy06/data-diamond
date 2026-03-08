@@ -804,28 +804,73 @@ function renderZone(name, type, pitch, container) {
     return;
   }
 
-  // Unique pitch types in data
-  var typeSet = {};
-  points.forEach(function(s) { if (s.type) typeSet[s.type] = true; });
-  var PITCH_TYPES = ['All'].concat(Object.keys(typeSet).sort());
+  // Pitch type colors
+  var PITCH_COLORS = {
+    'Fastball':     '#f87171',
+    'Breaking Ball':'#60a5fa',
+    'Offspeed':     '#a78bfa',
+    'Changeup':     '#34d399',
+    'Curveball':    '#fb923c',
+    'Slider':       '#facc15',
+    'Cutter':       '#f472b6',
+    'Sinker':       '#22d3ee'
+  };
+  var FALLBACK_COLORS = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee'];
 
-  // Outcome result filter options
+  // Collect unique pitch types in data
+  var typeSet = [];
+  points.forEach(function(s) {
+    var t = s.pitch_type || s.type || 'Unknown';
+    if (!typeSet.includes(t)) typeSet.push(t);
+  });
+  typeSet.sort();
+
+  // Assign colors to types
+  var typeColorMap = {};
+  typeSet.forEach(function(t, i) {
+    typeColorMap[t] = PITCH_COLORS[t] || FALLBACK_COLORS[i % FALLBACK_COLORS.length];
+  });
+
+  function dotColor(s) {
+    var t = s.pitch_type || s.type || 'Unknown';
+    return typeColorMap[t] || '#6b7a9a';
+  }
+
+  // Outcome filter options
   var RESULT_FILTERS = [
-    { lbl: 'All',       val: 'all'       },
-    { lbl: 'Hits',      val: 'hit'       },
-    { lbl: 'Outs',      val: 'out'       },
-    { lbl: 'Strikeouts',val: 'strikeout' },
-    { lbl: 'Balls',     val: 'ball'      },
-    { lbl: 'Strikes',   val: 'strike'    }
+    { lbl: 'All',        val: 'all'       },
+    { lbl: 'Hits',       val: 'hit'       },
+    { lbl: 'Outs',       val: 'out'       },
+    { lbl: 'Strikeouts', val: 'strikeout' },
+    { lbl: 'Walks',      val: 'walk'      },
+    { lbl: 'Balls',      val: 'ball'      },
+    { lbl: 'Strikes',    val: 'strike'    }
   ];
 
+  function resultMatch(s, filter) {
+    if (filter === 'all') return true;
+    var o = s.outcome || '';
+    if (filter === 'hit')       return ['Single','Double','Triple','Home Run'].includes(o);
+    if (filter === 'strikeout') return o === 'Strikeout Swinging' || o === 'Strikeout Looking';
+    if (filter === 'ball')      return o === 'Ball';
+    if (filter === 'walk')      return o === 'Walk' || o === 'Intentional Walk' || o === 'Hit By Pitch';
+    if (filter === 'strike')    return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(o);
+    if (filter === 'out')       return ['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Caught Stealing','Sacrifice Fly','Sacrifice Bunt'].includes(o);
+    return true;
+  }
+
   // Stats
-  var totalPts   = points.length;
-  var inZone     = points.filter(function(s){ return s.x>=-1&&s.x<=1&&s.y>=0&&s.y<=1; }).length;
-  var ks         = points.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
-  var hits       = points.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
-  var swStr      = points.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
-  var chases     = points.filter(function(s){ return (s.x<-1||s.x>1||s.y<0||s.y>1)&&(s.outcome==='Swinging Strike'||s.outcome==='Foul'); }).length;
+  var totalPts = points.length;
+  var inZone   = points.filter(function(s){ return s.x>=-1&&s.x<=1&&s.y>=0&&s.y<=1; }).length;
+  var ks       = points.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
+  var hits     = points.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+  var swStr    = points.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
+  var chases   = points.filter(function(s){ return (s.x<-1||s.x>1||s.y<0||s.y>1)&&(s.outcome==='Swinging Strike'||s.outcome==='Foul'); }).length;
+
+  // Build legend HTML
+  var legendHTML = typeSet.map(function(t) {
+    return '<div class="legend-item"><div class="legend-dot" style="background:' + typeColorMap[t] + '"></div>' + t + '</div>';
+  }).join('');
 
   container.innerHTML =
     '<div class="stat-card">' +
@@ -833,17 +878,9 @@ function renderZone(name, type, pitch, container) {
     '<span class="stat-card-subtitle">' + totalPts + ' pitches plotted</span></div>' +
     '<div class="zone-container">' +
 
-    // Pitch type filters
-    '<div style="margin-bottom:12px">' +
-    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Pitch Type</div>' +
-    '<div class="zone-controls" id="zone-type-filters">' +
-    PITCH_TYPES.map(function(t) {
-      return '<button class="zone-filter-btn' + (t==='All'?' active':'') + '" data-filter="' + t + '">' + t + '</button>';
-    }).join('') + '</div></div>' +
-
-    // Result filters
+    // Result filters (was pitch type, now outcome)
     '<div style="margin-bottom:20px">' +
-    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Result</div>' +
+    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Filter by Outcome</div>' +
     '<div class="zone-controls" id="zone-result-filters">' +
     RESULT_FILTERS.map(function(r) {
       return '<button class="zone-filter-btn' + (r.val==='all'?' active':'') + '" data-result="' + r.val + '">' + r.lbl + '</button>';
@@ -857,14 +894,10 @@ function renderZone(name, type, pitch, container) {
     '</div>' +
     '<div style="flex:1;min-width:160px">' +
 
-    // Legend
+    // Legend (pitch types)
     '<div class="zone-legend" style="margin-bottom:20px">' +
-    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Legend</div>' +
-    '<div class="legend-item"><div class="legend-dot" style="background:#4ade80"></div>Hit</div>' +
-    '<div class="legend-item"><div class="legend-dot" style="background:#f87171"></div>Out / Strikeout</div>' +
-    '<div class="legend-item"><div class="legend-dot" style="background:#FFB81C"></div>Strike (no contact)</div>' +
-    '<div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div>Ball</div>' +
-    '<div class="legend-item"><div class="legend-dot" style="background:#c084fc"></div>Walk / HBP</div>' +
+    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Pitch Type</div>' +
+    legendHTML +
     '</div>' +
 
     // Zone stats
@@ -878,12 +911,8 @@ function renderZone(name, type, pitch, container) {
     '</div></div></div></div></div>';
 
   // ── Canvas drawing ──────────────────────────────
-  var activeType   = 'All';
   var activeResult = 'all';
 
-  // Coordinate system:
-  // Data: x = -1 (left edge) to +1 (right edge), y = 0 (bottom) to 1 (top)
-  // Full plot range: x = -2.5 to 2.5, y = -0.8 to 1.5
   var X_MIN = -2.5, X_MAX = 2.5;
   var Y_MIN = -0.8, Y_MAX = 1.5;
 
@@ -898,28 +927,6 @@ function renderZone(name, type, pitch, container) {
   function toCanvasY(y) { return PAD_T + PH - ((y - Y_MIN) / (Y_MAX - Y_MIN)) * PH; }
   function fromCanvasX(cx) { return X_MIN + ((cx - PAD_L) / PW) * (X_MAX - X_MIN); }
   function fromCanvasY(cy) { return Y_MIN + (PH - (cy - PAD_T)) / PH * (Y_MAX - Y_MIN); }
-
-  function dotColor(s) {
-    var o = s.outcome || '';
-    if (['Single','Double','Triple','Home Run'].includes(o))                                    return '#4ade80';
-    if (['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Caught Stealing'].includes(o)) return '#f87171';
-    if (o === 'Strikeout Swinging' || o === 'Strikeout Looking')                                return '#f87171';
-    if (o === 'Called Strike' || o === 'Swinging Strike' || o === 'Foul')                       return '#FFB81C';
-    if (o === 'Ball')                                                                            return '#60a5fa';
-    if (o === 'Walk' || o === 'Intentional Walk' || o === 'Hit By Pitch')                       return '#c084fc';
-    return '#6b7a9a';
-  }
-
-  function resultMatch(s, filter) {
-    if (filter === 'all') return true;
-    var o = s.outcome || '';
-    if (filter === 'hit')       return ['Single','Double','Triple','Home Run'].includes(o);
-    if (filter === 'strikeout') return o === 'Strikeout Swinging' || o === 'Strikeout Looking';
-    if (filter === 'ball')      return o === 'Ball';
-    if (filter === 'strike')    return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(o);
-    if (filter === 'out')       return ['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out'].includes(o);
-    return true;
-  }
 
   function drawZone() {
     ctx.clearRect(0, 0, W, H);
@@ -940,7 +947,7 @@ function renderZone(name, type, pitch, container) {
       ctx.beginPath(); ctx.moveTo(PAD_L, cy); ctx.lineTo(PAD_L + PW, cy); ctx.stroke();
     });
 
-    // Home plate indicator at bottom center
+    // Home plate indicator
     var plateY = toCanvasY(Y_MIN + 0.05);
     var plateCx = toCanvasX(0);
     ctx.fillStyle = 'rgba(255,255,255,0.06)';
@@ -951,13 +958,11 @@ function renderZone(name, type, pitch, container) {
     ctx.closePath();
     ctx.fill();
 
-    // Strike zone box fill
+    // Strike zone box
     var zx1 = toCanvasX(-1), zx2 = toCanvasX(1);
     var zy1 = toCanvasY(1),  zy2 = toCanvasY(0);
     ctx.fillStyle = 'rgba(255,184,28,0.03)';
     ctx.fillRect(zx1, zy1, zx2-zx1, zy2-zy1);
-
-    // Strike zone border
     ctx.strokeStyle = 'rgba(255,184,28,0.7)';
     ctx.lineWidth = 2;
     ctx.strokeRect(zx1, zy1, zx2-zx1, zy2-zy1);
@@ -990,36 +995,23 @@ function renderZone(name, type, pitch, container) {
     ctx.textAlign = 'center';
     ctx.fillText('STRIKE ZONE', toCanvasX(0), zy1 - 6);
 
-    // Filter and draw dots
+    // Filter points
     var filtered = points.filter(function(s) {
-      var typeOk = (activeType === 'All') || (s.type === activeType);
-      var resOk  = resultMatch(s, activeResult);
-      return typeOk && resOk;
+      return resultMatch(s, activeResult);
     });
 
-    // Draw dots back-to-front (balls/strikes behind, hits/ks on top)
-    var layers = [
-      filtered.filter(function(s){ return ['Ball'].includes(s.outcome); }),
-      filtered.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }),
-      filtered.filter(function(s){ return ['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out'].includes(s.outcome); }),
-      filtered.filter(function(s){ return ['Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }),
-      filtered.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }),
-      filtered.filter(function(s){ return ['Walk','Intentional Walk','Hit By Pitch'].includes(s.outcome); })
-    ];
-
-    layers.forEach(function(layer) {
-      layer.forEach(function(s) {
-        var cx = toCanvasX(s.x);
-        var cy = toCanvasY(s.y);
-        var color = dotColor(s);
-        ctx.beginPath();
-        ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
-        ctx.fillStyle = color + 'bb';
-        ctx.fill();
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
-      });
+    // Draw all dots
+    filtered.forEach(function(s) {
+      var cx = toCanvasX(s.x);
+      var cy = toCanvasY(s.y);
+      var color = dotColor(s);
+      ctx.beginPath();
+      ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = color + 'bb';
+      ctx.fill();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
     });
 
     // Count label
@@ -1029,26 +1021,18 @@ function renderZone(name, type, pitch, container) {
     ctx.fillText(filtered.length + ' / ' + totalPts + ' pitches shown', PAD_L, H - 10);
   }
 
-  // Defer until DOM is painted
   requestAnimationFrame(function() { drawZone(); });
 
-  // ── Tooltip on hover ───────────────────────────
+  // ── Tooltip ────────────────────────────────────
   var tooltip = document.getElementById('zone-tooltip');
 
   canvas.addEventListener('mousemove', function(e) {
     var rect = canvas.getBoundingClientRect();
     var mx = (e.clientX - rect.left) * (W / rect.width);
     var my = (e.clientY - rect.top)  * (H / rect.height);
-    var dx = fromCanvasX(mx);
-    var dy = fromCanvasY(my);
 
-    // Find nearest point within 12px
     var best = null, bestDist = Infinity;
-    var filtered = points.filter(function(s) {
-      var typeOk = (activeType === 'All') || (s.type === activeType);
-      var resOk  = resultMatch(s, activeResult);
-      return typeOk && resOk;
-    });
+    var filtered = points.filter(function(s) { return resultMatch(s, activeResult); });
     filtered.forEach(function(s) {
       var px = toCanvasX(s.x), py = toCanvasY(s.y);
       var dist = Math.sqrt((mx-px)*(mx-px) + (my-py)*(my-py));
@@ -1058,15 +1042,16 @@ function renderZone(name, type, pitch, container) {
     if (best) {
       canvas.style.cursor = 'pointer';
       var ttx = toCanvasX(best.x), tty = toCanvasY(best.y);
-      // Offset tooltip so it doesn't cover dot
       var offX = ttx > W * 0.65 ? -180 : 12;
       var offY = tty > H * 0.65 ? -110 : 8;
       tooltip.style.left = (ttx + offX) + 'px';
       tooltip.style.top  = (tty + offY) + 'px';
+      var t = best.pitch_type || best.type || 'Unknown';
+      var dotStyle = 'display:inline-block;width:10px;height:10px;border-radius:50%;background:' + typeColorMap[t] + ';margin-right:6px;vertical-align:middle';
       tooltip.innerHTML =
-        '<div class="zt-pitch">' + (best.type || 'Unknown') + '</div>' +
+        '<div class="zt-pitch"><span style="' + dotStyle + '"></span>' + t + '</div>' +
         '<div class="zt-row"><span>Outcome</span><span>' + (best.outcome || '—') + '</span></div>' +
-        '<div class="zt-row"><span>Count</span><span>' + (best.count || '—') + '</span></div>' +
+        '<div class="zt-row"><span>Count</span><span>'   + (best.count   || '—') + '</span></div>' +
         '<div class="zt-row"><span>Pitcher</span><span>' + (best.pitcher || '—') + '</span></div>' +
         (best.contact ? '<div class="zt-row"><span>Contact</span><span>' + best.contact + '</span></div>' : '') +
         (best.spray   ? '<div class="zt-row"><span>Spray</span><span>'   + best.spray   + '</span></div>' : '') +
@@ -1083,16 +1068,7 @@ function renderZone(name, type, pitch, container) {
     canvas.style.cursor = 'default';
   });
 
-  // ── Filter buttons ─────────────────────────────
-  container.querySelectorAll('#zone-type-filters .zone-filter-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      container.querySelectorAll('#zone-type-filters .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
-      btn.classList.add('active');
-      activeType = btn.dataset.filter;
-      drawZone();
-    });
-  });
-
+  // ── Result filter buttons ──────────────────────
   container.querySelectorAll('#zone-result-filters .zone-filter-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       container.querySelectorAll('#zone-result-filters .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -1102,6 +1078,7 @@ function renderZone(name, type, pitch, container) {
     });
   });
 }
+
 
 // ── PITCH SPLITS TAB ──────────────────────────────
 function renderSplits(name, type, pitch) {
