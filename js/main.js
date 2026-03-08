@@ -927,59 +927,62 @@ function renderZone(name, type, pitch, container) {
   function fromCanvasY(cy) { return Y_MIN + (PH - (cy - PAD_T)) / PH * (Y_MAX - Y_MIN); }
 
   // ── Shared background drawing ──────────────────
-  function drawBackground() {
+  function drawBackground(opts) {
+    opts = opts || {};
     ctx.fillStyle = '#0e1525';
     ctx.fillRect(0, 0, W, H);
 
-    ctx.strokeStyle = 'rgba(255,184,28,0.05)';
-    ctx.lineWidth = 1;
-    [-2,-1,0,1,2].forEach(function(xv) {
-      var cx = toCanvasX(xv);
-      ctx.beginPath(); ctx.moveTo(cx, PAD_T); ctx.lineTo(cx, PAD_T+PH); ctx.stroke();
-    });
-    [-0.5,0,0.5,1.0].forEach(function(yv) {
-      var cy = toCanvasY(yv);
-      ctx.beginPath(); ctx.moveTo(PAD_L, cy); ctx.lineTo(PAD_L+PW, cy); ctx.stroke();
-    });
+    if (!opts.clean) {
+      ctx.strokeStyle = 'rgba(255,184,28,0.05)';
+      ctx.lineWidth = 1;
+      [-2,-1,0,1,2].forEach(function(xv) {
+        var cx = toCanvasX(xv);
+        ctx.beginPath(); ctx.moveTo(cx, PAD_T); ctx.lineTo(cx, PAD_T+PH); ctx.stroke();
+      });
+      [-0.5,0,0.5,1.0].forEach(function(yv) {
+        var cy = toCanvasY(yv);
+        ctx.beginPath(); ctx.moveTo(PAD_L, cy); ctx.lineTo(PAD_L+PW, cy); ctx.stroke();
+      });
 
-    // Home plate
-    var plateCx = toCanvasX(0), plateY = toCanvasY(Y_MIN+0.05);
-    ctx.fillStyle = 'rgba(255,255,255,0.06)';
-    ctx.beginPath();
-    ctx.moveTo(plateCx, plateY-4);
-    ctx.lineTo(plateCx-8, plateY+4);
-    ctx.lineTo(plateCx+8, plateY+4);
-    ctx.closePath(); ctx.fill();
+      // Home plate
+      var plateCx = toCanvasX(0), plateY = toCanvasY(Y_MIN+0.05);
+      ctx.fillStyle = 'rgba(255,255,255,0.06)';
+      ctx.beginPath();
+      ctx.moveTo(plateCx, plateY-4);
+      ctx.lineTo(plateCx-8, plateY+4);
+      ctx.lineTo(plateCx+8, plateY+4);
+      ctx.closePath(); ctx.fill();
 
-    // Strike zone box
-    var zx1=toCanvasX(-1), zx2=toCanvasX(1), zy1=toCanvasY(1), zy2=toCanvasY(0);
-    ctx.fillStyle = 'rgba(255,184,28,0.03)';
-    ctx.fillRect(zx1, zy1, zx2-zx1, zy2-zy1);
-    ctx.strokeStyle = 'rgba(255,184,28,0.7)';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(zx1, zy1, zx2-zx1, zy2-zy1);
+      // Strike zone box
+      var zx1=toCanvasX(-1), zx2=toCanvasX(1), zy1=toCanvasY(1), zy2=toCanvasY(0);
+      ctx.fillStyle = 'rgba(255,184,28,0.03)';
+      ctx.fillRect(zx1, zy1, zx2-zx1, zy2-zy1);
+      ctx.strokeStyle = 'rgba(255,184,28,0.7)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(zx1, zy1, zx2-zx1, zy2-zy1);
 
-    // Inner 3x3 grid
-    ctx.strokeStyle = 'rgba(255,184,28,0.18)';
-    ctx.lineWidth = 0.8;
-    for (var i=1; i<3; i++) {
-      var xi=zx1+(i/3)*(zx2-zx1), yi=zy1+(i/3)*(zy2-zy1);
-      ctx.beginPath(); ctx.moveTo(xi,zy1); ctx.lineTo(xi,zy2); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(zx1,yi); ctx.lineTo(zx2,yi); ctx.stroke();
+      // Inner 3x3 grid
+      ctx.strokeStyle = 'rgba(255,184,28,0.18)';
+      ctx.lineWidth = 0.8;
+      for (var i=1; i<3; i++) {
+        var xi=zx1+(i/3)*(zx2-zx1), yi=zy1+(i/3)*(zy2-zy1);
+        ctx.beginPath(); ctx.moveTo(xi,zy1); ctx.lineTo(xi,zy2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(zx1,yi); ctx.lineTo(zx2,yi); ctx.stroke();
+      }
+
+      // Axis labels
+      ctx.fillStyle = '#4a5568';
+      ctx.font = '10px DM Mono, monospace';
+      ctx.textAlign = 'center';
+      [-2,-1,0,1,2].forEach(function(xv) { ctx.fillText(xv, toCanvasX(xv), H-10); });
+      ctx.textAlign = 'right';
+      [-0.5,0,0.5,1.0].forEach(function(yv) { ctx.fillText(yv.toFixed(1), PAD_L-6, toCanvasY(yv)+4); });
+
+      ctx.fillStyle = 'rgba(255,184,28,0.25)';
+      ctx.font = '9px DM Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('STRIKE ZONE', toCanvasX(0), zy1-6);
     }
-
-    // Axis labels
-    ctx.fillStyle = '#4a5568';
-    ctx.font = '10px DM Mono, monospace';
-    ctx.textAlign = 'center';
-    [-2,-1,0,1,2].forEach(function(xv) { ctx.fillText(xv, toCanvasX(xv), H-10); });
-    ctx.textAlign = 'right';
-    [-0.5,0,0.5,1.0].forEach(function(yv) { ctx.fillText(yv.toFixed(1), PAD_L-6, toCanvasY(yv)+4); });
-
-    ctx.fillStyle = 'rgba(255,184,28,0.25)';
-    ctx.font = '9px DM Mono, monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('STRIKE ZONE', toCanvasX(0), zy1-6);
   }
 
   // ── Scatter draw ───────────────────────────────
@@ -996,77 +999,90 @@ function renderZone(name, type, pitch, container) {
     });
   }
 
-  // ── Zone Grid draw (4 cols x 3 rows = 12 zones like Savant) ──
-  // Zone layout: x cols = [-1,-0.33], [-0.33,0.33], [0.33,1] + outside left/right
-  // y rows = [0,0.33], [0.33,0.67], [0.67,1] + outside hi/lo
-  // Savant uses a 3x3 inside + border zones = 9 inner + 5 border = 14 total
-  // We'll do the full 4-col x 3-row grid: left-out, inner-left, inner-mid, inner-right, right-out
-  //                                        high-out, row1, row2, row3, low-out
+  // ── Zone Grid (9 inner + 4 corner outer zones, like Savant) ──────
   function drawGrid(filtered) {
-    // Define 5 x-bands and 5 y-bands (3 inner + 2 outer each)
-    var xBands = [-2.5, -1, -0.333, 0.333, 1, 2.5];
-    var yBands = [-0.8, 0, 0.333,  0.667, 1, 1.5];
+    var total = filtered.length;
 
-    // Count pitches per cell
-    var grid = [];
-    var maxCount = 0;
-    for (var row=0; row<5; row++) {
-      grid[row] = [];
-      for (var col=0; col<5; col++) {
-        var count = filtered.filter(function(s) {
-          return s.x >= xBands[col] && s.x < xBands[col+1] &&
-                 s.y >= yBands[row] && s.y < yBands[row+1];
-        }).length;
-        grid[row][col] = count;
-        if (count > maxCount) maxCount = count;
+    // Savant-style layout:
+    // Outer corners: top-left, top-right, bottom-left, bottom-right
+    // Inner: 3x3 grid
+    // x: [-2.5,-1] | [-1,1] inner | [1,2.5]
+    // y: [-0.8,0]  | [0,1]  inner | [1,1.5]
+    // Inner 3x3 subdivisions: thirds of [-1,1] and [0,1]
+    var X0=-2.5, XI1=-1, XI2=1, X3=2.5;
+    var Y0=-0.8, YI1=0,  YI2=1, Y3=1.5;
+    var xThird = (XI2-XI1)/3; // 0.667
+    var yThird = (YI2-YI1)/3; // 0.333
+
+    // Define all 13 zones: 4 outer corners + 9 inner
+    // Each zone: { x1, x2, y1, y2, outer }
+    var zones = [
+      // 4 outer corner zones
+      { x1:X0,       x2:XI1,        y1:YI1, y2:Y3,  outer:true  }, // left
+      { x1:XI2,      x2:X3,         y1:YI1, y2:Y3,  outer:true  }, // right
+      { x1:XI1,      x2:XI2,        y1:YI2, y2:Y3,  outer:true  }, // top
+      { x1:XI1,      x2:XI2,        y1:Y0,  y2:YI1, outer:true  }, // bottom
+      // 9 inner zones (row top to bottom, col left to right)
+      { x1:XI1+0*xThird, x2:XI1+1*xThird, y1:YI1+2*yThird, y2:YI2, outer:false },
+      { x1:XI1+1*xThird, x2:XI1+2*xThird, y1:YI1+2*yThird, y2:YI2, outer:false },
+      { x1:XI1+2*xThird, x2:XI2,          y1:YI1+2*yThird, y2:YI2, outer:false },
+      { x1:XI1+0*xThird, x2:XI1+1*xThird, y1:YI1+1*yThird, y2:YI1+2*yThird, outer:false },
+      { x1:XI1+1*xThird, x2:XI1+2*xThird, y1:YI1+1*yThird, y2:YI1+2*yThird, outer:false },
+      { x1:XI1+2*xThird, x2:XI2,          y1:YI1+1*yThird, y2:YI1+2*yThird, outer:false },
+      { x1:XI1+0*xThird, x2:XI1+1*xThird, y1:YI1,          y2:YI1+1*yThird, outer:false },
+      { x1:XI1+1*xThird, x2:XI1+2*xThird, y1:YI1,          y2:YI1+1*yThird, outer:false },
+      { x1:XI1+2*xThird, x2:XI2,          y1:YI1,          y2:YI1+1*yThird, outer:false }
+    ];
+
+    // Count pitches per zone
+    zones.forEach(function(z) {
+      z.count = filtered.filter(function(s) {
+        return s.x >= z.x1 && s.x < z.x2 && s.y >= z.y1 && s.y < z.y2;
+      }).length;
+      z.pct = total > 0 ? z.count / total * 100 : 0;
+    });
+
+    var maxInner = 0;
+    zones.filter(function(z){ return !z.outer; }).forEach(function(z){ if(z.count>maxInner) maxInner=z.count; });
+    var maxOuter = 0;
+    zones.filter(function(z){ return z.outer; }).forEach(function(z){ if(z.count>maxOuter) maxOuter=z.count; });
+
+    // Draw zones
+    zones.forEach(function(z) {
+      var cx1 = toCanvasX(z.x1), cx2 = toCanvasX(z.x2);
+      var cy1 = toCanvasY(z.y2), cy2 = toCanvasY(z.y1); // flip y
+      var cw  = cx2-cx1, ch = cy2-cy1;
+      var maxRef = z.outer ? maxOuter : maxInner;
+      var intensity = (maxRef > 0) ? z.count/maxRef : 0;
+
+      if (z.count === 0) {
+        ctx.fillStyle = z.outer ? 'rgba(255,255,255,0.03)' : 'rgba(255,184,28,0.05)';
+      } else if (!z.outer) {
+        // Inner: blue (cold) -> gold (hot)
+        var r = Math.round(96  + (255-96)  * intensity);
+        var g = Math.round(165 + (184-165) * intensity);
+        var b = Math.round(250 + (28-250)  * intensity);
+        ctx.fillStyle = 'rgba('+r+','+g+','+b+','+(0.2+0.7*intensity)+')';
+      } else {
+        // Outer: subtle blue
+        ctx.fillStyle = 'rgba(96,165,250,'+(0.05+0.35*intensity)+')';
       }
-    }
+      ctx.fillRect(cx1, cy1, cw, ch);
 
-    // Draw cells (y rows go bottom to top in data, top to bottom on canvas)
-    for (var row=0; row<5; row++) {
-      for (var col=0; col<5; col++) {
-        var count = grid[row][col];
-        var cx1 = toCanvasX(xBands[col]);
-        var cx2 = toCanvasX(xBands[col+1]);
-        var cy1 = toCanvasY(yBands[row+1]); // top of cell on canvas
-        var cy2 = toCanvasY(yBands[row]);   // bottom of cell on canvas
-        var cw  = cx2 - cx1;
-        var ch  = cy2 - cy1;
+      // Border
+      ctx.strokeStyle = z.outer ? 'rgba(255,255,255,0.08)' : 'rgba(255,184,28,0.4)';
+      ctx.lineWidth = z.outer ? 0.5 : 1.5;
+      ctx.strokeRect(cx1, cy1, cw, ch);
 
-        // Inner zone cells (rows 1-3, cols 1-3)
-        var isInner = (row >= 1 && row <= 3 && col >= 1 && col <= 3);
-
-        if (count === 0) {
-          ctx.fillStyle = isInner ? 'rgba(255,184,28,0.04)' : 'rgba(255,255,255,0.01)';
-        } else {
-          var intensity = maxCount > 0 ? count / maxCount : 0;
-          if (isInner) {
-            // Gold gradient for inner zone
-            var r = Math.round(255);
-            var g = Math.round(100 + 84 * intensity);
-            var b = Math.round(28 * (1 - intensity));
-            ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + (0.15 + 0.65*intensity) + ')';
-          } else {
-            // Blue tint for outer zones
-            ctx.fillStyle = 'rgba(96,165,250,' + (0.05 + 0.4*intensity) + ')';
-          }
-        }
-        ctx.fillRect(cx1, cy1, cw, ch);
-
-        // Cell border
-        ctx.strokeStyle = isInner ? 'rgba(255,184,28,0.25)' : 'rgba(255,255,255,0.06)';
-        ctx.lineWidth = 0.5;
-        ctx.strokeRect(cx1, cy1, cw, ch);
-
-        // Count label
-        if (count > 0) {
-          ctx.fillStyle = count/maxCount > 0.5 ? '#fff' : 'rgba(255,255,255,0.7)';
-          ctx.font = 'bold ' + (isInner ? '14' : '11') + 'px DM Mono, monospace';
-          ctx.textAlign = 'center';
-          ctx.fillText(count, cx1 + cw/2, cy1 + ch/2 + 5);
-        }
+      // Percentage label
+      if (z.count > 0) {
+        var pctStr = z.pct.toFixed(1) + '%';
+        ctx.fillStyle = intensity > 0.55 ? '#fff' : 'rgba(255,255,255,0.75)';
+        ctx.font = 'bold ' + (z.outer ? '10' : '13') + 'px DM Mono, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(pctStr, cx1+cw/2, cy1+ch/2+5);
       }
-    }
+    });
   }
 
   // ── Heat map draw ──────────────────────────────
@@ -1176,7 +1192,8 @@ function renderZone(name, type, pitch, container) {
   // ── Main draw ──────────────────────────────────
   function drawZone() {
     ctx.clearRect(0, 0, W, H);
-    drawBackground();
+    var clean = (activeView === 'grid' || activeView === 'heatmap');
+    drawBackground(clean ? {clean:true} : {});
 
     var filtered = points.filter(function(s) { return resultMatch(s, activeResult); });
 
@@ -1184,15 +1201,17 @@ function renderZone(name, type, pitch, container) {
     else if (activeView === 'grid')    drawGrid(filtered);
     else if (activeView === 'heatmap') drawHeatmap(filtered);
 
-    // Update legend visibility
+    // Legend visibility
     var legend = document.getElementById('zone-legend');
     if (legend) legend.style.display = activeView === 'scatter' ? '' : 'none';
 
-    // Pitch count
-    ctx.fillStyle = 'rgba(106,123,154,0.6)';
-    ctx.font = '10px DM Mono, monospace';
-    ctx.textAlign = 'left';
-    ctx.fillText(filtered.length + ' / ' + totalPts + ' pitches shown', PAD_L, H - 10);
+    // Pitch count only on scatter
+    if (activeView === 'scatter') {
+      ctx.fillStyle = 'rgba(106,123,154,0.6)';
+      ctx.font = '10px DM Mono, monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(filtered.length + ' / ' + totalPts + ' pitches shown', PAD_L, H - 10);
+    }
   }
 
   requestAnimationFrame(function() { drawZone(); });
