@@ -1102,10 +1102,11 @@ function renderZone(name, type, pitch, container) {
     // TL: left strip, top half   | TR: right strip, top half
     // BL: left strip, bottom half| BR: right strip, bottom half
     // Each outer zone fills the full canvas height on its side (top to bottom)
-    outer[0].px = { x:CX1,      y:CY1, w:SX1-GAP-CX1,   h:CY2-CY1 }; // TL (full left strip)
-    outer[1].px = { x:SX2+GAP,  y:CY1, w:CX2-(SX2+GAP), h:CY2-CY1 }; // TR (full right strip)
-    outer[2].px = { x:CX1,      y:CY1, w:SX1-GAP-CX1,   h:CY2-CY1 }; // BL — same as TL (merged)
-    outer[3].px = { x:SX2+GAP,  y:CY1, w:CX2-(SX2+GAP), h:CY2-CY1 }; // BR — same as TR (merged)
+    // Strips span full canvas height (0..H), split at SMidY into top/bottom halves
+    outer[0].px = { x:CX1,     y:0,     w:SX1-GAP-CX1,   h:SMidY   }; // TL: left, top half
+    outer[1].px = { x:SX2+GAP, y:0,     w:CX2-(SX2+GAP), h:SMidY   }; // TR: right, top half
+    outer[2].px = { x:CX1,     y:SMidY, w:SX1-GAP-CX1,   h:H-SMidY }; // BL: left, bottom half
+    outer[3].px = { x:SX2+GAP, y:SMidY, w:CX2-(SX2+GAP), h:H-SMidY }; // BR: right, bottom half
 
     // Merge BL into TL and BR into TR so we only draw 2 outer rects
     outer[0].count += outer[2].count; outer[0].pct += outer[2].pct;
