@@ -619,7 +619,7 @@ function renderPlayerDetail(name, type, content) {
     '<button class="tab-btn active" data-tab="overview">Overview</button>' +
     '<button class="tab-btn" data-tab="season">Season Stats</button>' +
     '<button class="tab-btn" data-tab="zone">Strike Zone</button>' +
-    '<button class="tab-btn" data-tab="splits">Pitch Splits</button>' +
+    '<button class="tab-btn" data-tab="splits">Splits</button>' +
     '</div></div></div>' +
     '<div class="container" style="padding-top:32px;padding-bottom:80px"><div id="player-tab-content"></div></div>';
 
@@ -656,7 +656,28 @@ function renderPlayerDetail(name, type, content) {
     panel.className = 'fade-up';
     if (t === 'overview') panel.innerHTML = renderOverview(name, type, sum, pitchData);
     if (t === 'season')   panel.innerHTML = renderSeasonStats(name, type, sum, pitchData);
-    if (t === 'splits')   panel.innerHTML = renderSplits(name, type, pitchData);
+    if (t === 'splits') {
+      panel.innerHTML = renderSplits(name, type, pitchData);
+      // Wire handedness filter buttons
+      var allPoints = [];
+      if (type === 'batter' && pitchData && pitchData.scatter) {
+        allPoints = pitchData.scatter;
+      } else if (type === 'pitcher') {
+        DATA.pitches.forEach(function(bp) {
+          if (!bp.scatter) return;
+          bp.scatter.forEach(function(s) { if (s.pitcher === name) allPoints.push(s); });
+        });
+      }
+      panel.querySelectorAll('.splits-hand-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          panel.querySelectorAll('.splits-hand-btn').forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          var hand = btn.dataset.hand;
+          var filtered = hand === 'all' ? allPoints : allPoints.filter(function(s) { return s.batter_side === hand; });
+          panel.querySelector('#splits-tables').innerHTML = buildSplitsTables(filtered);
+        });
+      });
+    }
     tabContent.appendChild(panel);
     if (t === 'zone')     renderZone(name, type, pitchData, panel);
     setTimeout(function() {
@@ -933,7 +954,7 @@ function renderZone(name, type, pitch, container) {
 
   // Coordinate ranges: scatter shows full field, grid/heatmap zooms to zone
   var SCATTER_BOUNDS = { xMin:-2.5, xMax:2.5,  yMin:-0.8, yMax:1.5  };
-  var CLEAN_BOUNDS   = { xMin:-1.85, xMax:1.85, yMin:-0.65, yMax:1.65 };
+  var CLEAN_BOUNDS   = { xMin:-1.85, xMax:1.85, yMin:-0.85, yMax:1.85 };
   var X_MIN = SCATTER_BOUNDS.xMin, X_MAX = SCATTER_BOUNDS.xMax;
   var Y_MIN = SCATTER_BOUNDS.yMin, Y_MAX = SCATTER_BOUNDS.yMax;
 
@@ -1058,24 +1079,26 @@ function renderZone(name, type, pitch, container) {
       z.pct = total > 0 ? z.count/total*100 : 0;
     });
 
-    // ── 4 outer zones: TL, TR, BL, BR corner quadrants ──
-    // Each covers all pitches in that diagonal corner outside the strike zone
+    // ── 4 outer zones: every non-inner pitch assigned by quadrant ──
+    // Split at x=ZX1/ZX2 and y midpoint of zone
+    var yMid = (ZY1+ZY2)/2; // 0.5
     var outer = [
-      { label:'TL', count:0 }, // left of zone AND above zone
-      { label:'TR', count:0 }, // right of zone AND above zone
-      { label:'BL', count:0 }, // left of zone AND below zone
-      { label:'BR', count:0 }  // right of zone AND below zone
+      { label:'TL', count:0 }, // left of zone, upper half
+      { label:'TR', count:0 }, // right of zone, upper half
+      { label:'BL', count:0 }, // left of zone, lower half
+      { label:'BR', count:0 }  // right of zone, lower half
     ];
-    // Midpoints in data space
-    var xMid = (ZX1 + ZX2) / 2; // horizontal midpoint of the strike zone
-    var yMid = (ZY1 + ZY2) / 2; // vertical midpoint of the strike zone
     filtered.forEach(function(s) {
       var inInner = inner.some(function(z) {
         return s.x >= z.x1 && s.x < z.x2 && s.y >= z.y1 && s.y < z.y2;
       });
       if (inInner) return;
-      var isLeft = s.x < xMid;
+      // Assign to quadrant based on which side of zone and vertical midpoint
+      var isLeft = s.x < ZX1 || (s.x < ZX2 && s.x < (ZX1+ZX2)/2);
       var isTop  = s.y >= yMid;
+      // Simpler: just use x<0 and y>=0.5 since zone is symmetric around those
+      isLeft = s.x < 0;
+      isTop  = s.y >= yMid;
       if      ( isLeft &&  isTop) outer[0].count++;
       else if (!isLeft &&  isTop) outer[1].count++;
       else if ( isLeft && !isTop) outer[2].count++;
@@ -1086,74 +1109,58 @@ function renderZone(name, type, pitch, container) {
     var maxInner = 0, maxOuter = 0;
     inner.forEach(function(z) { if (z.count > maxInner) maxInner = z.count; });
     outer.forEach(function(z) { if (z.count > maxOuter) maxOuter = z.count; });
-    outer.forEach(function(z) { z.intensity = maxOuter > 0 ? z.count/maxOuter : 0; });
 
     // ── Canvas coords for the strike zone box ──
     var SX1 = toCanvasX(ZX1), SX2 = toCanvasX(ZX2);
-    var SY1 = toCanvasY(ZY2), SY2 = toCanvasY(ZY1); // note: Y is flipped (SY1=top, SY2=bottom)
-    var CX1 = PAD_L, CX2 = PAD_L + PW;
-    var CY1 = PAD_T, CY2 = PAD_T + PH;
-    var GAP = 4; // px gap between L-shape and zone box
+    var SY1 = toCanvasY(ZY2), SY2 = toCanvasY(ZY1); // note: Y is flipped
+    var SMidY = toCanvasY(yMid);
+    // Left/right strip widths and canvas edges
+    var CX1 = toCanvasX(X_MIN), CX2 = toCanvasX(X_MAX);
+    var CY1 = toCanvasY(Y_MAX), CY2 = toCanvasY(Y_MIN);
+    var GAP = 4; // px gap between outer rect and zone box
 
-    // Canvas midpoints — where the quadrant dividing lines are
-    var CMidX = toCanvasX(xMid);
-    var CMidY = toCanvasY(yMid); // Y is flipped in canvas space
+    // Outer render rects (pixel coords):
+    // TL: left strip, top half   | TR: right strip, top half
+    // BL: left strip, bottom half| BR: right strip, bottom half
+    // Each outer zone fills the full canvas height on its side (top to bottom)
+    // 4 equal corner squares, same size as one inner cell
+    // Positioned at the 4 diagonal corners of the strike zone
+    var cellPxW = SX2 - SX1;  // full zone width in pixels
+    var cellPxH = SY2 - SY1;  // full zone height in pixels
+    var sqW = (cellPxW / 3);  // one inner cell width
+    var sqH = (cellPxH / 3);  // one inner cell height
+    outer[0].px = { x:SX1-GAP-sqW, y:SY1-GAP-sqH, w:sqW, h:sqH }; // TL
+    outer[1].px = { x:SX2+GAP,     y:SY1-GAP-sqH, w:sqW, h:sqH }; // TR
+    outer[2].px = { x:SX1-GAP-sqW, y:SY2+GAP,     w:sqW, h:sqH }; // BL
+    outer[3].px = { x:SX2+GAP,     y:SY2+GAP,     w:sqW, h:sqH }; // BR
 
-    // Each L-shape covers one quadrant of the canvas, excluding the inner zone cells.
-    // It's drawn as two non-overlapping rects:
-    //   - the side strip (left or right of zone, full quadrant height)
-    //   - the top/bottom cap (above or below zone, from canvas edge to midpoint x)
-    //
-    //  Canvas layout (SY1=zone top, SY2=zone bottom in canvas px, CMidY=canvas mid):
-    //
-    //   CY1 ┌────────┬──────────┬────────┐
-    //       │  TL-cap│  (above) │ TR-cap │  ← top cap spans zone x-range, from CY1 to SY1-GAP
-    //  CMidY├────────┤          ├────────┤
-    //       │TL-side │  inner   │TR-side │  ← side strips span full canvas height, outside zone x
-    //   SY1 │        ├──────────┤        │
-    //       │        │  3×3     │        │
-    //   SY2 │        ├──────────┤        │
-    //       │BL-side │          │BR-side │
-    //  CMidY├────────┤          ├────────┤
-    //       │  BL-cap│  (below) │ BR-cap │  ← bottom cap spans zone x-range, from SY2+GAP to CY2
-    //   CY2 └────────┴──────────┴────────┘
+    // Merge BL into TL and BR into TR so we only draw 2 outer rects
+    outer[0].count += outer[2].count; outer[0].pct += outer[2].pct;
+    outer[1].count += outer[3].count; outer[1].pct += outer[3].pct;
+    outer[2].skip = true; outer[3].skip = true;
+    outer[0].intensity = maxOuter > 0 ? outer[0].count/maxOuter : 0;
+    outer[1].intensity = maxOuter > 0 ? outer[1].count/maxOuter : 0;
 
-    var cellW = (SX2 - SX1) / 3;
-    var cellH = (SY2 - SY1) / 3;
-
-    var lShapes = [
-      { rects: [{ x:SX1-GAP-cellW, y:SY1-GAP-cellH, w:cellW, h:cellH }], labelX: SX1-GAP-cellW/2, labelY: SY1-GAP-cellH/2, z: outer[0] }, // TL
-      { rects: [{ x:SX2+GAP,       y:SY1-GAP-cellH, w:cellW, h:cellH }], labelX: SX2+GAP+cellW/2, labelY: SY1-GAP-cellH/2, z: outer[1] }, // TR
-      { rects: [{ x:SX1-GAP-cellW, y:SY2+GAP,       w:cellW, h:cellH }], labelX: SX1-GAP-cellW/2, labelY: SY2+GAP+cellH/2, z: outer[2] }, // BL
-      { rects: [{ x:SX2+GAP,       y:SY2+GAP,       w:cellW, h:cellH }], labelX: SX2+GAP+cellW/2, labelY: SY2+GAP+cellH/2, z: outer[3] }  // BR
-    ];
-
-    // ── Draw L-shaped outer zones ──
-    // Draw in two passes: fill then stroke/label, using save/clip per shape
-    lShapes.forEach(function(ls) {
-      var z = ls.z;
-      var intensity = z.intensity;
-      var fillColor = z.count === 0
+    // ── Draw outer zones ──
+    outer.forEach(function(z) {
+      if (z.skip) return;
+      var p = z.px;
+      if (p.w <= 0 || p.h <= 0) return;
+      var intensity = z.intensity !== undefined ? z.intensity : (maxOuter > 0 ? z.count/maxOuter : 0);
+      ctx.fillStyle = z.count === 0
         ? 'rgba(96,165,250,0.12)'
         : 'rgba(96,165,250,'+(0.1+0.55*intensity)+')';
-
-      // Build L-shape path from the union of both rects
-      ctx.save();
-      ctx.beginPath();
-      ls.rects.forEach(function(r) { ctx.rect(r.x, r.y, r.w, r.h); });
-      ctx.fillStyle = fillColor;
-      ctx.fill();
+      ctx.fillRect(p.x, p.y, p.w, p.h);
       ctx.strokeStyle = 'rgba(96,165,250,0.55)';
       ctx.lineWidth = 1.5;
-      ctx.stroke();
-      ctx.restore();
-
-      // Label in the outer corner of the L
+      ctx.strokeRect(p.x, p.y, p.w, p.h);
+      // Always show percentage (including 0%)
       ctx.save();
+      ctx.beginPath(); ctx.rect(p.x+1, p.y+1, p.w-2, p.h-2); ctx.clip();
       ctx.fillStyle = intensity > 0.55 ? '#fff' : 'rgba(255,255,255,0.75)';
       ctx.font = 'bold 12px DM Mono, monospace';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText(z.pct.toFixed(1)+'%', ls.labelX, ls.labelY);
+      ctx.fillText(z.pct.toFixed(1)+'%', p.x+p.w/2, p.y+p.h/2);
       ctx.textBaseline = 'alphabetic';
       ctx.restore();
     });
@@ -1414,9 +1421,9 @@ function renderZone(name, type, pitch, container) {
 }
 
 
-// ── PITCH SPLITS TAB ──────────────────────────────
+// ── SPLITS TAB ────────────────────────────────────
 function renderSplits(name, type, pitch) {
-  let points = [];
+  var points = [];
   if (type === 'batter' && pitch && pitch.scatter) {
     points = pitch.scatter;
   } else if (type === 'pitcher') {
@@ -1430,10 +1437,80 @@ function renderSplits(name, type, pitch) {
     return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No split data</h3></div>';
   }
 
-  // Pitch type breakdown
-  const typeMap = {};
+  var total = points.length;
+
+  // ── Count group definitions ──
+  var COUNT_GROUPS = [
+    { key: 'all',     label: 'All Counts',      test: function()  { return true; } },
+    { key: 'early',   label: 'Early Count',      test: function(c) { return ["'0-0","'1-0","'0-1",'0-0','1-0','0-1'].includes(c); } },
+    { key: 'ahead',   label: 'Pitcher Ahead',    test: function(c) { return ["'0-1","'0-2","'1-2",'0-1','0-2','1-2'].includes(c); } },
+    { key: 'behind',  label: 'Pitcher Behind',   test: function(c) { return ["'1-0","'2-0","'3-0","'2-1","'3-1",'1-0','2-0','3-0','2-1','3-1'].includes(c); } },
+    { key: 'pre2k',   label: 'Pre-2K',           test: function(c) { return ["'0-0","'1-0","'2-0","'3-0","'1-1","'2-1","'3-1",'0-0','1-0','2-0','3-0','1-1','2-1','3-1'].includes(c); } }
+  ];
+
+  // ── Get all pitch types present ──
+  var typeSet = [];
   points.forEach(function(s) {
-    const t = s.pitch_type || 'Unknown';
+    var t = s.pitch_type || s.type || 'Unknown';
+    if (!typeSet.includes(t)) typeSet.push(t);
+  });
+  typeSet.sort();
+
+  // ── Build pitch usage table per count group ──
+  function buildCountTable(pts) {
+    var n = pts.length;
+    if (!n) return '<tr><td colspan="' + (typeSet.length+2) + '" style="color:var(--text-dim);text-align:center">No data</td></tr>';
+    var typeCounts = {};
+    typeSet.forEach(function(t) { typeCounts[t] = 0; });
+    pts.forEach(function(s) {
+      var t = s.pitch_type || s.type || 'Unknown';
+      if (typeCounts[t] !== undefined) typeCounts[t]++;
+    });
+    return '<tr>' +
+      typeSet.map(function(t) {
+        var c = typeCounts[t];
+        return '<td class="highlight-val">' + fmt1(c/n*100) + '%</td>';
+      }).join('') +
+      '<td>' + n + '</td>' +
+      '</tr>';
+  }
+
+  var countTableHTML =
+    '<div class="stat-card" style="margin-bottom:20px">' +
+    '<div class="stat-card-header"><span class="stat-card-title">Pitch Usage by Count</span></div>' +
+    '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
+    '<th style="text-align:left">Situation</th>' +
+    typeSet.map(function(t) { return '<th>' + t + '</th>'; }).join('') +
+    '<th>#</th>' +
+    '</tr></thead><tbody>' +
+    COUNT_GROUPS.map(function(grp) {
+      var subset = points.filter(function(s) { return grp.test(s.count || ''); });
+      var n = subset.length;
+      if (!n) {
+        return '<tr><td style="text-align:left;color:var(--text-mid)">' + grp.label + '</td>' +
+          typeSet.map(function() { return '<td style="color:var(--text-dim)">—</td>'; }).join('') +
+          '<td>0</td></tr>';
+      }
+      var typeCounts = {};
+      typeSet.forEach(function(t) { typeCounts[t] = 0; });
+      subset.forEach(function(s) {
+        var t = s.pitch_type || s.type || 'Unknown';
+        if (typeCounts[t] !== undefined) typeCounts[t]++;
+      });
+      return '<tr>' +
+        '<td style="text-align:left;color:var(--text)">' + grp.label + '</td>' +
+        typeSet.map(function(t) {
+          return '<td class="highlight-val">' + fmt1(typeCounts[t]/n*100) + '%</td>';
+        }).join('') +
+        '<td>' + n + '</td>' +
+        '</tr>';
+    }).join('') +
+    '</tbody></table></div></div>';
+
+  // ── Pitch type breakdown (existing) ──
+  var typeMap = {};
+  points.forEach(function(s) {
+    var t = s.pitch_type || s.type || 'Unknown';
     if (!typeMap[t]) typeMap[t] = { total: 0, k: 0, hit: 0, ball: 0, strike: 0 };
     typeMap[t].total++;
     if (s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking') typeMap[t].k++;
@@ -1442,25 +1519,24 @@ function renderSplits(name, type, pitch) {
     if (['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome)) typeMap[t].strike++;
   });
 
-  const total = points.length;
-
-  return '<div class="stat-card" style="margin-bottom:20px">' +
+  var pitchMixHTML =
+    '<div class="stat-card" style="margin-bottom:20px">' +
     '<div class="stat-card-header"><span class="stat-card-title">Pitch Mix</span></div>' +
     '<div class="pitch-mix-grid">' +
     Object.entries(typeMap).map(function(entry) {
       return '<div class="pitch-mix-item">' +
-        '<div class="pitch-mix-pct">' + fmt1(entry[1].total / total * 100) + '%</div>' +
+        '<div class="pitch-mix-pct">' + fmt1(entry[1].total/total*100) + '%</div>' +
         '<div class="pitch-mix-type">' + entry[0] + '</div>' +
         '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);margin-top:4px">' + entry[1].total + ' pitches</div>' +
         '</div>';
     }).join('') + '</div></div>' +
-    '<div class="stat-card">' +
+    '<div class="stat-card" style="margin-bottom:20px">' +
     '<div class="stat-card-header"><span class="stat-card-title">By Pitch Type</span></div>' +
     '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
     '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>K</th><th>HIT</th><th>STR%</th><th>BALL%</th>' +
     '</tr></thead><tbody>' +
     Object.entries(typeMap).map(function(entry) {
-      const d = entry[1];
+      var d = entry[1];
       return '<tr>' +
         '<td style="text-align:left;color:var(--text)">' + entry[0] + '</td>' +
         '<td>' + d.total + '</td>' +
@@ -1472,6 +1548,107 @@ function renderSplits(name, type, pitch) {
         '</tr>';
     }).join('') +
     '</tbody></table></div></div>';
+
+  // ── Handedness filter buttons + reactive re-render ──
+  var splitsHTML =
+    '<div style="margin-bottom:16px;display:flex;align-items:center;gap:10px">' +
+    '<span style="font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase">Batter Hand</span>' +
+    '<button class="zone-filter-btn splits-hand-btn active" data-hand="all">All</button>' +
+    '<button class="zone-filter-btn splits-hand-btn" data-hand="R">RHB</button>' +
+    '<button class="zone-filter-btn splits-hand-btn" data-hand="L">LHB</button>' +
+    '</div>' +
+    '<div id="splits-tables">' + buildSplitsTables(points) + '</div>';
+
+  return splitsHTML;
+}
+
+function buildSplitsTables(points) {
+  var total = points.length;
+  if (!total) return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No data for this filter</h3></div>';
+
+  var COUNT_GROUPS = [
+    { key: 'all',    label: 'All Counts',    test: function()  { return true; } },
+    { key: 'early',  label: 'Early Count',   test: function(c) { return ['0-0','1-0','0-1'].includes(c); } },
+    { key: 'ahead',  label: 'Pitcher Ahead', test: function(c) { return ['0-1','0-2','1-2'].includes(c); } },
+    { key: 'behind', label: 'Pitcher Behind',test: function(c) { return ['1-0','2-0','3-0','2-1','3-1'].includes(c); } },
+    { key: 'pre2k',  label: 'Pre-2K',        test: function(c) { return ['0-0','1-0','2-0','3-0','1-1','2-1','3-1'].includes(c); } }
+  ];
+
+  var typeSet = [];
+  points.forEach(function(s) {
+    var t = s.pitch_type || s.type || 'Unknown';
+    if (!typeSet.includes(t)) typeSet.push(t);
+  });
+  typeSet.sort();
+
+  var countTableHTML =
+    '<div class="stat-card" style="margin-bottom:20px">' +
+    '<div class="stat-card-header"><span class="stat-card-title">Pitch Usage by Count</span></div>' +
+    '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
+    '<th style="text-align:left">Situation</th>' +
+    typeSet.map(function(t) { return '<th>' + t + '</th>'; }).join('') +
+    '<th>#</th>' +
+    '</tr></thead><tbody>' +
+    COUNT_GROUPS.map(function(grp) {
+      var subset = points.filter(function(s) { return grp.test(s.count || ''); });
+      var n = subset.length;
+      if (!n) {
+        return '<tr><td style="text-align:left;color:var(--text-mid)">' + grp.label + '</td>' +
+          typeSet.map(function() { return '<td style="color:var(--text-dim)">—</td>'; }).join('') +
+          '<td>0</td></tr>';
+      }
+      var tc = {};
+      typeSet.forEach(function(t) { tc[t] = 0; });
+      subset.forEach(function(s) { var t = s.pitch_type || s.type || 'Unknown'; if (tc[t]!==undefined) tc[t]++; });
+      return '<tr>' +
+        '<td style="text-align:left;color:var(--text)">' + grp.label + '</td>' +
+        typeSet.map(function(t) { return '<td class="highlight-val">' + fmt1(tc[t]/n*100) + '%</td>'; }).join('') +
+        '<td>' + n + '</td></tr>';
+    }).join('') +
+    '</tbody></table></div></div>';
+
+  var typeMap = {};
+  points.forEach(function(s) {
+    var t = s.pitch_type || s.type || 'Unknown';
+    if (!typeMap[t]) typeMap[t] = { total:0, k:0, hit:0, ball:0, strike:0 };
+    typeMap[t].total++;
+    if (s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking') typeMap[t].k++;
+    if (['Single','Double','Triple','Home Run'].includes(s.outcome)) typeMap[t].hit++;
+    if (s.outcome === 'Ball') typeMap[t].ball++;
+    if (['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome)) typeMap[t].strike++;
+  });
+
+  var pitchMixHTML =
+    '<div class="stat-card" style="margin-bottom:20px">' +
+    '<div class="stat-card-header"><span class="stat-card-title">Pitch Mix</span></div>' +
+    '<div class="pitch-mix-grid">' +
+    Object.entries(typeMap).map(function(e) {
+      return '<div class="pitch-mix-item">' +
+        '<div class="pitch-mix-pct">' + fmt1(e[1].total/total*100) + '%</div>' +
+        '<div class="pitch-mix-type">' + e[0] + '</div>' +
+        '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);margin-top:4px">' + e[1].total + ' pitches</div>' +
+        '</div>';
+    }).join('') + '</div></div>' +
+    '<div class="stat-card" style="margin-bottom:20px">' +
+    '<div class="stat-card-header"><span class="stat-card-title">By Pitch Type</span></div>' +
+    '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
+    '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>K</th><th>HIT</th><th>STR%</th><th>BALL%</th>' +
+    '</tr></thead><tbody>' +
+    Object.entries(typeMap).map(function(e) {
+      var d = e[1];
+      return '<tr>' +
+        '<td style="text-align:left;color:var(--text)">' + e[0] + '</td>' +
+        '<td>' + d.total + '</td>' +
+        '<td class="highlight-val">' + fmt1(d.total/total*100) + '%</td>' +
+        '<td>' + d.k + '</td>' +
+        '<td>' + d.hit + '</td>' +
+        '<td>' + fmt1(d.strike/d.total*100) + '%</td>' +
+        '<td>' + fmt1(d.ball/d.total*100) + '%</td>' +
+        '</tr>';
+    }).join('') +
+    '</tbody></table></div></div>';
+
+  return countTableHTML + pitchMixHTML;
 }
 
 // ── TABLE BUILDERS ────────────────────────────────
