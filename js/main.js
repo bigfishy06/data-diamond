@@ -973,9 +973,13 @@ function renderZone(name, type, pitch, container) {
     }
   }
 
-  // ── Strike zone box (drawn on all views) ────────
+  // ── Strike zone box — always uses CLEAN_BOUNDS so size is identical on all views ──
   function drawStrikeZone() {
-    var zx1=toCanvasX(-1), zx2=toCanvasX(1), zy1=toCanvasY(1), zy2=toCanvasY(0);
+    // Compute pixel coords using CLEAN_BOUNDS regardless of current X_MIN/X_MAX
+    var cb = CLEAN_BOUNDS;
+    function czx(x) { return PAD_L + ((x - cb.xMin) / (cb.xMax - cb.xMin)) * PW; }
+    function czy(y) { return PAD_T + PH - ((y - cb.yMin) / (cb.yMax - cb.yMin)) * PH; }
+    var zx1=czx(-1), zx2=czx(1), zy1=czy(1), zy2=czy(0);
     ctx.fillStyle = 'rgba(255,184,28,0.03)';
     ctx.fillRect(zx1, zy1, zx2-zx1, zy2-zy1);
     ctx.strokeStyle = 'rgba(255,184,28,0.85)';
@@ -1019,18 +1023,20 @@ function renderZone(name, type, pitch, container) {
     // Canvas extents (use current bounds)
     var XL=X_MIN, XR=X_MAX, YB=Y_MIN, YT_=Y_MAX;
 
-    // 13 zones: 9 inner 3x3 + 4 outer corner squares (same size as inner cells)
-    // Outer corners sit just outside the zone at each diagonal corner
+    // 13 zones: 9 inner 3x3 + 4 outer corners
+    // Corners fill the diagonal quadrants outside the strike zone.
+    // Each pair of corners shares an edge and meets at the midpoint of that edge.
+    var xMid = (XI1 + XI2) / 2;  // = 0  (horizontal midpoint between TL/TR and BL/BR)
+    var yMid = (YI1 + YI2) / 2;  // = 0.5 (vertical midpoint between TL/BL and TR/BR)
     var zones = [
-      // Outer corners (4) — each extends to the canvas midpoint so they all meet
-      // Top-left: from canvas left to zone left, from zone top to canvas top
-      { x1:XL,  x2:XI1, y1:(YI2+YT_)/2, y2:YT_, outer:true, label:'TL' },
-      // Top-right: from zone right to canvas right, from zone top to canvas top
-      { x1:XI2, x2:XR,  y1:(YI2+YT_)/2, y2:YT_, outer:true, label:'TR' },
-      // Bottom-left: from canvas left to zone left, from canvas bottom to zone bottom
-      { x1:XL,  x2:XI1, y1:YB, y2:(YI1+YB)/2,   outer:true, label:'BL' },
-      // Bottom-right: from zone right to canvas right, from canvas bottom to zone bottom
-      { x1:XI2, x2:XR,  y1:YB, y2:(YI1+YB)/2,   outer:true, label:'BR' },
+      // TL: left of zone, above zone — meets TR at x=0, meets BL at y=0.5
+      { x1:XL,   x2:xMid, y1:yMid, y2:YT_, outer:true, label:'TL' },
+      // TR: right of zone, above zone — meets TL at x=0, meets BR at y=0.5
+      { x1:xMid, x2:XR,   y1:yMid, y2:YT_, outer:true, label:'TR' },
+      // BL: left of zone, below zone — meets BR at x=0, meets TL at y=0.5
+      { x1:XL,   x2:xMid, y1:YB,   y2:yMid, outer:true, label:'BL' },
+      // BR: right of zone, below zone — meets BL at x=0, meets TR at y=0.5
+      { x1:xMid, x2:XR,   y1:YB,   y2:yMid, outer:true, label:'BR' },
       // Inner 3x3 (row top→bottom, col left→right)
       { x1:XI1+0*xT, x2:XI1+1*xT, y1:YI1+2*yT, y2:YI2, outer:false },
       { x1:XI1+1*xT, x2:XI1+2*xT, y1:YI1+2*yT, y2:YI2, outer:false },
@@ -1094,42 +1100,48 @@ function renderZone(name, type, pitch, container) {
   }
 
 
-  // ── Heat map draw (free-flowing, full canvas) ────────────────────
+  // ── Heat map draw ────────────────────────────────
   function drawHeatmap(filtered) {
     if (!filtered.length) return;
 
-    // Render density at full canvas resolution so heat bleeds to edges
-    var GRID_W = W, GRID_H = H;
-    var density = new Float32Array(GRID_W * GRID_H);
-    var SIGMA = 18.0; // large sigma for smooth free-flowing blobs
+    // Low-res density grid (coordinates match data space)
+    var GW = 64, GH = 64;
+    var density = new Float32Array(GW * GH);
+    var SIGMA = 5.0; // in grid cells — with 64 cells over ~3.4 units, 1 cell ≈ 0.053 units, sigma≈0.27 units
 
     filtered.forEach(function(s) {
-      var gx = ((s.x - X_MIN) / (X_MAX - X_MIN)) * GRID_W;
-      var gy = GRID_H - ((s.y - Y_MIN) / (Y_MAX - Y_MIN)) * GRID_H;
+      var gx = ((s.x - X_MIN) / (X_MAX - X_MIN)) * GW;
+      var gy = GH - ((s.y - Y_MIN) / (Y_MAX - Y_MIN)) * GH;
       var radius = Math.ceil(SIGMA * 3);
       for (var dy = -radius; dy <= radius; dy++) {
         for (var dx = -radius; dx <= radius; dx++) {
           var px = Math.round(gx + dx);
           var py = Math.round(gy + dy);
-          if (px < 0 || px >= GRID_W || py < 0 || py >= GRID_H) continue;
-          density[py * GRID_W + px] += Math.exp(-(dx*dx + dy*dy) / (2*SIGMA*SIGMA));
+          if (px < 0 || px >= GW || py < 0 || py >= GH) continue;
+          density[py * GW + px] += Math.exp(-(dx*dx + dy*dy) / (2*SIGMA*SIGMA));
         }
       }
     });
 
     var maxD = 0;
-    for (var i = 0; i < density.length; i++) { if (density[i] > maxD) maxD = density[i]; }
+    for (var i = 0; i < density.length; i++) if (density[i] > maxD) maxD = density[i];
     if (maxD === 0) return;
 
-    // Draw full-canvas ImageData so heat bleeds freely to all edges
-    var imgData = ctx.createImageData(W, H);
-    for (var py = 0; py < H; py++) {
-      for (var px = 0; px < W; px++) {
-        var val = density[py * GRID_W + px] / maxD;
-        if (val < 0.003) continue;
+    // Build small imageData then drawImage it scaled to full CSS canvas size
+    // This avoids DPR issues — we draw in CSS pixel space via drawImage
+    var offscreen = document.createElement('canvas');
+    offscreen.width  = GW;
+    offscreen.height = GH;
+    var octx = offscreen.getContext('2d');
+    var imgData = octx.createImageData(GW, GH);
+
+    for (var py = 0; py < GH; py++) {
+      for (var px = 0; px < GW; px++) {
+        var val = density[py * GW + px] / maxD;
+        if (val < 0.01) continue;
         var r, g, b;
         if (val < 0.25) {
-          var t = val/0.25; r=0; g=Math.round(t*120); b=Math.round(180+t*75);
+          var t=val/0.25; r=0; g=Math.round(t*120); b=Math.round(180+t*75);
         } else if (val < 0.5) {
           var t=(val-0.25)/0.25; r=0; g=Math.round(120+t*135); b=Math.round(255-t*255);
         } else if (val < 0.75) {
@@ -1137,16 +1149,23 @@ function renderZone(name, type, pitch, container) {
         } else {
           var t=(val-0.75)/0.25; r=255; g=Math.round(255-t*255); b=0;
         }
-        var idx = (py * W + px) * 4;
+        var idx = (py * GW + px) * 4;
         imgData.data[idx]   = r;
         imgData.data[idx+1] = g;
         imgData.data[idx+2] = b;
-        imgData.data[idx+3] = Math.round((0.15 + val*0.80)*255);
+        imgData.data[idx+3] = Math.round((0.2 + val*0.75)*255);
       }
     }
-    ctx.putImageData(imgData, 0, 0);
+    octx.putImageData(imgData, 0, 0);
 
-    // Color scale
+    // Scale the tiny blurred grid up to fill the full CSS canvas smoothly
+    ctx.save();
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(offscreen, 0, 0, W, H);
+    ctx.restore();
+
+    // Color scale legend
     var scaleX=PAD_L+PW+4, scaleH=PH*0.6, scaleY=PAD_T+PH*0.2;
     var grad=ctx.createLinearGradient(0,scaleY,0,scaleY+scaleH);
     grad.addColorStop(0,'#ff0000'); grad.addColorStop(0.33,'#ffff00');
