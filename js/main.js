@@ -1101,16 +1101,25 @@ function renderZone(name, type, pitch, container) {
     // Outer render rects (pixel coords):
     // TL: left strip, top half   | TR: right strip, top half
     // BL: left strip, bottom half| BR: right strip, bottom half
-    outer[0].px = { x:CX1,      y:CY1,       w:SX1-GAP-CX1,    h:SMidY-CY1    }; // TL
-    outer[1].px = { x:SX2+GAP,  y:CY1,       w:CX2-(SX2+GAP),  h:SMidY-CY1    }; // TR
-    outer[2].px = { x:CX1,      y:SMidY,     w:SX1-GAP-CX1,    h:CY2-SMidY    }; // BL
-    outer[3].px = { x:SX2+GAP,  y:SMidY,     w:CX2-(SX2+GAP),  h:CY2-SMidY    }; // BR
+    // Each outer zone fills the full canvas height on its side (top to bottom)
+    outer[0].px = { x:CX1,      y:CY1, w:SX1-GAP-CX1,   h:CY2-CY1 }; // TL (full left strip)
+    outer[1].px = { x:SX2+GAP,  y:CY1, w:CX2-(SX2+GAP), h:CY2-CY1 }; // TR (full right strip)
+    outer[2].px = { x:CX1,      y:CY1, w:SX1-GAP-CX1,   h:CY2-CY1 }; // BL — same as TL (merged)
+    outer[3].px = { x:SX2+GAP,  y:CY1, w:CX2-(SX2+GAP), h:CY2-CY1 }; // BR — same as TR (merged)
+
+    // Merge BL into TL and BR into TR so we only draw 2 outer rects
+    outer[0].count += outer[2].count; outer[0].pct += outer[2].pct;
+    outer[1].count += outer[3].count; outer[1].pct += outer[3].pct;
+    outer[2].skip = true; outer[3].skip = true;
+    outer[0].intensity = maxOuter > 0 ? outer[0].count/maxOuter : 0;
+    outer[1].intensity = maxOuter > 0 ? outer[1].count/maxOuter : 0;
 
     // ── Draw outer zones ──
     outer.forEach(function(z) {
+      if (z.skip) return;
       var p = z.px;
       if (p.w <= 0 || p.h <= 0) return;
-      var intensity = maxOuter > 0 ? z.count/maxOuter : 0;
+      var intensity = z.intensity !== undefined ? z.intensity : (maxOuter > 0 ? z.count/maxOuter : 0);
       ctx.fillStyle = z.count === 0
         ? 'rgba(96,165,250,0.07)'
         : 'rgba(96,165,250,'+(0.1+0.55*intensity)+')';
