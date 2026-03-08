@@ -881,12 +881,30 @@ function renderZone(name, type, pitch, container) {
     '</div></div>' +
 
     // Outcome filters
-    '<div style="margin-bottom:20px">' +
+    '<div style="margin-bottom:16px">' +
     '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Filter by Outcome</div>' +
     '<div class="zone-controls" id="zone-result-filters">' +
     RESULT_FILTERS.map(function(r) {
       return '<button class="zone-filter-btn' + (r.val==='all'?' active':'') + '" data-result="' + r.val + '">' + r.lbl + '</button>';
     }).join('') + '</div></div>' +
+
+    // Pitch type filter
+    '<div style="margin-bottom:16px">' +
+    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Filter by Pitch Type</div>' +
+    '<div class="zone-controls" id="zone-type-filters">' +
+    '<button class="zone-filter-btn active" data-ptype="all">All</button>' +
+    typeSet.map(function(t) {
+      return '<button class="zone-filter-btn" data-ptype="' + t + '">' + t + '</button>';
+    }).join('') + '</div></div>' +
+
+    // Batter handedness filter
+    '<div style="margin-bottom:20px">' +
+    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Filter by Batter Hand</div>' +
+    '<div class="zone-controls" id="zone-hand-filters">' +
+    '<button class="zone-filter-btn active" data-hand="all">All</button>' +
+    '<button class="zone-filter-btn" data-hand="R">Right (R)</button>' +
+    '<button class="zone-filter-btn" data-hand="L">Left (L)</button>' +
+    '</div></div>' +
 
     // Canvas + sidebar
     '<div class="zone-wrap">' +
@@ -910,6 +928,8 @@ function renderZone(name, type, pitch, container) {
   // ── Canvas setup ──────────────────────────────
   var activeResult = 'all';
   var activeView   = 'scatter';
+  var activeType   = 'all';  // pitch type filter
+  var activeHand   = 'all';  // batter handedness filter
 
   // Coordinate ranges: scatter shows full field, grid/heatmap zooms to zone
   var SCATTER_BOUNDS = { xMin:-2.5, xMax:2.5,  yMin:-0.8, yMax:1.5  };
@@ -1089,12 +1109,17 @@ function renderZone(name, type, pitch, container) {
       ctx.lineWidth   = z.outer ? 0.5 : 1.5;
       ctx.strokeRect(cx1, cy1, cw, ch);
 
-      // Percentage label
+      // Percentage label — clip to zone rect so text stays inside its cell
       if (z.count > 0) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(cx1, cy1, cw, ch);
+        ctx.clip();
         ctx.fillStyle  = intensity > 0.5 ? '#fff' : 'rgba(255,255,255,0.8)';
         ctx.font       = 'bold ' + (z.outer ? '11' : '13') + 'px DM Mono, monospace';
         ctx.textAlign  = 'center';
         ctx.fillText(z.pct.toFixed(1)+'%', cx1+cw/2, cy1+ch/2+5);
+        ctx.restore();
       }
     });
   }
@@ -1192,7 +1217,12 @@ function renderZone(name, type, pitch, container) {
 
     drawBackground(clean ? {clean:true} : {});
 
-    var filtered = points.filter(function(s) { return resultMatch(s, activeResult); });
+    var filtered = points.filter(function(s) {
+      if (!resultMatch(s, activeResult)) return false;
+      if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
+      if (activeHand !== 'all' && (s.batter_side || s.side || '') !== activeHand) return false;
+      return true;
+    });
 
     if      (activeView === 'scatter') drawScatter(filtered);
     else if (activeView === 'grid')    drawGrid(filtered);
@@ -1218,7 +1248,12 @@ function renderZone(name, type, pitch, container) {
     var my = (e.clientY - rect.top)  * (CSS_H / rect.height);
 
     var best = null, bestDist = Infinity;
-    var filtered = points.filter(function(s) { return resultMatch(s, activeResult); });
+    var filtered = points.filter(function(s) {
+      if (!resultMatch(s, activeResult)) return false;
+      if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
+      if (activeHand !== 'all' && (s.batter_side || s.side || '') !== activeHand) return false;
+      return true;
+    });
     filtered.forEach(function(s) {
       var px=toCanvasX(s.x), py=toCanvasY(s.y);
       var dist = Math.sqrt((mx-px)*(mx-px)+(my-py)*(my-py));
@@ -1270,6 +1305,26 @@ function renderZone(name, type, pitch, container) {
       container.querySelectorAll('#zone-result-filters .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
       activeResult = btn.dataset.result;
+      drawZone();
+    });
+  });
+
+  // Pitch type filter buttons
+  container.querySelectorAll('#zone-type-filters .zone-filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      container.querySelectorAll('#zone-type-filters .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeType = btn.dataset.ptype;
+      drawZone();
+    });
+  });
+
+  // Batter handedness filter buttons
+  container.querySelectorAll('#zone-hand-filters .zone-filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      container.querySelectorAll('#zone-hand-filters .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeHand = btn.dataset.hand;
       drawZone();
     });
   });
