@@ -1005,83 +1005,98 @@ function renderZone(name, type, pitch, container) {
     });
   }
 
-  // ── Zone Grid: 5x5 bands (3 inner + 2 outer each axis) ──────────
+  // ── Zone Grid: 13 zones (9 inner 3x3 + 4 outer corners) ──────────
   function drawGrid(filtered) {
     var total = filtered.length;
 
-    // 5 x-bands and 5 y-bands: outer-left, inner thirds (x3), outer-right
-    var xBands = [-2.5, -1, -0.333, 0.333, 1, 2.5];
-    var yBands = [-0.8,  0,  0.333, 0.667, 1, 1.5];
+    // Strike zone: x [-1,1], y [0,1]
+    // Inner 3x3: thirds of each axis
+    // 4 outer corner zones fill the remaining canvas space
+    var XI1=-1, XI2=1, YI1=0, YI2=1;
+    var xT = (XI2-XI1)/3;  // 0.667
+    var yT = (YI2-YI1)/3;  // 0.333
 
-    // Count per cell
-    var grid = [], maxInner = 0, maxOuter = 0;
-    for (var row = 0; row < 5; row++) {
-      grid[row] = [];
-      for (var col = 0; col < 5; col++) {
-        var isInner = (row >= 1 && row <= 3 && col >= 1 && col <= 3);
-        var count = 0;
-        filtered.forEach(function(s) {
-          if (s.x >= xBands[col] && s.x < xBands[col+1] &&
-              s.y >= yBands[row] && s.y < yBands[row+1]) count++;
-        });
-        grid[row][col] = { count: count, inner: isInner };
-        var pct = total > 0 ? count / total * 100 : 0;
-        grid[row][col].pct = pct;
-        if (isInner && count > maxInner) maxInner = count;
-        if (!isInner && count > maxOuter) maxOuter = count;
+    // Canvas extents (use current bounds)
+    var XL=X_MIN, XR=X_MAX, YB=Y_MIN, YT_=Y_MAX;
+
+    // 13 zones: 9 inner 3x3 + 4 outer corner squares (same size as inner cells)
+    // Outer corners sit just outside the zone at each diagonal corner
+    var zones = [
+      // Outer corners (4) — each same size as one inner cell, positioned at the 4 diagonal corners
+      { x1:XI1-xT, x2:XI1,   y1:YI2,      y2:YI2+yT, outer:true, label:'TL' },
+      { x1:XI2,    x2:XI2+xT, y1:YI2,     y2:YI2+yT, outer:true, label:'TR' },
+      { x1:XI1-xT, x2:XI1,   y1:YI1-yT,  y2:YI1,    outer:true, label:'BL' },
+      { x1:XI2,    x2:XI2+xT, y1:YI1-yT, y2:YI1,    outer:true, label:'BR' },
+      // Inner 3x3 (row top→bottom, col left→right)
+      { x1:XI1+0*xT, x2:XI1+1*xT, y1:YI1+2*yT, y2:YI2, outer:false },
+      { x1:XI1+1*xT, x2:XI1+2*xT, y1:YI1+2*yT, y2:YI2, outer:false },
+      { x1:XI1+2*xT, x2:XI2,      y1:YI1+2*yT, y2:YI2, outer:false },
+      { x1:XI1+0*xT, x2:XI1+1*xT, y1:YI1+1*yT, y2:YI1+2*yT, outer:false },
+      { x1:XI1+1*xT, x2:XI1+2*xT, y1:YI1+1*yT, y2:YI1+2*yT, outer:false },
+      { x1:XI1+2*xT, x2:XI2,      y1:YI1+1*yT, y2:YI1+2*yT, outer:false },
+      { x1:XI1+0*xT, x2:XI1+1*xT, y1:YI1,      y2:YI1+1*yT, outer:false },
+      { x1:XI1+1*xT, x2:XI1+2*xT, y1:YI1,      y2:YI1+1*yT, outer:false },
+      { x1:XI1+2*xT, x2:XI2,      y1:YI1,      y2:YI1+1*yT, outer:false }
+    ];
+
+    // Count & percentage per zone
+    zones.forEach(function(z) {
+      z.count = 0;
+      filtered.forEach(function(s) {
+        if (s.x >= z.x1 && s.x < z.x2 && s.y >= z.y1 && s.y < z.y2) z.count++;
+      });
+      z.pct = total > 0 ? z.count / total * 100 : 0;
+    });
+
+    var maxInner = 0, maxOuter = 0;
+    zones.forEach(function(z) {
+      if (!z.outer && z.count > maxInner) maxInner = z.count;
+      if ( z.outer && z.count > maxOuter) maxOuter = z.count;
+    });
+
+    zones.forEach(function(z) {
+      var cx1 = toCanvasX(z.x1), cx2 = toCanvasX(z.x2);
+      var cy1 = toCanvasY(z.y2), cy2 = toCanvasY(z.y1);
+      var cw = cx2-cx1, ch = cy2-cy1;
+      var maxRef = z.outer ? maxOuter : maxInner;
+      var intensity = maxRef > 0 ? z.count / maxRef : 0;
+
+      // Fill
+      if (z.count === 0) {
+        ctx.fillStyle = z.outer ? 'rgba(255,255,255,0.02)' : 'rgba(255,184,28,0.04)';
+      } else if (!z.outer) {
+        var r = Math.round(96  + (255-96)  * intensity);
+        var g = Math.round(165 + (184-165) * intensity);
+        var b = Math.round(250 + (28 -250) * intensity);
+        ctx.fillStyle = 'rgba('+r+','+g+','+b+','+(0.25+0.65*intensity)+')';
+      } else {
+        ctx.fillStyle = 'rgba(96,165,250,'+(0.04+0.28*intensity)+')';
       }
-    }
+      ctx.fillRect(cx1, cy1, cw, ch);
 
-    // Draw cells — y rows in data go bottom→top, canvas goes top→bottom, so flip row index
-    for (var row = 0; row < 5; row++) {
-      var canvasRow = 4 - row; // flip
-      for (var col = 0; col < 5; col++) {
-        var cell = grid[row][col];
-        var cx1 = toCanvasX(xBands[col]);
-        var cx2 = toCanvasX(xBands[col+1]);
-        var cy1 = toCanvasY(yBands[canvasRow+1]);
-        var cy2 = toCanvasY(yBands[canvasRow]);
-        var cw = cx2 - cx1, ch = cy2 - cy1;
-        var maxRef = cell.inner ? maxInner : maxOuter;
-        var intensity = maxRef > 0 ? cell.count / maxRef : 0;
+      // Border
+      ctx.strokeStyle = z.outer ? 'rgba(255,255,255,0.07)' : 'rgba(255,184,28,0.45)';
+      ctx.lineWidth   = z.outer ? 0.5 : 1.5;
+      ctx.strokeRect(cx1, cy1, cw, ch);
 
-        // Fill color
-        if (cell.count === 0) {
-          ctx.fillStyle = cell.inner ? 'rgba(255,184,28,0.05)' : 'rgba(255,255,255,0.02)';
-        } else if (cell.inner) {
-          // Blue → Gold
-          var r = Math.round(96  + (255 - 96)  * intensity);
-          var g = Math.round(165 + (184 - 165) * intensity);
-          var b = Math.round(250 + (28  - 250) * intensity);
-          ctx.fillStyle = 'rgba('+r+','+g+','+b+','+(0.25+0.65*intensity)+')';
-        } else {
-          ctx.fillStyle = 'rgba(96,165,250,'+(0.04+0.3*intensity)+')';
-        }
-        ctx.fillRect(cx1, cy1, cw, ch);
-
-        // Border
-        ctx.strokeStyle = cell.inner ? 'rgba(255,184,28,0.45)' : 'rgba(255,255,255,0.07)';
-        ctx.lineWidth = cell.inner ? 1.5 : 0.5;
-        ctx.strokeRect(cx1, cy1, cw, ch);
-
-        // Percentage label
-        if (cell.count > 0) {
-          ctx.fillStyle = intensity > 0.5 ? '#fff' : 'rgba(255,255,255,0.8)';
-          ctx.font = 'bold ' + (cell.inner ? '13' : '10') + 'px DM Mono, monospace';
-          ctx.textAlign = 'center';
-          ctx.fillText(cell.pct.toFixed(1)+'%', cx1+cw/2, cy1+ch/2+5);
-        }
+      // Percentage label
+      if (z.count > 0) {
+        ctx.fillStyle  = intensity > 0.5 ? '#fff' : 'rgba(255,255,255,0.8)';
+        ctx.font       = 'bold ' + (z.outer ? '11' : '13') + 'px DM Mono, monospace';
+        ctx.textAlign  = 'center';
+        ctx.fillText(z.pct.toFixed(1)+'%', cx1+cw/2, cy1+ch/2+5);
       }
-    }
+    });
   }
+
 
   // ── Heat map draw (pixel-level, bilinear interpolation) ──────────
   function drawHeatmap(filtered) {
     if (!filtered.length) return;
 
-    var GRID_W = 120, GRID_H = 120;
+    var GRID_W = 80, GRID_H = 80;
     var density = new Float32Array(GRID_W * GRID_H);
-    var SIGMA = 2.5;
+    var SIGMA = 6.0;  // large sigma = smooth blobs, not dots
 
     filtered.forEach(function(s) {
       var gx = ((s.x - X_MIN) / (X_MAX - X_MIN)) * GRID_W;
@@ -1114,7 +1129,7 @@ function renderZone(name, type, pitch, container) {
         var v01 = density[(gyi+1) * GRID_W + gxi   ];
         var v11 = density[(gyi+1) * GRID_W + gxi+1 ];
         var val = (v00*(1-fx)*(1-fy) + v10*fx*(1-fy) + v01*(1-fx)*fy + v11*fx*fy) / maxD;
-        if (val < 0.02) continue;
+        if (val < 0.005) continue;
         var r, g, b;
         if (val < 0.25) {
           var t = val/0.25; r=0; g=Math.round(t*120); b=Math.round(180+t*75);
@@ -1129,7 +1144,7 @@ function renderZone(name, type, pitch, container) {
         imgData.data[idx]   = r;
         imgData.data[idx+1] = g;
         imgData.data[idx+2] = b;
-        imgData.data[idx+3] = Math.round((0.1 + val*0.85)*255);
+        imgData.data[idx+3] = Math.round((0.4 + val*0.58)*255);
       }
     }
     ctx.putImageData(imgData, PAD_L, PAD_T);
@@ -1152,12 +1167,8 @@ function renderZone(name, type, pitch, container) {
     ctx.clearRect(0, 0, W * DPR, H * DPR);
     var clean = (activeView === 'grid' || activeView === 'heatmap');
 
-    // Zoom in for grid/heatmap, full field for scatter
-    if (clean) {
-      setBounds(CLEAN_BOUNDS.xMin, CLEAN_BOUNDS.xMax, CLEAN_BOUNDS.yMin, CLEAN_BOUNDS.yMax);
-    } else {
-      setBounds(SCATTER_BOUNDS.xMin, SCATTER_BOUNDS.xMax, SCATTER_BOUNDS.yMin, SCATTER_BOUNDS.yMax);
-    }
+    // Same bounds for all views so strike zone is same size
+    setBounds(CLEAN_BOUNDS.xMin, CLEAN_BOUNDS.xMax, CLEAN_BOUNDS.yMin, CLEAN_BOUNDS.yMax);
 
     drawBackground(clean ? {clean:true} : {});
 
