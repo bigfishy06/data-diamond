@@ -917,12 +917,12 @@ function renderZone(name, type, pitch, container) {
     '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Pitch Type</div>' +
     legendHTML + '</div>' +
     '<div class="zone-stats-grid">' +
-    '<div class="zone-stat-box"><div class="zone-stat-val">' + totalPts + '</div><div class="zone-stat-lbl">Pitches</div></div>' +
-    '<div class="zone-stat-box"><div class="zone-stat-val">' + fmt1(inZone/totalPts*100) + '%</div><div class="zone-stat-lbl">Zone%</div></div>' +
-    '<div class="zone-stat-box"><div class="zone-stat-val">' + ks + '</div><div class="zone-stat-lbl">Strikeouts</div></div>' +
-    '<div class="zone-stat-box"><div class="zone-stat-val">' + hits + '</div><div class="zone-stat-lbl">Hits</div></div>' +
-    '<div class="zone-stat-box"><div class="zone-stat-val">' + swStr + '</div><div class="zone-stat-lbl">Swinging K</div></div>' +
-    '<div class="zone-stat-box"><div class="zone-stat-val">' + chases + '</div><div class="zone-stat-lbl">Chases</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val" id="zs-pitches">' + totalPts + '</div><div class="zone-stat-lbl">Pitches</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val" id="zs-zone">' + fmt1(inZone/totalPts*100) + '%</div><div class="zone-stat-lbl">Zone%</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val" id="zs-ks">' + ks + '</div><div class="zone-stat-lbl">Strikeouts</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val" id="zs-hits">' + hits + '</div><div class="zone-stat-lbl">Hits</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val" id="zs-swk">' + swStr + '</div><div class="zone-stat-lbl">Swinging K</div></div>' +
+    '<div class="zone-stat-box"><div class="zone-stat-val" id="zs-chases">' + chases + '</div><div class="zone-stat-lbl">Chases</div></div>' +
     '</div></div></div></div></div>';
 
   // ── Canvas setup ──────────────────────────────
@@ -1203,6 +1203,25 @@ function renderZone(name, type, pitch, container) {
     ctx.fillText('HI',scaleX+10,scaleY+8);
     ctx.fillText('LO',scaleX+10,scaleY+scaleH);
   }
+  // ── Update reactive stat boxes ─────────────────
+  function updateStats(f) {
+    var n    = f.length;
+    var iz   = f.filter(function(s){ return s.x>=-1&&s.x<=1&&s.y>=0&&s.y<=1; }).length;
+    var fks  = f.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
+    var fh   = f.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+    var fsw  = f.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
+    var fch  = f.filter(function(s){ return (s.x<-1||s.x>1||s.y<0||s.y>1)&&(s.outcome==='Swinging Strike'||s.outcome==='Foul'); }).length;
+    var el;
+    if ((el=document.getElementById('zs-pitches'))) el.textContent = n;
+    if ((el=document.getElementById('zs-zone')))    el.textContent = n>0 ? fmt1(iz/n*100)+'%' : '—';
+    if ((el=document.getElementById('zs-ks')))      el.textContent = fks;
+    if ((el=document.getElementById('zs-hits')))    el.textContent = fh;
+    if ((el=document.getElementById('zs-swk')))     el.textContent = fsw;
+    if ((el=document.getElementById('zs-chases')))  el.textContent = fch;
+    var sub = document.querySelector('.stat-card-subtitle');
+    if (sub) sub.textContent = n + ' pitches plotted';
+  }
+
   // ── Main draw ──────────────────────────────────
   function drawZone() {
     ctx.clearRect(0, 0, W * DPR, H * DPR);
@@ -1223,6 +1242,8 @@ function renderZone(name, type, pitch, container) {
       if (activeHand !== 'all' && (s.batter_side || s.side || '') !== activeHand) return false;
       return true;
     });
+
+    updateStats(filtered);
 
     if      (activeView === 'scatter') drawScatter(filtered);
     else if (activeView === 'grid')    drawGrid(filtered);
