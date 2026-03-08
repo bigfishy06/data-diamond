@@ -933,7 +933,7 @@ function renderZone(name, type, pitch, container) {
 
   // Coordinate ranges: scatter shows full field, grid/heatmap zooms to zone
   var SCATTER_BOUNDS = { xMin:-2.5, xMax:2.5,  yMin:-0.8, yMax:1.5  };
-  var CLEAN_BOUNDS   = { xMin:-1.7, xMax:1.7,  yMin:-0.45, yMax:1.45 };
+  var CLEAN_BOUNDS   = { xMin:-1.85, xMax:1.85, yMin:-0.52, yMax:1.52 };
   var X_MIN = SCATTER_BOUNDS.xMin, X_MAX = SCATTER_BOUNDS.xMax;
   var Y_MIN = SCATTER_BOUNDS.yMin, Y_MAX = SCATTER_BOUNDS.yMax;
 
@@ -1029,47 +1029,43 @@ function renderZone(name, type, pitch, container) {
     });
   }
 
-  // ── Zone Grid: 13 zones (9 inner 3x3 + 4 outer corners) ──────────
+  // ── Zone Grid: Savant-style 13 zones ─────────────────────────────
+  // 9 inner 3x3 + 4 corner squares same size as one inner cell,
+  // positioned just outside the diagonal corners with a small gap.
   function drawGrid(filtered) {
     var total = filtered.length;
 
-    // Strike zone: x [-1,1], y [0,1]
-    // Inner 3x3: thirds of each axis
-    // 4 outer corner zones fill the remaining canvas space
-    var XI1=-1, XI2=1, YI1=0, YI2=1;
-    var xT = (XI2-XI1)/3;  // 0.667
-    var yT = (YI2-YI1)/3;  // 0.333
+    // Strike zone data coords
+    var ZX1=-1, ZX2=1, ZY1=0, ZY2=1;
+    var cellW = (ZX2-ZX1)/3;   // data width of one inner cell  = 0.667
+    var cellH = (ZY2-ZY1)/3;   // data height of one inner cell = 0.333
+    var GAP   = 0.08;           // small gap in data coords between corner and zone edge
 
-    // Canvas extents (use current bounds)
-    var XL=X_MIN, XR=X_MAX, YB=Y_MIN, YT_=Y_MAX;
+    // 9 inner zones (left→right, top→bottom in data space)
+    var inner = [];
+    for (var row=0; row<3; row++) {
+      for (var col=0; col<3; col++) {
+        inner.push({
+          x1: ZX1 + col*cellW,
+          x2: ZX1 + (col+1)*cellW,
+          y1: ZY1 + (2-row)*cellH,   // row 0 = top = highest y
+          y2: ZY1 + (3-row)*cellH,
+          outer: false
+        });
+      }
+    }
 
-    // 13 zones: 9 inner 3x3 + 4 outer corners
-    // Corners fill the diagonal quadrants outside the strike zone.
-    // Each pair of corners shares an edge and meets at the midpoint of that edge.
-    var xMid = (XI1 + XI2) / 2;  // = 0  (horizontal midpoint between TL/TR and BL/BR)
-    var yMid = (YI1 + YI2) / 2;  // = 0.5 (vertical midpoint between TL/BL and TR/BR)
-    var zones = [
-      // TL: left of zone, above zone — meets TR at x=0, meets BL at y=0.5
-      { x1:XL,   x2:xMid, y1:yMid, y2:YT_, outer:true, label:'TL' },
-      // TR: right of zone, above zone — meets TL at x=0, meets BR at y=0.5
-      { x1:xMid, x2:XR,   y1:yMid, y2:YT_, outer:true, label:'TR' },
-      // BL: left of zone, below zone — meets BR at x=0, meets TL at y=0.5
-      { x1:XL,   x2:xMid, y1:YB,   y2:yMid, outer:true, label:'BL' },
-      // BR: right of zone, below zone — meets BL at x=0, meets TR at y=0.5
-      { x1:xMid, x2:XR,   y1:YB,   y2:yMid, outer:true, label:'BR' },
-      // Inner 3x3 (row top→bottom, col left→right)
-      { x1:XI1+0*xT, x2:XI1+1*xT, y1:YI1+2*yT, y2:YI2, outer:false },
-      { x1:XI1+1*xT, x2:XI1+2*xT, y1:YI1+2*yT, y2:YI2, outer:false },
-      { x1:XI1+2*xT, x2:XI2,      y1:YI1+2*yT, y2:YI2, outer:false },
-      { x1:XI1+0*xT, x2:XI1+1*xT, y1:YI1+1*yT, y2:YI1+2*yT, outer:false },
-      { x1:XI1+1*xT, x2:XI1+2*xT, y1:YI1+1*yT, y2:YI1+2*yT, outer:false },
-      { x1:XI1+2*xT, x2:XI2,      y1:YI1+1*yT, y2:YI1+2*yT, outer:false },
-      { x1:XI1+0*xT, x2:XI1+1*xT, y1:YI1,      y2:YI1+1*yT, outer:false },
-      { x1:XI1+1*xT, x2:XI1+2*xT, y1:YI1,      y2:YI1+1*yT, outer:false },
-      { x1:XI1+2*xT, x2:XI2,      y1:YI1,      y2:YI1+1*yT, outer:false }
+    // 4 corner squares — same size as one inner cell, offset by GAP outside zone
+    var corners = [
+      { x1: ZX1-GAP-cellW, x2: ZX1-GAP, y1: ZY2+GAP, y2: ZY2+GAP+cellH, outer:true }, // TL
+      { x1: ZX2+GAP,       x2: ZX2+GAP+cellW, y1: ZY2+GAP, y2: ZY2+GAP+cellH, outer:true }, // TR
+      { x1: ZX1-GAP-cellW, x2: ZX1-GAP, y1: ZY1-GAP-cellH, y2: ZY1-GAP, outer:true }, // BL
+      { x1: ZX2+GAP,       x2: ZX2+GAP+cellW, y1: ZY1-GAP-cellH, y2: ZY1-GAP, outer:true }  // BR
     ];
 
-    // Count & percentage per zone
+    var zones = corners.concat(inner);
+
+    // Count pitches per zone
     zones.forEach(function(z) {
       z.count = 0;
       filtered.forEach(function(s) {
@@ -1084,44 +1080,49 @@ function renderZone(name, type, pitch, container) {
       if ( z.outer && z.count > maxOuter) maxOuter = z.count;
     });
 
-    zones.forEach(function(z) {
+    function drawZoneCell(z) {
       var cx1 = toCanvasX(z.x1), cx2 = toCanvasX(z.x2);
-      var cy1 = toCanvasY(z.y2), cy2 = toCanvasY(z.y1);
+      var cy1 = toCanvasY(z.y2), cy2 = toCanvasY(z.y1);  // y flipped for canvas
       var cw = cx2-cx1, ch = cy2-cy1;
       var maxRef = z.outer ? maxOuter : maxInner;
       var intensity = maxRef > 0 ? z.count / maxRef : 0;
 
-      // Fill
+      // Fill colour
       if (z.count === 0) {
-        ctx.fillStyle = z.outer ? 'rgba(255,255,255,0.02)' : 'rgba(255,184,28,0.04)';
+        ctx.fillStyle = z.outer ? 'rgba(96,165,250,0.08)' : 'rgba(255,184,28,0.05)';
       } else if (!z.outer) {
+        // Blue (low) → Gold (high)
         var r = Math.round(96  + (255-96)  * intensity);
         var g = Math.round(165 + (184-165) * intensity);
         var b = Math.round(250 + (28 -250) * intensity);
-        ctx.fillStyle = 'rgba('+r+','+g+','+b+','+(0.25+0.65*intensity)+')';
+        ctx.fillStyle = 'rgba('+r+','+g+','+b+','+(0.3+0.65*intensity)+')';
       } else {
-        ctx.fillStyle = 'rgba(96,165,250,'+(0.04+0.28*intensity)+')';
+        ctx.fillStyle = 'rgba(96,165,250,'+(0.08+0.45*intensity)+')';
       }
       ctx.fillRect(cx1, cy1, cw, ch);
 
       // Border
-      ctx.strokeStyle = z.outer ? 'rgba(255,255,255,0.07)' : 'rgba(255,184,28,0.45)';
-      ctx.lineWidth   = z.outer ? 0.5 : 1.5;
+      ctx.strokeStyle = z.outer ? 'rgba(96,165,250,0.5)' : 'rgba(255,184,28,0.5)';
+      ctx.lineWidth   = 1.5;
       ctx.strokeRect(cx1, cy1, cw, ch);
 
-      // Percentage label — clip to zone rect so text stays inside its cell
+      // Count label (like Savant shows raw counts, not %)
       if (z.count > 0) {
         ctx.save();
         ctx.beginPath();
-        ctx.rect(cx1, cy1, cw, ch);
+        ctx.rect(cx1+1, cy1+1, cw-2, ch-2);
         ctx.clip();
-        ctx.fillStyle  = intensity > 0.5 ? '#fff' : 'rgba(255,255,255,0.8)';
-        ctx.font       = 'bold ' + (z.outer ? '11' : '13') + 'px DM Mono, monospace';
-        ctx.textAlign  = 'center';
-        ctx.fillText(z.pct.toFixed(1)+'%', cx1+cw/2, cy1+ch/2+5);
+        ctx.fillStyle = intensity > 0.55 ? '#fff' : 'rgba(255,255,255,0.85)';
+        ctx.font = 'bold 13px DM Mono, monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(z.pct.toFixed(1)+'%', cx1+cw/2, cy1+ch/2);
+        ctx.textBaseline = 'alphabetic';
         ctx.restore();
       }
-    });
+    }
+
+    zones.forEach(drawZoneCell);
   }
 
 
