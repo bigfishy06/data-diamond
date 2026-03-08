@@ -891,7 +891,7 @@ function renderZone(name, type, pitch, container) {
     // Canvas + sidebar
     '<div class="zone-wrap">' +
     '<div class="zone-canvas-wrap" style="position:relative">' +
-    '<canvas id="zone-canvas" width="360" height="400"></canvas>' +
+    '<canvas id="zone-canvas" width="480" height="480" style="width:360px;height:360px"></canvas>' +
     '<div id="zone-tooltip" class="zone-tooltip hidden"></div>' +
     '</div>' +
     '<div style="flex:1;min-width:160px">' +
@@ -911,28 +911,46 @@ function renderZone(name, type, pitch, container) {
   var activeResult = 'all';
   var activeView   = 'scatter';
 
-  var X_MIN = -2.5, X_MAX = 2.5;
-  var Y_MIN = -0.8, Y_MAX = 1.5;
+  // Coordinate ranges: scatter shows full field, grid/heatmap zooms to zone
+  var SCATTER_BOUNDS = { xMin:-2.5, xMax:2.5,  yMin:-0.8, yMax:1.5  };
+  var CLEAN_BOUNDS   = { xMin:-1.7, xMax:1.7,  yMin:-0.45, yMax:1.45 };
+  var X_MIN = SCATTER_BOUNDS.xMin, X_MAX = SCATTER_BOUNDS.xMax;
+  var Y_MIN = SCATTER_BOUNDS.yMin, Y_MAX = SCATTER_BOUNDS.yMax;
 
   var canvas = document.getElementById('zone-canvas');
   var ctx    = canvas.getContext('2d');
-  var W = canvas.width, H = canvas.height;
-  var PAD_L = 36, PAD_R = 16, PAD_T = 16, PAD_B = 36;
+
+  // Hi-DPI: canvas internal size vs CSS size
+  var DPR = window.devicePixelRatio || 1;
+  var CSS_W = 360, CSS_H = 360;
+  canvas.width  = CSS_W * DPR;
+  canvas.height = CSS_H * DPR;
+  canvas.style.width  = CSS_W + 'px';
+  canvas.style.height = CSS_H + 'px';
+  ctx.scale(DPR, DPR);
+
+  var W = CSS_W, H = CSS_H;
+  var PAD_L = 32, PAD_R = 12, PAD_T = 12, PAD_B = 32;
   var PW = W - PAD_L - PAD_R;
   var PH = H - PAD_T - PAD_B;
+
+  function setBounds(xMin, xMax, yMin, yMax) {
+    X_MIN = xMin; X_MAX = xMax; Y_MIN = yMin; Y_MAX = yMax;
+  }
 
   function toCanvasX(x) { return PAD_L + ((x - X_MIN) / (X_MAX - X_MIN)) * PW; }
   function toCanvasY(y) { return PAD_T + PH - ((y - Y_MIN) / (Y_MAX - Y_MIN)) * PH; }
   function fromCanvasX(cx) { return X_MIN + ((cx - PAD_L) / PW) * (X_MAX - X_MIN); }
   function fromCanvasY(cy) { return Y_MIN + (PH - (cy - PAD_T)) / PH * (Y_MAX - Y_MIN); }
 
-  // ── Shared background drawing ──────────────────
+  // ── Shared background ─────────────────────────
   function drawBackground(opts) {
     opts = opts || {};
     ctx.fillStyle = '#0e1525';
     ctx.fillRect(0, 0, W, H);
 
     if (!opts.clean) {
+      // Subtle grid lines (scatter only)
       ctx.strokeStyle = 'rgba(255,184,28,0.05)';
       ctx.lineWidth = 1;
       [-2,-1,0,1,2].forEach(function(xv) {
@@ -952,36 +970,24 @@ function renderZone(name, type, pitch, container) {
       ctx.lineTo(plateCx-8, plateY+4);
       ctx.lineTo(plateCx+8, plateY+4);
       ctx.closePath(); ctx.fill();
+    }
+  }
 
-      // Strike zone box
-      var zx1=toCanvasX(-1), zx2=toCanvasX(1), zy1=toCanvasY(1), zy2=toCanvasY(0);
-      ctx.fillStyle = 'rgba(255,184,28,0.03)';
-      ctx.fillRect(zx1, zy1, zx2-zx1, zy2-zy1);
-      ctx.strokeStyle = 'rgba(255,184,28,0.7)';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(zx1, zy1, zx2-zx1, zy2-zy1);
-
-      // Inner 3x3 grid
-      ctx.strokeStyle = 'rgba(255,184,28,0.18)';
-      ctx.lineWidth = 0.8;
-      for (var i=1; i<3; i++) {
-        var xi=zx1+(i/3)*(zx2-zx1), yi=zy1+(i/3)*(zy2-zy1);
-        ctx.beginPath(); ctx.moveTo(xi,zy1); ctx.lineTo(xi,zy2); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(zx1,yi); ctx.lineTo(zx2,yi); ctx.stroke();
-      }
-
-      // Axis labels
-      ctx.fillStyle = '#4a5568';
-      ctx.font = '10px DM Mono, monospace';
-      ctx.textAlign = 'center';
-      [-2,-1,0,1,2].forEach(function(xv) { ctx.fillText(xv, toCanvasX(xv), H-10); });
-      ctx.textAlign = 'right';
-      [-0.5,0,0.5,1.0].forEach(function(yv) { ctx.fillText(yv.toFixed(1), PAD_L-6, toCanvasY(yv)+4); });
-
-      ctx.fillStyle = 'rgba(255,184,28,0.25)';
-      ctx.font = '9px DM Mono, monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText('STRIKE ZONE', toCanvasX(0), zy1-6);
+  // ── Strike zone box (drawn on all views) ────────
+  function drawStrikeZone() {
+    var zx1=toCanvasX(-1), zx2=toCanvasX(1), zy1=toCanvasY(1), zy2=toCanvasY(0);
+    ctx.fillStyle = 'rgba(255,184,28,0.03)';
+    ctx.fillRect(zx1, zy1, zx2-zx1, zy2-zy1);
+    ctx.strokeStyle = 'rgba(255,184,28,0.85)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(zx1, zy1, zx2-zx1, zy2-zy1);
+    // Inner 3x3 dividers
+    ctx.strokeStyle = 'rgba(255,184,28,0.25)';
+    ctx.lineWidth = 0.8;
+    for (var i=1; i<3; i++) {
+      var xi=zx1+(i/3)*(zx2-zx1), yi=zy1+(i/3)*(zy2-zy1);
+      ctx.beginPath(); ctx.moveTo(xi,zy1); ctx.lineTo(xi,zy2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(zx1,yi); ctx.lineTo(zx2,yi); ctx.stroke();
     }
   }
 
@@ -999,200 +1005,160 @@ function renderZone(name, type, pitch, container) {
     });
   }
 
-  // ── Zone Grid (9 inner + 4 corner outer zones, like Savant) ──────
+  // ── Zone Grid: 5x5 bands (3 inner + 2 outer each axis) ──────────
   function drawGrid(filtered) {
     var total = filtered.length;
 
-    // Savant-style layout:
-    // Outer corners: top-left, top-right, bottom-left, bottom-right
-    // Inner: 3x3 grid
-    // x: [-2.5,-1] | [-1,1] inner | [1,2.5]
-    // y: [-0.8,0]  | [0,1]  inner | [1,1.5]
-    // Inner 3x3 subdivisions: thirds of [-1,1] and [0,1]
-    var X0=-2.5, XI1=-1, XI2=1, X3=2.5;
-    var Y0=-0.8, YI1=0,  YI2=1, Y3=1.5;
-    var xThird = (XI2-XI1)/3; // 0.667
-    var yThird = (YI2-YI1)/3; // 0.333
+    // 5 x-bands and 5 y-bands: outer-left, inner thirds (x3), outer-right
+    var xBands = [-2.5, -1, -0.333, 0.333, 1, 2.5];
+    var yBands = [-0.8,  0,  0.333, 0.667, 1, 1.5];
 
-    // Define all 13 zones: 4 outer corners + 9 inner
-    // Each zone: { x1, x2, y1, y2, outer }
-    var zones = [
-      // 4 outer corner zones
-      { x1:X0,       x2:XI1,        y1:YI1, y2:Y3,  outer:true  }, // left
-      { x1:XI2,      x2:X3,         y1:YI1, y2:Y3,  outer:true  }, // right
-      { x1:XI1,      x2:XI2,        y1:YI2, y2:Y3,  outer:true  }, // top
-      { x1:XI1,      x2:XI2,        y1:Y0,  y2:YI1, outer:true  }, // bottom
-      // 9 inner zones (row top to bottom, col left to right)
-      { x1:XI1+0*xThird, x2:XI1+1*xThird, y1:YI1+2*yThird, y2:YI2, outer:false },
-      { x1:XI1+1*xThird, x2:XI1+2*xThird, y1:YI1+2*yThird, y2:YI2, outer:false },
-      { x1:XI1+2*xThird, x2:XI2,          y1:YI1+2*yThird, y2:YI2, outer:false },
-      { x1:XI1+0*xThird, x2:XI1+1*xThird, y1:YI1+1*yThird, y2:YI1+2*yThird, outer:false },
-      { x1:XI1+1*xThird, x2:XI1+2*xThird, y1:YI1+1*yThird, y2:YI1+2*yThird, outer:false },
-      { x1:XI1+2*xThird, x2:XI2,          y1:YI1+1*yThird, y2:YI1+2*yThird, outer:false },
-      { x1:XI1+0*xThird, x2:XI1+1*xThird, y1:YI1,          y2:YI1+1*yThird, outer:false },
-      { x1:XI1+1*xThird, x2:XI1+2*xThird, y1:YI1,          y2:YI1+1*yThird, outer:false },
-      { x1:XI1+2*xThird, x2:XI2,          y1:YI1,          y2:YI1+1*yThird, outer:false }
-    ];
-
-    // Count pitches per zone
-    zones.forEach(function(z) {
-      z.count = filtered.filter(function(s) {
-        return s.x >= z.x1 && s.x < z.x2 && s.y >= z.y1 && s.y < z.y2;
-      }).length;
-      z.pct = total > 0 ? z.count / total * 100 : 0;
-    });
-
-    var maxInner = 0;
-    zones.filter(function(z){ return !z.outer; }).forEach(function(z){ if(z.count>maxInner) maxInner=z.count; });
-    var maxOuter = 0;
-    zones.filter(function(z){ return z.outer; }).forEach(function(z){ if(z.count>maxOuter) maxOuter=z.count; });
-
-    // Draw zones
-    zones.forEach(function(z) {
-      var cx1 = toCanvasX(z.x1), cx2 = toCanvasX(z.x2);
-      var cy1 = toCanvasY(z.y2), cy2 = toCanvasY(z.y1); // flip y
-      var cw  = cx2-cx1, ch = cy2-cy1;
-      var maxRef = z.outer ? maxOuter : maxInner;
-      var intensity = (maxRef > 0) ? z.count/maxRef : 0;
-
-      if (z.count === 0) {
-        ctx.fillStyle = z.outer ? 'rgba(255,255,255,0.03)' : 'rgba(255,184,28,0.05)';
-      } else if (!z.outer) {
-        // Inner: blue (cold) -> gold (hot)
-        var r = Math.round(96  + (255-96)  * intensity);
-        var g = Math.round(165 + (184-165) * intensity);
-        var b = Math.round(250 + (28-250)  * intensity);
-        ctx.fillStyle = 'rgba('+r+','+g+','+b+','+(0.2+0.7*intensity)+')';
-      } else {
-        // Outer: subtle blue
-        ctx.fillStyle = 'rgba(96,165,250,'+(0.05+0.35*intensity)+')';
+    // Count per cell
+    var grid = [], maxInner = 0, maxOuter = 0;
+    for (var row = 0; row < 5; row++) {
+      grid[row] = [];
+      for (var col = 0; col < 5; col++) {
+        var isInner = (row >= 1 && row <= 3 && col >= 1 && col <= 3);
+        var count = 0;
+        filtered.forEach(function(s) {
+          if (s.x >= xBands[col] && s.x < xBands[col+1] &&
+              s.y >= yBands[row] && s.y < yBands[row+1]) count++;
+        });
+        grid[row][col] = { count: count, inner: isInner };
+        var pct = total > 0 ? count / total * 100 : 0;
+        grid[row][col].pct = pct;
+        if (isInner && count > maxInner) maxInner = count;
+        if (!isInner && count > maxOuter) maxOuter = count;
       }
-      ctx.fillRect(cx1, cy1, cw, ch);
+    }
 
-      // Border
-      ctx.strokeStyle = z.outer ? 'rgba(255,255,255,0.08)' : 'rgba(255,184,28,0.4)';
-      ctx.lineWidth = z.outer ? 0.5 : 1.5;
-      ctx.strokeRect(cx1, cy1, cw, ch);
+    // Draw cells — y rows in data go bottom→top, canvas goes top→bottom, so flip row index
+    for (var row = 0; row < 5; row++) {
+      var canvasRow = 4 - row; // flip
+      for (var col = 0; col < 5; col++) {
+        var cell = grid[row][col];
+        var cx1 = toCanvasX(xBands[col]);
+        var cx2 = toCanvasX(xBands[col+1]);
+        var cy1 = toCanvasY(yBands[canvasRow+1]);
+        var cy2 = toCanvasY(yBands[canvasRow]);
+        var cw = cx2 - cx1, ch = cy2 - cy1;
+        var maxRef = cell.inner ? maxInner : maxOuter;
+        var intensity = maxRef > 0 ? cell.count / maxRef : 0;
 
-      // Percentage label
-      if (z.count > 0) {
-        var pctStr = z.pct.toFixed(1) + '%';
-        ctx.fillStyle = intensity > 0.55 ? '#fff' : 'rgba(255,255,255,0.75)';
-        ctx.font = 'bold ' + (z.outer ? '10' : '13') + 'px DM Mono, monospace';
-        ctx.textAlign = 'center';
-        ctx.fillText(pctStr, cx1+cw/2, cy1+ch/2+5);
+        // Fill color
+        if (cell.count === 0) {
+          ctx.fillStyle = cell.inner ? 'rgba(255,184,28,0.05)' : 'rgba(255,255,255,0.02)';
+        } else if (cell.inner) {
+          // Blue → Gold
+          var r = Math.round(96  + (255 - 96)  * intensity);
+          var g = Math.round(165 + (184 - 165) * intensity);
+          var b = Math.round(250 + (28  - 250) * intensity);
+          ctx.fillStyle = 'rgba('+r+','+g+','+b+','+(0.25+0.65*intensity)+')';
+        } else {
+          ctx.fillStyle = 'rgba(96,165,250,'+(0.04+0.3*intensity)+')';
+        }
+        ctx.fillRect(cx1, cy1, cw, ch);
+
+        // Border
+        ctx.strokeStyle = cell.inner ? 'rgba(255,184,28,0.45)' : 'rgba(255,255,255,0.07)';
+        ctx.lineWidth = cell.inner ? 1.5 : 0.5;
+        ctx.strokeRect(cx1, cy1, cw, ch);
+
+        // Percentage label
+        if (cell.count > 0) {
+          ctx.fillStyle = intensity > 0.5 ? '#fff' : 'rgba(255,255,255,0.8)';
+          ctx.font = 'bold ' + (cell.inner ? '13' : '10') + 'px DM Mono, monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(cell.pct.toFixed(1)+'%', cx1+cw/2, cy1+ch/2+5);
+        }
       }
-    });
+    }
   }
 
-  // ── Heat map draw ──────────────────────────────
+  // ── Heat map draw (pixel-level, bilinear interpolation) ──────────
   function drawHeatmap(filtered) {
     if (!filtered.length) return;
 
-    // Create offscreen canvas for smooth gaussian blur effect
-    var GRID_W = 40, GRID_H = 40;
-    var density = [];
-    for (var i=0; i<GRID_H; i++) {
-      density[i] = new Float32Array(GRID_W);
-    }
-
-    var SIGMA = 3.0; // blur radius in grid cells
+    var GRID_W = 120, GRID_H = 120;
+    var density = new Float32Array(GRID_W * GRID_H);
+    var SIGMA = 2.5;
 
     filtered.forEach(function(s) {
-      // Map data coords to grid coords
       var gx = ((s.x - X_MIN) / (X_MAX - X_MIN)) * GRID_W;
       var gy = GRID_H - ((s.y - Y_MIN) / (Y_MAX - Y_MIN)) * GRID_H;
-
-      // Gaussian splat
       var radius = Math.ceil(SIGMA * 3);
-      for (var dy=-radius; dy<=radius; dy++) {
-        for (var dx=-radius; dx<=radius; dx++) {
+      for (var dy = -radius; dy <= radius; dy++) {
+        for (var dx = -radius; dx <= radius; dx++) {
           var px = Math.round(gx + dx);
           var py = Math.round(gy + dy);
           if (px < 0 || px >= GRID_W || py < 0 || py >= GRID_H) continue;
-          var dist2 = dx*dx + dy*dy;
-          density[py][px] += Math.exp(-dist2 / (2 * SIGMA * SIGMA));
+          density[py * GRID_W + px] += Math.exp(-(dx*dx + dy*dy) / (2*SIGMA*SIGMA));
         }
       }
     });
 
-    // Find max density
     var maxD = 0;
-    for (var i=0; i<GRID_H; i++) {
-      for (var j=0; j<GRID_W; j++) {
-        if (density[i][j] > maxD) maxD = density[i][j];
-      }
-    }
+    for (var i = 0; i < density.length; i++) { if (density[i] > maxD) maxD = density[i]; }
     if (maxD === 0) return;
 
-    // Draw heatmap cells
-    var cellW = PW / GRID_W;
-    var cellH = PH / GRID_H;
-
-    for (var i=0; i<GRID_H; i++) {
-      for (var j=0; j<GRID_W; j++) {
-        var val = density[i][j] / maxD;
-        if (val < 0.01) continue;
-
-        // Color: cool blue -> green -> yellow -> hot red (like Savant)
+    var imgData = ctx.createImageData(PW, PH);
+    for (var py = 0; py < PH; py++) {
+      for (var px = 0; px < PW; px++) {
+        var gx = (px / PW) * GRID_W;
+        var gy = (py / PH) * GRID_H;
+        var gxi = Math.min(Math.floor(gx), GRID_W-2);
+        var gyi = Math.min(Math.floor(gy), GRID_H-2);
+        var fx = gx - gxi, fy = gy - gyi;
+        var v00 = density[ gyi    * GRID_W + gxi   ];
+        var v10 = density[ gyi    * GRID_W + gxi+1 ];
+        var v01 = density[(gyi+1) * GRID_W + gxi   ];
+        var v11 = density[(gyi+1) * GRID_W + gxi+1 ];
+        var val = (v00*(1-fx)*(1-fy) + v10*fx*(1-fy) + v01*(1-fx)*fy + v11*fx*fy) / maxD;
+        if (val < 0.02) continue;
         var r, g, b;
         if (val < 0.25) {
-          var t = val / 0.25;
-          r = Math.round(0   + t * 0);
-          g = Math.round(0   + t * 100);
-          b = Math.round(180 + t * 75);
+          var t = val/0.25; r=0; g=Math.round(t*120); b=Math.round(180+t*75);
         } else if (val < 0.5) {
-          var t = (val - 0.25) / 0.25;
-          r = Math.round(0   + t * 50);
-          g = Math.round(100 + t * 155);
-          b = Math.round(255 - t * 255);
+          var t=(val-0.25)/0.25; r=0; g=Math.round(120+t*135); b=Math.round(255-t*255);
         } else if (val < 0.75) {
-          var t = (val - 0.5) / 0.25;
-          r = Math.round(50  + t * 205);
-          g = Math.round(255 - t * 55);
-          b = 0;
+          var t=(val-0.5)/0.25; r=Math.round(t*255); g=255; b=0;
         } else {
-          var t = (val - 0.75) / 0.25;
-          r = 255;
-          g = Math.round(200 - t * 200);
-          b = 0;
+          var t=(val-0.75)/0.25; r=255; g=Math.round(255-t*255); b=0;
         }
-
-        ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + (0.15 + val * 0.75) + ')';
-        ctx.fillRect(
-          PAD_L + j * cellW,
-          PAD_T + i * cellH,
-          cellW + 0.5,
-          cellH + 0.5
-        );
+        var idx = (py * PW + px) * 4;
+        imgData.data[idx]   = r;
+        imgData.data[idx+1] = g;
+        imgData.data[idx+2] = b;
+        imgData.data[idx+3] = Math.round((0.1 + val*0.85)*255);
       }
     }
+    ctx.putImageData(imgData, PAD_L, PAD_T);
 
-    // Heat map color scale legend drawn on canvas
-    var scaleX = PAD_L + PW - 12;
-    var scaleH = PH * 0.5;
-    var scaleY = PAD_T + PH * 0.25;
-    var grad = ctx.createLinearGradient(0, scaleY, 0, scaleY + scaleH);
-    grad.addColorStop(0,    'rgba(255,0,0,0.9)');
-    grad.addColorStop(0.33, 'rgba(255,200,0,0.9)');
-    grad.addColorStop(0.66, 'rgba(0,255,0,0.9)');
-    grad.addColorStop(1,    'rgba(0,0,180,0.9)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(scaleX, scaleY, 8, scaleH);
-    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-    ctx.lineWidth = 0.5;
-    ctx.strokeRect(scaleX, scaleY, 8, scaleH);
-    ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    ctx.font = '8px DM Mono, monospace';
-    ctx.textAlign = 'left';
-    ctx.fillText('HI', scaleX + 11, scaleY + 8);
-    ctx.fillText('LO', scaleX + 11, scaleY + scaleH);
+    // Color scale
+    var scaleX=PAD_L+PW+4, scaleH=PH*0.6, scaleY=PAD_T+PH*0.2;
+    var grad=ctx.createLinearGradient(0,scaleY,0,scaleY+scaleH);
+    grad.addColorStop(0,'#ff0000'); grad.addColorStop(0.33,'#ffff00');
+    grad.addColorStop(0.66,'#00ff78'); grad.addColorStop(1,'#0000b4');
+    ctx.fillStyle=grad; ctx.fillRect(scaleX,scaleY,7,scaleH);
+    ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=0.5;
+    ctx.strokeRect(scaleX,scaleY,7,scaleH);
+    ctx.fillStyle='rgba(255,255,255,0.45)'; ctx.font='8px DM Mono,monospace';
+    ctx.textAlign='left';
+    ctx.fillText('HI',scaleX+10,scaleY+8);
+    ctx.fillText('LO',scaleX+10,scaleY+scaleH);
   }
-
   // ── Main draw ──────────────────────────────────
   function drawZone() {
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0, 0, W * DPR, H * DPR);
     var clean = (activeView === 'grid' || activeView === 'heatmap');
+
+    // Zoom in for grid/heatmap, full field for scatter
+    if (clean) {
+      setBounds(CLEAN_BOUNDS.xMin, CLEAN_BOUNDS.xMax, CLEAN_BOUNDS.yMin, CLEAN_BOUNDS.yMax);
+    } else {
+      setBounds(SCATTER_BOUNDS.xMin, SCATTER_BOUNDS.xMax, SCATTER_BOUNDS.yMin, SCATTER_BOUNDS.yMax);
+    }
+
     drawBackground(clean ? {clean:true} : {});
 
     var filtered = points.filter(function(s) { return resultMatch(s, activeResult); });
@@ -1201,17 +1167,12 @@ function renderZone(name, type, pitch, container) {
     else if (activeView === 'grid')    drawGrid(filtered);
     else if (activeView === 'heatmap') drawHeatmap(filtered);
 
+    // Strike zone drawn on ALL views
+    drawStrikeZone();
+
     // Legend visibility
     var legend = document.getElementById('zone-legend');
     if (legend) legend.style.display = activeView === 'scatter' ? '' : 'none';
-
-    // Pitch count only on scatter
-    if (activeView === 'scatter') {
-      ctx.fillStyle = 'rgba(106,123,154,0.6)';
-      ctx.font = '10px DM Mono, monospace';
-      ctx.textAlign = 'left';
-      ctx.fillText(filtered.length + ' / ' + totalPts + ' pitches shown', PAD_L, H - 10);
-    }
   }
 
   requestAnimationFrame(function() { drawZone(); });
@@ -1222,8 +1183,8 @@ function renderZone(name, type, pitch, container) {
   canvas.addEventListener('mousemove', function(e) {
     if (activeView !== 'scatter') { tooltip.classList.add('hidden'); return; }
     var rect = canvas.getBoundingClientRect();
-    var mx = (e.clientX - rect.left) * (W / rect.width);
-    var my = (e.clientY - rect.top)  * (H / rect.height);
+    var mx = (e.clientX - rect.left) * (CSS_W / rect.width);
+    var my = (e.clientY - rect.top)  * (CSS_H / rect.height);
 
     var best = null, bestDist = Infinity;
     var filtered = points.filter(function(s) { return resultMatch(s, activeResult); });
@@ -1428,4 +1389,61 @@ function initPlayerLinks(container, type) {
 }
 
 // ── START ─────────────────────────────────────────
+
+  // ── Tooltip (scatter only) ─────────────────────
+  var tooltip = document.getElementById('zone-tooltip');
+
+  canvas.addEventListener('mousemove', function(e) {
+    if (activeView !== 'scatter') { tooltip.classList.add('hidden'); return; }
+    var rect = canvas.getBoundingClientRect();
+    var mx = (e.clientX - rect.left) * (CSS_W / rect.width);
+    var my = (e.clientY - rect.top)  * (CSS_H / rect.height);
+
+    var best = null, bestDist = Infinity;
+    var filtered = points.filter(function(s) { return resultMatch(s, activeResult); });
+    filtered.forEach(function(s) {
+      var px=toCanvasX(s.x), py=toCanvasY(s.y);
+      var dist = Math.sqrt((mx-px)*(mx-px)+(my-py)*(my-py));
+      if (dist < bestDist && dist < 14) { bestDist = dist; best = s; }
+    });
+
+    if (best) {
+      canvas.style.cursor = 'pointer';
+      var ttx=toCanvasX(best.x), tty=toCanvasY(best.y);
+      var offX = ttx > W*0.65 ? -180 : 12;
+      var offY = tty > H*0.65 ? -110 : 8;
+      tooltip.style.left = (ttx+offX)+'px';
+      tooltip.style.top  = (tty+offY)+'px';
+      var t = best.pitch_type || best.type || 'Unknown';
+      var dotStyle = 'display:inline-block;width:10px;height:10px;border-radius:50%;background:'+typeColorMap[t]+';margin-right:6px;vertical-align:middle';
+      tooltip.innerHTML =
+        '<div class="zt-pitch"><span style="'+dotStyle+'"></span>'+t+'</div>'+
+        '<div class="zt-row"><span>Outcome</span><span>'+(best.outcome||'—')+'</span></div>'+
+        '<div class="zt-row"><span>Count</span><span>'+(best.count||'—')+'</span></div>'+
+        '<div class="zt-row"><span>Pitcher</span><span>'+(best.pitcher||'—')+'</span></div>'+
+        (best.contact ? '<div class="zt-row"><span>Contact</span><span>'+best.contact+'</span></div>' : '')+
+        (best.spray   ? '<div class="zt-row"><span>Spray</span><span>'+best.spray+'</span></div>' : '')+
+        '<div class="zt-coords">x: '+(best.x!=null?best.x.toFixed(3):'—')+'  y: '+(best.y!=null?best.y.toFixed(3):'—')+'</div>';
+      tooltip.classList.remove('hidden');
+    } else {
+      canvas.style.cursor = 'default';
+      tooltip.classList.add('hidden');
+    }
+  });
+
+  canvas.addEventListener('mouseleave', function() {
+    tooltip.classList.add('hidden');
+    canvas.style.cursor = 'default';
+  });
+
+  // ── Filter buttons ─────────────────────────────
+  container.querySelectorAll('#zone-view-btns .zone-filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      container.querySelectorAll('#zone-view-btns .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeView = btn.dataset.view;
+      tooltip.classList.add('hidden');
+      drawZone();
+    });
+  });
 init();
