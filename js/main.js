@@ -1567,11 +1567,11 @@ function buildSplitsTables(points) {
   if (!total) return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No data for this filter</h3></div>';
 
   var COUNT_GROUPS = [
-    { key: 'all',    label: 'All Counts',    test: function()  { return true; } },
-    { key: 'early',  label: 'Early Count',   test: function(c) { return ['0-0','1-0','0-1'].includes(c); } },
-    { key: 'ahead',  label: 'Pitcher Ahead', test: function(c) { return ['0-1','0-2','1-2'].includes(c); } },
-    { key: 'behind', label: 'Pitcher Behind',test: function(c) { return ['1-0','2-0','3-0','2-1','3-1'].includes(c); } },
-    { key: 'pre2k',  label: 'Pre-2K',        test: function(c) { return ['0-0','1-0','2-0','3-0','1-1','2-1','3-1'].includes(c); } }
+    { key: 'all',    label: 'All Counts',    test: function()     { return true; } },
+    { key: 'early',  label: 'Early Count',   test: function(c) { c=c.replace(/^'/,''); return ['0-0','1-0','0-1'].includes(c); } },
+    { key: 'ahead',  label: 'Pitcher Ahead', test: function(c) { c=c.replace(/^'/,''); return ['0-1','0-2','1-2'].includes(c); } },
+    { key: 'behind', label: 'Pitcher Behind',test: function(c) { c=c.replace(/^'/,''); return ['1-0','2-0','3-0','2-1','3-1'].includes(c); } },
+    { key: 'pre2k',  label: 'Pre-2K',        test: function(c) { c=c.replace(/^'/,''); return ['0-0','1-0','2-0','3-0','1-1','2-1','3-1'].includes(c); } }
   ];
 
   var typeSet = [];
