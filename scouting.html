@@ -672,7 +672,7 @@
   }
   function drawSec(d,text,y){
     d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
-    d.text('▸  '+text.toUpperCase(),ML,y);
+    d.text('-- '+text.toUpperCase(),ML,y);
     sd(d,CO.navy3);d.setLineWidth(0.3);d.line(ML+32,y-1,ML+CPW,y-1);
     return y+5;
   }
@@ -884,27 +884,57 @@
     }
     var scXY=sc.filter(function(s){return s.x!=null&&s.y!=null;});
     if(scXY.length){y=drawSec(d,'Strike Zone Analysis',y);y=addCharts(d,scXY,y);}
-    ['R','L'].forEach(function(hand){
-      var sub=sc.filter(function(s){return s.batter_side===hand;});if(!sub.length)return;
-      if(y>210){d.addPage();drawBg(d);y=MT+8;}
-      y=drawSec(d,'vs '+(hand==='R'?'Right':'Left')+'-Handed Batters',y);
+    // Build RHH and LHH splits side by side
+    var splitData=['R','L'].map(function(hand){
+      var sub=sc.filter(function(s){return s.batter_side===hand;});
       var sk=sub.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
       var sb=sub.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
       var ss=sub.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
       var sz=sub.filter(function(s){return s.x!=null&&s.x>=-1&&s.x<=1&&s.y!=null&&s.y>=0&&s.y<=1;}).length;
-      y=drawTbl(d,['PITCHES','K','BB','STR%','ZN%'],
-        [[sub.length,sk,sb,f1(xp(ss,sub.length))+'%',f1(xp(sz,sub.length))+'%'].map(String)],
-        Array(5).fill(CPW/5),y);y+=4;
-      var subXY=sub.filter(function(s){return s.x!=null&&s.y!=null;});
-      if(subXY.length){
-        var iw=100,ih=115;
-        d.addImage(mkHeat(subXY),'PNG',ML,y,iw,ih);
-        d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
-        d.text('vs. '+(hand==='R'?'RHH':'LHH')+' Heat Map',ML+iw/2,y+ih+3,{align:'center'});
-        y+=ih+8;
-      }
-      y+=4;
+      return {hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(function(s){return s.x!=null&&s.y!=null;})};
     });
+    var iw=CPW/2-4,ih=Math.round(iw*1.15),gap=8;
+    // Section headers side by side
+    if(y>200){d.addPage();drawBg(d);y=MT+8;}
+    splitData.forEach(function(sd2,i){
+      if(!sd2.sub.length)return;
+      var xOff=ML+i*(iw+gap);
+      d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
+      d.text('VS '+(sd2.hand==='R'?'RHH':'LHH'),xOff+iw/2,y,{align:'center'});
+    });
+    y+=5;
+    // Stat rows side by side
+    splitData.forEach(function(sd2,i){
+      if(!sd2.sub.length)return;
+      var xOff=ML+i*(iw+gap);
+      var cw=iw/5;
+      var headers=['PITCHES','K','BB','STR%','ZN%'];
+      var row=[sd2.sub.length,sd2.sk,sd2.sb,f1(xp(sd2.ss,sd2.sub.length))+'%',f1(xp(sd2.sz,sd2.sub.length))+'%'].map(String);
+      // header row
+      sf(d,CO.navy2);d.rect(xOff,y,iw,8,'F');
+      sd(d,CO.gold);d.setLineWidth(0.3);d.line(xOff,y+8,xOff+iw,y+8);
+      d.setFont('helvetica','bold');d.setFontSize(6);st(d,CO.gold);
+      var cx=xOff;
+      headers.forEach(function(h){d.text(h,cx+cw/2,y+5,{align:'center'});cx+=cw;});
+      // data row
+      sf(d,CO.navy3);d.rect(xOff,y+8,iw,7,'F');
+      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.white);
+      cx=xOff;
+      row.forEach(function(v,vi){
+        if(vi===0||vi===1||vi===2){d.setFont('helvetica','bold');st(d,CO.white);}else{d.setFont('helvetica','normal');st(d,CO.dim);}
+        d.text(v,cx+cw/2,y+13,{align:'center'});cx+=cw;
+      });
+    });
+    y+=20;
+    // Heat maps side by side
+    splitData.forEach(function(sd2,i){
+      if(!sd2.subXY.length)return;
+      var xOff=ML+i*(iw+gap);
+      d.addImage(mkHeat(sd2.subXY),'PNG',xOff,y,iw,ih);
+      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
+      d.text('vs. '+(sd2.hand==='R'?'RHH':'LHH')+' Heat Map',xOff+iw/2,y+ih+3,{align:'center'});
+    });
+    y+=ih+10;
     drawFoot(d,player.name,'PITCHER');
     d.save('scouting_'+player.name.replace(/ /g,'_')+'_pitcher.pdf');
   }
