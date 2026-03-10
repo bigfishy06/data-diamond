@@ -184,11 +184,11 @@ function buildHomeTeamsGrid() {
     const pitcherNames = new Set();
     DATA.pitches.forEach(function(bp) {
       if (!bp.scatter) return;
-      const bSum = getSummaryPlayer(bp.batter);
-      if (!bSum) return;
-      const bt = resolveTeam(bSum.batter_team);
-      if (!bt || bt.id === team.id) return;
-      bp.scatter.forEach(function(s) { if (s.pitcher) pitcherNames.add(s.pitcher); });
+      bp.scatter.forEach(function(s) {
+        if (!s.pitcher) return;
+        const pt = resolveTeam(s.pitcher_team);
+        if (pt && pt.id === team.id) pitcherNames.add(s.pitcher);
+      });
     });
     const playerCount = batterCount + pitcherNames.size;
     const card = document.createElement('div');
