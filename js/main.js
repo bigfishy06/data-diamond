@@ -626,7 +626,7 @@ function renderPlayerDetail(name, type, content) {
     const hlERA  = pd.ERA  != null ? fmt2(pd.ERA)            : '—';
     const hlWHIP = pd.WHIP != null ? fmt2(pd.WHIP)           : '—';
     const hlKBB  = pd.K_BB != null ? fmt2(pd.K_BB)           : '—';
-    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP], ['K/BB', hlKBB]].forEach(function(s) {
+    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   }
@@ -718,22 +718,37 @@ function renderOverview(name, type, sum, pitch) {
       { lbl: 'STR%', val: fmt1(str/tot*100) + '%',  pct: str/tot },
       { lbl: 'ZN%',  val: fmt1(inZone/tot*100) + '%', pct: inZone/tot }
     ];
-    const counting = [['Pitches', tot], ['K', ks], ['BB', bbs], ['Strikes', str], ['Zone Pitches', inZone]];
-    return '<div class="overview-grid">' +
-      '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Pitch Metrics</span>' +
+  if (type === 'pitcher' && pitch && pitch.scatter) {
+    const sc      = pitch.scatter;
+    const tot     = sc.filter(function(s) { return s.outcome && s.outcome !== ''; }).length;
+    const ks      = sc.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+    const bbs     = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+    const str     = sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+    const swStr   = sc.filter(function(s) { return s.outcome === 'Swinging Strike'; }).length;
+    const inPlay  = sc.filter(function(s) { return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+    const fouls   = sc.filter(function(s) { return s.outcome === 'Foul'; }).length;
+    const swings  = swStr + fouls + inPlay;
+    const pd      = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
+    const ea      = pd.EA_pct != null ? fmt1(pd.EA_pct) + '%' : '—';
+    const kbb     = pd.K_BB   != null ? fmt2(pd.K_BB)         : '—';
+    const bars = [
+      { lbl: 'STR%',     val: tot > 0    ? fmt1(str/tot*100) + '%'             : '—', pct: tot > 0    ? str/tot                 : 0 },
+      { lbl: 'SWING%',   val: tot > 0    ? fmt1(swings/tot*100) + '%'          : '—', pct: tot > 0    ? swings/tot              : 0 },
+      { lbl: 'WHIFF%',   val: swings > 0 ? fmt1(swStr/swings*100) + '%'        : '—', pct: swings > 0 ? swStr/swings            : 0 },
+      { lbl: 'CONTACT%', val: swings > 0 ? fmt1((fouls+inPlay)/swings*100)+'%' : '—', pct: swings > 0 ? (fouls+inPlay)/swings   : 0 },
+      { lbl: 'K%',       val: tot > 0    ? fmt1(ks/tot*100) + '%'              : '—', pct: tot > 0    ? ks/tot                  : 0 },
+      { lbl: 'BB%',      val: tot > 0    ? fmt1(bbs/tot*100) + '%'             : '—', pct: tot > 0    ? bbs/tot                 : 0 },
+      { lbl: 'E+A%',     val: ea,  pct: pd.EA_pct != null ? pd.EA_pct/100              : 0 },
+      { lbl: 'K/BB',     val: kbb, pct: pd.K_BB   != null ? Math.min(pd.K_BB/10, 1)   : 0 }
+    ];
+    return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Pitch Metrics</span>' +
       '<span class="stat-card-subtitle">' + tot + ' pitches</span></div>' +
       '<div style="padding:16px 24px">' +
       bars.map(function(b) {
         return '<div class="stat-bar-row"><div class="sbr-label">' + b.lbl + '</div>' +
           '<div class="sbr-bar"><div class="sbr-fill" style="width:0%" data-width="' + Math.min((b.pct||0)*100,100).toFixed(1) + '%"></div></div>' +
           '<div class="sbr-val">' + b.val + '</div></div>';
-      }).join('') + '</div></div>' +
-      '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Totals</span></div>' +
-      '<div style="padding:0"><table class="stat-table"><tbody>' +
-      counting.map(function(c) {
-        return '<tr><td style="color:var(--text-dim)">' + c[0] + '</td>' +
-          '<td class="highlight-val" style="text-align:right">' + c[1] + '</td></tr>';
-      }).join('') + '</tbody></table></div></div></div>';
+      }).join('') + '</div></div>';
   }
 
   return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No data available</h3></div>';
