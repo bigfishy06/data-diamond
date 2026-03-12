@@ -1200,9 +1200,9 @@ function renderZone(name, type, pitch, container) {
   function drawHeatmap(filtered) {
     if (!filtered.length) return;
 
-    var GW = 64, GH = 64;
+    var GW = 100, GH = 100;
     var density = new Float32Array(GW * GH);
-    var SIGMA = 3.0;
+    var SIGMA = 2.0;
 
     filtered.forEach(function(s) {
       var gx = ((s.x - X_MIN) / (X_MAX - X_MIN)) * GW;
