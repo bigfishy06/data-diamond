@@ -706,19 +706,6 @@ function renderOverview(name, type, sum, pitch) {
   }
 
   if (type === 'pitcher' && pitch && pitch.scatter) {
-    const sc  = pitch.scatter;
-    const tot = sc.filter(function(s) { return s.outcome && s.outcome !== ''; }).length;
-    const ks  = sc.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
-    const bbs = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
-    const str = sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
-    const inZone = sc.filter(function(s) { return s.x >= -1 && s.x <= 1 && s.y >= 0 && s.y <= 1.5; }).length;
-    const bars = [
-      { lbl: 'K%',   val: fmt1(ks/tot*100) + '%',   pct: ks/tot },
-      { lbl: 'BB%',  val: fmt1(bbs/tot*100) + '%',  pct: 1 - bbs/tot },
-      { lbl: 'STR%', val: fmt1(str/tot*100) + '%',  pct: str/tot },
-      { lbl: 'ZN%',  val: fmt1(inZone/tot*100) + '%', pct: inZone/tot }
-    ];
-  if (type === 'pitcher' && pitch && pitch.scatter) {
     const sc      = pitch.scatter;
     const tot     = sc.filter(function(s) { return s.outcome && s.outcome !== ''; }).length;
     const ks      = sc.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
