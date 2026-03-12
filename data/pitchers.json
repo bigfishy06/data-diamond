@@ -21,7 +21,7 @@
     "WHIP": 2,
     "K_pct": 3.3,
     "BB_pct": 3.3,
-    "K_BB": 0,
+    "K_BB": 1,
     "STR_pct": 43.3,
     "scatter": [
       {
@@ -618,7 +618,7 @@
     "WHIP": 2.86,
     "K_pct": 0,
     "BB_pct": 9.1,
-    "K_BB": -9.1,
+    "K_BB": 0,
     "STR_pct": 18.2,
     "scatter": [
       {
@@ -854,7 +854,7 @@
     "WHIP": 1.18,
     "K_pct": 6.5,
     "BB_pct": 0,
-    "K_BB": 6.5,
+    "K_BB": null,
     "STR_pct": 38.7,
     "scatter": [
       {
@@ -1470,7 +1470,7 @@
     "WHIP": 3,
     "K_pct": 6.5,
     "BB_pct": 5.2,
-    "K_BB": 1.3,
+    "K_BB": 1.25,
     "STR_pct": 39,
     "scatter": [
       {
@@ -2960,7 +2960,7 @@
     "WHIP": 1.7,
     "K_pct": 4.8,
     "BB_pct": 0,
-    "K_BB": 4.8,
+    "K_BB": null,
     "STR_pct": 37.1,
     "scatter": [
       {
@@ -4165,7 +4165,7 @@
     "WHIP": 1.14,
     "K_pct": 6.5,
     "BB_pct": 2.8,
-    "K_BB": 3.7,
+    "K_BB": 2.33,
     "STR_pct": 43.5,
     "scatter": [
       {
@@ -6206,7 +6206,7 @@
     "WHIP": 4,
     "K_pct": 6.2,
     "BB_pct": 3.1,
-    "K_BB": 3.1,
+    "K_BB": 2,
     "STR_pct": 56.2,
     "scatter": [
       {
@@ -6822,7 +6822,7 @@
     "WHIP": 1.67,
     "K_pct": 7.4,
     "BB_pct": 0,
-    "K_BB": 7.4,
+    "K_BB": null,
     "STR_pct": 46.3,
     "scatter": [
       {
@@ -7875,7 +7875,7 @@
     "WHIP": 2,
     "K_pct": 0,
     "BB_pct": 0,
-    "K_BB": 0,
+    "K_BB": null,
     "STR_pct": 61.5,
     "scatter": [
       {
@@ -8149,7 +8149,7 @@
     "WHIP": 0.5,
     "K_pct": 12.1,
     "BB_pct": 3,
-    "K_BB": 9.1,
+    "K_BB": 4,
     "STR_pct": 60.6,
     "scatter": [
       {
@@ -8803,7 +8803,7 @@
     "WHIP": 0,
     "K_pct": 0,
     "BB_pct": 0,
-    "K_BB": 0,
+    "K_BB": null,
     "STR_pct": 0,
     "scatter": [
       {
@@ -8906,7 +8906,7 @@
     "WHIP": 0.5,
     "K_pct": 5.6,
     "BB_pct": 0,
-    "K_BB": 5.6,
+    "K_BB": null,
     "STR_pct": 44.4,
     "scatter": [
       {
@@ -9275,7 +9275,7 @@
     "WHIP": 3,
     "K_pct": 6.7,
     "BB_pct": 3.3,
-    "K_BB": 3.4,
+    "K_BB": 2,
     "STR_pct": 43.3,
     "scatter": [
       {
@@ -9815,7 +9815,7 @@
     "WHIP": 4.5,
     "K_pct": 2.2,
     "BB_pct": 2.2,
-    "K_BB": 0,
+    "K_BB": 1,
     "STR_pct": 39.1,
     "scatter": [
       {
@@ -10716,7 +10716,7 @@
     "WHIP": 1.18,
     "K_pct": 6.5,
     "BB_pct": 0,
-    "K_BB": 6.5,
+    "K_BB": null,
     "STR_pct": 48.4,
     "scatter": [
       {
@@ -11332,7 +11332,7 @@
     "WHIP": 2,
     "K_pct": 6.2,
     "BB_pct": 0,
-    "K_BB": 6.2,
+    "K_BB": null,
     "STR_pct": 43.8,
     "scatter": [
       {
@@ -11663,7 +11663,7 @@
     "WHIP": 1.48,
     "K_pct": 6.8,
     "BB_pct": 2.3,
-    "K_BB": 4.5,
+    "K_BB": 3,
     "STR_pct": 47.7,
     "scatter": [
       {
@@ -12526,7 +12526,7 @@
     "WHIP": 0.5,
     "K_pct": 10.3,
     "BB_pct": 0,
-    "K_BB": 10.3,
+    "K_BB": null,
     "STR_pct": 48.3,
     "scatter": [
       {
@@ -13085,7 +13085,7 @@
     "WHIP": 3,
     "K_pct": 4.9,
     "BB_pct": 2.4,
-    "K_BB": 2.5,
+    "K_BB": 2,
     "STR_pct": 43.9,
     "scatter": [
       {
@@ -13891,7 +13891,7 @@
     "WHIP": 1.82,
     "K_pct": 10.8,
     "BB_pct": 3.1,
-    "K_BB": 7.7,
+    "K_BB": 3.5,
     "STR_pct": 58.5,
     "scatter": [
       {
@@ -15153,7 +15153,7 @@
     "WHIP": 4,
     "K_pct": 0,
     "BB_pct": 5.3,
-    "K_BB": -5.3,
+    "K_BB": 0,
     "STR_pct": 31.6,
     "scatter": [
       {
@@ -15541,7 +15541,7 @@
     "WHIP": 0.8,
     "K_pct": 14.9,
     "BB_pct": 0,
-    "K_BB": 14.9,
+    "K_BB": null,
     "STR_pct": 60.8,
     "scatter": [
       {
@@ -16974,7 +16974,7 @@
     "WHIP": 3,
     "K_pct": 0,
     "BB_pct": 8,
-    "K_BB": -8,
+    "K_BB": 0,
     "STR_pct": 32,
     "scatter": [
       {
@@ -17457,7 +17457,7 @@
     "WHIP": 0,
     "K_pct": 0,
     "BB_pct": 0,
-    "K_BB": 0,
+    "K_BB": null,
     "STR_pct": 37.5,
     "scatter": [
       {
@@ -17636,7 +17636,7 @@
     "WHIP": 5.71,
     "K_pct": 4,
     "BB_pct": 4,
-    "K_BB": 0,
+    "K_BB": 1,
     "STR_pct": 32,
     "scatter": [
       {
@@ -18138,7 +18138,7 @@
     "WHIP": 2.33,
     "K_pct": 3.2,
     "BB_pct": 6.5,
-    "K_BB": -3.3,
+    "K_BB": 0.5,
     "STR_pct": 30.6,
     "scatter": [
       {
@@ -19343,7 +19343,7 @@
     "WHIP": 3,
     "K_pct": 0,
     "BB_pct": 5,
-    "K_BB": -5,
+    "K_BB": 0,
     "STR_pct": 30,
     "scatter": [
       {
@@ -19750,7 +19750,7 @@
     "WHIP": 3.67,
     "K_pct": 2,
     "BB_pct": 8.2,
-    "K_BB": -6.2,
+    "K_BB": 0.25,
     "STR_pct": 42.9,
     "scatter": [
       {
@@ -21639,7 +21639,7 @@
     "WHIP": 5.71,
     "K_pct": 6.7,
     "BB_pct": 13.3,
-    "K_BB": -6.6,
+    "K_BB": 0.5,
     "STR_pct": 33.3,
     "scatter": [
       {
@@ -22236,7 +22236,7 @@
     "WHIP": 1.33,
     "K_pct": 6.2,
     "BB_pct": 4.2,
-    "K_BB": 2,
+    "K_BB": 1.5,
     "STR_pct": 41.7,
     "scatter": [
       {
@@ -23156,7 +23156,7 @@
     "WHIP": 2.5,
     "K_pct": 3.8,
     "BB_pct": 3.8,
-    "K_BB": 0,
+    "K_BB": 1,
     "STR_pct": 40,
     "scatter": [
       {
@@ -24682,29 +24682,29 @@
     ]
   },
   {
-    "pitcher": "Koki Takashi",
+    "pitcher": "Koki Togashi",
     "pitcher_team": "Brantford Red Sox",
-    "total_pitches": 50,
-    "R": 1,
-    "ER": 1,
-    "K": 1,
+    "total_pitches": 71,
+    "R": 3,
+    "ER": 3,
+    "K": 2,
     "BB": 4,
-    "H": 2,
-    "strikes": 22,
-    "IP": 1.3,
-    "BF": 10,
-    "Early": 4,
-    "Ahead": 3,
-    "EA": 7,
-    "EA_pct": 70,
-    "Early_pct": 40,
-    "Ahead_pct": 30,
-    "ERA": 6.92,
-    "WHIP": 4.62,
-    "K_pct": 2,
-    "BB_pct": 8,
-    "K_BB": -6,
-    "STR_pct": 44,
+    "H": 6,
+    "strikes": 30,
+    "IP": 2.3,
+    "BF": 17,
+    "Early": 7,
+    "Ahead": 5,
+    "EA": 12,
+    "EA_pct": 70.6,
+    "Early_pct": 41.2,
+    "Ahead_pct": 29.4,
+    "ERA": 11.74,
+    "WHIP": 4.35,
+    "K_pct": 2.8,
+    "BB_pct": 5.6,
+    "K_BB": 0.5,
+    "STR_pct": 42.3,
     "scatter": [
       {
         "x": 0.7063,
@@ -25655,34 +25655,7 @@
         "pitcher_side": "R",
         "date": "2025-05-16",
         "in_zone": false
-      }
-    ]
-  },
-  {
-    "pitcher": "Koki Togashi",
-    "pitcher_team": "Brantford Red Sox",
-    "total_pitches": 21,
-    "R": 3,
-    "ER": 3,
-    "K": 1,
-    "BB": 0,
-    "H": 4,
-    "strikes": 8,
-    "IP": 1,
-    "BF": 7,
-    "Early": 3,
-    "Ahead": 2,
-    "EA": 5,
-    "EA_pct": 71.4,
-    "Early_pct": 42.9,
-    "Ahead_pct": 28.6,
-    "ERA": 27,
-    "WHIP": 4,
-    "K_pct": 4.8,
-    "BB_pct": 0,
-    "K_BB": 4.8,
-    "STR_pct": 38.1,
-    "scatter": [
+      },
       {
         "x": 0.4852,
         "y": 0.3391,
@@ -26106,7 +26079,7 @@
     "WHIP": 2,
     "K_pct": 0,
     "BB_pct": 0,
-    "K_BB": 0,
+    "K_BB": null,
     "STR_pct": 47.4,
     "scatter": [
       {
@@ -26475,7 +26448,7 @@
     "WHIP": 1.9,
     "K_pct": 2.5,
     "BB_pct": 6.1,
-    "K_BB": -3.6,
+    "K_BB": 0.42,
     "STR_pct": 39.6,
     "scatter": [
       {
@@ -30207,7 +30180,7 @@
     "WHIP": 1.75,
     "K_pct": 8.5,
     "BB_pct": 3.7,
-    "K_BB": 4.8,
+    "K_BB": 2.33,
     "STR_pct": 46.3,
     "scatter": [
       {
@@ -31754,7 +31727,7 @@
     "WHIP": 5.71,
     "K_pct": 0,
     "BB_pct": 6.1,
-    "K_BB": -6.1,
+    "K_BB": 0,
     "STR_pct": 33.3,
     "scatter": [
       {
@@ -32408,7 +32381,7 @@
     "WHIP": 1.76,
     "K_pct": 8.6,
     "BB_pct": 2.9,
-    "K_BB": 5.7,
+    "K_BB": 3,
     "STR_pct": 51.4,
     "scatter": [
       {
@@ -33081,7 +33054,7 @@
     "WHIP": 2.26,
     "K_pct": 4.1,
     "BB_pct": 1,
-    "K_BB": 3.1,
+    "K_BB": 4,
     "STR_pct": 41.2,
     "scatter": [
       {
@@ -34932,7 +34905,7 @@
     "WHIP": 2.94,
     "K_pct": 6.1,
     "BB_pct": 4.1,
-    "K_BB": 2,
+    "K_BB": 1.5,
     "STR_pct": 49,
     "scatter": [
       {
@@ -35890,7 +35863,7 @@
     "WHIP": 1.33,
     "K_pct": 10.8,
     "BB_pct": 0,
-    "K_BB": 10.8,
+    "K_BB": null,
     "STR_pct": 43.2,
     "scatter": [
       {
@@ -36582,7 +36555,7 @@
     "WHIP": 1.18,
     "K_pct": 7.1,
     "BB_pct": 0,
-    "K_BB": 7.1,
+    "K_BB": null,
     "STR_pct": 50,
     "scatter": [
       {
@@ -37141,7 +37114,7 @@
     "WHIP": 1.75,
     "K_pct": 8.9,
     "BB_pct": 2.5,
-    "K_BB": 6.4,
+    "K_BB": 3.5,
     "STR_pct": 40.5,
     "scatter": [
       {
@@ -40216,7 +40189,7 @@
     "WHIP": 0,
     "K_pct": 15.4,
     "BB_pct": 0,
-    "K_BB": 15.4,
+    "K_BB": null,
     "STR_pct": 69.2,
     "scatter": [
       {

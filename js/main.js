@@ -317,7 +317,7 @@ function renderPitchingLeaderboards(container) {
     { title: 'ERA',     key: 'ERA',       fmt: function(v) { return fmt2(v); },       desc: false },
     { title: 'WHIP',    key: 'WHIP',      fmt: function(v) { return fmt2(v); },       desc: false },
     { title: 'K%',      key: 'K_pct',     fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
-    { title: 'K-BB%',   key: 'K_BB',      fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
+    { title: 'K/BB',    key: 'K_BB',      fmt: function(v) { return fmt2(v); },        desc: true  },
     { title: 'STR%',    key: 'STR_pct',   fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
     { title: 'BB%',     key: 'BB_pct',    fmt: function(v) { return fmt1(v) + '%'; }, desc: false },
     { title: 'E+A%',    key: 'EA_pct',    fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
@@ -625,8 +625,8 @@ function renderPlayerDetail(name, type, content) {
     const hlIP   = pd.IP   != null ? fmtIP(pd.IP)           : '—';
     const hlERA  = pd.ERA  != null ? fmt2(pd.ERA)            : '—';
     const hlWHIP = pd.WHIP != null ? fmt2(pd.WHIP)           : '—';
-    const hlKBB  = pd.K_BB != null ? fmt1(pd.K_BB) + '%'     : '—';
-    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP], ['K-BB%', hlKBB]].forEach(function(s) {
+    const hlKBB  = pd.K_BB != null ? fmt2(pd.K_BB)           : '—';
+    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP], ['K/BB', hlKBB]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   }
@@ -775,7 +775,7 @@ function renderSeasonStats(name, type, sum, pitch) {
     const pd = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
     const era   = pd.ERA      != null ? fmt2(pd.ERA)      : '—';
     const whip  = pd.WHIP     != null ? fmt2(pd.WHIP)     : '—';
-    const kbb   = pd.K_BB     != null ? fmt1(pd.K_BB) + '%' : '—';
+    const kbb   = pd.K_BB     != null ? fmt2(pd.K_BB)        : '—';
     const ip    = pd.IP       != null ? fmtIP(pd.IP)      : '—';
     const early = pd.Early_pct != null ? fmt1(pd.Early_pct) + '%' : '—';
     const ahead = pd.Ahead_pct != null ? fmt1(pd.Ahead_pct) + '%' : '—';
@@ -784,7 +784,7 @@ function renderSeasonStats(name, type, sum, pitch) {
 
     return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Full Season Pitching</span></div>' +
       '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-      '<th>IP</th><th>BF</th><th>ERA</th><th>WHIP</th><th>PITCHES</th><th>K</th><th>BB</th><th>K%</th><th>BB%</th><th>K-BB%</th><th>STR%</th><th>ZN%</th><th>E+A%</th><th>EARLY%</th><th>AHEAD%</th><th>SW-STR</th><th>CL-STR</th>' +
+      '<th>IP</th><th>BF</th><th>ERA</th><th>WHIP</th><th>PITCHES</th><th>K</th><th>BB</th><th>K%</th><th>BB%</th><th>K/BB</th><th>STR%</th><th>ZN%</th><th>E+A%</th><th>EARLY%</th><th>AHEAD%</th><th>SW-STR</th><th>CL-STR</th>' +
       '</tr></thead><tbody><tr>' +
       '<td>' + ip + '</td>' +
       '<td>' + bf + '</td>' +
