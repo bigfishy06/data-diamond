@@ -79,6 +79,13 @@ function fmtN(v) {
   if (v == null || isNaN(v)) return '—';
   return Math.round(v);
 }
+function fmtIP(v) {
+  if (v == null || isNaN(v)) return '—';
+  const totalOuts = Math.round(parseFloat(v) * 3);
+  const innings = Math.floor(totalOuts / 3);
+  const outs = totalOuts % 3;
+  return innings + '.' + outs;
+}
 function hexToRgba(hex, a) {
   const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
   return 'rgba('+r+','+g+','+b+','+a+')';
@@ -313,6 +320,7 @@ function renderPitchingLeaderboards(container) {
     { title: 'K-BB%',   key: 'K_BB',      fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
     { title: 'STR%',    key: 'STR_pct',   fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
     { title: 'BB%',     key: 'BB_pct',    fmt: function(v) { return fmt1(v) + '%'; }, desc: false },
+    { title: 'E+A%',    key: 'EA_pct',    fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
     { title: 'EARLY%',  key: 'Early_pct', fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
     { title: 'AHEAD%',  key: 'Ahead_pct', fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
     { title: 'PITCHES', key: 'total_pitches', fmt: fmtN, desc: true }
@@ -613,7 +621,12 @@ function renderPlayerDetail(name, type, content) {
     const ks  = sc.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
     const bbs = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
     const strPct = tot > 0 ? Math.round(sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length / tot * 100) : 0;
-    [['PITCHES', tot], ['K', ks], ['BB', bbs], ['STR%', strPct + '%']].forEach(function(s) {
+    const pd = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
+    const hlIP   = pd.IP   != null ? fmtIP(pd.IP)           : '—';
+    const hlERA  = pd.ERA  != null ? fmt2(pd.ERA)            : '—';
+    const hlWHIP = pd.WHIP != null ? fmt2(pd.WHIP)           : '—';
+    const hlKBB  = pd.K_BB != null ? fmt1(pd.K_BB) + '%'     : '—';
+    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP], ['K-BB%', hlKBB]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   }
@@ -760,18 +773,21 @@ function renderSeasonStats(name, type, sum, pitch) {
 
     // Pull extra stats from pitchers.json
     const pd = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
-    const era   = pd.ERA  != null ? fmt2(pd.ERA)  : '—';
-    const whip  = pd.WHIP != null ? fmt2(pd.WHIP) : '—';
-    const kbb   = pd.K_BB != null ? fmt1(pd.K_BB) + '%' : '—';
-    const ip    = pd.IP   != null ? fmt1(pd.IP)   : '—';
+    const era   = pd.ERA      != null ? fmt2(pd.ERA)      : '—';
+    const whip  = pd.WHIP     != null ? fmt2(pd.WHIP)     : '—';
+    const kbb   = pd.K_BB     != null ? fmt1(pd.K_BB) + '%' : '—';
+    const ip    = pd.IP       != null ? fmtIP(pd.IP)      : '—';
     const early = pd.Early_pct != null ? fmt1(pd.Early_pct) + '%' : '—';
     const ahead = pd.Ahead_pct != null ? fmt1(pd.Ahead_pct) + '%' : '—';
+    const ea    = pd.EA_pct   != null ? fmt1(pd.EA_pct) + '%'  : '—';
+    const bf    = pd.BF       != null ? fmtN(pd.BF)      : '—';
 
     return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Full Season Pitching</span></div>' +
       '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-      '<th>IP</th><th>ERA</th><th>WHIP</th><th>PITCHES</th><th>K</th><th>BB</th><th>K%</th><th>BB%</th><th>K-BB%</th><th>STR%</th><th>ZN%</th><th>EARLY%</th><th>AHEAD%</th><th>SW-STR</th><th>CL-STR</th>' +
+      '<th>IP</th><th>BF</th><th>ERA</th><th>WHIP</th><th>PITCHES</th><th>K</th><th>BB</th><th>K%</th><th>BB%</th><th>K-BB%</th><th>STR%</th><th>ZN%</th><th>E+A%</th><th>EARLY%</th><th>AHEAD%</th><th>SW-STR</th><th>CL-STR</th>' +
       '</tr></thead><tbody><tr>' +
       '<td>' + ip + '</td>' +
+      '<td>' + bf + '</td>' +
       '<td class="highlight-val">' + era + '</td>' +
       '<td class="highlight-val">' + whip + '</td>' +
       '<td>' + tot + '</td>' +
@@ -782,6 +798,7 @@ function renderSeasonStats(name, type, sum, pitch) {
       '<td class="highlight-val">' + kbb + '</td>' +
       '<td>' + fmt1(str/tot*100) + '%</td>' +
       '<td>' + fmt1(inZone/tot*100) + '%</td>' +
+      '<td class="highlight-val">' + ea + '</td>' +
       '<td>' + early + '</td>' +
       '<td>' + ahead + '</td>' +
       '<td>' + swStr + '</td>' +
