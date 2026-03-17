@@ -28,7 +28,7 @@ function resolveTeam(rawName) {
   }) || null;
 }
 
-let DATA = { summary: [], pitches: [], pitchers: [] };
+let DATA = { summary: [], pitches: [], pitchers: [], iblHistory: {} };
 
 // ── INIT ──────────────────────────────────────────
 async function init() {
@@ -46,17 +46,20 @@ async function init() {
 async function loadAll() {
   try {
     const base = getBase();
-    const [sumRes, pitRes, pitcherRes] = await Promise.all([
+    const [sumRes, pitRes, pitcherRes, iblRes] = await Promise.all([
       fetch(base + 'data/summary.json'),
       fetch(base + 'data/pitches.json'),
-      fetch(base + 'data/pitchers.json')
+      fetch(base + 'data/pitchers.json'),
+      fetch(base + 'data/ibl_history.json')
     ]);
-    if (sumRes.ok)     DATA.summary  = await sumRes.json();
-    if (pitRes.ok)     DATA.pitches  = await pitRes.json();
-    if (pitcherRes.ok) DATA.pitchers = await pitcherRes.json();
+    if (sumRes.ok)     DATA.summary    = await sumRes.json();
+    if (pitRes.ok)     DATA.pitches    = await pitRes.json();
+    if (pitcherRes.ok) DATA.pitchers   = await pitcherRes.json();
+    if (iblRes.ok)     DATA.iblHistory = await iblRes.json();
     console.log('summary players:', DATA.summary.length);
     console.log('pitches players:', DATA.pitches.length);
     console.log('pitchers:', DATA.pitchers.length);
+    console.log('ibl history players:', Object.keys(DATA.iblHistory).length);
   } catch(e) {
     console.error('loadAll failed:', e.message);
   }
@@ -765,6 +768,81 @@ function renderOverview(name, type, sum, pitch) {
 }
 
 // ── SEASON STATS TAB ──────────────────────────────
+function renderIBLHistoryTable(name, type) {
+  var seasons = DATA.iblHistory[name];
+  if (!seasons || !seasons.length) return '';
+
+  var isPitcher = type === 'pitcher';
+
+  // Determine if player has any pitching stats in history
+  var hasPitching = seasons.some(function(s) { return s.IP != null && s.IP > 0; });
+  var hasBatting  = seasons.some(function(s) { return s.AB != null && s.AB > 0; });
+
+  var html = '<div class="stat-card" style="margin-top:24px">' +
+    '<div class="stat-card-header"><span class="stat-card-title">IBL Career History</span>' +
+    '<span class="stat-card-subtitle">' + seasons.length + ' season' + (seasons.length !== 1 ? 's' : '') + '</span></div>';
+
+  if (!isPitcher && hasBatting) {
+    html += '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
+      '<th>Season</th><th>Team</th><th>Pos</th><th>G</th><th>AB</th><th>R</th><th>H</th>' +
+      '<th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>SB</th><th>BB</th><th>SO</th>' +
+      '<th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th>' +
+      '</tr></thead><tbody>';
+    seasons.forEach(function(s) {
+      html += '<tr>' +
+        '<td style="white-space:nowrap;color:var(--text-dim)">' + s.season + '</td>' +
+        '<td style="white-space:nowrap">' + (s.team || '—') + '</td>' +
+        '<td>' + (s.pos || '—') + '</td>' +
+        '<td>' + (s.G  != null ? s.G  : '—') + '</td>' +
+        '<td>' + (s.AB != null ? s.AB : '—') + '</td>' +
+        '<td>' + (s.R  != null ? s.R  : '—') + '</td>' +
+        '<td>' + (s.H  != null ? s.H  : '—') + '</td>' +
+        '<td>' + (s['2B'] != null ? s['2B'] : '—') + '</td>' +
+        '<td>' + (s['3B'] != null ? s['3B'] : '—') + '</td>' +
+        '<td>' + (s.HR  != null ? s.HR  : '—') + '</td>' +
+        '<td>' + (s.RBI != null ? s.RBI : '—') + '</td>' +
+        '<td>' + (s.SB  != null ? s.SB  : '—') + '</td>' +
+        '<td>' + (s.BB  != null ? s.BB  : '—') + '</td>' +
+        '<td>' + (s.SO  != null ? s.SO  : '—') + '</td>' +
+        '<td class="highlight-val">' + (s.AVG != null ? fmt3(s.AVG) : '—') + '</td>' +
+        '<td>' + (s.OBP != null ? fmt3(s.OBP) : '—') + '</td>' +
+        '<td>' + (s.SLG != null ? fmt3(s.SLG) : '—') + '</td>' +
+        '<td class="highlight-val">' + (s.OPS != null ? fmt3(s.OPS) : '—') + '</td>' +
+        '</tr>';
+    });
+    html += '</tbody></table></div>';
+  }
+
+  if (isPitcher && hasPitching) {
+    html += '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
+      '<th>Season</th><th>Team</th><th>W</th><th>L</th><th>ERA</th><th>G</th><th>GS</th>' +
+      '<th>SV</th><th>IP</th><th>H</th><th>ER</th><th>BB</th><th>K</th><th>WP</th>' +
+      '</tr></thead><tbody>';
+    seasons.forEach(function(s) {
+      html += '<tr>' +
+        '<td style="white-space:nowrap;color:var(--text-dim)">' + s.season + '</td>' +
+        '<td style="white-space:nowrap">' + (s.team || '—') + '</td>' +
+        '<td>' + (s.W  != null ? s.W  : '—') + '</td>' +
+        '<td>' + (s.L  != null ? s.L  : '—') + '</td>' +
+        '<td class="highlight-val">' + (s.ERA != null ? fmt2(s.ERA) : '—') + '</td>' +
+        '<td>' + (s.G  != null ? s.G  : '—') + '</td>' +
+        '<td>' + (s.GS != null ? s.GS : '—') + '</td>' +
+        '<td>' + (s.SV != null ? s.SV : '—') + '</td>' +
+        '<td>' + (s.IP != null ? fmtIP(s.IP) : '—') + '</td>' +
+        '<td>' + (s.HA != null ? s.HA : '—') + '</td>' +
+        '<td>' + (s.ER != null ? s.ER : '—') + '</td>' +
+        '<td>' + (s.BBA != null ? s.BBA : '—') + '</td>' +
+        '<td class="highlight-val">' + (s.KP != null ? s.KP : '—') + '</td>' +
+        '<td>' + (s.WP != null ? s.WP : '—') + '</td>' +
+        '</tr>';
+    });
+    html += '</tbody></table></div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
 function renderSeasonStats(name, type, sum, pitch) {
   if (type === 'batter' && sum) {
     return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Full Season Hitting</span></div>' +
@@ -783,7 +861,8 @@ function renderSeasonStats(name, type, sum, pitch) {
       '<td>' + fmtN(sum.HR) + '</td>' +
       '<td>' + fmtN(sum.BB) + '</td>' +
       '<td>' + fmtN(sum.K) + '</td>' +
-      '</tr></tbody></table></div></div>';
+      '</tr></tbody></table></div></div>' +
+      renderIBLHistoryTable(name, type);
   }
 
   if (type === 'pitcher' && pitch && pitch.scatter) {
@@ -828,8 +907,13 @@ function renderSeasonStats(name, type, sum, pitch) {
       '<td>' + ahead + '</td>' +
       '<td>' + swStr + '</td>' +
       '<td>' + calStr + '</td>' +
-      '</tr></tbody></table></div></div>';
+      '</tr></tbody></table></div></div>' +
+      renderIBLHistoryTable(name, type);
   }
+
+  // Player exists in IBL history but not in current-season pitch data
+  var histOnly = renderIBLHistoryTable(name, type);
+  if (histOnly) return histOnly;
 
   return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No data available</h3></div>';
 }
