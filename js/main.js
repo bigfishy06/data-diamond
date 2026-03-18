@@ -904,7 +904,7 @@ function renderZone(name, type, pitch, container) {
   // Strike zone: x from -1 to 1 (width = 2 units)
   // Strike zone: y from 0 to 1.5 (height = 1.5 units) — taller/slimmer shape
   var ZONE_X1 = -1, ZONE_X2 = 1;
-  var ZONE_Y1 = 0,  ZONE_Y2 = 1.5;
+  var ZONE_Y1 = 0,  ZONE_Y2 = 1;
 
   var totalPts = points.length;
   var inZone   = points.filter(function(s){ return s.x >= ZONE_X1 && s.x <= ZONE_X2 && s.y >= ZONE_Y1 && s.y <= ZONE_Y2; }).length;
