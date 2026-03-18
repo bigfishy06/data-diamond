@@ -576,19 +576,65 @@
 
     <div id="fielder-cheat-section" style="display:none;margin-top:48px">
       <div class="cheat-sheet-title" id="fielder-cheat-title">Fielder Cheat Sheet</div>
-      <!-- 3x5 card -->
-      <div id="fielder-card-wrap" style="
-        width:7.5in; max-width:100%;
-        background:#0e1525;
-        border:1.5px solid rgba(255,184,28,0.4);
-        border-radius:6px;
-        padding:10px 14px;
-        font-family:'DM Mono',monospace;
-        overflow-x:auto;
-      ">
-        <table id="fielder-card-table" style="width:100%;border-collapse:collapse;font-size:9px;"></table>
+
+      <!-- Download button -->
+      <div style="margin-bottom:14px;display:flex;align-items:center;gap:12px">
+        <button id="dl-cheat-btn" onclick="downloadCheatCard()" style="
+          font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;
+          padding:9px 20px;border:none;border-radius:6px;
+          background:#FFB81C;color:#080c12;cursor:pointer;
+          display:flex;align-items:center;gap:8px;transition:background .15s;
+        " onmouseover="this.style.background='#ffc94d'" onmouseout="this.style.background='#FFB81C'">
+          ⬇ &nbsp;DOWNLOAD 3×5 CARD
+        </button>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25)">
+          Prints as a 5&quot; × 3&quot; index card
+        </span>
+      </div>
+
+      <!-- 3x5 card preview — 5in wide × 3in tall at 96dpi -->
+      <div style="overflow-x:auto">
+        <div id="fielder-card-wrap" style="
+          width:5in; min-height:3in;
+          background:#0e1525;
+          border:1.5px solid rgba(255,184,28,0.45);
+          border-radius:4px;
+          padding:8px 12px;
+          font-family:'DM Mono',monospace;
+          box-shadow:0 4px 24px rgba(0,0,0,0.5);
+        ">
+          <div id="fielder-card-header" style="
+            font-family:'Bebas Neue',sans-serif;
+            font-size:11px;letter-spacing:2px;
+            color:#FFB81C;margin-bottom:5px;
+            border-bottom:1px solid rgba(255,184,28,0.3);
+            padding-bottom:3px;
+            display:flex;justify-content:space-between;align-items:center;
+          ">
+            <span id="fielder-card-team-name">TEAM</span>
+            <span style="font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:1px">DATA DIAMOND — FIELDER CHEAT SHEET</span>
+          </div>
+          <table id="fielder-card-table" style="width:100%;border-collapse:collapse;font-size:8px;"></table>
+        </div>
       </div>
     </div>
+
+    <style>
+      @media print {
+        body * { visibility: hidden; }
+        #fielder-card-wrap, #fielder-card-wrap * { visibility: visible; }
+        #fielder-card-wrap {
+          position: fixed !important;
+          left: 0; top: 0;
+          width: 5in !important;
+          min-height: 3in !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+          padding: 8px 12px !important;
+        }
+        @page { size: 5in 3in; margin: 0; }
+      }
+    </style>
 
   </div>
 
@@ -615,6 +661,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="js/main.js"></script>
   <script>
   const TEAMS_SC = [
@@ -1099,6 +1146,7 @@
     if (!batters.length) { section.style.display = 'none'; return; }
 
     document.getElementById('fielder-cheat-title').textContent = team.name.toUpperCase() + ' — FIELDER CHEAT SHEET';
+    document.getElementById('fielder-card-team-name').textContent = team.name.toUpperCase() + ' BATTERS';
     section.style.display = 'block';
 
     var rows = batters.map(function(entry) {
@@ -1155,6 +1203,31 @@
   }
 
     buildTeamPicker();
+
+  function downloadCheatCard() {
+    var wrap = document.getElementById('fielder-card-wrap');
+    var teamTitle = document.getElementById('fielder-card-team-name').textContent;
+
+    // Use html2canvas if available, otherwise fall back to print
+    if (window.html2canvas) {
+      html2canvas(wrap, {
+        backgroundColor: '#0e1525',
+        scale: 3,
+        width: wrap.offsetWidth,
+        height: wrap.offsetHeight,
+        useCORS: true
+      }).then(function(canvas) {
+        // Download as PNG
+        var a = document.createElement('a');
+        a.download = 'cheatsheet_' + teamTitle.replace(/\s+/g,'_').toLowerCase() + '.png';
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+      });
+    } else {
+      // Fallback: trigger browser print (which respects @media print)
+      window.print();
+    }
+  }
   </script>
 </body>
 </html>
