@@ -1008,8 +1008,8 @@ function renderZone(name, type, pitch, container) {
   // CLEAN_BOUNDS: zoomed view for grid/heatmap — ratio matches zone aspect (wider than tall in data space)
   var SCATTER_BOUNDS = { xMin:-2.5, xMax:2.5,  yMin:-0.8, yMax:2.2  };
   var CLEAN_BOUNDS   = { xMin:-1.85, xMax:1.85, yMin:-0.85, yMax:1.85 };
-  var X_MIN = SCATTER_BOUNDS.xMin, X_MAX = SCATTER_BOUNDS.xMax;
-  var Y_MIN = SCATTER_BOUNDS.yMin, Y_MAX = SCATTER_BOUNDS.yMax;
+  var X_MIN = CLEAN_BOUNDS.xMin, X_MAX = CLEAN_BOUNDS.xMax;
+  var Y_MIN = CLEAN_BOUNDS.yMin, Y_MAX = CLEAN_BOUNDS.yMax;
 
   var canvas = document.getElementById('zone-canvas');
   var ctx    = canvas.getContext('2d');
@@ -1159,11 +1159,11 @@ function renderZone(name, type, pitch, container) {
     var cellPxH = SY2 - SY1;
     var sqW = (cellPxW / 3);
     var sqH = (cellPxH / 3);
-    var outerH = sqH;
-    outer[0].px = { x:SX1-GAP-sqW, y:SY1,        w:sqW, h:outerH };  // TL
-    outer[1].px = { x:SX2+GAP,     y:SY1,        w:sqW, h:outerH };  // TR
-    outer[2].px = { x:SX1-GAP-sqW, y:SY2-outerH, w:sqW, h:outerH };  // BL
-    outer[3].px = { x:SX2+GAP,     y:SY2-outerH, w:sqW, h:outerH };  // BR
+    // 4 corner cells — top-left, top-right, bottom-left, bottom-right
+    outer[0].px = { x:SX1-GAP-sqW, y:SY1,          w:sqW, h:sqH };  // TL
+    outer[1].px = { x:SX2+GAP,     y:SY1,          w:sqW, h:sqH };  // TR
+    outer[2].px = { x:SX1-GAP-sqW, y:SY2-sqH,      w:sqW, h:sqH };  // BL
+    outer[3].px = { x:SX2+GAP,     y:SY2-sqH,      w:sqW, h:sqH };  // BR
 
     outer[0].intensity = maxOuter > 0 ? outer[0].count/maxOuter : 0;
     outer[1].intensity = maxOuter > 0 ? outer[1].count/maxOuter : 0;
@@ -1342,11 +1342,8 @@ function renderZone(name, type, pitch, container) {
     ctx.clearRect(0, 0, W * DPR, H * DPR);
     var clean = (activeView === 'grid' || activeView === 'heatmap');
 
-    if (activeView === 'scatter') {
-      setBounds(SCATTER_BOUNDS.xMin, SCATTER_BOUNDS.xMax, SCATTER_BOUNDS.yMin, SCATTER_BOUNDS.yMax);
-    } else {
-      setBounds(CLEAN_BOUNDS.xMin, CLEAN_BOUNDS.xMax, CLEAN_BOUNDS.yMin, CLEAN_BOUNDS.yMax);
-    }
+    // All views use the same bounds so the strike zone is identical across scatter/grid/heatmap
+    setBounds(CLEAN_BOUNDS.xMin, CLEAN_BOUNDS.xMax, CLEAN_BOUNDS.yMin, CLEAN_BOUNDS.yMax);
 
     drawBackground(clean ? {clean:true} : {});
 
