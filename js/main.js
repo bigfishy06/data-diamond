@@ -592,12 +592,27 @@ function renderPlayerDetail(name, type, content) {
     '<a href="players.html">Players</a><span>/</span>' +
     (team ? '<a href="teams.html?team=' + team.id + '">' + team.abbreviation + '</a><span>/</span>' : '') +
     '<span>' + name + '</span></div>' +
-    '<div class="player-badges">' +
-    '<span class="badge badge-pos">' + (type === 'pitcher' ? 'P' : 'H') + '</span>' +
-    (team ? '<span class="badge badge-team">' + team.abbreviation + '</span>' : '') +
-    '</div>' +
-    '<h1 class="player-name-hero">' + name.toUpperCase() + '</h1>' +
-    (team ? '<p class="player-meta"><span>' + team.name + '</span></p>' : '') +
+    (function() {
+      var iblSeasons = DATA.iblHistory[name];
+      var ibl = iblSeasons && iblSeasons.length ? iblSeasons[0] : null;
+      var pos    = ibl && ibl.pos    ? ibl.pos    : (type === 'pitcher' ? 'P' : '—');
+      var bats   = ibl && ibl.bats   ? ibl.bats   : null;
+      var thr    = ibl && ibl.throws ? ibl.throws : null;
+      var height = ibl && ibl.height ? ibl.height : null;
+      var weight = ibl && ibl.weight ? ibl.weight : null;
+      var teamName = team ? team.name : (ibl && ibl.team ? ibl.team : null);
+      var badges = '<div class="player-badges">' +
+        '<span class="badge badge-pos">' + pos + '</span>' +
+        (team ? '<span class="badge badge-team">' + team.abbreviation + '</span>' : '') +
+        '</div>';
+      var meta = '<p class="player-meta">';
+      if (teamName) meta += '<span>' + teamName + '</span>';
+      if (bats || thr) meta += '<span>Bats: ' + (bats || '?') + ' / Throws: ' + (thr || '?') + '</span>';
+      if (height) meta += '<span>HT: ' + height + '</span>';
+      if (weight) meta += '<span>WT: ' + weight + ' lbs</span>';
+      meta += '</p>';
+      return badges + '<h1 class="player-name-hero">' + name.toUpperCase() + '</h1>' + meta;
+    }()) +
     '<div class="headline-stats" id="headline-stats"></div>' +
     '</div></section>' +
     '<div class="tabs-bar" style="margin-top:0"><div class="container"><div class="tabs">' +
@@ -768,35 +783,58 @@ function renderOverview(name, type, sum, pitch) {
 }
 
 // ── SEASON STATS TAB ──────────────────────────────
-function renderIBLHistoryTable(name, type) {
-  var seasons = DATA.iblHistory[name];
-  if (!seasons || !seasons.length) return '';
+function renderSeasonStats(name, type, sum, pitch) {
+  var iblSeasons = (DATA.iblHistory[name] || []).filter(function(s) {
+    return type === 'pitcher' ? (s.IP != null && s.IP > 0) : (s.AB != null && s.AB > 0);
+  });
 
-  var isPitcher = type === 'pitcher';
+  var html = '';
 
-  // Determine if player has any pitching stats in history
-  var hasPitching = seasons.some(function(s) { return s.IP != null && s.IP > 0; });
-  var hasBatting  = seasons.some(function(s) { return s.AB != null && s.AB > 0; });
-
-  var html = '<div class="stat-card" style="margin-top:24px">' +
-    '<div class="stat-card-header"><span class="stat-card-title">IBL Career History</span>' +
-    '<span class="stat-card-subtitle">' + seasons.length + ' season' + (seasons.length !== 1 ? 's' : '') + '</span></div>';
-
-  if (!isPitcher && hasBatting) {
-    html += '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-      '<th>Season</th><th>Team</th><th>Pos</th><th>G</th><th>AB</th><th>R</th><th>H</th>' +
-      '<th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>SB</th><th>BB</th><th>SO</th>' +
+  if (type === 'batter' && sum) {
+    html += '<div class="stat-card"><div class="stat-card-header">' +
+      '<span class="stat-card-title">Full Season Stats</span></div>' +
+      '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
+      '<th>Season</th><th>Team</th>' +
       '<th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th>' +
+      '<th>G</th><th>AB</th><th>R</th><th>H</th>' +
+      '<th>2B</th><th>3B</th><th>HR</th><th>RBI</th>' +
+      '<th>SB</th><th>BB</th><th>K</th>' +
       '</tr></thead><tbody>';
-    seasons.forEach(function(s) {
+
+    // Current season row from summary.json — label it clearly
+    html += '<tr style="border-bottom:2px solid rgba(255,255,255,0.15)">' +
+      '<td style="color:var(--text-dim);white-space:nowrap">Current</td>' +
+      '<td style="white-space:nowrap">' + (sum.batter_team || '—') + '</td>' +
+      '<td class="highlight-val">' + fmt3(sum.AVG) + '</td>' +
+      '<td>' + fmt3(sum.OBP) + '</td>' +
+      '<td>' + fmt3(sum.SLG) + '</td>' +
+      '<td class="highlight-val">' + fmt3(sum.OPS) + '</td>' +
+      '<td>—</td>' +
+      '<td>' + fmtN(sum.AB) + '</td>' +
+      '<td>—</td>' +
+      '<td>' + fmtN(sum.H) + '</td>' +
+      '<td>' + fmtN(sum['2B']) + '</td>' +
+      '<td>' + fmtN(sum['3B']) + '</td>' +
+      '<td>' + fmtN(sum.HR) + '</td>' +
+      '<td>—</td>' +
+      '<td>—</td>' +
+      '<td>' + fmtN(sum.BB) + '</td>' +
+      '<td>' + fmtN(sum.K) + '</td>' +
+      '</tr>';
+
+    // IBL history rows
+    iblSeasons.forEach(function(s) {
       html += '<tr>' +
-        '<td style="white-space:nowrap;color:var(--text-dim)">' + s.season + '</td>' +
+        '<td style="color:var(--text-dim);white-space:nowrap">' + s.season + '</td>' +
         '<td style="white-space:nowrap">' + (s.team || '—') + '</td>' +
-        '<td>' + (s.pos || '—') + '</td>' +
-        '<td>' + (s.G  != null ? s.G  : '—') + '</td>' +
-        '<td>' + (s.AB != null ? s.AB : '—') + '</td>' +
-        '<td>' + (s.R  != null ? s.R  : '—') + '</td>' +
-        '<td>' + (s.H  != null ? s.H  : '—') + '</td>' +
+        '<td class="highlight-val">' + (s.AVG != null ? fmt3(s.AVG) : '—') + '</td>' +
+        '<td>' + (s.OBP != null ? fmt3(s.OBP) : '—') + '</td>' +
+        '<td>' + (s.SLG != null ? fmt3(s.SLG) : '—') + '</td>' +
+        '<td class="highlight-val">' + (s.OPS != null ? fmt3(s.OPS) : '—') + '</td>' +
+        '<td>' + (s.G   != null ? s.G   : '—') + '</td>' +
+        '<td>' + (s.AB  != null ? s.AB  : '—') + '</td>' +
+        '<td>' + (s.R   != null ? s.R   : '—') + '</td>' +
+        '<td>' + (s.H   != null ? s.H   : '—') + '</td>' +
         '<td>' + (s['2B'] != null ? s['2B'] : '—') + '</td>' +
         '<td>' + (s['3B'] != null ? s['3B'] : '—') + '</td>' +
         '<td>' + (s.HR  != null ? s.HR  : '—') + '</td>' +
@@ -804,65 +842,11 @@ function renderIBLHistoryTable(name, type) {
         '<td>' + (s.SB  != null ? s.SB  : '—') + '</td>' +
         '<td>' + (s.BB  != null ? s.BB  : '—') + '</td>' +
         '<td>' + (s.SO  != null ? s.SO  : '—') + '</td>' +
-        '<td class="highlight-val">' + (s.AVG != null ? fmt3(s.AVG) : '—') + '</td>' +
-        '<td>' + (s.OBP != null ? fmt3(s.OBP) : '—') + '</td>' +
-        '<td>' + (s.SLG != null ? fmt3(s.SLG) : '—') + '</td>' +
-        '<td class="highlight-val">' + (s.OPS != null ? fmt3(s.OPS) : '—') + '</td>' +
         '</tr>';
     });
-    html += '</tbody></table></div>';
-  }
 
-  if (isPitcher && hasPitching) {
-    html += '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-      '<th>Season</th><th>Team</th><th>W</th><th>L</th><th>ERA</th><th>G</th><th>GS</th>' +
-      '<th>SV</th><th>IP</th><th>H</th><th>ER</th><th>BB</th><th>K</th><th>WP</th>' +
-      '</tr></thead><tbody>';
-    seasons.forEach(function(s) {
-      html += '<tr>' +
-        '<td style="white-space:nowrap;color:var(--text-dim)">' + s.season + '</td>' +
-        '<td style="white-space:nowrap">' + (s.team || '—') + '</td>' +
-        '<td>' + (s.W  != null ? s.W  : '—') + '</td>' +
-        '<td>' + (s.L  != null ? s.L  : '—') + '</td>' +
-        '<td class="highlight-val">' + (s.ERA != null ? fmt2(s.ERA) : '—') + '</td>' +
-        '<td>' + (s.G  != null ? s.G  : '—') + '</td>' +
-        '<td>' + (s.GS != null ? s.GS : '—') + '</td>' +
-        '<td>' + (s.SV != null ? s.SV : '—') + '</td>' +
-        '<td>' + (s.IP != null ? fmtIP(s.IP) : '—') + '</td>' +
-        '<td>' + (s.HA != null ? s.HA : '—') + '</td>' +
-        '<td>' + (s.ER != null ? s.ER : '—') + '</td>' +
-        '<td>' + (s.BBA != null ? s.BBA : '—') + '</td>' +
-        '<td class="highlight-val">' + (s.KP != null ? s.KP : '—') + '</td>' +
-        '<td>' + (s.WP != null ? s.WP : '—') + '</td>' +
-        '</tr>';
-    });
-    html += '</tbody></table></div>';
-  }
-
-  html += '</div>';
-  return html;
-}
-
-function renderSeasonStats(name, type, sum, pitch) {
-  if (type === 'batter' && sum) {
-    return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Full Season Hitting</span></div>' +
-      '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-      '<th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>K</th>' +
-      '</tr></thead><tbody><tr>' +
-      '<td class="highlight-val">' + fmt3(sum.AVG) + '</td>' +
-      '<td>' + fmt3(sum.OBP) + '</td>' +
-      '<td>' + fmt3(sum.SLG) + '</td>' +
-      '<td class="highlight-val">' + fmt3(sum.OPS) + '</td>' +
-      '<td>' + fmtN(sum.AB) + '</td>' +
-      '<td>' + fmtN(sum.H) + '</td>' +
-      '<td>' + fmtN(sum['1B']) + '</td>' +
-      '<td>' + fmtN(sum['2B']) + '</td>' +
-      '<td>' + fmtN(sum['3B']) + '</td>' +
-      '<td>' + fmtN(sum.HR) + '</td>' +
-      '<td>' + fmtN(sum.BB) + '</td>' +
-      '<td>' + fmtN(sum.K) + '</td>' +
-      '</tr></tbody></table></div></div>' +
-      renderIBLHistoryTable(name, type);
+    html += '</tbody></table></div></div>';
+    return html;
   }
 
   if (type === 'pitcher' && pitch && pitch.scatter) {
@@ -871,49 +855,124 @@ function renderSeasonStats(name, type, sum, pitch) {
     const ks  = sc.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
     const bbs = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
     const str = sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
-    const swStr = sc.filter(function(s) { return s.outcome === 'Swinging Strike'; }).length;
+    const swStr  = sc.filter(function(s) { return s.outcome === 'Swinging Strike'; }).length;
     const calStr = sc.filter(function(s) { return s.outcome === 'Called Strike'; }).length;
     const inZone = sc.filter(function(s) { return s.x >= -1 && s.x <= 1 && s.y >= 0 && s.y <= 1.5; }).length;
-
-    // Pull extra stats from pitchers.json
     const pd = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
-    const era   = pd.ERA      != null ? fmt2(pd.ERA)      : '—';
-    const whip  = pd.WHIP     != null ? fmt2(pd.WHIP)     : '—';
-    const kbb   = pd.K_BB     != null ? fmt2(pd.K_BB)        : '—';
-    const ip    = pd.IP       != null ? fmtIP(pd.IP)      : '—';
-    const early = pd.Early_pct != null ? fmt1(pd.Early_pct) + '%' : '—';
-    const ahead = pd.Ahead_pct != null ? fmt1(pd.Ahead_pct) + '%' : '—';
-    const ea    = pd.EA_pct   != null ? fmt1(pd.EA_pct) + '%'  : '—';
-    const bf    = pd.BF       != null ? fmtN(pd.BF)      : '—';
+    const era   = pd.ERA       != null ? fmt2(pd.ERA)            : '—';
+    const whip  = pd.WHIP      != null ? fmt2(pd.WHIP)           : '—';
+    const kbb   = pd.K_BB      != null ? fmt2(pd.K_BB)           : '—';
+    const ip    = pd.IP        != null ? fmtIP(pd.IP)            : '—';
+    const early = pd.Early_pct != null ? fmt1(pd.Early_pct) + '%': '—';
+    const ahead = pd.Ahead_pct != null ? fmt1(pd.Ahead_pct) + '%': '—';
+    const ea    = pd.EA_pct    != null ? fmt1(pd.EA_pct)  + '%'  : '—';
+    const bf    = pd.BF        != null ? fmtN(pd.BF)             : '—';
 
-    return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Full Season Pitching</span></div>' +
+    html += '<div class="stat-card"><div class="stat-card-header">' +
+      '<span class="stat-card-title">Full Season Stats</span></div>' +
       '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-      '<th>IP</th><th>BF</th><th>ERA</th><th>WHIP</th><th>PITCHES</th><th>K</th><th>BB</th><th>K%</th><th>BB%</th><th>K/BB</th><th>STR%</th><th>ZN%</th><th>E+A%</th><th>EARLY%</th><th>AHEAD%</th><th>SW-STR</th><th>CL-STR</th>' +
-      '</tr></thead><tbody><tr>' +
+      '<th>Season</th><th>Team</th>' +
+      '<th>IP</th><th>W</th><th>L</th><th>ERA</th><th>GS</th><th>SV</th>' +
+      '<th>BF</th><th>PITCHES</th><th>K</th><th>BB</th>' +
+      '<th>K%</th><th>BB%</th><th>K/BB</th>' +
+      '<th>WHIP</th><th>STR%</th><th>ZN%</th><th>E+A%</th><th>EARLY%</th><th>AHEAD%</th>' +
+      '</tr></thead><tbody>';
+
+    // Current season row
+    html += '<tr style="border-bottom:2px solid rgba(255,255,255,0.15)">' +
+      '<td style="color:var(--text-dim);white-space:nowrap">Current</td>' +
+      '<td style="white-space:nowrap">—</td>' +
       '<td>' + ip + '</td>' +
-      '<td>' + bf + '</td>' +
+      '<td>—</td><td>—</td>' +
       '<td class="highlight-val">' + era + '</td>' +
-      '<td class="highlight-val">' + whip + '</td>' +
+      '<td>—</td><td>—</td>' +
+      '<td>' + bf + '</td>' +
       '<td>' + tot + '</td>' +
       '<td>' + ks + '</td>' +
       '<td>' + bbs + '</td>' +
       '<td class="highlight-val">' + fmt1(ks/tot*100) + '%</td>' +
       '<td>' + fmt1(bbs/tot*100) + '%</td>' +
       '<td class="highlight-val">' + kbb + '</td>' +
+      '<td class="highlight-val">' + whip + '</td>' +
       '<td>' + fmt1(str/tot*100) + '%</td>' +
       '<td>' + fmt1(inZone/tot*100) + '%</td>' +
       '<td class="highlight-val">' + ea + '</td>' +
       '<td>' + early + '</td>' +
       '<td>' + ahead + '</td>' +
-      '<td>' + swStr + '</td>' +
-      '<td>' + calStr + '</td>' +
-      '</tr></tbody></table></div></div>' +
-      renderIBLHistoryTable(name, type);
+      '</tr>';
+
+    // IBL history rows
+    iblSeasons.forEach(function(s) {
+      html += '<tr>' +
+        '<td style="color:var(--text-dim);white-space:nowrap">' + s.season + '</td>' +
+        '<td style="white-space:nowrap">' + (s.team || '—') + '</td>' +
+        '<td>' + (s.IP  != null ? fmtIP(s.IP) : '—') + '</td>' +
+        '<td>' + (s.W   != null ? s.W   : '—') + '</td>' +
+        '<td>' + (s.L   != null ? s.L   : '—') + '</td>' +
+        '<td class="highlight-val">' + (s.ERA != null ? fmt2(s.ERA) : '—') + '</td>' +
+        '<td>' + (s.GS  != null ? s.GS  : '—') + '</td>' +
+        '<td>' + (s.SV  != null ? s.SV  : '—') + '</td>' +
+        '<td>—</td><td>—</td>' +
+        '<td class="highlight-val">' + (s.KP  != null ? s.KP  : '—') + '</td>' +
+        '<td>' + (s.BBA != null ? s.BBA : '—') + '</td>' +
+        '<td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>' +
+        '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
   }
 
-  // Player exists in IBL history but not in current-season pitch data
-  var histOnly = renderIBLHistoryTable(name, type);
-  if (histOnly) return histOnly;
+  // IBL history only (no current-season data)
+  if (iblSeasons.length) {
+    var isPitcher = iblSeasons.some(function(s) { return s.IP != null && s.IP > 0; });
+    html += '<div class="stat-card"><div class="stat-card-header">' +
+      '<span class="stat-card-title">Full Season Stats</span></div>' +
+      '<div class="table-wrap"><table class="stat-table"><thead><tr>';
+    if (isPitcher) {
+      html += '<th>Season</th><th>Team</th><th>IP</th><th>W</th><th>L</th><th>ERA</th><th>GS</th><th>SV</th><th>K</th><th>BB</th><th>WP</th></tr></thead><tbody>';
+      iblSeasons.forEach(function(s) {
+        html += '<tr>' +
+          '<td style="color:var(--text-dim);white-space:nowrap">' + s.season + '</td>' +
+          '<td style="white-space:nowrap">' + (s.team || '—') + '</td>' +
+          '<td>' + (s.IP  != null ? fmtIP(s.IP) : '—') + '</td>' +
+          '<td>' + (s.W   != null ? s.W   : '—') + '</td>' +
+          '<td>' + (s.L   != null ? s.L   : '—') + '</td>' +
+          '<td class="highlight-val">' + (s.ERA != null ? fmt2(s.ERA) : '—') + '</td>' +
+          '<td>' + (s.GS  != null ? s.GS  : '—') + '</td>' +
+          '<td>' + (s.SV  != null ? s.SV  : '—') + '</td>' +
+          '<td class="highlight-val">' + (s.KP  != null ? s.KP  : '—') + '</td>' +
+          '<td>' + (s.BBA != null ? s.BBA : '—') + '</td>' +
+          '<td>' + (s.WP  != null ? s.WP  : '—') + '</td>' +
+          '</tr>';
+      });
+    } else {
+      html += '<th>Season</th><th>Team</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th><th>G</th><th>AB</th><th>R</th><th>H</th><th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>SB</th><th>BB</th><th>K</th></tr></thead><tbody>';
+      iblSeasons.forEach(function(s) {
+        html += '<tr>' +
+          '<td style="color:var(--text-dim);white-space:nowrap">' + s.season + '</td>' +
+          '<td style="white-space:nowrap">' + (s.team || '—') + '</td>' +
+          '<td class="highlight-val">' + (s.AVG != null ? fmt3(s.AVG) : '—') + '</td>' +
+          '<td>' + (s.OBP != null ? fmt3(s.OBP) : '—') + '</td>' +
+          '<td>' + (s.SLG != null ? fmt3(s.SLG) : '—') + '</td>' +
+          '<td class="highlight-val">' + (s.OPS != null ? fmt3(s.OPS) : '—') + '</td>' +
+          '<td>' + (s.G   != null ? s.G   : '—') + '</td>' +
+          '<td>' + (s.AB  != null ? s.AB  : '—') + '</td>' +
+          '<td>' + (s.R   != null ? s.R   : '—') + '</td>' +
+          '<td>' + (s.H   != null ? s.H   : '—') + '</td>' +
+          '<td>' + (s['2B'] != null ? s['2B'] : '—') + '</td>' +
+          '<td>' + (s['3B'] != null ? s['3B'] : '—') + '</td>' +
+          '<td>' + (s.HR  != null ? s.HR  : '—') + '</td>' +
+          '<td>' + (s.RBI != null ? s.RBI : '—') + '</td>' +
+          '<td>' + (s.SB  != null ? s.SB  : '—') + '</td>' +
+          '<td>' + (s.BB  != null ? s.BB  : '—') + '</td>' +
+          '<td>' + (s.SO  != null ? s.SO  : '—') + '</td>' +
+          '</tr>';
+      });
+    }
+    html += '</tbody></table></div></div>';
+    return html;
+  }
 
   return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No data available</h3></div>';
 }
