@@ -727,31 +727,62 @@ function renderOverview(name, type, sum, pitch) {
   }
 
   if (type === 'pitcher' && pitch && pitch.scatter) {
-    const sc      = pitch.scatter;
-    const tot     = sc.filter(function(s) { return s.outcome && s.outcome !== ''; }).length;
-    const ks      = sc.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
-    const bbs     = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
-    const str     = sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
-    const swStr   = sc.filter(function(s) { return s.outcome === 'Swinging Strike'; }).length;
-    const inPlay  = sc.filter(function(s) { return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
-    const fouls   = sc.filter(function(s) { return s.outcome === 'Foul'; }).length;
-    const swings  = swStr + fouls + inPlay;
-    const pd      = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
-    const ea      = pd.EA_pct != null ? fmt1(pd.EA_pct) + '%' : '—';
-    const kbb     = pd.K_BB   != null ? fmt2(pd.K_BB)         : '—';
-    const bars = [
-      { lbl: 'STR%',     val: tot > 0    ? fmt1(str/tot*100) + '%'             : '—', pct: tot > 0    ? str/tot                 : 0 },
-      { lbl: 'SWING%',   val: tot > 0    ? fmt1(swings/tot*100) + '%'          : '—', pct: tot > 0    ? swings/tot              : 0 },
-      { lbl: 'WHIFF%',   val: swings > 0 ? fmt1(swStr/swings*100) + '%'        : '—', pct: swings > 0 ? swStr/swings            : 0 },
-      { lbl: 'CONTACT%', val: swings > 0 ? fmt1((fouls+inPlay)/swings*100)+'%' : '—', pct: swings > 0 ? (fouls+inPlay)/swings   : 0 },
-      { lbl: 'K%',       val: tot > 0    ? fmt1(ks/tot*100) + '%'              : '—', pct: tot > 0    ? ks/tot                  : 0 },
-      { lbl: 'BB%',      val: tot > 0    ? fmt1(bbs/tot*100) + '%'             : '—', pct: tot > 0    ? bbs/tot                 : 0 },
-      { lbl: 'E+A%',     val: ea,  pct: pd.EA_pct != null ? pd.EA_pct/100              : 0 },
-      { lbl: 'K/BB',     val: kbb, pct: pd.K_BB   != null ? Math.min(pd.K_BB/10, 1)   : 0 }
-    ];
-    return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Pitch Metrics</span>' +
-      '<span class="stat-card-subtitle">' + tot + ' pitches</span></div>' +
-      '<div style="padding:16px 24px">' +
+    // Build date options for pitch metrics filter
+    var pmDates = new Set();
+    var pmYears = new Set();
+    pitch.scatter.forEach(function(s) {
+      if (s.date) { pmDates.add(s.date); pmYears.add(s.date.slice(0,4)); }
+    });
+    pmDates = Array.from(pmDates).sort();
+    pmYears = Array.from(pmYears).sort();
+
+    var pmDateFilter = 'season'; // default = all
+    var pmSelectedDate = null;
+
+    function calcMetrics(scIn) {
+      var tot    = scIn.filter(function(s) { return s.outcome && s.outcome !== ''; }).length;
+      var ks     = scIn.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+      var bbs    = scIn.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+      var str    = scIn.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+      var swStr  = scIn.filter(function(s) { return s.outcome === 'Swinging Strike'; }).length;
+      var inPlay = scIn.filter(function(s) { return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+      var fouls  = scIn.filter(function(s) { return s.outcome === 'Foul'; }).length;
+      var swings = swStr + fouls + inPlay;
+      var pd     = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
+      return {
+        tot: tot, ks: ks, bbs: bbs, str: str, swStr: swStr, inPlay: inPlay, fouls: fouls, swings: swings, pd: pd,
+        bars: [
+          { lbl: 'STR%',     val: tot > 0    ? fmt1(str/tot*100) + '%'             : '—', pct: tot > 0    ? str/tot               : 0 },
+          { lbl: 'SWING%',   val: tot > 0    ? fmt1(swings/tot*100) + '%'          : '—', pct: tot > 0    ? swings/tot            : 0 },
+          { lbl: 'WHIFF%',   val: swings > 0 ? fmt1(swStr/swings*100) + '%'        : '—', pct: swings > 0 ? swStr/swings          : 0 },
+          { lbl: 'CONTACT%', val: swings > 0 ? fmt1((fouls+inPlay)/swings*100)+'%' : '—', pct: swings > 0 ? (fouls+inPlay)/swings : 0 },
+          { lbl: 'K%',       val: tot > 0    ? fmt1(ks/tot*100) + '%'              : '—', pct: tot > 0    ? ks/tot                : 0 },
+          { lbl: 'BB%',      val: tot > 0    ? fmt1(bbs/tot*100) + '%'             : '—', pct: tot > 0    ? bbs/tot              : 0 },
+          { lbl: 'E+A%',     val: pd.EA_pct != null ? fmt1(pd.EA_pct)+'%' : '—', pct: pd.EA_pct != null ? pd.EA_pct/100 : 0 },
+          { lbl: 'K/BB',     val: pd.K_BB   != null ? fmt2(pd.K_BB)       : '—', pct: pd.K_BB   != null ? Math.min(pd.K_BB/10,1) : 0 }
+        ]
+      };
+    }
+
+    // Date filter buttons: Season + individual dates
+    var pmDateBtns = '<button class="zone-filter-btn active" data-pmdate="season">Season</button>' +
+      pmDates.map(function(d) { return '<button class="zone-filter-btn" data-pmdate="'+d+'">'+d+'</button>'; }).join('');
+
+    var pmDateFilterHTML = pmDates.length > 1
+      ? '<div style="margin-bottom:16px;padding:0 24px">' +
+        '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Date</div>' +
+        '<div class="zone-controls" id="pm-date-filters" style="flex-wrap:wrap">' + pmDateBtns + '</div></div>'
+      : '';
+
+    var sc = pitch.scatter;
+    var m  = calcMetrics(sc);
+    var bars = m.bars;
+    var tot  = m.tot;
+
+    var html = '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Pitch Metrics</span>' +
+      '<span class="stat-card-subtitle" id="pm-pitch-count">' + tot + ' pitches</span></div>' +
+      pmDateFilterHTML +
+      '<div style="padding:16px 24px" id="pm-bars-wrap">' +
       bars.map(function(b) {
         var p = Math.max(0, Math.min(1, b.pct || 0));
         var r, g, bl;
@@ -777,6 +808,51 @@ function renderOverview(name, type, sum, pitch) {
           '<div style="width:60px;text-align:right;font-family:var(--font-mono);font-size:13px;font-weight:600;color:' + color + ';flex-shrink:0">' + b.val + '</div>' +
         '</div>';
       }).join('') + '</div></div>';
+
+    // Wire up date filter buttons for pitch metrics
+    if (pmDates.length > 1) {
+      setTimeout(function() {
+        var btns = document.querySelectorAll('#pm-date-filters .zone-filter-btn');
+        btns.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            btns.forEach(function(b){ b.classList.remove('active'); });
+            btn.classList.add('active');
+            pmDateFilter = btn.dataset.pmdate;
+            var filtered = pmDateFilter === 'season'
+              ? pitch.scatter
+              : pitch.scatter.filter(function(s){ return s.date === pmDateFilter; });
+            var m2 = calcMetrics(filtered);
+            // Update pitch count
+            var countEl = document.getElementById('pm-pitch-count');
+            if (countEl) countEl.textContent = m2.tot + ' pitches';
+            // Rebuild bars
+            var wrap = document.getElementById('pm-bars-wrap');
+            if (!wrap) return;
+            wrap.innerHTML = m2.bars.map(function(b) {
+              var p2 = Math.max(0, Math.min(1, b.pct || 0));
+              var r2, g2, bl2;
+              if (p2 <= 0.5) { var t2=p2*2; r2=Math.round(58+t2*(180-58)); g2=Math.round(130+t2*(180-130)); bl2=Math.round(210+t2*(180-210)); }
+              else { var t2=(p2-0.5)*2; r2=Math.round(180+t2*(210-180)); g2=Math.round(180+t2*(50-180)); bl2=Math.round(180+t2*(50-180)); }
+              var col2 = 'rgb('+r2+','+g2+','+bl2+')';
+              var wp2 = (p2*100).toFixed(1);
+              return '<div class="stat-bar-row" style="align-items:center;margin-bottom:10px">' +
+                '<div class="sbr-label" style="width:80px;flex-shrink:0">'+b.lbl+'</div>' +
+                '<div style="flex:1;position:relative;height:10px;background:rgba(255,255,255,0.06);border-radius:5px;margin:0 8px">' +
+                  '<div class="sbr-fill" style="position:absolute;left:0;top:0;height:10px;width:0%;background:'+col2+';border-radius:5px;transition:width 0.8s cubic-bezier(0.4,0,0.2,1)" data-width="'+wp2+'%"></div>' +
+                  '<div class="savant-bubble" style="position:absolute;top:50%;transform:translate(-50%,-50%);left:0%;width:26px;height:26px;border-radius:50%;background:'+col2+';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;font-family:var(--font-mono);z-index:2;transition:left 0.8s cubic-bezier(0.4,0,0.2,1);box-shadow:0 1px 4px rgba(0,0,0,0.4)" data-left="'+wp2+'">●</div>' +
+                '</div>' +
+                '<div style="width:60px;text-align:right;font-family:var(--font-mono);font-size:13px;font-weight:600;color:'+col2+';flex-shrink:0">'+b.val+'</div>' +
+              '</div>';
+            }).join('');
+            // Re-trigger bar animations
+            wrap.querySelectorAll('.sbr-fill').forEach(function(el){ if(el.dataset.width) el.style.width=el.dataset.width; });
+            wrap.querySelectorAll('.savant-bubble').forEach(function(el){ if(el.dataset.left) el.style.left=el.dataset.left; });
+          });
+        });
+      }, 50);
+    }
+
+    return html;
   }
 
   return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No data available</h3></div>';
@@ -943,11 +1019,45 @@ function renderZone(name, type, pitch, container) {
     return '<div class="legend-item"><div class="legend-dot" style="background:' + typeColorMap[t] + '"></div>' + t + '</div>';
   }).join('');
 
+  // Build date controls for pitcher zone
+  var allDates = [];
+  var allYears = [];
+  if (type === 'pitcher') {
+    var dateSet = new Set();
+    var yearSet = new Set();
+    points.forEach(function(s) {
+      if (s.date) { dateSet.add(s.date); yearSet.add(s.date.slice(0,4)); }
+    });
+    allDates = Array.from(dateSet).sort();
+    allYears = Array.from(yearSet).sort();
+  }
+
+  var dateFilterHTML = '';
+  if (type === 'pitcher' && allDates.length > 1) {
+    var yearBtns = '<button class="zone-filter-btn active" data-year="all">All</button>' +
+      allYears.map(function(y) { return '<button class="zone-filter-btn" data-year="'+y+'">'+y+'</button>'; }).join('');
+
+    dateFilterHTML =
+      '<div style="margin-bottom:16px">' +
+      '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Year</div>' +
+      '<div class="zone-controls" id="zone-year-filters">' + yearBtns + '</div></div>' +
+
+      '<div style="margin-bottom:16px">' +
+      '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Date Range' +
+      ' <span id="zone-date-label" style="color:var(--gold);margin-left:8px;font-size:9px">' + allDates[0] + ' → ' + allDates[allDates.length-1] + '</span></div>' +
+      '<div style="padding:0 4px">' +
+      '<input type="range" id="zone-date-start" min="0" max="'+(allDates.length-1)+'" value="0" style="width:100%;accent-color:var(--gold);margin-bottom:6px">' +
+      '<input type="range" id="zone-date-end" min="0" max="'+(allDates.length-1)+'" value="'+(allDates.length-1)+'" style="width:100%;accent-color:var(--gold)">' +
+      '</div></div>';
+  }
+
   container.innerHTML =
     '<div class="stat-card">' +
     '<div class="stat-card-header"><span class="stat-card-title">Strike Zone</span>' +
-    '<span class="stat-card-subtitle">' + totalPts + ' pitches plotted</span></div>' +
+    '<span class="stat-card-subtitle" id="zone-pitch-count">' + totalPts + ' pitches plotted</span></div>' +
     '<div class="zone-container">' +
+
+    dateFilterHTML +
 
     '<div style="margin-bottom:16px">' +
     '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">View</div>' +
@@ -999,10 +1109,13 @@ function renderZone(name, type, pitch, container) {
     '</div></div></div></div></div>';
 
   // ── Canvas setup ──────────────────────────────
-  var activeResult = 'all';
-  var activeView   = 'scatter';
-  var activeType   = 'all';
-  var activeHand   = 'all';
+  var activeResult    = 'all';
+  var activeView      = 'scatter';
+  var activeType      = 'all';
+  var activeHand      = 'all';
+  var activeDateStart = 0;
+  var activeDateEnd   = allDates.length > 0 ? allDates.length - 1 : 0;
+  var activeYear      = 'all';
 
   // SCATTER_BOUNDS: wide view for scatter plot
   // CLEAN_BOUNDS: zoomed view for grid/heatmap — ratio matches zone aspect (wider than tall in data space)
@@ -1103,17 +1216,16 @@ function renderZone(name, type, pitch, container) {
   function drawGrid(filtered) {
     var total = filtered.length;
 
-    // Strike zone boundaries — taller zone
     var ZX1=ZONE_X1, ZX2=ZONE_X2, ZY1=ZONE_Y1, ZY2=ZONE_Y2;
     var cW = (ZX2-ZX1)/3, cH = (ZY2-ZY1)/3;
 
+    // 9 inner cells (3x3 grid), row 0 = top
     var inner = [];
     for (var row=0; row<3; row++) {
       for (var col=0; col<3; col++) {
         inner.push({
           x1: ZX1+col*cW,     x2: ZX1+(col+1)*cW,
-          y1: ZY2-(row+1)*cH, y2: ZY2-row*cH,
-          outer: false
+          y1: ZY2-(row+1)*cH, y2: ZY2-row*cH
         });
       }
     }
@@ -1126,65 +1238,95 @@ function renderZone(name, type, pitch, container) {
       z.pct = total > 0 ? z.count/total*100 : 0;
     });
 
-    var yMid = (ZY1+ZY2)/2;
+    // 4 outer shadow zones — Statcast style
+    // TL: above zone + left of zone (top-left quadrant outside)
+    // TR: above zone + right of zone (top-right corner)
+    // BL: below zone + left (bottom-left corner)
+    // BR: below zone + right (bottom-right quadrant outside)
     var outer = [
-      { label:'TL', count:0 },
-      { label:'TR', count:0 },
-      { label:'BL', count:0 },
-      { label:'BR', count:0 }
+      { label:'TL', x1:-99, x2:0,    y1:ZY2, y2:99,  count:0 },  // top-left outside
+      { label:'TR', x1:0,   x2:99,   y1:ZY2, y2:99,  count:0 },  // top-right outside
+      { label:'BL', x1:-99, x2:0,    y1:-99, y2:ZY1, count:0 },  // bottom-left outside
+      { label:'BR', x1:0,   x2:99,   y1:-99, y2:ZY1, count:0 },  // bottom-right outside
     ];
+
+    // Also catch pitches beside the zone (left/right of zone, within y bounds)
+    var sideL = { count:0 };  // left of zone, within zone height
+    var sideR = { count:0 };  // right of zone, within zone height
+
     filtered.forEach(function(s) {
       var inInner = inner.some(function(z) {
         return s.x >= z.x1 && s.x < z.x2 && s.y >= z.y1 && s.y < z.y2;
       });
       if (inInner) return;
-      var isLeft = s.x < 0;
-      var isTop  = s.y >= yMid;
-      if      ( isLeft &&  isTop) outer[0].count++;
-      else if (!isLeft &&  isTop) outer[1].count++;
-      else if ( isLeft && !isTop) outer[2].count++;
-      else                        outer[3].count++;
+      // Assign to outer quadrant
+      var inZoneY = s.y >= ZY1 && s.y < ZY2;
+      var inZoneX = s.x >= ZX1 && s.x < ZX2;
+      if (!inZoneY && s.x < 0)  outer[0].count += (s.y >= ZY2) ? 1 : 0;
+      if (!inZoneY && s.x < 0)  outer[2].count += (s.y < ZY1)  ? 1 : 0;
+      if (!inZoneY && s.x >= 0) outer[1].count += (s.y >= ZY2) ? 1 : 0;
+      if (!inZoneY && s.x >= 0) outer[3].count += (s.y < ZY1)  ? 1 : 0;
+      // above/below zone, within x bounds
+      if (inZoneX && s.y >= ZY2) { outer[0].count++; outer[1].count++; } // split above
+      if (inZoneX && s.y < ZY1)  { outer[2].count++; outer[3].count++; } // split below
+      // beside zone within y bounds — add to nearest corner
+      if (inZoneY && s.x < ZX1)  { outer[0].count++; outer[2].count++; }
+      if (inZoneY && s.x >= ZX2) { outer[1].count++; outer[3].count++; }
+    });
+
+    // Simpler: just count by quadrant outside inner zone
+    outer.forEach(function(z) { z.count = 0; });
+    filtered.forEach(function(s) {
+      var inInner = inner.some(function(z) {
+        return s.x >= z.x1 && s.x < z.x2 && s.y >= z.y1 && s.y < z.y2;
+      });
+      if (inInner) return;
+      var isLeft = s.x < (ZX1+ZX2)/2;
+      var isTop  = s.y >= (ZY1+ZY2)/2;
+      if ( isLeft &&  isTop) outer[0].count++;
+      if (!isLeft &&  isTop) outer[1].count++;
+      if ( isLeft && !isTop) outer[2].count++;
+      if (!isLeft && !isTop) outer[3].count++;
     });
     outer.forEach(function(z) { z.pct = total > 0 ? z.count/total*100 : 0; });
 
     var maxInner = 0, maxOuter = 0;
     inner.forEach(function(z) { if (z.count > maxInner) maxInner = z.count; });
     outer.forEach(function(z) { if (z.count > maxOuter) maxOuter = z.count; });
+    outer.forEach(function(z) { z.intensity = maxOuter > 0 ? z.count/maxOuter : 0; });
 
+    // Canvas coords for zone box
     var SX1 = toCanvasX(ZX1), SX2 = toCanvasX(ZX2);
     var SY1 = toCanvasY(ZY2), SY2 = toCanvasY(ZY1);
-    var GAP = 4;
+    var zoneW = SX2 - SX1;
+    var zoneH = SY2 - SY1;
+    var sqW = zoneW / 3;
+    var sqH = zoneH / 3;
 
-    var cellPxW = SX2 - SX1;
-    var cellPxH = SY2 - SY1;
-    var sqW = (cellPxW / 3);
-    var sqH = (cellPxH / 3);
-    // 4 corner cells pushed to corners of the zone box
-    outer[0].px = { x:SX1-sqW, y:SY1,      w:sqW, h:sqH };  // TL
-    outer[1].px = { x:SX2,     y:SY1,      w:sqW, h:sqH };  // TR
-    outer[2].px = { x:SX1-sqW, y:SY2-sqH,  w:sqW, h:sqH };  // BL
-    outer[3].px = { x:SX2,     y:SY2-sqH,  w:sqW, h:sqH };  // BR
+    // Outer cell positions — Statcast 13-zone layout:
+    // TL: top-left, spans 2/3 of zone width, sits above zone
+    // TR: top-right corner only (1/3 wide), sits above zone
+    // BL: bottom-left corner only (1/3 wide), sits below zone
+    // BR: bottom-right, spans 2/3 of zone width, sits below zone
+    outer[0].px = { x:SX1,        y:SY1-sqH, w:sqW*2, h:sqH };  // TL — wide, above-left
+    outer[1].px = { x:SX1+sqW*2,  y:SY1-sqH, w:sqW,   h:sqH };  // TR — narrow, above-right
+    outer[2].px = { x:SX1,        y:SY2,     w:sqW,   h:sqH };  // BL — narrow, below-left
+    outer[3].px = { x:SX1+sqW,    y:SY2,     w:sqW*2, h:sqH };  // BR — wide, below-right
 
-    outer[0].intensity = maxOuter > 0 ? outer[0].count/maxOuter : 0;
-    outer[1].intensity = maxOuter > 0 ? outer[1].count/maxOuter : 0;
-    outer[2].intensity = maxOuter > 0 ? outer[2].count/maxOuter : 0;
-    outer[3].intensity = maxOuter > 0 ? outer[3].count/maxOuter : 0;
-
+    // Draw outer cells
     outer.forEach(function(z) {
-      if (z.skip) return;
       var p = z.px;
-      if (p.w <= 0 || p.h <= 0) return;
-      var intensity = z.intensity !== undefined ? z.intensity : (maxOuter > 0 ? z.count/maxOuter : 0);
+      if (!p || p.w <= 0 || p.h <= 0) return;
       ctx.fillStyle = z.count === 0
         ? 'rgba(96,165,250,0.12)'
-        : 'rgba(96,165,250,'+(0.1+0.55*intensity)+')';
+        : 'rgba(96,165,250,'+(0.1+0.55*z.intensity)+')';
       ctx.fillRect(p.x, p.y, p.w, p.h);
       ctx.strokeStyle = 'rgba(96,165,250,0.55)';
       ctx.lineWidth = 1.5;
       ctx.strokeRect(p.x, p.y, p.w, p.h);
       ctx.save();
       ctx.beginPath(); ctx.rect(p.x+1, p.y+1, p.w-2, p.h-2); ctx.clip();
-      ctx.fillStyle = intensity > 0.55 ? '#fff' : 'rgba(255,255,255,0.75)';
+      ctx.fillStyle = z.intensity > 0.55 ? '#fff' : 'rgba(255,255,255,0.75)';
       ctx.font = 'bold 12px DM Mono, monospace';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(z.pct.toFixed(1)+'%', p.x+p.w/2, p.y+p.h/2);
@@ -1192,6 +1334,7 @@ function renderZone(name, type, pitch, container) {
       ctx.restore();
     });
 
+    // Draw inner 3x3
     inner.forEach(function(z) {
       var cx1=toCanvasX(z.x1), cx2=toCanvasX(z.x2);
       var cy1=toCanvasY(z.y2), cy2=toCanvasY(z.y1);
@@ -1351,8 +1494,17 @@ function renderZone(name, type, pitch, container) {
       if (!resultMatch(s, activeResult)) return false;
       if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
       if (activeHand !== 'all' && (s.batter_side || s.side || '') !== activeHand) return false;
+      if (allDates.length > 1 && s.date) {
+        if (activeYear !== 'all' && !s.date.startsWith(activeYear)) return false;
+        var di = allDates.indexOf(s.date);
+        if (di < activeDateStart || di > activeDateEnd) return false;
+      }
       return true;
     });
+
+    // Update pitch count label
+    var countEl = document.getElementById('zone-pitch-count');
+    if (countEl) countEl.textContent = filtered.length + ' pitches plotted';
 
     updateStats(filtered);
 
@@ -1382,6 +1534,11 @@ function renderZone(name, type, pitch, container) {
       if (!resultMatch(s, activeResult)) return false;
       if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
       if (activeHand !== 'all' && (s.batter_side || s.side || '') !== activeHand) return false;
+      if (allDates.length > 1 && s.date) {
+        if (activeYear !== 'all' && !s.date.startsWith(activeYear)) return false;
+        var di = allDates.indexOf(s.date);
+        if (di < activeDateStart || di > activeDateEnd) return false;
+      }
       return true;
     });
     filtered.forEach(function(s) {
@@ -1456,6 +1613,60 @@ function renderZone(name, type, pitch, container) {
       drawZone();
     });
   });
+
+  // ── Date filters (pitcher only) ───────────────
+  if (type === 'pitcher' && allDates.length > 1) {
+    // Year buttons
+    container.querySelectorAll('#zone-year-filters .zone-filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        container.querySelectorAll('#zone-year-filters .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        activeYear = btn.dataset.year;
+        // Reset date sliders to full range when switching year
+        var startEl = document.getElementById('zone-date-start');
+        var endEl   = document.getElementById('zone-date-end');
+        if (startEl) { startEl.value = 0; activeDateStart = 0; }
+        if (endEl)   { endEl.value = allDates.length - 1; activeDateEnd = allDates.length - 1; }
+        updateDateLabel();
+        drawZone();
+      });
+    });
+
+    function updateDateLabel() {
+      var label = document.getElementById('zone-date-label');
+      if (!label) return;
+      var startDate = allDates[activeDateStart] || '';
+      var endDate   = allDates[activeDateEnd]   || '';
+      label.textContent = startDate === endDate ? startDate : startDate + ' → ' + endDate;
+    }
+
+    var startSlider = document.getElementById('zone-date-start');
+    var endSlider   = document.getElementById('zone-date-end');
+
+    if (startSlider) {
+      startSlider.addEventListener('input', function() {
+        activeDateStart = parseInt(this.value);
+        if (activeDateStart > activeDateEnd) {
+          activeDateEnd = activeDateStart;
+          if (endSlider) endSlider.value = activeDateEnd;
+        }
+        updateDateLabel();
+        drawZone();
+      });
+    }
+
+    if (endSlider) {
+      endSlider.addEventListener('input', function() {
+        activeDateEnd = parseInt(this.value);
+        if (activeDateEnd < activeDateStart) {
+          activeDateStart = activeDateEnd;
+          if (startSlider) startSlider.value = activeDateStart;
+        }
+        updateDateLabel();
+        drawZone();
+      });
+    }
+  }
 }
 
 
