@@ -630,7 +630,11 @@ function renderPlayerDetail(name, type, content) {
 
   const hl = document.getElementById('headline-stats');
   if (type === 'batter' && sum) {
-    [['AVG', fmt3(sum.AVG)], ['OPS', fmt3(sum.OPS)], ['HR', fmtN(sum.HR)], ['K', fmtN(sum.K)]].forEach(function(s) {
+    // RBI from IBL history (most recent season with AB)
+    const iblB = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
+    const iblBSeason = iblB.length ? iblB[0] : null;
+    const hlRBI = iblBSeason && iblBSeason.RBI != null ? fmtN(iblBSeason.RBI) : '—';
+    [['AVG', fmt3(sum.AVG)], ['OPS', fmt3(sum.OPS)], ['HR', fmtN(sum.HR)], ['RBI', hlRBI], ['K', fmtN(sum.K)]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   } else if (type === 'pitcher' && pitchData && pitchData.scatter) {
@@ -640,10 +644,17 @@ function renderPlayerDetail(name, type, content) {
     const bbs = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
     const strPct = tot > 0 ? Math.round(sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length / tot * 100) : 0;
     const pd = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
-    const hlIP   = pd.IP   != null ? fmtIP(pd.IP)           : '—';
-    const hlERA  = pd.ERA  != null ? fmt2(pd.ERA)            : '—';
-    const hlWHIP = pd.WHIP != null ? fmt2(pd.WHIP)           : '—';
-    const hlKBB  = pd.K_BB != null ? fmt2(pd.K_BB)           : '—';
+    // ERA from IBL history (most recent season with IP)
+    const iblP = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
+    const iblPSeason = iblP.length ? iblP[0] : null;
+    const hlIP   = pd.IP   != null ? fmtIP(pd.IP) : '—';
+    const hlERA  = iblPSeason && iblPSeason.ERA != null ? fmt2(iblPSeason.ERA) : '—';
+    // WHIP calculated from datadiamond scatter: (BB + H) / IP
+    const scAll  = pitchData && pitchData.scatter ? pitchData.scatter : [];
+    const pdBB   = scAll.filter(function(s){ return s.outcome==='Walk'||s.outcome==='Intentional Walk'; }).length;
+    const pdH    = scAll.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+    const hlWHIP = pd.IP > 0 ? fmt2((pdBB + pdH) / pd.IP) : '—';
+    const hlKBB  = pd.K_BB != null ? fmt2(pd.K_BB) : '—';
     [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
@@ -705,9 +716,11 @@ function renderOverview(name, type, sum, pitch) {
       { lbl: 'SLG',  val: fmt3(sum.SLG),  pct: (sum.SLG  || 0) / 0.65 },
       { lbl: 'OPS',  val: fmt3(sum.OPS),  pct: (sum.OPS  || 0) / 1.10 }
     ];
+    const iblBat = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
+    const iblBatS = iblBat.length ? iblBat[0] : null;
     const counting = [
       ['AB', sum.AB], ['H', sum.H], ['2B', sum['2B']], ['3B', sum['3B']],
-      ['HR', sum.HR], ['BB', sum.BB], ['K', sum.K]
+      ['HR', sum.HR], ['RBI', iblBatS ? iblBatS.RBI : null], ['BB', sum.BB], ['K', sum.K]
     ];
     return '<div class="overview-grid">' +
       '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Rate Stats</span>' +
@@ -764,15 +777,17 @@ function renderOverview(name, type, sum, pitch) {
       };
     }
 
-    // Date filter buttons: Season + individual dates
-    var pmDateBtns = '<button class="zone-filter-btn active" data-pmdate="season">Season</button>' +
-      pmDates.map(function(d) { return '<button class="zone-filter-btn" data-pmdate="'+d+'">'+d+'</button>'; }).join('');
-
-    var pmDateFilterHTML = pmDates.length > 1
-      ? '<div style="margin-bottom:16px;padding:0 24px">' +
-        '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Date</div>' +
-        '<div class="zone-controls" id="pm-date-filters" style="flex-wrap:wrap">' + pmDateBtns + '</div></div>'
-      : '';
+    // Season dropdown for pitch metrics
+    var seasonLabel = pmYears.length ? pmYears[0] + ' Summer' : 'Season';
+    var pmDateFilterHTML = '<div style="margin-bottom:16px;padding:0 24px">' +
+      '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Season</div>' +
+      '<select id="pm-season-select" style="' +
+        'background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);' +
+        'border-radius:6px;color:#fff;font-family:var(--font-mono);font-size:11px;' +
+        'padding:8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px">' +
+        '<option value="season">Season</option>' +
+        (pmYears.length ? '<option value="'+pmYears[0]+'">Summer '+pmYears[0]+'</option>' : '') +
+      '</select></div>';
 
     var sc = pitch.scatter;
     var m  = calcMetrics(sc);
@@ -809,18 +824,15 @@ function renderOverview(name, type, sum, pitch) {
         '</div>';
       }).join('') + '</div></div>';
 
-    // Wire up date filter buttons for pitch metrics
-    if (pmDates.length > 1) {
-      setTimeout(function() {
-        var btns = document.querySelectorAll('#pm-date-filters .zone-filter-btn');
-        btns.forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            btns.forEach(function(b){ b.classList.remove('active'); });
-            btn.classList.add('active');
-            pmDateFilter = btn.dataset.pmdate;
-            var filtered = pmDateFilter === 'season'
-              ? pitch.scatter
-              : pitch.scatter.filter(function(s){ return s.date === pmDateFilter; });
+    // Wire up season dropdown for pitch metrics
+    setTimeout(function() {
+      var sel = document.getElementById('pm-season-select');
+      if (sel) {
+        sel.addEventListener('change', function() {
+          pmDateFilter = this.value;
+          var filtered = pmDateFilter === 'season'
+            ? pitch.scatter
+            : pitch.scatter.filter(function(s){ return s.date && s.date.startsWith(pmDateFilter); });
             var m2 = calcMetrics(filtered);
             // Update pitch count
             var countEl = document.getElementById('pm-pitch-count');
@@ -849,8 +861,8 @@ function renderOverview(name, type, sum, pitch) {
             wrap.querySelectorAll('.savant-bubble').forEach(function(el){ if(el.dataset.left) el.style.left=el.dataset.left; });
           });
         });
-      }, 50);
-    }
+      }
+    }, 50);
 
     return html;
   }
@@ -1034,21 +1046,14 @@ function renderZone(name, type, pitch, container) {
 
   var dateFilterHTML = '';
   if (type === 'pitcher' && allDates.length > 1) {
-    var yearBtns = '<button class="zone-filter-btn active" data-year="all">All</button>' +
-      allYears.map(function(y) { return '<button class="zone-filter-btn" data-year="'+y+'">'+y+'</button>'; }).join('');
+    var dateOptions = '<option value="all">Season</option>' +
+      allDates.map(function(d) { return '<option value="'+d+'">'+d+'</option>'; }).join('');
 
     dateFilterHTML =
       '<div style="margin-bottom:16px">' +
-      '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Year</div>' +
-      '<div class="zone-controls" id="zone-year-filters">' + yearBtns + '</div></div>' +
-
-      '<div style="margin-bottom:16px">' +
-      '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Date Range' +
-      ' <span id="zone-date-label" style="color:var(--gold);margin-left:8px;font-size:9px">' + allDates[0] + ' → ' + allDates[allDates.length-1] + '</span></div>' +
-      '<div style="padding:0 4px">' +
-      '<input type="range" id="zone-date-start" min="0" max="'+(allDates.length-1)+'" value="0" style="width:100%;accent-color:var(--gold);margin-bottom:6px">' +
-      '<input type="range" id="zone-date-end" min="0" max="'+(allDates.length-1)+'" value="'+(allDates.length-1)+'" style="width:100%;accent-color:var(--gold)">' +
-      '</div></div>';
+      '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Date</div>' +
+      '<select id="zone-date-select" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#fff;font-family:var(--font-mono);font-size:11px;padding:8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px">' +
+      dateOptions + '</select></div>';
   }
 
   container.innerHTML =
@@ -1109,13 +1114,11 @@ function renderZone(name, type, pitch, container) {
     '</div></div></div></div></div>';
 
   // ── Canvas setup ──────────────────────────────
-  var activeResult    = 'all';
-  var activeView      = 'scatter';
-  var activeType      = 'all';
-  var activeHand      = 'all';
-  var activeDateStart = 0;
-  var activeDateEnd   = allDates.length > 0 ? allDates.length - 1 : 0;
-  var activeYear      = 'all';
+  var activeResult   = 'all';
+  var activeView     = 'scatter';
+  var activeType     = 'all';
+  var activeHand     = 'all';
+  var activeZoneDate = 'all';
 
   // SCATTER_BOUNDS: wide view for scatter plot
   // CLEAN_BOUNDS: zoomed view for grid/heatmap — ratio matches zone aspect (wider than tall in data space)
@@ -1494,11 +1497,7 @@ function renderZone(name, type, pitch, container) {
       if (!resultMatch(s, activeResult)) return false;
       if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
       if (activeHand !== 'all' && (s.batter_side || s.side || '') !== activeHand) return false;
-      if (allDates.length > 1 && s.date) {
-        if (activeYear !== 'all' && !s.date.startsWith(activeYear)) return false;
-        var di = allDates.indexOf(s.date);
-        if (di < activeDateStart || di > activeDateEnd) return false;
-      }
+      if (allDates.length > 1 && activeZoneDate !== 'all' && s.date !== activeZoneDate) return false;
       return true;
     });
 
@@ -1534,11 +1533,7 @@ function renderZone(name, type, pitch, container) {
       if (!resultMatch(s, activeResult)) return false;
       if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
       if (activeHand !== 'all' && (s.batter_side || s.side || '') !== activeHand) return false;
-      if (allDates.length > 1 && s.date) {
-        if (activeYear !== 'all' && !s.date.startsWith(activeYear)) return false;
-        var di = allDates.indexOf(s.date);
-        if (di < activeDateStart || di > activeDateEnd) return false;
-      }
+      if (allDates.length > 1 && activeZoneDate !== 'all' && s.date !== activeZoneDate) return false;
       return true;
     });
     filtered.forEach(function(s) {
@@ -1614,55 +1609,12 @@ function renderZone(name, type, pitch, container) {
     });
   });
 
-  // ── Date filters (pitcher only) ───────────────
+  // ── Date filter (pitcher only) ────────────────
   if (type === 'pitcher' && allDates.length > 1) {
-    // Year buttons
-    container.querySelectorAll('#zone-year-filters .zone-filter-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        container.querySelectorAll('#zone-year-filters .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
-        btn.classList.add('active');
-        activeYear = btn.dataset.year;
-        // Reset date sliders to full range when switching year
-        var startEl = document.getElementById('zone-date-start');
-        var endEl   = document.getElementById('zone-date-end');
-        if (startEl) { startEl.value = 0; activeDateStart = 0; }
-        if (endEl)   { endEl.value = allDates.length - 1; activeDateEnd = allDates.length - 1; }
-        updateDateLabel();
-        drawZone();
-      });
-    });
-
-    function updateDateLabel() {
-      var label = document.getElementById('zone-date-label');
-      if (!label) return;
-      var startDate = allDates[activeDateStart] || '';
-      var endDate   = allDates[activeDateEnd]   || '';
-      label.textContent = startDate === endDate ? startDate : startDate + ' → ' + endDate;
-    }
-
-    var startSlider = document.getElementById('zone-date-start');
-    var endSlider   = document.getElementById('zone-date-end');
-
-    if (startSlider) {
-      startSlider.addEventListener('input', function() {
-        activeDateStart = parseInt(this.value);
-        if (activeDateStart > activeDateEnd) {
-          activeDateEnd = activeDateStart;
-          if (endSlider) endSlider.value = activeDateEnd;
-        }
-        updateDateLabel();
-        drawZone();
-      });
-    }
-
-    if (endSlider) {
-      endSlider.addEventListener('input', function() {
-        activeDateEnd = parseInt(this.value);
-        if (activeDateEnd < activeDateStart) {
-          activeDateStart = activeDateEnd;
-          if (startSlider) startSlider.value = activeDateStart;
-        }
-        updateDateLabel();
+    var zoneDateSel = document.getElementById('zone-date-select');
+    if (zoneDateSel) {
+      zoneDateSel.addEventListener('change', function() {
+        activeZoneDate = this.value;
         drawZone();
       });
     }
