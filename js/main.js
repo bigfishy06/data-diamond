@@ -44,6 +44,15 @@ async function init() {
 }
 
 async function loadAll() {
+  // Inject dropdown theme styles once
+  if (!document.getElementById('dd-select-style')) {
+    var s = document.createElement('style');
+    s.id = 'dd-select-style';
+    s.textContent = 'select option { background:#0e1525; color:#FFB81C; }' +
+      'select:focus { border-color:rgba(255,184,28,0.7); }';
+    document.head.appendChild(s);
+  }
+
   try {
     const base = getBase();
     const [sumRes, pitRes, pitcherRes, iblRes] = await Promise.all([
@@ -253,12 +262,20 @@ function renderHittingLeaderboards(container) {
     return;
   }
 
+  // Enrich players with RBI from ibl_history
+  const enriched = players.map(function(p) {
+    const ibl = (DATA.iblHistory[p.batter] || []).filter(function(s){ return s.AB > 0; });
+    const rbi = ibl.length && ibl[0].RBI != null ? ibl[0].RBI : null;
+    return Object.assign({}, p, { RBI: rbi });
+  });
+
   const boards = [
     { title: 'AVG',  key: 'AVG',  fmt: fmt3, desc: true  },
     { title: 'OPS',  key: 'OPS',  fmt: fmt3, desc: true  },
     { title: 'OBP',  key: 'OBP',  fmt: fmt3, desc: true  },
     { title: 'SLG',  key: 'SLG',  fmt: fmt3, desc: true  },
     { title: 'HR',   key: 'HR',   fmt: fmtN, desc: true  },
+    { title: 'RBI',  key: 'RBI',  fmt: fmtN, desc: true  },
     { title: 'H',    key: 'H',    fmt: fmtN, desc: true  },
     { title: 'BB',   key: 'BB',   fmt: fmtN, desc: true  },
     { title: 'K',    key: 'K',    fmt: fmtN, desc: false }
@@ -268,7 +285,7 @@ function renderHittingLeaderboards(container) {
   grid.className = 'leaderboard-grid fade-up';
 
   boards.forEach(function(board) {
-    const sorted = players.slice().sort(function(a, b) {
+    const sorted = enriched.slice().sort(function(a, b) {
       const av = a[board.key] != null ? a[board.key] : (board.desc ? -Infinity : Infinity);
       const bv = b[board.key] != null ? b[board.key] : (board.desc ? -Infinity : Infinity);
       return board.desc ? bv - av : av - bv;
@@ -280,11 +297,12 @@ function renderHittingLeaderboards(container) {
       sorted.map(function(p, i) {
         const team = resolveTeam(p.batter_team);
         const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+        const val = p[board.key] != null ? board.fmt(p[board.key]) : '—';
         return '<div class="leader-row" data-name="' + p.batter + '" data-type="batter">' +
           '<span class="leader-rank ' + rankClass + '">' + (i+1) + '</span>' +
           '<span class="leader-name">' + p.batter + '</span>' +
           '<span class="leader-team">' + (team ? team.abbreviation : '') + '</span>' +
-          '<span class="leader-val">' + board.fmt(p[board.key]) + '</span>' +
+          '<span class="leader-val">' + val + '</span>' +
           '</div>';
       }).join('');
     card.querySelectorAll('.leader-row').forEach(function(row) {
@@ -316,11 +334,31 @@ function renderPitchingLeaderboards(container) {
     return;
   }
 
+  // Enrich pitchers with ERA from ibl_history and WHIP calculated from scatter
+  const enriched = pitchers.map(function(pd) {
+    const name = pd.pitcher;
+    // ERA from most recent IBL season with IP
+    const ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
+    const era = ibl.length && ibl[0].ERA != null ? ibl[0].ERA : null;
+    // WHIP from datadiamond scatter
+    var bb = 0, h = 0;
+    DATA.pitches.forEach(function(bp) {
+      if (!bp.scatter) return;
+      bp.scatter.forEach(function(s) {
+        if (s.pitcher !== name) return;
+        if (s.outcome === 'Walk' || s.outcome === 'Intentional Walk') bb++;
+        if (['Single','Double','Triple','Home Run'].includes(s.outcome)) h++;
+      });
+    });
+    const whip = pd.IP > 0 ? (bb + h) / pd.IP : null;
+    return Object.assign({}, pd, { ERA: era, WHIP: whip });
+  });
+
   const boards = [
     { title: 'ERA',     key: 'ERA',       fmt: function(v) { return fmt2(v); },       desc: false },
     { title: 'WHIP',    key: 'WHIP',      fmt: function(v) { return fmt2(v); },       desc: false },
     { title: 'K%',      key: 'K_pct',     fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
-    { title: 'K/BB',    key: 'K_BB',      fmt: function(v) { return fmt2(v); },        desc: true  },
+    { title: 'K/BB',    key: 'K_BB',      fmt: function(v) { return fmt2(v); },       desc: true  },
     { title: 'STR%',    key: 'STR_pct',   fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
     { title: 'BB%',     key: 'BB_pct',    fmt: function(v) { return fmt1(v) + '%'; }, desc: false },
     { title: 'E+A%',    key: 'EA_pct',    fmt: function(v) { return fmt1(v) + '%'; }, desc: true  },
@@ -333,7 +371,7 @@ function renderPitchingLeaderboards(container) {
   grid.className = 'leaderboard-grid fade-up';
 
   boards.forEach(function(board) {
-    const sorted = pitchers.filter(function(p) { return p[board.key] != null; })
+    const sorted = enriched.filter(function(p) { return p[board.key] != null; })
       .slice().sort(function(a,b) {
         return board.desc ? b[board.key] - a[board.key] : a[board.key] - b[board.key];
       }).slice(0, 5);
@@ -344,11 +382,12 @@ function renderPitchingLeaderboards(container) {
       sorted.map(function(p, i) {
         const team = resolveTeam(p.pitcher_team);
         const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+        const val = p[board.key] != null ? board.fmt(p[board.key]) : '—';
         return '<div class="leader-row" data-name="' + p.pitcher + '" data-type="pitcher">' +
           '<span class="leader-rank ' + rankClass + '">' + (i+1) + '</span>' +
           '<span class="leader-name">' + p.pitcher + '</span>' +
           '<span class="leader-team">' + (team ? team.abbreviation : '') + '</span>' +
-          '<span class="leader-val">' + board.fmt(p[board.key]) + '</span>' +
+          '<span class="leader-val">' + val + '</span>' +
           '</div>';
       }).join('');
     card.querySelectorAll('.leader-row').forEach(function(row) {
@@ -781,10 +820,7 @@ function renderOverview(name, type, sum, pitch) {
     var seasonLabel = pmYears.length ? pmYears[0] + ' Summer' : 'Season';
     var pmDateFilterHTML = '<div style="margin-bottom:16px;padding:0 24px">' +
       '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Season</div>' +
-      '<select id="pm-season-select" style="' +
-        'background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);' +
-        'border-radius:6px;color:#fff;font-family:var(--font-mono);font-size:11px;' +
-        'padding:8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px">' +
+      '<select id="pm-season-select" style="background:#0e1525;border:1.5px solid rgba(255,184,28,0.35);border-radius:6px;color:#FFB81C;font-family:var(--font-mono);font-size:11px;padding:8px 28px 8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23FFB81C'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;">' +
         '<option value="season">Season</option>' +
         (pmYears.length ? '<option value="'+pmYears[0]+'">Summer '+pmYears[0]+'</option>' : '') +
       '</select></div>';
@@ -1050,8 +1086,8 @@ function renderZone(name, type, pitch, container) {
 
     dateFilterHTML =
       '<div style="margin-bottom:16px">' +
-      '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Date</div>' +
-      '<select id="zone-date-select" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#fff;font-family:var(--font-mono);font-size:11px;padding:8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px">' +
+      '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Game Date</div>' +
+      '<select id="zone-date-select" style="background:#0e1525;border:1.5px solid rgba(255,184,28,0.35);border-radius:6px;color:#FFB81C;font-family:var(--font-mono);font-size:11px;padding:8px 28px 8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23FFB81C'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;">' +
       dateOptions + '</select></div>';
   }
 
