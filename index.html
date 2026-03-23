@@ -236,8 +236,615 @@
     </div>
   </section>
 
+  <!-- OPENING DAY COUNTDOWN -->
+  <div class="countdown-wrap">
+    <div class="countdown-inner">
+      <span class="countdown-label">OPENING DAY</span>
+      <span class="countdown-date">MAY 15, 2026 · 7:35 PM</span>
+      <div class="countdown-blocks" id="countdown-blocks">
+        <div class="countdown-block"><span class="countdown-num" id="cd-days">--</span><span class="countdown-unit">DAYS</span></div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-block"><span class="countdown-num" id="cd-hours">--</span><span class="countdown-unit">HRS</span></div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-block"><span class="countdown-num" id="cd-mins">--</span><span class="countdown-unit">MIN</span></div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-block"><span class="countdown-num" id="cd-secs">--</span><span class="countdown-unit">SEC</span></div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .countdown-wrap {
+      background: rgba(255,184,28,0.04);
+      border-top: 1px solid rgba(255,184,28,0.12);
+      border-bottom: 1px solid rgba(255,184,28,0.12);
+      padding: 18px 0;
+    }
+    .countdown-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .countdown-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      color: #FFB81C;
+    }
+    .countdown-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.08em;
+    }
+    .countdown-blocks {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+    .countdown-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 52px;
+      background: rgba(255,184,28,0.06);
+      border: 1px solid rgba(255,184,28,0.15);
+      border-radius: 3px;
+      padding: 8px 10px 6px;
+    }
+    .countdown-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: #FFB81C;
+      line-height: 1;
+    }
+    .countdown-unit {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.3);
+      margin-top: 2px;
+    }
+    .countdown-sep {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: rgba(255,184,28,0.4);
+      margin-bottom: 12px;
+    }
+    .countdown-done {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.1em;
+      color: #FFB81C;
+      margin-left: auto;
+    }
+  </style>
+  <script>
+    (function() {
+      const target = new Date('2026-05-15T19:35:00-04:00').getTime();
+      function tick() {
+        const now  = Date.now();
+        const diff = target - now;
+        if (diff <= 0) {
+          document.getElementById('countdown-blocks').innerHTML = '<span class="countdown-done">⚾ PLAY BALL!</span>';
+          return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+        document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+        document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+        document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
+
   <!-- TICKER -->
   <div class="ticker-wrap"><div class="ticker-track" id="stat-ticker"></div></div>
+
+  <!-- GAME PREP -->
+  <div class="container" style="padding-top:48px;padding-bottom:0">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+      <h2 class="section-title" style="margin-bottom:0">GAME <span>PREP</span></h2>
+      <span style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.08em">GUELPH ROYALS · 2026</span>
+    </div>
+    <div id="game-prep-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:48px"></div>
+  </div>
+  <style>
+    .gp-card {
+      background: rgba(13,20,32,0.8);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: border-color 0.2s;
+    }
+    .gp-card:hover { border-color: rgba(255,184,28,0.2); }
+    .gp-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .gp-date {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: #FFB81C;
+    }
+    .gp-venue {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.05em;
+    }
+    .gp-matchup {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .gp-team {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+    .gp-team-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 10px;
+      color: #fff;
+    }
+    .gp-team-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+    }
+    .gp-vs {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.1em;
+    }
+    .gp-ha {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      padding: 2px 6px;
+      border-radius: 2px;
+      margin-top: 2px;
+    }
+    .gp-ha.home { background: rgba(255,184,28,0.15); color: #FFB81C; }
+    .gp-ha.away { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.35); }
+    .gp-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .gp-btn {
+      padding: 9px 6px;
+      background: rgba(255,184,28,0.08);
+      border: 1px solid rgba(255,184,28,0.2);
+      border-radius: 3px;
+      color: #FFB81C;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s, border-color 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .gp-btn:hover { background: rgba(255,184,28,0.16); border-color: rgba(255,184,28,0.4); }
+    .gp-btn:active { transform: scale(0.97); }
+    .gp-btn-icon { font-size: 16px; }
+    .gp-btn-label { font-size: 10px; }
+    .gp-generating {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  </style>
+  <script>
+  // ── SCHEDULE (Guelph games only, 2026) ─────────────
+  const GUELPH_SCHEDULE = [
+    { date:'2026-05-15', time:'7:35 PM', home:'Chatham-Kent Barnstormers', away:'Guelph Royals',     venue:'Fergie Jenkins Field' },
+    { date:'2026-05-23', time:'2:00 PM', home:'Guelph Royals',             away:'Brantford Red Sox', venue:'Hastings Stadium' },
+    { date:'2026-05-24', time:'2:00 PM', home:'Toronto Maple Leafs',       away:'Guelph Royals',     venue:'Dominico Field' },
+    { date:'2026-05-26', time:'7:05 PM', home:'Guelph Royals',             away:'Welland Jackfish',  venue:'Hastings Stadium' },
+    { date:'2026-05-30', time:'2:00 PM', home:'Guelph Royals',             away:'Kitchener Panthers',venue:'Hastings Stadium' },
+    { date:'2026-05-31', time:'4:05 PM', home:'London Majors',             away:'Guelph Royals',     venue:'Labatt Park' },
+    { date:'2026-06-02', time:'7:05 PM', home:'Guelph Royals',             away:'Hamilton Cardinals',venue:'Hastings Stadium' },
+    { date:'2026-06-06', time:'2:00 PM', home:'Guelph Royals',             away:'London Majors',     venue:'Hastings Stadium' },
+    { date:'2026-06-07', time:'6:08 PM', home:'Barrie Baycats',            away:'Guelph Royals',     venue:'Athletic Kulture Stadium' },
+    { date:'2026-06-09', time:'7:05 PM', home:'Guelph Royals',             away:'Barrie Baycats',    venue:'Hastings Stadium' },
+    { date:'2026-06-10', time:'7:30 PM', home:'Toronto Maple Leafs',       away:'Guelph Royals',     venue:'Dominico Field' },
+    { date:'2026-06-13', time:'2:00 PM', home:'Guelph Royals',             away:'Kitchener Panthers',venue:'Hastings Stadium' },
+    { date:'2026-06-14', time:'2:05 PM', home:'Kitchener Panthers',        away:'Guelph Royals',     venue:'Jack Couch Park' },
+    { date:'2026-06-16', time:'7:05 PM', home:'Guelph Royals',             away:'Chatham-Kent Barnstormers',venue:'Hastings Stadium' },
+    { date:'2026-06-19', time:'7:35 PM', home:'Hamilton Cardinals',        away:'Guelph Royals',     venue:'Bernie Arbour Stadium' },
+    { date:'2026-06-20', time:'7:05 PM', home:'Guelph Royals',             away:'Toronto Maple Leafs',venue:'Hastings Stadium' },
+    { date:'2026-06-21', time:'1:05 PM', home:'Welland Jackfish',          away:'Guelph Royals',     venue:'Welland Stadium' },
+    { date:'2026-06-23', time:'7:05 PM', home:'Guelph Royals',             away:'Brantford Red Sox', venue:'Hastings Stadium' },
+    { date:'2026-06-27', time:'7:05 PM', home:'Guelph Royals',             away:'Barrie Baycats',    venue:'Hastings Stadium' },
+    { date:'2026-06-28', time:'2:00 PM', home:'Brantford Red Sox',         away:'Guelph Royals',     venue:'Arnold Anderson Stadium' },
+    { date:'2026-07-01', time:'2:05 PM', home:'Kitchener Panthers',        away:'Guelph Royals',     venue:'Jack Couch Park' },
+    { date:'2026-07-02', time:'7:38 PM', home:'Barrie Baycats',            away:'Guelph Royals',     venue:'Athletic Kulture Stadium' },
+    { date:'2026-07-04', time:'2:00 PM', home:'Guelph Royals',             away:'Toronto Maple Leafs',venue:'Hastings Stadium' },
+    { date:'2026-07-07', time:'7:05 PM', home:'Guelph Royals',             away:'Welland Jackfish',  venue:'Hastings Stadium' },
+    { date:'2026-07-10', time:'7:05 PM', home:'London Majors',             away:'Guelph Royals',     venue:'Labatt Park' },
+    { date:'2026-07-14', time:'7:05 PM', home:'Guelph Royals',             away:'Hamilton Cardinals',venue:'Hastings Stadium' },
+    { date:'2026-07-16', time:'7:05 PM', home:'Welland Jackfish',          away:'Guelph Royals',     venue:'Welland Stadium' },
+    { date:'2026-07-17', time:'7:07 PM', home:'Brantford Red Sox',         away:'Guelph Royals',     venue:'Arnold Anderson Stadium' },
+    { date:'2026-07-18', time:'7:05 PM', home:'Guelph Royals',             away:'Toronto Maple Leafs',venue:'Hastings Stadium' },
+    { date:'2026-07-22', time:'7:30 PM', home:'Toronto Maple Leafs',       away:'Guelph Royals',     venue:'Dominico Field' },
+    { date:'2026-07-24', time:'7:35 PM', home:'Chatham-Kent Barnstormers', away:'Guelph Royals',     venue:'Fergie Jenkins Field' },
+    { date:'2026-07-25', time:'2:00 PM', home:'Guelph Royals',             away:'Chatham-Kent Barnstormers',venue:'Hastings Stadium' },
+    { date:'2026-07-28', time:'7:05 PM', home:'Guelph Royals',             away:'London Majors',     venue:'Hastings Stadium' },
+    { date:'2026-07-31', time:'7:07 PM', home:'Brantford Red Sox',         away:'Guelph Royals',     venue:'Arnold Anderson Stadium' },
+    { date:'2026-08-01', time:'7:05 PM', home:'Guelph Royals',             away:'Kitchener Panthers',venue:'Hastings Stadium' },
+    { date:'2026-08-03', time:'4:05 PM', home:'Hamilton Cardinals',        away:'Guelph Royals',     venue:'Bernie Arbour Stadium' },
+    { date:'2026-08-06', time:'7:05 PM', home:'Kitchener Panthers',        away:'Guelph Royals',     venue:'Jack Couch Park' },
+    { date:'2026-08-08', time:'7:05 PM', home:'Guelph Royals',             away:'Welland Jackfish',  venue:'Hastings Stadium' },
+    { date:'2026-08-11', time:'7:05 PM', home:'Guelph Royals',             away:'Barrie Baycats',    venue:'Hastings Stadium' },
+    { date:'2026-08-14', time:'7:35 PM', home:'Chatham-Kent Barnstormers', away:'Guelph Royals',     venue:'Fergie Jenkins Field' },
+    { date:'2026-08-15', time:'2:00 PM', home:'Guelph Royals',             away:'Brantford Red Sox', venue:'Hastings Stadium' },
+    { date:'2026-08-18', time:'7:05 PM', home:'Guelph Royals',             away:'Chatham-Kent Barnstormers',venue:'Hastings Stadium' },
+    { date:'2026-08-20', time:'7:38 PM', home:'Barrie Baycats',            away:'Guelph Royals',     venue:'Athletic Kulture Stadium' },
+    { date:'2026-08-21', time:'7:35 PM', home:'Hamilton Cardinals',        away:'Guelph Royals',     venue:'Bernie Arbour Stadium' },
+    { date:'2026-08-22', time:'7:05 PM', home:'Guelph Royals',             away:'London Majors',     venue:'Hastings Stadium' },
+    { date:'2026-08-29', time:'7:05 PM', home:'Guelph Royals',             away:'Hamilton Cardinals',venue:'Hastings Stadium' },
+  ];
+
+  function getOpponent(game) {
+    return game.home === 'Guelph Royals' ? game.away : game.home;
+  }
+  function isHomeGame(game) { return game.home === 'Guelph Royals'; }
+
+  function buildGamePrepGrid() {
+    const grid = document.getElementById('game-prep-grid');
+    if (!grid) return;
+    const today = new Date(); today.setHours(0,0,0,0);
+    const upcoming = GUELPH_SCHEDULE.filter(g => new Date(g.date + 'T00:00:00') >= today).slice(0,3);
+    if (!upcoming.length) { grid.innerHTML = '<p style="color:rgba(255,255,255,0.3);font-family:\'DM Mono\',monospace;font-size:12px">Season complete.</p>'; return; }
+
+    grid.innerHTML = upcoming.map(function(game, idx) {
+      const opp   = getOpponent(game);
+      const oppT  = resolveTeam(opp);
+      const guelT = resolveTeam('Guelph Royals');
+      const home  = isHomeGame(game);
+      const d     = new Date(game.date + 'T12:00:00');
+      const dateStr = d.toLocaleDateString('en-CA', { weekday:'short', month:'short', day:'numeric' }).toUpperCase();
+
+      const guelColor = guelT ? guelT.primaryColor : '#003DA5';
+      const oppColor  = oppT  ? oppT.primaryColor  : '#888';
+
+      const [guelTeam, oppTeam] = home
+        ? [{ name:'Guelph Royals', abbr:'GUE', color:guelColor, ha:'HOME' }, { name:opp, abbr: oppT ? oppT.abbreviation : opp.slice(0,3).toUpperCase(), color:oppColor, ha:'AWAY' }]
+        : [{ name:'Guelph Royals', abbr:'GUE', color:guelColor, ha:'AWAY' }, { name:opp, abbr: oppT ? oppT.abbreviation : opp.slice(0,3).toUpperCase(), color:oppColor, ha:'HOME' }];
+
+      return `<div class="gp-card">
+        <div class="gp-card-top">
+          <span class="gp-date">${dateStr} · ${game.time}</span>
+        </div>
+        <div class="gp-venue" style="text-align:center">${game.venue}</div>
+        <div class="gp-matchup">
+          <div class="gp-team">
+            <div class="gp-team-dot" style="border-color:${guelTeam.color};background:${guelTeam.color}22">${guelTeam.abbr}</div>
+            <div class="gp-team-name">Guelph</div>
+            <span class="gp-ha ${guelTeam.ha.toLowerCase()}">${guelTeam.ha}</span>
+          </div>
+          <div class="gp-vs">VS</div>
+          <div class="gp-team">
+            <div class="gp-team-dot" style="border-color:${oppTeam.color};background:${oppTeam.color}22">${oppTeam.abbr}</div>
+            <div class="gp-team-name">${oppT ? oppT.name.split(' ').pop() : opp.split(' ').pop()}</div>
+            <span class="gp-ha ${oppTeam.ha.toLowerCase()}">${oppTeam.ha}</span>
+          </div>
+        </div>
+        <div class="gp-btns">
+          <button class="gp-btn" onclick="downloadReport('pitcher-scouting','${opp}','${game.date}',this)">
+            <span class="gp-btn-icon">⚾</span>
+            <span class="gp-btn-label">OPP PITCHERS</span>
+          </button>
+          <button class="gp-btn" onclick="downloadReport('batter-scouting','${opp}','${game.date}',this)">
+            <span class="gp-btn-icon">🏏</span>
+            <span class="gp-btn-label">OPP BATTERS</span>
+          </button>
+          <button class="gp-btn" onclick="downloadReport('cheat-sheet','${opp}','${game.date}',this)">
+            <span class="gp-btn-icon">📋</span>
+            <span class="gp-btn-label">CHEAT SHEET</span>
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── PNG REPORT GENERATOR ──────────────────────────
+  function downloadReport(type, oppName, dateStr, btn) {
+    btn.classList.add('gp-generating');
+    btn.textContent = '…';
+    setTimeout(function() {
+      try {
+        const canvas = buildReportCanvas(type, oppName, dateStr);
+        const link = document.createElement('a');
+        link.download = type + '-vs-' + oppName.replace(/\s+/g,'-') + '-' + dateStr + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      } catch(e) {
+        console.error('Report generation failed:', e);
+        alert('Report generation failed: ' + e.message);
+      }
+      btn.classList.remove('gp-generating');
+      btn.innerHTML = type === 'pitcher-scouting'
+        ? '<span class="gp-btn-icon">⚾</span><span class="gp-btn-label">OPP PITCHERS</span>'
+        : type === 'batter-scouting'
+        ? '<span class="gp-btn-icon">🏏</span><span class="gp-btn-label">OPP BATTERS</span>'
+        : '<span class="gp-btn-icon">📋</span><span class="gp-btn-label">CHEAT SHEET</span>';
+    }, 100);
+  }
+
+  function buildReportCanvas(type, oppName, dateStr) {
+    const W = 1200, PAD = 40;
+    const oppT = resolveTeam(oppName);
+    const oppColor = oppT ? oppT.primaryColor : '#888888';
+
+    // Gather data
+    const oppBatters = DATA.summary.filter(function(p) {
+      const t = resolveTeam(p.batter_team);
+      return t && t.name === oppName;
+    }).sort(function(a,b) { return (b.AB||0)-(a.AB||0); });
+
+    const oppPitcherNames = new Set();
+    DATA.pitches.forEach(function(bp) {
+      if (!bp.scatter) return;
+      bp.scatter.forEach(function(s) {
+        if (!s.pitcher_team) return;
+        const pt = resolveTeam(s.pitcher_team);
+        if (pt && pt.name === oppName) oppPitcherNames.add(s.pitcher);
+      });
+    });
+    const oppPitchers = DATA.pitchers.filter(function(pd) { return oppPitcherNames.has(pd.pitcher); });
+
+    // Determine rows
+    let rows = [], title = '', subtitle = '';
+    const d = new Date(dateStr + 'T12:00:00');
+    const dateLabel = d.toLocaleDateString('en-CA', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+
+    if (type === 'pitcher-scouting') {
+      title = 'PITCHER SCOUTING REPORT';
+      subtitle = oppName.toUpperCase() + ' · ' + dateLabel;
+      rows = oppPitchers.map(function(pd) {
+        const pts = [];
+        DATA.pitches.forEach(function(bp) {
+          if (!bp.scatter) return;
+          bp.scatter.forEach(function(s) { if (s.pitcher === pd.pitcher) pts.push(s); });
+        });
+        const tot = pts.length;
+        const ks  = pts.filter(function(s) { return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
+        const bbs = pts.filter(function(s) { return s.outcome==='Walk'; }).length;
+        const str = pts.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+        const bb  = pts.filter(function(s) { return s.outcome==='Walk'||s.outcome==='Intentional Walk'; }).length;
+        const h   = pts.filter(function(s) { return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+        const whip = pd.IP > 0 ? fmt2((bb+h)/pd.IP) : '—';
+        const pitchTypes = {};
+        pts.forEach(function(s) { var t=s.pitch_type||s.type||'?'; pitchTypes[t]=(pitchTypes[t]||0)+1; });
+        const topPitch = Object.entries(pitchTypes).sort(function(a,b){return b[1]-a[1];})[0];
+        return {
+          name: pd.pitcher,
+          cols: [
+            tot || '—',
+            pd.ERA != null ? fmt2(pd.ERA) : '—',
+            whip,
+            ks || '—',
+            bbs || '—',
+            tot > 0 ? fmt1(str/tot*100)+'%' : '—',
+            topPitch ? topPitch[0] : '—'
+          ]
+        };
+      });
+      rows.headers = ['PITCHER','PITCHES','ERA','WHIP','K','BB','STR%','TOP PITCH'];
+    } else if (type === 'batter-scouting') {
+      title = 'BATTER SCOUTING REPORT';
+      subtitle = oppName.toUpperCase() + ' · ' + dateLabel;
+      rows = oppBatters.map(function(p) {
+        return {
+          name: p.batter,
+          cols: [
+            fmtN(p.AB)||'—',
+            fmt3(p.AVG)||'—',
+            fmt3(p.OBP)||'—',
+            fmt3(p.SLG)||'—',
+            fmt3(p.OPS)||'—',
+            fmtN(p.HR)||'—',
+            fmtN(p.K)||'—',
+            fmtN(p.BB)||'—'
+          ]
+        };
+      });
+      rows.headers = ['BATTER','AB','AVG','OBP','SLG','OPS','HR','K','BB'];
+    } else {
+      // CHEAT SHEET — combined
+      title = 'GAME CHEAT SHEET';
+      subtitle = 'GUELPH ROYALS vs ' + oppName.toUpperCase() + ' · ' + dateLabel;
+      rows = { headers: null, batters: oppBatters.slice(0,8), pitchers: oppPitchers.slice(0,5), pitcherPts: {} };
+      oppPitchers.forEach(function(pd) {
+        const pts = [];
+        DATA.pitches.forEach(function(bp) {
+          if (!bp.scatter) return;
+          bp.scatter.forEach(function(s) { if (s.pitcher === pd.pitcher) pts.push(s); });
+        });
+        rows.pitcherPts[pd.pitcher] = pts;
+      });
+    }
+
+    // ── CANVAS DRAWING ──────────────────────────────
+    const canvas = document.createElement('canvas');
+    const ROW_H = 36, HEADER_H = 44, TOP_H = 100;
+
+    let H;
+    if (type === 'cheat-sheet') {
+      H = TOP_H + 50 + HEADER_H + (rows.batters.length * ROW_H) + 60 + HEADER_H + (rows.pitchers.length * ROW_H) + PAD * 2;
+    } else {
+      H = TOP_H + HEADER_H + (rows.length * ROW_H) + PAD * 2 + 20;
+    }
+    H = Math.max(H, 400);
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    // Background
+    ctx.fillStyle = '#080c12';
+    ctx.fillRect(0, 0, W, H);
+
+    // Accent bar
+    ctx.fillStyle = oppColor;
+    ctx.fillRect(0, 0, W, 5);
+
+    // Logo diamond
+    function drawDiamond(cx, cy, size) {
+      ctx.save();
+      ctx.strokeStyle = '#FFB81C';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy-size); ctx.lineTo(cx+size, cy);
+      ctx.lineTo(cx, cy+size); ctx.lineTo(cx-size, cy);
+      ctx.closePath(); ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(cx, cy, size*0.18, 0, Math.PI*2);
+      ctx.fillStyle = '#FFB81C'; ctx.fill();
+      ctx.restore();
+    }
+    drawDiamond(PAD+18, 52, 18);
+
+    // Header text
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 32px "Arial Narrow", Arial, sans-serif';
+    ctx.fillText('DATA DIAMOND', PAD+44, 44);
+    ctx.fillStyle = '#FFB81C';
+    ctx.font = '13px "Courier New", monospace';
+    ctx.fillText(title, PAD+44, 64);
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.font = '11px "Courier New", monospace';
+    ctx.fillText(subtitle, PAD+44, 82);
+
+    // Opp color swatch
+    ctx.fillStyle = oppColor;
+    ctx.fillRect(W - PAD - 120, 28, 120, 4);
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.font = '11px "Courier New", monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText(oppName.toUpperCase(), W - PAD, 52);
+    ctx.textAlign = 'left';
+
+    // Divider
+    ctx.strokeStyle = 'rgba(255,184,28,0.2)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(PAD, TOP_H-8); ctx.lineTo(W-PAD, TOP_H-8); ctx.stroke();
+
+    function drawTable(startY, headers, dataRows) {
+      const colW = (W - PAD*2) / headers.length;
+      // Header row
+      ctx.fillStyle = 'rgba(255,184,28,0.08)';
+      ctx.fillRect(PAD, startY, W-PAD*2, HEADER_H);
+      ctx.fillStyle = '#FFB81C';
+      ctx.font = 'bold 11px "Courier New", monospace';
+      headers.forEach(function(h, i) {
+        ctx.fillText(h, PAD + i*colW + 8, startY + 27);
+      });
+      // Data rows
+      dataRows.forEach(function(row, ri) {
+        const y = startY + HEADER_H + ri * ROW_H;
+        ctx.fillStyle = ri % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent';
+        ctx.fillRect(PAD, y, W-PAD*2, ROW_H);
+        // Name col
+        ctx.fillStyle = '#fff';
+        ctx.font = '13px "Courier New", monospace';
+        ctx.fillText(row.name, PAD + 8, y + 23);
+        // Data cols
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.font = '12px "Courier New", monospace';
+        row.cols.forEach(function(val, ci) {
+          ctx.fillText(String(val), PAD + (ci+1)*colW + 8, y + 23);
+        });
+        // Row divider
+        ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(PAD, y+ROW_H); ctx.lineTo(W-PAD, y+ROW_H); ctx.stroke();
+      });
+      return startY + HEADER_H + dataRows.length * ROW_H;
+    }
+
+    if (type === 'cheat-sheet') {
+      // Batters section
+      ctx.fillStyle = '#FFB81C';
+      ctx.font = 'bold 13px "Courier New", monospace';
+      ctx.fillText('⚾  OPPOSING BATTERS', PAD, TOP_H + 20);
+      const bHeaders = ['BATTER','AB','AVG','OBP','SLG','OPS','HR','K','BB'];
+      const bRows = rows.batters.map(function(p) { return { name:p.batter, cols:[fmtN(p.AB)||'—',fmt3(p.AVG)||'—',fmt3(p.OBP)||'—',fmt3(p.SLG)||'—',fmt3(p.OPS)||'—',fmtN(p.HR)||'—',fmtN(p.K)||'—',fmtN(p.BB)||'—'] }; });
+      const afterBatters = drawTable(TOP_H + 30, bHeaders, bRows);
+      // Pitchers section
+      ctx.fillStyle = '#FFB81C';
+      ctx.font = 'bold 13px "Courier New", monospace';
+      ctx.fillText('🥊  OPPOSING PITCHERS', PAD, afterBatters + 36);
+      const pHeaders = ['PITCHER','PITCHES','ERA','WHIP','K','BB','STR%','TOP PITCH'];
+      const pRows = rows.pitchers.map(function(pd) {
+        const pts = rows.pitcherPts[pd.pitcher] || [];
+        const tot = pts.length;
+        const ks  = pts.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
+        const bbs = pts.filter(function(s){return s.outcome==='Walk';}).length;
+        const bb  = pts.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+        const h   = pts.filter(function(s){return ['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
+        const str = pts.filter(function(s){return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+        const whip = pd.IP > 0 ? fmt2((bb+h)/pd.IP) : '—';
+        const pitchTypes = {};
+        pts.forEach(function(s){var t=s.pitch_type||s.type||'?';pitchTypes[t]=(pitchTypes[t]||0)+1;});
+        const topPitch = Object.entries(pitchTypes).sort(function(a,b){return b[1]-a[1];})[0];
+        return { name:pd.pitcher, cols:[tot||'—', pd.ERA!=null?fmt2(pd.ERA):'—', whip, ks||'—', bbs||'—', tot>0?fmt1(str/tot*100)+'%':'—', topPitch?topPitch[0]:'—'] };
+      });
+      drawTable(afterBatters + 46, pHeaders, pRows);
+    } else {
+      drawTable(TOP_H, rows.headers, rows);
+    }
+
+    // Footer
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.font = '10px "Courier New", monospace';
+    ctx.fillText('data-diamond.ca · Generated ' + new Date().toLocaleDateString(), PAD, H - 14);
+
+    return canvas;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Wait for DATA to load before building grid
+    var attempts = 0;
+    function tryBuild() {
+      if ((DATA.summary && DATA.summary.length) || attempts > 20) {
+        buildGamePrepGrid();
+      } else {
+        attempts++;
+        setTimeout(tryBuild, 300);
+      }
+    }
+    tryBuild();
+  });
+  </script>
 
   <!-- TEAMS -->
   <div class="container" style="padding-top:48px;padding-bottom:80px">
