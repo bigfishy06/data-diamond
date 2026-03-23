@@ -3,7 +3,7 @@
    Powered by summary.json + pitches.json
 ================================================ */
 
-function getBase() { return 'https://bigfishy06.github.io/data-diamond/'; }
+function getBase() { return '/'; }
 
 const TEAMS = [
   { id: 'bar', name: 'Barrie Baycats',             abbreviation: 'BAR', primaryColor: '#C8102E' },
