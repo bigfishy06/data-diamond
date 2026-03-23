@@ -1003,53 +1003,74 @@
       return;
     }
 
-    var label = type === 'pitcher-scouting' ? 'PITCHERS' : 'BATTERS';
-    var html = '<div class="gp-picker-header"><span>' + oppName.toUpperCase() + ' — ' + label + '</span>' +
-               '<button class="gp-picker-close" onclick="closePicker('' + pickerId + '')">✕</button></div>';
-    players.forEach(function(p, i) {
-      html += '<div class="gp-picker-row">' +
-        '<span class="gp-picker-name">' + p.name + '</span>' +
-        '<span class="gp-picker-stat">' + p.stat + '</span>' +
-        '<button class="gp-picker-dl" id="' + pickerId + '-dl-' + i + '" onclick="downloadOne('' + type + '',' + cardIdx + ',' + i + ','' + oppName + '')">' +
-          '⬇ PDF</button>' +
-        '</div>';
-    });
-    picker.innerHTML = html;
-    picker.classList.add('open');
-
-    // Store player list on element for downloadOne to access
+    // Store data on element — no string injection into onclick
     picker._players = players;
     picker._team = team;
-  }
+    picker._type = type;
 
-  function closePicker(pickerId) {
-    var picker = document.getElementById(pickerId);
-    if (picker) { picker.classList.remove('open'); picker.innerHTML = ''; }
-  }
+    var label = type === 'pitcher-scouting' ? 'PITCHERS' : 'BATTERS';
 
-  function downloadOne(type, cardIdx, playerIdx, oppName) {
-    var pickerId = 'picker-' + (type === 'pitcher-scouting' ? 'pitcher' : 'batter') + '-' + cardIdx;
-    var picker = document.getElementById(pickerId);
-    if (!picker || !picker._players) return;
-    var p = picker._players[playerIdx];
-    var team = picker._team;
-    var dlBtn = document.getElementById(pickerId + '-dl-' + playerIdx);
-    if (dlBtn) { dlBtn.disabled = true; dlBtn.textContent = '…'; }
+    // Build DOM directly to avoid any quote/apostrophe issues
+    picker.innerHTML = '';
 
-    function run() {
-      if (type === 'batter-scouting') genBatterPDF(p.player, team);
-      else genPitcherPDF(p.player, team);
-      if (dlBtn) { dlBtn.disabled = false; dlBtn.textContent = '⬇ PDF'; }
-    }
+    var header = document.createElement('div');
+    header.className = 'gp-picker-header';
+    var headerSpan = document.createElement('span');
+    headerSpan.textContent = oppName.toUpperCase() + ' — ' + label;
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'gp-picker-close';
+    closeBtn.textContent = '✕';
+    closeBtn.addEventListener('click', function() {
+      picker.classList.remove('open');
+      picker.innerHTML = '';
+    });
+    header.appendChild(headerSpan);
+    header.appendChild(closeBtn);
+    picker.appendChild(header);
 
-    if (window.jspdf) {
-      setTimeout(run, 50);
-    } else {
-      var s = document.createElement('script');
-      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-      s.onload = function() { setTimeout(run, 50); };
-      document.head.appendChild(s);
-    }
+    players.forEach(function(p, i) {
+      var row = document.createElement('div');
+      row.className = 'gp-picker-row';
+
+      var nameEl = document.createElement('span');
+      nameEl.className = 'gp-picker-name';
+      nameEl.textContent = p.name;
+
+      var statEl = document.createElement('span');
+      statEl.className = 'gp-picker-stat';
+      statEl.textContent = p.stat;
+
+      var dlBtn = document.createElement('button');
+      dlBtn.className = 'gp-picker-dl';
+      dlBtn.textContent = '⬇ PDF';
+      (function(player, btn) {
+        btn.addEventListener('click', function() {
+          btn.disabled = true;
+          btn.textContent = '…';
+          function run() {
+            if (type === 'batter-scouting') genBatterPDF(player.player, team);
+            else genPitcherPDF(player.player, team);
+            btn.disabled = false;
+            btn.textContent = '⬇ PDF';
+          }
+          if (window.jspdf) {
+            setTimeout(run, 50);
+          } else {
+            var sc = document.createElement('script');
+            sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+            sc.onload = function() { setTimeout(run, 50); };
+            document.head.appendChild(sc);
+          }
+        });
+      })(p, dlBtn);
+
+      row.appendChild(nameEl);
+      row.appendChild(statEl);
+      row.appendChild(dlBtn);
+      picker.appendChild(row);
+    });
+
+    picker.classList.add('open');
   }
 
   function openFielderSheet(oppName, btn) {
