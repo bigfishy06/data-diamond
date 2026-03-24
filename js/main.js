@@ -429,6 +429,15 @@ function renderTeamGrid(content) {
       const t = resolveTeam(p.batter_team);
       return t && t.id === team.id;
     });
+    // Aggregate team AVG and OPS for the card preview
+    const qualified = teamPlayers.filter(function(p) { return p.AB > 0; });
+    const totalAB = qualified.reduce(function(s,p){ return s + (p.AB||0); }, 0);
+    const totalH  = qualified.reduce(function(s,p){ return s + (p.H||0);  }, 0);
+    const teamAVG = totalAB > 0 ? fmt3(totalH / totalAB) : '—';
+    const teamOPS = qualified.length > 0
+      ? fmt3(qualified.reduce(function(s,p){ return s + (p.OPS||0); }, 0) / qualified.length)
+      : '—';
+
     const card = document.createElement('div');
     card.className = 'team-card fade-up';
     card.style.setProperty('--team-color', team.primaryColor);
@@ -436,7 +445,10 @@ function renderTeamGrid(content) {
     card.innerHTML =
       '<div class="team-abbr">' + team.abbreviation + '</div>' +
       '<div class="team-name">' + team.name + '</div>' +
-      '<div class="team-meta">' + team.id.toUpperCase() + '</div>' +
+      '<div class="team-meta" style="display:flex;gap:16px;margin-top:6px">' +
+      '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">AVG <span style="color:var(--text)">' + teamAVG + '</span></span>' +
+      '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">OPS <span style="color:var(--text)">' + teamOPS + '</span></span>' +
+      '</div>' +
       '<div class="team-footer">' +
       '<span class="team-player-count">' + teamPlayers.length + ' player' + (teamPlayers.length !== 1 ? 's' : '') + '</span>' +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--text-dim)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>' +
@@ -455,6 +467,12 @@ function renderTeamDetail(teamId, content) {
     return t && t.id === teamId;
   });
 
+  // Collect all pitchers for this team from pitchers array
+  const teamPitchers = DATA.pitchers.filter(function(pd) {
+    const t = resolveTeam(pd.pitcher_team);
+    return t && t.id === teamId;
+  });
+
   content.innerHTML =
     '<section class="player-hero" style="position:relative;padding:48px 0 40px;overflow:hidden">' +
     '<div class="player-hero-bg" style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 50%,' + hexToRgba(team.primaryColor, 0.15) + ' 0%,transparent 70%)"></div>' +
@@ -462,63 +480,162 @@ function renderTeamDetail(teamId, content) {
     '<div class="breadcrumb"><a href="teams.html">Teams</a><span>/</span><span>' + team.name + '</span></div>' +
     '<div style="font-family:var(--font-display);font-size:72px;letter-spacing:4px;color:' + team.primaryColor + ';line-height:1;filter:drop-shadow(0 0 16px ' + hexToRgba(team.primaryColor, 0.4) + ')">' + team.abbreviation + '</div>' +
     '<h1 style="font-family:var(--font-display);font-size:clamp(36px,6vw,72px);letter-spacing:4px;color:var(--text);margin-top:8px">' + team.name.toUpperCase() + '</h1>' +
-    '<p style="font-family:var(--font-mono);font-size:12px;color:var(--text-dim);margin-top:8px;letter-spacing:1px">' + players.length + ' PLAYERS WITH DATA</p>' +
     '</div></section>' +
     '<div class="container" style="padding-top:32px;padding-bottom:80px">' +
     '<div class="tabs-bar"><div class="tabs">' +
-    '<button class="tab-btn active" data-tab="hitters">Hitters</button>' +
-    '<button class="tab-btn" data-tab="pitchers">Pitchers</button>' +
+    '<button class="tab-btn active" data-tab="hitting">Hitting</button>' +
+    '<button class="tab-btn" data-tab="pitching">Pitching</button>' +
     '</div></div>' +
-    '<div id="team-roster-content"></div></div>';
+    '<div id="team-stats-content"></div></div>';
 
-  const rosterContent = document.getElementById('team-roster-content');
+  const statsContent = document.getElementById('team-stats-content');
   const tabs = content.querySelectorAll('.tab-btn');
 
-  function renderRoster(type) {
+  function renderTeamStats(type) {
     tabs.forEach(function(t) { t.classList.toggle('active', t.dataset.tab === type); });
-    rosterContent.innerHTML = '';
-    if (type === 'hitters') {
+    statsContent.innerHTML = '';
+
+    if (type === 'hitting') {
       if (!players.length) {
-        rosterContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No hitter data</h3></div>';
+        statsContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No hitting data</h3></div>';
         return;
       }
-      const card = document.createElement('div');
-      card.className = 'stat-card fade-up';
-      card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Hitting</span>' +
-        '<span class="stat-card-subtitle">' + players.length + ' players</span></div>' +
+
+      // Aggregate team hitting totals
+      const qual = players.filter(function(p) { return p.AB > 0; });
+      const totAB = qual.reduce(function(s,p){ return s+(p.AB||0); },0);
+      const totH  = qual.reduce(function(s,p){ return s+(p.H||0);  },0);
+      const tot2B = qual.reduce(function(s,p){ return s+(p['2B']||0); },0);
+      const tot3B = qual.reduce(function(s,p){ return s+(p['3B']||0); },0);
+      const totHR = qual.reduce(function(s,p){ return s+(p.HR||0); },0);
+      const totBB = qual.reduce(function(s,p){ return s+(p.BB||0); },0);
+      const totK  = qual.reduce(function(s,p){ return s+(p.K||0);  },0);
+      const totHBP= qual.reduce(function(s,p){ return s+(p.HBP||0); },0);
+      const totSF = qual.reduce(function(s,p){ return s+(p.SF||0);  },0);
+      const teamAVG = totAB > 0 ? totH / totAB : null;
+      const teamOBP = (totAB + totBB + totHBP + totSF) > 0
+        ? (totH + totBB + totHBP) / (totAB + totBB + totHBP + totSF) : null;
+      const tb = totH + tot2B + (tot3B*2) + (totHR*3);
+      const teamSLG = totAB > 0 ? tb / totAB : null;
+      const teamOPS = teamOBP != null && teamSLG != null ? teamOBP + teamSLG : null;
+
+      // Summary stat boxes
+      const summaryHTML =
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:24px">' +
+        statBox('AVG', teamAVG != null ? fmt3(teamAVG) : '—', team.primaryColor) +
+        statBox('OBP', teamOBP != null ? fmt3(teamOBP) : '—', team.primaryColor) +
+        statBox('SLG', teamSLG != null ? fmt3(teamSLG) : '—', team.primaryColor) +
+        statBox('OPS', teamOPS != null ? fmt3(teamOPS) : '—', team.primaryColor) +
+        statBox('HR',  fmtN(totHR), team.primaryColor) +
+        statBox('BB',  fmtN(totBB), team.primaryColor) +
+        statBox('K',   fmtN(totK),  team.primaryColor) +
+        '</div>';
+
+      const summaryCard = document.createElement('div');
+      summaryCard.className = 'stat-card fade-up';
+      summaryCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Team Hitting</span>' +
+        '<span class="stat-card-subtitle">' + qual.length + ' players · ' + totAB + ' AB</span></div>' +
+        summaryHTML;
+      statsContent.appendChild(summaryCard);
+
+      // Full player hitting table
+      const tableCard = document.createElement('div');
+      tableCard.className = 'stat-card fade-up';
+      tableCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Player Breakdown</span></div>' +
         buildHittingTable(players);
-      rosterContent.appendChild(card);
-      initTableSort(card.querySelector('table'));
-      initPlayerLinks(card, 'batter');
+      statsContent.appendChild(tableCard);
+      initTableSort(tableCard.querySelector('table'));
+      initPlayerLinks(tableCard, 'batter');
+
     } else {
-      const pitcherSet = new Set();
-      DATA.pitches.forEach(function(bp) {
-        if (!bp.scatter) return;
-        bp.scatter.forEach(function(s) {
-          if (!s.pitcher) return;
-          const bSum = getSummaryPlayer(bp.batter);
-          if (bSum) {
-            const bt = resolveTeam(bSum.batter_team);
-            if (bt && bt.id !== teamId) pitcherSet.add(s.pitcher);
-          }
-        });
-      });
-      if (!pitcherSet.size) {
-        rosterContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No pitcher data for this team</h3></div>';
+      // PITCHING
+      if (!teamPitchers.length) {
+        statsContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No pitching data</h3></div>';
         return;
       }
-      const card = document.createElement('div');
-      card.className = 'stat-card fade-up';
-      card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Pitchers</span>' +
-        '<span class="stat-card-subtitle">' + pitcherSet.size + ' pitchers</span></div>' +
-        buildPitcherListTable(Array.from(pitcherSet));
-      rosterContent.appendChild(card);
-      initPlayerLinks(card, 'pitcher');
+
+      // Aggregate team pitching totals
+      const totPitches = teamPitchers.reduce(function(s,p){ return s+(p.total_pitches||0); },0);
+      const totIP      = teamPitchers.reduce(function(s,p){ return s+(p.IP||0); },0);
+      const totKs      = teamPitchers.reduce(function(s,p){ return s+Math.round((p.K_pct||0)/100*(p.total_pitches||0)); },0);
+      const totBBs     = teamPitchers.reduce(function(s,p){ return s+Math.round((p.BB_pct||0)/100*(p.total_pitches||0)); },0);
+      const avgSTR     = teamPitchers.length > 0
+        ? teamPitchers.reduce(function(s,p){ return s+(p.STR_pct||0); },0) / teamPitchers.length : null;
+      const avgK       = teamPitchers.length > 0
+        ? teamPitchers.reduce(function(s,p){ return s+(p.K_pct||0); },0) / teamPitchers.length : null;
+      const avgBB      = teamPitchers.length > 0
+        ? teamPitchers.reduce(function(s,p){ return s+(p.BB_pct||0); },0) / teamPitchers.length : null;
+      const avgEA      = teamPitchers.length > 0
+        ? teamPitchers.reduce(function(s,p){ return s+(p.EA_pct||0); },0) / teamPitchers.length : null;
+
+      // ERA from ibl_history
+      var eraSum = 0, eraCount = 0;
+      teamPitchers.forEach(function(pd) {
+        const ibl = (DATA.iblHistory[pd.pitcher] || []).filter(function(s){ return s.IP > 0; });
+        if (ibl.length && ibl[0].ERA != null) { eraSum += ibl[0].ERA; eraCount++; }
+      });
+      const teamERA = eraCount > 0 ? eraSum / eraCount : null;
+
+      const summaryHTML =
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:24px">' +
+        statBox('ERA',    teamERA  != null ? fmt2(teamERA)  : '—', team.primaryColor) +
+        statBox('IP',     fmt1(totIP),   team.primaryColor) +
+        statBox('Pitches',fmtN(totPitches), team.primaryColor) +
+        statBox('K%',     avgK    != null ? fmt1(avgK)+'%'  : '—', team.primaryColor) +
+        statBox('BB%',    avgBB   != null ? fmt1(avgBB)+'%' : '—', team.primaryColor) +
+        statBox('STR%',   avgSTR  != null ? fmt1(avgSTR)+'%': '—', team.primaryColor) +
+        statBox('E+A%',   avgEA   != null ? fmt1(avgEA)+'%' : '—', team.primaryColor) +
+        '</div>';
+
+      const summaryCard = document.createElement('div');
+      summaryCard.className = 'stat-card fade-up';
+      summaryCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Team Pitching</span>' +
+        '<span class="stat-card-subtitle">' + teamPitchers.length + ' pitchers</span></div>' +
+        summaryHTML;
+      statsContent.appendChild(summaryCard);
+
+      // Full pitcher table
+      const tableCard = document.createElement('div');
+      tableCard.className = 'stat-card fade-up';
+      tableCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Pitcher Breakdown</span></div>' +
+        buildTeamPitcherTable(teamPitchers);
+      statsContent.appendChild(tableCard);
+      initTableSort(tableCard.querySelector('table'));
+      initPlayerLinks(tableCard, 'pitcher');
     }
   }
 
-  tabs.forEach(function(t) { t.addEventListener('click', function() { renderRoster(t.dataset.tab); }); });
-  renderRoster('hitters');
+  tabs.forEach(function(t) { t.addEventListener('click', function() { renderTeamStats(t.dataset.tab); }); });
+  renderTeamStats('hitting');
+}
+
+function statBox(label, value, color) {
+  return '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:4px;padding:16px;text-align:center">' +
+    '<div style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:0.08em;margin-bottom:6px">' + label + '</div>' +
+    '<div style="font-family:var(--font-display);font-size:28px;color:' + (color || 'var(--accent)') + ';letter-spacing:1px">' + value + '</div>' +
+    '</div>';
+}
+
+function buildTeamPitcherTable(pitchers) {
+  const rows = pitchers.map(function(pd) {
+    const ibl = (DATA.iblHistory[pd.pitcher] || []).filter(function(s){ return s.IP > 0; });
+    const era = ibl.length && ibl[0].ERA != null ? fmt2(ibl[0].ERA) : '—';
+    return '<tr>' +
+      '<td><a class="player-name-cell" data-name="' + pd.pitcher + '" data-type="pitcher">' + pd.pitcher + '</a></td>' +
+      '<td>' + fmt1(pd.IP||0) + '</td>' +
+      '<td>' + fmtN(pd.total_pitches||0) + '</td>' +
+      '<td class="highlight-val">' + era + '</td>' +
+      '<td>' + (pd.K_pct   != null ? fmt1(pd.K_pct)+'%'   : '—') + '</td>' +
+      '<td>' + (pd.BB_pct  != null ? fmt1(pd.BB_pct)+'%'  : '—') + '</td>' +
+      '<td>' + (pd.STR_pct != null ? fmt1(pd.STR_pct)+'%' : '—') + '</td>' +
+      '<td>' + (pd.EA_pct  != null ? fmt1(pd.EA_pct)+'%'  : '—') + '</td>' +
+      '<td>' + (pd.K_BB    != null ? fmt2(pd.K_BB)        : '—') + '</td>' +
+      '</tr>';
+  }).join('');
+  return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
+    '<th style="text-align:left">Pitcher</th><th>IP</th><th>Pitches</th><th>ERA</th>' +
+    '<th>K%</th><th>BB%</th><th>STR%</th><th>E+A%</th><th>K/BB</th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
 // ══════════════════════════════════════════════════
