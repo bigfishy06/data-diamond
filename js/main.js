@@ -673,7 +673,7 @@ function renderPlayerDetail(name, type, content) {
     const iblB = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
     const iblBSeason = iblB.length ? iblB[0] : null;
     const hlRBI = iblBSeason && iblBSeason.RBI != null ? fmtN(iblBSeason.RBI) : '—';
-    [['AVG', fmt3(sum.AVG)], ['OPS', fmt3(sum.OPS)], ['HR', fmtN(sum.HR)], ['RBI', hlRBI], ['K', fmtN(sum.K)]].forEach(function(s) {
+    [['AVG', fmt3(sum.AVG)], ['OPS', fmt3(sum.OPS)], ['HR', fmtN(sum.HR)], ['RBI', hlRBI]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   } else if (type === 'pitcher' && pitchData && pitchData.scatter) {
@@ -726,7 +726,7 @@ function renderPlayerDetail(name, type, content) {
           btn.classList.add('active');
           var hand = btn.dataset.hand;
           var filtered = hand === 'all' ? allPoints : allPoints.filter(function(s) {
-            var field = type === 'batter' ? (s.pitcher_throws || s.pitcher_hand || '') : (s.batter_side || s.side || '');
+            var field = type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '');
             return field === hand;
           });
           panel.querySelector('#splits-tables').innerHTML = buildSplitsTables(filtered);
@@ -811,7 +811,7 @@ function renderOverview(name, type, sum, pitch) {
     return '<div class="overview-grid">' +
       '<div class="stat-card" style="grid-column:1/-1"><div class="stat-card-header"><span class="stat-card-title">Rate Stats</span>' +
       '<span class="stat-card-subtitle">' + totPitches + ' pitches seen</span></div>' +
-      '<div style="padding:16px 24px;display:grid;grid-template-columns:1fr 1fr;gap:4px 32px">' +
+      '<div style="padding:16px 24px">' +
       (disciplineBars.length ? disciplineBars.map(makeSavantBar).join('') : '<p style="color:var(--text-dim);font-family:var(--font-mono);font-size:12px">No pitch data available.</p>') +
       '</div></div>' +
       '</div>';
@@ -1585,7 +1585,7 @@ function renderZone(name, type, pitch, container) {
     var filtered = points.filter(function(s) {
       if (!resultMatch(s, activeResult)) return false;
       if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
-      if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_throws || s.pitcher_hand || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
+      if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
       if (allDates.length > 1) {
         if (activeSeasonFilter !== 'all' && s.date && !s.date.startsWith(activeSeasonFilter.replace('year:',''))) return false;
         if (activeZoneDate !== 'all' && s.date !== activeZoneDate) return false;
@@ -1624,7 +1624,7 @@ function renderZone(name, type, pitch, container) {
     var filtered = points.filter(function(s) {
       if (!resultMatch(s, activeResult)) return false;
       if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
-      if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_throws || s.pitcher_hand || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
+      if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
       if (allDates.length > 1) {
         if (activeSeasonFilter !== 'all' && s.date && !s.date.startsWith(activeSeasonFilter.replace('year:',''))) return false;
         if (activeZoneDate !== 'all' && s.date !== activeZoneDate) return false;
