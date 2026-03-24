@@ -252,7 +252,8 @@ function initLeaguePage() {
   }
 
   tabs.forEach(function(t) { t.addEventListener('click', function() { renderTab(t.dataset.tab); }); });
-  renderTab('hitting');
+  const urlTab = new URLSearchParams(window.location.search).get('tab');
+  renderTab(urlTab === 'pitching' ? 'pitching' : 'hitting');
 }
 
 function renderHittingLeaderboards(container) {
@@ -293,7 +294,7 @@ function renderHittingLeaderboards(container) {
 
     const card = document.createElement('div');
     card.className = 'leader-card';
-    card.innerHTML = '<div class="leader-card-header">' + board.title + '</div>' +
+    card.innerHTML = '<div class="leader-card-header" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;" onclick="navigate(\'league.html?tab=hitting\')" title="View full ' + board.title + ' leaderboard">' + board.title + '<span style="font-size:10px;opacity:0.4;font-family:\'DM Mono\',monospace">VIEW ALL ↗</span></div>' +
       sorted.map(function(p, i) {
         const team = resolveTeam(p.batter_team);
         const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
@@ -378,7 +379,7 @@ function renderPitchingLeaderboards(container) {
 
     const card = document.createElement('div');
     card.className = 'leader-card';
-    card.innerHTML = '<div class="leader-card-header">' + board.title + '</div>' +
+    card.innerHTML = '<div class="leader-card-header" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;" onclick="navigate(\'league.html?tab=pitching\')" title="View full ' + board.title + ' leaderboard">' + board.title + '<span style="font-size:10px;opacity:0.4;font-family:\'DM Mono\',monospace">VIEW ALL ↗</span></div>' +
       sorted.map(function(p, i) {
         const team = resolveTeam(p.pitcher_team);
         const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';

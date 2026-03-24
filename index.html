@@ -614,13 +614,13 @@
         <div class="gp-matchup">
           <div class="gp-team">
             <div class="gp-team-dot" style="border-color:${guelTeam.color};background:${guelTeam.color}22">${guelTeam.abbr}</div>
-            <div class="gp-team-name">Guelph</div>
+            <div class="gp-team-name">Guelph Royals</div>
             <span class="gp-ha ${guelTeam.ha.toLowerCase()}">${guelTeam.ha}</span>
           </div>
           <div class="gp-vs">VS</div>
           <div class="gp-team">
             <div class="gp-team-dot" style="border-color:${oppTeam.color};background:${oppTeam.color}22">${oppTeam.abbr}</div>
-            <div class="gp-team-name">${oppT ? oppT.name.split(' ').pop() : opp.split(' ').pop()}</div>
+            <div class="gp-team-name">${oppT ? oppT.name : opp}</div>
             <span class="gp-ha ${oppTeam.ha.toLowerCase()}">${oppTeam.ha}</span>
           </div>
         </div>
