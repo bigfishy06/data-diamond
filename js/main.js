@@ -538,15 +538,6 @@ function renderTeamDetail(teamId, content) {
         summaryHTML;
       statsContent.appendChild(summaryCard);
 
-      // Full player hitting table
-      const tableCard = document.createElement('div');
-      tableCard.className = 'stat-card fade-up';
-      tableCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Player Breakdown</span></div>' +
-        buildHittingTable(players);
-      statsContent.appendChild(tableCard);
-      initTableSort(tableCard.querySelector('table'));
-      initPlayerLinks(tableCard, 'batter');
-
     } else {
       // PITCHING
       if (!teamPitchers.length) {
@@ -593,15 +584,6 @@ function renderTeamDetail(teamId, content) {
         '<span class="stat-card-subtitle">' + teamPitchers.length + ' pitchers</span></div>' +
         summaryHTML;
       statsContent.appendChild(summaryCard);
-
-      // Full pitcher table
-      const tableCard = document.createElement('div');
-      tableCard.className = 'stat-card fade-up';
-      tableCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Pitcher Breakdown</span></div>' +
-        buildTeamPitcherTable(teamPitchers);
-      statsContent.appendChild(tableCard);
-      initTableSort(tableCard.querySelector('table'));
-      initPlayerLinks(tableCard, 'pitcher');
     }
   }
 
