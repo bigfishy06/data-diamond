@@ -252,8 +252,7 @@ function initLeaguePage() {
   }
 
   tabs.forEach(function(t) { t.addEventListener('click', function() { renderTab(t.dataset.tab); }); });
-  const urlTab = new URLSearchParams(window.location.search).get('tab');
-  renderTab(urlTab === 'pitching' ? 'pitching' : 'hitting');
+  renderTab('hitting');
 }
 
 function renderHittingLeaderboards(container) {
@@ -294,7 +293,7 @@ function renderHittingLeaderboards(container) {
 
     const card = document.createElement('div');
     card.className = 'leader-card';
-    card.innerHTML = '<div class="leader-card-header" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;" onclick="navigate(\'league.html?tab=hitting\')" title="View full ' + board.title + ' leaderboard">' + board.title + '<span style="font-size:10px;opacity:0.4;font-family:\'DM Mono\',monospace">VIEW ALL ↗</span></div>' +
+    card.innerHTML = '<div class="leader-card-header">' + board.title + '</div>' +
       sorted.map(function(p, i) {
         const team = resolveTeam(p.batter_team);
         const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
@@ -379,7 +378,7 @@ function renderPitchingLeaderboards(container) {
 
     const card = document.createElement('div');
     card.className = 'leader-card';
-    card.innerHTML = '<div class="leader-card-header" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;" onclick="navigate(\'league.html?tab=pitching\')" title="View full ' + board.title + ' leaderboard">' + board.title + '<span style="font-size:10px;opacity:0.4;font-family:\'DM Mono\',monospace">VIEW ALL ↗</span></div>' +
+    card.innerHTML = '<div class="leader-card-header">' + board.title + '</div>' +
       sorted.map(function(p, i) {
         const team = resolveTeam(p.pitcher_team);
         const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
@@ -726,7 +725,10 @@ function renderPlayerDetail(name, type, content) {
           panel.querySelectorAll('.splits-hand-btn').forEach(function(b) { b.classList.remove('active'); });
           btn.classList.add('active');
           var hand = btn.dataset.hand;
-          var filtered = hand === 'all' ? allPoints : allPoints.filter(function(s) { return s.batter_side === hand; });
+          var filtered = hand === 'all' ? allPoints : allPoints.filter(function(s) {
+            var field = type === 'batter' ? (s.pitcher_throws || s.pitcher_hand || '') : (s.batter_side || s.side || '');
+            return field === hand;
+          });
           panel.querySelector('#splits-tables').innerHTML = buildSplitsTables(filtered);
         });
       });
@@ -749,34 +751,70 @@ function renderPlayerDetail(name, type, content) {
 
 // ── OVERVIEW TAB ──────────────────────────────────
 function renderOverview(name, type, sum, pitch) {
+
   if (type === 'batter' && sum) {
-    const bars = [
-      { lbl: 'AVG',  val: fmt3(sum.AVG),  pct: (sum.AVG  || 0) / 0.35 },
-      { lbl: 'OBP',  val: fmt3(sum.OBP),  pct: (sum.OBP  || 0) / 0.42 },
-      { lbl: 'SLG',  val: fmt3(sum.SLG),  pct: (sum.SLG  || 0) / 0.65 },
-      { lbl: 'OPS',  val: fmt3(sum.OPS),  pct: (sum.OPS  || 0) / 1.10 }
-    ];
-    const iblBat = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
-    const iblBatS = iblBat.length ? iblBat[0] : null;
-    const counting = [
-      ['AB', sum.AB], ['H', sum.H], ['2B', sum['2B']], ['3B', sum['3B']],
-      ['HR', sum.HR], ['RBI', iblBatS ? iblBatS.RBI : null], ['BB', sum.BB], ['K', sum.K]
-    ];
+    // Discipline stats from scatter
+    var sc = (pitch && pitch.scatter) ? pitch.scatter : [];
+    var ZX1 = -1, ZX2 = 1, ZY1 = 0, ZY2 = 1;
+    var totPitches   = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+    var swStr        = sc.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
+    var fouls        = sc.filter(function(s){ return s.outcome === 'Foul'; }).length;
+    var inPlayOuts   = sc.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+    var swings       = swStr + fouls + inPlayOuts;
+    var ks           = sc.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+    var bbs          = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+    var pa           = sum.PA || (sum.AB + (sum.BB||0) + (sum.HBP||0) + (sum.SF||0)) || 1;
+    var psPerPA      = pa > 0 ? totPitches / pa : 0;
+    var inZonePts    = sc.filter(function(s){ return s.x != null && s.x >= ZX1 && s.x <= ZX2 && s.y != null && s.y >= ZY1 && s.y <= ZY2; });
+    var inZoneSwings = inZonePts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+    var inZoneContact= inZonePts.filter(function(s){ return s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+    var oozPts       = sc.filter(function(s){ return s.x != null && s.y != null && (s.x < ZX1 || s.x > ZX2 || s.y < ZY1 || s.y > ZY2); });
+    var chases       = oozPts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
+
+    var disciplineBars = sc.length ? [
+      { lbl: 'SWING%',      val: totPitches > 0   ? fmt1(swings/totPitches*100)+'%'              : '—', pct: totPitches > 0   ? swings/totPitches               : 0 },
+      { lbl: 'WHIFF%',      val: swings > 0       ? fmt1(swStr/swings*100)+'%'                   : '—', pct: swings > 0       ? swStr/swings                    : 0 },
+      { lbl: 'K%',          val: totPitches > 0   ? fmt1(ks/totPitches*100)+'%'                  : '—', pct: totPitches > 0   ? ks/totPitches                   : 0 },
+      { lbl: 'BB%',         val: totPitches > 0   ? fmt1(bbs/totPitches*100)+'%'                 : '—', pct: totPitches > 0   ? bbs/totPitches                  : 0 },
+      { lbl: 'PS/PA',       val: pa > 0           ? fmt2(psPerPA)                                : '—', pct: Math.min(psPerPA / 6, 1) },
+      { lbl: 'IZ SWING%',   val: inZonePts.length ? fmt1(inZoneSwings/inZonePts.length*100)+'%'  : '—', pct: inZonePts.length ? inZoneSwings/inZonePts.length    : 0 },
+      { lbl: 'IZ CONTACT%', val: inZoneSwings > 0 ? fmt1(inZoneContact/inZoneSwings*100)+'%'     : '—', pct: inZoneSwings > 0 ? inZoneContact/inZoneSwings       : 0 },
+      { lbl: 'CHASE%',      val: oozPts.length    ? fmt1(chases/oozPts.length*100)+'%'           : '—', pct: oozPts.length    ? chases/oozPts.length             : 0 },
+    ] : [];
+
+    function makeSavantBar(b) {
+      var p = Math.max(0, Math.min(1, b.pct || 0));
+      var r, g, bl;
+      if (p <= 0.5) {
+        var t = p * 2;
+        r  = Math.round(58  + t * (180 - 58));
+        g  = Math.round(130 + t * (180 - 130));
+        bl = Math.round(210 + t * (180 - 210));
+      } else {
+        var t = (p - 0.5) * 2;
+        r  = Math.round(180 + t * (210 - 180));
+        g  = Math.round(180 + t * (50  - 180));
+        bl = Math.round(180 + t * (50  - 180));
+      }
+      var color = 'rgb(' + r + ',' + g + ',' + bl + ')';
+      var widthPct = (p * 100).toFixed(1);
+      return '<div class="stat-bar-row" style="align-items:center;margin-bottom:10px">' +
+        '<div class="sbr-label" style="width:90px;flex-shrink:0">' + b.lbl + '</div>' +
+        '<div style="flex:1;position:relative;height:10px;background:rgba(255,255,255,0.06);border-radius:5px;margin:0 8px">' +
+          '<div class="sbr-fill" style="position:absolute;left:0;top:0;height:10px;width:0%;background:' + color + ';border-radius:5px;transition:width 0.8s cubic-bezier(0.4,0,0.2,1)" data-width="' + widthPct + '%"></div>' +
+          '<div class="savant-bubble" style="position:absolute;top:50%;transform:translate(-50%,-50%);left:0%;width:26px;height:26px;border-radius:50%;background:' + color + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;font-family:var(--font-mono);z-index:2;transition:left 0.8s cubic-bezier(0.4,0,0.2,1);box-shadow:0 1px 4px rgba(0,0,0,0.4)" data-left="' + widthPct + '">●</div>' +
+        '</div>' +
+        '<div style="width:60px;text-align:right;font-family:var(--font-mono);font-size:13px;font-weight:600;color:' + color + ';flex-shrink:0">' + b.val + '</div>' +
+      '</div>';
+    }
+
     return '<div class="overview-grid">' +
-      '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Rate Stats</span>' +
-      '<span class="stat-card-subtitle">' + fmtN(sum.AB) + ' AB</span></div>' +
-      '<div style="padding:16px 24px">' +
-      bars.map(function(b) {
-        return '<div class="stat-bar-row"><div class="sbr-label">' + b.lbl + '</div>' +
-          '<div class="sbr-bar"><div class="sbr-fill" style="width:0%" data-width="' + Math.min((b.pct||0)*100,100).toFixed(1) + '%"></div></div>' +
-          '<div class="sbr-val">' + b.val + '</div></div>';
-      }).join('') + '</div></div>' +
-      '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Counting Stats</span></div>' +
-      '<div style="padding:0"><table class="stat-table"><tbody>' +
-      counting.map(function(c) {
-        return '<tr><td style="color:var(--text-dim)">' + c[0] + '</td>' +
-          '<td class="highlight-val" style="text-align:right">' + (c[1] != null ? c[1] : '—') + '</td></tr>';
-      }).join('') + '</tbody></table></div></div></div>';
+      '<div class="stat-card" style="grid-column:1/-1"><div class="stat-card-header"><span class="stat-card-title">Rate Stats</span>' +
+      '<span class="stat-card-subtitle">' + totPitches + ' pitches seen</span></div>' +
+      '<div style="padding:16px 24px;display:grid;grid-template-columns:1fr 1fr;gap:4px 32px">' +
+      (disciplineBars.length ? disciplineBars.map(makeSavantBar).join('') : '<p style="color:var(--text-dim);font-family:var(--font-mono);font-size:12px">No pitch data available.</p>') +
+      '</div></div>' +
+      '</div>';
   }
 
   if (type === 'pitcher' && pitch && pitch.scatter) {
@@ -1138,11 +1176,12 @@ function renderZone(name, type, pitch, container) {
     }).join('') + '</div></div>' +
 
     '<div style="margin-bottom:20px">' +
-    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Filter by Batter Hand</div>' +
+    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">' + (type === 'batter' ? 'Filter by Pitcher Hand' : 'Filter by Batter Hand') + '</div>' +
     '<div class="zone-controls" id="zone-hand-filters">' +
     '<button class="zone-filter-btn active" data-hand="all">All</button>' +
-    '<button class="zone-filter-btn" data-hand="R">Right (R)</button>' +
-    '<button class="zone-filter-btn" data-hand="L">Left (L)</button>' +
+    (type === 'batter'
+      ? '<button class="zone-filter-btn" data-hand="R">RHP</button><button class="zone-filter-btn" data-hand="L">LHP</button>'
+      : '<button class="zone-filter-btn" data-hand="R">Right (R)</button><button class="zone-filter-btn" data-hand="L">Left (L)</button>') +
     '</div></div>' +
 
     '<div class="zone-wrap">' +
@@ -1546,7 +1585,7 @@ function renderZone(name, type, pitch, container) {
     var filtered = points.filter(function(s) {
       if (!resultMatch(s, activeResult)) return false;
       if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
-      if (activeHand !== 'all' && (s.batter_side || s.side || '') !== activeHand) return false;
+      if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_throws || s.pitcher_hand || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
       if (allDates.length > 1) {
         if (activeSeasonFilter !== 'all' && s.date && !s.date.startsWith(activeSeasonFilter.replace('year:',''))) return false;
         if (activeZoneDate !== 'all' && s.date !== activeZoneDate) return false;
@@ -1585,7 +1624,7 @@ function renderZone(name, type, pitch, container) {
     var filtered = points.filter(function(s) {
       if (!resultMatch(s, activeResult)) return false;
       if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
-      if (activeHand !== 'all' && (s.batter_side || s.side || '') !== activeHand) return false;
+      if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_throws || s.pitcher_hand || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
       if (allDates.length > 1) {
         if (activeSeasonFilter !== 'all' && s.date && !s.date.startsWith(activeSeasonFilter.replace('year:',''))) return false;
         if (activeZoneDate !== 'all' && s.date !== activeZoneDate) return false;
@@ -1725,10 +1764,15 @@ function renderSplits(name, type, pitch) {
 
   var splitsHTML =
     '<div style="margin-bottom:16px;display:flex;align-items:center;gap:10px">' +
-    '<span style="font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase">Batter Hand</span>' +
-    '<button class="zone-filter-btn splits-hand-btn active" data-hand="all">All</button>' +
-    '<button class="zone-filter-btn splits-hand-btn" data-hand="R">RHB</button>' +
-    '<button class="zone-filter-btn splits-hand-btn" data-hand="L">LHB</button>' +
+    (type === 'batter'
+      ? '<span style="font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase">Pitcher Hand</span>' +
+        '<button class="zone-filter-btn splits-hand-btn active" data-hand="all">All</button>' +
+        '<button class="zone-filter-btn splits-hand-btn" data-hand="R">RHP</button>' +
+        '<button class="zone-filter-btn splits-hand-btn" data-hand="L">LHP</button>'
+      : '<span style="font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase">Batter Hand</span>' +
+        '<button class="zone-filter-btn splits-hand-btn active" data-hand="all">All</button>' +
+        '<button class="zone-filter-btn splits-hand-btn" data-hand="R">RHB</button>' +
+        '<button class="zone-filter-btn splits-hand-btn" data-hand="L">LHB</button>') +
     '</div>' +
     '<div id="splits-tables">' + buildSplitsTables(points) + '</div>';
 
