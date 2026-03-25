@@ -538,6 +538,15 @@ function renderTeamDetail(teamId, content) {
         summaryHTML;
       statsContent.appendChild(summaryCard);
 
+      // Full player hitting table
+      const tableCard = document.createElement('div');
+      tableCard.className = 'stat-card fade-up';
+      tableCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Player Breakdown</span></div>' +
+        buildHittingTable(players);
+      statsContent.appendChild(tableCard);
+      initTableSort(tableCard.querySelector('table'));
+      initPlayerLinks(tableCard, 'batter');
+
     } else {
       // PITCHING
       if (!teamPitchers.length) {
@@ -584,6 +593,15 @@ function renderTeamDetail(teamId, content) {
         '<span class="stat-card-subtitle">' + teamPitchers.length + ' pitchers</span></div>' +
         summaryHTML;
       statsContent.appendChild(summaryCard);
+
+      // Full pitcher table
+      const tableCard = document.createElement('div');
+      tableCard.className = 'stat-card fade-up';
+      tableCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Pitcher Breakdown</span></div>' +
+        buildTeamPitcherTable(teamPitchers);
+      statsContent.appendChild(tableCard);
+      initTableSort(tableCard.querySelector('table'));
+      initPlayerLinks(tableCard, 'pitcher');
     }
   }
 
@@ -870,27 +888,75 @@ function renderOverview(name, type, sum, pitch) {
     var oozPts       = sc.filter(function(s){ return s.x != null && s.y != null && (s.x < ZX1 || s.x > ZX2 || s.y < ZY1 || s.y > ZY2); });
     var chases       = oozPts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
 
+    // Build league arrays for percentile ranking
+    var leagueDisc = (function() {
+      var o = { swing:[], whiff:[], k:[], bb:[], pspa:[], izSwing:[], izContact:[], chase:[] };
+      DATA.pitches.forEach(function(bp) {
+        var sc2 = bp.scatter || [];
+        var tot2 = sc2.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+        if (!tot2) return;
+        var sw2  = sc2.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
+        var fo2  = sc2.filter(function(s){ return s.outcome === 'Foul'; }).length;
+        var ip2  = sc2.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+        var swings2 = sw2 + fo2 + ip2;
+        var ks2  = sc2.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+        var bbs2 = sc2.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+        var bSum2 = getSummaryPlayer(bp.batter);
+        var pa2 = bSum2 ? (bSum2.PA || (bSum2.AB + (bSum2.BB||0) + (bSum2.HBP||0) + (bSum2.SF||0)) || 1) : 1;
+        var inZ2 = sc2.filter(function(s){ return s.x != null && s.x >= ZX1 && s.x <= ZX2 && s.y != null && s.y >= ZY1 && s.y <= ZY2; });
+        var izSw2 = inZ2.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+        var izCon2 = inZ2.filter(function(s){ return s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+        var ooz2 = sc2.filter(function(s){ return s.x != null && s.y != null && (s.x < ZX1 || s.x > ZX2 || s.y < ZY1 || s.y > ZY2); });
+        var chases2 = ooz2.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
+        o.swing.push(tot2 > 0 ? swings2/tot2 : 0);
+        o.whiff.push(swings2 > 0 ? sw2/swings2 : 0);
+        o.k.push(tot2 > 0 ? ks2/tot2 : 0);
+        o.bb.push(tot2 > 0 ? bbs2/tot2 : 0);
+        o.pspa.push(tot2 / pa2);
+        o.izSwing.push(inZ2.length > 0 ? izSw2/inZ2.length : 0);
+        o.izContact.push(izSw2 > 0 ? izCon2/izSw2 : 0);
+        o.chase.push(ooz2.length > 0 ? chases2/ooz2.length : 0);
+      });
+      return o;
+    })();
+
+    function leaguePct(val, arr) {
+      if (!arr.length || val == null) return 0;
+      return arr.filter(function(v){ return v < val; }).length / arr.length;
+    }
+
+    var mySwing     = totPitches > 0   ? swings/totPitches               : null;
+    var myWhiff     = swings > 0       ? swStr/swings                    : null;
+    var myK         = totPitches > 0   ? ks/totPitches                   : null;
+    var myBB        = totPitches > 0   ? bbs/totPitches                  : null;
+    var myPspa      = pa > 0           ? psPerPA                         : null;
+    var myIzSwing   = inZonePts.length ? inZoneSwings/inZonePts.length   : null;
+    var myIzContact = inZoneSwings > 0 ? inZoneContact/inZoneSwings      : null;
+    var myChase     = oozPts.length    ? chases/oozPts.length            : null;
+
+    // good:true = higher percentile → red (better). good:false = lower is better, color is flipped
     var disciplineBars = sc.length ? [
-      { lbl: 'SWING%',      val: totPitches > 0   ? fmt1(swings/totPitches*100)+'%'              : '—', pct: totPitches > 0   ? swings/totPitches               : 0 },
-      { lbl: 'WHIFF%',      val: swings > 0       ? fmt1(swStr/swings*100)+'%'                   : '—', pct: swings > 0       ? swStr/swings                    : 0 },
-      { lbl: 'K%',          val: totPitches > 0   ? fmt1(ks/totPitches*100)+'%'                  : '—', pct: totPitches > 0   ? ks/totPitches                   : 0 },
-      { lbl: 'BB%',         val: totPitches > 0   ? fmt1(bbs/totPitches*100)+'%'                 : '—', pct: totPitches > 0   ? bbs/totPitches                  : 0 },
-      { lbl: 'PS/PA',       val: pa > 0           ? fmt2(psPerPA)                                : '—', pct: Math.min(psPerPA / 6, 1) },
-      { lbl: 'IZ SWING%',   val: inZonePts.length ? fmt1(inZoneSwings/inZonePts.length*100)+'%'  : '—', pct: inZonePts.length ? inZoneSwings/inZonePts.length    : 0 },
-      { lbl: 'IZ CONTACT%', val: inZoneSwings > 0 ? fmt1(inZoneContact/inZoneSwings*100)+'%'     : '—', pct: inZoneSwings > 0 ? inZoneContact/inZoneSwings       : 0 },
-      { lbl: 'CHASE%',      val: oozPts.length    ? fmt1(chases/oozPts.length*100)+'%'           : '—', pct: oozPts.length    ? chases/oozPts.length             : 0 },
+      { lbl: 'SWING%',      val: mySwing     != null ? fmt1(mySwing*100)+'%'      : '—', pct: mySwing     != null ? leaguePct(mySwing,     leagueDisc.swing)     : 0, good: false },
+      { lbl: 'WHIFF%',      val: myWhiff     != null ? fmt1(myWhiff*100)+'%'      : '—', pct: myWhiff     != null ? leaguePct(myWhiff,     leagueDisc.whiff)     : 0, good: false },
+      { lbl: 'K%',          val: myK         != null ? fmt1(myK*100)+'%'          : '—', pct: myK         != null ? leaguePct(myK,         leagueDisc.k)         : 0, good: false },
+      { lbl: 'BB%',         val: myBB        != null ? fmt1(myBB*100)+'%'         : '—', pct: myBB        != null ? leaguePct(myBB,        leagueDisc.bb)        : 0, good: true  },
+      { lbl: 'PS/PA',       val: myPspa      != null ? fmt2(myPspa)               : '—', pct: myPspa      != null ? leaguePct(myPspa,      leagueDisc.pspa)      : 0, good: true  },
+      { lbl: 'IZ SWING%',   val: myIzSwing   != null ? fmt1(myIzSwing*100)+'%'   : '—', pct: myIzSwing   != null ? leaguePct(myIzSwing,   leagueDisc.izSwing)   : 0, good: true  },
+      { lbl: 'IZ CONTACT%', val: myIzContact != null ? fmt1(myIzContact*100)+'%' : '—', pct: myIzContact != null ? leaguePct(myIzContact, leagueDisc.izContact) : 0, good: true  },
+      { lbl: 'CHASE%',      val: myChase     != null ? fmt1(myChase*100)+'%'      : '—', pct: myChase     != null ? leaguePct(myChase,     leagueDisc.chase)     : 0, good: false },
     ] : [];
 
     function makeSavantBar(b) {
       var p = Math.max(0, Math.min(1, b.pct || 0));
+      var colorP = Math.max(0, Math.min(1, b.good ? p : (1 - p)));
       var r, g, bl;
-      if (p <= 0.5) {
-        var t = p * 2;
+      if (colorP <= 0.5) {
+        var t = colorP * 2;
         r  = Math.round(58  + t * (180 - 58));
         g  = Math.round(130 + t * (180 - 130));
         bl = Math.round(210 + t * (180 - 210));
       } else {
-        var t = (p - 0.5) * 2;
+        var t = (colorP - 0.5) * 2;
         r  = Math.round(180 + t * (210 - 180));
         g  = Math.round(180 + t * (50  - 180));
         bl = Math.round(180 + t * (50  - 180));
@@ -929,6 +995,39 @@ function renderOverview(name, type, sum, pitch) {
     var pmDateFilter = 'season'; // default = all
     var pmSelectedDate = null;
 
+    // League percentile arrays for pitchers
+    var lgP = (function() {
+      var o = { str:[], swing:[], whiff:[], contact:[], k:[], bb:[], ea:[], kbb:[] };
+      DATA.pitches.forEach(function(bp) {
+        var sc2 = bp.scatter || [];
+        var t2  = sc2.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+        if (!t2) return;
+        var ks2  = sc2.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+        var bbs2 = sc2.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+        var str2 = sc2.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+        var sw2  = sc2.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
+        var ip2  = sc2.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+        var fo2  = sc2.filter(function(s){ return s.outcome === 'Foul'; }).length;
+        var sw2t = sw2 + fo2 + ip2;
+        var pname2 = sc2[0] && sc2[0].pitcher;
+        var pd2 = pname2 ? (DATA.pitchers.find(function(p){ return p.pitcher === pname2; }) || {}) : {};
+        o.str.push(str2/t2);
+        o.swing.push(sw2t/t2);
+        o.whiff.push(sw2t > 0 ? sw2/sw2t : 0);
+        o.contact.push(sw2t > 0 ? (fo2+ip2)/sw2t : 0);
+        o.k.push(ks2/t2);
+        o.bb.push(bbs2/t2);
+        if (pd2.EA_pct != null) o.ea.push(pd2.EA_pct);
+        if (pd2.K_BB   != null) o.kbb.push(pd2.K_BB);
+      });
+      return o;
+    })();
+
+    function lp(val, arr) {
+      if (!arr.length || val == null) return 0;
+      return arr.filter(function(v){ return v < val; }).length / arr.length;
+    }
+
     function calcMetrics(scIn) {
       var tot    = scIn.filter(function(s) { return s.outcome && s.outcome !== ''; }).length;
       var ks     = scIn.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
@@ -942,14 +1041,13 @@ function renderOverview(name, type, sum, pitch) {
       return {
         tot: tot, ks: ks, bbs: bbs, str: str, swStr: swStr, inPlay: inPlay, fouls: fouls, swings: swings, pd: pd,
         bars: [
-          { lbl: 'STR%',     val: tot > 0    ? fmt1(str/tot*100) + '%'             : '—', pct: tot > 0    ? str/tot               : 0 },
-          { lbl: 'SWING%',   val: tot > 0    ? fmt1(swings/tot*100) + '%'          : '—', pct: tot > 0    ? swings/tot            : 0 },
-          { lbl: 'WHIFF%',   val: swings > 0 ? fmt1(swStr/swings*100) + '%'        : '—', pct: swings > 0 ? swStr/swings          : 0 },
-          { lbl: 'CONTACT%', val: swings > 0 ? fmt1((fouls+inPlay)/swings*100)+'%' : '—', pct: swings > 0 ? (fouls+inPlay)/swings : 0 },
-          { lbl: 'K%',       val: tot > 0    ? fmt1(ks/tot*100) + '%'              : '—', pct: tot > 0    ? ks/tot                : 0 },
-          { lbl: 'BB%',      val: tot > 0    ? fmt1(bbs/tot*100) + '%'             : '—', pct: tot > 0    ? bbs/tot              : 0 },
-          { lbl: 'E+A%',     val: pd.EA_pct != null ? fmt1(pd.EA_pct)+'%' : '—', pct: pd.EA_pct != null ? pd.EA_pct/100 : 0 },
-          { lbl: 'K/BB',     val: pd.K_BB   != null ? fmt2(pd.K_BB)       : '—', pct: pd.K_BB   != null ? Math.min(pd.K_BB/10,1) : 0 }
+          { lbl: 'STR%',     val: tot > 0    ? fmt1(str/tot*100) + '%'             : '—', pct: tot > 0    ? lp(str/tot,               lgP.str)     : 0, good: true  },
+          { lbl: 'SWING%',   val: tot > 0    ? fmt1(swings/tot*100) + '%'          : '—', pct: tot > 0    ? lp(swings/tot,            lgP.swing)   : 0, good: true  },
+          { lbl: 'WHIFF%',   val: swings > 0 ? fmt1(swStr/swings*100) + '%'        : '—', pct: swings > 0 ? lp(swStr/swings,          lgP.whiff)   : 0, good: true  },
+          { lbl: 'K%',       val: tot > 0    ? fmt1(ks/tot*100) + '%'              : '—', pct: tot > 0    ? lp(ks/tot,                lgP.k)       : 0, good: true  },
+          { lbl: 'BB%',      val: tot > 0    ? fmt1(bbs/tot*100) + '%'             : '—', pct: tot > 0    ? lp(bbs/tot,              lgP.bb)      : 0, good: false },
+          { lbl: 'E+A%',     val: pd.EA_pct != null ? fmt1(pd.EA_pct)+'%' : '—', pct: lp(pd.EA_pct, lgP.ea),  good: true  },
+          { lbl: 'K/BB',     val: pd.K_BB   != null ? fmt2(pd.K_BB)       : '—', pct: lp(pd.K_BB,   lgP.kbb), good: true  }
         ]
       };
     }
@@ -974,14 +1072,15 @@ function renderOverview(name, type, sum, pitch) {
       '<div style="padding:16px 24px" id="pm-bars-wrap">' +
       bars.map(function(b) {
         var p = Math.max(0, Math.min(1, b.pct || 0));
+        var colorP = Math.max(0, Math.min(1, b.good ? p : (1 - p)));
         var r, g, bl;
-        if (p <= 0.5) {
-          var t = p * 2;
+        if (colorP <= 0.5) {
+          var t = colorP * 2;
           r  = Math.round(58  + t * (180 - 58));
           g  = Math.round(130 + t * (180 - 130));
           bl = Math.round(210 + t * (180 - 210));
         } else {
-          var t = (p - 0.5) * 2;
+          var t = (colorP - 0.5) * 2;
           r  = Math.round(180 + t * (210 - 180));
           g  = Math.round(180 + t * (50  - 180));
           bl = Math.round(180 + t * (50  - 180));
@@ -1016,9 +1115,10 @@ function renderOverview(name, type, sum, pitch) {
             if (!wrap) return;
             wrap.innerHTML = m2.bars.map(function(b) {
               var p2 = Math.max(0, Math.min(1, b.pct || 0));
+              var cp2 = Math.max(0, Math.min(1, b.good ? p2 : (1 - p2)));
               var r2, g2, bl2;
-              if (p2 <= 0.5) { var t2=p2*2; r2=Math.round(58+t2*(180-58)); g2=Math.round(130+t2*(180-130)); bl2=Math.round(210+t2*(180-210)); }
-              else { var t2=(p2-0.5)*2; r2=Math.round(180+t2*(210-180)); g2=Math.round(180+t2*(50-180)); bl2=Math.round(180+t2*(50-180)); }
+              if (cp2 <= 0.5) { var t2=cp2*2; r2=Math.round(58+t2*(180-58)); g2=Math.round(130+t2*(180-130)); bl2=Math.round(210+t2*(180-210)); }
+              else { var t2=(cp2-0.5)*2; r2=Math.round(180+t2*(210-180)); g2=Math.round(180+t2*(50-180)); bl2=Math.round(180+t2*(50-180)); }
               var col2 = 'rgb('+r2+','+g2+','+bl2+')';
               var wp2 = (p2*100).toFixed(1);
               return '<div class="stat-bar-row" style="align-items:center;margin-bottom:10px">' +
