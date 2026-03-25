@@ -938,14 +938,14 @@ function renderOverview(name, type, sum, pitch) {
 
     // good:true = higher percentile → red (better). good:false = lower is better, color is flipped
     var disciplineBars = sc.length ? [
-      { lbl: 'SWING%',      val: mySwing     != null ? fmt1(mySwing*100)+'%'      : '—', pct: mySwing     != null ? leaguePct(mySwing,     leagueDisc.swing)     : 0, good: false },
-      { lbl: 'WHIFF%',      val: myWhiff     != null ? fmt1(myWhiff*100)+'%'      : '—', pct: myWhiff     != null ? leaguePct(myWhiff,     leagueDisc.whiff)     : 0, good: false },
-      { lbl: 'K%',          val: myK         != null ? fmt1(myK*100)+'%'          : '—', pct: myK         != null ? leaguePct(myK,         leagueDisc.k)         : 0, good: false },
+      { lbl: 'SWING%',      val: mySwing     != null ? fmt1(mySwing*100)+'%'      : '—', pct: mySwing     != null ? 1 - leaguePct(mySwing,     leagueDisc.swing)     : 0, good: true },
+      { lbl: 'WHIFF%',      val: myWhiff     != null ? fmt1(myWhiff*100)+'%'      : '—', pct: myWhiff     != null ? 1 - leaguePct(myWhiff,     leagueDisc.whiff)     : 0, good: true },
+      { lbl: 'K%',          val: myK         != null ? fmt1(myK*100)+'%'          : '—', pct: myK         != null ? 1 - leaguePct(myK,         leagueDisc.k)         : 0, good: true },
       { lbl: 'BB%',         val: myBB        != null ? fmt1(myBB*100)+'%'         : '—', pct: myBB        != null ? leaguePct(myBB,        leagueDisc.bb)        : 0, good: true  },
       { lbl: 'PS/PA',       val: myPspa      != null ? fmt2(myPspa)               : '—', pct: myPspa      != null ? leaguePct(myPspa,      leagueDisc.pspa)      : 0, good: true  },
       { lbl: 'IZ SWING%',   val: myIzSwing   != null ? fmt1(myIzSwing*100)+'%'   : '—', pct: myIzSwing   != null ? leaguePct(myIzSwing,   leagueDisc.izSwing)   : 0, good: true  },
       { lbl: 'IZ CONTACT%', val: myIzContact != null ? fmt1(myIzContact*100)+'%' : '—', pct: myIzContact != null ? leaguePct(myIzContact, leagueDisc.izContact) : 0, good: true  },
-      { lbl: 'CHASE%',      val: myChase     != null ? fmt1(myChase*100)+'%'      : '—', pct: myChase     != null ? leaguePct(myChase,     leagueDisc.chase)     : 0, good: false },
+      { lbl: 'CHASE%',      val: myChase     != null ? fmt1(myChase*100)+'%'      : '—', pct: myChase     != null ? 1 - leaguePct(myChase,     leagueDisc.chase)     : 0, good: true },
     ] : [];
 
     function makeSavantBar(b) {
@@ -954,14 +954,14 @@ function renderOverview(name, type, sum, pitch) {
       var r, g, bl;
       if (colorP <= 0.5) {
         var t = colorP * 2;
-        r  = Math.round(58  + t * (180 - 58));
-        g  = Math.round(130 + t * (180 - 130));
-        bl = Math.round(210 + t * (180 - 210));
+        r  = Math.round(58  + t * (160 - 58));
+        g  = Math.round(130 + t * (160 - 130));
+        bl = Math.round(210 + t * (160 - 210));
       } else {
         var t = (colorP - 0.5) * 2;
-        r  = Math.round(180 + t * (210 - 180));
-        g  = Math.round(180 + t * (50  - 180));
-        bl = Math.round(180 + t * (50  - 180));
+        r  = Math.round(160 + t * (210 - 160));
+        g  = Math.round(160 + t * (50  - 160));
+        bl = Math.round(160 + t * (50  - 160));
       }
       var color = 'rgb(' + r + ',' + g + ',' + bl + ')';
       var widthPct = (p * 100).toFixed(1);
@@ -1045,13 +1045,13 @@ function renderOverview(name, type, sum, pitch) {
       return {
         tot: tot, ks: ks, bbs: bbs, str: str, swStr: swStr, inPlay: inPlay, fouls: fouls, swings: swings, pd: pd,
         bars: [
-          { lbl: 'STR%',     val: tot > 0    ? fmt1(str/tot*100) + '%'             : '—', pct: tot > 0    ? lp(str/tot,               lgP.str)     : 0, good: true  },
-          { lbl: 'SWING%',   val: tot > 0    ? fmt1(swings/tot*100) + '%'          : '—', pct: tot > 0    ? lp(swings/tot,            lgP.swing)   : 0, good: true  },
-          { lbl: 'WHIFF%',   val: swings > 0 ? fmt1(swStr/swings*100) + '%'        : '—', pct: swings > 0 ? lp(swStr/swings,          lgP.whiff)   : 0, good: true  },
-          { lbl: 'K%',       val: tot > 0    ? fmt1(ks/tot*100) + '%'              : '—', pct: tot > 0    ? lp(ks/tot,                lgP.k)       : 0, good: true  },
-          { lbl: 'BB%',      val: tot > 0    ? fmt1(bbs/tot*100) + '%'             : '—', pct: tot > 0    ? lp(bbs/tot,              lgP.bb)      : 0, good: false },
-          { lbl: 'E+A%',     val: pd.EA_pct != null ? fmt1(pd.EA_pct)+'%' : '—', pct: lp(pd.EA_pct, lgP.ea),  good: true  },
-          { lbl: 'K/BB',     val: pd.K_BB   != null ? fmt2(pd.K_BB)       : '—', pct: lp(pd.K_BB,   lgP.kbb), good: true  }
+          { lbl: 'STR%',     val: tot > 0    ? fmt1(str/tot*100) + '%'             : '—', pct: tot > 0    ? lp(str/tot,               lgP.str)     : 0, good: true },
+          { lbl: 'SWING%',   val: tot > 0    ? fmt1(swings/tot*100) + '%'          : '—', pct: tot > 0    ? lp(swings/tot,            lgP.swing)   : 0, good: true },
+          { lbl: 'WHIFF%',   val: swings > 0 ? fmt1(swStr/swings*100) + '%'        : '—', pct: swings > 0 ? lp(swStr/swings,          lgP.whiff)   : 0, good: true },
+          { lbl: 'K%',       val: tot > 0    ? fmt1(ks/tot*100) + '%'              : '—', pct: tot > 0    ? lp(ks/tot,                lgP.k)       : 0, good: true },
+          { lbl: 'BB%',      val: tot > 0    ? fmt1(bbs/tot*100) + '%'             : '—', pct: tot > 0    ? 1 - lp(bbs/tot,           lgP.bb)      : 0, good: true },
+          { lbl: 'E+A%',     val: pd.EA_pct != null ? fmt1(pd.EA_pct)+'%' : '—', pct: lp(pd.EA_pct, lgP.ea),  good: true },
+          { lbl: 'K/BB',     val: pd.K_BB   != null ? fmt2(pd.K_BB)       : '—', pct: lp(pd.K_BB,   lgP.kbb), good: true }
         ]
       };
     }
@@ -1080,14 +1080,14 @@ function renderOverview(name, type, sum, pitch) {
         var r, g, bl;
         if (colorP <= 0.5) {
           var t = colorP * 2;
-          r  = Math.round(58  + t * (180 - 58));
-          g  = Math.round(130 + t * (180 - 130));
-          bl = Math.round(210 + t * (180 - 210));
+          r  = Math.round(58  + t * (160 - 58));
+          g  = Math.round(130 + t * (160 - 130));
+          bl = Math.round(210 + t * (160 - 210));
         } else {
           var t = (colorP - 0.5) * 2;
-          r  = Math.round(180 + t * (210 - 180));
-          g  = Math.round(180 + t * (50  - 180));
-          bl = Math.round(180 + t * (50  - 180));
+          r  = Math.round(160 + t * (210 - 160));
+          g  = Math.round(160 + t * (50  - 160));
+          bl = Math.round(160 + t * (50  - 160));
         }
         var color = 'rgb(' + r + ',' + g + ',' + bl + ')';
         var widthPct = (p * 100).toFixed(1);
