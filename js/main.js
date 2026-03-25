@@ -922,7 +922,9 @@ function renderOverview(name, type, sum, pitch) {
 
     function leaguePct(val, arr) {
       if (!arr.length || val == null) return 0;
-      return arr.filter(function(v){ return v < val; }).length / arr.length;
+      var below = arr.filter(function(v){ return v < val; }).length;
+      var equal = arr.filter(function(v){ return v === val; }).length;
+      return (below + equal * 0.5) / arr.length;
     }
 
     var mySwing     = totPitches > 0   ? swings/totPitches               : null;
@@ -1025,7 +1027,9 @@ function renderOverview(name, type, sum, pitch) {
 
     function lp(val, arr) {
       if (!arr.length || val == null) return 0;
-      return arr.filter(function(v){ return v < val; }).length / arr.length;
+      var below = arr.filter(function(v){ return v < val; }).length;
+      var equal = arr.filter(function(v){ return v === val; }).length;
+      return (below + equal * 0.5) / arr.length;
     }
 
     function calcMetrics(scIn) {
