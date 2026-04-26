@@ -976,7 +976,9 @@ function renderOverview(name, type, sum, pitch) {
     }
 
     return '<div class="overview-grid">' +
-      '<div class="stat-card" style="grid-column:1/-1"><div class="stat-card-header"><span class="stat-card-title">Rate Stats</span>' +
+      '<div class="stat-card" style="grid-column:1/-1"><div class="stat-card-header"><span class="stat-card-title">Overview</span></div>' +
+      '<div style="padding:16px 24px"></div></div>' +
+      '<div class="stat-card" style="grid-column:1/-1"><div class="stat-card-header"><span class="stat-card-title">Percentile Stats</span>' +
       '<span class="stat-card-subtitle">' + totPitches + ' pitches seen</span></div>' +
       '<div style="padding:16px 24px">' +
       (disciplineBars.length ? disciplineBars.map(makeSavantBar).join('') : '<p style="color:var(--text-dim);font-family:var(--font-mono);font-size:12px">No pitch data available.</p>') +
@@ -1070,7 +1072,9 @@ function renderOverview(name, type, sum, pitch) {
     var bars = m.bars;
     var tot  = m.tot;
 
-    var html = '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Pitch Metrics</span>' +
+    var html = '<div class="stat-card" style="margin-bottom:20px"><div class="stat-card-header"><span class="stat-card-title">Overview</span></div>' +
+      '<div style="padding:16px 24px"></div></div>' +
+      '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Percentile Stats</span>' +
       '<span class="stat-card-subtitle" id="pm-pitch-count">' + tot + ' pitches</span></div>' +
       pmDateFilterHTML +
       '<div style="padding:16px 24px" id="pm-bars-wrap">' +
