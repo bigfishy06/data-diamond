@@ -870,7 +870,300 @@ function renderPlayerDetail(name, type, content) {
 
 // ── OVERVIEW TAB ──────────────────────────────────
 function renderOverview(name, type, sum, pitch) {
-  return '';
+  var sc = (pitch && pitch.scatter) ? pitch.scatter : [];
+
+  // ── Shared percentile helper ───────────────────
+  function pctRank(val, arr) {
+    if (!arr.length || val == null) return null;
+    var below = arr.filter(function(v){ return v < val; }).length;
+    var equal = arr.filter(function(v){ return v === val; }).length;
+    return (below + equal * 0.5) / arr.length;
+  }
+
+  // ── Highlight card builder ─────────────────────
+  // tier: 'elite'=top 10%, 'strong'=top 20%, 'weak'=bot 20%, 'poor'=bot 10%
+  function makeHighlight(label, value, note, tier) {
+    var colors = {
+      elite:  { bg: 'rgba(255,184,28,0.10)',  border: 'rgba(255,184,28,0.45)',  dot: '#FFB81C',        tag: 'ELITE'    },
+      strong: { bg: 'rgba(80,200,120,0.08)',   border: 'rgba(80,200,120,0.35)',  dot: '#50C878',        tag: 'STRONG'   },
+      weak:   { bg: 'rgba(255,140,0,0.08)',    border: 'rgba(255,140,0,0.35)',   dot: '#FF8C00',        tag: 'CONCERN'  },
+      poor:   { bg: 'rgba(220,50,50,0.10)',    border: 'rgba(220,50,50,0.40)',   dot: '#DC3232',        tag: 'POOR'     }
+    };
+    var c = colors[tier] || colors.strong;
+    return '<div style="background:' + c.bg + ';border:1px solid ' + c.border + ';border-radius:6px;padding:16px 20px;display:flex;align-items:center;gap:16px">' +
+      '<div style="width:8px;height:8px;border-radius:50%;background:' + c.dot + ';flex-shrink:0;box-shadow:0 0 6px ' + c.dot + '"></div>' +
+      '<div style="flex:1">' +
+        '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px">' +
+          '<span style="font-family:var(--font-display);font-size:22px;color:' + c.dot + ';letter-spacing:1px">' + value + '</span>' +
+          '<span style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.08em">' + label + '</span>' +
+        '</div>' +
+        '<div style="font-family:var(--font-body);font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4">' + note + '</div>' +
+      '</div>' +
+      '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;color:' + c.dot + ';opacity:0.7;flex-shrink:0">' + c.tag + '</div>' +
+    '</div>';
+  }
+
+  var highlights = [];
+
+  // ══════════════════════════════════════════════
+  // BATTER HIGHLIGHTS
+  // ══════════════════════════════════════════════
+  if (type === 'batter' && sum) {
+    var ZX1 = -1, ZX2 = 1, ZY1 = 0, ZY2 = 1;
+    var totP    = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+    var swStr   = sc.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
+    var fouls   = sc.filter(function(s){ return s.outcome === 'Foul'; }).length;
+    var inPlay  = sc.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+    var swings  = swStr + fouls + inPlay;
+    var ks      = sc.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+    var bbs     = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+    var pa      = sum.PA || (sum.AB + (sum.BB||0) + (sum.HBP||0) + (sum.SF||0)) || 1;
+    var inZonePts    = sc.filter(function(s){ return s.x != null && s.x >= ZX1 && s.x <= ZX2 && s.y != null && s.y >= ZY1 && s.y <= ZY2; });
+    var inZoneSwings = inZonePts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul' || inPlay; }).length;
+    var inZoneContact= inZonePts.filter(function(s){ return s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+    var oozPts  = sc.filter(function(s){ return s.x != null && s.y != null && (s.x < ZX1 || s.x > ZX2 || s.y < ZY1 || s.y > ZY2); });
+    var chases  = oozPts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
+
+    // League arrays
+    var lg = { avg:[], ops:[], obp:[], slg:[], kRate:[], bbRate:[], whiff:[], chase:[], izContact:[], hr:[] };
+    DATA.summary.forEach(function(p) {
+      if (!p.AB || p.AB < 5) return;
+      lg.avg.push(p.AVG || 0);
+      lg.ops.push(p.OPS || 0);
+      lg.obp.push(p.OBP || 0);
+      lg.slg.push(p.SLG || 0);
+      lg.hr.push(p.HR || 0);
+      var pPA = p.PA || (p.AB + (p.BB||0) + (p.HBP||0) + (p.SF||0)) || 1;
+      lg.kRate.push(p.K / pPA);
+      lg.bbRate.push((p.BB||0) / pPA);
+    });
+    DATA.pitches.forEach(function(bp) {
+      var sc2 = bp.scatter || [];
+      var t2  = sc2.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+      if (!t2) return;
+      var sw2  = sc2.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
+      var fo2  = sc2.filter(function(s){ return s.outcome === 'Foul'; }).length;
+      var ip2  = sc2.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+      var sw2t = sw2 + fo2 + ip2;
+      var iz2  = sc2.filter(function(s){ return s.x != null && s.x >= ZX1 && s.x <= ZX2 && s.y != null && s.y >= ZY1 && s.y <= ZY2; });
+      var izSw2  = iz2.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul' || ip2; }).length;
+      var izCon2 = iz2.filter(function(s){ return s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+      var ooz2   = sc2.filter(function(s){ return s.x != null && s.y != null && (s.x < ZX1 || s.x > ZX2 || s.y < ZY1 || s.y > ZY2); });
+      var ch2    = ooz2.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
+      if (sw2t > 0) lg.whiff.push(sw2 / sw2t);
+      if (ooz2.length > 0) lg.chase.push(ch2 / ooz2.length);
+      if (izSw2 > 0) lg.izContact.push(izCon2 / izSw2);
+    });
+
+    // Compute player values
+    var myAVG      = sum.AVG;
+    var myOPS      = sum.OPS;
+    var myOBP      = sum.OBP;
+    var mySLG      = sum.SLG;
+    var myHR       = sum.HR;
+    var myK        = pa > 0 ? ks / pa : null;
+    var myBB       = pa > 0 ? bbs / pa : null;
+    var myWhiff    = swings > 0 ? swStr / swings : null;
+    var myChase    = oozPts.length > 0 ? chases / oozPts.length : null;
+    var myIzCon    = inZoneSwings > 0 ? inZoneContact / inZoneSwings : null;
+
+    // Thresholds: pct >= 0.90 → elite, >= 0.80 → strong, <= 0.20 → weak, <= 0.10 → poor
+    function tier(pct, higherIsBetter) {
+      if (pct == null) return null;
+      var p = higherIsBetter ? pct : (1 - pct);
+      if (p >= 0.90) return 'elite';
+      if (p >= 0.80) return 'strong';
+      if (p <= 0.10) return 'poor';
+      if (p <= 0.20) return 'weak';
+      return null;
+    }
+
+    var checks = [
+      { label: 'AVG',       val: fmt3(myAVG),             pct: pctRank(myAVG, lg.avg),        hi: true,
+        notes: { elite: 'Hitting at an outstanding rate — one of the best averages in the league.',
+                 strong: 'Solid contact rate, well above the league average.',
+                 weak: 'Below-average batting average — contact consistency is a concern.',
+                 poor: 'Struggling to make consistent contact, one of the lowest averages in the league.' } },
+      { label: 'OPS',       val: fmt3(myOPS),             pct: pctRank(myOPS, lg.ops),        hi: true,
+        notes: { elite: 'Elite overall offensive production — combining on-base and power at a top-tier rate.',
+                 strong: 'Above-average run producer with a strong combination of OBP and slugging.',
+                 weak: 'Below-average overall offensive output.',
+                 poor: 'Among the lowest OPS in the league — struggles both getting on base and driving the ball.' } },
+      { label: 'OBP',       val: fmt3(myOBP),             pct: pctRank(myOBP, lg.obp),        hi: true,
+        notes: { elite: 'Gets on base at an elite rate — rarely makes an easy out.',
+                 strong: 'Consistently reaches base above the league average.',
+                 weak: 'On-base percentage is below average — tends to make outs at a high rate.',
+                 poor: 'Very low on-base percentage, one of the worst in the league.' } },
+      { label: 'SLG',       val: fmt3(mySLG),             pct: pctRank(mySLG, lg.slg),        hi: true,
+        notes: { elite: 'Exceptional power numbers — driving the ball with elite authority.',
+                 strong: 'Above-average slugger with real extra-base pop.',
+                 weak: 'Below-average slugging — lacks extra-base hit production.',
+                 poor: 'Very low slugging percentage, struggles to drive the ball with power.' } },
+      { label: 'HR',        val: fmtN(myHR),              pct: pctRank(myHR, lg.hr),          hi: true,
+        notes: { elite: 'Among the league leaders in home runs — a genuine power threat.',
+                 strong: 'Above-average home run production.',
+                 weak: null, poor: null } },
+      { label: 'K%',        val: fmt1(myK*100)+'%',       pct: pctRank(myK, lg.kRate),        hi: false,
+        notes: { elite: null, strong: null,
+                 weak: 'Strikeout rate is elevated — pitchers are regularly putting this hitter away.',
+                 poor: 'One of the highest strikeout rates in the league — a major vulnerability.' } },
+      { label: 'BB%',       val: fmt1(myBB*100)+'%',      pct: pctRank(myBB, lg.bbRate),      hi: true,
+        notes: { elite: 'Outstanding plate discipline — draws walks at an elite rate.',
+                 strong: 'Above-average walk rate, shows good patience at the plate.',
+                 weak: 'Low walk rate — rarely works counts or forces free passes.',
+                 poor: 'Almost never walks — an aggressive approach that pitchers can exploit.' } },
+      { label: 'WHIFF%',    val: myWhiff != null ? fmt1(myWhiff*100)+'%' : '—', pct: pctRank(myWhiff, lg.whiff), hi: false,
+        notes: { elite: null, strong: null,
+                 weak: 'High whiff rate — misses on a lot of swings, leaving pitchers in control.',
+                 poor: 'One of the highest whiff rates in the league — struggles to make bat-on-ball contact.' } },
+      { label: 'CHASE%',    val: myChase != null ? fmt1(myChase*100)+'%' : '—', pct: pctRank(myChase, lg.chase), hi: false,
+        notes: { elite: null, strong: null,
+                 weak: 'Chases pitches out of the zone at an above-average rate.',
+                 poor: 'One of the highest chase rates in the league — easily baited outside the strike zone.' } },
+      { label: 'IZ CON%',   val: myIzCon != null ? fmt1(myIzCon*100)+'%' : '—', pct: pctRank(myIzCon, lg.izContact), hi: true,
+        notes: { elite: 'Exceptional in-zone contact — rarely misses pitches in the strike zone.',
+                 strong: 'Above-average contact rate on pitches in the zone.',
+                 weak: 'Below-average in-zone contact — missing strikes more often than most.',
+                 poor: 'Struggles significantly to make contact on pitches in the strike zone.' } }
+    ];
+
+    checks.forEach(function(c) {
+      if (c.val === '—' || c.pct == null) return;
+      var t = tier(c.pct, c.hi);
+      if (!t) return;
+      var note = c.notes[t];
+      if (!note) return;
+      highlights.push(makeHighlight(c.label, c.val, note, t));
+    });
+  }
+
+  // ══════════════════════════════════════════════
+  // PITCHER HIGHLIGHTS
+  // ══════════════════════════════════════════════
+  if (type === 'pitcher' && pitch && pitch.scatter) {
+    var pd   = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
+    var tot  = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+    var ks   = sc.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+    var bbs  = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+    var str  = sc.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+    var swS  = sc.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
+    var ipO  = sc.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+    var fo   = sc.filter(function(s){ return s.outcome === 'Foul'; }).length;
+    var swings = swS + fo + ipO;
+
+    // IBL ERA
+    var iblP = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
+    var era  = iblP.length && iblP[0].ERA != null ? iblP[0].ERA : null;
+
+    // WHIP from scatter
+    var pdH  = sc.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+    var whip = pd.IP > 0 ? (bbs + pdH) / pd.IP : null;
+
+    // League arrays
+    var lg = { kRate:[], bbRate:[], strRate:[], whiff:[], ea:[], kbb:[], whip:[], era:[] };
+    DATA.pitches.forEach(function(bp) {
+      var sc2  = bp.scatter || [];
+      var t2   = sc2.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+      if (!t2) return;
+      var ks2  = sc2.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+      var bbs2 = sc2.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+      var str2 = sc2.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+      var sw2  = sc2.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
+      var ip2  = sc2.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+      var fo2  = sc2.filter(function(s){ return s.outcome === 'Foul'; }).length;
+      var sw2t = sw2 + fo2 + ip2;
+      var pname2 = sc2[0] && sc2[0].pitcher;
+      var pd2 = pname2 ? (DATA.pitchers.find(function(p){ return p.pitcher === pname2; }) || {}) : {};
+      var h2  = sc2.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+      lg.kRate.push(ks2 / t2);
+      lg.bbRate.push(bbs2 / t2);
+      lg.strRate.push(str2 / t2);
+      if (sw2t > 0) lg.whiff.push(sw2 / sw2t);
+      if (pd2.EA_pct != null) lg.ea.push(pd2.EA_pct);
+      if (pd2.K_BB   != null) lg.kbb.push(pd2.K_BB);
+      if (pd2.IP > 0) lg.whip.push((bbs2 + h2) / pd2.IP);
+      var ibl2 = (DATA.iblHistory[pname2] || []).filter(function(s){ return s.IP > 0; });
+      if (ibl2.length && ibl2[0].ERA != null) lg.era.push(ibl2[0].ERA);
+    });
+
+    function tier(pct, higherIsBetter) {
+      if (pct == null) return null;
+      var p = higherIsBetter ? pct : (1 - pct);
+      if (p >= 0.90) return 'elite';
+      if (p >= 0.80) return 'strong';
+      if (p <= 0.10) return 'poor';
+      if (p <= 0.20) return 'weak';
+      return null;
+    }
+
+    var myKRate  = tot > 0 ? ks / tot : null;
+    var myBBRate = tot > 0 ? bbs / tot : null;
+    var myStr    = tot > 0 ? str / tot : null;
+    var myWhiff  = swings > 0 ? swS / swings : null;
+    var myEA     = pd.EA_pct != null ? pd.EA_pct : null;
+    var myKBB    = pd.K_BB   != null ? pd.K_BB   : null;
+
+    var checks = [
+      { label: 'K%',     val: myKRate  != null ? fmt1(myKRate*100)+'%'  : '—', pct: pctRank(myKRate,  lg.kRate),  hi: true,
+        notes: { elite: 'Elite strikeout rate — one of the most dominant swing-and-miss pitchers in the league.',
+                 strong: 'Above-average ability to put hitters away with strikeouts.',
+                 weak: 'Below-average strikeout rate — hitters are making contact more often than ideal.',
+                 poor: 'Very low strikeout rate — struggles to finish hitters off with punchouts.' } },
+      { label: 'BB%',    val: myBBRate != null ? fmt1(myBBRate*100)+'%' : '—', pct: pctRank(myBBRate, lg.bbRate), hi: false,
+        notes: { elite: null, strong: null,
+                 weak: 'Walk rate is elevated — command is an issue, giving hitters too many free passes.',
+                 poor: 'One of the highest walk rates in the league — significant control problems.' } },
+      { label: 'STR%',   val: myStr    != null ? fmt1(myStr*100)+'%'    : '—', pct: pctRank(myStr,    lg.strRate), hi: true,
+        notes: { elite: 'Exceptional strike-throwing ability — consistently in the zone at an elite rate.',
+                 strong: 'Above-average strike rate, commanding the zone effectively.',
+                 weak: 'Below-average strike rate — falling behind in counts too often.',
+                 poor: 'Very low strike rate — one of the least accurate pitchers in the league.' } },
+      { label: 'WHIFF%', val: myWhiff  != null ? fmt1(myWhiff*100)+'%'  : '—', pct: pctRank(myWhiff,  lg.whiff),  hi: true,
+        notes: { elite: 'Elite swing-and-miss stuff — generates whiffs at a top-tier rate.',
+                 strong: 'Above-average whiff rate, pitches that hitters struggle to square up.',
+                 weak: 'Below-average whiff rate — hitters are making solid contact on swings.',
+                 poor: 'Very few whiffs generated — hitters put the ball in play almost every swing.' } },
+      { label: 'E+A%',   val: myEA     != null ? fmt1(myEA)+'%'         : '—', pct: pctRank(myEA,     lg.ea),     hi: true,
+        notes: { elite: 'Works ahead in counts at an elite rate — dictates at-bats from the start.',
+                 strong: 'Consistently gets into advantageous counts early in plate appearances.',
+                 weak: 'Falls behind in counts more often than most — hitters dictate the at-bat.',
+                 poor: 'Rarely gets ahead in counts, one of the worst early-count rates in the league.' } },
+      { label: 'K/BB',   val: myKBB    != null ? fmt2(myKBB)            : '—', pct: pctRank(myKBB,    lg.kbb),    hi: true,
+        notes: { elite: 'Outstanding K/BB ratio — strikes out hitters while rarely walking them.',
+                 strong: 'Good command-to-stuff ratio, putting away hitters more often than walking them.',
+                 weak: 'Low K/BB ratio — walks nearly as often as striking out, a sign of command trouble.',
+                 poor: 'Very poor K/BB — walks are undermining an already-low strikeout rate.' } },
+      { label: 'WHIP',   val: whip     != null ? fmt2(whip)             : '—', pct: pctRank(whip,     lg.whip),   hi: false,
+        notes: { elite: null, strong: null,
+                 weak: 'Elevated WHIP — giving up too many baserunners per inning.',
+                 poor: 'One of the highest WHIPs in the league — runners on base constantly.' } },
+      { label: 'ERA',    val: era      != null ? fmt2(era)              : '—', pct: pctRank(era,      lg.era),    hi: false,
+        notes: { elite: null, strong: null,
+                 weak: 'ERA is above average — runs are scoring at a higher-than-ideal rate.',
+                 poor: 'One of the highest ERAs in the league — struggling to prevent runs.' } }
+    ];
+
+    checks.forEach(function(c) {
+      if (c.val === '—' || c.pct == null) return;
+      var t = tier(c.pct, c.hi);
+      if (!t) return;
+      var note = c.notes[t];
+      if (!note) return;
+      highlights.push(makeHighlight(c.label, c.val, note, t));
+    });
+  }
+
+  if (!highlights.length) {
+    return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Overview</span></div>' +
+      '<div style="padding:32px 24px;text-align:center;color:var(--text-dim);font-family:var(--font-mono);font-size:13px">No standout stats to highlight yet — check back with more data.</div>' +
+      '</div>';
+  }
+
+  return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Key Highlights</span>' +
+    '<span class="stat-card-subtitle">' + highlights.length + ' standout stat' + (highlights.length !== 1 ? 's' : '') + '</span></div>' +
+    '<div style="padding:16px 24px;display:flex;flex-direction:column;gap:10px">' +
+    highlights.join('') +
+    '</div></div>';
 }
 
 // ── PERCENTILE STATS TAB ──────────────────────────
