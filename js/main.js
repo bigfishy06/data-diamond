@@ -773,6 +773,7 @@ function renderPlayerDetail(name, type, content) {
     '</div></section>' +
     '<div class="tabs-bar" style="margin-top:0"><div class="container"><div class="tabs">' +
     '<button class="tab-btn active" data-tab="overview">Overview</button>' +
+    '<button class="tab-btn" data-tab="percentile">Percentile Stats</button>' +
     '<button class="tab-btn" data-tab="season">Season Stats</button>' +
     '<button class="tab-btn" data-tab="zone">Strike Zone</button>' +
     '<button class="tab-btn" data-tab="splits">Splits</button>' +
@@ -824,7 +825,8 @@ function renderPlayerDetail(name, type, content) {
     tabContent.innerHTML = '';
     var panel = document.createElement('div');
     panel.className = 'fade-up';
-    if (t === 'overview') panel.innerHTML = renderOverview(name, type, sum, pitchData);
+    if (t === 'overview')   panel.innerHTML = renderOverview(name, type, sum, pitchData);
+    if (t === 'percentile') panel.innerHTML = renderPercentileStats(name, type, sum, pitchData);
     if (t === 'season')   panel.innerHTML = renderSeasonStats(name, type, sum, pitchData);
     if (t === 'splits') {
       panel.innerHTML = renderSplits(name, type, pitchData);
@@ -868,6 +870,11 @@ function renderPlayerDetail(name, type, content) {
 
 // ── OVERVIEW TAB ──────────────────────────────────
 function renderOverview(name, type, sum, pitch) {
+  return '';
+}
+
+// ── PERCENTILE STATS TAB ──────────────────────────
+function renderPercentileStats(name, type, sum, pitch) {
 
   if (type === 'batter' && sum) {
     // Discipline stats from scatter
@@ -976,8 +983,6 @@ function renderOverview(name, type, sum, pitch) {
     }
 
     return '<div class="overview-grid">' +
-      '<div class="stat-card" style="grid-column:1/-1"><div class="stat-card-header"><span class="stat-card-title">Overview</span></div>' +
-      '<div style="padding:16px 24px"></div></div>' +
       '<div class="stat-card" style="grid-column:1/-1"><div class="stat-card-header"><span class="stat-card-title">Percentile Stats</span>' +
       '<span class="stat-card-subtitle">' + totPitches + ' pitches seen</span></div>' +
       '<div style="padding:16px 24px">' +
@@ -1072,9 +1077,7 @@ function renderOverview(name, type, sum, pitch) {
     var bars = m.bars;
     var tot  = m.tot;
 
-    var html = '<div class="stat-card" style="margin-bottom:20px"><div class="stat-card-header"><span class="stat-card-title">Overview</span></div>' +
-      '<div style="padding:16px 24px"></div></div>' +
-      '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Percentile Stats</span>' +
+    var html = '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Pitch Metrics</span>' +
       '<span class="stat-card-subtitle" id="pm-pitch-count">' + tot + ' pitches</span></div>' +
       pmDateFilterHTML +
       '<div style="padding:16px 24px" id="pm-bars-wrap">' +
