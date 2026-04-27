@@ -948,11 +948,12 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
   if (type === 'batter' && sum) {
     var scB = sc.filter(function(s){ return s.x != null && s.y != null; });
     var side = scB.length ? (scB[0].batter_side || 'R') : 'R';
-    var insideFn  = side === 'R' ? function(s){ return s.x < -0.1; } : function(s){ return s.x > 0.1; };
-    var outsideFn = side === 'R' ? function(s){ return s.x >  0.1; } : function(s){ return s.x < -0.1; };
-    var highFn    = function(s){ return s.y > 0.6; };
-    var lowFn     = function(s){ return s.y < 0.35; };
-    var inZoneFn  = function(s){ return s.x >= -1 && s.x <= 1 && s.y >= 0 && s.y <= 1; };
+    // x = vertical (0=bottom of zone, 1=top), y = horizontal (-1=left, 0=middle, 1=right catcher view)
+    var insideFn  = side === 'R' ? function(s){ return s.y < -0.1; } : function(s){ return s.y > 0.1; };
+    var outsideFn = side === 'R' ? function(s){ return s.y >  0.1; } : function(s){ return s.y < -0.1; };
+    var highFn    = function(s){ return s.x > 0.6; };
+    var lowFn     = function(s){ return s.x < 0.35; };
+    var inZoneFn  = function(s){ return s.y >= -1 && s.y <= 1 && s.x >= 0 && s.x <= 1; };
     var oozFn     = function(s){ return !inZoneFn(s); };
 
     var totP    = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
@@ -994,10 +995,10 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
       var sw2t=sw2+fo2+ip2;
       var bSum2=getSummaryPlayer(bp.batter);
       var pa2=bSum2?(bSum2.PA||(bSum2.AB+(bSum2.BB||0)+(bSum2.HBP||0)+(bSum2.SF||0))||1):1;
-      var iz2=sc2.filter(function(s){return s.x!=null&&s.y!=null&&s.x>=-1&&s.x<=1&&s.y>=0&&s.y<=1;});
+      var iz2=sc2.filter(function(s){return s.y!=null&&s.x!=null&&s.y>=-1&&s.y<=1&&s.x>=0&&s.x<=1;});
       var izSw2=iz2.filter(function(s){return['Swinging Strike','Foul'].concat(IN_PLAY).includes(s.outcome);}).length;
       var izCon2=iz2.filter(function(s){return['Foul'].concat(IN_PLAY).includes(s.outcome);}).length;
-      var ooz2=sc2.filter(function(s){return s.x!=null&&s.y!=null&&(s.x<-1||s.x>1||s.y<0||s.y>1);});
+      var ooz2=sc2.filter(function(s){return s.y!=null&&s.x!=null&&(s.y<-1||s.y>1||s.x<0||s.x>1);});
       var ch2=ooz2.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Foul';}).length;
       lg.swing.push(t2>0?sw2t/t2:0);
       if(sw2t>0)       lg.whiff.push(sw2/sw2t);
@@ -1200,12 +1201,13 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
     // Zone / pitch-type approach
     var pitchTypes=[];
     scP.forEach(function(s){if(s.pitch_type&&!pitchTypes.includes(s.pitch_type))pitchTypes.push(s.pitch_type);});
-    var inZoneFn=function(s){return s.x>=-1&&s.x<=1&&s.y>=0&&s.y<=1;};
+    // x = vertical (0=bottom, 1=top), y = horizontal (-1=left, 1=right catcher view)
+    var inZoneFn=function(s){return s.y>=-1&&s.y<=1&&s.x>=0&&s.x<=1;};
     var PZONES=[
-      {label:'Up in Zone',fn:function(s){return inZoneFn(s)&&s.y>0.6;}},
-      {label:'Low in Zone',fn:function(s){return inZoneFn(s)&&s.y<0.35;}},
-      {label:'Inside Edge',fn:function(s){return inZoneFn(s)&&s.x<-0.5;}},
-      {label:'Outside Edge',fn:function(s){return inZoneFn(s)&&s.x>0.5;}},
+      {label:'Up in Zone',fn:function(s){return inZoneFn(s)&&s.x>0.6;}},
+      {label:'Low in Zone',fn:function(s){return inZoneFn(s)&&s.x<0.35;}},
+      {label:'Inside Edge',fn:function(s){return inZoneFn(s)&&s.y<-0.5;}},
+      {label:'Outside Edge',fn:function(s){return inZoneFn(s)&&s.y>0.5;}},
       {label:'Out of Zone',fn:function(s){return!inZoneFn(s);}}
     ];
     pitchTypes.forEach(function(pt){
@@ -1293,8 +1295,111 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
 
 function renderPercentileStats(name, type, sum, pitch) {
 
+  // ── Shared bar renderer ───────────────────────
+  function makeSavantBar(b, labelWidth) {
+    var p      = Math.max(0, Math.min(1, b.pct || 0));
+    var colorP = Math.max(0, Math.min(1, b.good ? p : (1 - p)));
+    var r, g, bl;
+    if (colorP <= 0.5) {
+      var t = colorP * 2;
+      r = Math.round(58  + t * (160 - 58));
+      g = Math.round(130 + t * (160 - 130));
+      bl= Math.round(210 + t * (160 - 210));
+    } else {
+      var t = (colorP - 0.5) * 2;
+      r = Math.round(160 + t * (210 - 160));
+      g = Math.round(160 + t * (50  - 160));
+      bl= Math.round(160 + t * (50  - 160));
+    }
+    var color    = 'rgb(' + r + ',' + g + ',' + bl + ')';
+    var widthPct = (p * 100).toFixed(1);
+    var lw       = labelWidth || 100;
+    return '<div class="sbr-row" data-stat="' + b.lbl + '" style="align-items:center;margin-bottom:12px;display:flex">' +
+      '<div class="sbr-label" style="width:' + lw + 'px;flex-shrink:0;font-family:var(--font-mono);font-size:11px;color:var(--text-mid)">' + b.lbl + '</div>' +
+      '<div style="flex:1;position:relative;height:10px;background:rgba(255,255,255,0.06);border-radius:5px;margin:0 8px">' +
+        '<div class="sbr-fill" style="position:absolute;left:0;top:0;height:10px;width:0%;background:' + color + ';border-radius:5px;transition:width 0.8s cubic-bezier(0.4,0,0.2,1)" data-width="' + widthPct + '%"></div>' +
+        '<div class="savant-bubble" style="position:absolute;top:50%;transform:translate(-50%,-50%);left:0%;width:26px;height:26px;border-radius:50%;background:' + color + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;font-family:var(--font-mono);z-index:2;transition:left 0.8s cubic-bezier(0.4,0,0.2,1);box-shadow:0 1px 4px rgba(0,0,0,0.4)" data-left="' + widthPct + '">&#9679;</div>' +
+      '</div>' +
+      '<div style="width:64px;text-align:right;font-family:var(--font-mono);font-size:13px;font-weight:600;color:' + color + ';flex-shrink:0">' + b.val + '</div>' +
+    '</div>';
+  }
+
+  // ── Filter pill UI builder ─────────────────────
+  // Returns HTML for pill toggles + the bars container, and wires interactions via setTimeout.
+  function buildFilteredCard(cardId, title, subtitle, allBars, labelWidth, extraHeaderHTML) {
+    var pillsId = cardId + '-pills';
+    var barsId  = cardId + '-bars';
+
+    var pillsHTML = allBars.map(function(b) {
+      return '<button class="pct-pill active" data-stat="' + b.lbl + '" style="' +
+        'font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;' +
+        'padding:5px 10px;border-radius:20px;cursor:pointer;border:1px solid rgba(255,184,28,0.4);' +
+        'background:rgba(255,184,28,0.12);color:#FFB81C;transition:all 0.15s;white-space:nowrap' +
+        '">' + b.lbl + '</button>';
+    }).join('');
+
+    var barsHTML = allBars.map(function(b){ return makeSavantBar(b, labelWidth); }).join('');
+
+    var html =
+      '<div class="stat-card">' +
+        '<div class="stat-card-header">' +
+          '<span class="stat-card-title">' + title + '</span>' +
+          '<span class="stat-card-subtitle" id="' + cardId + '-count">' + subtitle + '</span>' +
+        '</div>' +
+        (extraHeaderHTML || '') +
+        // Filter pill row
+        '<div style="padding:0 24px 16px;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:4px">' +
+          '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px">Filter Stats</div>' +
+          '<div id="' + pillsId + '" style="display:flex;flex-wrap:wrap;gap:6px">' + pillsHTML + '</div>' +
+        '</div>' +
+        '<div style="padding:16px 24px" id="' + barsId + '">' + barsHTML + '</div>' +
+      '</div>';
+
+    // Wire pill toggle interactions
+    setTimeout(function() {
+      var pillContainer = document.getElementById(pillsId);
+      var barsContainer = document.getElementById(barsId);
+      if (!pillContainer || !barsContainer) return;
+
+      // Animate bars on load
+      barsContainer.querySelectorAll('.sbr-fill').forEach(function(el){ if(el.dataset.width) el.style.width = el.dataset.width; });
+      barsContainer.querySelectorAll('.savant-bubble').forEach(function(el){ if(el.dataset.left) el.style.left = el.dataset.left; });
+
+      pillContainer.querySelectorAll('.pct-pill').forEach(function(pill) {
+        pill.addEventListener('click', function() {
+          var stat    = pill.dataset.stat;
+          var isActive = pill.classList.contains('active');
+
+          // Toggle pill style
+          if (isActive) {
+            pill.classList.remove('active');
+            pill.style.background = 'rgba(255,255,255,0.04)';
+            pill.style.color      = 'rgba(255,255,255,0.3)';
+            pill.style.borderColor= 'rgba(255,255,255,0.1)';
+          } else {
+            pill.classList.add('active');
+            pill.style.background = 'rgba(255,184,28,0.12)';
+            pill.style.color      = '#FFB81C';
+            pill.style.borderColor= 'rgba(255,184,28,0.4)';
+          }
+
+          // Show/hide corresponding bar row
+          barsContainer.querySelectorAll('.sbr-row').forEach(function(row) {
+            if (row.dataset.stat === stat) {
+              row.style.display = isActive ? 'none' : 'flex';
+            }
+          });
+        });
+      });
+    }, 60);
+
+    return html;
+  }
+
+  // ══════════════════════════════════════════════
+  // BATTER
+  // ══════════════════════════════════════════════
   if (type === 'batter' && sum) {
-    // Discipline stats from scatter
     var sc = (pitch && pitch.scatter) ? pitch.scatter : [];
     var ZX1 = -1, ZX2 = 1, ZY1 = 0, ZY2 = 1;
     var totPitches   = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
@@ -1306,40 +1411,124 @@ function renderPercentileStats(name, type, sum, pitch) {
     var bbs          = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
     var pa           = sum.PA || (sum.AB + (sum.BB||0) + (sum.HBP||0) + (sum.SF||0)) || 1;
     var psPerPA      = pa > 0 ? totPitches / pa : 0;
-    var inZonePts    = sc.filter(function(s){ return s.x != null && s.x >= ZX1 && s.x <= ZX2 && s.y != null && s.y >= ZY1 && s.y <= ZY2; });
+    // x=vertical(0=bot,1=top), y=horizontal(-1=left,1=right)
+    var inZonePts    = sc.filter(function(s){ return s.y != null && s.y >= -1 && s.y <= 1 && s.x != null && s.x >= 0 && s.x <= 1; });
     var inZoneSwings = inZonePts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
     var inZoneContact= inZonePts.filter(function(s){ return s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
-    var oozPts       = sc.filter(function(s){ return s.x != null && s.y != null && (s.x < ZX1 || s.x > ZX2 || s.y < ZY1 || s.y > ZY2); });
+    var oozPts       = sc.filter(function(s){ return s.y != null && s.x != null && (s.y < -1 || s.y > 1 || s.x < 0 || s.x > 1); });
     var chases       = oozPts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
 
-    // Build league arrays for percentile ranking
+    // runners = 3-char string: pos0=1st, pos1=2nd, pos2=3rd. '1' = occupied.
+    // RISP = runner on 2nd (pos1) or 3rd (pos2)
+    function hasRISP(s) {
+      var r = String(s.runners || '000');
+      return r[1] === '1' || r[2] === '1';
+    }
+    // ── RISP (runner on 2nd pos1 or 3rd pos2 of '000' string) ──────────────────
+    var rispPts  = sc.filter(function(s){ return hasRISP(s); });
+    var rispAB   = rispPts.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+    var rispHits = rispPts.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+    var myBARISP = rispAB >= 5 ? rispHits / rispAB : null;
+
+    // RBI from IBL history
+    var myRBI = null;
+    var _iblB = (DATA.iblHistory[name]||[]).filter(function(s){ return s.AB > 0; });
+    if (_iblB.length && _iblB[0].RBI != null) myRBI = _iblB[0].RBI;
+
+    // ── Contact type from outcomes ────────────────────────────────────────────
+    var gbB    = sc.filter(function(s){ return s.outcome === 'Groundout' || s.outcome === 'Double Play' || s.outcome === 'Triple Play'; }).length;
+    var fbB    = sc.filter(function(s){ return s.outcome === 'Flyout' || s.outcome === 'Sacrifice Fly' || s.outcome === 'Sac Fly Double Play'; }).length;
+    var loB    = sc.filter(function(s){ return s.outcome === 'Lineout'; }).length;
+    var poB    = sc.filter(function(s){ return s.outcome === 'Popout'; }).length;
+    var bipB   = gbB + fbB + loB + poB; // balls in play (outs only, for contact type %)
+
+    // BABIP: (H - HR) / (AB - K - HR + SF)
+    var babipNum = (sum.H||0) - (sum.HR||0);
+    var babipDen = (sum.AB||0) - (sum.K||0) - (sum.HR||0) + (sum.SF||0);
+    var myBABIP  = babipDen >= 5 ? babipNum / babipDen : null;
+
+    // ISO: SLG - AVG
+    var myISO = (sum.SLG != null && sum.AVG != null) ? sum.SLG - sum.AVG : null;
+
+    // BB/K ratio
+    var myBBK = (sum.K||0) > 0 ? (sum.BB||0) / (sum.K||0) : null;
+
+    // Contact% = (swings - whiffs) / swings
+    var myContact = swings > 0 ? (swings - swStr) / swings : null;
+
+    // First Pitch Swing% and First Pitch Strike%
+    var fp    = sc.filter(function(s){ return (s.count||'').replace(/^'/,'') === '0-0'; });
+    var fpSw  = fp.filter(function(s){ return ['Swinging Strike','Foul'].concat(['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt']).includes(s.outcome); }).length;
+    var fpStr = fp.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome) || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+    var myFPSwing  = fp.length >= 5 ? fpSw  / fp.length : null;
+    var myFPStrike = fp.length >= 5 ? fpStr / fp.length : null;
+
+    // 2-Strike BA
+    var twoK    = sc.filter(function(s){ var c=(s.count||'').replace(/^'/,''); return c.endsWith('-2') && c !== '0-2' && ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); });
+    var twoKH   = twoK.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+    var my2KBA  = twoK.length >= 5 ? twoKH / twoK.length : null;
+
+    // League arrays
     var leagueDisc = (function() {
-      var o = { swing:[], whiff:[], k:[], bb:[], pspa:[], izSwing:[], izContact:[], chase:[] };
+      var o = { swing:[], whiff:[], contact:[], k:[], bb:[], bbk:[], pspa:[],
+                izSwing:[], izContact:[], chase:[],
+                avg:[], obp:[], ops:[], slg:[], iso:[], babip:[],
+                rbi:[], baRisp:[], fpSwing:[], fpStrike:[], twoKba:[],
+                gb:[], fb:[], lo:[], po:[] };
       DATA.pitches.forEach(function(bp) {
-        var sc2 = bp.scatter || [];
+        var sc2  = bp.scatter || [];
         var tot2 = sc2.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
         if (!tot2) return;
-        var sw2  = sc2.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
-        var fo2  = sc2.filter(function(s){ return s.outcome === 'Foul'; }).length;
-        var ip2  = sc2.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+        var sw2     = sc2.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
+        var fo2     = sc2.filter(function(s){ return s.outcome === 'Foul'; }).length;
+        var ip2     = sc2.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
         var swings2 = sw2 + fo2 + ip2;
-        var ks2  = sc2.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
-        var bbs2 = sc2.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
-        var bSum2 = getSummaryPlayer(bp.batter);
-        var pa2 = bSum2 ? (bSum2.PA || (bSum2.AB + (bSum2.BB||0) + (bSum2.HBP||0) + (bSum2.SF||0)) || 1) : 1;
-        var inZ2 = sc2.filter(function(s){ return s.x != null && s.x >= ZX1 && s.x <= ZX2 && s.y != null && s.y >= ZY1 && s.y <= ZY2; });
-        var izSw2 = inZ2.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
-        var izCon2 = inZ2.filter(function(s){ return s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
-        var ooz2 = sc2.filter(function(s){ return s.x != null && s.y != null && (s.x < ZX1 || s.x > ZX2 || s.y < ZY1 || s.y > ZY2); });
-        var chases2 = ooz2.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
+        var ks2     = sc2.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+        var bbs2    = sc2.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+        var bSum2   = getSummaryPlayer(bp.batter);
+        var pa2     = bSum2 ? (bSum2.PA || (bSum2.AB + (bSum2.BB||0) + (bSum2.HBP||0) + (bSum2.SF||0)) || 1) : 1;
+        var inZ2    = sc2.filter(function(s){ return s.y != null && s.y >= -1 && s.y <= 1 && s.x != null && s.x >= 0 && s.x <= 1; });
+        var izSw2   = inZ2.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul' || ip2; }).length;
+        var izCon2  = inZ2.filter(function(s){ return s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+        var ooz2    = sc2.filter(function(s){ return s.y != null && s.x != null && (s.y < -1 || s.y > 1 || s.x < 0 || s.x > 1); });
+        var ch2     = ooz2.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
+        var risp2   = sc2.filter(function(s){ return hasRISP(s); });
+        var rAB2    = risp2.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+        var rH2     = risp2.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+        var gb2     = sc2.filter(function(s){ return s.outcome === 'Groundout' || s.outcome === 'Double Play' || s.outcome === 'Triple Play'; }).length;
+        var fb2     = sc2.filter(function(s){ return s.outcome === 'Flyout' || s.outcome === 'Sacrifice Fly' || s.outcome === 'Sac Fly Double Play'; }).length;
+        var lo2     = sc2.filter(function(s){ return s.outcome === 'Lineout'; }).length;
+        var po2     = sc2.filter(function(s){ return s.outcome === 'Popout'; }).length;
+        var bip2    = gb2 + fb2 + lo2 + po2;
+        var fp2     = sc2.filter(function(s){ return (s.count||'').replace(/^'/,'') === '0-0'; });
+        var fpSw2   = fp2.filter(function(s){ return ['Swinging Strike','Foul'].concat(ip2 > 0 ? ['Single'] : []).length > 0 && ['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+        var fpStr2  = fp2.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+        var twoK2   = sc2.filter(function(s){ var c=(s.count||'').replace(/^'/,''); return c.endsWith('-2') && c !== '0-2' && ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); });
+        var twoKH2  = twoK2.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
         o.swing.push(tot2 > 0 ? swings2/tot2 : 0);
         o.whiff.push(swings2 > 0 ? sw2/swings2 : 0);
+        o.contact.push(swings2 > 0 ? (swings2-sw2)/swings2 : 0);
         o.k.push(tot2 > 0 ? ks2/tot2 : 0);
         o.bb.push(tot2 > 0 ? bbs2/tot2 : 0);
+        if (ks2 > 0) o.bbk.push(bbs2/ks2);
         o.pspa.push(tot2 / pa2);
         o.izSwing.push(inZ2.length > 0 ? izSw2/inZ2.length : 0);
         o.izContact.push(izSw2 > 0 ? izCon2/izSw2 : 0);
-        o.chase.push(ooz2.length > 0 ? chases2/ooz2.length : 0);
+        o.chase.push(ooz2.length > 0 ? ch2/ooz2.length : 0);
+        if (rAB2 >= 5) o.baRisp.push(rH2/rAB2);
+        if (bip2 > 0) { o.gb.push(gb2/bip2); o.fb.push(fb2/bip2); o.lo.push(lo2/bip2); o.po.push(po2/bip2); }
+        if (fp2.length >= 5) { o.fpSwing.push(fpSw2/fp2.length); o.fpStrike.push(fpStr2/fp2.length); }
+        if (twoK2.length >= 5) o.twoKba.push(twoKH2/twoK2.length);
+      });
+      DATA.summary.forEach(function(p) {
+        if (!p.AB || p.AB < 5) return;
+        o.avg.push(p.AVG||0); o.obp.push(p.OBP||0); o.ops.push(p.OPS||0); o.slg.push(p.SLG||0);
+        var iso2 = (p.SLG||0) - (p.AVG||0); o.iso.push(iso2);
+        var bNum = (p.H||0)-(p.HR||0); var bDen = (p.AB||0)-(p.K||0)-(p.HR||0)+(p.SF||0);
+        if (bDen >= 5) o.babip.push(bNum/bDen);
+        if ((p.K||0) > 0) o.bbk.push((p.BB||0)/(p.K||0));
+        var iblR = (DATA.iblHistory[p.batter]||[]).filter(function(s){ return s.AB > 0; });
+        if (iblR.length && iblR[0].RBI != null) o.rbi.push(iblR[0].RBI);
       });
       return o;
     })();
@@ -1360,56 +1549,52 @@ function renderPercentileStats(name, type, sum, pitch) {
     var myIzContact = inZoneSwings > 0 ? inZoneContact/inZoneSwings      : null;
     var myChase     = oozPts.length    ? chases/oozPts.length            : null;
 
-    // good:true = higher percentile → red (better). good:false = lower is better, color is flipped
-    var disciplineBars = sc.length ? [
-      { lbl: 'SWING%',      val: mySwing     != null ? fmt1(mySwing*100)+'%'      : '—', pct: mySwing     != null ? 1 - leaguePct(mySwing,     leagueDisc.swing)     : 0, good: true },
-      { lbl: 'WHIFF%',      val: myWhiff     != null ? fmt1(myWhiff*100)+'%'      : '—', pct: myWhiff     != null ? 1 - leaguePct(myWhiff,     leagueDisc.whiff)     : 0, good: true },
-      { lbl: 'K%',          val: myK         != null ? fmt1(myK*100)+'%'          : '—', pct: myK         != null ? 1 - leaguePct(myK,         leagueDisc.k)         : 0, good: true },
-      { lbl: 'BB%',         val: myBB        != null ? fmt1(myBB*100)+'%'         : '—', pct: myBB        != null ? leaguePct(myBB,        leagueDisc.bb)        : 0, good: true  },
-      { lbl: 'PS/PA',       val: myPspa      != null ? fmt2(myPspa)               : '—', pct: myPspa      != null ? leaguePct(myPspa,      leagueDisc.pspa)      : 0, good: true  },
-      { lbl: 'IZ SWING%',   val: myIzSwing   != null ? fmt1(myIzSwing*100)+'%'   : '—', pct: myIzSwing   != null ? leaguePct(myIzSwing,   leagueDisc.izSwing)   : 0, good: true  },
-      { lbl: 'IZ CONTACT%', val: myIzContact != null ? fmt1(myIzContact*100)+'%' : '—', pct: myIzContact != null ? leaguePct(myIzContact, leagueDisc.izContact) : 0, good: true  },
-      { lbl: 'CHASE%',      val: myChase     != null ? fmt1(myChase*100)+'%'      : '—', pct: myChase     != null ? 1 - leaguePct(myChase,     leagueDisc.chase)     : 0, good: true },
-    ] : [];
+    function lp(v, a) { return leaguePct(v, a); }
 
-    function makeSavantBar(b) {
-      var p = Math.max(0, Math.min(1, b.pct || 0));
-      var colorP = Math.max(0, Math.min(1, b.good ? p : (1 - p)));
-      var r, g, bl;
-      if (colorP <= 0.5) {
-        var t = colorP * 2;
-        r  = Math.round(58  + t * (160 - 58));
-        g  = Math.round(130 + t * (160 - 130));
-        bl = Math.round(210 + t * (160 - 210));
-      } else {
-        var t = (colorP - 0.5) * 2;
-        r  = Math.round(160 + t * (210 - 160));
-        g  = Math.round(160 + t * (50  - 160));
-        bl = Math.round(160 + t * (50  - 160));
-      }
-      var color = 'rgb(' + r + ',' + g + ',' + bl + ')';
-      var widthPct = (p * 100).toFixed(1);
-      return '<div class="stat-bar-row" style="align-items:center;margin-bottom:10px">' +
-        '<div class="sbr-label" style="width:90px;flex-shrink:0">' + b.lbl + '</div>' +
-        '<div style="flex:1;position:relative;height:10px;background:rgba(255,255,255,0.06);border-radius:5px;margin:0 8px">' +
-          '<div class="sbr-fill" style="position:absolute;left:0;top:0;height:10px;width:0%;background:' + color + ';border-radius:5px;transition:width 0.8s cubic-bezier(0.4,0,0.2,1)" data-width="' + widthPct + '%"></div>' +
-          '<div class="savant-bubble" style="position:absolute;top:50%;transform:translate(-50%,-50%);left:0%;width:26px;height:26px;border-radius:50%;background:' + color + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;font-family:var(--font-mono);z-index:2;transition:left 0.8s cubic-bezier(0.4,0,0.2,1);box-shadow:0 1px 4px rgba(0,0,0,0.4)" data-left="' + widthPct + '">●</div>' +
-        '</div>' +
-        '<div style="width:60px;text-align:right;font-family:var(--font-mono);font-size:13px;font-weight:600;color:' + color + ';flex-shrink:0">' + b.val + '</div>' +
-      '</div>';
+    var allBars = !sc.length ? [] : [
+      // Slash line
+      { lbl: 'BA',          val: sum.AVG    != null ? fmt3(sum.AVG)            : '—', pct: lp(sum.AVG,    leagueDisc.avg),       good: true  },
+      { lbl: 'OBP',         val: sum.OBP    != null ? fmt3(sum.OBP)            : '—', pct: lp(sum.OBP,    leagueDisc.obp),       good: true  },
+      { lbl: 'SLG',         val: sum.SLG    != null ? fmt3(sum.SLG)            : '—', pct: lp(sum.SLG,    leagueDisc.slg),       good: true  },
+      { lbl: 'OPS',         val: sum.OPS    != null ? fmt3(sum.OPS)            : '—', pct: lp(sum.OPS,    leagueDisc.ops),       good: true  },
+      { lbl: 'ISO',         val: myISO      != null ? fmt3(myISO)              : '—', pct: lp(myISO,      leagueDisc.iso),       good: true  },
+      { lbl: 'BABIP',       val: myBABIP    != null ? fmt3(myBABIP)            : '—', pct: lp(myBABIP,    leagueDisc.babip),     good: true  },
+      { lbl: 'RBI',         val: myRBI      != null ? fmtN(myRBI)              : '—', pct: lp(myRBI,      leagueDisc.rbi),       good: true  },
+      { lbl: 'BA/RISP',     val: myBARISP   != null ? fmt3(myBARISP)           : '—', pct: lp(myBARISP,   leagueDisc.baRisp),    good: true  },
+      // Plate discipline
+      { lbl: 'SWING%',      val: mySwing    != null ? fmt1(mySwing*100)+'%'    : '—', pct: mySwing    != null ? 1-lp(mySwing,    leagueDisc.swing)     : 0, good: true },
+      { lbl: 'WHIFF%',      val: myWhiff    != null ? fmt1(myWhiff*100)+'%'    : '—', pct: myWhiff    != null ? 1-lp(myWhiff,    leagueDisc.whiff)     : 0, good: true },
+      { lbl: 'CONTACT%',    val: myContact  != null ? fmt1(myContact*100)+'%'  : '—', pct: myContact  != null ? lp(myContact,    leagueDisc.contact)   : 0, good: true },
+      { lbl: 'K%',          val: myK        != null ? fmt1(myK*100)+'%'        : '—', pct: myK        != null ? 1-lp(myK,        leagueDisc.k)         : 0, good: true },
+      { lbl: 'BB%',         val: myBB       != null ? fmt1(myBB*100)+'%'       : '—', pct: myBB       != null ? lp(myBB,         leagueDisc.bb)        : 0, good: true },
+      { lbl: 'BB/K',        val: myBBK      != null ? fmt2(myBBK)              : '—', pct: myBBK      != null ? lp(myBBK,        leagueDisc.bbk)       : 0, good: true },
+      { lbl: 'PS/PA',       val: myPspa     != null ? fmt2(myPspa)             : '—', pct: myPspa     != null ? lp(myPspa,       leagueDisc.pspa)      : 0, good: true },
+      { lbl: 'IZ SWING%',   val: myIzSwing  != null ? fmt1(myIzSwing*100)+'%' : '—', pct: myIzSwing  != null ? lp(myIzSwing,    leagueDisc.izSwing)   : 0, good: true },
+      { lbl: 'IZ CONTACT%', val: myIzContact!= null ? fmt1(myIzContact*100)+'%': '—', pct: myIzContact!= null ? lp(myIzContact, leagueDisc.izContact)  : 0, good: true },
+      { lbl: 'CHASE%',      val: myChase    != null ? fmt1(myChase*100)+'%'    : '—', pct: myChase    != null ? 1-lp(myChase,    leagueDisc.chase)     : 0, good: true },
+      // First pitch
+      { lbl: 'FP STRIKE%',  val: myFPStrike != null ? fmt1(myFPStrike*100)+'%': '—', pct: myFPStrike != null ? 1-lp(myFPStrike, leagueDisc.fpStrike)  : 0, good: true },
+      // 2-strike
+      // Contact type (% of outs in play)
+      { lbl: 'GB%',         val: bipB > 0   ? fmt1(gbB/bipB*100)+'%'           : '—', pct: bipB > 0   ? lp(gbB/bipB,            leagueDisc.gb)        : 0, good: false },
+      { lbl: 'FB%',         val: bipB > 0   ? fmt1(fbB/bipB*100)+'%'           : '—', pct: bipB > 0   ? lp(fbB/bipB,            leagueDisc.fb)        : 0, good: true  },
+      { lbl: 'LO%',         val: bipB > 0   ? fmt1(loB/bipB*100)+'%'           : '—', pct: bipB > 0   ? lp(loB/bipB,            leagueDisc.lo)        : 0, good: true  },
+      { lbl: 'PO%',         val: bipB > 0   ? fmt1(poB/bipB*100)+'%'           : '—', pct: bipB > 0   ? lp(poB/bipB,            leagueDisc.po)        : 0, good: false },
+    ].filter(function(b){ return b.val !== '—'; });
+
+    if (!allBars.length) {
+      return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No pitch data available</h3></div>';
     }
 
     return '<div class="overview-grid">' +
-      '<div class="stat-card" style="grid-column:1/-1"><div class="stat-card-header"><span class="stat-card-title">Percentile Stats</span>' +
-      '<span class="stat-card-subtitle">' + totPitches + ' pitches seen</span></div>' +
-      '<div style="padding:16px 24px">' +
-      (disciplineBars.length ? disciplineBars.map(makeSavantBar).join('') : '<p style="color:var(--text-dim);font-family:var(--font-mono);font-size:12px">No pitch data available.</p>') +
-      '</div></div>' +
+      buildFilteredCard('pct-batter', 'Percentile Stats', totPitches + ' pitches seen', allBars, 110) +
       '</div>';
   }
 
+  // ══════════════════════════════════════════════
+  // PITCHER
+  // ══════════════════════════════════════════════
   if (type === 'pitcher' && pitch && pitch.scatter) {
-    // Build date options for pitch metrics filter
     var pmDates = new Set();
     var pmYears = new Set();
     pitch.scatter.forEach(function(s) {
@@ -1417,13 +1602,11 @@ function renderPercentileStats(name, type, sum, pitch) {
     });
     pmDates = Array.from(pmDates).sort();
     pmYears = Array.from(pmYears).sort();
+    var pmDateFilter = 'season';
 
-    var pmDateFilter = 'season'; // default = all
-    var pmSelectedDate = null;
-
-    // League percentile arrays for pitchers
     var lgP = (function() {
-      var o = { str:[], swing:[], whiff:[], contact:[], k:[], bb:[], ea:[], kbb:[] };
+      var o = { str:[], swing:[], whiff:[], contact:[], k:[], bb:[], ea:[], kbb:[], era:[], whip:[], baAgst:[], babip:[],
+                gb:[], fb:[], lo:[], po:[], fpSwing:[], fpStrike:[], twoKK:[], csw:[] };
       DATA.pitches.forEach(function(bp) {
         var sc2 = bp.scatter || [];
         var t2  = sc2.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
@@ -1434,17 +1617,43 @@ function renderPercentileStats(name, type, sum, pitch) {
         var sw2  = sc2.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
         var ip2  = sc2.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
         var fo2  = sc2.filter(function(s){ return s.outcome === 'Foul'; }).length;
+        var h2   = sc2.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+        var hr2  = sc2.filter(function(s){ return s.outcome === 'Home Run'; }).length;
+        var ab2  = sc2.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
         var sw2t = sw2 + fo2 + ip2;
+        var gb2  = sc2.filter(function(s){ return s.outcome === 'Groundout' || s.outcome === 'Double Play' || s.outcome === 'Triple Play'; }).length;
+        var fb2  = sc2.filter(function(s){ return s.outcome === 'Flyout' || s.outcome === 'Sacrifice Fly' || s.outcome === 'Sac Fly Double Play'; }).length;
+        var lo2  = sc2.filter(function(s){ return s.outcome === 'Lineout'; }).length;
+        var po2  = sc2.filter(function(s){ return s.outcome === 'Popout'; }).length;
+        var bip2 = gb2 + fb2 + lo2 + po2;
+        var fp2  = sc2.filter(function(s){ return (s.count||'').replace(/^'/,'') === '0-0'; });
+        var fpStr2 = fp2.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+        var fpSw2  = fp2.filter(function(s){ return ['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+        var twoK2  = sc2.filter(function(s){ var c=(s.count||'').replace(/^'/,''); return c.endsWith('-2') && ['Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error'].includes(s.outcome); });
+        var twoKK2 = twoK2.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
         var pname2 = sc2[0] && sc2[0].pitcher;
         var pd2 = pname2 ? (DATA.pitchers.find(function(p){ return p.pitcher === pname2; }) || {}) : {};
+        // Babip against: (H-HR)/(AB-K-HR)
+        var bNum2 = h2-hr2; var bDen2 = ab2-ks2-hr2;
         o.str.push(str2/t2);
         o.swing.push(sw2t/t2);
         o.whiff.push(sw2t > 0 ? sw2/sw2t : 0);
-        o.contact.push(sw2t > 0 ? (fo2+ip2)/sw2t : 0);
+        o.contact.push(sw2t > 0 ? (sw2t-sw2)/sw2t : 0);
         o.k.push(ks2/t2);
         o.bb.push(bbs2/t2);
         if (pd2.EA_pct != null) o.ea.push(pd2.EA_pct);
         if (pd2.K_BB   != null) o.kbb.push(pd2.K_BB);
+        if (pd2.IP > 0) o.whip.push((bbs2+h2)/pd2.IP);
+        if (ab2 >= 5)   o.baAgst.push(h2/ab2);
+        if (bDen2 >= 5) o.babip.push(bNum2/bDen2);
+        if (bip2 > 0)   { o.gb.push(gb2/bip2); o.fb.push(fb2/bip2); o.lo.push(lo2/bip2); o.po.push(po2/bip2); }
+        if (fp2.length >= 5) { o.fpStrike.push(fpStr2/fp2.length); o.fpSwing.push(fpSw2/fp2.length); }
+        if (twoK2.length >= 5) o.twoKK.push(twoKK2/twoK2.length);
+        // CSW = (Called Strikes + Swinging Strikes) / total pitches seen
+        var csw2 = sc2.filter(function(s){ return s.outcome === 'Called Strike' || s.outcome === 'Swinging Strike'; }).length;
+        if (t2 > 0) o.csw.push(csw2/t2);
+        var ibl2 = (DATA.iblHistory[pname2]||[]).filter(function(s){ return s.IP > 0; });
+        if (ibl2.length && ibl2[0].ERA != null) o.era.push(ibl2[0].ERA);
       });
       return o;
     })();
@@ -1456,122 +1665,123 @@ function renderPercentileStats(name, type, sum, pitch) {
       return (below + equal * 0.5) / arr.length;
     }
 
-    function calcMetrics(scIn) {
-      var tot    = scIn.filter(function(s) { return s.outcome && s.outcome !== ''; }).length;
-      var ks     = scIn.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
-      var bbs    = scIn.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
-      var str    = scIn.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
-      var swStr  = scIn.filter(function(s) { return s.outcome === 'Swinging Strike'; }).length;
-      var inPlay = scIn.filter(function(s) { return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
-      var fouls  = scIn.filter(function(s) { return s.outcome === 'Foul'; }).length;
+    function calcBars(scIn) {
+      var tot    = scIn.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+      var ks     = scIn.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+      var bbs    = scIn.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+      var str    = scIn.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+      var swStr  = scIn.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
+      var inPlay = scIn.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+      var fouls  = scIn.filter(function(s){ return s.outcome === 'Foul'; }).length;
       var swings = swStr + fouls + inPlay;
-      var pd     = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
+      var hits   = scIn.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
+      var hrs    = scIn.filter(function(s){ return s.outcome === 'Home Run'; }).length;
+      var abF    = scIn.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+      var gb     = scIn.filter(function(s){ return s.outcome === 'Groundout' || s.outcome === 'Double Play' || s.outcome === 'Triple Play'; }).length;
+      var fb     = scIn.filter(function(s){ return s.outcome === 'Flyout' || s.outcome === 'Sacrifice Fly' || s.outcome === 'Sac Fly Double Play'; }).length;
+      var lo     = scIn.filter(function(s){ return s.outcome === 'Lineout'; }).length;
+      var po     = scIn.filter(function(s){ return s.outcome === 'Popout'; }).length;
+      var bip    = gb + fb + lo + po;
+      var fp     = scIn.filter(function(s){ return (s.count||'').replace(/^'/,'') === '0-0'; });
+      var fpStr2 = fp.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+      var fpSw2  = fp.filter(function(s){ return ['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
+      var twoK   = scIn.filter(function(s){ var c=(s.count||'').replace(/^'/,''); return c.endsWith('-2') && ['Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error'].includes(s.outcome); });
+      var twoKK  = twoK.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+      var pd     = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
+      var iblSP  = (DATA.iblHistory[name]||[]).filter(function(s){ return s.IP > 0; });
+      var era    = iblSP.length && iblSP[0].ERA != null ? iblSP[0].ERA : null;
+      var whip   = pd.IP > 0 ? (bbs + hits) / pd.IP : null;
+      var baAgst = abF >= 5 ? hits / abF : null;
+      var bNumP  = hits - hrs; var bDenP = abF - ks - hrs;
+      var babip  = bDenP >= 5 ? bNumP / bDenP : null;
+      var fpStrikePct = fp.length >= 5 ? fpStr2 / fp.length : null;
+      var fpSwingPct  = fp.length >= 5 ? fpSw2  / fp.length : null;
+      var twoKKpct    = twoK.length >= 5 ? twoKK / twoK.length : null;
+      var cswCount = scIn.filter(function(s){ return s.outcome === 'Called Strike' || s.outcome === 'Swinging Strike'; }).length;
+      var cswPct   = tot > 0 ? cswCount / tot : null;
       return {
-        tot: tot, ks: ks, bbs: bbs, str: str, swStr: swStr, inPlay: inPlay, fouls: fouls, swings: swings, pd: pd,
+        tot: tot,
         bars: [
-          { lbl: 'STR%',     val: tot > 0    ? fmt1(str/tot*100) + '%'             : '—', pct: tot > 0    ? lp(str/tot,               lgP.str)     : 0, good: true },
-          { lbl: 'SWING%',   val: tot > 0    ? fmt1(swings/tot*100) + '%'          : '—', pct: tot > 0    ? lp(swings/tot,            lgP.swing)   : 0, good: true },
-          { lbl: 'WHIFF%',   val: swings > 0 ? fmt1(swStr/swings*100) + '%'        : '—', pct: swings > 0 ? lp(swStr/swings,          lgP.whiff)   : 0, good: true },
-          { lbl: 'K%',       val: tot > 0    ? fmt1(ks/tot*100) + '%'              : '—', pct: tot > 0    ? lp(ks/tot,                lgP.k)       : 0, good: true },
-          { lbl: 'BB%',      val: tot > 0    ? fmt1(bbs/tot*100) + '%'             : '—', pct: tot > 0    ? 1 - lp(bbs/tot,           lgP.bb)      : 0, good: true },
-          { lbl: 'E+A%',     val: pd.EA_pct != null ? fmt1(pd.EA_pct)+'%' : '—', pct: lp(pd.EA_pct, lgP.ea),  good: true },
-          { lbl: 'K/BB',     val: pd.K_BB   != null ? fmt2(pd.K_BB)       : '—', pct: lp(pd.K_BB,   lgP.kbb), good: true }
-        ]
+          // Outcome stats
+          { lbl: 'ERA',      val: era!=null      ? fmt2(era)              :'—', pct: era!=null      ? 1-lp(era,         lgP.era)     : 0, good: true },
+          { lbl: 'WHIP',     val: whip!=null     ? fmt2(whip)             :'—', pct: whip!=null     ? 1-lp(whip,        lgP.whip)    : 0, good: true },
+          { lbl: 'BA AGNST', val: baAgst!=null   ? fmt3(baAgst)           :'—', pct: baAgst!=null   ? 1-lp(baAgst,      lgP.baAgst)  : 0, good: true },
+          { lbl: 'BABIP',    val: babip!=null    ? fmt3(babip)            :'—', pct: babip!=null    ? 1-lp(babip,       lgP.babip)   : 0, good: true },
+          // Rate stats
+          { lbl: 'STR%',     val: tot>0          ? fmt1(str/tot*100)+'%'  :'—', pct: tot>0          ? lp(str/tot,       lgP.str)     : 0, good: true },
+          { lbl: 'SWING%',   val: tot>0          ? fmt1(swings/tot*100)+'%':'—', pct: tot>0         ? lp(swings/tot,    lgP.swing)   : 0, good: true },
+          { lbl: 'WHIFF%',   val: swings>0       ? fmt1(swStr/swings*100)+'%':'—', pct: swings>0    ? lp(swStr/swings,  lgP.whiff)   : 0, good: true },
+          { lbl: 'CONTACT%', val: swings>0       ? fmt1((swings-swStr)/swings*100)+'%':'—', pct: swings>0 ? 1-lp((swings-swStr)/swings, lgP.contact) : 0, good: true },
+          { lbl: 'K%',       val: tot>0          ? fmt1(ks/tot*100)+'%'   :'—', pct: tot>0          ? lp(ks/tot,        lgP.k)       : 0, good: true },
+          { lbl: 'BB%',      val: tot>0          ? fmt1(bbs/tot*100)+'%'  :'—', pct: tot>0          ? 1-lp(bbs/tot,     lgP.bb)      : 0, good: true },
+          { lbl: 'E+A%',     val: pd.EA_pct!=null? fmt1(pd.EA_pct)+'%'   :'—', pct: lp(pd.EA_pct,  lgP.ea),  good: true },
+          { lbl: 'K/BB',     val: pd.K_BB!=null  ? fmt2(pd.K_BB)         :'—', pct: lp(pd.K_BB,    lgP.kbb), good: true },
+          // Contact type
+          { lbl: 'GB%',      val: bip>0          ? fmt1(gb/bip*100)+'%'  :'—', pct: bip>0          ? lp(gb/bip,        lgP.gb)      : 0, good: true },
+          { lbl: 'FB%',      val: bip>0          ? fmt1(fb/bip*100)+'%'  :'—', pct: bip>0          ? 1-lp(fb/bip,      lgP.fb)      : 0, good: true },
+          { lbl: 'LO%',      val: bip>0          ? fmt1(lo/bip*100)+'%'  :'—', pct: bip>0          ? lp(lo/bip,        lgP.lo)      : 0, good: true },
+          { lbl: 'PO%',      val: bip>0          ? fmt1(po/bip*100)+'%'  :'—', pct: bip>0          ? 1-lp(po/bip,      lgP.po)      : 0, good: true },
+          // First pitch & 2-strike
+          { lbl: 'FP STR%',  val: fpStrikePct!=null ? fmt1(fpStrikePct*100)+'%':'—', pct: fpStrikePct!=null ? lp(fpStrikePct, lgP.fpStrike) : 0, good: true },
+          { lbl: 'PUTAWAY%', val: twoKKpct!=null    ? fmt1(twoKKpct*100)+'%'   :'—', pct: twoKKpct!=null    ? lp(twoKKpct,   lgP.twoKK)   : 0, good: true },
+        ].filter(function(b){ return b.val !== '—'; })
       };
     }
+    var sc     = pitch.scatter;
+    var m      = calcBars(sc);
+    var allBars = m.bars;
+    var tot    = m.tot;
 
-    // Season dropdown for pitch metrics
-    var seasonLabel = pmYears.length ? pmYears[0] + ' Summer' : 'Season';
-    var pmDateFilterHTML = '<div style="margin-bottom:16px;padding:0 24px">' +
-      '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Season</div>' +
-      '<select id="pm-season-select" style="background:#0e1525;border:1.5px solid rgba(255,184,28,0.35);border-radius:6px;color:#FFB81C;font-family:var(--font-mono);font-size:11px;padding:8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px;">' +
-        '<option value="season">Season</option>' +
-        (pmYears.length ? '<option value="'+pmYears[0]+'">Summer '+pmYears[0]+'</option>' : '') +
-      '</select></div>';
+    // Season selector HTML (injected as extraHeaderHTML)
+    var seasonSelectHTML = pmYears.length
+      ? '<div style="padding:0 24px 12px">' +
+          '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Season</div>' +
+          '<select id="pm-season-select" style="background:#0e1525;border:1.5px solid rgba(255,184,28,0.35);border-radius:6px;color:#FFB81C;font-family:var(--font-mono);font-size:11px;padding:8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px">' +
+            '<option value="season">All</option>' +
+            pmYears.map(function(y){ return '<option value="'+y+'">Summer '+y+'</option>'; }).join('') +
+          '</select>' +
+        '</div>'
+      : '';
 
-    var sc = pitch.scatter;
-    var m  = calcMetrics(sc);
-    var bars = m.bars;
-    var tot  = m.tot;
+    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', tot + ' pitches', allBars, 80, seasonSelectHTML);
 
-    var html = '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Pitch Metrics</span>' +
-      '<span class="stat-card-subtitle" id="pm-pitch-count">' + tot + ' pitches</span></div>' +
-      pmDateFilterHTML +
-      '<div style="padding:16px 24px" id="pm-bars-wrap">' +
-      bars.map(function(b) {
-        var p = Math.max(0, Math.min(1, b.pct || 0));
-        var colorP = Math.max(0, Math.min(1, b.good ? p : (1 - p)));
-        var r, g, bl;
-        if (colorP <= 0.5) {
-          var t = colorP * 2;
-          r  = Math.round(58  + t * (160 - 58));
-          g  = Math.round(130 + t * (160 - 130));
-          bl = Math.round(210 + t * (160 - 210));
-        } else {
-          var t = (colorP - 0.5) * 2;
-          r  = Math.round(160 + t * (210 - 160));
-          g  = Math.round(160 + t * (50  - 160));
-          bl = Math.round(160 + t * (50  - 160));
-        }
-        var color = 'rgb(' + r + ',' + g + ',' + bl + ')';
-        var widthPct = (p * 100).toFixed(1);
-        return '<div class="stat-bar-row" style="align-items:center;margin-bottom:10px">' +
-          '<div class="sbr-label" style="width:80px;flex-shrink:0">' + b.lbl + '</div>' +
-          '<div style="flex:1;position:relative;height:10px;background:rgba(255,255,255,0.06);border-radius:5px;margin:0 8px">' +
-            '<div class="sbr-fill" style="position:absolute;left:0;top:0;height:10px;width:0%;background:' + color + ';border-radius:5px;transition:width 0.8s cubic-bezier(0.4,0,0.2,1)" data-width="' + widthPct + '%"></div>' +
-            '<div class="savant-bubble" style="position:absolute;top:50%;transform:translate(-50%,-50%);left:0%;width:26px;height:26px;border-radius:50%;background:' + color + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;font-family:var(--font-mono);z-index:2;transition:left 0.8s cubic-bezier(0.4,0,0.2,1);box-shadow:0 1px 4px rgba(0,0,0,0.4)" data-left="' + widthPct + '">●</div>' +
-          '</div>' +
-          '<div style="width:60px;text-align:right;font-family:var(--font-mono);font-size:13px;font-weight:600;color:' + color + ';flex-shrink:0">' + b.val + '</div>' +
-        '</div>';
-      }).join('') + '</div></div>';
-
-    // Wire up season dropdown for pitch metrics
+    // Wire season dropdown — updates pitch count subtitle and re-renders bars
     setTimeout(function() {
       var sel = document.getElementById('pm-season-select');
-      if (sel) {
-        sel.addEventListener('change', function() {
-          pmDateFilter = this.value;
-          var filtered = pmDateFilter === 'season'
-            ? pitch.scatter
-            : pitch.scatter.filter(function(s){ return s.date && s.date.startsWith(pmDateFilter); });
-            var m2 = calcMetrics(filtered);
-            // Update pitch count
-            var countEl = document.getElementById('pm-pitch-count');
-            if (countEl) countEl.textContent = m2.tot + ' pitches';
-            // Rebuild bars
-            var wrap = document.getElementById('pm-bars-wrap');
-            if (!wrap) return;
-            wrap.innerHTML = m2.bars.map(function(b) {
-              var p2 = Math.max(0, Math.min(1, b.pct || 0));
-              var cp2 = Math.max(0, Math.min(1, b.good ? p2 : (1 - p2)));
-              var r2, g2, bl2;
-              if (cp2 <= 0.5) { var t2=cp2*2; r2=Math.round(58+t2*(180-58)); g2=Math.round(130+t2*(180-130)); bl2=Math.round(210+t2*(180-210)); }
-              else { var t2=(cp2-0.5)*2; r2=Math.round(180+t2*(210-180)); g2=Math.round(180+t2*(50-180)); bl2=Math.round(180+t2*(50-180)); }
-              var col2 = 'rgb('+r2+','+g2+','+bl2+')';
-              var wp2 = (p2*100).toFixed(1);
-              return '<div class="stat-bar-row" style="align-items:center;margin-bottom:10px">' +
-                '<div class="sbr-label" style="width:80px;flex-shrink:0">'+b.lbl+'</div>' +
-                '<div style="flex:1;position:relative;height:10px;background:rgba(255,255,255,0.06);border-radius:5px;margin:0 8px">' +
-                  '<div class="sbr-fill" style="position:absolute;left:0;top:0;height:10px;width:0%;background:'+col2+';border-radius:5px;transition:width 0.8s cubic-bezier(0.4,0,0.2,1)" data-width="'+wp2+'%"></div>' +
-                  '<div class="savant-bubble" style="position:absolute;top:50%;transform:translate(-50%,-50%);left:0%;width:26px;height:26px;border-radius:50%;background:'+col2+';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;font-family:var(--font-mono);z-index:2;transition:left 0.8s cubic-bezier(0.4,0,0.2,1);box-shadow:0 1px 4px rgba(0,0,0,0.4)" data-left="'+wp2+'">●</div>' +
-                '</div>' +
-                '<div style="width:60px;text-align:right;font-family:var(--font-mono);font-size:13px;font-weight:600;color:'+col2+';flex-shrink:0">'+b.val+'</div>' +
-              '</div>';
-            }).join('');
-            // Re-trigger bar animations
-            wrap.querySelectorAll('.sbr-fill').forEach(function(el){ if(el.dataset.width) el.style.width=el.dataset.width; });
-            wrap.querySelectorAll('.savant-bubble').forEach(function(el){ if(el.dataset.left) el.style.left=el.dataset.left; });
+      if (!sel) return;
+      sel.addEventListener('change', function() {
+        pmDateFilter = this.value;
+        var filtered = pmDateFilter === 'season'
+          ? pitch.scatter
+          : pitch.scatter.filter(function(s){ return s.date && s.date.startsWith(pmDateFilter); });
+        var m2 = calcBars(filtered);
+        var countEl = document.getElementById('pct-pitcher-count');
+        if (countEl) countEl.textContent = m2.tot + ' pitches';
+        // Rebuild only the bar rows, preserving pill toggle state
+        var barsWrap = document.getElementById('pct-pitcher-bars');
+        if (!barsWrap) return;
+        // Track which stats are currently hidden
+        var hidden = {};
+        barsWrap.querySelectorAll('.sbr-row').forEach(function(row){
+          if (row.style.display === 'none') hidden[row.dataset.stat] = true;
         });
-      }
-    }, 50);
+        barsWrap.innerHTML = m2.bars.map(function(b){ return makeSavantBar(b, 80); }).join('');
+        // Restore hidden state
+        barsWrap.querySelectorAll('.sbr-row').forEach(function(row){
+          if (hidden[row.dataset.stat]) row.style.display = 'none';
+        });
+        // Animate
+        barsWrap.querySelectorAll('.sbr-fill').forEach(function(el){ if(el.dataset.width) el.style.width=el.dataset.width; });
+        barsWrap.querySelectorAll('.savant-bubble').forEach(function(el){ if(el.dataset.left) el.style.left=el.dataset.left; });
+      });
+    }, 80);
 
     return html;
   }
 
-  return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No data available</h3></div>';
+  return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No data available</h3></div>';
 }
 
-// ── SEASON STATS TAB ──────────────────────────────
 function renderSeasonStats(name, type, sum, pitch) {
   var allSeasons = DATA.iblHistory[name] || [];
 
@@ -1718,15 +1928,22 @@ function renderZone(name, type, pitch, container) {
   // ── ZONE DIMENSIONS ──────────────────────────────
   // Strike zone: x from -1 to 1 (width = 2 units)
   // Strike zone: y from 0 to 1.5 (height = 1.5 units) — taller/slimmer shape
+  // x = vertical (0=bottom of zone, 1=top), y = horizontal (-1=left, 0=middle, 1=right catcher view)
+  // Canvas toCanvasX maps x→screen-x and toCanvasY maps y→screen-y, so for rendering:
+  // screen horizontal = x data axis, screen vertical = y data axis (canvas already handles this correctly via toCanvasX/toCanvasY)
+  // Zone boundaries: x (horiz on screen) -1..1, y (vert on screen) 0..1
+  // BUT actual data: x=vertical, y=horizontal. We keep ZONE constants for canvas rendering unchanged,
+  // but all in-zone/ooz logic for stats uses corrected axes below.
   var ZONE_X1 = -1, ZONE_X2 = 1;
   var ZONE_Y1 = 0,  ZONE_Y2 = 1;
 
   var totalPts = points.length;
-  var inZone   = points.filter(function(s){ return s.x >= ZONE_X1 && s.x <= ZONE_X2 && s.y >= ZONE_Y1 && s.y <= ZONE_Y2; }).length;
+  // Stats: x=vertical(0=bot,1=top), y=horizontal(-1=left,1=right)
+  var inZone   = points.filter(function(s){ return s.y >= -1 && s.y <= 1 && s.x >= 0 && s.x <= 1; }).length;
   var ks       = points.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
   var hits     = points.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
   var swStr    = points.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
-  var chases   = points.filter(function(s){ return (s.x < ZONE_X1 || s.x > ZONE_X2 || s.y < ZONE_Y1 || s.y > ZONE_Y2)&&(s.outcome==='Swinging Strike'||s.outcome==='Foul'); }).length;
+  var chases   = points.filter(function(s){ return (s.y < -1 || s.y > 1 || s.x < 0 || s.x > 1)&&(s.outcome==='Swinging Strike'||s.outcome==='Foul'); }).length;
 
   var legendHTML = typeSet.map(function(t) {
     return '<div class="legend-item"><div class="legend-dot" style="background:' + typeColorMap[t] + '"></div>' + t + '</div>';
@@ -1936,7 +2153,7 @@ function renderZone(name, type, pitch, container) {
     var total = filtered.length;
 
     var ZX1=ZONE_X1, ZX2=ZONE_X2, ZY1=ZONE_Y1, ZY2=ZONE_Y2;
-    var cW = (ZX2-ZX1)/3, cH = (ZY2-ZY1)/3;
+    var cW = (ZX2-ZX1)/3, cH = (ZY2-ZY1)/3; // canvas grid: x horiz -1..1 cols, y vert 0..1 rows
 
     // 9 inner cells (3x3 grid), row 0 = top
     var inner = [];
@@ -1952,7 +2169,7 @@ function renderZone(name, type, pitch, container) {
     inner.forEach(function(z) {
       z.count = 0;
       filtered.forEach(function(s) {
-        if (s.x >= z.x1 && s.x < z.x2 && s.y >= z.y1 && s.y < z.y2) z.count++;
+        if (s.y >= z.x1 && s.y < z.x2 && s.x >= z.y1 && s.x < z.y2) z.count++; // data-y=horiz(x-cell), data-x=vert(y-cell)
       });
       z.pct = total > 0 ? z.count/total*100 : 0;
     });
@@ -1975,33 +2192,34 @@ function renderZone(name, type, pitch, container) {
 
     filtered.forEach(function(s) {
       var inInner = inner.some(function(z) {
-        return s.x >= z.x1 && s.x < z.x2 && s.y >= z.y1 && s.y < z.y2;
+        return s.y >= z.x1 && s.y < z.x2 && s.x >= z.y1 && s.x < z.y2;
       });
       if (inInner) return;
       // Assign to outer quadrant
-      var inZoneY = s.y >= ZY1 && s.y < ZY2;
-      var inZoneX = s.x >= ZX1 && s.x < ZX2;
-      if (!inZoneY && s.x < 0)  outer[0].count += (s.y >= ZY2) ? 1 : 0;
-      if (!inZoneY && s.x < 0)  outer[2].count += (s.y < ZY1)  ? 1 : 0;
-      if (!inZoneY && s.x >= 0) outer[1].count += (s.y >= ZY2) ? 1 : 0;
-      if (!inZoneY && s.x >= 0) outer[3].count += (s.y < ZY1)  ? 1 : 0;
-      // above/below zone, within x bounds
-      if (inZoneX && s.y >= ZY2) { outer[0].count++; outer[1].count++; } // split above
-      if (inZoneX && s.y < ZY1)  { outer[2].count++; outer[3].count++; } // split below
-      // beside zone within y bounds — add to nearest corner
-      if (inZoneY && s.x < ZX1)  { outer[0].count++; outer[2].count++; }
-      if (inZoneY && s.x >= ZX2) { outer[1].count++; outer[3].count++; }
+      // x=vertical(0=bot,1=top)=canvas-y axis; y=horizontal(-1..1)=canvas-x axis
+      var inZoneY = s.x >= ZY1 && s.x < ZY2;   // data-x is vert, maps to canvas-y (ZY range)
+      var inZoneX = s.y >= ZX1 && s.y < ZX2;   // data-y is horiz, maps to canvas-x (ZX range)
+      if (!inZoneY && s.y < 0)  outer[0].count += (s.x >= ZY2) ? 1 : 0;
+      if (!inZoneY && s.y < 0)  outer[2].count += (s.x < ZY1)  ? 1 : 0;
+      if (!inZoneY && s.y >= 0) outer[1].count += (s.x >= ZY2) ? 1 : 0;
+      if (!inZoneY && s.y >= 0) outer[3].count += (s.x < ZY1)  ? 1 : 0;
+      // above/below zone (data-x is vertical), within horizontal bounds
+      if (inZoneX && s.x >= ZY2) { outer[0].count++; outer[1].count++; } // split above
+      if (inZoneX && s.x < ZY1)  { outer[2].count++; outer[3].count++; } // split below
+      // beside zone (data-y is horizontal), within vertical bounds
+      if (inZoneY && s.y < ZX1)  { outer[0].count++; outer[2].count++; }
+      if (inZoneY && s.y >= ZX2) { outer[1].count++; outer[3].count++; }
     });
 
     // Simpler: just count by quadrant outside inner zone
     outer.forEach(function(z) { z.count = 0; });
     filtered.forEach(function(s) {
       var inInner = inner.some(function(z) {
-        return s.x >= z.x1 && s.x < z.x2 && s.y >= z.y1 && s.y < z.y2;
+        return s.y >= z.x1 && s.y < z.x2 && s.x >= z.y1 && s.x < z.y2;
       });
       if (inInner) return;
-      var isLeft = s.x < (ZX1+ZX2)/2;
-      var isTop  = s.y >= (ZY1+ZY2)/2;
+      var isLeft = s.y < (ZX1+ZX2)/2;   // data-y is horizontal
+      var isTop  = s.x >= (ZY1+ZY2)/2;  // data-x is vertical
       if ( isLeft &&  isTop) outer[0].count++;
       if (!isLeft &&  isTop) outer[1].count++;
       if ( isLeft && !isTop) outer[2].count++;
@@ -2183,11 +2401,11 @@ function renderZone(name, type, pitch, container) {
   // ── Update reactive stat boxes ─────────────────
   function updateStats(f) {
     var n    = f.length;
-    var iz   = f.filter(function(s){ return s.x >= ZONE_X1 && s.x <= ZONE_X2 && s.y >= ZONE_Y1 && s.y <= ZONE_Y2; }).length;
+    var iz   = f.filter(function(s){ return s.y >= -1 && s.y <= 1 && s.x >= 0 && s.x <= 1; }).length;
     var fks  = f.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
     var fh   = f.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
     var fsw  = f.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
-    var fch  = f.filter(function(s){ return (s.x < ZONE_X1 || s.x > ZONE_X2 || s.y < ZONE_Y1 || s.y > ZONE_Y2)&&(s.outcome==='Swinging Strike'||s.outcome==='Foul'); }).length;
+    var fch  = f.filter(function(s){ return (s.y < -1 || s.y > 1 || s.x < 0 || s.x > 1)&&(s.outcome==='Swinging Strike'||s.outcome==='Foul'); }).length;
     var el;
     if ((el=document.getElementById('zs-pitches'))) el.textContent = n;
     if ((el=document.getElementById('zs-zone')))    el.textContent = n>0 ? fmt1(iz/n*100)+'%' : '—';
