@@ -1344,17 +1344,23 @@ function renderPercentileStats(name, type, sum, pitch) {
     // Checkbox panel HTML — two-column grid of checkboxes
     var cbHTML = allBars.map(function(b) {
       var checked = defaults.indexOf(b.lbl) !== -1;
-      return '<label style="display:flex;align-items:center;gap:7px;cursor:pointer;min-width:110px;' +
-             'font-family:var(--font-mono);font-size:10px;color:' + (checked ? '#FFB81C' : 'rgba(255,255,255,0.4)') + ';' +
-             'letter-spacing:0.06em;white-space:nowrap;transition:color 0.15s">' +
+      var gold    = '#FFB81C';
+      var dim     = 'rgba(255,255,255,0.35)';
+      return '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;' +
+             'font-family:var(--font-mono);font-size:11px;letter-spacing:0.05em;' +
+             'color:' + (checked ? gold : dim) + ';white-space:nowrap;' +
+             'padding:5px 0;transition:color 0.15s;user-select:none">' +
         '<input type="checkbox" data-stat="' + b.lbl + '"' + (checked ? ' checked' : '') + ' style="' +
-          'appearance:none;-webkit-appearance:none;width:14px;height:14px;flex-shrink:0;' +
-          'border-radius:3px;border:1px solid ' + (checked ? '#FFB81C' : 'rgba(255,255,255,0.2)') + ';' +
-          'background:' + (checked ? '#FFB81C' : 'rgba(255,255,255,0.04)') + ';' +
-          'cursor:pointer;position:relative;transition:all 0.15s">' +
+          'appearance:none;-webkit-appearance:none;width:15px;height:15px;flex-shrink:0;' +
+          'border-radius:3px;border:1.5px solid ' + (checked ? gold : 'rgba(255,255,255,0.2)') + ';' +
+          'background:' + (checked ? gold : 'transparent') + ';' +
+          'cursor:pointer;transition:all 0.15s">' +
         b.lbl +
       '</label>';
     }).join('');
+
+    // Toolbar: season left (if present) + checkboxes in a responsive grid right
+    var cbGridStyle = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:0 8px;width:100%';
 
     var html =
       '<div class="stat-card">' +
@@ -1362,20 +1368,17 @@ function renderPercentileStats(name, type, sum, pitch) {
           '<span class="stat-card-title">' + title + '</span>' +
           '<span class="stat-card-subtitle" id="' + cardId + '-count">' + subtitle + '</span>' +
         '</div>' +
-        // Season selector + checkbox toggle in one toolbar row
-        '<div style="display:flex;align-items:flex-start;gap:24px;padding:12px 24px 0;flex-wrap:wrap">' +
+        '<div style="padding:16px 24px;border-bottom:1px solid rgba(255,255,255,0.06)">' +
           (extraHeaderHTML
-            ? '<div style="flex-shrink:0">' + extraHeaderHTML + '</div>'
+            ? '<div style="margin-bottom:16px">' + extraHeaderHTML + '</div>'
             : '') +
-          '<div style="flex:1;min-width:200px">' +
-            '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);' +
-                 'letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px">Stats</div>' +
-            '<div id="' + cbPanelId + '" style="display:flex;flex-wrap:wrap;gap:8px 20px">' +
-              cbHTML +
-            '</div>' +
+          '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);' +
+               'letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px">Visible Stats</div>' +
+          '<div id="' + cbPanelId + '" style="' + cbGridStyle + '">' +
+            cbHTML +
           '</div>' +
         '</div>' +
-        '<div style="padding:20px 24px 4px" id="' + barsId + '">' + barsHTML + '</div>' +
+        '<div style="padding:20px 24px 8px" id="' + barsId + '">' + barsHTML + '</div>' +
       '</div>';
 
     // Wire checkbox interactions
