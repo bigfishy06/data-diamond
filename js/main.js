@@ -1616,10 +1616,8 @@ function renderPercentileStats(name, type, sum, pitch) {
       return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No pitch data available</h3></div>';
     }
 
-    return '<div class="overview-grid">' +
-      buildFilteredCard('pct-batter', 'Percentile Stats', totPitches + ' pitches seen', allBars, 110, null,
-        ['SWING%','WHIFF%','CONTACT%','K%','BB%','BB/K','PS/PA','IZ SWING%','IZ CONTACT%','CHASE%']) +
-      '</div>';
+    return buildFilteredCard('pct-batter', 'Percentile Stats', totPitches + ' pitches seen', allBars, 110, null,
+      ['SWING%','WHIFF%','CONTACT%','K%','BB%','BB/K','PS/PA','IZ SWING%','IZ CONTACT%','CHASE%']);
   }
 
   // ══════════════════════════════════════════════
