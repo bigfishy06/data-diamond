@@ -1324,21 +1324,37 @@ function renderPercentileStats(name, type, sum, pitch) {
     '</div>';
   }
 
-  // ── Filter pill UI builder ─────────────────────
-  // Returns HTML for pill toggles + the bars container, and wires interactions via setTimeout.
-  function buildFilteredCard(cardId, title, subtitle, allBars, labelWidth, extraHeaderHTML) {
-    var pillsId = cardId + '-pills';
-    var barsId  = cardId + '-bars';
+  // ── Checkbox filter card builder ──────────────
+  // defaultStats: array of lbl strings shown by default. All others hidden until checked.
+  // extraHeaderHTML: injected between header and checkbox panel (e.g. season selector).
+  function buildFilteredCard(cardId, title, subtitle, allBars, labelWidth, extraHeaderHTML, defaultStats) {
+    var cbPanelId = cardId + '-cbpanel';
+    var barsId    = cardId + '-bars';
+    var defaults  = defaultStats || allBars.map(function(b){ return b.lbl; });
 
-    var pillsHTML = allBars.map(function(b) {
-      return '<button class="pct-pill active" data-stat="' + b.lbl + '" style="' +
-        'font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;' +
-        'padding:5px 10px;border-radius:20px;cursor:pointer;border:1px solid rgba(255,184,28,0.4);' +
-        'background:rgba(255,184,28,0.12);color:#FFB81C;transition:all 0.15s;white-space:nowrap' +
-        '">' + b.lbl + '</button>';
+    // Build initial bar HTML — only render bars that are in defaults
+    var barsHTML = allBars.map(function(b) {
+      var visible = defaults.indexOf(b.lbl) !== -1;
+      var barHtml = makeSavantBar(b, labelWidth);
+      // Inject display:none for non-defaults
+      if (!visible) barHtml = barHtml.replace('display:flex', 'display:none');
+      return barHtml;
     }).join('');
 
-    var barsHTML = allBars.map(function(b){ return makeSavantBar(b, labelWidth); }).join('');
+    // Checkbox panel HTML — two-column grid of checkboxes
+    var cbHTML = allBars.map(function(b) {
+      var checked = defaults.indexOf(b.lbl) !== -1;
+      return '<label style="display:flex;align-items:center;gap:7px;cursor:pointer;min-width:110px;' +
+             'font-family:var(--font-mono);font-size:10px;color:' + (checked ? '#FFB81C' : 'rgba(255,255,255,0.4)') + ';' +
+             'letter-spacing:0.06em;white-space:nowrap;transition:color 0.15s">' +
+        '<input type="checkbox" data-stat="' + b.lbl + '"' + (checked ? ' checked' : '') + ' style="' +
+          'appearance:none;-webkit-appearance:none;width:14px;height:14px;flex-shrink:0;' +
+          'border-radius:3px;border:1px solid ' + (checked ? '#FFB81C' : 'rgba(255,255,255,0.2)') + ';' +
+          'background:' + (checked ? '#FFB81C' : 'rgba(255,255,255,0.04)') + ';' +
+          'cursor:pointer;position:relative;transition:all 0.15s">' +
+        b.lbl +
+      '</label>';
+    }).join('');
 
     var html =
       '<div class="stat-card">' +
@@ -1346,49 +1362,60 @@ function renderPercentileStats(name, type, sum, pitch) {
           '<span class="stat-card-title">' + title + '</span>' +
           '<span class="stat-card-subtitle" id="' + cardId + '-count">' + subtitle + '</span>' +
         '</div>' +
-        (extraHeaderHTML || '') +
-        // Filter pill row
-        '<div style="padding:0 24px 16px;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:4px">' +
-          '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px">Filter Stats</div>' +
-          '<div id="' + pillsId + '" style="display:flex;flex-wrap:wrap;gap:6px">' + pillsHTML + '</div>' +
+        // Season selector + checkbox toggle in one toolbar row
+        '<div style="display:flex;align-items:flex-start;gap:24px;padding:12px 24px 0;flex-wrap:wrap">' +
+          (extraHeaderHTML
+            ? '<div style="flex-shrink:0">' + extraHeaderHTML + '</div>'
+            : '') +
+          '<div style="flex:1;min-width:200px">' +
+            '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);' +
+                 'letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px">Stats</div>' +
+            '<div id="' + cbPanelId + '" style="display:flex;flex-wrap:wrap;gap:8px 20px">' +
+              cbHTML +
+            '</div>' +
+          '</div>' +
         '</div>' +
-        '<div style="padding:16px 24px" id="' + barsId + '">' + barsHTML + '</div>' +
+        '<div style="padding:20px 24px 4px" id="' + barsId + '">' + barsHTML + '</div>' +
       '</div>';
 
-    // Wire pill toggle interactions
+    // Wire checkbox interactions
     setTimeout(function() {
-      var pillContainer = document.getElementById(pillsId);
-      var barsContainer = document.getElementById(barsId);
-      if (!pillContainer || !barsContainer) return;
+      var cbPanel    = document.getElementById(cbPanelId);
+      var barsWrap   = document.getElementById(barsId);
+      if (!cbPanel || !barsWrap) return;
 
-      // Animate bars on load
-      barsContainer.querySelectorAll('.sbr-fill').forEach(function(el){ if(el.dataset.width) el.style.width = el.dataset.width; });
-      barsContainer.querySelectorAll('.savant-bubble').forEach(function(el){ if(el.dataset.left) el.style.left = el.dataset.left; });
+      // Animate visible bars
+      barsWrap.querySelectorAll('.sbr-fill').forEach(function(el){ if(el.dataset.width) el.style.width = el.dataset.width; });
+      barsWrap.querySelectorAll('.savant-bubble').forEach(function(el){ if(el.dataset.left) el.style.left = el.dataset.left; });
 
-      pillContainer.querySelectorAll('.pct-pill').forEach(function(pill) {
-        pill.addEventListener('click', function() {
-          var stat    = pill.dataset.stat;
-          var isActive = pill.classList.contains('active');
+      // Checkbox tick mark via pseudo-element workaround (inject via JS)
+      function styleCheckbox(input) {
+        var checked = input.checked;
+        input.style.background   = checked ? '#FFB81C' : 'rgba(255,255,255,0.04)';
+        input.style.borderColor  = checked ? '#FFB81C' : 'rgba(255,255,255,0.2)';
+        input.parentElement.style.color = checked ? '#FFB81C' : 'rgba(255,255,255,0.4)';
+        // Draw tick
+        // Checkmark via inline unicode char overlay on the input
+        input.style.backgroundImage    = 'none';
+        if (checked) {
+          input.style.boxShadow = 'inset 0 0 0 2px #080c12';
+          input.setAttribute('data-checked', '1');
+        } else {
+          input.style.boxShadow = 'none';
+          input.removeAttribute('data-checked');
+        }
+      }
 
-          // Toggle pill style
-          if (isActive) {
-            pill.classList.remove('active');
-            pill.style.background = 'rgba(255,255,255,0.04)';
-            pill.style.color      = 'rgba(255,255,255,0.3)';
-            pill.style.borderColor= 'rgba(255,255,255,0.1)';
-          } else {
-            pill.classList.add('active');
-            pill.style.background = 'rgba(255,184,28,0.12)';
-            pill.style.color      = '#FFB81C';
-            pill.style.borderColor= 'rgba(255,184,28,0.4)';
-          }
+      // Init tick marks
+      cbPanel.querySelectorAll('input[type="checkbox"]').forEach(function(cb) { styleCheckbox(cb); });
 
-          // Show/hide corresponding bar row
-          barsContainer.querySelectorAll('.sbr-row').forEach(function(row) {
-            if (row.dataset.stat === stat) {
-              row.style.display = isActive ? 'none' : 'flex';
-            }
-          });
+      cbPanel.addEventListener('change', function(e) {
+        var cb   = e.target;
+        if (cb.type !== 'checkbox') return;
+        var stat = cb.dataset.stat;
+        styleCheckbox(cb);
+        barsWrap.querySelectorAll('.sbr-row').forEach(function(row) {
+          if (row.dataset.stat === stat) row.style.display = cb.checked ? 'flex' : 'none';
         });
       });
     }, 60);
@@ -1573,7 +1600,7 @@ function renderPercentileStats(name, type, sum, pitch) {
       { lbl: 'IZ CONTACT%', val: myIzContact!= null ? fmt1(myIzContact*100)+'%': '—', pct: myIzContact!= null ? lp(myIzContact, leagueDisc.izContact)  : 0, good: true },
       { lbl: 'CHASE%',      val: myChase    != null ? fmt1(myChase*100)+'%'    : '—', pct: myChase    != null ? 1-lp(myChase,    leagueDisc.chase)     : 0, good: true },
       // First pitch
-      { lbl: 'FP STRIKE%',  val: myFPStrike != null ? fmt1(myFPStrike*100)+'%': '—', pct: myFPStrike != null ? 1-lp(myFPStrike, leagueDisc.fpStrike)  : 0, good: true },
+      { lbl: 'FP SWING%',   val: myFPSwing  != null ? fmt1(myFPSwing*100)+'%' : '—', pct: myFPSwing  != null ? lp(myFPSwing,    leagueDisc.fpSwing)   : 0, good: true },
       // 2-strike
       // Contact type (% of outs in play)
       { lbl: 'GB%',         val: bipB > 0   ? fmt1(gbB/bipB*100)+'%'           : '—', pct: bipB > 0   ? lp(gbB/bipB,            leagueDisc.gb)        : 0, good: false },
@@ -1587,7 +1614,8 @@ function renderPercentileStats(name, type, sum, pitch) {
     }
 
     return '<div class="overview-grid">' +
-      buildFilteredCard('pct-batter', 'Percentile Stats', totPitches + ' pitches seen', allBars, 110) +
+      buildFilteredCard('pct-batter', 'Percentile Stats', totPitches + ' pitches seen', allBars, 110, null,
+        ['SWING%','WHIFF%','CONTACT%','K%','BB%','BB/K','PS/PA','IZ SWING%','IZ CONTACT%','CHASE%']) +
       '</div>';
   }
 
@@ -1734,7 +1762,7 @@ function renderPercentileStats(name, type, sum, pitch) {
 
     // Season selector HTML (injected as extraHeaderHTML)
     var seasonSelectHTML = pmYears.length
-      ? '<div style="padding:0 24px 12px">' +
+      ? '<div>' +
           '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Season</div>' +
           '<select id="pm-season-select" style="background:#0e1525;border:1.5px solid rgba(255,184,28,0.35);border-radius:6px;color:#FFB81C;font-family:var(--font-mono);font-size:11px;padding:8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px">' +
             '<option value="season">All</option>' +
@@ -1743,7 +1771,8 @@ function renderPercentileStats(name, type, sum, pitch) {
         '</div>'
       : '';
 
-    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', tot + ' pitches', allBars, 80, seasonSelectHTML);
+    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', tot + ' pitches', allBars, 80, seasonSelectHTML,
+      ['STR%','SWING%','WHIFF%','CONTACT%','K%','BB%','E+A%','K/BB']);
 
     // Wire season dropdown — updates pitch count subtitle and re-renders bars
     setTimeout(function() {
