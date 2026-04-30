@@ -1088,7 +1088,7 @@
     var seen = {};
     DATA.pitches.forEach(function(e) {
       if (!e.scatter || !e.scatter.length) return;
-      var t = resolveTeam(e.team);
+      var t = resolveTeam(e.batter_team);
       if (!(t && t.id === teamId)) return;
       if (seen[e.batter]) return;
       seen[e.batter] = e;
