@@ -2198,17 +2198,26 @@ function renderZone(name, type, pitch, container) {
 
   // ── Shared background ─────────────────────────
   function drawBatterSilhouette(facingRight) {
-    // facingRight=true: RHB on left side, facing right toward zone
-    // facingRight=false: LHB on right side, facing left toward zone (mirrored)
-    var cx  = toCanvasX(facingRight ? -1.6 : 1.6);
-    var fy  = toCanvasY(-0.15);  // feet
-    var ky  = toCanvasY( 0.25);  // knee
-    var wy  = toCanvasY( 0.52);  // waist
-    var sy  = toCanvasY( 0.78);  // shoulders
-    var hy  = toCanvasY( 1.02);  // head centre
-    var hr  = Math.abs(toCanvasY(0.98) - toCanvasY(1.12)); // head radius ~14px
-    var hw  = Math.abs(toCanvasX(0) - toCanvasX(0.17));    // half-body width ~20px
-    var dir = facingRight ? 1 : -1;
+    // Traces the reference silhouette: batter in load/stride position
+    // facing toward the zone. Front foot lifted, back foot planted,
+    // knees bent, torso coiled, hands up near ear, bat angled back over shoulder.
+    //
+    // All coords in canvas-pixel space, built from unit scale then transformed.
+    // Unit batter fits in a 1x2 box; we scale to ~55px wide, ~160px tall.
+    // Origin = back foot (planted foot, away from zone).
+
+    var scale  = Math.abs(toCanvasX(0) - toCanvasX(1.1)); // ~130px per unit
+    var dir    = facingRight ? 1 : -1;
+
+    // Anchor: back foot bottom, placed just outside the zone edge
+    var ax = toCanvasX(facingRight ? -1.52 : 1.52);
+    var ay = toCanvasY(-0.12);
+
+    // Helper: place a point relative to anchor in batter's local space
+    // lx = lateral (positive = toward zone), ly = vertical (positive = up)
+    function p(lx, ly) {
+      return { x: ax + dir * lx * scale, y: ay - ly * scale };
+    }
 
     ctx.save();
     ctx.globalAlpha = 0.22;
@@ -2217,71 +2226,154 @@ function renderZone(name, type, pitch, container) {
     ctx.lineCap     = 'round';
     ctx.lineJoin    = 'round';
 
-    // ── Legs (wide batting stance) ──────────────────
+    // ── Full body silhouette as one filled shape ────
+    // Traced in CCW order from back foot, matching reference image pose:
+    // back foot planted, front foot lifted/striding toward zone,
+    // knees bent deeply, butt out, torso upright-ish, hands at ear, bat back.
     ctx.beginPath();
-    // Left leg
-    ctx.moveTo(cx - hw*0.3, wy);
-    ctx.lineTo(cx - hw*0.9, ky);
-    ctx.lineTo(cx - hw*0.9, fy);
-    ctx.lineTo(cx - hw*0.5, fy);
-    ctx.lineTo(cx - hw*0.1, ky);
-    // Right leg
-    ctx.lineTo(cx + hw*0.1, ky);
-    ctx.lineTo(cx + hw*0.5, fy);
-    ctx.lineTo(cx + hw*0.9, fy);
-    ctx.lineTo(cx + hw*0.9, ky);
-    ctx.lineTo(cx + hw*0.3, wy);
+
+    // Back foot / heel (origin area)
+    ctx.moveTo(p(-0.04, 0.00).x, p(-0.04, 0.00).y);
+    ctx.lineTo(p( 0.10, 0.00).x, p( 0.10, 0.00).y);  // toe of back foot
+
+    // Back leg up to knee (bent, knee pushed back/out)
+    ctx.quadraticCurveTo(
+      p( 0.12, 0.12).x, p( 0.12, 0.12).y,
+      p( 0.05, 0.28).x, p( 0.05, 0.28).y   // back knee
+    );
+
+    // Thigh up to hip/butt (butt sticking out away from zone)
+    ctx.quadraticCurveTo(
+      p( 0.02, 0.38).x, p( 0.02, 0.38).y,
+      p(-0.08, 0.42).x, p(-0.08, 0.42).y   // back hip/butt
+    );
+
+    // Butt curve to front hip
+    ctx.quadraticCurveTo(
+      p(-0.05, 0.48).x, p(-0.05, 0.48).y,
+      p( 0.12, 0.50).x, p( 0.12, 0.50).y   // front hip
+    );
+
+    // Front thigh down (front leg bent, foot lifted)
+    ctx.quadraticCurveTo(
+      p( 0.18, 0.38).x, p( 0.18, 0.38).y,
+      p( 0.22, 0.26).x, p( 0.22, 0.26).y   // front knee
+    );
+
+    // Front shin angled forward (stride leg)
+    ctx.quadraticCurveTo(
+      p( 0.28, 0.16).x, p( 0.28, 0.16).y,
+      p( 0.32, 0.08).x, p( 0.32, 0.08).y   // front ankle
+    );
+
+    // Front foot (toe up, heel down, striding toward zone)
+    ctx.lineTo(p( 0.40, 0.06).x, p( 0.40, 0.06).y);
+    ctx.lineTo(p( 0.40, 0.00).x, p( 0.40, 0.00).y);
+    ctx.lineTo(p( 0.28, 0.00).x, p( 0.28, 0.00).y);  // front heel
+
+    // Front shin back up inside
+    ctx.quadraticCurveTo(
+      p( 0.24, 0.14).x, p( 0.24, 0.14).y,
+      p( 0.18, 0.24).x, p( 0.18, 0.24).y   // front knee inside
+    );
+
+    // Inside front thigh up to crotch
+    ctx.quadraticCurveTo(
+      p( 0.14, 0.36).x, p( 0.14, 0.36).y,
+      p( 0.08, 0.46).x, p( 0.08, 0.46).y   // crotch
+    );
+
+    // Inside back thigh down to back knee inside
+    ctx.quadraticCurveTo(
+      p( 0.04, 0.36).x, p( 0.04, 0.36).y,
+      p( 0.06, 0.26).x, p( 0.06, 0.26).y   // back knee inside
+    );
+
+    // Back of back shin down to heel
+    ctx.quadraticCurveTo(
+      p( 0.06, 0.12).x, p( 0.06, 0.12).y,
+      p(-0.04, 0.00).x, p(-0.04, 0.00).y   // back heel
+    );
+
+    ctx.fill();
+
+    // ── Torso / upper body ─────────────────────────
+    ctx.beginPath();
+    // Waist left (away from zone side)
+    ctx.moveTo(p(-0.06, 0.48).x, p(-0.06, 0.48).y);
+    // Left side of torso up to back shoulder
+    ctx.quadraticCurveTo(
+      p(-0.10, 0.62).x, p(-0.10, 0.62).y,
+      p(-0.04, 0.76).x, p(-0.04, 0.76).y   // back shoulder
+    );
+    // Neck
+    ctx.lineTo(p( 0.02, 0.82).x, p( 0.02, 0.82).y);
+    // Front shoulder (toward zone, slightly lower — coiled)
+    ctx.lineTo(p( 0.14, 0.78).x, p( 0.14, 0.78).y);
+    // Right side of torso down to waist right
+    ctx.quadraticCurveTo(
+      p( 0.16, 0.64).x, p( 0.16, 0.64).y,
+      p( 0.12, 0.50).x, p( 0.12, 0.50).y   // front waist
+    );
+    // Waist back
+    ctx.quadraticCurveTo(
+      p( 0.02, 0.47).x, p( 0.02, 0.47).y,
+      p(-0.06, 0.48).x, p(-0.06, 0.48).y
+    );
+    ctx.fill();
+
+    // ── Head ───────────────────────────────────────
+    var headCx = p( 0.02, 0.90).x;
+    var headCy = p( 0.02, 0.90).y;
+    var hr2 = scale * 0.085;
+    ctx.beginPath();
+    ctx.arc(headCx, headCy, hr2, 0, Math.PI*2);
+    ctx.fill();
+
+    // Helmet cap (flat top, brim toward zone)
+    ctx.beginPath();
+    ctx.arc(headCx, headCy - hr2*0.1, hr2*1.05, Math.PI, 0);  // dome
+    ctx.lineTo(headCx + dir*hr2*1.6, headCy + hr2*0.1);         // brim tip
+    ctx.lineTo(headCx + dir*hr2*0.2, headCy + hr2*0.1);
     ctx.closePath();
     ctx.fill();
 
-    // ── Torso ───────────────────────────────────────
-    ctx.beginPath();
-    ctx.moveTo(cx - hw*0.6, wy);
-    ctx.lineTo(cx - hw*0.55, sy);
-    ctx.lineTo(cx + hw*0.55, sy);
-    ctx.lineTo(cx + hw*0.6, wy);
-    ctx.closePath();
-    ctx.fill();
+    // ── Arms — both hands up near ear, elbow bent ──
+    // Hands position: above/behind back shoulder, near ear
+    var handX = p(-0.02, 0.98).x;
+    var handY = p(-0.02, 0.98).y;
+    var armW  = scale * 0.065;
+    ctx.lineWidth = armW;
 
-    // ── Head ────────────────────────────────────────
+    // Back arm (elbow up, forearm to hands)
     ctx.beginPath();
-    ctx.arc(cx + dir*hw*0.1, hy, hr, 0, Math.PI*2);
-    ctx.fill();
-
-    // ── Helmet brim (faces toward zone) ─────────────
-    ctx.beginPath();
-    ctx.ellipse(cx + dir*(hw*0.1 + hr*0.85), hy + hr*0.25, hr*0.8, hr*0.28, 0, 0, Math.PI*2);
-    ctx.fill();
-
-    // ── Arms in batting stance ───────────────────────
-    // Hands held up near back shoulder, ready to swing
-    // Back shoulder = away from zone, hands float behind ear toward zone side
-    var shoulderX   = cx - dir*hw*0.4;          // back shoulder (away from zone)
-    var shoulderFX  = cx + dir*hw*0.4;          // front shoulder (toward zone)
-    var handsX      = cx - dir*hw*0.2;           // hands pulled back behind body
-    var handsY      = sy - hr*1.8;              // hands up at ear/shoulder height
-    var armThick    = Math.abs(toCanvasX(0) - toCanvasX(0.11));
-    ctx.lineWidth   = armThick;
-
-    // Back arm: shoulder down/back to hands
-    ctx.beginPath();
-    ctx.moveTo(shoulderX, sy);
-    ctx.quadraticCurveTo(shoulderX - dir*hw*0.3, sy - hr, handsX, handsY);
-    ctx.stroke();
-    // Front arm: front shoulder curves to same hands position
-    ctx.beginPath();
-    ctx.moveTo(shoulderFX, sy);
-    ctx.quadraticCurveTo(shoulderFX - dir*hw*0.1, sy - hr*0.5, handsX, handsY);
+    ctx.moveTo(p(-0.04, 0.76).x, p(-0.04, 0.76).y);  // back shoulder
+    ctx.quadraticCurveTo(
+      p(-0.14, 0.90).x, p(-0.14, 0.90).y,              // elbow out/up
+      handX, handY
+    );
     ctx.stroke();
 
-    // ── Bat held back, angled upward ────────────────
-    // Bat runs from hands up and back (away from zone), tilted ~45 deg
-    var batLen = Math.abs(toCanvasX(0) - toCanvasX(0.72));
-    ctx.lineWidth = Math.abs(toCanvasX(0) - toCanvasX(0.045));
+    // Front arm (wraps around, elbow tucked in)
     ctx.beginPath();
-    ctx.moveTo(handsX, handsY);
-    // Bat tip goes up and away from zone
-    ctx.lineTo(handsX - dir*batLen*0.5, handsY - batLen*0.85);
+    ctx.moveTo(p( 0.14, 0.78).x, p( 0.14, 0.78).y);  // front shoulder
+    ctx.quadraticCurveTo(
+      p( 0.08, 0.90).x, p( 0.08, 0.90).y,              // elbow tucked
+      handX, handY
+    );
+    ctx.stroke();
+
+    // ── Bat — from hands, angled back over shoulder ─
+    var batLen = scale * 0.62;
+    var batW   = scale * 0.03;
+    ctx.lineWidth = batW;
+    ctx.beginPath();
+    ctx.moveTo(handX, handY);
+    // Bat goes up and back (away from zone), ~50deg from vertical
+    ctx.lineTo(
+      handX - dir * batLen * 0.55,
+      handY - batLen * 0.82
+    );
     ctx.stroke();
 
     ctx.restore();
