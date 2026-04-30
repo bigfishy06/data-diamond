@@ -969,8 +969,9 @@
 
     var players = [];
     if (type === 'batter-scouting') {
+      var oppTid = oppT ? oppT.id : null;
       players = DATA.summary.filter(function(p) {
-        var t = resolveTeam(p.batter_team); return t && t.name === oppName;
+        var t = resolveTeam(p.batter_team); return t && (oppTid ? t.id === oppTid : t.name === oppName);
       }).sort(function(a,b){ return (b.AB||0)-(a.AB||0); }).map(function(s) {
         return { name: s.batter, stat: 'AVG ' + f3(s.AVG), player: { name: s.batter, summary: s, pitch: getPitchPlayer(s.batter) } };
       });
@@ -981,7 +982,7 @@
         bp.scatter.forEach(function(s) {
           if (!s.pitcher_team) return;
           var pt = resolveTeam(s.pitcher_team);
-          if (pt && pt.name === oppName) seen.add(s.pitcher);
+          if (pt && (oppT ? pt.id === oppT.id : pt.name === oppName)) seen.add(s.pitcher);
         });
       });
       seen.forEach(function(name) {
