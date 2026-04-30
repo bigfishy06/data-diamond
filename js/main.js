@@ -11,8 +11,7 @@ const AUTH = {
 
   // ✅ Add every email address that is allowed to access the site
   ALLOWED_EMAILS: [
-    'you@example.com',
-    'colleague@example.com'
+    'christiansturgeon06@gmail.com'
   ],
 
   // Internal state
