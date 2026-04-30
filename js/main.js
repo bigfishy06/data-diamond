@@ -774,6 +774,7 @@ function renderPlayerDetail(name, type, content) {
     '<button class="tab-btn" data-tab="season">Season Stats</button>' +
     '<button class="tab-btn" data-tab="zone">Strike Zone</button>' +
     '<button class="tab-btn" data-tab="splits">Splits</button>' +
+    (type === 'pitcher' ? '<button class="tab-btn" data-tab="usage">Pitch Usage</button>' : '') +
     '</div></div></div>' +
     '<div class="container" style="padding-top:32px;padding-bottom:80px"><div id="player-tab-content"></div></div>';
 
@@ -851,6 +852,7 @@ function renderPlayerDetail(name, type, content) {
     }
     tabContent.appendChild(panel);
     if (t === 'zone')     renderZone(name, type, pitchData, panel);
+    if (t === 'usage')    panel.innerHTML = renderPitchUsage(name, pitchData);
     setTimeout(function() {
       panel.querySelectorAll('.sbr-fill').forEach(function(el) {
         if (el.dataset.width) el.style.width = el.dataset.width;
@@ -1810,6 +1812,85 @@ function renderPercentileStats(name, type, sum, pitch) {
   }
 
   return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No data available</h3></div>';
+}
+
+
+// -- PITCH USAGE TAB ----------------------------------------
+function renderPitchUsage(name, pitch) {
+  var sc = (pitch && pitch.scatter) ? pitch.scatter : [];
+  if (!sc.length) {
+    return '<div class="empty-state"><div class="empty-state-icon">&#128203;</div><h3>No pitch data available</h3></div>';
+  }
+  var gameMap = {};
+  sc.forEach(function(s) {
+    var dt = (s.date || '').slice(0, 10); if (!dt) return;
+    if (!gameMap[dt]) gameMap[dt] = []; gameMap[dt].push(s);
+  });
+  var gameDates = Object.keys(gameMap).sort();
+  var today    = new Date(); today.setHours(0,0,0,0);
+  var lastDate = gameDates.length ? new Date(gameDates[gameDates.length-1] + 'T12:00:00') : null;
+  var daysRest = lastDate ? Math.floor((today - lastDate) / 86400000) : 99;
+  var lastCount= lastDate ? gameMap[gameDates[gameDates.length-1]].length : 0;
+  var avail, availBg, availText;
+  if      (daysRest <= 1)                    { avail='UNAVAILABLE'; availBg='rgba(220,50,50,0.15)'; availText='#DC3232'; }
+  else if (daysRest === 2 && lastCount >= 20){ avail='QUESTIONABLE'; availBg='rgba(255,140,0,0.15)'; availText='#FF8C00'; }
+  else                                       { avail='AVAILABLE';    availBg='rgba(50,200,100,0.15)'; availText='#32C864'; }
+  var restNote = daysRest===99 ? 'No recent appearances' :
+                 daysRest===0  ? 'Pitched today' :
+                 daysRest===1  ? 'Pitched yesterday - '+lastCount+' pitches' :
+                 daysRest+' days rest - last outing: '+lastCount+' pitches';
+  var html =
+    '<div class="stat-card" style="margin-bottom:16px">' +
+      '<div style="padding:20px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">' +
+        '<div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 28px;background:'+availBg+';border:1px solid '+availText+';border-radius:6px;flex-shrink:0">' +
+          '<div style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:'+availText+'">'+avail+'</div>' +
+          '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;margin-top:2px">CURRENT STATUS</div>' +
+        '</div>' +
+        '<div>' +
+          '<div style="font-family:var(--font-mono);font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:6px">'+restNote+'</div>' +
+          '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.35)">'+gameDates.length+' appearance'+(gameDates.length!==1?'s':'')+' this season</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Season Log</span>' +
+    '<span class="stat-card-subtitle">'+gameDates.length+' outing'+(gameDates.length!==1?'s':'')+'</span></div>' +
+    '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
+    '<th style="text-align:left">Date</th><th style="text-align:left">Opp</th>' +
+    '<th>Pitches</th><th>K</th><th>BB</th><th>STR%</th><th>WHIFF%</th><th>Rest</th><th>Status</th>' +
+    '</tr></thead><tbody>';
+  gameDates.forEach(function(dt, idx) {
+    var gsc=gameMap[dt], gTot=gsc.length;
+    var gK   =gsc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
+    var gBB  =gsc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+    var gStr =gsc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+    var gSwS =gsc.filter(function(s){return s.outcome==='Swinging Strike';}).length;
+    var gFo  =gsc.filter(function(s){return s.outcome==='Foul';}).length;
+    var gIP  =gsc.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
+    var gSw  =gSwS+gFo+gIP;
+    var oppLabel='--';
+    if(gsc[0]&&gsc[0].batter_team){ var bt=resolveTeam(gsc[0].batter_team); oppLabel=bt?bt.abbreviation:gsc[0].batter_team.slice(0,3).toUpperCase(); }
+    var restDays=null, restStr='--';
+    if(idx>0){ var prev=new Date(gameDates[idx-1]+'T12:00:00'),curr=new Date(dt+'T12:00:00'); restDays=Math.floor((curr-prev)/86400000); restStr=restDays+'d'; }
+    var rowStatus,rowColor;
+    if(restDays===null)                      {rowStatus='DEBUT';      rowColor='rgba(255,255,255,0.3)';}
+    else if(restDays<=1)                     {rowStatus='B2B';        rowColor='#DC3232';}
+    else if(restDays===2&&gTot>=20)          {rowStatus='SHORT REST'; rowColor='#FF8C00';}
+    else                                     {rowStatus='NORMAL';     rowColor='#32C864';}
+    var dObj=new Date(dt+'T12:00:00');
+    var dateLabel=dObj.toLocaleDateString('en-CA',{month:'short',day:'numeric'}).toUpperCase();
+    html+=
+      '<tr>'+
+      '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:11px">'+dateLabel+'</td>'+
+      '<td><span style="font-family:var(--font-mono);font-size:11px;font-weight:600">'+oppLabel+'</span></td>'+
+      '<td>'+gTot+'</td><td>'+gK+'</td><td>'+gBB+'</td>'+
+      '<td>'+(gTot>0?fmt1(gStr/gTot*100)+'%':'--')+'</td>'+
+      '<td>'+(gSw>0?fmt1(gSwS/gSw*100)+'%':'--')+'</td>'+
+      '<td style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5)">'+restStr+'</td>'+
+      '<td><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:'+rowColor+'">'+rowStatus+'</span></td>'+
+      '</tr>';
+  });
+  html+='</tbody></table></div></div>';
+  return html;
 }
 
 function renderSeasonStats(name, type, sum, pitch) {
