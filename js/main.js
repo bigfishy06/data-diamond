@@ -2139,10 +2139,42 @@ function renderZone(name, type, pitch, container) {
       : '<button class="zone-filter-btn" data-hand="R">Right (R)</button><button class="zone-filter-btn" data-hand="L">Left (L)</button>') +
     '</div></div>' +
 
-    '<div class="zone-wrap">' +
-    '<div class="zone-canvas-wrap" style="position:relative">' +
-    '<canvas id="zone-canvas" width="480" height="660" style="width:300px;height:413px"></canvas>' +
-    '<div id="zone-tooltip" class="zone-tooltip hidden"></div>' +
+    '<div class="zone-wrap" style="overflow:visible;padding-left:72px;padding-right:72px">' +
+    '<div class="zone-canvas-wrap" style="position:relative;display:inline-block">' +
+      // Left batter silhouette (RHB from catcher view — batter on right side of plate = left of canvas)
+      '<svg width="72" height="413" viewBox="0 0 72 413" style="position:absolute;left:-68px;top:0;opacity:0.18;pointer-events:none" xmlns="http://www.w3.org/2000/svg">' +
+        // RHB: stands to the LEFT of the plate (catcher view), faces right
+        '<g fill="#FFB81C">' +
+          // head
+          '<ellipse cx="52" cy="105" rx="10" ry="11"/>' +
+          // torso
+          '<path d="M42 116 Q36 140 38 170 L58 170 Q62 140 62 116 Z"/>' +
+          // back arm (left arm of batter = far arm)
+          '<path d="M58 125 Q68 118 70 108 Q72 100 66 98 Q62 100 60 110 Q56 120 58 125Z"/>' +
+          // front arm holding bat
+          '<path d="M42 122 Q30 115 22 100 Q18 92 24 90 Q28 92 32 100 Q38 112 42 122Z"/>' +
+          // bat
+          '<rect x="8" y="72" width="4" height="40" rx="2" transform="rotate(-20 8 72)"/>' +
+          // hips/legs
+          '<path d="M38 170 L34 220 L42 220 L46 190 L50 220 L58 220 L54 170 Z"/>' +
+          // helmet
+          '<path d="M42 97 Q44 88 52 86 Q62 84 66 92 Q68 98 64 102 Q58 98 52 98 Q46 98 42 97Z"/>' +
+        '</g>' +
+      '</svg>' +
+      // Right batter silhouette (LHB — batter on left side of plate = right of canvas, mirrored)
+      '<svg width="72" height="413" viewBox="0 0 72 413" style="position:absolute;right:-68px;top:0;opacity:0.18;pointer-events:none;transform:scaleX(-1)" xmlns="http://www.w3.org/2000/svg">' +
+        '<g fill="#FFB81C">' +
+          '<ellipse cx="52" cy="105" rx="10" ry="11"/>' +
+          '<path d="M42 116 Q36 140 38 170 L58 170 Q62 140 62 116 Z"/>' +
+          '<path d="M58 125 Q68 118 70 108 Q72 100 66 98 Q62 100 60 110 Q56 120 58 125Z"/>' +
+          '<path d="M42 122 Q30 115 22 100 Q18 92 24 90 Q28 92 32 100 Q38 112 42 122Z"/>' +
+          '<rect x="8" y="72" width="4" height="40" rx="2" transform="rotate(-20 8 72)"/>' +
+          '<path d="M38 170 L34 220 L42 220 L46 190 L50 220 L58 220 L54 170 Z"/>' +
+          '<path d="M42 97 Q44 88 52 86 Q62 84 66 92 Q68 98 64 102 Q58 98 52 98 Q46 98 42 97Z"/>' +
+        '</g>' +
+      '</svg>' +
+      '<canvas id="zone-canvas" width="480" height="660" style="width:300px;height:413px"></canvas>' +
+      '<div id="zone-tooltip" class="zone-tooltip hidden"></div>' +
     '</div>' +
     '<div style="flex:1;min-width:160px">' +
     '<div class="zone-legend" id="zone-legend" style="margin-bottom:20px">' +
