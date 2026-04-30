@@ -2384,10 +2384,6 @@ function renderZone(name, type, pitch, container) {
     ctx.fillStyle = '#0e1525';
     ctx.fillRect(0, 0, W, H);
 
-    // Draw batter silhouettes behind everything else
-    drawBatterSilhouette(true);   // RHB on left
-    drawBatterSilhouette(false);  // LHB on right
-
     if (!opts.clean) {
       ctx.strokeStyle = 'rgba(255,184,28,0.05)';
       ctx.lineWidth = 1;
@@ -2416,6 +2412,14 @@ function renderZone(name, type, pitch, container) {
     function czy(y) { return toCanvasY(y); }
     var zx1=czx(ZONE_X1), zx2=czx(ZONE_X2);
     var zy1=czy(ZONE_Y2), zy2=czy(ZONE_Y1);   // zy1=top of zone, zy2=bottom
+    // Label: From a Pitcher's POV
+    ctx.save();
+    ctx.font = 'bold 11px monospace';
+    ctx.fillStyle = 'rgba(255,184,28,0.75)';
+    ctx.textAlign = 'center';
+    ctx.fillText("FROM A PITCHER'S POV", (zx1+zx2)/2, zy1 - 8);
+    ctx.restore();
+
     ctx.fillStyle = 'rgba(255,184,28,0.03)';
     ctx.fillRect(zx1, zy1, zx2-zx1, zy2-zy1);
     ctx.strokeStyle = 'rgba(255,184,28,0.85)';
