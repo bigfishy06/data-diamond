@@ -2139,42 +2139,10 @@ function renderZone(name, type, pitch, container) {
       : '<button class="zone-filter-btn" data-hand="R">Right (R)</button><button class="zone-filter-btn" data-hand="L">Left (L)</button>') +
     '</div></div>' +
 
-    '<div class="zone-wrap" style="overflow:visible;padding-left:72px;padding-right:72px">' +
-    '<div class="zone-canvas-wrap" style="position:relative;display:inline-block">' +
-      // Left batter silhouette (RHB from catcher view — batter on right side of plate = left of canvas)
-      '<svg width="72" height="413" viewBox="0 0 72 413" style="position:absolute;left:-68px;top:0;opacity:0.18;pointer-events:none" xmlns="http://www.w3.org/2000/svg">' +
-        // RHB: stands to the LEFT of the plate (catcher view), faces right
-        '<g fill="#FFB81C">' +
-          // head
-          '<ellipse cx="52" cy="105" rx="10" ry="11"/>' +
-          // torso
-          '<path d="M42 116 Q36 140 38 170 L58 170 Q62 140 62 116 Z"/>' +
-          // back arm (left arm of batter = far arm)
-          '<path d="M58 125 Q68 118 70 108 Q72 100 66 98 Q62 100 60 110 Q56 120 58 125Z"/>' +
-          // front arm holding bat
-          '<path d="M42 122 Q30 115 22 100 Q18 92 24 90 Q28 92 32 100 Q38 112 42 122Z"/>' +
-          // bat
-          '<rect x="8" y="72" width="4" height="40" rx="2" transform="rotate(-20 8 72)"/>' +
-          // hips/legs
-          '<path d="M38 170 L34 220 L42 220 L46 190 L50 220 L58 220 L54 170 Z"/>' +
-          // helmet
-          '<path d="M42 97 Q44 88 52 86 Q62 84 66 92 Q68 98 64 102 Q58 98 52 98 Q46 98 42 97Z"/>' +
-        '</g>' +
-      '</svg>' +
-      // Right batter silhouette (LHB — batter on left side of plate = right of canvas, mirrored)
-      '<svg width="72" height="413" viewBox="0 0 72 413" style="position:absolute;right:-68px;top:0;opacity:0.18;pointer-events:none;transform:scaleX(-1)" xmlns="http://www.w3.org/2000/svg">' +
-        '<g fill="#FFB81C">' +
-          '<ellipse cx="52" cy="105" rx="10" ry="11"/>' +
-          '<path d="M42 116 Q36 140 38 170 L58 170 Q62 140 62 116 Z"/>' +
-          '<path d="M58 125 Q68 118 70 108 Q72 100 66 98 Q62 100 60 110 Q56 120 58 125Z"/>' +
-          '<path d="M42 122 Q30 115 22 100 Q18 92 24 90 Q28 92 32 100 Q38 112 42 122Z"/>' +
-          '<rect x="8" y="72" width="4" height="40" rx="2" transform="rotate(-20 8 72)"/>' +
-          '<path d="M38 170 L34 220 L42 220 L46 190 L50 220 L58 220 L54 170 Z"/>' +
-          '<path d="M42 97 Q44 88 52 86 Q62 84 66 92 Q68 98 64 102 Q58 98 52 98 Q46 98 42 97Z"/>' +
-        '</g>' +
-      '</svg>' +
-      '<canvas id="zone-canvas" width="480" height="660" style="width:300px;height:413px"></canvas>' +
-      '<div id="zone-tooltip" class="zone-tooltip hidden"></div>' +
+    '<div class="zone-wrap">' +
+    '<div class="zone-canvas-wrap" style="position:relative">' +
+    '<canvas id="zone-canvas" width="480" height="660" style="width:300px;height:413px"></canvas>' +
+    '<div id="zone-tooltip" class="zone-tooltip hidden"></div>' +
     '</div>' +
     '<div style="flex:1;min-width:160px">' +
     '<div class="zone-legend" id="zone-legend" style="margin-bottom:20px">' +
@@ -2229,10 +2197,104 @@ function renderZone(name, type, pitch, container) {
   function fromCanvasY(cy) { return Y_MIN + (PH - (cy - PAD_T)) / PH * (Y_MAX - Y_MIN); }
 
   // ── Shared background ─────────────────────────
+  function drawBatterSilhouette(facingRight) {
+    // facingRight=true: RHB on left side, facing right toward zone
+    // facingRight=false: LHB on right side, facing left toward zone (mirrored)
+    var cx  = toCanvasX(facingRight ? -1.6 : 1.6);
+    var fy  = toCanvasY(-0.15);  // feet
+    var ky  = toCanvasY( 0.25);  // knee
+    var wy  = toCanvasY( 0.52);  // waist
+    var sy  = toCanvasY( 0.78);  // shoulders
+    var hy  = toCanvasY( 1.02);  // head centre
+    var hr  = Math.abs(toCanvasY(0.98) - toCanvasY(1.12)); // head radius ~14px
+    var hw  = Math.abs(toCanvasX(0) - toCanvasX(0.17));    // half-body width ~20px
+    var dir = facingRight ? 1 : -1;
+
+    ctx.save();
+    ctx.globalAlpha = 0.22;
+    ctx.fillStyle   = '#FFB81C';
+    ctx.strokeStyle = '#FFB81C';
+    ctx.lineCap     = 'round';
+    ctx.lineJoin    = 'round';
+
+    // ── Legs (wide batting stance) ──────────────────
+    ctx.beginPath();
+    // Left leg
+    ctx.moveTo(cx - hw*0.3, wy);
+    ctx.lineTo(cx - hw*0.9, ky);
+    ctx.lineTo(cx - hw*0.9, fy);
+    ctx.lineTo(cx - hw*0.5, fy);
+    ctx.lineTo(cx - hw*0.1, ky);
+    // Right leg
+    ctx.lineTo(cx + hw*0.1, ky);
+    ctx.lineTo(cx + hw*0.5, fy);
+    ctx.lineTo(cx + hw*0.9, fy);
+    ctx.lineTo(cx + hw*0.9, ky);
+    ctx.lineTo(cx + hw*0.3, wy);
+    ctx.closePath();
+    ctx.fill();
+
+    // ── Torso ───────────────────────────────────────
+    ctx.beginPath();
+    ctx.moveTo(cx - hw*0.6, wy);
+    ctx.lineTo(cx - hw*0.55, sy);
+    ctx.lineTo(cx + hw*0.55, sy);
+    ctx.lineTo(cx + hw*0.6, wy);
+    ctx.closePath();
+    ctx.fill();
+
+    // ── Head ────────────────────────────────────────
+    ctx.beginPath();
+    ctx.arc(cx + dir*hw*0.1, hy, hr, 0, Math.PI*2);
+    ctx.fill();
+
+    // ── Helmet brim (faces toward zone) ─────────────
+    ctx.beginPath();
+    ctx.ellipse(cx + dir*(hw*0.1 + hr*0.85), hy + hr*0.25, hr*0.8, hr*0.28, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    // ── Arms in batting stance ───────────────────────
+    // Hands held up near back shoulder, ready to swing
+    // Back shoulder = away from zone, hands float behind ear toward zone side
+    var shoulderX   = cx - dir*hw*0.4;          // back shoulder (away from zone)
+    var shoulderFX  = cx + dir*hw*0.4;          // front shoulder (toward zone)
+    var handsX      = cx - dir*hw*0.2;           // hands pulled back behind body
+    var handsY      = sy - hr*1.8;              // hands up at ear/shoulder height
+    var armThick    = Math.abs(toCanvasX(0) - toCanvasX(0.11));
+    ctx.lineWidth   = armThick;
+
+    // Back arm: shoulder down/back to hands
+    ctx.beginPath();
+    ctx.moveTo(shoulderX, sy);
+    ctx.quadraticCurveTo(shoulderX - dir*hw*0.3, sy - hr, handsX, handsY);
+    ctx.stroke();
+    // Front arm: front shoulder curves to same hands position
+    ctx.beginPath();
+    ctx.moveTo(shoulderFX, sy);
+    ctx.quadraticCurveTo(shoulderFX - dir*hw*0.1, sy - hr*0.5, handsX, handsY);
+    ctx.stroke();
+
+    // ── Bat held back, angled upward ────────────────
+    // Bat runs from hands up and back (away from zone), tilted ~45 deg
+    var batLen = Math.abs(toCanvasX(0) - toCanvasX(0.72));
+    ctx.lineWidth = Math.abs(toCanvasX(0) - toCanvasX(0.045));
+    ctx.beginPath();
+    ctx.moveTo(handsX, handsY);
+    // Bat tip goes up and away from zone
+    ctx.lineTo(handsX - dir*batLen*0.5, handsY - batLen*0.85);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
   function drawBackground(opts) {
     opts = opts || {};
     ctx.fillStyle = '#0e1525';
     ctx.fillRect(0, 0, W, H);
+
+    // Draw batter silhouettes behind everything else
+    drawBatterSilhouette(true);   // RHB on left
+    drawBatterSilhouette(false);  // LHB on right
 
     if (!opts.clean) {
       ctx.strokeStyle = 'rgba(255,184,28,0.05)';
