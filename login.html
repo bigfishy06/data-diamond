@@ -124,19 +124,44 @@
     <div class="login-footer">Access is restricted to authorised users only.</div>
   </div>
 
-  <!-- Inline callback — delegates straight to main.js AUTH object -->
   <script>
-    // This global function is called by Google after the user picks an account.
-    // It forwards the credential to the AUTH object defined in main.js.
+    const ALLOWED_EMAILS = ["christiansturgeon06@gmail.com"];
+
     function handleGoogleSignIn(response) {
-      if (typeof AUTH !== 'undefined') {
-        AUTH.handleCredentialResponse(response);
+      try {
+        var base64 = response.credential.split(".")[1]
+          .replace(/-/g, "+").replace(/_/g, "/");
+        var payload = JSON.parse(atob(base64));
+        var email = (payload.email || "").toLowerCase().trim();
+
+        if (!ALLOWED_EMAILS.includes(email)) {
+          document.getElementById("login-error").textContent =
+            "Blocked: " + email + " is not authorised to access this site.";
+          return;
+        }
+
+        var user = {
+          name:    payload.given_name || payload.name || "User",
+          email:   email,
+          picture: payload.picture || ""
+        };
+        sessionStorage.setItem("dd_user", JSON.stringify(user));
+        window.location.href = "index.html";
+
+      } catch(e) {
+        document.getElementById("login-error").textContent =
+          "Sign-in failed. Please try again.";
+        console.error("Auth error:", e);
       }
     }
-  </script>
 
-  <!-- Load your main.js so AUTH is available -->
-  <script src="main.js"></script>
+    try {
+      var saved = sessionStorage.getItem("dd_user");
+      if (saved && JSON.parse(saved).email) {
+        window.location.href = "index.html";
+      }
+    } catch(e) {}
+  </script>
 
 </body>
 </html>
