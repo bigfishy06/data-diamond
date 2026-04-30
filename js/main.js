@@ -7,7 +7,7 @@ function getBase() { return '/'; }
 
 // ── GOOGLE AUTH ───────────────────────────────────
 const AUTH = {
-  CLIENT_ID: '348783711243-fs4oqm29ftt5bd3bin80id4a4rh7msqi.apps.googleusercontent.com',
+  CLIENT_ID: '348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com',
 
   // ✅ Add every email address that is allowed to access the site
   ALLOWED_EMAILS: [
