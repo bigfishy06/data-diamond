@@ -1,0 +1,17 @@
+{
+  "teams": [
+    { "id": "bar", "name": "Barrie Baycats",           "abbreviation": "BAR", "league": "CBL", "division": "Ontario", "primaryColor": "#1A3A6B", "secondaryColor": "#E8C84A" },
+    { "id": "bra", "name": "Brantford Red Sox",         "abbreviation": "BRA", "league": "CBL", "division": "Ontario", "primaryColor": "#C8102E", "secondaryColor": "#0C2340" },
+    { "id": "ckb", "name": "Chatham-Kent Barnstormers", "abbreviation": "CKB", "league": "CBL", "division": "Ontario", "primaryColor": "#2B5F35", "secondaryColor": "#D4A017" },
+    { "id": "gue", "name": "Guelph Royals",             "abbreviation": "GUE", "league": "CBL", "division": "Ontario", "primaryColor": "#002F6C", "secondaryColor": "#C8A951" },
+    { "id": "ham", "name": "Hamilton Cardinals",         "abbreviation": "HAM", "league": "CBL", "division": "Ontario", "primaryColor": "#C41E3A", "secondaryColor": "#1A1A1A" },
+    { "id": "kit", "name": "Kitchener Panthers",         "abbreviation": "KIT", "league": "CBL", "division": "Ontario", "primaryColor": "#1C3D6E", "secondaryColor": "#E8A020" },
+    { "id": "lon", "name": "London Majors",              "abbreviation": "LON", "league": "CBL", "division": "Ontario", "primaryColor": "#003087", "secondaryColor": "#E31837" },
+    { "id": "tor", "name": "Toronto Maple Leafs",        "abbreviation": "TOR", "league": "CBL", "division": "Ontario", "primaryColor": "#003F87", "secondaryColor": "#FFFFFF" },
+    { "id": "wel", "name": "Welland Jackfish",           "abbreviation": "WEL", "league": "CBL", "division": "Ontario", "primaryColor": "#1A6B3A", "secondaryColor": "#1A3A6B" }
+  ],
+  "zoneConfig": {
+    "note": "x: -1=left edge of zone, 0=center, +1=right edge. y: 0=bottom edge, 1=top edge.",
+    "xMin": -1.8, "xMax": 1.8, "yMin": -0.5, "yMax": 1.5
+  }
+}
