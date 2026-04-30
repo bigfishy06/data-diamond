@@ -743,10 +743,27 @@ function renderPlayerDetail(name, type, content) {
   // ── Collect player bio details (used in hero + overview) ──────────────────────
   var _iblAll  = DATA.iblHistory[name] || [];
   var _ibl     = _iblAll.length ? _iblAll[0] : null;
+
+  // Derive bats/throws from scatter data (Batter_Side / Pitcher_Side columns).
+  // If a player appears with more than one distinct side value they are Switch.
+  function deriveHand(scatter, field) {
+    var sides = new Set();
+    scatter.forEach(function(s) { if (s[field]) sides.add(s[field]); });
+    if (sides.size === 0) return null;
+    if (sides.size > 1)  return 'S';
+    return sides.values().next().value;
+  }
+
+  var _batterScatter = (pitch && pitch.scatter) ? pitch.scatter : [];
+  var _pitcherScatter = (type === 'pitcher' && pitchData && pitchData.scatter) ? pitchData.scatter : [];
+
+  var _bats   = deriveHand(_batterScatter,  'batter_side');
+  var _throws = deriveHand(_pitcherScatter, 'pitcher_side');
+
   var playerInfo = {
     pos:      _ibl && _ibl.pos    ? _ibl.pos    : (type === 'pitcher' ? 'P' : '—'),
-    bats:     _ibl && _ibl.bats   ? _ibl.bats   : null,
-    throws:   _ibl && _ibl.throws ? _ibl.throws : null,
+    bats:     _bats   || (_ibl && _ibl.bats   ? _ibl.bats   : null),
+    throws:   _throws || (_ibl && _ibl.throws ? _ibl.throws : null),
     height:   _ibl && _ibl.height ? _ibl.height : null,
     weight:   _ibl && _ibl.weight ? _ibl.weight : null,
     teamName: team ? team.name : (_ibl && _ibl.team ? _ibl.team : null),
@@ -1241,7 +1258,8 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
   var bioItems = [];
   if (pi.teamName) bioItems.push({ label: 'Team', val: pi.teamName });
   if (pi.pos && pi.pos !== '\u2014') bioItems.push({ label: 'Position', val: pi.pos });
-  if (pi.bats || pi.throws) bioItems.push({ label: 'Bats / Throws', val: (pi.bats||'?')+' / '+(pi.throws||'?') });
+  function fmtHand(h) { return h || '?'; }
+  if (pi.bats || pi.throws) bioItems.push({ label: 'Bats / Throws', val: fmtHand(pi.bats)+' / '+fmtHand(pi.throws) });
   if (pi.height) bioItems.push({ label: 'Height', val: pi.height });
   if (pi.weight) bioItems.push({ label: 'Weight', val: pi.weight + ' lbs' });
 
