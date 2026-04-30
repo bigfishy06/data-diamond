@@ -124,7 +124,7 @@ function resolveTeam(rawName) {
   }) || null;
 }
 
-let DATA = { summary: [], pitches: [], pitchers: [], iblHistory: {} };
+let DATA = { summary: [], pitches: [], pitchers: [], iblHistory: {}, pbpBatters: [], pbpPitchers: [] };
 
 // ── INIT ──────────────────────────────────────────
 async function init() {
@@ -154,20 +154,25 @@ async function loadAll() {
 
   try {
     const base = getBase();
-    const [sumRes, pitRes, pitcherRes, iblRes] = await Promise.all([
+    const [sumRes, pitRes, pitcherRes, iblRes, pbpBatRes, pbpPitRes] = await Promise.all([
       fetch(base + 'data/summary.json'),
       fetch(base + 'data/pitches.json'),
       fetch(base + 'data/pitchers.json'),
-      fetch(base + 'data/ibl_history.json')
+      fetch(base + 'data/ibl_history.json'),
+      fetch(base + 'data/pbp_batters.json'),
+      fetch(base + 'data/pbp_pitchers.json')
     ]);
-    if (sumRes.ok)     DATA.summary    = await sumRes.json();
-    if (pitRes.ok)     DATA.pitches    = await pitRes.json();
-    if (pitcherRes.ok) DATA.pitchers   = await pitcherRes.json();
-    if (iblRes.ok)     DATA.iblHistory = await iblRes.json();
+    if (sumRes.ok)     DATA.summary     = await sumRes.json();
+    if (pitRes.ok)     DATA.pitches     = await pitRes.json();
+    if (pitcherRes.ok) DATA.pitchers    = await pitcherRes.json();
+    if (iblRes.ok)     DATA.iblHistory  = await iblRes.json();
+    if (pbpBatRes.ok)  DATA.pbpBatters  = await pbpBatRes.json();
+    if (pbpPitRes.ok)  DATA.pbpPitchers = await pbpPitRes.json();
     console.log('summary players:', DATA.summary.length);
     console.log('pitches players:', DATA.pitches.length);
     console.log('pitchers:', DATA.pitchers.length);
-    console.log('ibl history players:', Object.keys(DATA.iblHistory).length);
+    console.log('pbp batters:', DATA.pbpBatters.length);
+    console.log('pbp pitchers:', DATA.pbpPitchers.length);
   } catch(e) {
     console.error('loadAll failed:', e.message);
   }
@@ -203,6 +208,12 @@ function hexToRgba(hex, a) {
 }
 function navigate(url) { window.location.href = getBase() + url; }
 
+function getPbpBatter(name) {
+  return DATA.pbpBatters.find(function(p) { return p.batter === name; }) || null;
+}
+function getPbpPitcher(name) {
+  return DATA.pbpPitchers.find(function(p) { return p.pitcher === name; }) || null;
+}
 function getPitchPlayer(name) {
   return DATA.pitches.find(function(p) { return p.batter === name; }) || null;
 }
@@ -221,6 +232,7 @@ function getAllBatters() {
   const names = new Set();
   DATA.summary.forEach(function(p) { names.add(p.batter); });
   DATA.pitches.forEach(function(p) { names.add(p.batter); });
+  DATA.pbpBatters.forEach(function(p) { names.add(p.batter); });
   return Array.from(names).sort();
 }
 function getAllPitchers() {
@@ -228,6 +240,7 @@ function getAllPitchers() {
   DATA.pitches.forEach(function(p) {
     if (p.scatter) p.scatter.forEach(function(s) { if (s.pitcher) names.add(s.pitcher); });
   });
+  DATA.pbpPitchers.forEach(function(p) { names.add(p.pitcher); });
   return Array.from(names).sort();
 }
 
@@ -776,7 +789,9 @@ function renderPlayerList(content) {
     listContent.innerHTML = '';
 
     if (type === 'batters') {
-      const players = DATA.summary.filter(function(p) { return p.AB > 0; });
+      const players = DATA.pbpBatters.length
+        ? DATA.pbpBatters.filter(function(p) { return p.AB >= 5; })
+        : DATA.summary.filter(function(p) { return p.AB > 0; });
       const card = document.createElement('div');
       card.className = 'stat-card fade-up';
       card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">All Batters</span>' +
@@ -794,14 +809,19 @@ function renderPlayerList(content) {
         });
       });
     } else {
-      const names = getAllPitchers();
       const card  = document.createElement('div');
       card.className = 'stat-card fade-up';
+      var pitcherHTML = DATA.pbpPitchers.length
+        ? buildPbpPitcherTable(DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; }))
+        : buildPitcherListTable(getAllPitchers());
+      var pitcherCount = DATA.pbpPitchers.length
+        ? DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; }).length
+        : getAllPitchers().length;
       card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">All Pitchers</span>' +
-        '<span class="stat-card-subtitle">' + names.length + ' pitchers</span></div>' +
+        '<span class="stat-card-subtitle">' + pitcherCount + ' pitchers</span></div>' +
         '<div style="padding:16px 24px 0">' +
         '<input class="roster-search" id="pitcher-search" placeholder="Search pitchers..." /></div>' +
-        buildPitcherListTable(names);
+        pitcherHTML;
       listContent.appendChild(card);
       initPlayerLinks(card, 'pitcher');
       document.getElementById('pitcher-search').addEventListener('input', function(e) {
@@ -900,12 +920,13 @@ function renderPlayerDetail(name, type, content) {
   }
 
   const hl = document.getElementById('headline-stats');
-  if (type === 'batter' && sum) {
-    // RBI from IBL history (most recent season with AB)
-    const iblB = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
-    const iblBSeason = iblB.length ? iblB[0] : null;
-    const hlRBI = iblBSeason && iblBSeason.RBI != null ? fmtN(iblBSeason.RBI) : '—';
-    [['AVG', fmt3(sum.AVG)], ['OPS', fmt3(sum.OPS)], ['HR', fmtN(sum.HR)], ['RBI', hlRBI]].forEach(function(s) {
+  if (type === 'batter') {
+    var pbpB = getPbpBatter(name);
+    var dispAVG = pbpB ? fmt3(pbpB.AVG) : (sum ? fmt3(sum.AVG) : '—');
+    var dispOPS = pbpB ? fmt3(pbpB.OPS) : (sum ? fmt3(sum.OPS) : '—');
+    var dispHR  = pbpB ? fmtN(pbpB.HR)  : (sum ? fmtN(sum.HR)  : '—');
+    var dispPA  = pbpB ? fmtN(pbpB.PA)  : '—';
+    [['AVG', dispAVG], ['OPS', dispOPS], ['HR', dispHR], ['PA', dispPA]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   } else if (type === 'pitcher' && pitchData && pitchData.scatter) {
@@ -917,16 +938,12 @@ function renderPlayerDetail(name, type, content) {
     const pd = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
     // ERA from IBL history (most recent season with IP)
     const iblP = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
-    const iblPSeason = iblP.length ? iblP[0] : null;
-    const hlIP   = pd.IP   != null ? fmtIP(pd.IP) : '—';
-    const hlERA  = iblPSeason && iblPSeason.ERA != null ? fmt2(iblPSeason.ERA) : '—';
-    // WHIP calculated from datadiamond scatter: (BB + H) / IP
-    const scAll  = pitchData && pitchData.scatter ? pitchData.scatter : [];
-    const pdBB   = scAll.filter(function(s){ return s.outcome==='Walk'||s.outcome==='Intentional Walk'; }).length;
-    const pdH    = scAll.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
-    const hlWHIP = pd.IP > 0 ? fmt2((pdBB + pdH) / pd.IP) : '—';
-    const hlKBB  = pd.K_BB != null ? fmt2(pd.K_BB) : '—';
-    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP]].forEach(function(s) {
+    var pbpP = getPbpPitcher(name);
+    const hlIP   = pbpP ? fmtIP(pbpP.IP) : (pd.IP != null ? fmtIP(pd.IP) : '—');
+    const hlERA  = pbpP ? fmt2(pbpP.ERA)  : '—';
+    const hlWHIP = pbpP ? fmt2(pbpP.WHIP) : '—';
+    const hlKpct = pbpP ? fmt1(pbpP.K_pct)+'%' : '—';
+    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP], ['K%', hlKpct]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   }
@@ -987,6 +1004,8 @@ function renderPlayerDetail(name, type, content) {
 function renderOverview(name, type, sum, pitch, playerInfo) {
   var sc  = (pitch && pitch.scatter) ? pitch.scatter : [];
   var pi  = playerInfo || {};
+  var pbpB = getPbpBatter(name);
+  var pbpP = getPbpPitcher(name);
 
   // ── Shared percentile helper ───────────────────
   function pctRank(val, arr) {
@@ -1063,10 +1082,9 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
   // ══════════════════════════════
   // BATTER DATA
   // ══════════════════════════════
-  if (type === 'batter' && sum) {
+  if (type === 'batter') {
     var scB = sc.filter(function(s){ return s.x != null && s.y != null; });
     var side = scB.length ? (scB[0].batter_side || 'R') : 'R';
-    // x = vertical (0=bottom of zone, 1=top), y = horizontal (-1=left, 0=middle, 1=right catcher view)
     var insideFn  = side === 'R' ? function(s){ return s.y < -0.1; } : function(s){ return s.y > 0.1; };
     var outsideFn = side === 'R' ? function(s){ return s.y >  0.1; } : function(s){ return s.y < -0.1; };
     var highFn    = function(s){ return s.x > 0.6; };
@@ -1074,110 +1092,141 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
     var inZoneFn  = function(s){ return s.y >= -1 && s.y <= 1 && s.x >= 0 && s.x <= 1; };
     var oozFn     = function(s){ return !inZoneFn(s); };
 
-    var totP    = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
-    var swStr   = sc.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
-    var fouls   = sc.filter(function(s){ return s.outcome === 'Foul'; }).length;
-    var ipAll   = sc.filter(function(s){ return IN_PLAY.includes(s.outcome); }).length;
-    var swings  = swStr + fouls + ipAll;
-    var ks      = sc.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
-    var bbs     = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
-    var pa      = sum.PA || (sum.AB + (sum.BB||0) + (sum.HBP||0) + (sum.SF||0)) || 1;
+    // ── PBP-based stats (preferred) ───────────────
+    var d = pbpB;  // getPbpBatter(name) — set at top of renderOverview
+    var lgB = buildPbpBatterLeague();
+
+    function pctRankB(val, arr) {
+      if (!arr || !arr.length || val == null) return null;
+      var below = arr.filter(function(v){ return v < val; }).length;
+      var equal = arr.filter(function(v){ return v === val; }).length;
+      return (below + equal * 0.5) / arr.length;
+    }
+
+    // Slash line — use pbpB if available, else sum
+    var srcAVG = d ? d.AVG  : (sum ? sum.AVG  : null);
+    var srcOBP = d ? d.OBP  : (sum ? sum.OBP  : null);
+    var srcSLG = d ? d.SLG  : (sum ? sum.SLG  : null);
+    var srcOPS = d ? d.OPS  : (sum ? sum.OPS  : null);
+    var srcHR  = d ? d.HR   : (sum ? sum.HR   : null);
+
+    var lgAvg  = d ? lgB.avg  : []; var lgObp = d ? lgB.obp  : [];
+    var lgSlg  = d ? lgB.slg  : []; var lgOps = d ? lgB.ops  : [];
+    var lgHr   = DATA.pbpBatters.filter(function(p){ return p.AB>=5; }).map(function(p){ return p.HR||0; });
+
+    evalStat('AVG', srcAVG != null ? fmt3(srcAVG) : '—', pctRankB(srcAVG, lgAvg), true,
+      { elite:'Hitting at an outstanding rate — one of the best averages in the league.', strong:'Solid contact rate, well above the league average.',
+        weak:'Below-average batting average — contact consistency is a concern.', poor:'Struggling to make consistent contact, one of the lowest averages in the league.' });
+    evalStat('OBP', srcOBP != null ? fmt3(srcOBP) : '—', pctRankB(srcOBP, lgObp), true,
+      { elite:'Gets on base at an elite rate — rarely makes an easy out.', strong:'Consistently reaches base above the league average.',
+        weak:'On-base percentage is below average — makes outs at a high rate.', poor:'Very low on-base percentage, one of the worst in the league.' });
+    evalStat('SLG', srcSLG != null ? fmt3(srcSLG) : '—', pctRankB(srcSLG, lgSlg), true,
+      { elite:'Exceptional power numbers — driving the ball with elite authority.', strong:'Above-average slugger with real extra-base pop.',
+        weak:'Below-average slugging — lacks extra-base hit production.', poor:'Very low slugging percentage, struggles to drive the ball with power.' });
+    evalStat('OPS', srcOPS != null ? fmt3(srcOPS) : '—', pctRankB(srcOPS, lgOps), true,
+      { elite:'Elite overall offensive production — top-tier combination of on-base and power.', strong:'Above-average run producer combining OBP and slugging effectively.',
+        weak:'Below-average overall offensive output.', poor:'Among the lowest OPS in the league — struggles getting on base and driving the ball.' });
+    evalStat('HR',  srcHR  != null ? fmtN(srcHR)  : '—', pctRankB(srcHR,  lgHr),  true,
+      { elite:'Among the league leaders in home runs — a genuine power threat.', strong:'Above-average home run production.', weak:null, poor:null });
+
+    // ── Discipline stats from PBP ─────────────────
+    if (d) {
+      evalStat('SWING%',    d.SWING_pct   != null ? fmt1(d.SWING_pct)+'%'   : '—', pctRankB(d.SWING_pct,   lgB.swing),   false,
+        { weak:'Passive approach — below-average swing rate, letting a lot of pitches go.', poor:'One of the lowest swing rates in the league — very selective, rarely offers.' });
+      evalStat('WHIFF%',    d.WHIFF_pct   != null ? fmt1(d.WHIFF_pct)+'%'   : '—', d.WHIFF_pct != null ? 1-pctRankB(d.WHIFF_pct, lgB.whiff) : null, true,
+        { elite:'Excellent bat-to-ball skills — one of the lowest whiff rates in the league.', strong:'Above-average contact rate on swings.',
+          weak:'High whiff rate — misses on a significant portion of swings.', poor:'One of the highest whiff rates in the league — struggles to make bat-on-ball contact.' });
+      evalStat('K%',        d.K_pct       != null ? fmt1(d.K_pct)+'%'       : '—', d.K_pct != null ? 1-pctRankB(d.K_pct, lgB.kpct) : null, true,
+        { elite:'Exceptional strikeout avoidance — one of the hardest to put away in the league.', strong:'Below-average strikeout rate — makes consistent contact.',
+          weak:'Strikeout rate is elevated — pitchers are regularly putting this hitter away.', poor:'One of the highest strikeout rates in the league — a major vulnerability.' });
+      evalStat('BB%',       d.BB_pct      != null ? fmt1(d.BB_pct)+'%'      : '—', pctRankB(d.BB_pct,      lgB.bbpct),   true,
+        { elite:'Outstanding plate discipline — draws walks at an elite rate.', strong:'Above-average walk rate, shows good patience at the plate.',
+          weak:'Low walk rate — rarely works counts or forces free passes.', poor:'Almost never walks — an aggressive approach that pitchers can exploit.' });
+      evalStat('PS/PA',     d.PS_PA       != null ? fmt2(d.PS_PA)           : '—', pctRankB(d.PS_PA,       lgB.pspa),    true,
+        { elite:'Sees an elite number of pitches per PA — works counts to exhaustion.', strong:'Above-average pitch count per PA — runs up counts and tires pitchers.',
+          weak:'Below-average pitches per PA — tends to swing early in counts.', poor:'One of the lowest PS/PA in the league — very first-pitch aggressive.' });
+      evalStat('CONTACT%',  d.CONTACT_pct != null ? fmt1(d.CONTACT_pct)+'%' : '—', pctRankB(d.CONTACT_pct, lgB.contact), true,
+        { elite:'Elite bat-to-ball ability — makes contact at one of the highest rates in the league.', strong:'Above-average contact rate — consistently puts the ball in play.',
+          weak:'Below-average contact rate — missing more often than most hitters.', poor:'Struggles to make contact on swings — one of the lowest contact rates in the league.' });
+      evalStat('GB%',       d.GB_pct      != null ? fmt1(d.GB_pct)+'%'      : '—', d.GB_pct != null ? 1-pctRankB(d.GB_pct, lgB.gb) : null, true,
+        { elite:'Excellent ground ball avoidance — hits the ball in the air consistently.', strong:'Above-average tendency to avoid ground balls.',
+          weak:'Heavy ground ball hitter — limiting extra-base potential.', poor:'One of the highest ground ball rates — nearly everything stays on the ground.' });
+      evalStat('FB%',       d.FB_pct      != null ? fmt1(d.FB_pct)+'%'      : '—', pctRankB(d.FB_pct,      lgB.fb),      true,
+        { elite:'Elite fly ball rate — generates air contact at a top-tier rate.', strong:'Above-average fly ball rate — good power profile.',
+          weak:null, poor:null });
+      evalStat('FP SWING%', d.FP_SWING_pct!= null ? fmt1(d.FP_SWING_pct)+'%': '—', d.FP_SWING_pct != null ? 1-pctRankB(d.FP_SWING_pct, lgB.fpSwing) : null, true,
+        { elite:'Takes first pitches at an elite rate — forces pitchers to throw strikes.', strong:'Patient on first pitches — works deeper into counts.',
+          weak:'Swings at first pitches frequently — pitchers can get ahead cheaply.', poor:'One of the most aggressive first-pitch hitters — almost always offers.' });
+    } else {
+      // Fallback to scatter-based stats if no PBP data
+      var totP = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+      var swStr = sc.filter(function(s){ return s.outcome === 'Swinging Strike'; }).length;
+      var fouls = sc.filter(function(s){ return s.outcome === 'Foul'; }).length;
+      var ipAll = sc.filter(function(s){ return IN_PLAY.includes(s.outcome); }).length;
+      var swings = swStr + fouls + ipAll;
+      var ks  = sc.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
+      var bbs = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+      var pa  = sum ? (sum.PA || (sum.AB + (sum.BB||0) + (sum.HBP||0) + (sum.SF||0)) || 1) : 1;
+      var mySwing = totP > 0 ? swings/totP : null;
+      var myWhiff = swings > 0 ? swStr/swings : null;
+      var myK  = pa > 0 ? ks/pa : null;
+      var myBB = pa > 0 ? bbs/pa : null;
+      var lgSwing=[]; var lgWhiff=[]; var lgK=[]; var lgBB=[];
+      DATA.pitches.forEach(function(bp){
+        var s2=bp.scatter||[]; var t2=s2.filter(function(s){return s.outcome&&s.outcome!=='';}).length; if(!t2)return;
+        var sw2=s2.filter(function(s){return s.outcome==='Swinging Strike';}).length;
+        var fo2=s2.filter(function(s){return s.outcome==='Foul';}).length;
+        var ip2=s2.filter(function(s){return IN_PLAY.includes(s.outcome);}).length;
+        var sw2t=sw2+fo2+ip2;
+        lgSwing.push(t2>0?sw2t/t2:0);
+        if(sw2t>0) lgWhiff.push(sw2/sw2t);
+      });
+      DATA.summary.forEach(function(p){
+        if(!p.AB||p.AB<5)return;
+        var pPA=p.PA||(p.AB+(p.BB||0)+(p.HBP||0)+(p.SF||0))||1;
+        lgK.push((p.K||0)/pPA); lgBB.push((p.BB||0)/pPA);
+      });
+      evalStat('SWING%', mySwing!=null?fmt1(mySwing*100)+'%':'—', pctRank(mySwing,lgSwing), true,
+        { elite:'Attacks pitches at an elite rate.', strong:'Above-average swing rate.',
+          weak:'Passive approach — below-average swing rate.', poor:'One of the lowest swing rates in the league.' });
+      evalStat('WHIFF%', myWhiff!=null?fmt1(myWhiff*100)+'%':'—', pctRank(myWhiff,lgWhiff), false,
+        { weak:'High whiff rate — misses on a significant portion of swings.', poor:'One of the highest whiff rates — struggles to make contact.' });
+      evalStat('K%',     myK!=null?fmt1(myK*100)+'%':'—',         pctRank(myK,lgK),         false,
+        { weak:'Strikeout rate is elevated.', poor:'One of the highest strikeout rates in the league.' });
+      evalStat('BB%',    myBB!=null?fmt1(myBB*100)+'%':'—',        pctRank(myBB,lgBB),       true,
+        { elite:'Outstanding plate discipline.', strong:'Above-average walk rate.',
+          weak:'Low walk rate.', poor:'Almost never walks.' });
+    }
+
+    // In-zone / chase from scatter (datadiamond only — needs x/y coords)
     var inZonePts    = scB.filter(inZoneFn);
     var inZoneSwings = inZonePts.filter(function(s){ return ['Swinging Strike','Foul'].concat(IN_PLAY).includes(s.outcome); }).length;
     var inZoneCon    = inZonePts.filter(function(s){ return ['Foul'].concat(IN_PLAY).includes(s.outcome); }).length;
     var oozPts  = scB.filter(oozFn);
     var chases  = oozPts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
-
-    var mySwing   = totP > 0           ? swings / totP                      : null;
-    var myWhiff   = swings > 0         ? swStr / swings                     : null;
-    var myK       = pa > 0             ? ks / pa                            : null;
-    var myBB      = pa > 0             ? bbs / pa                           : null;
-    var myPspa    = pa > 0             ? totP / pa                          : null;
-    var myIzSwing = inZonePts.length   ? inZoneSwings / inZonePts.length    : null;
-    var myIzCon   = inZoneSwings > 0   ? inZoneCon / inZoneSwings           : null;
-    var myChase   = oozPts.length > 0  ? chases / oozPts.length             : null;
-
-    // League arrays
-    var lg = { avg:[], ops:[], obp:[], slg:[], hr:[], swing:[], whiff:[], kRate:[], bbRate:[], pspa:[], izSwing:[], izCon:[], chase:[] };
-    DATA.summary.forEach(function(p) {
-      if (!p.AB || p.AB < 5) return;
-      lg.avg.push(p.AVG||0); lg.ops.push(p.OPS||0); lg.obp.push(p.OBP||0); lg.slg.push(p.SLG||0); lg.hr.push(p.HR||0);
-      var pPA = p.PA||(p.AB+(p.BB||0)+(p.HBP||0)+(p.SF||0))||1;
-      lg.kRate.push((p.K||0)/pPA); lg.bbRate.push((p.BB||0)/pPA);
-    });
-    DATA.pitches.forEach(function(bp) {
-      var sc2=bp.scatter||[]; var t2=sc2.filter(function(s){return s.outcome&&s.outcome!=='';}).length; if(!t2)return;
-      var sw2=sc2.filter(function(s){return s.outcome==='Swinging Strike';}).length;
-      var fo2=sc2.filter(function(s){return s.outcome==='Foul';}).length;
-      var ip2=sc2.filter(function(s){return IN_PLAY.includes(s.outcome);}).length;
-      var sw2t=sw2+fo2+ip2;
-      var bSum2=getSummaryPlayer(bp.batter);
-      var pa2=bSum2?(bSum2.PA||(bSum2.AB+(bSum2.BB||0)+(bSum2.HBP||0)+(bSum2.SF||0))||1):1;
-      var iz2=sc2.filter(function(s){return s.y!=null&&s.x!=null&&s.y>=-1&&s.y<=1&&s.x>=0&&s.x<=1;});
+    var myIzSwing = inZonePts.length  ? inZoneSwings / inZonePts.length : null;
+    var myIzCon   = inZoneSwings > 0  ? inZoneCon    / inZoneSwings     : null;
+    var myChase   = oozPts.length > 0 ? chases        / oozPts.length   : null;
+    var lgIzSwing=[]; var lgIzCon=[]; var lgChase=[];
+    DATA.pitches.forEach(function(bp){
+      var s2=bp.scatter||[];
+      var iz2=s2.filter(function(s){return s.y!=null&&s.x!=null&&s.y>=-1&&s.y<=1&&s.x>=0&&s.x<=1;});
       var izSw2=iz2.filter(function(s){return['Swinging Strike','Foul'].concat(IN_PLAY).includes(s.outcome);}).length;
       var izCon2=iz2.filter(function(s){return['Foul'].concat(IN_PLAY).includes(s.outcome);}).length;
-      var ooz2=sc2.filter(function(s){return s.y!=null&&s.x!=null&&(s.y<-1||s.y>1||s.x<0||s.x>1);});
+      var ooz2=s2.filter(function(s){return s.y!=null&&s.x!=null&&(s.y<-1||s.y>1||s.x<0||s.x>1);});
       var ch2=ooz2.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Foul';}).length;
-      lg.swing.push(t2>0?sw2t/t2:0);
-      if(sw2t>0)       lg.whiff.push(sw2/sw2t);
-      lg.pspa.push(t2/pa2);
-      if(iz2.length>0)  lg.izSwing.push(izSw2/iz2.length);
-      if(izSw2>0)       lg.izCon.push(izCon2/izSw2);
-      if(ooz2.length>0) lg.chase.push(ch2/ooz2.length);
+      if(iz2.length>0)  lgIzSwing.push(izSw2/iz2.length);
+      if(izSw2>0)       lgIzCon.push(izCon2/izSw2);
+      if(ooz2.length>0) lgChase.push(ch2/ooz2.length);
     });
-
-    // Standard rate / average stats
-    evalStat('AVG',  fmt3(sum.AVG), pctRank(sum.AVG,lg.avg), true,
-      { elite:'Hitting at an outstanding rate — one of the best averages in the league.', strong:'Solid contact rate, well above the league average.',
-        weak:'Below-average batting average — contact consistency is a concern.', poor:'Struggling to make consistent contact, one of the lowest averages in the league.' });
-    evalStat('OBP',  fmt3(sum.OBP), pctRank(sum.OBP,lg.obp), true,
-      { elite:'Gets on base at an elite rate — rarely makes an easy out.', strong:'Consistently reaches base above the league average.',
-        weak:'On-base percentage is below average — makes outs at a high rate.', poor:'Very low on-base percentage, one of the worst in the league.' });
-    evalStat('SLG',  fmt3(sum.SLG), pctRank(sum.SLG,lg.slg), true,
-      { elite:'Exceptional power numbers — driving the ball with elite authority.', strong:'Above-average slugger with real extra-base pop.',
-        weak:'Below-average slugging — lacks extra-base hit production.', poor:'Very low slugging percentage, struggles to drive the ball with power.' });
-    evalStat('OPS',  fmt3(sum.OPS), pctRank(sum.OPS,lg.ops), true,
-      { elite:'Elite overall offensive production — top-tier combination of on-base and power.', strong:'Above-average run producer combining OBP and slugging effectively.',
-        weak:'Below-average overall offensive output.', poor:'Among the lowest OPS in the league — struggles getting on base and driving the ball.' });
-    evalStat('HR',   fmtN(sum.HR),  pctRank(sum.HR,lg.hr),   true,
-      { elite:'Among the league leaders in home runs — a genuine power threat.', strong:'Above-average home run production.', weak:null, poor:null });
-
-    // Pitch-tracking discipline rates
-    evalStat('SWING%',      mySwing!=null  ? fmt1(mySwing*100)+'%'   : '—', pctRank(mySwing,lg.swing),     true,
-      { elite:'Attacks pitches at an elite rate — an extremely aggressive, committed hitter.', strong:'Above-average swing rate — an active, attacking bat.',
-        weak:'Passive approach — below-average swing rate, letting a lot of pitches go.', poor:'One of the lowest swing rates in the league — very selective, rarely offers.' });
-    evalStat('WHIFF%',      myWhiff!=null  ? fmt1(myWhiff*100)+'%'   : '—', pctRank(myWhiff,lg.whiff),     false,
-      { weak:'High whiff rate — misses on a significant portion of swings.', poor:'One of the highest whiff rates in the league — struggles to make bat-on-ball contact.' });
-    evalStat('K%',          myK!=null      ? fmt1(myK*100)+'%'       : '—', pctRank(myK,lg.kRate),         false,
-      { weak:'Strikeout rate is elevated — pitchers are regularly putting this hitter away.', poor:'One of the highest strikeout rates in the league — a major vulnerability.' });
-    evalStat('BB%',         myBB!=null     ? fmt1(myBB*100)+'%'      : '—', pctRank(myBB,lg.bbRate),       true,
-      { elite:'Outstanding plate discipline — draws walks at an elite rate.', strong:'Above-average walk rate, shows good patience at the plate.',
-        weak:'Low walk rate — rarely works counts or forces free passes.', poor:'Almost never walks — an aggressive approach that pitchers can exploit.' });
-    evalStat('PS/PA',       myPspa!=null   ? fmt2(myPspa)            : '—', pctRank(myPspa,lg.pspa),       true,
-      { elite:'Sees an elite number of pitches per PA — works counts to exhaustion.', strong:'Above-average pitch count per PA — runs up counts and tires pitchers.',
-        weak:'Below-average pitches per PA — tends to swing early in counts.', poor:'One of the lowest PS/PA in the league — very first-pitch aggressive.' });
-    evalStat('IZ SWING%',   myIzSwing!=null? fmt1(myIzSwing*100)+'%' : '—', pctRank(myIzSwing,lg.izSwing), true,
-      { elite:'Attacks pitches in the zone at an elite rate — rarely takes a hittable pitch.', strong:'Above-average zone swing rate — recognizes and attacks strikes.',
+    evalStat('IZ SWING%',   myIzSwing!=null?fmt1(myIzSwing*100)+'%':'—', pctRank(myIzSwing,lgIzSwing), true,
+      { elite:'Attacks pitches in the zone at an elite rate.', strong:'Above-average zone swing rate — recognizes and attacks strikes.',
         weak:'Below-average zone swing rate — taking more strikes than most hitters.', poor:'One of the lowest in-zone swing rates — frequently lets hittable pitches pass.' });
-    evalStat('IZ CONTACT%', myIzCon!=null  ? fmt1(myIzCon*100)+'%'  : '—', pctRank(myIzCon,lg.izCon),     true,
+    evalStat('IZ CONTACT%', myIzCon!=null?fmt1(myIzCon*100)+'%':'—',     pctRank(myIzCon,lgIzCon),   true,
       { elite:'Exceptional in-zone contact — rarely misses a pitch in the strike zone.', strong:'Above-average contact rate on pitches in the zone.',
         weak:'Below-average in-zone contact — missing strikes more often than most.', poor:'Struggles significantly to make contact on pitches in the strike zone.' });
-    evalStat('CHASE%',      myChase!=null  ? fmt1(myChase*100)+'%'   : '—', pctRank(myChase,lg.chase),     false,
+    evalStat('CHASE%',      myChase!=null?fmt1(myChase*100)+'%':'—',      pctRank(myChase,lgChase),   false,
       { weak:'Chases pitches out of the zone at an above-average rate.', poor:'One of the highest chase rates in the league — easily baited outside the strike zone.' });
-
-    // RBI from IBL history
-    var lg_rbi=[];
-    DATA.summary.forEach(function(p){
-      if(!p.AB||p.AB<5)return;
-      var iblR=(DATA.iblHistory[p.batter]||[]).filter(function(s){return s.AB>0;});
-      if(iblR.length&&iblR[0].RBI!=null) lg_rbi.push(iblR[0].RBI);
-    });
-    var myRBI=null;
-    var _iblB2=(DATA.iblHistory[name]||[]).filter(function(s){return s.AB>0;});
-    if(_iblB2.length&&_iblB2[0].RBI!=null) myRBI=_iblB2[0].RBI;
-    if(myRBI!=null) evalStat('RBI', fmtN(myRBI), pctRank(myRBI,lg_rbi), true,
-      { elite:'Among the league leaders in RBI — a true run producer.', strong:'Above-average RBI production.',
-        weak:'Below-average RBI total.', poor:'One of the lowest RBI totals — struggling to drive in runs.' });
 
     // Zone / pitch-type approach checks
     var ZONE_CHECKS = [
@@ -1227,9 +1276,10 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
   // ══════════════════════════════
   // PITCHER DATA
   // ══════════════════════════════
-  if (type === 'pitcher' && pitch && pitch.scatter) {
+  if (type === 'pitcher') {
     var scP  = sc.filter(function(s){ return s.x != null && s.y != null; });
     var pd   = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
+    var pbpPO = getPbpPitcher(name) || {};
     var tot  = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
     var ks   = sc.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
     var bbs  = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
@@ -1245,8 +1295,8 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
     var myWhiff = swings > 0 ? swS / swings : null;
     var myK     = tot > 0    ? ks / tot     : null;
     var myBB    = tot > 0    ? bbs / tot    : null;
-    var myEA    = pd.EA_pct  != null ? pd.EA_pct : null;
-    var myKBB   = pd.K_BB    != null ? pd.K_BB   : null;
+    var myEA    = pbpPO.EA_pct != null ? pbpPO.EA_pct : (pd.EA_pct  != null ? pd.EA_pct : null);
+    var myKBB   = pbpPO.K_BB   != null ? pbpPO.K_BB   : (pd.K_BB    != null ? pd.K_BB   : null);
 
     var iblP   = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
     var iblPRS = iblP.length ? iblP[0] : null;
@@ -1410,6 +1460,61 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
     '</div>';
 
   return identityCard + cols;
+}
+
+// ── PBP-based league percentile arrays ────────────────────────────────────
+function buildPbpBatterLeague() {
+  var o = { avg:[], obp:[], slg:[], ops:[], iso:[], babip:[], kpct:[], bbpct:[], bbk:[], pspa:[],
+            swing:[], whiff:[], contact:[], fpSwing:[], gb:[], fb:[], lo:[], po:[] };
+  DATA.pbpBatters.forEach(function(p) {
+    if (!p.AB || p.AB < 5) return;
+    if (p.AVG   != null) o.avg.push(p.AVG);
+    if (p.OBP   != null) o.obp.push(p.OBP);
+    if (p.SLG   != null) o.slg.push(p.SLG);
+    if (p.OPS   != null) o.ops.push(p.OPS);
+    if (p.ISO   != null) o.iso.push(p.ISO);
+    if (p.BABIP != null) o.babip.push(p.BABIP);
+    if (p.K_pct != null) o.kpct.push(p.K_pct);
+    if (p.BB_pct!= null) o.bbpct.push(p.BB_pct);
+    if (p.BB_K  != null) o.bbk.push(p.BB_K);
+    if (p.PS_PA != null) o.pspa.push(p.PS_PA);
+    if (p.SWING_pct   != null) o.swing.push(p.SWING_pct);
+    if (p.WHIFF_pct   != null) o.whiff.push(p.WHIFF_pct);
+    if (p.CONTACT_pct != null) o.contact.push(p.CONTACT_pct);
+    if (p.FP_SWING_pct!= null) o.fpSwing.push(p.FP_SWING_pct);
+    if (p.GB_pct != null) o.gb.push(p.GB_pct);
+    if (p.FB_pct != null) o.fb.push(p.FB_pct);
+    if (p.LO_pct != null) o.lo.push(p.LO_pct);
+    if (p.PO_pct != null) o.po.push(p.PO_pct);
+  });
+  return o;
+}
+
+function buildPbpPitcherLeague() {
+  var o = { era:[], whip:[], baAgst:[], babip:[], kpct:[], bbpct:[], kbb:[], str:[], swing:[],
+            whiff:[], contact:[], fpStr:[], putaway:[], ea:[], gb:[], fb:[], lo:[], po:[] };
+  DATA.pbpPitchers.forEach(function(p) {
+    if (!p.BF || p.BF < 5) return;
+    if (p.ERA        != null) o.era.push(p.ERA);
+    if (p.WHIP       != null) o.whip.push(p.WHIP);
+    if (p.BA_against != null) o.baAgst.push(p.BA_against);
+    if (p.BABIP      != null) o.babip.push(p.BABIP);
+    if (p.K_pct      != null) o.kpct.push(p.K_pct);
+    if (p.BB_pct     != null) o.bbpct.push(p.BB_pct);
+    if (p.K_BB       != null) o.kbb.push(p.K_BB);
+    if (p.STR_pct    != null) o.str.push(p.STR_pct);
+    if (p.SWING_pct  != null) o.swing.push(p.SWING_pct);
+    if (p.WHIFF_pct  != null) o.whiff.push(p.WHIFF_pct);
+    if (p.CONTACT_pct!= null) o.contact.push(p.CONTACT_pct);
+    if (p.FP_STR_pct != null) o.fpStr.push(p.FP_STR_pct);
+    if (p.PUTAWAY_pct!= null) o.putaway.push(p.PUTAWAY_pct);
+    if (p.EA_pct     != null) o.ea.push(p.EA_pct);
+    if (p.GB_pct     != null) o.gb.push(p.GB_pct);
+    if (p.FB_pct     != null) o.fb.push(p.FB_pct);
+    if (p.LO_pct     != null) o.lo.push(p.LO_pct);
+    if (p.PO_pct     != null) o.po.push(p.PO_pct);
+  });
+  return o;
 }
 
 function renderPercentileStats(name, type, sum, pitch) {
@@ -1700,43 +1805,69 @@ function renderPercentileStats(name, type, sum, pitch) {
 
     function lp(v, a) { return leaguePct(v, a); }
 
-    var allBars = !sc.length ? [] : [
-      // Slash line
-      { lbl: 'BA',          val: sum.AVG    != null ? fmt3(sum.AVG)            : '—', pct: lp(sum.AVG,    leagueDisc.avg),       good: true  },
-      { lbl: 'OBP',         val: sum.OBP    != null ? fmt3(sum.OBP)            : '—', pct: lp(sum.OBP,    leagueDisc.obp),       good: true  },
-      { lbl: 'SLG',         val: sum.SLG    != null ? fmt3(sum.SLG)            : '—', pct: lp(sum.SLG,    leagueDisc.slg),       good: true  },
-      { lbl: 'OPS',         val: sum.OPS    != null ? fmt3(sum.OPS)            : '—', pct: lp(sum.OPS,    leagueDisc.ops),       good: true  },
-      { lbl: 'ISO',         val: myISO      != null ? fmt3(myISO)              : '—', pct: lp(myISO,      leagueDisc.iso),       good: true  },
-      { lbl: 'BABIP',       val: myBABIP    != null ? fmt3(myBABIP)            : '—', pct: lp(myBABIP,    leagueDisc.babip),     good: true  },
-      { lbl: 'RBI',         val: myRBI      != null ? fmtN(myRBI)              : '—', pct: lp(myRBI,      leagueDisc.rbi),       good: true  },
-      { lbl: 'BA/RISP',     val: myBARISP   != null ? fmt3(myBARISP)           : '—', pct: lp(myBARISP,   leagueDisc.baRisp),    good: true  },
-      // Plate discipline
-      { lbl: 'SWING%',      val: mySwing    != null ? fmt1(mySwing*100)+'%'    : '—', pct: mySwing    != null ? 1-lp(mySwing,    leagueDisc.swing)     : 0, good: true },
-      { lbl: 'WHIFF%',      val: myWhiff    != null ? fmt1(myWhiff*100)+'%'    : '—', pct: myWhiff    != null ? 1-lp(myWhiff,    leagueDisc.whiff)     : 0, good: true },
-      { lbl: 'CONTACT%',    val: myContact  != null ? fmt1(myContact*100)+'%'  : '—', pct: myContact  != null ? lp(myContact,    leagueDisc.contact)   : 0, good: true },
-      { lbl: 'K%',          val: myK        != null ? fmt1(myK*100)+'%'        : '—', pct: myK        != null ? 1-lp(myK,        leagueDisc.k)         : 0, good: true },
-      { lbl: 'BB%',         val: myBB       != null ? fmt1(myBB*100)+'%'       : '—', pct: myBB       != null ? lp(myBB,         leagueDisc.bb)        : 0, good: true },
-      { lbl: 'BB/K',        val: myBBK      != null ? fmt2(myBBK)              : '—', pct: myBBK      != null ? lp(myBBK,        leagueDisc.bbk)       : 0, good: true },
-      { lbl: 'PS/PA',       val: myPspa     != null ? fmt2(myPspa)             : '—', pct: myPspa     != null ? lp(myPspa,       leagueDisc.pspa)      : 0, good: true },
-      { lbl: 'IZ SWING%',   val: myIzSwing  != null ? fmt1(myIzSwing*100)+'%' : '—', pct: myIzSwing  != null ? lp(myIzSwing,    leagueDisc.izSwing)   : 0, good: true },
-      { lbl: 'IZ CONTACT%', val: myIzContact!= null ? fmt1(myIzContact*100)+'%': '—', pct: myIzContact!= null ? lp(myIzContact, leagueDisc.izContact)  : 0, good: true },
-      { lbl: 'CHASE%',      val: myChase    != null ? fmt1(myChase*100)+'%'    : '—', pct: myChase    != null ? 1-lp(myChase,    leagueDisc.chase)     : 0, good: true },
-      // First pitch
-      { lbl: 'FP SWING%',   val: myFPSwing  != null ? fmt1(myFPSwing*100)+'%' : '—', pct: myFPSwing  != null ? lp(myFPSwing,    leagueDisc.fpSwing)   : 0, good: true },
-      // 2-strike
-      // Contact type (% of outs in play)
-      { lbl: 'GB%',         val: bipB > 0   ? fmt1(gbB/bipB*100)+'%'           : '—', pct: bipB > 0   ? lp(gbB/bipB,            leagueDisc.gb)        : 0, good: false },
-      { lbl: 'FB%',         val: bipB > 0   ? fmt1(fbB/bipB*100)+'%'           : '—', pct: bipB > 0   ? lp(fbB/bipB,            leagueDisc.fb)        : 0, good: true  },
-      { lbl: 'LO%',         val: bipB > 0   ? fmt1(loB/bipB*100)+'%'           : '—', pct: bipB > 0   ? lp(loB/bipB,            leagueDisc.lo)        : 0, good: true  },
-      { lbl: 'PO%',         val: bipB > 0   ? fmt1(poB/bipB*100)+'%'           : '—', pct: bipB > 0   ? lp(poB/bipB,            leagueDisc.po)        : 0, good: false },
-    ].filter(function(b){ return b.val !== '—'; });
+    // Use pbpBatters data if available, fall back to scatter-derived
+    var pbpBatterData = getPbpBatter(name);
+    var lgB = buildPbpBatterLeague();
 
-    if (!allBars.length) {
-      return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No pitch data available</h3></div>';
+    function lpB(val, arr) {
+      if (!arr || !arr.length || val == null) return 0;
+      var below = arr.filter(function(v){ return v < val; }).length;
+      var equal = arr.filter(function(v){ return v === val; }).length;
+      return (below + equal * 0.5) / arr.length;
     }
 
-    return buildFilteredCard('pct-batter', 'Percentile Stats', totPitches + ' pitches seen', allBars, 110, null,
-      ['SWING%','WHIFF%','CONTACT%','K%','BB%','BB/K','PS/PA','IZ SWING%','IZ CONTACT%','CHASE%']);
+    var pitchCount = pbpBatterData ? pbpBatterData.pitches : totPitches;
+
+    var allBars = [];
+    if (pbpBatterData) {
+      // ── PBP-derived bars ──
+      var d = pbpBatterData;
+      allBars = [
+        { lbl: 'BA',         val: d.AVG   != null ? fmt3(d.AVG)           : '—', pct: lpB(d.AVG,           lgB.avg),     good: true  },
+        { lbl: 'OBP',        val: d.OBP   != null ? fmt3(d.OBP)           : '—', pct: lpB(d.OBP,           lgB.obp),     good: true  },
+        { lbl: 'SLG',        val: d.SLG   != null ? fmt3(d.SLG)           : '—', pct: lpB(d.SLG,           lgB.slg),     good: true  },
+        { lbl: 'OPS',        val: d.OPS   != null ? fmt3(d.OPS)           : '—', pct: lpB(d.OPS,           lgB.ops),     good: true  },
+        { lbl: 'ISO',        val: d.ISO   != null ? fmt3(d.ISO)           : '—', pct: lpB(d.ISO,           lgB.iso),     good: true  },
+        { lbl: 'BABIP',      val: d.BABIP != null ? fmt3(d.BABIP)         : '—', pct: lpB(d.BABIP,         lgB.babip),   good: true  },
+        { lbl: 'SWING%',     val: d.SWING_pct   != null ? fmt1(d.SWING_pct)+'%'   : '—', pct: lpB(d.SWING_pct,   lgB.swing),   good: false },
+        { lbl: 'WHIFF%',     val: d.WHIFF_pct   != null ? fmt1(d.WHIFF_pct)+'%'   : '—', pct: 1-lpB(d.WHIFF_pct, lgB.whiff),   good: true  },
+        { lbl: 'CONTACT%',   val: d.CONTACT_pct != null ? fmt1(d.CONTACT_pct)+'%' : '—', pct: lpB(d.CONTACT_pct, lgB.contact), good: true  },
+        { lbl: 'K%',         val: d.K_pct  != null ? fmt1(d.K_pct)+'%'   : '—', pct: 1-lpB(d.K_pct,       lgB.kpct),    good: true  },
+        { lbl: 'BB%',        val: d.BB_pct != null ? fmt1(d.BB_pct)+'%'  : '—', pct: lpB(d.BB_pct,        lgB.bbpct),   good: true  },
+        { lbl: 'BB/K',       val: d.BB_K  != null ? fmt2(d.BB_K)         : '—', pct: lpB(d.BB_K,          lgB.bbk),     good: true  },
+        { lbl: 'PS/PA',      val: d.PS_PA != null ? fmt2(d.PS_PA)        : '—', pct: lpB(d.PS_PA,         lgB.pspa),    good: true  },
+        { lbl: 'IZ SWING%',  val: myIzSwing  != null ? fmt1(myIzSwing*100)+'%'  : '—', pct: myIzSwing  != null ? lp(myIzSwing,  leagueDisc.izSwing)  : 0, good: true },
+        { lbl: 'IZ CONTACT%',val: myIzContact!= null ? fmt1(myIzContact*100)+'%': '—', pct: myIzContact!= null ? lp(myIzContact,leagueDisc.izContact) : 0, good: true },
+        { lbl: 'CHASE%',     val: myChase    != null ? fmt1(myChase*100)+'%'    : '—', pct: myChase    != null ? 1-lp(myChase,   leagueDisc.chase)    : 0, good: true },
+        { lbl: 'FP SWING%',  val: d.FP_SWING_pct != null ? fmt1(d.FP_SWING_pct)+'%' : '—', pct: lpB(d.FP_SWING_pct, lgB.fpSwing), good: false },
+        { lbl: 'GB%',        val: d.GB_pct != null ? fmt1(d.GB_pct)+'%'  : '—', pct: 1-lpB(d.GB_pct,     lgB.gb),      good: true  },
+        { lbl: 'FB%',        val: d.FB_pct != null ? fmt1(d.FB_pct)+'%'  : '—', pct: lpB(d.FB_pct,       lgB.fb),      good: true  },
+        { lbl: 'LO%',        val: d.LO_pct != null ? fmt1(d.LO_pct)+'%'  : '—', pct: lpB(d.LO_pct,       lgB.lo),      good: true  },
+        { lbl: 'PO%',        val: d.PO_pct != null ? fmt1(d.PO_pct)+'%'  : '—', pct: 1-lpB(d.PO_pct,     lgB.po),      good: true  },
+      ].filter(function(b){ return b.val !== '—'; });
+    } else if (sc.length) {
+      // Fall back to scatter-derived bars
+      allBars = [
+        { lbl: 'BA',         val: sum && sum.AVG  != null ? fmt3(sum.AVG)         : '—', pct: lp(sum && sum.AVG,  leagueDisc.avg),  good: true  },
+        { lbl: 'OBP',        val: sum && sum.OBP  != null ? fmt3(sum.OBP)         : '—', pct: lp(sum && sum.OBP,  leagueDisc.obp),  good: true  },
+        { lbl: 'SLG',        val: sum && sum.SLG  != null ? fmt3(sum.SLG)         : '—', pct: lp(sum && sum.SLG,  leagueDisc.slg),  good: true  },
+        { lbl: 'OPS',        val: sum && sum.OPS  != null ? fmt3(sum.OPS)         : '—', pct: lp(sum && sum.OPS,  leagueDisc.ops),  good: true  },
+        { lbl: 'SWING%',     val: mySwing    != null ? fmt1(mySwing*100)+'%'    : '—', pct: mySwing    != null ? 1-lp(mySwing,    leagueDisc.swing)    : 0, good: true },
+        { lbl: 'WHIFF%',     val: myWhiff    != null ? fmt1(myWhiff*100)+'%'    : '—', pct: myWhiff    != null ? 1-lp(myWhiff,    leagueDisc.whiff)    : 0, good: true },
+        { lbl: 'K%',         val: myK        != null ? fmt1(myK*100)+'%'        : '—', pct: myK        != null ? 1-lp(myK,        leagueDisc.k)        : 0, good: true },
+        { lbl: 'BB%',        val: myBB       != null ? fmt1(myBB*100)+'%'       : '—', pct: myBB       != null ? lp(myBB,         leagueDisc.bb)       : 0, good: true },
+        { lbl: 'IZ SWING%',  val: myIzSwing  != null ? fmt1(myIzSwing*100)+'%' : '—', pct: myIzSwing  != null ? lp(myIzSwing,    leagueDisc.izSwing)  : 0, good: true },
+        { lbl: 'IZ CONTACT%',val: myIzContact!= null ? fmt1(myIzContact*100)+'%': '—', pct: myIzContact!= null ? lp(myIzContact, leagueDisc.izContact) : 0, good: true },
+        { lbl: 'CHASE%',     val: myChase    != null ? fmt1(myChase*100)+'%'    : '—', pct: myChase    != null ? 1-lp(myChase,    leagueDisc.chase)    : 0, good: true },
+      ].filter(function(b){ return b.val !== '—'; });
+    }
+
+    if (!allBars.length) {
+      return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No data available</h3></div>';
+    }
+
+    return buildFilteredCard('pct-batter', 'Percentile Stats', pitchCount + ' pitches seen', allBars, 110, null,
+      ['BA','OBP','SLG','OPS','SWING%','WHIFF%','CONTACT%','K%','BB%','BB/K','PS/PA','FP SWING%','GB%','FB%']);
   }
 
   // ══════════════════════════════════════════════
@@ -1789,9 +1920,13 @@ function renderPercentileStats(name, type, sum, pitch) {
         o.contact.push(sw2t > 0 ? (sw2t-sw2)/sw2t : 0);
         o.k.push(ks2/t2);
         o.bb.push(bbs2/t2);
-        if (pd2.EA_pct != null) o.ea.push(pd2.EA_pct);
-        if (pd2.K_BB   != null) o.kbb.push(pd2.K_BB);
-        if (pd2.IP > 0) o.whip.push((bbs2+h2)/pd2.IP);
+        var pbpPD2 = DATA.pbpPitchers.find(function(pp){ return pp.pitcher === pname2; }) || {};
+        if (pbpPD2.EA_pct != null) o.ea.push(pbpPD2.EA_pct);
+        else if (pd2.EA_pct != null) o.ea.push(pd2.EA_pct);
+        if (pbpPD2.K_BB   != null) o.kbb.push(pbpPD2.K_BB);
+        else if (pd2.K_BB  != null) o.kbb.push(pd2.K_BB);
+        if (pbpPD2.WHIP   != null) o.whip.push(pbpPD2.WHIP);
+        else if (pd2.IP > 0) o.whip.push((bbs2+h2)/pd2.IP);
         if (ab2 >= 5)   o.baAgst.push(h2/ab2);
         if (bDen2 >= 5) o.babip.push(bNum2/bDen2);
         if (bip2 > 0)   { o.gb.push(gb2/bip2); o.fb.push(fb2/bip2); o.lo.push(lo2/bip2); o.po.push(po2/bip2); }
@@ -1875,10 +2010,46 @@ function renderPercentileStats(name, type, sum, pitch) {
         ].filter(function(b){ return b.val !== '—'; })
       };
     }
-    var sc     = pitch.scatter;
-    var m      = calcBars(sc);
-    var allBars = m.bars;
+    var sc     = pitch ? pitch.scatter : [];
+    var m      = sc && sc.length ? calcBars(sc) : { bars: [], tot: 0 };
     var tot    = m.tot;
+    var pbpPitData = getPbpPitcher(name);
+    var lgPpbp = buildPbpPitcherLeague();
+
+    function lpP(val, arr) {
+      if (!arr || !arr.length || val == null) return 0;
+      var below = arr.filter(function(v){ return v < val; }).length;
+      var equal = arr.filter(function(v){ return v === val; }).length;
+      return (below + equal * 0.5) / arr.length;
+    }
+
+    var allBars;
+    if (pbpPitData) {
+      var dp = pbpPitData;
+      allBars = [
+        { lbl: 'ERA',      val: dp.ERA        != null ? fmt2(dp.ERA)              : '—', pct: dp.ERA        != null ? 1-lpP(dp.ERA,        lgPpbp.era)     : 0, good: true },
+        { lbl: 'WHIP',     val: dp.WHIP       != null ? fmt2(dp.WHIP)             : '—', pct: dp.WHIP       != null ? 1-lpP(dp.WHIP,       lgPpbp.whip)    : 0, good: true },
+        { lbl: 'BA AGNST', val: dp.BA_against != null ? fmt3(dp.BA_against)       : '—', pct: dp.BA_against != null ? 1-lpP(dp.BA_against, lgPpbp.baAgst)  : 0, good: true },
+        { lbl: 'BABIP',    val: dp.BABIP      != null ? fmt3(dp.BABIP)            : '—', pct: dp.BABIP      != null ? 1-lpP(dp.BABIP,      lgPpbp.babip)   : 0, good: true },
+        { lbl: 'STR%',     val: dp.STR_pct    != null ? fmt1(dp.STR_pct)+'%'     : '—', pct: lpP(dp.STR_pct,    lgPpbp.str),     good: true },
+        { lbl: 'SWING%',   val: dp.SWING_pct  != null ? fmt1(dp.SWING_pct)+'%'   : '—', pct: lpP(dp.SWING_pct,  lgPpbp.swing),   good: true },
+        { lbl: 'WHIFF%',   val: dp.WHIFF_pct  != null ? fmt1(dp.WHIFF_pct)+'%'   : '—', pct: lpP(dp.WHIFF_pct,  lgPpbp.whiff),   good: true },
+        { lbl: 'CONTACT%', val: dp.CONTACT_pct!= null ? fmt1(dp.CONTACT_pct)+'%' : '—', pct: dp.CONTACT_pct!= null ? 1-lpP(dp.CONTACT_pct, lgPpbp.contact) : 0, good: true },
+        { lbl: 'K%',       val: dp.K_pct      != null ? fmt1(dp.K_pct)+'%'       : '—', pct: lpP(dp.K_pct,      lgPpbp.kpct),    good: true },
+        { lbl: 'BB%',      val: dp.BB_pct     != null ? fmt1(dp.BB_pct)+'%'      : '—', pct: dp.BB_pct     != null ? 1-lpP(dp.BB_pct,     lgPpbp.bbpct)   : 0, good: true },
+        { lbl: 'E+A%',     val: dp.EA_pct     != null ? fmt1(dp.EA_pct)+'%'      : '—', pct: lpP(dp.EA_pct,     lgPpbp.ea),      good: true },
+        { lbl: 'K/BB',     val: dp.K_BB       != null ? fmt2(dp.K_BB)            : '—', pct: lpP(dp.K_BB,       lgPpbp.kbb),     good: true },
+        { lbl: 'GB%',      val: dp.GB_pct     != null ? fmt1(dp.GB_pct)+'%'      : '—', pct: lpP(dp.GB_pct,     lgPpbp.gb),      good: true },
+        { lbl: 'FB%',      val: dp.FB_pct     != null ? fmt1(dp.FB_pct)+'%'      : '—', pct: dp.FB_pct     != null ? 1-lpP(dp.FB_pct,     lgPpbp.fb)      : 0, good: true },
+        { lbl: 'LO%',      val: dp.LO_pct     != null ? fmt1(dp.LO_pct)+'%'      : '—', pct: lpP(dp.LO_pct,     lgPpbp.lo),      good: true },
+        { lbl: 'PO%',      val: dp.PO_pct     != null ? fmt1(dp.PO_pct)+'%'      : '—', pct: dp.PO_pct     != null ? 1-lpP(dp.PO_pct,     lgPpbp.po)      : 0, good: true },
+        { lbl: 'FP STR%',  val: dp.FP_STR_pct != null ? fmt1(dp.FP_STR_pct)+'%' : '—', pct: lpP(dp.FP_STR_pct, lgPpbp.fpStr),   good: true },
+        { lbl: 'PUTAWAY%', val: dp.PUTAWAY_pct!= null ? fmt1(dp.PUTAWAY_pct)+'%' : '—', pct: lpP(dp.PUTAWAY_pct,lgPpbp.putaway), good: true },
+      ].filter(function(b){ return b.val !== '—'; });
+      tot = dp.pitches || tot;
+    } else {
+      allBars = m.bars;
+    }
 
     // Season selector HTML (injected as extraHeaderHTML)
     var seasonSelectHTML = pmYears.length
@@ -1891,8 +2062,8 @@ function renderPercentileStats(name, type, sum, pitch) {
         '</div>'
       : '';
 
-    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', tot + ' pitches', allBars, 80, seasonSelectHTML,
-      ['STR%','SWING%','WHIFF%','CONTACT%','K%','BB%','E+A%','K/BB']);
+    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', (tot || (pbpPitData && pbpPitData.BF) || 0) + ' batters faced', allBars, 80, seasonSelectHTML,
+      ['ERA','WHIP','STR%','SWING%','WHIFF%','CONTACT%','K%','BB%','E+A%','K/BB','GB%','FB%']);
 
     // Wire season dropdown — updates pitch count subtitle and re-renders bars
     setTimeout(function() {
@@ -3134,10 +3305,12 @@ function buildSplitsTables(points) {
 // ── TABLE BUILDERS ────────────────────────────────
 function buildHittingTable(players) {
   const rows = players.map(function(p) {
-    const team = resolveTeam(p.batter_team);
+    const teamField = p.batter_team;
+    const team = resolveTeam(teamField);
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + p.batter + '" data-type="batter">' + p.batter + '</a></td>' +
       '<td>' + (team ? team.abbreviation : '—') + '</td>' +
+      '<td>' + fmtN(p.PA || p.AB) + '</td>' +
       '<td>' + fmtN(p.AB) + '</td>' +
       '<td class="highlight-val">' + fmt3(p.AVG) + '</td>' +
       '<td>' + fmt3(p.OBP) + '</td>' +
@@ -3149,11 +3322,48 @@ function buildHittingTable(players) {
       '<td>' + fmtN(p.HR) + '</td>' +
       '<td>' + fmtN(p.BB) + '</td>' +
       '<td>' + fmtN(p.K) + '</td>' +
+      '<td>' + (p.K_pct != null ? fmt1(p.K_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.BB_pct != null ? fmt1(p.BB_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.SWING_pct != null ? fmt1(p.SWING_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.WHIFF_pct != null ? fmt1(p.WHIFF_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.GB_pct != null ? fmt1(p.GB_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.FB_pct != null ? fmt1(p.FB_pct)+'%' : '—') + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-    '<th style="text-align:left">Player</th><th>Team</th><th>AB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th>' +
+    '<th style="text-align:left">Player</th><th>Team</th><th>PA</th><th>AB</th>' +
+    '<th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th>' +
     '<th>H</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>K</th>' +
+    '<th>K%</th><th>BB%</th><th>SWING%</th><th>WHIFF%</th><th>GB%</th><th>FB%</th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table></div>';
+}
+
+function buildPbpPitcherTable(pitchers) {
+  const rows = pitchers.map(function(p) {
+    const team = resolveTeam(p.pitcher_team);
+    return '<tr>' +
+      '<td><a class="player-name-cell" data-name="' + p.pitcher + '" data-type="pitcher">' + p.pitcher + '</a></td>' +
+      '<td>' + (team ? team.abbreviation : '—') + '</td>' +
+      '<td>' + fmtIP(p.IP || 0) + '</td>' +
+      '<td>' + fmtN(p.BF) + '</td>' +
+      '<td class="highlight-val">' + (p.ERA != null ? fmt2(p.ERA) : '—') + '</td>' +
+      '<td>' + (p.WHIP != null ? fmt2(p.WHIP) : '—') + '</td>' +
+      '<td>' + (p.BA_against != null ? fmt3(p.BA_against) : '—') + '</td>' +
+      '<td class="highlight-val">' + (p.K_pct != null ? fmt1(p.K_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.BB_pct != null ? fmt1(p.BB_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.K_BB != null ? fmt2(p.K_BB) : '—') + '</td>' +
+      '<td>' + (p.STR_pct != null ? fmt1(p.STR_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.SWING_pct != null ? fmt1(p.SWING_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.WHIFF_pct != null ? fmt1(p.WHIFF_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.EA_pct != null ? fmt1(p.EA_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.GB_pct != null ? fmt1(p.GB_pct)+'%' : '—') + '</td>' +
+      '<td>' + (p.FB_pct != null ? fmt1(p.FB_pct)+'%' : '—') + '</td>' +
+      '</tr>';
+  }).join('');
+  return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
+    '<th style="text-align:left">Pitcher</th><th>Team</th><th>IP</th><th>BF</th>' +
+    '<th>ERA</th><th>WHIP</th><th>BA AGN</th><th>K%</th><th>BB%</th><th>K/BB</th>' +
+    '<th>STR%</th><th>SWING%</th><th>WHIFF%</th><th>E+A%</th><th>GB%</th><th>FB%</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
