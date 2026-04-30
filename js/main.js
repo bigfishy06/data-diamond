@@ -5,6 +5,103 @@
 
 function getBase() { return '/'; }
 
+// ── GOOGLE AUTH ───────────────────────────────────
+const AUTH = {
+  CLIENT_ID: '348783711243-fs4oqm29ftt5bd3bin80id4a4rh7msqi.apps.googleusercontent.com',
+
+  // ✅ Add every email address that is allowed to access the site
+  ALLOWED_EMAILS: [
+    'you@example.com',
+    'colleague@example.com'
+  ],
+
+  // Internal state
+  _user: null,
+
+  init: function() {
+    // Load the saved session (survives page refreshes)
+    const saved = sessionStorage.getItem('dd_user');
+    if (saved) {
+      try { AUTH._user = JSON.parse(saved); } catch(e) {}
+    }
+
+    const path = window.location.pathname.split('/').pop() || 'index.html';
+    const onLoginPage = path === 'login.html';
+
+    if (!AUTH._user) {
+      // Not signed in — send to login page (unless already there)
+      if (!onLoginPage) { window.location.href = getBase() + 'login.html'; return false; }
+      return false;
+    }
+
+    if (onLoginPage) {
+      // Already signed in — bounce to home
+      window.location.href = getBase() + 'index.html';
+      return false;
+    }
+
+    AUTH._renderUserUI();
+    return true;
+  },
+
+  handleCredentialResponse: function(response) {
+    // Decode the JWT Google sends back
+    const payload = JSON.parse(atob(response.credential.split('.')[1]));
+    const email   = (payload.email || '').toLowerCase();
+
+    if (!AUTH.ALLOWED_EMAILS.map(function(e){ return e.toLowerCase(); }).includes(email)) {
+      document.getElementById('login-error').textContent =
+        '⛔ ' + email + ' is not authorised to access this site.';
+      return;
+    }
+
+    AUTH._user = { name: payload.given_name || payload.name, email: email, picture: payload.picture };
+    sessionStorage.setItem('dd_user', JSON.stringify(AUTH._user));
+    window.location.href = getBase() + 'index.html';
+  },
+
+  signOut: function() {
+    sessionStorage.removeItem('dd_user');
+    AUTH._user = null;
+    if (typeof google !== 'undefined') google.accounts.id.disableAutoSelect();
+    window.location.href = getBase() + 'login.html';
+  },
+
+  _renderUserUI: function() {
+    // Find or create the user widget in the nav
+    let widget = document.getElementById('auth-widget');
+    if (!widget) {
+      // Try to append into whatever header/nav exists
+      const nav = document.querySelector('nav, header, .nav-inner, .header-inner') || document.body;
+      widget = document.createElement('div');
+      widget.id = 'auth-widget';
+      nav.appendChild(widget);
+    }
+
+    const u = AUTH._user;
+    widget.innerHTML =
+      '<span id="auth-greeting">Hi, ' + u.name + '!</span>' +
+      (u.picture ? '<img id="auth-avatar" src="' + u.picture + '" alt="' + u.name + '">' : '') +
+      '<button id="auth-signout">Sign out</button>';
+
+    widget.querySelector('#auth-signout').addEventListener('click', AUTH.signOut);
+
+    // Inject minimal styles once
+    if (!document.getElementById('auth-styles')) {
+      var s = document.createElement('style');
+      s.id = 'auth-styles';
+      s.textContent =
+        '#auth-widget{display:flex;align-items:center;gap:10px;margin-left:auto;padding:0 16px;}' +
+        '#auth-greeting{color:#FFB81C;font-family:var(--font-mono,monospace);font-size:13px;white-space:nowrap;}' +
+        '#auth-avatar{width:30px;height:30px;border-radius:50%;border:2px solid #FFB81C;object-fit:cover;}' +
+        '#auth-signout{background:transparent;border:1px solid rgba(255,184,28,0.4);color:#FFB81C;' +
+        'padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px;transition:all .2s;}' +
+        '#auth-signout:hover{background:rgba(255,184,28,0.15);}';
+      document.head.appendChild(s);
+    }
+  }
+};
+
 const TEAMS = [
   { id: 'bar', name: 'Barrie Baycats',             abbreviation: 'BAR', primaryColor: '#C8102E' },
   { id: 'bra', name: 'Brantford Red Sox',           abbreviation: 'BRA', primaryColor: '#BD3039' },
@@ -32,6 +129,9 @@ let DATA = { summary: [], pitches: [], pitchers: [], iblHistory: {} };
 
 // ── INIT ──────────────────────────────────────────
 async function init() {
+  // Auth gate: stop here if user is not signed in
+  if (!AUTH.init()) return;
+
   await loadAll();
   buildTicker();
   initGlobalSearch();
