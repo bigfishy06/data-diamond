@@ -928,7 +928,7 @@ function renderPlayerDetail(name, type, content) {
     '<button class="tab-btn" data-tab="splits">Splits</button>' +
     (type === 'pitcher' ? '<button class="tab-btn" data-tab="usage">Pitch Usage</button>' : '') +
     '</div></div></div>' +
-    '<div class="container" style="padding-top:16px;padding-bottom:0" id="season-filter-bar"></div>' +
+
     '<div class="container" style="padding-top:32px;padding-bottom:80px"><div id="player-tab-content"></div></div>';
 
   if (team) {
@@ -1019,80 +1019,10 @@ function renderPlayerDetail(name, type, content) {
 
   tabs.forEach(function(tb) { tb.addEventListener('click', function() { activateTab(tb.dataset.tab); }); });
 
-  // ── Season filter ──────────────────────────────────────────────────────────
-  // Collect available seasons from iblHistory + scatter date years
-  var _histSeasons = (DATA.iblHistory[name] || []).map(function(s){ return s.season; }).filter(Boolean);
-  var _scatterYears = new Set();
-  if (pitchData && pitchData.scatter) {
-    pitchData.scatter.forEach(function(s){ if (s.date) _scatterYears.add(s.date.slice(0,4)); });
-  } else if (type === 'pitcher') {
-    DATA.pitches.forEach(function(bp){
-      if (!bp.scatter) return;
-      bp.scatter.forEach(function(s){ if (s.pitcher === name && s.date) _scatterYears.add(s.date.slice(0,4)); });
-    });
-  }
-
-  // Build unified season list — match iblHistory seasons to scatter years
-  // Format: [{label: '2025 Summer', year: '2025'}, ...]
-  var _allSeasonOpts = [];
-  _histSeasons.forEach(function(label) {
-    var yr = label.match(/(\d{4})/);
-    _allSeasonOpts.push({ label: label, year: yr ? yr[1] : null });
-  });
-  // Add scatter-only years that aren't in history
-  _scatterYears.forEach(function(yr) {
-    if (!_allSeasonOpts.find(function(o){ return o.year === yr; })) {
-      _allSeasonOpts.push({ label: yr, year: yr });
-    }
-  });
-  _allSeasonOpts.sort(function(a, b){ return b.year > a.year ? 1 : -1; });
-
-  // Active season — default to most recent (index 0) or 'all'
-  var activeSeasonFilter = _allSeasonOpts.length ? _allSeasonOpts[0].label : 'all';
+  // Always filter to 2025 data only
+  var activeSeasonFilter = '2025';
 
   // Render the filter bar (only show for tabs that use it)
-  var SEASON_TABS = ['overview', 'percentile', 'zone', 'splits'];
-
-  function renderSeasonFilterBar(activeTab) {
-    var _filterBar = document.getElementById('season-filter-bar');
-    if (!_filterBar) return;
-    if (!SEASON_TABS.includes(activeTab) || !_allSeasonOpts.length) {
-      _filterBar.innerHTML = '';
-      return;
-    }
-    var btnStyle = function(active) {
-      return 'font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;' +
-             'padding:5px 12px;border-radius:4px;cursor:pointer;transition:all .15s;' +
-             'border:1px solid ' + (active ? '#FFB81C' : 'rgba(255,255,255,0.1)') + ';' +
-             'background:' + (active ? 'rgba(255,184,28,0.12)' : 'rgba(255,255,255,0.03)') + ';' +
-             'color:' + (active ? '#FFB81C' : 'rgba(255,255,255,0.4)') + ';';
-    };
-    var btns = '<button style="' + btnStyle(activeSeasonFilter === 'all') + '" data-sf="all">ALL</button>';
-    _allSeasonOpts.forEach(function(opt) {
-      btns += '<button style="' + btnStyle(activeSeasonFilter === opt.label) + '" data-sf="' + opt.label + '">' +
-              opt.label.toUpperCase() + '</button>';
-    });
-    _filterBar.innerHTML =
-      '<div style="display:flex;align-items:center;gap:8px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.05)">' +
-      '<span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:rgba(255,255,255,0.25);text-transform:uppercase;white-space:nowrap">Season</span>' +
-      '<div style="display:flex;gap:6px;flex-wrap:wrap">' + btns + '</div></div>';
-
-    _filterBar.querySelectorAll('[data-sf]').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        activeSeasonFilter = btn.dataset.sf;
-        activateTab(currentTab); // re-render current tab with new filter
-      });
-    });
-  }
-
-  var currentTab = 'overview';
-  var _origActivate = activateTab;
-  activateTab = function(t) {
-    currentTab = t;
-    renderSeasonFilterBar(t);
-    _origActivate(t);
-  };
-
   activateTab('overview');
 }
 
@@ -1104,15 +1034,13 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
   // Filter scatter by season
   var _scRaw = (pitch && pitch.scatter) ? pitch.scatter : [];
   var sc = seasonFilter === 'all' ? _scRaw : _scRaw.filter(function(s){
-    if (!s.date) return true;
-    var yr = s.date.slice(0,4);
-    return seasonFilter.indexOf(yr) !== -1;
+    return !s.date || s.date.slice(0,4) === seasonFilter;
   });
   // For overview, also pick the right iblHistory season row
   var _ovIblAll = DATA.iblHistory[name] || [];
   var _ovIblSeason = seasonFilter === 'all'
     ? (_ovIblAll.filter(function(s){ return (type==='batter'?s.AB:s.IP) > 0; })[0] || null)
-    : (_ovIblAll.find(function(s){ return s.season === seasonFilter; }) || null);
+    : (_ovIblAll.find(function(s){ return s.season && s.season.indexOf(seasonFilter) !== -1; }) || null);
   var pbpP = getPbpPitcher(name);
 
   // ── Shared percentile helper ───────────────────
