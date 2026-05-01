@@ -1035,8 +1035,17 @@ function renderPlayerDetail(name, type, content) {
   _ddScatter.forEach(function(s) {
     var d = s.date || s.Date || s.game_date || '';
     if (!d) return;
-    var yr = String(d).slice(0, 4);
-    if (!/^\d{4}$/.test(yr) || _seenYears[yr]) return;
+    var yr;
+    d = String(d);
+    // Handle YYYY-MM-DD
+    if (d.length === 10 && d[4] === '-') {
+      yr = d.slice(0, 4);
+    // Handle DD-Mon-YY e.g. "01-Jun-25"
+    } else {
+      var parts = d.split('-');
+      if (parts.length === 3 && parts[2].length === 2) yr = '20' + parts[2];
+    }
+    if (!yr || !/^\d{4}$/.test(yr) || _seenYears[yr]) return;
     _seenYears[yr] = true;
     _allSeasonOpts.push({ label: yr, year: yr });
   });
@@ -1117,7 +1126,15 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
   // Filter scatter by season
   var _scRaw = (pitch && pitch.scatter) ? pitch.scatter : [];
   var sc = seasonFilter === 'all' ? _scRaw : _scRaw.filter(function(s){
-    return !s.date || s.date.slice(0,4) === seasonFilter;
+    if (!s.date) return true;
+    // Handle YYYY-MM-DD format
+    if (s.date.length === 10 && s.date[4] === '-') return s.date.slice(0,4) === seasonFilter;
+    // Handle DD-Mon-YY format e.g. "01-Jun-25"
+    var parts = s.date.split('-');
+    if (parts.length === 3 && parts[2].length === 2) {
+      return ('20' + parts[2]) === seasonFilter;
+    }
+    return true;
   });
   // For overview, also pick the right iblHistory season row
   var _ovIblAll = DATA.iblHistory[name] || [];
