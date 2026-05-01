@@ -18,16 +18,7 @@ const PORT = process.env.PORT || 3747;
 const MONGO_URI = process.env.MONGO_URI;
 
 // ── CORS: allow your GitHub Pages site ───────────────────────────────────────
-app.use(cors({
-  origin: [
-    /\.github\.io$/,
-    /localhost/,
-    /data-diamond\.onrender\.com$/,
-    /data-diamond\.ca$/
-  ],
-  methods: ['GET','POST','OPTIONS'],
-  allowedHeaders: ['Content-Type']
-}));
+app.use(cors()); // allow all origins
 app.use(express.json({ limit: '10mb' }));
 
 // ── MongoDB ───────────────────────────────────────────────────────────────────
