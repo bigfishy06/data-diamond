@@ -1480,13 +1480,39 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
 
   // ── Batted ball donut chart (batter only, from pbpBatters) ──────────────────
   var donutHTML = '';
-  if (type === 'batter' && pbpB &&
-      (pbpB.GB_pct != null || pbpB.FB_pct != null || pbpB.LO_pct != null || pbpB.PO_pct != null)) {
+  if (type === 'batter') {
+    // Try pbpBatters first (case-insensitive fallback)
+    var pbpBD = pbpB || DATA.pbpBatters.find(function(p){
+      return p.batter.toLowerCase() === name.toLowerCase();
+    }) || null;
 
-    var gb = pbpB.GB_pct || 0;
-    var fb = pbpB.FB_pct || 0;
-    var lo = pbpB.LO_pct || 0;
-    var po = pbpB.PO_pct || 0;
+    // Fall back to scatter-based contact data if no pbpB
+    var gb = 0, fb = 0, lo = 0, po = 0;
+    if (pbpBD && (pbpBD.GB_pct != null || pbpBD.FB_pct != null)) {
+      gb = pbpBD.GB_pct || 0;
+      fb = pbpBD.FB_pct || 0;
+      lo = pbpBD.LO_pct || 0;
+      po = pbpBD.PO_pct || 0;
+    } else if (sc.length) {
+      // Derive from scatter contact quality
+      var batted = sc.filter(function(s){
+        return ['Groundout','Flyout','Single','Double','Triple','Home Run',
+                'Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s.outcome);
+      });
+      var gbC = batted.filter(function(s){ return s.contact === 'Ground Ball'; }).length;
+      var fbC = batted.filter(function(s){ return s.contact === 'Fly Ball'; }).length;
+      var loC = batted.filter(function(s){ return s.contact === 'Line Drive'; }).length;
+      var poC = batted.filter(function(s){ return s.contact === 'Pop Up'; }).length;
+      var tot = gbC + fbC + loC + poC;
+      if (tot >= 5) {
+        gb = Math.round(gbC / tot * 100 * 10) / 10;
+        fb = Math.round(fbC / tot * 100 * 10) / 10;
+        lo = Math.round(loC / tot * 100 * 10) / 10;
+        po = Math.round(poC / tot * 100 * 10) / 10;
+      }
+    }
+
+    if (gb + fb + lo + po > 0) {
 
     // Segments: GB=orange, FB=blue, LO=green, PO=purple
     var segments = [
@@ -1551,8 +1577,8 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
         '</div>';
     }).join('');
 
-    donutHTML =
-      '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">' +
+      donutHTML =
+        '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">' +
         '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px">Batted Ball Profile</div>' +
         '<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">' +
           // SVG donut
@@ -1568,7 +1594,8 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
           '</div>' +
         '</div>' +
       '</div>';
-  }
+    } // end gb > 0
+  } // end batter
 
   // ── Pitcher time-to-plate gauge ──────────────────────────────────────────────
   var pitcherGaugeHTML = '';
@@ -1598,7 +1625,7 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
       }
 
       // Build SVG gauge (semicircle)
-      var gR = 54, gCx = 70, gCy = 68;
+      var gR = 54, gCx = 70, gCy = 74;
       var startDeg = 180, endDeg = 0; // left to right semicircle
 
       // Needle angle: map ttp to 180°→0° (left=fast, right=slow)
@@ -1654,7 +1681,7 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
           '<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">' +
             // SVG gauge
             '<div style="flex-shrink:0;text-align:center">' +
-              '<svg width="140" height="80" viewBox="0 0 140 80">' +
+              '<svg width="140" height="90" viewBox="0 0 140 90">' +
                 // Background track
                 '<path d="M ' + (gCx - gR) + ' ' + gCy + ' A ' + gR + ' ' + gR + ' 0 0 1 ' + (gCx + gR) + ' ' + gCy +
                       ' L ' + (gCx + ir) + ' ' + gCy + ' A ' + ir + ' ' + ir + ' 0 0 0 ' + (gCx - ir) + ' ' + gCy + ' Z"' +
