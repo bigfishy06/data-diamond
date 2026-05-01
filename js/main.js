@@ -1594,222 +1594,127 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     '</div>';
   }
 
-  // ── Batted ball donut chart (batter only, from pbpBatters) ──────────────────
+  // ── Batted ball donut + spray direction (batter only) ──────────────────────
   var donutHTML = '';
   if (type === 'batter') {
-    // Try pbpBatters first (case-insensitive fallback)
     var pbpBD = pbpB || DATA.pbpBatters.find(function(p){
       return p.batter.toLowerCase() === name.toLowerCase();
     }) || null;
 
-    // Fall back to scatter-based contact data if no pbpB
     var gb = 0, fb = 0, lo = 0, po = 0;
     if (pbpBD && (pbpBD.GB_pct != null || pbpBD.FB_pct != null)) {
-      gb = pbpBD.GB_pct || 0;
-      fb = pbpBD.FB_pct || 0;
-      lo = pbpBD.LO_pct || 0;
-      po = pbpBD.PO_pct || 0;
+      gb = pbpBD.GB_pct || 0; fb = pbpBD.FB_pct || 0;
+      lo = pbpBD.LO_pct || 0; po = pbpBD.PO_pct || 0;
     } else if (sc.length) {
-      // Derive from scatter contact quality
       var batted = sc.filter(function(s){
         return ['Groundout','Flyout','Single','Double','Triple','Home Run',
                 'Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s.outcome);
       });
-      var gbC = batted.filter(function(s){ return s.contact === 'Ground Ball'; }).length;
-      var fbC = batted.filter(function(s){ return s.contact === 'Fly Ball'; }).length;
-      var loC = batted.filter(function(s){ return s.contact === 'Line Drive'; }).length;
-      var poC = batted.filter(function(s){ return s.contact === 'Pop Up'; }).length;
-      var tot = gbC + fbC + loC + poC;
-      if (tot >= 5) {
-        gb = Math.round(gbC / tot * 100 * 10) / 10;
-        fb = Math.round(fbC / tot * 100 * 10) / 10;
-        lo = Math.round(loC / tot * 100 * 10) / 10;
-        po = Math.round(poC / tot * 100 * 10) / 10;
+      var gbC=batted.filter(function(s){return s.contact==='Ground Ball';}).length;
+      var fbC=batted.filter(function(s){return s.contact==='Fly Ball';}).length;
+      var loC=batted.filter(function(s){return s.contact==='Line Drive';}).length;
+      var poC=batted.filter(function(s){return s.contact==='Pop Up';}).length;
+      var tot=gbC+fbC+loC+poC;
+      if(tot>=5){
+        gb=Math.round(gbC/tot*1000)/10; fb=Math.round(fbC/tot*1000)/10;
+        lo=Math.round(loC/tot*1000)/10; po=Math.round(poC/tot*1000)/10;
       }
     }
 
-    if (gb + fb + lo + po > 0) {
-
-    // Segments: GB=orange, FB=blue, LO=green, PO=purple
-    var segments = [
-      { label: 'GB%', pct: gb, color: '#fb923c' },
-      { label: 'FB%', pct: fb, color: '#60a5fa' },
-      { label: 'LO%', pct: lo, color: '#34d399' },
-      { label: 'PO%', pct: po, color: '#a78bfa' }
-    ].filter(function(s) { return s.pct > 0; });
-
-    var total = gb + fb + lo + po;
-
-    // Build SVG donut
-    var cx = 60, cy = 60, R = 48, r = 30;
-    var svgPaths = '';
-    var startAngle = -Math.PI / 2; // start from top
-
-    segments.forEach(function(seg) {
-      var sweep = (seg.pct / 100) * 2 * Math.PI;
-      var endAngle = startAngle + sweep;
-
-      // Outer arc
-      var x1o = cx + R * Math.cos(startAngle);
-      var y1o = cy + R * Math.sin(startAngle);
-      var x2o = cx + R * Math.cos(endAngle);
-      var y2o = cy + R * Math.sin(endAngle);
-      // Inner arc
-      var x1i = cx + r * Math.cos(endAngle);
-      var y1i = cy + r * Math.sin(endAngle);
-      var x2i = cx + r * Math.cos(startAngle);
-      var y2i = cy + r * Math.sin(startAngle);
-
-      var largeArc = sweep > Math.PI ? 1 : 0;
-
-      var path = 'M ' + x1o.toFixed(2) + ' ' + y1o.toFixed(2) +
-                 ' A ' + R + ' ' + R + ' 0 ' + largeArc + ' 1 ' + x2o.toFixed(2) + ' ' + y2o.toFixed(2) +
-                 ' L ' + x1i.toFixed(2) + ' ' + y1i.toFixed(2) +
-                 ' A ' + r + ' ' + r + ' 0 ' + largeArc + ' 0 ' + x2i.toFixed(2) + ' ' + y2i.toFixed(2) +
-                 ' Z';
-
-      svgPaths += '<path d="' + path + '" fill="' + seg.color + '" opacity="0.9"/>';
-
-      // Label in middle of arc
-      var midAngle = startAngle + sweep / 2;
-      var labelR   = (R + r) / 2;
-      var lx = cx + labelR * Math.cos(midAngle);
-      var ly = cy + labelR * Math.sin(midAngle);
-      if (seg.pct >= 8) {
-        svgPaths += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 1).toFixed(1) + '"' +
-                    ' text-anchor="middle" dominant-baseline="middle"' +
-                    ' font-size="7" font-family="monospace" font-weight="bold" fill="#0e1525">' +
-                    Math.round(seg.pct) + '%</text>';
-      }
-      startAngle = endAngle;
-    });
-
-    // Legend items
-    var legendHTML = segments.map(function(seg) {
-      return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
-        '<div style="width:10px;height:10px;border-radius:2px;background:' + seg.color + ';flex-shrink:0"></div>' +
-        '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.05em;width:36px">' + seg.label + '</div>' +
-        '<div style="font-family:var(--font-mono);font-size:13px;color:#fff;font-weight:600">' + fmt1(seg.pct) + '%</div>' +
-        '</div>';
-    }).join('');
-
-      donutHTML =
-        '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">' +
-        '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px">Batted Ball Profile</div>' +
-        '<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">' +
-          // SVG donut
-          '<svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0">' +
-            svgPaths +
-            // total label in center
-            '<text x="' + cx + '" y="' + (cy - 5) + '" text-anchor="middle" font-size="8" font-family="monospace" fill="rgba(255,255,255,0.4)">' + Math.round(total) + '% BIP</text>' +
-            '<text x="' + cx + '" y="' + (cy + 7) + '" text-anchor="middle" font-size="7" font-family="monospace" fill="rgba(255,255,255,0.25)">tracked</text>' +
-          '</svg>' +
-          // Legend
-          '<div style="flex:1;min-width:120px">' +
-            legendHTML +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    } // end gb > 0
-
-    // ── Spray direction donut + shift recommendation ─────────────────────────
-    var sprayHTML = '';
-    var pullC = 0, strC = 0, oppC = 0;
-    if (sc.length) {
-      var batted2 = sc.filter(function(s){
-        return ['Groundout','Flyout','Single','Double','Triple','Home Run',
-                'Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s.outcome) && s.spray;
+    function buildDonut(segments, total, cx, cy, R, r, centerLines) {
+      var paths='', startA=-Math.PI/2;
+      segments.forEach(function(seg){
+        var sweep=(seg.pct/100)*2*Math.PI, endA=startA+sweep;
+        var x1o=cx+R*Math.cos(startA),y1o=cy+R*Math.sin(startA);
+        var x2o=cx+R*Math.cos(endA),  y2o=cy+R*Math.sin(endA);
+        var x1i=cx+r*Math.cos(endA),  y1i=cy+r*Math.sin(endA);
+        var x2i=cx+r*Math.cos(startA),y2i=cy+r*Math.sin(startA);
+        var la=sweep>Math.PI?1:0;
+        paths+='<path d="M '+x1o.toFixed(2)+' '+y1o.toFixed(2)+
+               ' A '+R+' '+R+' 0 '+la+' 1 '+x2o.toFixed(2)+' '+y2o.toFixed(2)+
+               ' L '+x1i.toFixed(2)+' '+y1i.toFixed(2)+
+               ' A '+r+' '+r+' 0 '+la+' 0 '+x2i.toFixed(2)+' '+y2i.toFixed(2)+
+               ' Z" fill="'+seg.color+'" opacity="0.9"/>';
+        var midA=startA+sweep/2, lRm=(R+r)/2;
+        var lx=cx+lRm*Math.cos(midA), ly=cy+lRm*Math.sin(midA);
+        if(seg.pct>=8) paths+='<text x="'+lx.toFixed(1)+'" y="'+(ly+1).toFixed(1)+'" text-anchor="middle" dominant-baseline="middle" font-size="7" font-family="monospace" font-weight="bold" fill="#0e1525">'+Math.round(seg.pct)+'%</text>';
+        startA=endA;
       });
-      pullC = batted2.filter(function(s){ return s.spray === 'Pull'; }).length;
-      strC  = batted2.filter(function(s){ return s.spray === 'Straightaway'; }).length;
-      oppC  = batted2.filter(function(s){ return s.spray === 'Opposite Field'; }).length;
-      var sprayTot = pullC + strC + oppC;
-
-      if (sprayTot >= 3) {
-        var pullPct = Math.round(pullC / sprayTot * 1000) / 10;
-        var strPct2 = Math.round(strC  / sprayTot * 1000) / 10;
-        var oppPct  = Math.round(oppC  / sprayTot * 1000) / 10;
-
-        var spraySegs = [
-          { label: 'Pull',        pct: pullPct, color: '#f87171' },
-          { label: 'Straightaway',pct: strPct2, color: '#FFB81C' },
-          { label: 'Oppo',       pct: oppPct,  color: '#60a5fa' }
-        ].filter(function(s){ return s.pct > 0; });
-
-        // Build donut SVG
-        var scx = 60, scy = 60, sR = 48, sr = 30;
-        var sPaths = '';
-        var sStart = -Math.PI / 2;
-        spraySegs.forEach(function(seg) {
-          var sweep = (seg.pct / 100) * 2 * Math.PI;
-          var sEnd = sStart + sweep;
-          var x1o = scx + sR * Math.cos(sStart), y1o = scy + sR * Math.sin(sStart);
-          var x2o = scx + sR * Math.cos(sEnd),   y2o = scy + sR * Math.sin(sEnd);
-          var x1i = scx + sr * Math.cos(sEnd),   y1i = scy + sr * Math.sin(sEnd);
-          var x2i = scx + sr * Math.cos(sStart), y2i = scy + sr * Math.sin(sStart);
-          var la = sweep > Math.PI ? 1 : 0;
-          var path = 'M '+x1o.toFixed(2)+' '+y1o.toFixed(2)+
-                     ' A '+sR+' '+sR+' 0 '+la+' 1 '+x2o.toFixed(2)+' '+y2o.toFixed(2)+
-                     ' L '+x1i.toFixed(2)+' '+y1i.toFixed(2)+
-                     ' A '+sr+' '+sr+' 0 '+la+' 0 '+x2i.toFixed(2)+' '+y2i.toFixed(2)+' Z';
-          sPaths += '<path d="'+path+'" fill="'+seg.color+'" opacity="0.9"/>';
-          var midA = sStart + sweep / 2;
-          var lR2 = (sR + sr) / 2;
-          var lx2 = scx + lR2 * Math.cos(midA), ly2 = scy + lR2 * Math.sin(midA);
-          if (seg.pct >= 8) {
-            sPaths += '<text x="'+lx2.toFixed(1)+'" y="'+(ly2+1).toFixed(1)+'"'+
-                      ' text-anchor="middle" dominant-baseline="middle"'+
-                      ' font-size="7" font-family="monospace" font-weight="bold" fill="#0e1525">'+
-                      Math.round(seg.pct)+'%</text>';
-          }
-          sStart = sEnd;
-        });
-
-        // Shift recommendation logic
-        var shiftLabel, shiftDesc, shiftColor;
-        if (pullPct >= 55) {
-          shiftLabel = 'STANDARD SHIFT';
-          shiftDesc  = 'Heavy pull hitter — shift defenders toward the pull side.';
-          shiftColor = '#f87171';
-        } else if (pullPct >= 45) {
-          shiftLabel = 'SLIGHT SHIFT';
-          shiftDesc  = 'Moderate pull tendency — consider a soft shift or shaded alignment.';
-          shiftColor = '#FFB81C';
-        } else if (oppPct >= 40) {
-          shiftLabel = 'NO SHIFT';
-          shiftDesc  = 'Hits well to the opposite field — play straight up.';
-          shiftColor = '#34d399';
-        } else {
-          shiftLabel = 'STRAIGHT UP';
-          shiftDesc  = 'Balanced spray — standard defensive alignment recommended.';
-          shiftColor = '#60a5fa';
-        }
-
-        var sprayLegend = spraySegs.map(function(seg) {
-          return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'+
-            '<div style="width:10px;height:10px;border-radius:2px;background:'+seg.color+';flex-shrink:0"></div>'+
-            '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.05em;width:36px">'+seg.label+'</div>'+
-            '<div style="font-family:var(--font-mono);font-size:13px;color:#fff;font-weight:600">'+seg.pct.toFixed(1)+'%</div>'+
-            '</div>';
-        }).join('');
-
-        sprayHTML =
-          '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">'+
-          '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px">Spray Direction</div>'+
-          '<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">'+
-            '<svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0">'+sPaths+'</svg>'+
-            '<div style="flex:1;min-width:120px">'+sprayLegend+'</div>'+
-            '<div style="flex:1;min-width:160px;border-left:1px solid rgba(255,255,255,0.07);padding-left:20px">'+
-              '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:8px">Shift Recommendation</div>'+
-              '<div style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:'+shiftColor+';letter-spacing:0.05em;margin-bottom:6px">'+shiftLabel+'</div>'+
-              '<div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5">'+shiftDesc+'</div>'+
-            '</div>'+
-          '</div>'+
-          '</div>';
-      }
+      centerLines.forEach(function(line, i){
+        paths+='<text x="'+cx+'" y="'+(cy+(i===0?-5:7))+'" text-anchor="middle" font-size="'+(i===0?8:7)+'" font-family="monospace" fill="rgba(255,255,255,'+(i===0?'0.4':'0.25')+')">'+line+'</text>';
+      });
+      return '<svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0">'+paths+'</svg>';
     }
-    donutHTML += sprayHTML;
 
+    function buildLegend(segments) {
+      return segments.map(function(seg){
+        return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'+
+          '<div style="width:10px;height:10px;border-radius:2px;background:'+seg.color+';flex-shrink:0"></div>'+
+          '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.05em;width:36px">'+seg.label+'</div>'+
+          '<div style="font-family:var(--font-mono);font-size:13px;color:#fff;font-weight:600">'+seg.pct.toFixed(1)+'%</div>'+
+          '</div>';
+      }).join('');
+    }
+
+    // ── Batted ball donut ────────────────────────────────────────────────────
+    var bbSegs = [{label:'GB%',pct:gb,color:'#fb923c'},{label:'FB%',pct:fb,color:'#60a5fa'},
+                  {label:'LO%',pct:lo,color:'#34d399'},{label:'PO%',pct:po,color:'#a78bfa'}]
+                  .filter(function(s){return s.pct>0;});
+    var bbTotal = gb+fb+lo+po;
+    var bbSVG = bbTotal > 0 ? buildDonut(bbSegs, bbTotal, 60, 60, 48, 30, [Math.round(bbTotal)+'% BIP','tracked']) : '';
+    var bbLegend = bbTotal > 0 ? buildLegend(bbSegs) : '';
+
+    // ── Spray donut ──────────────────────────────────────────────────────────
+    var spraySVG = '', sprayLegendHTML = '', shiftHTML = '';
+    var batted2 = sc.filter(function(s){
+      return ['Groundout','Flyout','Single','Double','Triple','Home Run',
+              'Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s.outcome) && s.spray;
+    });
+    var pullC=batted2.filter(function(s){return s.spray==='Pull';}).length;
+    var strC =batted2.filter(function(s){return s.spray==='Straightaway';}).length;
+    var oppC =batted2.filter(function(s){return s.spray==='Opposite Field';}).length;
+    var sprayTot=pullC+strC+oppC;
+    if(sprayTot>=3){
+      var pullPct=Math.round(pullC/sprayTot*1000)/10;
+      var strPct =Math.round(strC /sprayTot*1000)/10;
+      var oppPct =Math.round(oppC /sprayTot*1000)/10;
+      var spraySegs=[{label:'Pull',pct:pullPct,color:'#f87171'},{label:'Str',pct:strPct,color:'#FFB81C'},{label:'Oppo',pct:oppPct,color:'#60a5fa'}].filter(function(s){return s.pct>0;});
+      spraySVG = buildDonut(spraySegs, 100, 60, 60, 48, 30, []);
+      sprayLegendHTML = buildLegend(spraySegs);
+      var sLabel,sDesc,sColor;
+      if(pullPct>=55){sLabel='STANDARD SHIFT';sDesc='Heavy pull hitter — shift defenders toward the pull side.';sColor='#f87171';}
+      else if(pullPct>=45){sLabel='SLIGHT SHIFT';sDesc='Moderate pull tendency — consider a shaded alignment.';sColor='#FFB81C';}
+      else if(oppPct>=40){sLabel='NO SHIFT';sDesc='Hits well to the opposite field — play straight up.';sColor='#34d399';}
+      else{sLabel='STRAIGHT UP';sDesc='Balanced spray — standard alignment recommended.';sColor='#60a5fa';}
+      shiftHTML =
+        '<div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.07)"></div>'+
+        '<div style="min-width:140px">'+
+          '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:8px">Shift Recommendation</div>'+
+          '<div style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:'+sColor+';letter-spacing:0.05em;margin-bottom:6px">'+sLabel+'</div>'+
+          '<div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5">'+sDesc+'</div>'+
+        '</div>';
+    }
+
+    // ── Combined card ────────────────────────────────────────────────────────
+    if (bbTotal > 0 || spraySVG) {
+      var leftSection = bbTotal > 0 ?
+        '<div>'+
+          '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:10px">Batted Ball Profile</div>'+
+          '<div style="display:flex;align-items:center;gap:16px">'+bbSVG+'<div>'+bbLegend+'</div></div>'+
+        '</div>' : '';
+      var divider = (bbTotal > 0 && spraySVG) ? '<div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.07)"></div>' : '';
+      var rightSection = spraySVG ?
+        '<div>'+
+          '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:10px">Spray Direction</div>'+
+          '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'+spraySVG+'<div>'+sprayLegendHTML+'</div>'+shiftHTML+'</div>'+
+        '</div>' : '';
+      donutHTML =
+        '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">'+
+        '<div style="display:flex;align-items:flex-start;gap:28px;flex-wrap:wrap">'+
+          leftSection + divider + rightSection +
+        '</div>'+
+        '</div>';
+    }
   } // end batter
 
   // ── Pitcher time-to-plate gauge ──────────────────────────────────────────────
