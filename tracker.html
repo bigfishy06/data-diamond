@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Game Tracker — Data Diamond</title>
+<link rel="stylesheet" href="css/style.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; }
+body { background:#080c12; color:#fff; font-family:'Inter',sans-serif; margin:0; min-height:100vh; }
+
+/* ── Layout ── */
+.tracker-wrap { display:grid; grid-template-columns:1fr 340px; gap:0; height:100vh; overflow:hidden; }
+.tracker-main { overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:12px; }
+.tracker-side { background:#0d1521; border-left:1px solid rgba(255,255,255,0.06); overflow-y:auto; display:flex; flex-direction:column; }
+
+/* ── Top bar ── */
+.tracker-topbar {
+  display:flex; align-items:center; gap:12px; padding:10px 16px;
+  background:#0a1018; border-bottom:1px solid rgba(255,255,255,0.07);
+  grid-column:1/-1; position:sticky; top:0; z-index:100;
+}
+.topbar-logo { font-family:'Bebas Neue',sans-serif; font-size:18px; color:#FFB81C; letter-spacing:0.05em; }
+.topbar-game { font-family:'DM Mono',monospace; font-size:11px; color:rgba(255,255,255,0.5); flex:1; }
+.topbar-score { font-family:'Bebas Neue',sans-serif; font-size:22px; color:#fff; letter-spacing:0.05em; }
+.topbar-inning { font-family:'DM Mono',monospace; font-size:10px; color:#FFB81C; text-align:center; }
+.export-btn {
+  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.1em;
+  padding:6px 14px; border-radius:4px; cursor:pointer; border:1px solid rgba(255,184,28,0.4);
+  background:rgba(255,184,28,0.08); color:#FFB81C; transition:all .15s;
+}
+.export-btn:hover { background:rgba(255,184,28,0.18); }
+
+/* ── Count display ── */
+.count-display {
+  display:flex; gap:6px; align-items:center;
+  font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:0.05em;
+}
+.count-dot {
+  width:10px; height:10px; border-radius:50%;
+  border:1.5px solid rgba(255,255,255,0.2);
+  background:transparent; transition:background .15s;
+}
+.count-dot.on-ball { background:#60a5fa; border-color:#60a5fa; }
+.count-dot.on-str  { background:#f87171; border-color:#f87171; }
+.count-dot.on-out  { background:#FFB81C; border-color:#FFB81C; }
+
+/* ── Strike zone canvas ── */
+.zone-wrap {
+  background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08);
+  border-radius:10px; padding:16px; display:flex; flex-direction:column; align-items:center; gap:10px;
+}
+.zone-canvas-container { position:relative; cursor:crosshair; }
+#zone-canvas { display:block; }
+.zone-batter-label {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1em;
+  color:rgba(255,255,255,0.3); text-align:center; text-transform:uppercase;
+}
+
+/* ── Pitch type buttons ── */
+.pitch-btns { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; }
+.pitch-btn {
+  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.08em;
+  padding:5px 12px; border-radius:4px; cursor:pointer; transition:all .15s;
+  border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.03); color:rgba(255,255,255,0.5);
+}
+.pitch-btn:hover { border-color:rgba(255,255,255,0.3); color:#fff; }
+.pitch-btn.active { border-color:#FFB81C; background:rgba(255,184,28,0.12); color:#FFB81C; }
+
+/* ── Outcome buttons ── */
+.outcome-section { display:flex; flex-direction:column; gap:8px; }
+.outcome-group-label {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.15em;
+  color:rgba(255,255,255,0.25); text-transform:uppercase;
+}
+.outcome-btns { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; }
+.outcome-btn {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.05em;
+  padding:7px 6px; border-radius:5px; cursor:pointer; transition:all .15s; text-align:center;
+  border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:rgba(255,255,255,0.55);
+}
+.outcome-btn:hover { border-color:rgba(255,255,255,0.25); color:#fff; background:rgba(255,255,255,0.06); }
+.outcome-btn.pitch  { border-color:rgba(96,165,250,0.3);  color:#60a5fa; }
+.outcome-btn.pitch:hover  { background:rgba(96,165,250,0.1); }
+.outcome-btn.strike { border-color:rgba(248,113,113,0.3); color:#f87171; }
+.outcome-btn.strike:hover { background:rgba(248,113,113,0.1); }
+.outcome-btn.hit    { border-color:rgba(52,211,153,0.3);  color:#34d399; }
+.outcome-btn.hit:hover    { background:rgba(52,211,153,0.1); }
+.outcome-btn.out    { border-color:rgba(255,184,28,0.3);  color:#FFB81C; }
+.outcome-btn.out:hover    { background:rgba(255,184,28,0.1); }
+.outcome-btn.selected { box-shadow:0 0 0 2px currentColor; opacity:1; font-weight:700; }
+
+/* ── Contact/Spray (shown after in-play outcome) ── */
+.contact-row { display:flex; gap:6px; flex-wrap:wrap; }
+.contact-btn {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.05em;
+  padding:5px 10px; border-radius:4px; cursor:pointer; transition:all .15s;
+  border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.03); color:rgba(255,255,255,0.5);
+}
+.contact-btn.active { border-color:#a78bfa; background:rgba(167,139,250,0.12); color:#a78bfa; }
+.spray-btn { }
+.spray-btn.active { border-color:#fb923c; background:rgba(251,146,60,0.12); color:#fb923c; }
+
+/* ── Time to plate ── */
+.ttp-row { display:flex; align-items:center; gap:8px; }
+.ttp-input {
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+  border-radius:4px; color:#fff; font-family:'DM Mono',monospace; font-size:13px;
+  padding:6px 10px; width:80px; outline:none;
+}
+.ttp-input:focus { border-color:#FFB81C; }
+.ttp-label { font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,0.35); }
+
+/* ── Record pitch button ── */
+.record-btn {
+  width:100%; padding:12px; border-radius:6px; cursor:pointer; font-family:'Bebas Neue',sans-serif;
+  font-size:17px; letter-spacing:0.1em; border:none; transition:all .15s;
+  background:#FFB81C; color:#080c12;
+}
+.record-btn:hover { background:#ffc94d; }
+.record-btn:disabled { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.3); cursor:not-allowed; }
+.undo-btn {
+  width:100%; padding:8px; border-radius:6px; cursor:pointer; font-family:'DM Mono',monospace;
+  font-size:10px; letter-spacing:0.1em; border:1px solid rgba(255,255,255,0.1);
+  background:transparent; color:rgba(255,255,255,0.35); transition:all .15s;
+}
+.undo-btn:hover { border-color:rgba(255,100,100,0.4); color:#f87171; }
+
+/* ── Side panel ── */
+.side-section { padding:14px 16px; border-bottom:1px solid rgba(255,255,255,0.05); }
+.side-title { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.15em; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:10px; }
+
+/* ── Scoreboard ── */
+.scoreboard { display:grid; grid-template-columns:auto repeat(9,1fr) auto auto; gap:1px; font-family:'DM Mono',monospace; font-size:10px; }
+.sb-cell { padding:4px 5px; text-align:center; background:rgba(255,255,255,0.03); }
+.sb-cell.header { color:rgba(255,255,255,0.3); background:rgba(255,255,255,0.06); }
+.sb-cell.active-inn { background:rgba(255,184,28,0.12); color:#FFB81C; }
+.sb-cell.team-name { text-align:left; color:rgba(255,255,255,0.6); font-size:9px; padding-left:4px; }
+.sb-cell.total { font-weight:700; color:#FFB81C; background:rgba(255,184,28,0.06); }
+
+/* ── Bases diagram ── */
+.bases-wrap { display:flex; justify-content:center; margin:8px 0; }
+.bases-svg { }
+
+/* ── Lineup card ── */
+.lineup-list { display:flex; flex-direction:column; gap:3px; }
+.lineup-item {
+  display:flex; align-items:center; gap:8px; padding:5px 8px; border-radius:5px;
+  border:1px solid rgba(255,255,255,0.05); background:rgba(255,255,255,0.02);
+  font-family:'DM Mono',monospace; font-size:10px; cursor:pointer; transition:all .15s;
+}
+.lineup-item.current { background:rgba(255,184,28,0.1); border-color:rgba(255,184,28,0.3); }
+.lineup-item.on-base { background:rgba(52,211,153,0.08); border-color:rgba(52,211,153,0.2); }
+.lineup-num { color:rgba(255,255,255,0.25); width:14px; flex-shrink:0; }
+.lineup-name { flex:1; color:#fff; }
+.lineup-pos { color:rgba(255,255,255,0.3); font-size:9px; }
+.lineup-side { width:16px; text-align:center; font-size:9px; color:rgba(255,255,255,0.25); }
+
+/* ── Pitch log ── */
+.pitch-log { display:flex; flex-direction:column; gap:2px; max-height:200px; overflow-y:auto; }
+.pitch-log-item {
+  display:flex; align-items:center; gap:6px; padding:3px 6px; border-radius:3px;
+  font-family:'DM Mono',monospace; font-size:9px; background:rgba(255,255,255,0.02);
+}
+.log-count { color:rgba(255,255,255,0.25); width:28px; flex-shrink:0; }
+.log-type { width:56px; color:rgba(255,255,255,0.4); }
+.log-outcome { flex:1; }
+.log-outcome.ball { color:#60a5fa; }
+.log-outcome.strike { color:#f87171; }
+.log-outcome.hit { color:#34d399; }
+.log-outcome.out { color:#FFB81C; }
+
+/* ── Setup screen ── */
+#setup-screen { position:fixed; inset:0; background:#080c12; z-index:200; overflow-y:auto; padding:32px 24px; }
+.setup-inner { max-width:800px; margin:0 auto; }
+.setup-title { font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:0.05em; color:#FFB81C; margin-bottom:4px; }
+.setup-sub { font-family:'DM Mono',monospace; font-size:11px; color:rgba(255,255,255,0.35); margin-bottom:32px; }
+.setup-section-title { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.15em; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:10px; }
+.setup-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px; }
+.lineup-input-list { display:flex; flex-direction:column; gap:6px; }
+.lineup-input-row { display:flex; gap:6px; align-items:center; }
+.li-num { font-family:'Bebas Neue',sans-serif; font-size:18px; color:rgba(255,184,28,0.5); width:20px; flex-shrink:0; }
+.li-input {
+  flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  border-radius:4px; color:#fff; font-family:'DM Mono',monospace; font-size:12px;
+  padding:7px 10px; outline:none; transition:border-color .15s;
+}
+.li-input:focus { border-color:#FFB81C; }
+.li-select {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  border-radius:4px; color:#fff; font-family:'DM Mono',monospace; font-size:11px;
+  padding:7px 6px; outline:none; width:52px;
+}
+.li-select-pos {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  border-radius:4px; color:#fff; font-family:'DM Mono',monospace; font-size:11px;
+  padding:7px 6px; outline:none; width:56px;
+}
+.start-btn {
+  width:100%; padding:14px; border-radius:6px; cursor:pointer; font-family:'Bebas Neue',sans-serif;
+  font-size:20px; letter-spacing:0.1em; border:none; background:#FFB81C; color:#080c12;
+  margin-top:24px; transition:all .15s;
+}
+.start-btn:hover { background:#ffc94d; }
+.info-input {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  border-radius:4px; color:#fff; font-family:'DM Mono',monospace; font-size:12px;
+  padding:8px 10px; outline:none; width:100%; transition:border-color .15s; margin-bottom:8px;
+}
+.info-input:focus { border-color:#FFB81C; }
+.side-select {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  border-radius:4px; color:#fff; font-family:'DM Mono',monospace; font-size:11px;
+  padding:8px 6px; outline:none; width:100%; margin-bottom:8px;
+}
+.pitcher-input-row { display:flex; gap:6px; align-items:center; margin-bottom:6px; }
+</style>
+</head>
+<body>
+
+<!-- ══ SETUP SCREEN ══════════════════════════════════════════════════════════ -->
+<div id="setup-screen">
+  <div class="setup-inner">
+    <div class="setup-title">GAME SETUP</div>
+    <div class="setup-sub" id="setup-game-label">Configure lineups before tracking begins</div>
+
+    <div class="setup-grid">
+      <!-- Away team lineup -->
+      <div>
+        <div class="setup-section-title" id="away-lineup-title">AWAY TEAM LINEUP</div>
+        <div class="lineup-input-list" id="away-lineup-inputs"></div>
+        <div style="margin-top:10px">
+          <div class="setup-section-title" style="margin-top:12px">STARTING PITCHER</div>
+          <div class="pitcher-input-row">
+            <input class="li-input" id="away-pitcher-name" placeholder="Pitcher name"/>
+            <select class="li-select" id="away-pitcher-side"><option value="R">R</option><option value="L">L</option></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home team lineup -->
+      <div>
+        <div class="setup-section-title" id="home-lineup-title">HOME TEAM LINEUP</div>
+        <div class="lineup-input-list" id="home-lineup-inputs"></div>
+        <div style="margin-top:10px">
+          <div class="setup-section-title" style="margin-top:12px">STARTING PITCHER</div>
+          <div class="pitcher-input-row">
+            <input class="li-input" id="home-pitcher-name" placeholder="Pitcher name"/>
+            <select class="li-select" id="home-pitcher-side"><option value="R">R</option><option value="L">L</option></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="start-btn" onclick="startGame()">▶ START TRACKING</button>
+  </div>
+</div>
+
+<!-- ══ TRACKER UI ════════════════════════════════════════════════════════════ -->
+<div style="display:grid;grid-template-rows:auto 1fr;height:100vh">
+
+  <!-- Top bar -->
+  <div class="tracker-topbar" style="display:grid;grid-template-columns:auto 1fr auto auto;gap:16px;align-items:center">
+    <div class="topbar-logo">DATA<span style="color:#fff">DIAMOND</span></div>
+    <div class="topbar-game" id="topbar-game-label">—</div>
+    <div style="text-align:center">
+      <div class="topbar-score" id="topbar-score">0 – 0</div>
+      <div class="topbar-inning" id="topbar-inning">TOP 1</div>
+    </div>
+    <button class="export-btn" onclick="exportCSV()">⬇ EXPORT CSV</button>
+  </div>
+
+  <!-- Main grid -->
+  <div class="tracker-wrap">
+
+    <!-- ── LEFT: Input panel ── -->
+    <div class="tracker-main">
+
+      <!-- Current at-bat header -->
+      <div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2px">Batter</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.05em" id="cur-batter">—</div>
+        </div>
+        <div style="width:1px;height:36px;background:rgba(255,255,255,0.08)"></div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2px">Pitcher</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.05em" id="cur-pitcher">—</div>
+        </div>
+        <div style="width:1px;height:36px;background:rgba(255,255,255,0.08)"></div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2px">Count</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.05em" id="cur-count">0-0</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;margin-left:auto">
+          <!-- Balls -->
+          <div style="display:flex;gap:3px">
+            <div class="count-dot" id="b1"></div><div class="count-dot" id="b2"></div><div class="count-dot" id="b3"></div>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.2)">B</div>
+          <div style="width:1px;height:16px;background:rgba(255,255,255,0.1)"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.2)">S</div>
+          <div style="display:flex;gap:3px">
+            <div class="count-dot" id="s1"></div><div class="count-dot" id="s2"></div>
+          </div>
+          <div style="width:1px;height:16px;background:rgba(255,255,255,0.1)"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.2)">O</div>
+          <div style="display:flex;gap:3px">
+            <div class="count-dot" id="o1"></div><div class="count-dot" id="o2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zone + controls grid -->
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start">
+
+        <!-- Strike zone -->
+        <div class="zone-wrap" style="width:260px">
+          <div style="display:flex;justify-content:space-between;width:100%">
+            <div class="zone-batter-label" id="zone-batter-side-label">LHH ←</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25)">Click to plot pitch</div>
+            <div class="zone-batter-label" id="zone-pitcher-side-label">→ RHP</div>
+          </div>
+          <div class="zone-canvas-container">
+            <canvas id="zone-canvas" width="228" height="260"></canvas>
+          </div>
+          <div style="display:flex;justify-content:space-between;width:100%">
+            <div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(255,255,255,0.2)">x: <span id="coord-x">—</span></div>
+            <div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(255,255,255,0.2)">y: <span id="coord-y">—</span></div>
+          </div>
+        </div>
+
+        <!-- Right controls -->
+        <div style="display:flex;flex-direction:column;gap:10px">
+
+          <!-- Pitch type -->
+          <div>
+            <div class="setup-section-title" style="margin-bottom:6px">PITCH TYPE</div>
+            <div class="pitch-btns" id="pitch-type-btns">
+              <button class="pitch-btn" data-pt="Fastball">Fastball</button>
+              <button class="pitch-btn" data-pt="Offspeed">Offspeed</button>
+            </div>
+          </div>
+
+          <!-- Outcomes -->
+          <div class="outcome-section">
+            <div class="setup-section-title">OUTCOME</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <!-- Pitch outcomes -->
+              <div>
+                <div class="outcome-group-label" style="margin-bottom:4px">Pitch</div>
+                <div class="outcome-btns" style="grid-template-columns:repeat(4,1fr)">
+                  <button class="outcome-btn pitch"  data-out="Ball">Ball</button>
+                  <button class="outcome-btn strike" data-out="Called Strike">Called ✓</button>
+                  <button class="outcome-btn strike" data-out="Swinging Strike">Swing ✗</button>
+                  <button class="outcome-btn strike" data-out="Foul">Foul</button>
+                </div>
+              </div>
+              <!-- Hit outcomes -->
+              <div>
+                <div class="outcome-group-label" style="margin-bottom:4px">Hit / Reach</div>
+                <div class="outcome-btns" style="grid-template-columns:repeat(4,1fr)">
+                  <button class="outcome-btn hit" data-out="Single">Single</button>
+                  <button class="outcome-btn hit" data-out="Double">Double</button>
+                  <button class="outcome-btn hit" data-out="Triple">Triple</button>
+                  <button class="outcome-btn hit" data-out="Home Run">HR</button>
+                  <button class="outcome-btn hit" data-out="Walk">Walk</button>
+                  <button class="outcome-btn hit" data-out="Intentional Walk">IBB</button>
+                  <button class="outcome-btn hit" data-out="Hit By Pitch">HBP</button>
+                  <button class="outcome-btn hit" data-out="Error">Error</button>
+                </div>
+              </div>
+              <!-- Out outcomes -->
+              <div>
+                <div class="outcome-group-label" style="margin-bottom:4px">Out</div>
+                <div class="outcome-btns" style="grid-template-columns:repeat(4,1fr)">
+                  <button class="outcome-btn out" data-out="Groundout">Groundout</button>
+                  <button class="outcome-btn out" data-out="Flyout">Flyout</button>
+                  <button class="outcome-btn out" data-out="Lineout">Lineout</button>
+                  <button class="outcome-btn out" data-out="Popout">Popout</button>
+                  <button class="outcome-btn out" data-out="Strikeout Swinging">K Swing</button>
+                  <button class="outcome-btn out" data-out="Strikeout Looking">K Look</button>
+                  <button class="outcome-btn out" data-out="Double Play">DP</button>
+                  <button class="outcome-btn out" data-out="Sacrifice Fly">Sac Fly</button>
+                  <button class="outcome-btn out" data-out="Sacrifice Bunt">Sac Bunt</button>
+                  <button class="outcome-btn out" data-out="Dropped Third Strike Swinging">DTS Sw</button>
+                  <button class="outcome-btn out" data-out="Dropped Third Strike Looking">DTS Lk</button>
+                  <button class="outcome-btn out" data-out="Truncated Out">Trunc</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact quality & spray (shown when in-play) -->
+          <div id="contact-section" style="display:none">
+            <div class="setup-section-title" style="margin-bottom:6px">CONTACT QUALITY</div>
+            <div class="contact-row" id="contact-btns">
+              <button class="contact-btn" data-c="Ground Ball">Ground Ball</button>
+              <button class="contact-btn" data-c="Fly Ball">Fly Ball</button>
+              <button class="contact-btn" data-c="Line Drive">Line Drive</button>
+              <button class="contact-btn" data-c="Pop Up">Pop Up</button>
+            </div>
+            <div class="setup-section-title" style="margin-bottom:6px;margin-top:10px">SPRAY DIRECTION</div>
+            <div class="contact-row" id="spray-btns">
+              <button class="contact-btn spray-btn" data-s="Pull">Pull</button>
+              <button class="contact-btn spray-btn" data-s="Straightaway">Straightaway</button>
+              <button class="contact-btn spray-btn" data-s="Opposite Field">Opposite Field</button>
+            </div>
+          </div>
+
+          <!-- Time to plate -->
+          <div id="ttp-section" style="display:none">
+            <div class="setup-section-title" style="margin-bottom:6px">TIME TO PLATE (sec) — Man on 1st</div>
+            <div class="ttp-row">
+              <input class="ttp-input" id="ttp-input" type="number" step="0.01" min="0.5" max="3" placeholder="1.20"/>
+              <span class="ttp-label">seconds</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Record + undo -->
+      <div style="display:flex;gap:8px">
+        <button class="record-btn" id="record-btn" onclick="recordPitch()" disabled>RECORD PITCH</button>
+        <button class="undo-btn" onclick="undoPitch()" style="width:80px">↩ UNDO</button>
+      </div>
+
+      <!-- Sub pitcher button -->
+      <div style="display:flex;gap:8px">
+        <button onclick="subPitcher()" style="flex:1;padding:7px;border-radius:5px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);transition:all .15s" onmouseover="this.style.borderColor='rgba(255,184,28,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">⟳ SUB PITCHER</button>
+        <button onclick="nextBatter()" style="flex:1;padding:7px;border-radius:5px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);transition:all .15s" onmouseover="this.style.borderColor='rgba(52,211,153,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">→ NEXT BATTER</button>
+        <button onclick="endInning()" style="flex:1;padding:7px;border-radius:5px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);transition:all .15s" onmouseover="this.style.borderColor='rgba(251,146,60,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">▸ END INNING</button>
+      </div>
+
+    </div><!-- /tracker-main -->
+
+    <!-- ── RIGHT: Side panel ── -->
+    <div class="tracker-side">
+
+      <!-- Scoreboard -->
+      <div class="side-section">
+        <div class="side-title">Scoreboard</div>
+        <div class="scoreboard" id="scoreboard"></div>
+      </div>
+
+      <!-- Bases -->
+      <div class="side-section" style="display:flex;align-items:center;gap:16px">
+        <svg class="bases-svg" width="90" height="90" viewBox="0 0 90 90" id="bases-svg">
+          <!-- 2nd base (top) -->
+          <rect id="base-2" x="33" y="4" width="24" height="24" rx="2" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" transform="rotate(45,45,16)"/>
+          <!-- 3rd base (left) -->
+          <rect id="base-3" x="4" y="33" width="24" height="24" rx="2" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" transform="rotate(45,16,45)"/>
+          <!-- 1st base (right) -->
+          <rect id="base-1" x="62" y="33" width="24" height="24" rx="2" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" transform="rotate(45,74,45)"/>
+          <!-- Home plate -->
+          <polygon points="45,80 38,72 38,64 52,64 52,72" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+        </svg>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:4px">RUNNERS</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:#fff" id="runners-label">—</div>
+        </div>
+      </div>
+
+      <!-- Current lineup -->
+      <div class="side-section" style="flex:1">
+        <div class="side-title" id="lineup-side-title">BATTING ORDER</div>
+        <div class="lineup-list" id="lineup-side"></div>
+        <div style="margin-top:12px">
+          <div class="side-title">PITCHING</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff" id="pitcher-side-label">—</div>
+        </div>
+      </div>
+
+      <!-- Pitch log -->
+      <div class="side-section">
+        <div class="side-title">PITCH LOG (THIS PA)</div>
+        <div class="pitch-log" id="pitch-log"></div>
+      </div>
+
+    </div><!-- /tracker-side -->
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// GAME STATE
+// ═══════════════════════════════════════════════════════════════════════════
+var G = {
+  homeTeam:'', awayTeam:'', date:'',
+  inning:1, half:'Top',   // half = 'Top' | 'Bottom'
+  outs:0, balls:0, strikes:0,
+  runs:{ home:[], away:[] },    // runs per inning (index = inning-1)
+  runners:'000',                // '1'=on, '0'=off: [1st,2nd,3rd]
+  // Lineups
+  awayLineup:[], homeLineup:[],  // [{name,pos,side,active,onBase}]
+  awayBatterIdx:0, homeBatterIdx:0,
+  awayPitcher:{name:'',side:'R'}, homePitcher:{name:'',side:'R'},
+  currentPitcher:{name:'',side:'R'},
+  // Pitches recorded
+  pitches:[],
+  // Current pitch state
+  pitchX:null, pitchY:null,
+  pitchType:'', outcome:'', contact:'', spray:'', ttp:''
+};
+
+// Canvas data coords: x = horizontal (-2.5 to 2.5), y = vertical (-0.8 to 1.5)
+// Strike zone: x in [-1,1], y in [0,1]
+var CW=228, CH=260, PD=20;
+var XMN=-2.5, XMX=2.5, YMN=-0.8, YMX=1.5;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SETUP
+// ═══════════════════════════════════════════════════════════════════════════
+function buildSetupInputs() {
+  // Read game info from URL params
+  var params = new URLSearchParams(window.location.search);
+  G.homeTeam = params.get('home') || 'Home Team';
+  G.awayTeam = params.get('away') || 'Away Team';
+  G.date     = params.get('date') || new Date().toISOString().slice(0,10);
+
+  document.getElementById('setup-game-label').textContent =
+    G.awayTeam + ' @ ' + G.homeTeam + ' · ' + G.date;
+  document.getElementById('away-lineup-title').textContent = G.awayTeam.toUpperCase() + ' LINEUP';
+  document.getElementById('home-lineup-title').textContent = G.homeTeam.toUpperCase() + ' LINEUP';
+
+  ['away','home'].forEach(function(side) {
+    var el = document.getElementById(side+'-lineup-inputs');
+    for (var i=1;i<=9;i++) {
+      el.innerHTML +=
+        '<div class="lineup-input-row">' +
+        '<div class="li-num">'+i+'</div>' +
+        '<input class="li-input" id="'+side+'-name-'+i+'" placeholder="Player name"/>' +
+        '<select class="li-select" id="'+side+'-bside-'+i+'"><option value="R">R</option><option value="L">L</option><option value="S">S</option></select>' +
+        '<select class="li-select-pos" id="'+side+'-pos-'+i+'"><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>DH</option><option>P</option></select>' +
+        '</div>';
+    }
+  });
+}
+
+function startGame() {
+  // Read lineups
+  ['away','home'].forEach(function(side) {
+    var arr = side === 'away' ? G.awayLineup : G.homeLineup;
+    arr.length = 0;
+    for (var i=1;i<=9;i++) {
+      var name = document.getElementById(side+'-name-'+i).value.trim();
+      var bside = document.getElementById(side+'-bside-'+i).value;
+      var pos   = document.getElementById(side+'-pos-'+i).value;
+      arr.push({ name: name||('Batter '+i), pos:pos, side:bside, onBase:false });
+    }
+    var pname = document.getElementById(side+'-pitcher-name').value.trim();
+    var pside = document.getElementById(side+'-pitcher-side').value;
+    if (side==='away') G.awayPitcher = { name:pname||'Pitcher', side:pside };
+    else               G.homePitcher = { name:pname||'Pitcher', side:pside };
+  });
+
+  // Initialize runs arrays
+  G.runs.home = []; G.runs.away = [];
+  for (var i=0;i<9;i++) { G.runs.home.push(0); G.runs.away.push(0); }
+
+  // Start with top 1
+  G.half='Top'; G.inning=1; G.outs=0; G.balls=0; G.strikes=0;
+  G.awayBatterIdx=0; G.homeBatterIdx=0;
+  G.currentPitcher = G.homePitcher; // home team pitches first (top = away bats)
+
+  document.getElementById('setup-screen').style.display='none';
+  refreshUI();
+  drawZone();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ZONE CANVAS
+// ═══════════════════════════════════════════════════════════════════════════
+var canvas, ctx;
+var plotted = { x:null, y:null };
+var currentPitchDots = [];
+
+function toCanvasX(dataX) { return PD + ((dataX-XMN)/(XMX-XMN))*(CW-PD*2); }
+function toCanvasY(dataY) { return CH-PD - ((dataY-YMN)/(YMX-YMN))*(CH-PD*2); }
+function toDataX(cx)      { return XMN + ((cx-PD)/(CW-PD*2))*(XMX-XMN); }
+function toDataY(cy)      { return YMN + ((CH-PD-cy)/(CH-PD*2))*(YMX-YMN); }
+
+function drawZone() {
+  canvas = document.getElementById('zone-canvas');
+  ctx    = canvas.getContext('2d');
+  ctx.clearRect(0,0,CW,CH);
+
+  // Background
+  ctx.fillStyle='#080c12'; ctx.fillRect(0,0,CW,CH);
+
+  // Grid lines
+  ctx.strokeStyle='rgba(255,255,255,0.05)'; ctx.lineWidth=0.5;
+  [-2,-1,0,1,2].forEach(function(v){
+    ctx.beginPath(); ctx.moveTo(toCanvasX(v),PD); ctx.lineTo(toCanvasX(v),CH-PD); ctx.stroke();
+  });
+  [-0.5,0,0.5,1].forEach(function(v){
+    ctx.beginPath(); ctx.moveTo(PD,toCanvasY(v)); ctx.lineTo(CW-PD,toCanvasY(v)); ctx.stroke();
+  });
+
+  // Strike zone fill
+  ctx.fillStyle='rgba(255,184,28,0.04)';
+  ctx.fillRect(toCanvasX(-1),toCanvasY(1),toCanvasX(1)-toCanvasX(-1),toCanvasY(0)-toCanvasY(1));
+
+  // Strike zone border
+  ctx.strokeStyle='rgba(255,184,28,0.7)'; ctx.lineWidth=1.5;
+  ctx.strokeRect(toCanvasX(-1),toCanvasY(1),toCanvasX(1)-toCanvasX(-1),toCanvasY(0)-toCanvasY(1));
+
+  // Zone thirds (subtle)
+  ctx.strokeStyle='rgba(255,184,28,0.15)'; ctx.lineWidth=0.5;
+  for (var i=1;i<3;i++) {
+    var xi=toCanvasX(-1+i*(2/3)), yi=toCanvasY(1)+i*(toCanvasY(0)-toCanvasY(1))/3;
+    ctx.beginPath(); ctx.moveTo(xi,toCanvasY(1)); ctx.lineTo(xi,toCanvasY(0)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(toCanvasX(-1),yi); ctx.lineTo(toCanvasX(1),yi); ctx.stroke();
+  }
+
+  // Previous pitch dots this PA
+  currentPitchDots.forEach(function(dot) {
+    var col = dot.outcome==='Ball'?'#60a5fa':
+              (dot.outcome==='Called Strike'||dot.outcome==='Strikeout Looking')?'#ef4444':
+              (dot.outcome==='Swinging Strike'||dot.outcome==='Strikeout Swinging')?'#f87171':
+              dot.outcome==='Foul'?'#fb923c':
+              '#34d399';
+    ctx.beginPath(); ctx.arc(toCanvasX(dot.x),toCanvasY(dot.y),5,0,Math.PI*2);
+    ctx.fillStyle=col+'99'; ctx.fill();
+    ctx.strokeStyle=col; ctx.lineWidth=1; ctx.stroke();
+  });
+
+  // Current plotted point
+  if (plotted.x !== null) {
+    ctx.beginPath(); ctx.arc(toCanvasX(plotted.x),toCanvasY(plotted.y),7,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,184,28,0.3)'; ctx.fill();
+    ctx.strokeStyle='#FFB81C'; ctx.lineWidth=2; ctx.stroke();
+    // Crosshair
+    ctx.strokeStyle='rgba(255,184,28,0.4)'; ctx.lineWidth=0.5; ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.moveTo(toCanvasX(plotted.x),PD); ctx.lineTo(toCanvasX(plotted.x),CH-PD); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(PD,toCanvasY(plotted.y)); ctx.lineTo(CW-PD,toCanvasY(plotted.y)); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Home plate indicator
+  ctx.fillStyle='rgba(255,255,255,0.2)';
+  var hx=toCanvasX(0), hy=CH-PD+8;
+  ctx.beginPath(); ctx.moveTo(hx,hy-4); ctx.lineTo(hx-6,hy+2); ctx.lineTo(hx-4,hy+6); ctx.lineTo(hx+4,hy+6); ctx.lineTo(hx+6,hy+2); ctx.closePath(); ctx.fill();
+}
+
+// Click handler
+document.getElementById('zone-canvas').addEventListener('click', function(e) {
+  var rect = canvas.getBoundingClientRect();
+  var scaleX = CW / rect.width, scaleY = CH / rect.height;
+  var cx = (e.clientX - rect.left) * scaleX;
+  var cy = (e.clientY - rect.top)  * scaleY;
+  plotted.x = parseFloat(toDataX(cx).toFixed(6));
+  plotted.y = parseFloat(toDataY(cy).toFixed(6));
+  G.pitchX = plotted.x; G.pitchY = plotted.y;
+  document.getElementById('coord-x').textContent = plotted.x.toFixed(3);
+  document.getElementById('coord-y').textContent = plotted.y.toFixed(3);
+  drawZone();
+  checkRecordReady();
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// OUTCOME / PITCH TYPE BUTTONS
+// ═══════════════════════════════════════════════════════════════════════════
+var IN_PLAY_OUTCOMES = ['Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout',
+  'Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Dropped Third Strike Swinging','Dropped Third Strike Looking','Truncated Out'];
+var PA_ENDING = ['Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout',
+  'Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Walk','Intentional Walk','Hit By Pitch',
+  'Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking','Truncated Out'];
+
+document.querySelectorAll('[data-pt]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-pt]').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    G.pitchType = btn.dataset.pt;
+    checkRecordReady();
+  });
+});
+
+document.querySelectorAll('[data-out]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-out]').forEach(function(b){ b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    G.outcome = btn.dataset.out;
+    // Show/hide contact section
+    var inPlay = IN_PLAY_OUTCOMES.includes(G.outcome);
+    document.getElementById('contact-section').style.display = inPlay ? '' : 'none';
+    if (!inPlay) { G.contact=''; G.spray=''; document.querySelectorAll('[data-c],[data-s]').forEach(function(b){b.classList.remove('active');}); }
+    // Show TTP if runner on 1st
+    document.getElementById('ttp-section').style.display = G.runners[0]==='1' ? '' : 'none';
+    checkRecordReady();
+  });
+});
+
+document.querySelectorAll('[data-c]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-c]').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active'); G.contact = btn.dataset.c;
+  });
+});
+
+document.querySelectorAll('[data-s]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-s]').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active'); G.spray = btn.dataset.s;
+  });
+});
+
+function checkRecordReady() {
+  var ready = G.outcome !== '';
+  document.getElementById('record-btn').disabled = !ready;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// RECORD PITCH
+// ═══════════════════════════════════════════════════════════════════════════
+function currentLineup()    { return G.half==='Top' ? G.awayLineup : G.homeLineup; }
+function currentBatterIdx() { return G.half==='Top' ? G.awayBatterIdx : G.homeBatterIdx; }
+function currentBatter()    { return currentLineup()[currentBatterIdx()]; }
+function setBatterIdx(i)    { if(G.half==='Top') G.awayBatterIdx=i; else G.homeBatterIdx=i; }
+
+function recordPitch() {
+  var batter  = currentBatter();
+  var pitcher = G.currentPitcher;
+  var runners = G.runners;
+  var ttp = document.getElementById('ttp-input').value;
+
+  // Build pitch row matching CSV format
+  var row = {
+    half_inning: G.half+' '+G.inning,
+    inning:      G.inning,
+    outs:        G.outs,
+    balls:       G.balls,
+    strikes:     G.strikes,
+    count:       "'"+G.balls+'-'+G.strikes,
+    batter_team: G.half==='Top' ? G.awayTeam : G.homeTeam,
+    pitcher_team:G.half==='Top' ? G.homeTeam : G.awayTeam,
+    date:        G.date,
+    home_team:   G.homeTeam,
+    away_team:   G.awayTeam,
+    ttp:         (runners[0]==='1' && ttp) ? ttp : '',
+    batter:      batter.name,
+    pitcher:     pitcher.name,
+    batter_side: batter.side,
+    pitcher_side:pitcher.side,
+    pitch_type:  G.pitchType,
+    outcome:     G.outcome,
+    contact:     G.contact,
+    spray:       G.spray,
+    runners:     runners,
+    pitch_x:     G.pitchX != null ? G.pitchX : '',
+    pitch_y:     G.pitchY != null ? G.pitchY : ''
+  };
+
+  G.pitches.push(row);
+
+  // Add to pitch log dots
+  if (G.pitchX != null) {
+    currentPitchDots.push({ x:G.pitchX, y:G.pitchY, outcome:G.outcome });
+  }
+
+  // Advance count / handle outcome
+  var isPAEnd = PA_ENDING.includes(G.outcome);
+  if (!isPAEnd) {
+    // Count update
+    if (G.outcome==='Ball'||G.outcome==='Intentional Walk') {
+      G.balls++;
+      if (G.balls>=4) { G.outcome='Walk'; isPAEnd=true; }
+    } else if (G.outcome==='Swinging Strike'||G.outcome==='Called Strike') {
+      G.strikes++;
+      if (G.strikes>=3) { isPAEnd=true; G.outcome='Strikeout Looking'; }
+    } else if (G.outcome==='Foul') {
+      if (G.strikes<2) G.strikes++;
+    }
+  }
+
+  if (isPAEnd) {
+    // Handle outs
+    var isOut = ['Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt',
+                 'Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking','Truncated Out'].includes(G.outcome);
+    if (isOut) {
+      G.outs += (G.outcome==='Double Play' ? 2 : 1);
+    }
+    // Handle runners advancing (simplified)
+    if (G.outcome==='Walk'||G.outcome==='Hit By Pitch'||G.outcome==='Intentional Walk') {
+      advanceRunnersWalk();
+    } else if (G.outcome==='Single') {
+      scoreRun(); scoreRun(); setRunner(1, true);
+    } else if (G.outcome==='Double') {
+      scoreRun(); scoreRun(); scoreRun(); setRunner(2, true);
+    } else if (G.outcome==='Triple') {
+      scoreRun(); scoreRun(); scoreRun(); setRunner(3, true);
+    } else if (G.outcome==='Home Run') {
+      var rbis = 1 + G.runners.split('').filter(function(c){return c==='1';}).length;
+      for(var i=0;i<rbis;i++) addRun();
+      G.runners='000';
+    } else if (G.outcome==='Error') {
+      setRunner(1, true);
+    }
+
+    if (G.outs>=3) {
+      setTimeout(endInning, 200);
+      return;
+    }
+    // Advance to next batter
+    nextBatter(true);
+  }
+
+  updateCount();
+  refreshPitchLog();
+  drawZone();
+  updateTTPVisibility();
+}
+
+function advanceRunnersWalk() {
+  var r = G.runners.split('');
+  if (r[0]==='1') {
+    if (r[1]==='1') {
+      if (r[2]==='1') addRun();
+      r[2]='1';
+    }
+    r[1]='1';
+  }
+  r[0]='1';
+  G.runners=r.join('');
+}
+
+function setRunner(base, on) {
+  var r = G.runners.split('');
+  // Score anyone on 3rd, then shift
+  if (base>=2 && r[2]==='1') addRun();
+  if (base>=3 && r[1]==='1') addRun();
+  r[2]=r[1]; r[1]=r[0];
+  r[0]='0'; r[base-1]=on?'1':'0';
+  G.runners=r.join('');
+}
+
+function scoreRun() {
+  if (G.runners[2]==='1') { addRun(); }
+  var r=G.runners.split(''); r[2]=r[1]; r[1]=r[0]; r[0]='0'; G.runners=r.join('');
+}
+
+function addRun() {
+  var arr = G.half==='Top' ? G.runs.away : G.runs.home;
+  while(arr.length < G.inning) arr.push(0);
+  arr[G.inning-1]++;
+  document.getElementById('topbar-score').textContent = totalRuns(G.runs.away)+' – '+totalRuns(G.runs.home);
+  updateScoreboard();
+}
+
+function totalRuns(arr) { return arr.reduce(function(a,b){return a+b;},0); }
+
+function nextBatter(fromRecord) {
+  G.balls=0; G.strikes=0; plotted.x=null; plotted.y=null; G.pitchX=null; G.pitchY=null;
+  G.pitchType=''; G.outcome=''; G.contact=''; G.spray='';
+  document.querySelectorAll('[data-pt],[data-out],[data-c],[data-s]').forEach(function(b){b.classList.remove('active','selected');});
+  document.getElementById('contact-section').style.display='none';
+  document.getElementById('ttp-input').value='';
+  currentPitchDots=[];
+  var idx = (currentBatterIdx()+1)%9;
+  setBatterIdx(idx);
+  updateCount();
+  refreshUI();
+  refreshPitchLog();
+  drawZone();
+  checkRecordReady();
+}
+
+function endInning() {
+  G.outs=0; G.balls=0; G.strikes=0;
+  G.runners='000';
+  if (G.half==='Top') {
+    G.half='Bottom';
+    G.currentPitcher = G.awayPitcher;
+  } else {
+    G.half='Top';
+    G.inning++;
+    G.currentPitcher = G.homePitcher;
+    // Extend runs arrays if needed
+    while(G.runs.home.length < G.inning) G.runs.home.push(0);
+    while(G.runs.away.length < G.inning) G.runs.away.push(0);
+  }
+  currentPitchDots=[];
+  plotted.x=null; plotted.y=null; G.pitchX=null; G.pitchY=null;
+  G.pitchType=''; G.outcome=''; G.contact=''; G.spray='';
+  document.querySelectorAll('[data-pt],[data-out],[data-c],[data-s]').forEach(function(b){b.classList.remove('active','selected');});
+  document.getElementById('contact-section').style.display='none';
+  document.getElementById('ttp-section').style.display='none';
+  document.getElementById('ttp-input').value='';
+  refreshUI(); refreshPitchLog(); drawZone(); updateCount(); checkRecordReady();
+}
+
+function subPitcher() {
+  var name = prompt('Entering pitcher name:');
+  if (!name) return;
+  var side = prompt('Pitcher side (R/L):', 'R') || 'R';
+  G.currentPitcher = { name:name.trim(), side:side.toUpperCase() };
+  if (G.half==='Top') G.homePitcher=G.currentPitcher;
+  else G.awayPitcher=G.currentPitcher;
+  refreshUI();
+}
+
+function undoPitch() {
+  if (!G.pitches.length) return;
+  G.pitches.pop();
+  currentPitchDots.pop();
+  // Recalculate count from remaining pitches in this PA
+  // Simple: just decrement count
+  if (G.strikes>0 && G.outcome!=='Ball') G.strikes--;
+  else if (G.balls>0) G.balls--;
+  updateCount(); drawZone(); refreshPitchLog();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// UI REFRESH
+// ═══════════════════════════════════════════════════════════════════════════
+function updateCount() {
+  document.getElementById('cur-count').textContent = G.balls+'-'+G.strikes;
+  document.getElementById('topbar-inning').textContent = G.half.toUpperCase()+' '+G.inning;
+
+  // Dots
+  ['b1','b2','b3'].forEach(function(id,i){ document.getElementById(id).className='count-dot'+(i<G.balls?' on-ball':''); });
+  ['s1','s2'].forEach(function(id,i){ document.getElementById(id).className='count-dot'+(i<G.strikes?' on-str':''); });
+  ['o1','o2'].forEach(function(id,i){ document.getElementById(id).className='count-dot'+(i<G.outs?' on-out':''); });
+
+  // Bases
+  ['1','2','3'].forEach(function(b){
+    var el=document.getElementById('base-'+b);
+    var on=G.runners[b==='1'?0:b==='2'?1:2]==='1';
+    el.setAttribute('fill', on?'#FFB81C':'rgba(255,255,255,0.06)');
+    el.setAttribute('stroke', on?'#FFB81C':'rgba(255,255,255,0.15)');
+  });
+  var rmap={'000':'Bases empty','100':'Runner on 1st','010':'Runner on 2nd','001':'Runner on 3rd',
+            '110':'1st & 2nd','101':'1st & 3rd','011':'2nd & 3rd','111':'Bases loaded'};
+  document.getElementById('runners-label').textContent = rmap[G.runners]||G.runners;
+}
+
+function updateTTPVisibility() {
+  document.getElementById('ttp-section').style.display = (G.runners[0]==='1' && G.outcome!=='') ? '' : 'none';
+}
+
+function refreshUI() {
+  var batter  = currentBatter();
+  var lineup  = currentLineup();
+  var batting = G.half==='Top' ? G.awayTeam : G.homeTeam;
+  document.getElementById('cur-batter').textContent  = batter ? batter.name : '—';
+  document.getElementById('cur-pitcher').textContent = G.currentPitcher.name || '—';
+  document.getElementById('topbar-game-label').textContent = G.awayTeam+' @ '+G.homeTeam+' · '+G.date;
+  document.getElementById('zone-batter-side-label').textContent  = (batter&&batter.side==='L')?'LHH ←':'RHH →';
+  document.getElementById('zone-pitcher-side-label').textContent = (G.currentPitcher.side==='L')?'LHP':'RHP';
+  document.getElementById('pitcher-side-label').textContent = G.currentPitcher.name+' ('+G.currentPitcher.side+')';
+  document.getElementById('lineup-side-title').textContent = batting.toUpperCase()+' BATTING';
+
+  // Lineup side panel
+  var idx = currentBatterIdx();
+  var html = '';
+  lineup.forEach(function(p,i) {
+    var cls = 'lineup-item'+(i===idx?' current':'');
+    html += '<div class="'+cls+'">' +
+      '<div class="lineup-num">'+(i+1)+'</div>' +
+      '<div class="lineup-name">'+(p.name||'—')+'</div>' +
+      '<div class="lineup-pos">'+p.pos+'</div>' +
+      '<div class="lineup-side">'+p.side+'</div>' +
+      '</div>';
+  });
+  document.getElementById('lineup-side').innerHTML = html;
+  updateCount();
+  updateScoreboard();
+}
+
+function updateScoreboard() {
+  var maxInn = Math.max(9, G.inning);
+  var html = '<div class="sb-cell header"></div>';
+  for(var i=1;i<=maxInn;i++) html+='<div class="sb-cell header'+(i===G.inning?' active-inn':'')+'">'+i+'</div>';
+  html+='<div class="sb-cell header">R</div><div class="sb-cell header">H</div>';
+
+  // Away row
+  html+='<div class="sb-cell team-name">'+G.awayTeam.split(' ').pop()+'</div>';
+  for(var i=1;i<=maxInn;i++){
+    var r=G.runs.away[i-1];
+    html+='<div class="sb-cell'+(i===G.inning&&G.half==='Top'?' active-inn':'')+'">'+((r!=null&&r!==undefined)?r:'')+'</div>';
+  }
+  html+='<div class="sb-cell total">'+totalRuns(G.runs.away)+'</div><div class="sb-cell">—</div>';
+
+  // Home row
+  html+='<div class="sb-cell team-name">'+G.homeTeam.split(' ').pop()+'</div>';
+  for(var i=1;i<=maxInn;i++){
+    var r=G.runs.home[i-1];
+    html+='<div class="sb-cell'+(i===G.inning&&G.half==='Bottom'?' active-inn':'')+'">'+((r!=null&&r!==undefined)?r:'')+'</div>';
+  }
+  html+='<div class="sb-cell total">'+totalRuns(G.runs.home)+'</div><div class="sb-cell">—</div>';
+  document.getElementById('scoreboard').style.gridTemplateColumns='auto repeat('+maxInn+',1fr) auto auto';
+  document.getElementById('scoreboard').innerHTML=html;
+}
+
+function refreshPitchLog() {
+  var pitches = G.pitches.filter(function(p){ return p.batter===currentBatter().name&&p.inning===G.inning&&p.half_inning.indexOf(G.half)===0; });
+  var outcomeClass=function(o){ return o==='Ball'?'ball':(o.indexOf('Strike')!==-1||o==='Foul')?'strike':(PA_ENDING.includes(o)&&!['Walk','Intentional Walk','Hit By Pitch'].includes(o)&&!['Single','Double','Triple','Home Run','Error'].includes(o))?'out':'hit'; };
+  var html = pitches.map(function(p,i){ return '<div class="pitch-log-item"><span class="log-count">'+(i+1)+'</span><span class="log-type">'+(p.pitch_type||'?')+'</span><span class="log-outcome '+outcomeClass(p.outcome)+'">'+p.outcome+'</span></div>'; }).join('');
+  document.getElementById('pitch-log').innerHTML = html || '<div style="font-family:\'DM Mono\',monospace;font-size:9px;color:rgba(255,255,255,0.2);padding:4px 0">No pitches yet</div>';
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// EXPORT CSV
+// ═══════════════════════════════════════════════════════════════════════════
+function exportCSV() {
+  var header = 'Half Inning,Inning,Outs,Balls,Strikes,Count,Batter_Team,Pitcher_Team,Date,Home Team,Away Team,Time To Plate (sec) with Man on First,Batter,Pitcher,Batter_Side,Pitcher_Side,Pitch_Type,Outcome,Quality of Contact,Spray Chart,Runners,Pitch_Location_X,Pitch_Location_Y';
+  var rows = G.pitches.map(function(p) {
+    return [
+      p.half_inning, p.inning, p.outs, p.balls, p.strikes, p.count,
+      p.batter_team, p.pitcher_team, p.date, p.home_team, p.away_team,
+      p.ttp, p.batter, p.pitcher, p.batter_side, p.pitcher_side,
+      p.pitch_type, p.outcome, p.contact, p.spray, p.runners,
+      p.pitch_x, p.pitch_y
+    ].map(function(v){ return '"'+(v||'').toString().replace(/"/g,'""')+'"'; }).join(',');
+  });
+  var csv = header+'\n'+rows.join('\n');
+  var blob = new Blob([csv], {type:'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = G.awayTeam.replace(/\s/g,'_')+'_vs_'+G.homeTeam.replace(/\s/g,'_')+'_'+G.date+'.csv';
+  a.click();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════════════
+buildSetupInputs();
+</script>
+</body>
+</html>
