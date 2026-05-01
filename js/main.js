@@ -1023,25 +1023,45 @@ function renderPlayerDetail(name, type, content) {
   var _seenYears = {};
   var _allSeasonOpts = [];
 
+  // Collect scatter points
   var _ddScatter = [];
   if (pitchData && pitchData.scatter) {
     _ddScatter = pitchData.scatter;
-  } else if (type === 'pitcher') {
+  }
+  if (type === 'pitcher') {
     DATA.pitches.forEach(function(bp) {
       if (!bp.scatter) return;
       bp.scatter.forEach(function(s) { if (s.pitcher === name) _ddScatter.push(s); });
     });
   }
+
+  // Extract years from scatter dates
   _ddScatter.forEach(function(s) {
-    if (!s.date) return;
-    var yr = s.date.slice(0, 4);
-    if (_seenYears[yr]) return;
+    var d = s.date || s.Date || s.game_date || '';
+    if (!d) return;
+    var yr = String(d).slice(0, 4);
+    if (!/^\d{4}$/.test(yr) || _seenYears[yr]) return;
     _seenYears[yr] = true;
     _allSeasonOpts.push({ label: yr, year: yr });
   });
+
+  // Fallback: if no scatter dates, pull years from iblHistory
+  if (!_allSeasonOpts.length) {
+    (DATA.iblHistory[name] || []).forEach(function(s) {
+      if (!s.season) return;
+      var m = s.season.match(/(\d{4})/);
+      if (!m) return;
+      var yr = m[1];
+      var hasData = type === 'pitcher' ? s.IP > 0 : s.AB > 0;
+      if (!hasData || _seenYears[yr]) return;
+      _seenYears[yr] = true;
+      _allSeasonOpts.push({ label: yr, year: yr });
+    });
+  }
+
   _allSeasonOpts.sort(function(a, b) { return parseInt(b.year) - parseInt(a.year); });
 
-  // Default to most recent year with data
+  // Default to most recent year
   var activeSeasonFilter = _allSeasonOpts.length ? _allSeasonOpts[0].year : 'all';
   var currentTab = 'overview';
 
