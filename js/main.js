@@ -1057,6 +1057,12 @@ function renderPlayerDetail(name, type, content) {
 
   _allSeasonOpts.sort(function(a, b) { return parseInt(b.year) - parseInt(a.year); });
 
+  // Always ensure 2025 is present
+  if (!_allSeasonOpts.find(function(o){ return o.year === '2025'; })) {
+    _allSeasonOpts.push({ label: '2025', year: '2025' });
+    _allSeasonOpts.sort(function(a, b) { return parseInt(b.year) - parseInt(a.year); });
+  }
+
   // Default to most recent year
   var activeSeasonFilter = _allSeasonOpts.length ? _allSeasonOpts[0].year : 'all';
   var currentTab = 'overview';
@@ -1075,9 +1081,10 @@ function renderPlayerDetail(name, type, content) {
              'background:' + (active ? 'rgba(255,184,28,0.12)' : 'rgba(255,255,255,0.03)') + ';' +
              'color:' + (active ? '#FFB81C' : 'rgba(255,255,255,0.4)') + ';';
     }
-    var btns = _allSeasonOpts.map(function(opt) {
-      return '<button style="' + btnStyle(activeSeasonFilter === opt.year) + '" data-sf="' + opt.year + '">' + opt.year + '</button>';
-    }).join('');
+    var btns = '<button style="' + btnStyle(activeSeasonFilter === 'all') + '" data-sf="all">All</button>' +
+      _allSeasonOpts.map(function(opt) {
+        return '<button style="' + btnStyle(activeSeasonFilter === opt.year) + '" data-sf="' + opt.year + '">' + opt.year + '</button>';
+      }).join('');
 
     _filterBar.innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;padding:8px 0 14px;border-bottom:1px solid rgba(255,255,255,0.05)">' +
