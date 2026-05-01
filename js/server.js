@@ -22,7 +22,8 @@ app.use(cors({
   origin: [
     /\.github\.io$/,
     /localhost/,
-    /data-diamond\.onrender\.com$/
+    /data-diamond\.onrender\.com$/,
+    /data-diamond\.ca$/
   ],
   methods: ['GET','POST','OPTIONS'],
   allowedHeaders: ['Content-Type']
