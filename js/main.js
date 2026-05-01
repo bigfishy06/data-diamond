@@ -1478,6 +1478,222 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
     '</div>';
   }
 
+  // ── Batted ball donut chart (batter only, from pbpBatters) ──────────────────
+  var donutHTML = '';
+  if (type === 'batter' && pbpB &&
+      (pbpB.GB_pct != null || pbpB.FB_pct != null || pbpB.LO_pct != null || pbpB.PO_pct != null)) {
+
+    var gb = pbpB.GB_pct || 0;
+    var fb = pbpB.FB_pct || 0;
+    var lo = pbpB.LO_pct || 0;
+    var po = pbpB.PO_pct || 0;
+
+    // Segments: GB=orange, FB=blue, LO=green, PO=purple
+    var segments = [
+      { label: 'GB%', pct: gb, color: '#fb923c' },
+      { label: 'FB%', pct: fb, color: '#60a5fa' },
+      { label: 'LO%', pct: lo, color: '#34d399' },
+      { label: 'PO%', pct: po, color: '#a78bfa' }
+    ].filter(function(s) { return s.pct > 0; });
+
+    var total = gb + fb + lo + po;
+
+    // Build SVG donut
+    var cx = 60, cy = 60, R = 48, r = 30;
+    var svgPaths = '';
+    var startAngle = -Math.PI / 2; // start from top
+
+    segments.forEach(function(seg) {
+      var sweep = (seg.pct / 100) * 2 * Math.PI;
+      var endAngle = startAngle + sweep;
+
+      // Outer arc
+      var x1o = cx + R * Math.cos(startAngle);
+      var y1o = cy + R * Math.sin(startAngle);
+      var x2o = cx + R * Math.cos(endAngle);
+      var y2o = cy + R * Math.sin(endAngle);
+      // Inner arc
+      var x1i = cx + r * Math.cos(endAngle);
+      var y1i = cy + r * Math.sin(endAngle);
+      var x2i = cx + r * Math.cos(startAngle);
+      var y2i = cy + r * Math.sin(startAngle);
+
+      var largeArc = sweep > Math.PI ? 1 : 0;
+
+      var path = 'M ' + x1o.toFixed(2) + ' ' + y1o.toFixed(2) +
+                 ' A ' + R + ' ' + R + ' 0 ' + largeArc + ' 1 ' + x2o.toFixed(2) + ' ' + y2o.toFixed(2) +
+                 ' L ' + x1i.toFixed(2) + ' ' + y1i.toFixed(2) +
+                 ' A ' + r + ' ' + r + ' 0 ' + largeArc + ' 0 ' + x2i.toFixed(2) + ' ' + y2i.toFixed(2) +
+                 ' Z';
+
+      svgPaths += '<path d="' + path + '" fill="' + seg.color + '" opacity="0.9"/>';
+
+      // Label in middle of arc
+      var midAngle = startAngle + sweep / 2;
+      var labelR   = (R + r) / 2;
+      var lx = cx + labelR * Math.cos(midAngle);
+      var ly = cy + labelR * Math.sin(midAngle);
+      if (seg.pct >= 8) {
+        svgPaths += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 1).toFixed(1) + '"' +
+                    ' text-anchor="middle" dominant-baseline="middle"' +
+                    ' font-size="7" font-family="monospace" font-weight="bold" fill="#0e1525">' +
+                    Math.round(seg.pct) + '%</text>';
+      }
+      startAngle = endAngle;
+    });
+
+    // Legend items
+    var legendHTML = segments.map(function(seg) {
+      return '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">' +
+        '<div style="width:10px;height:10px;border-radius:2px;background:' + seg.color + ';flex-shrink:0"></div>' +
+        '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:0.05em">' + seg.label + '</div>' +
+        '<div style="font-family:var(--font-mono);font-size:12px;color:#fff;font-weight:500;margin-left:auto">' + fmt1(seg.pct) + '%</div>' +
+        '</div>';
+    }).join('');
+
+    donutHTML =
+      '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">' +
+        '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px">Batted Ball Profile</div>' +
+        '<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">' +
+          // SVG donut
+          '<svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0">' +
+            svgPaths +
+            // total label in center
+            '<text x="' + cx + '" y="' + (cy - 5) + '" text-anchor="middle" font-size="8" font-family="monospace" fill="rgba(255,255,255,0.4)">' + Math.round(total) + '% BIP</text>' +
+            '<text x="' + cx + '" y="' + (cy + 7) + '" text-anchor="middle" font-size="7" font-family="monospace" fill="rgba(255,255,255,0.25)">tracked</text>' +
+          '</svg>' +
+          // Legend
+          '<div style="flex:1;min-width:120px">' +
+            legendHTML +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  // ── Pitcher time-to-plate gauge ──────────────────────────────────────────────
+  var pitcherGaugeHTML = '';
+  if (type === 'pitcher') {
+    // Get avg_time_to_plate from DATA.pitchers (datadiamond)
+    var pdG = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
+    var ttp = pdG.avg_time_to_plate != null ? pdG.avg_time_to_plate : null;
+
+    if (ttp != null) {
+      // Scale: 0.8s (fast) → 2.1s (slow). Steal threshold = 1.3s
+      var minT = 0.8, maxT = 2.1, stealThresh = 1.3;
+
+      // Color: green if <= 1.1 (very fast), yellow if 1.1-1.3, red if > 1.3
+      var gaugeColor, riskLabel, riskDesc;
+      if (ttp <= 1.1) {
+        gaugeColor = '#34d399'; // green
+        riskLabel  = 'QUICK DELIVERY';
+        riskDesc   = 'Delivers quickly — base runners have a very difficult time stealing.';
+      } else if (ttp <= 1.3) {
+        gaugeColor = '#FFB81C'; // gold
+        riskLabel  = 'AVERAGE DELIVERY';
+        riskDesc   = 'Near the steal threshold — runners may attempt with a good jump.';
+      } else {
+        gaugeColor = '#f87171'; // red
+        riskLabel  = 'SLOW DELIVERY';
+        riskDesc   = 'Slow to the plate — base runners can steal freely. Alert your catcher.';
+      }
+
+      // Build SVG gauge (semicircle)
+      var gR = 54, gCx = 70, gCy = 68;
+      var startDeg = 180, endDeg = 0; // left to right semicircle
+
+      // Needle angle: map ttp to 180°→0° (left=fast, right=slow)
+      var clampedT  = Math.max(minT, Math.min(maxT, ttp));
+      var needlePct = (clampedT - minT) / (maxT - minT);
+      var needleDeg = 180 - needlePct * 180; // 180=left, 0=right
+      var needleRad = needleDeg * Math.PI / 180;
+      var nLen = gR - 6;
+      var nx   = gCx + nLen * Math.cos(needleRad);
+      var ny   = gCy - nLen * Math.sin(needleRad);
+
+      // Steal threshold marker
+      var stealPct = (stealThresh - minT) / (maxT - minT);
+      var stealDeg = 180 - stealPct * 180;
+      var stealRad = stealDeg * Math.PI / 180;
+      var sx1 = gCx + (gR - 2) * Math.cos(stealRad);
+      var sy1 = gCy - (gR - 2) * Math.sin(stealRad);
+      var sx2 = gCx + (gR + 6) * Math.cos(stealRad);
+      var sy2 = gCy - (gR + 6) * Math.sin(stealRad);
+
+      // Arc segments: green (fast) → gold → red (slow)
+      // Green arc: 180° → stealThreshold angle
+      var greenEnd = stealDeg * Math.PI / 180;
+      var gx1 = gCx + gR * Math.cos(Math.PI);
+      var gy1 = gCy - gR * Math.sin(Math.PI);
+      var gx2 = gCx + gR * Math.cos(greenEnd);
+      var gy2 = gCy - gR * Math.sin(greenEnd);
+      var ir = gR - 12;
+      var gix1 = gCx + ir * Math.cos(greenEnd);
+      var giy1 = gCy - ir * Math.sin(greenEnd);
+      var gix2 = gCx + ir * Math.cos(Math.PI);
+      var giy2 = gCy - ir * Math.sin(Math.PI);
+
+      var greenArc = 'M ' + gx1.toFixed(1) + ' ' + gy1.toFixed(1) +
+        ' A ' + gR + ' ' + gR + ' 0 0 1 ' + gx2.toFixed(1) + ' ' + gy2.toFixed(1) +
+        ' L ' + gix1.toFixed(1) + ' ' + giy1.toFixed(1) +
+        ' A ' + ir + ' ' + ir + ' 0 0 0 ' + gix2.toFixed(1) + ' ' + giy2.toFixed(1) + ' Z';
+
+      // Red arc: stealThreshold → 0°
+      var rx1 = gx2, ry1 = gy2;
+      var rx2 = gCx + gR; var ry2 = gCy;
+      var rix1 = gCx + ir; var riy1 = gCy;
+      var rix2 = gix1; var riy2 = giy1;
+
+      var redArc = 'M ' + rx1.toFixed(1) + ' ' + ry1.toFixed(1) +
+        ' A ' + gR + ' ' + gR + ' 0 0 1 ' + rx2.toFixed(1) + ' ' + ry2.toFixed(1) +
+        ' L ' + rix1.toFixed(1) + ' ' + riy1.toFixed(1) +
+        ' A ' + ir + ' ' + ir + ' 0 0 0 ' + rix2.toFixed(1) + ' ' + riy2.toFixed(1) + ' Z';
+
+      pitcherGaugeHTML =
+        '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">' +
+          '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px">Time to Plate</div>' +
+          '<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">' +
+            // SVG gauge
+            '<div style="flex-shrink:0;text-align:center">' +
+              '<svg width="140" height="80" viewBox="0 0 140 80">' +
+                // Background track
+                '<path d="M ' + (gCx - gR) + ' ' + gCy + ' A ' + gR + ' ' + gR + ' 0 0 1 ' + (gCx + gR) + ' ' + gCy +
+                      ' L ' + (gCx + ir) + ' ' + gCy + ' A ' + ir + ' ' + ir + ' 0 0 0 ' + (gCx - ir) + ' ' + gCy + ' Z"' +
+                      ' fill="rgba(255,255,255,0.06)"/>' +
+                // Green zone (fast)
+                '<path d="' + greenArc + '" fill="rgba(52,211,153,0.25)"/>' +
+                // Red zone (slow / steal risk)
+                '<path d="' + redArc + '" fill="rgba(248,113,113,0.25)"/>' +
+                // Steal threshold marker
+                '<line x1="' + sx1.toFixed(1) + '" y1="' + sy1.toFixed(1) + '" x2="' + sx2.toFixed(1) + '" y2="' + sy2.toFixed(1) + '"' +
+                      ' stroke="#FFB81C" stroke-width="2" stroke-dasharray="2,2"/>' +
+                '<text x="' + (sx2 + 2).toFixed(1) + '" y="' + (sy2 - 2).toFixed(1) + '"' +
+                      ' font-size="5.5" font-family="monospace" fill="#FFB81C">1.3s</text>' +
+                // Needle
+                '<line x1="' + gCx + '" y1="' + gCy + '" x2="' + nx.toFixed(1) + '" y2="' + ny.toFixed(1) + '"' +
+                      ' stroke="' + gaugeColor + '" stroke-width="2.5" stroke-linecap="round"/>' +
+                '<circle cx="' + gCx + '" cy="' + gCy + '" r="4" fill="' + gaugeColor + '"/>' +
+                // Value label
+                '<text x="' + gCx + '" y="' + (gCy + 14) + '"' +
+                      ' text-anchor="middle" font-size="13" font-family="monospace" font-weight="bold" fill="' + gaugeColor + '">' + ttp.toFixed(2) + 's</text>' +
+                // Scale labels
+                '<text x="' + (gCx - gR - 2) + '" y="' + (gCy + 3) + '" font-size="6" font-family="monospace" fill="rgba(255,255,255,0.3)" text-anchor="end">0.8s</text>' +
+                '<text x="' + (gCx + gR + 2) + '" y="' + (gCy + 3) + '" font-size="6" font-family="monospace" fill="rgba(255,255,255,0.3)">2.1s</text>' +
+              '</svg>' +
+            '</div>' +
+            // Text info
+            '<div style="flex:1;min-width:140px">' +
+              '<div style="font-family:var(--font-mono);font-size:13px;font-weight:600;color:' + gaugeColor + ';letter-spacing:0.05em;margin-bottom:6px">' + riskLabel + '</div>' +
+              '<div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5;margin-bottom:10px">' + riskDesc + '</div>' +
+              '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:8px 12px">' +
+                '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.08em;margin-bottom:2px">STEAL THRESHOLD</div>' +
+                '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.7)">Above <span style="color:#FFB81C;font-weight:600">1.30s</span> = runners can steal freely</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }
+  }
+
   var cols =
     '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">' +
     makeSection('Positives', positives, 'green', 'No standout strengths yet.') +
@@ -1485,7 +1701,7 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
     makeSection('Approach',  approach,  'blue',  'Not enough pitch location data yet.') +
     '</div>';
 
-  return identityCard + cols;
+  return identityCard + donutHTML + pitcherGaugeHTML + cols;
 }
 
 // ── PBP-based league percentile arrays ────────────────────────────────────
