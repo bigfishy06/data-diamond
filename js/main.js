@@ -159,8 +159,8 @@ async function loadAll() {
       fetch(base + 'data/pitches.json'),
       fetch(base + 'data/pitchers.json'),
       fetch(base + 'data/ibl_history.json'),
-      fetch(base + 'data/pbp_batters.json'),
-      fetch(base + 'data/pbp_pitchers.json')
+      fetch('https://data-diamond.onrender.com/api/data/batters'),
+      fetch('https://data-diamond.onrender.com/api/data/pitchers')
     ]);
     if (sumRes.ok)     DATA.summary     = await sumRes.json();
     if (pitRes.ok)     DATA.pitches     = await pitRes.json();
