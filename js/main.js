@@ -214,6 +214,22 @@ function getPbpBatter(name) {
 function getPbpPitcher(name) {
   return DATA.pbpPitchers.find(function(p) { return p.pitcher === name; }) || null;
 }
+function getSeasonERA(name) {
+  var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
+  return ibl.length && ibl[0].ERA != null ? ibl[0].ERA : null;
+}
+function getSeasonWHIP(name) {
+  var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
+  return ibl.length && ibl[0].WHIP != null ? ibl[0].WHIP : null;
+}
+function getSeasonHR(name) {
+  var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
+  return ibl.length && ibl[0].HR != null ? ibl[0].HR : null;
+}
+function getSeasonRBI(name) {
+  var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
+  return ibl.length && ibl[0].RBI != null ? ibl[0].RBI : null;
+}
 function getPitchPlayer(name) {
   return DATA.pitches.find(function(p) { return p.batter === name; }) || null;
 }
@@ -924,9 +940,10 @@ function renderPlayerDetail(name, type, content) {
     var pbpB = getPbpBatter(name);
     var dispAVG = pbpB ? fmt3(pbpB.AVG) : (sum ? fmt3(sum.AVG) : '—');
     var dispOPS = pbpB ? fmt3(pbpB.OPS) : (sum ? fmt3(sum.OPS) : '—');
-    var dispHR  = pbpB ? fmtN(pbpB.HR)  : (sum ? fmtN(sum.HR)  : '—');
+    var dispHR  = getSeasonHR(name)  != null ? fmtN(getSeasonHR(name))  : (pbpB ? fmtN(pbpB.HR)  : (sum ? fmtN(sum.HR)  : '—'));
+    var dispRBI = getSeasonRBI(name) != null ? fmtN(getSeasonRBI(name)) : '—';
     var dispPA  = pbpB ? fmtN(pbpB.PA)  : '—';
-    [['AVG', dispAVG], ['OPS', dispOPS], ['HR', dispHR], ['PA', dispPA]].forEach(function(s) {
+    [['AVG', dispAVG], ['OPS', dispOPS], ['HR', dispHR], ['RBI', dispRBI]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   } else if (type === 'pitcher' && pitchData && pitchData.scatter) {
@@ -940,8 +957,8 @@ function renderPlayerDetail(name, type, content) {
     const iblP = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
     var pbpP = getPbpPitcher(name);
     const hlIP   = pbpP ? fmtIP(pbpP.IP) : (pd.IP != null ? fmtIP(pd.IP) : '—');
-    const hlERA  = pbpP ? fmt2(pbpP.ERA)  : '—';
-    const hlWHIP = pbpP ? fmt2(pbpP.WHIP) : '—';
+    const hlERA  = getSeasonERA(name)  != null ? fmt2(getSeasonERA(name))  : (pbpP ? fmt2(pbpP.ERA)  : '—');
+    const hlWHIP = getSeasonWHIP(name) != null ? fmt2(getSeasonWHIP(name)) : (pbpP ? fmt2(pbpP.WHIP) : '—');
     const hlKpct = pbpP ? fmt1(pbpP.K_pct)+'%' : '—';
     [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP], ['K%', hlKpct]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
@@ -1108,11 +1125,16 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
     var srcOBP = d ? d.OBP  : (sum ? sum.OBP  : null);
     var srcSLG = d ? d.SLG  : (sum ? sum.SLG  : null);
     var srcOPS = d ? d.OPS  : (sum ? sum.OPS  : null);
-    var srcHR  = d ? d.HR   : (sum ? sum.HR   : null);
+    var srcHR  = getSeasonHR(name)  != null ? getSeasonHR(name)  : (d ? d.HR  : (sum ? sum.HR  : null));
+    var srcRBI = getSeasonRBI(name) != null ? getSeasonRBI(name) : null;
 
     var lgAvg  = d ? lgB.avg  : []; var lgObp = d ? lgB.obp  : [];
     var lgSlg  = d ? lgB.slg  : []; var lgOps = d ? lgB.ops  : [];
     var lgHr   = DATA.pbpBatters.filter(function(p){ return p.AB>=5; }).map(function(p){ return p.HR||0; });
+    var lgRbi  = DATA.iblHistory ? Object.values(DATA.iblHistory).map(function(seasons){
+      var s = (seasons||[]).filter(function(s){ return s.AB > 0; });
+      return s.length && s[0].RBI != null ? s[0].RBI : null;
+    }).filter(function(v){ return v != null; }) : [];
 
     evalStat('AVG', srcAVG != null ? fmt3(srcAVG) : '—', pctRankB(srcAVG, lgAvg), true,
       { elite:'Hitting at an outstanding rate — one of the best averages in the league.', strong:'Solid contact rate, well above the league average.',
@@ -1128,6 +1150,9 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
         weak:'Below-average overall offensive output.', poor:'Among the lowest OPS in the league — struggles getting on base and driving the ball.' });
     evalStat('HR',  srcHR  != null ? fmtN(srcHR)  : '—', pctRankB(srcHR,  lgHr),  true,
       { elite:'Among the league leaders in home runs — a genuine power threat.', strong:'Above-average home run production.', weak:null, poor:null });
+    if (srcRBI != null) evalStat('RBI', fmtN(srcRBI), pctRankB(srcRBI, lgRbi), true,
+      { elite:'Among the league leaders in RBI — a true run producer.', strong:'Above-average RBI production — driving in runs consistently.',
+        weak:'Below-average RBI total — struggling to drive in runners.', poor:'One of the lowest RBI totals in the league.' });
 
     // ── Discipline stats from PBP ─────────────────
     if (d) {
@@ -1298,9 +1323,7 @@ function renderOverview(name, type, sum, pitch, playerInfo) {
     var myEA    = pbpPO.EA_pct != null ? pbpPO.EA_pct : (pd.EA_pct  != null ? pd.EA_pct : null);
     var myKBB   = pbpPO.K_BB   != null ? pbpPO.K_BB   : (pd.K_BB    != null ? pd.K_BB   : null);
 
-    var iblP   = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
-    var iblPRS = iblP.length ? iblP[0] : null;
-    var era    = iblPRS && iblPRS.ERA  != null ? iblPRS.ERA  : null;
+    var era    = getSeasonERA(name);
     var whip   = pd.IP > 0 ? (bbs + pdH) / pd.IP : null;
     var baAgst = (function(){
       var ab=sc.filter(function(s){return IN_PLAY.concat(KS).includes(s.outcome);}).length;
@@ -1817,6 +1840,11 @@ function renderPercentileStats(name, type, sum, pitch) {
     }
 
     var pitchCount = pbpBatterData ? pbpBatterData.pitches : totPitches;
+    var lgHr2  = DATA.pbpBatters.filter(function(p){ return p.AB>=5; }).map(function(p){ return p.HR||0; });
+    var lgRbi2 = Object.values(DATA.iblHistory||{}).map(function(seasons){
+      var s=(seasons||[]).filter(function(s){return s.AB>0;});
+      return s.length&&s[0].RBI!=null?s[0].RBI:null;
+    }).filter(function(v){return v!=null;});
 
     var allBars = [];
     if (pbpBatterData) {
@@ -1824,6 +1852,8 @@ function renderPercentileStats(name, type, sum, pitch) {
       var d = pbpBatterData;
       allBars = [
         { lbl: 'BA',         val: d.AVG   != null ? fmt3(d.AVG)           : '—', pct: lpB(d.AVG,           lgB.avg),     good: true  },
+        { lbl: 'HR',         val: getSeasonHR(name)  != null ? fmtN(getSeasonHR(name))  : (d.HR  != null ? fmtN(d.HR)  : '—'), pct: pctRankB(getSeasonHR(name) != null ? getSeasonHR(name) : d.HR, lgHr2), good: true },
+        { lbl: 'RBI',        val: getSeasonRBI(name) != null ? fmtN(getSeasonRBI(name)) : '—', pct: pctRankB(getSeasonRBI(name), lgRbi2), good: true },
         { lbl: 'OBP',        val: d.OBP   != null ? fmt3(d.OBP)           : '—', pct: lpB(d.OBP,           lgB.obp),     good: true  },
         { lbl: 'SLG',        val: d.SLG   != null ? fmt3(d.SLG)           : '—', pct: lpB(d.SLG,           lgB.slg),     good: true  },
         { lbl: 'OPS',        val: d.OPS   != null ? fmt3(d.OPS)           : '—', pct: lpB(d.OPS,           lgB.ops),     good: true  },
@@ -1986,8 +2016,8 @@ function renderPercentileStats(name, type, sum, pitch) {
         tot: tot,
         bars: [
           // Outcome stats
-          { lbl: 'ERA',      val: era!=null      ? fmt2(era)              :'—', pct: era!=null      ? 1-lp(era,         lgP.era)     : 0, good: true },
-          { lbl: 'WHIP',     val: whip!=null     ? fmt2(whip)             :'—', pct: whip!=null     ? 1-lp(whip,        lgP.whip)    : 0, good: true },
+          { lbl: 'ERA',  val: era  != null ? fmt2(era)  : '—', pct: era  != null ? 1-lp(era,  lgP.era)  : 0, good: true },
+          { lbl: 'WHIP', val: whip != null ? fmt2(whip) : '—', pct: whip != null ? 1-lp(whip, lgP.whip) : 0, good: true },
           { lbl: 'BA AGNST', val: baAgst!=null   ? fmt3(baAgst)           :'—', pct: baAgst!=null   ? 1-lp(baAgst,      lgP.baAgst)  : 0, good: true },
           { lbl: 'BABIP',    val: babip!=null    ? fmt3(babip)            :'—', pct: babip!=null    ? 1-lp(babip,       lgP.babip)   : 0, good: true },
           // Rate stats
@@ -2027,8 +2057,10 @@ function renderPercentileStats(name, type, sum, pitch) {
     if (pbpPitData) {
       var dp = pbpPitData;
       allBars = [
-        { lbl: 'ERA',      val: dp.ERA        != null ? fmt2(dp.ERA)              : '—', pct: dp.ERA        != null ? 1-lpP(dp.ERA,        lgPpbp.era)     : 0, good: true },
-        { lbl: 'WHIP',     val: dp.WHIP       != null ? fmt2(dp.WHIP)             : '—', pct: dp.WHIP       != null ? 1-lpP(dp.WHIP,       lgPpbp.whip)    : 0, good: true },
+        { lbl: 'ERA',  val: getSeasonERA(name)  != null ? fmt2(getSeasonERA(name))  : (dp.ERA  != null ? fmt2(dp.ERA)  : '—'),
+                   pct: getSeasonERA(name)  != null ? 1-lpP(getSeasonERA(name),  lgPpbp.era)  : (dp.ERA  != null ? 1-lpP(dp.ERA,  lgPpbp.era)  : 0), good: true },
+        { lbl: 'WHIP', val: getSeasonWHIP(name) != null ? fmt2(getSeasonWHIP(name)) : (dp.WHIP != null ? fmt2(dp.WHIP) : '—'),
+                   pct: getSeasonWHIP(name) != null ? 1-lpP(getSeasonWHIP(name), lgPpbp.whip) : (dp.WHIP != null ? 1-lpP(dp.WHIP, lgPpbp.whip) : 0), good: true },
         { lbl: 'BA AGNST', val: dp.BA_against != null ? fmt3(dp.BA_against)       : '—', pct: dp.BA_against != null ? 1-lpP(dp.BA_against, lgPpbp.baAgst)  : 0, good: true },
         { lbl: 'BABIP',    val: dp.BABIP      != null ? fmt3(dp.BABIP)            : '—', pct: dp.BABIP      != null ? 1-lpP(dp.BABIP,      lgPpbp.babip)   : 0, good: true },
         { lbl: 'STR%',     val: dp.STR_pct    != null ? fmt1(dp.STR_pct)+'%'     : '—', pct: lpP(dp.STR_pct,    lgPpbp.str),     good: true },
@@ -3346,8 +3378,8 @@ function buildPbpPitcherTable(pitchers) {
       '<td>' + (team ? team.abbreviation : '—') + '</td>' +
       '<td>' + fmtIP(p.IP || 0) + '</td>' +
       '<td>' + fmtN(p.BF) + '</td>' +
-      '<td class="highlight-val">' + (p.ERA != null ? fmt2(p.ERA) : '—') + '</td>' +
-      '<td>' + (p.WHIP != null ? fmt2(p.WHIP) : '—') + '</td>' +
+      '<td class="highlight-val">' + (getSeasonERA(p.pitcher)  != null ? fmt2(getSeasonERA(p.pitcher))  : (p.ERA  != null ? fmt2(p.ERA)  : '—')) + '</td>' +
+      '<td>' +                              (getSeasonWHIP(p.pitcher) != null ? fmt2(getSeasonWHIP(p.pitcher)) : (p.WHIP != null ? fmt2(p.WHIP) : '—')) + '</td>' +
       '<td>' + (p.BA_against != null ? fmt3(p.BA_against) : '—') + '</td>' +
       '<td class="highlight-val">' + (p.K_pct != null ? fmt1(p.K_pct)+'%' : '—') + '</td>' +
       '<td>' + (p.BB_pct != null ? fmt1(p.BB_pct)+'%' : '—') + '</td>' +
