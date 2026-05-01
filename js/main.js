@@ -925,7 +925,7 @@ function renderPlayerDetail(name, type, content) {
     (type === 'pitcher' ? '<button class="tab-btn" data-tab="usage">Pitch Usage</button>' : '') +
     '</div></div></div>' +
 
-    '<div class="container" style="padding-top:32px;padding-bottom:80px"><div id="player-tab-content"></div></div>';
+    '<div class="container" style="padding-top:32px;padding-bottom:80px"><div id="season-filter-bar"></div><div id="player-tab-content"></div></div>';
 
   if (team) {
     document.getElementById('player-hero-bg').style.background =
