@@ -938,11 +938,12 @@ function renderPlayerDetail(name, type, content) {
   const hl = document.getElementById('headline-stats');
   if (type === 'batter') {
     var pbpB = getPbpBatter(name);
-    var dispAVG = pbpB ? fmt3(pbpB.AVG) : (sum ? fmt3(sum.AVG) : '—');
-    var dispOPS = pbpB ? fmt3(pbpB.OPS) : (sum ? fmt3(sum.OPS) : '—');
+    var _iblBat = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
+    var _iblBatS = _iblBat.length ? _iblBat[0] : null;
+    var dispAVG = _iblBatS && _iblBatS.AVG != null ? fmt3(_iblBatS.AVG) : (pbpB ? fmt3(pbpB.AVG) : (sum ? fmt3(sum.AVG) : '—'));
+    var dispOPS = _iblBatS && _iblBatS.OPS != null ? fmt3(_iblBatS.OPS) : (pbpB ? fmt3(pbpB.OPS) : (sum ? fmt3(sum.OPS) : '—'));
     var dispHR  = getSeasonHR(name)  != null ? fmtN(getSeasonHR(name))  : (pbpB ? fmtN(pbpB.HR)  : (sum ? fmtN(sum.HR)  : '—'));
     var dispRBI = getSeasonRBI(name) != null ? fmtN(getSeasonRBI(name)) : '—';
-    var dispPA  = pbpB ? fmtN(pbpB.PA)  : '—';
     [['AVG', dispAVG], ['OPS', dispOPS], ['HR', dispHR], ['RBI', dispRBI]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
@@ -956,9 +957,11 @@ function renderPlayerDetail(name, type, content) {
     // ERA from IBL history (most recent season with IP)
     const iblP = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
     var pbpP = getPbpPitcher(name);
-    const hlIP   = pbpP ? fmtIP(pbpP.IP) : (pd.IP != null ? fmtIP(pd.IP) : '—');
-    const hlERA  = getSeasonERA(name)  != null ? fmt2(getSeasonERA(name))  : (pbpP ? fmt2(pbpP.ERA)  : '—');
-    const hlWHIP = getSeasonWHIP(name) != null ? fmt2(getSeasonWHIP(name)) : (pbpP ? fmt2(pbpP.WHIP) : '—');
+    var _iblPit = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
+    var _iblPitS = _iblPit.length ? _iblPit[0] : null;
+    const hlIP   = _iblPitS && _iblPitS.IP   != null ? fmtIP(_iblPitS.IP) : (pbpP ? fmtIP(pbpP.IP) : (pd.IP != null ? fmtIP(pd.IP) : '—'));
+    const hlERA  = _iblPitS && _iblPitS.ERA  != null ? fmt2(_iblPitS.ERA)  : (pbpP ? fmt2(pbpP.ERA)  : '—');
+    const hlWHIP = _iblPitS && _iblPitS.WHIP != null ? fmt2(_iblPitS.WHIP) : (pbpP ? fmt2(pbpP.WHIP) : '—');
     const hlKpct = pbpP ? fmt1(pbpP.K_pct)+'%' : '—';
     [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP], ['K%', hlKpct]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
