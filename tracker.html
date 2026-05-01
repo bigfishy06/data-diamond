@@ -216,6 +216,11 @@ body { background:#080c12; color:#fff; font-family:'Inter',sans-serif; margin:0;
   padding:8px 6px; outline:none; width:100%; margin-bottom:8px;
 }
 .pitcher-input-row { display:flex; gap:6px; align-items:center; margin-bottom:6px; }
+.ph-badge {
+  font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.08em;
+  padding:1px 5px; border-radius:3px; background:rgba(167,139,250,0.15);
+  border:1px solid rgba(167,139,250,0.35); color:#a78bfa; margin-left:4px;
+}
 </style>
 </head>
 <body>
@@ -364,7 +369,17 @@ body { background:#080c12; color:#fff; font-family:'Inter',sans-serif; margin:0;
                   <button class="outcome-btn strike" data-out="Foul">Foul</button>
                 </div>
               </div>
-              <!-- Hit outcomes -->
+              <!-- Strikeout outcomes -->
+              <div>
+                <div class="outcome-group-label" style="margin-bottom:4px">Strikeout</div>
+                <div class="outcome-btns" style="grid-template-columns:repeat(4,1fr)">
+                  <button class="outcome-btn strike" data-out="Strikeout Looking">K Look</button>
+                  <button class="outcome-btn strike" data-out="Strikeout Swinging">K Swing</button>
+                  <button class="outcome-btn hit"    data-out="Dropped Third Strike Looking">DTS Look</button>
+                  <button class="outcome-btn hit"    data-out="Dropped Third Strike Swinging">DTS Swing</button>
+                </div>
+              </div>
+              <!-- Hit / Reach outcomes -->
               <div>
                 <div class="outcome-group-label" style="margin-bottom:4px">Hit / Reach</div>
                 <div class="outcome-btns" style="grid-template-columns:repeat(4,1fr)">
@@ -376,6 +391,8 @@ body { background:#080c12; color:#fff; font-family:'Inter',sans-serif; margin:0;
                   <button class="outcome-btn hit" data-out="Intentional Walk">IBB</button>
                   <button class="outcome-btn hit" data-out="Hit By Pitch">HBP</button>
                   <button class="outcome-btn hit" data-out="Error">Error</button>
+                  <button class="outcome-btn hit" data-out="Catcher Interference">CI</button>
+                  <button class="outcome-btn hit" data-out="Batter Interference">BI</button>
                 </div>
               </div>
               <!-- Out outcomes -->
@@ -386,14 +403,20 @@ body { background:#080c12; color:#fff; font-family:'Inter',sans-serif; margin:0;
                   <button class="outcome-btn out" data-out="Flyout">Flyout</button>
                   <button class="outcome-btn out" data-out="Lineout">Lineout</button>
                   <button class="outcome-btn out" data-out="Popout">Popout</button>
-                  <button class="outcome-btn out" data-out="Strikeout Swinging">K Swing</button>
-                  <button class="outcome-btn out" data-out="Strikeout Looking">K Look</button>
                   <button class="outcome-btn out" data-out="Double Play">DP</button>
+                  <button class="outcome-btn out" data-out="Triple Play">TP</button>
                   <button class="outcome-btn out" data-out="Sacrifice Fly">Sac Fly</button>
                   <button class="outcome-btn out" data-out="Sacrifice Bunt">Sac Bunt</button>
-                  <button class="outcome-btn out" data-out="Dropped Third Strike Swinging">DTS Sw</button>
-                  <button class="outcome-btn out" data-out="Dropped Third Strike Looking">DTS Lk</button>
-                  <button class="outcome-btn out" data-out="Truncated Out">Trunc</button>
+                  <button class="outcome-btn out" data-out="Truncated Out">Trunc Out</button>
+                  <button class="outcome-btn out" data-out="Additional Out">Add'l Out</button>
+                </div>
+              </div>
+              <!-- Baserunning outcomes -->
+              <div>
+                <div class="outcome-group-label" style="margin-bottom:4px">Baserunning</div>
+                <div class="outcome-btns" style="grid-template-columns:repeat(4,1fr)">
+                  <button class="outcome-btn out" data-out="Pickoff">Pickoff</button>
+                  <button class="outcome-btn out" data-out="Caught Stealing">CS</button>
                 </div>
               </div>
             </div>
@@ -433,9 +456,10 @@ body { background:#080c12; color:#fff; font-family:'Inter',sans-serif; margin:0;
         <button class="undo-btn" onclick="undoPitch()" style="width:80px">↩ UNDO</button>
       </div>
 
-      <!-- Sub pitcher button -->
+      <!-- Sub pitcher / pinch hitter / next batter / end inning -->
       <div style="display:flex;gap:8px">
         <button onclick="subPitcher()" style="flex:1;padding:7px;border-radius:5px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);transition:all .15s" onmouseover="this.style.borderColor='rgba(255,184,28,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">⟳ SUB PITCHER</button>
+        <button onclick="pinchHitter()" style="flex:1;padding:7px;border-radius:5px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;border:1px solid rgba(167,139,250,0.3);background:transparent;color:#a78bfa;transition:all .15s" onmouseover="this.style.borderColor='rgba(167,139,250,0.7)'" onmouseout="this.style.borderColor='rgba(167,139,250,0.3)'">⇄ PINCH HITTER</button>
         <button onclick="nextBatter()" style="flex:1;padding:7px;border-radius:5px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);transition:all .15s" onmouseover="this.style.borderColor='rgba(52,211,153,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">→ NEXT BATTER</button>
         <button onclick="endInning()" style="flex:1;padding:7px;border-radius:5px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);transition:all .15s" onmouseover="this.style.borderColor='rgba(251,146,60,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">▸ END INNING</button>
       </div>
@@ -572,7 +596,7 @@ function startGame() {
   G.currentPitcher = G.homePitcher; // home team pitches first (top = away bats)
 
   // POST game start to server
-  fetch('http://localhost:3747/api/game/start', {
+  fetch('https://data-diamond.onrender.com/api/game/start', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -684,10 +708,13 @@ document.getElementById('zone-canvas').addEventListener('click', function(e) {
 // OUTCOME / PITCH TYPE BUTTONS
 // ═══════════════════════════════════════════════════════════════════════════
 var IN_PLAY_OUTCOMES = ['Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout',
-  'Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Dropped Third Strike Swinging','Dropped Third Strike Looking','Truncated Out'];
+  'Double Play','Triple Play','Sacrifice Fly','Sacrifice Bunt','Error',
+  'Dropped Third Strike Swinging','Dropped Third Strike Looking','Truncated Out',
+  'Pickoff','Caught Stealing','Additional Out','Batter Interference','Catcher Interference'];
 var PA_ENDING = ['Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout',
-  'Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Walk','Intentional Walk','Hit By Pitch',
-  'Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking','Truncated Out'];
+  'Double Play','Triple Play','Sacrifice Fly','Sacrifice Bunt','Error','Walk','Intentional Walk','Hit By Pitch',
+  'Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking',
+  'Truncated Out','Pickoff','Caught Stealing','Additional Out','Batter Interference','Catcher Interference'];
 
 document.querySelectorAll('[data-pt]').forEach(function(btn) {
   btn.addEventListener('click', function() {
@@ -707,8 +734,8 @@ document.querySelectorAll('[data-out]').forEach(function(btn) {
     var inPlay = IN_PLAY_OUTCOMES.includes(G.outcome);
     document.getElementById('contact-section').style.display = inPlay ? '' : 'none';
     if (!inPlay) { G.contact=''; G.spray=''; document.querySelectorAll('[data-c],[data-s]').forEach(function(b){b.classList.remove('active');}); }
-    // Show TTP if runner on 1st
-    document.getElementById('ttp-section').style.display = G.runners[0]==='1' ? '' : 'none';
+    // Show TTP only if runner on 1st ONLY (no one on 2nd or 3rd)
+    document.getElementById('ttp-section').style.display = (G.runners === '100') ? '' : 'none';
     checkRecordReady();
   });
 });
@@ -759,7 +786,7 @@ function recordPitch() {
     date:        G.date,
     home_team:   G.homeTeam,
     away_team:   G.awayTeam,
-    ttp:         (runners[0]==='1' && ttp) ? ttp : '',
+    ttp:         (runners === '100' && ttp) ? ttp : '',
     batter:      batter.name,
     pitcher:     pitcher.name,
     batter_side: batter.side,
@@ -776,7 +803,7 @@ function recordPitch() {
   G.pitches.push(row);
 
   // POST pitch to server — triggers stat rebuild
-  fetch('http://localhost:3747/api/pitch', {
+  fetch('https://data-diamond.onrender.com/api/pitch', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(row)
@@ -809,10 +836,11 @@ function recordPitch() {
 
   if (isPAEnd) {
     // Handle outs
-    var isOut = ['Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt',
-                 'Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking','Truncated Out'].includes(G.outcome);
+    var isOut = ['Groundout','Flyout','Lineout','Popout','Double Play','Triple Play','Sacrifice Fly','Sacrifice Bunt',
+                 'Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking',
+                 'Truncated Out','Pickoff','Caught Stealing','Additional Out','Batter Interference'].includes(G.outcome);
     if (isOut) {
-      G.outs += (G.outcome==='Double Play' ? 2 : 1);
+      G.outs += (G.outcome==='Double Play' ? 2 : G.outcome==='Triple Play' ? 3 : 1);
     }
     // Handle runners advancing (simplified)
     if (G.outcome==='Walk'||G.outcome==='Hit By Pitch'||G.outcome==='Intentional Walk') {
@@ -933,6 +961,19 @@ function subPitcher() {
   refreshUI();
 }
 
+function pinchHitter() {
+  var lineup  = currentLineup();
+  var idx     = currentBatterIdx();
+  var current = lineup[idx];
+  var name = prompt('Pinch hitter name (replacing ' + (current.name||'Batter '+(idx+1)) + '):');
+  if (!name) return;
+  var side = prompt('Batter side (R/L/S):', current.side||'R') || current.side || 'R';
+  var pos  = current.pos || 'DH';
+  // Replace in lineup, mark as PH
+  lineup[idx] = { name:name.trim(), pos:pos, side:side.toUpperCase(), ph:true };
+  refreshUI();
+}
+
 function undoPitch() {
   if (!G.pitches.length) return;
   G.pitches.pop();
@@ -940,7 +981,7 @@ function undoPitch() {
   if (G.strikes>0 && G.outcome!=='Ball') G.strikes--;
   else if (G.balls>0) G.balls--;
   updateCount(); drawZone(); refreshPitchLog();
-  fetch('http://localhost:3747/api/pitch/undo', { method:'POST' })
+  fetch('https://data-diamond.onrender.com/api/pitch/undo', { method:'POST' })
     .then(function(r){ return r.json(); })
     .then(function(d){ document.getElementById('pitch-counter').textContent = d.total + ' pitches'; })
     .catch(function(){});
@@ -971,7 +1012,7 @@ function updateCount() {
 }
 
 function updateTTPVisibility() {
-  document.getElementById('ttp-section').style.display = (G.runners[0]==='1' && G.outcome!=='') ? '' : 'none';
+  document.getElementById('ttp-section').style.display = (G.runners === '100' && G.outcome!=='') ? '' : 'none';
 }
 
 function refreshUI() {
@@ -993,7 +1034,7 @@ function refreshUI() {
     var cls = 'lineup-item'+(i===idx?' current':'');
     html += '<div class="'+cls+'">' +
       '<div class="lineup-num">'+(i+1)+'</div>' +
-      '<div class="lineup-name">'+(p.name||'—')+'</div>' +
+      '<div class="lineup-name">'+(p.name||'—')+(p.ph?'<span class="ph-badge">PH</span>':'')+'</div>' +
       '<div class="lineup-pos">'+p.pos+'</div>' +
       '<div class="lineup-side">'+p.side+'</div>' +
       '</div>';
@@ -1054,7 +1095,7 @@ function setServerStatus(online) {
 }
 
 function checkServerStatus() {
-  fetch('http://localhost:3747/api/ping')
+  fetch('https://data-diamond.onrender.com/api/ping')
     .then(function(r){ return r.json(); })
     .then(function(){ setServerStatus(true); })
     .catch(function(){ setServerStatus(false); });
