@@ -154,25 +154,21 @@ async function loadAll() {
 
   try {
     const base = getBase();
-    const [sumRes, pitRes, pitcherRes, iblRes, pbpBatRes, pbpPitRes] = await Promise.all([
+    const [sumRes, pitRes, pitcherRes, iblRes] = await Promise.all([
       fetch(base + 'data/summary.json'),
       fetch(base + 'data/pitches.json'),
       fetch(base + 'data/pitchers.json'),
       fetch(base + 'data/ibl_history.json'),
-      fetch('https://data-diamond.onrender.com/api/data/batters'),
-      fetch('https://data-diamond.onrender.com/api/data/pitchers')
     ]);
     if (sumRes.ok)     DATA.summary     = await sumRes.json();
     if (pitRes.ok)     DATA.pitches     = await pitRes.json();
     if (pitcherRes.ok) DATA.pitchers    = await pitcherRes.json();
     if (iblRes.ok)     DATA.iblHistory  = await iblRes.json();
-    if (pbpBatRes.ok)  DATA.pbpBatters  = await pbpBatRes.json();
-    if (pbpPitRes.ok)  DATA.pbpPitchers = await pbpPitRes.json();
+    DATA.pbpBatters  = [];
+    DATA.pbpPitchers = [];
     console.log('summary players:', DATA.summary.length);
     console.log('pitches players:', DATA.pitches.length);
     console.log('pitchers:', DATA.pitchers.length);
-    console.log('pbp batters:', DATA.pbpBatters.length);
-    console.log('pbp pitchers:', DATA.pbpPitchers.length);
   } catch(e) {
     console.error('loadAll failed:', e.message);
   }
