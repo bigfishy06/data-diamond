@@ -1019,8 +1019,69 @@ function renderPlayerDetail(name, type, content) {
 
   tabs.forEach(function(tb) { tb.addEventListener('click', function() { activateTab(tb.dataset.tab); }); });
 
-  // Always filter to 2025 data only
-  var activeSeasonFilter = '2025';
+  // ── Season filter — years from datadiamond scatter dates ─────────────────────
+  var _seenYears = {};
+  var _allSeasonOpts = [];
+
+  var _ddScatter = [];
+  if (pitchData && pitchData.scatter) {
+    _ddScatter = pitchData.scatter;
+  } else if (type === 'pitcher') {
+    DATA.pitches.forEach(function(bp) {
+      if (!bp.scatter) return;
+      bp.scatter.forEach(function(s) { if (s.pitcher === name) _ddScatter.push(s); });
+    });
+  }
+  _ddScatter.forEach(function(s) {
+    if (!s.date) return;
+    var yr = s.date.slice(0, 4);
+    if (_seenYears[yr]) return;
+    _seenYears[yr] = true;
+    _allSeasonOpts.push({ label: yr, year: yr });
+  });
+  _allSeasonOpts.sort(function(a, b) { return parseInt(b.year) - parseInt(a.year); });
+
+  // Default to most recent year with data
+  var activeSeasonFilter = _allSeasonOpts.length ? _allSeasonOpts[0].year : 'all';
+  var currentTab = 'overview';
+
+  function renderSeasonFilterBar(activeTab) {
+    var _filterBar = document.getElementById('season-filter-bar');
+    if (!_filterBar) return;
+    if (!_allSeasonOpts.length) { _filterBar.innerHTML = ''; return; }
+    var SEASON_TABS = ['overview', 'percentile', 'zone', 'splits'];
+    if (!SEASON_TABS.includes(activeTab)) { _filterBar.innerHTML = ''; return; }
+
+    function btnStyle(active) {
+      return 'font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;' +
+             'padding:5px 14px;border-radius:4px;cursor:pointer;transition:all .15s;' +
+             'border:1px solid ' + (active ? '#FFB81C' : 'rgba(255,255,255,0.1)') + ';' +
+             'background:' + (active ? 'rgba(255,184,28,0.12)' : 'rgba(255,255,255,0.03)') + ';' +
+             'color:' + (active ? '#FFB81C' : 'rgba(255,255,255,0.4)') + ';';
+    }
+    var btns = _allSeasonOpts.map(function(opt) {
+      return '<button style="' + btnStyle(activeSeasonFilter === opt.year) + '" data-sf="' + opt.year + '">' + opt.year + '</button>';
+    }).join('');
+
+    _filterBar.innerHTML =
+      '<div style="display:flex;align-items:center;gap:10px;padding:8px 0 14px;border-bottom:1px solid rgba(255,255,255,0.05)">' +
+      '<span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:rgba(255,255,255,0.25);text-transform:uppercase;white-space:nowrap">Season</span>' +
+      '<div style="display:flex;gap:6px">' + btns + '</div></div>';
+
+    _filterBar.querySelectorAll('[data-sf]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        activeSeasonFilter = btn.dataset.sf;
+        activateTab(currentTab);
+      });
+    });
+  }
+
+  var _origActivate = activateTab;
+  activateTab = function(t) {
+    currentTab = t;
+    renderSeasonFilterBar(t);
+    _origActivate(t);
+  };
 
   // Render the filter bar (only show for tabs that use it)
   activateTab('overview');
