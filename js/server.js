@@ -9,11 +9,13 @@
  * Render will auto-deploy on every push to main.
  */
 
-const express = require('express');
-const cors    = require('cors');
+const express      = require('express');
+const cors         = require('cors');
+const { MongoClient } = require('mongodb');
 
 const app  = express();
 const PORT = process.env.PORT || 3747;
+const MONGO_URI = process.env.MONGO_URI;
 
 // ── CORS: allow your GitHub Pages site ───────────────────────────────────────
 app.use(cors({
@@ -26,6 +28,25 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 app.use(express.json({ limit: '10mb' }));
+
+// ── MongoDB ───────────────────────────────────────────────────────────────────
+var pitchesCol = null;
+var gamesCol   = null;
+
+async function connectDB() {
+  if (!MONGO_URI) { console.warn('No MONGO_URI set — running in-memory only'); return; }
+  const client = new MongoClient(MONGO_URI);
+  await client.connect();
+  const db = client.db('datadiamond');
+  pitchesCol = db.collection('pitches');
+  gamesCol   = db.collection('games');
+  console.log('MongoDB connected');
+
+  // Load all historical pitches into memory on startup
+  allPitches = await pitchesCol.find({}).toArray();
+  rebuildStats();
+  console.log('Loaded ' + allPitches.length + ' pitches from MongoDB');
+}
 
 // ── In-memory stores ──────────────────────────────────────────────────────────
 var currentGame = {
@@ -241,30 +262,49 @@ function rebuildStats() {
 // ── Routes ────────────────────────────────────────────────────────────────────
 app.get('/api/ping', function(req,res){ res.json({ok:true,time:new Date().toISOString()}); });
 
-app.post('/api/game/start', function(req,res){
+app.post('/api/game/start', async function(req,res){
   var b=req.body;
   currentGame={
     gameId:b.home+'_vs_'+b.away+'_'+b.date,
     home:b.home||'',away:b.away||'',date:b.date||'',
     pitches:[],lineups:b.lineups||{home:[],away:[]},pitchers:b.pitchers||{home:{},away:{}}
   };
+  if (gamesCol) {
+    try {
+      await gamesCol.updateOne(
+        { gameId: currentGame.gameId },
+        { $set: { ...currentGame, startedAt: new Date() } },
+        { upsert: true }
+      );
+    } catch(e) { console.error('DB game save:', e.message); }
+  }
   console.log('[START] '+currentGame.gameId);
   res.json({ok:true,gameId:currentGame.gameId});
 });
 
-app.post('/api/pitch', function(req,res){
+app.post('/api/pitch', async function(req,res){
   var pitch=req.body;
+  pitch.gameId    = currentGame.gameId;
+  pitch.createdAt = new Date();
   currentGame.pitches.push(pitch);
   allPitches.push(pitch);
+  if (pitchesCol) {
+    try { await pitchesCol.insertOne(pitch); }
+    catch(e) { console.error('DB pitch save:', e.message); }
+  }
   rebuildStats();
   res.json({ok:true,total:currentGame.pitches.length});
 });
 
-app.post('/api/pitch/undo', function(req,res){
+app.post('/api/pitch/undo', async function(req,res){
   if(currentGame.pitches.length){
     var last=currentGame.pitches.pop();
     var i=allPitches.lastIndexOf(last);
     if(i>-1) allPitches.splice(i,1);
+    if (pitchesCol && last.createdAt) {
+      try { await pitchesCol.deleteOne({ gameId:currentGame.gameId, createdAt:last.createdAt }); }
+      catch(e) { console.error('DB undo:', e.message); }
+    }
     rebuildStats();
   }
   res.json({ok:true,total:currentGame.pitches.length});
@@ -280,6 +320,14 @@ app.get('/api/data/live',       function(req,res){
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────────
-app.listen(PORT, function(){
-  console.log('Data Diamond server running on port '+PORT);
+connectDB().then(function(){
+  app.listen(PORT, function(){
+    console.log('Data Diamond server running on port '+PORT);
+  });
+}).catch(function(e){
+  console.error('MongoDB connection failed:', e.message);
+  // Start anyway in memory-only mode
+  app.listen(PORT, function(){
+    console.log('Data Diamond server running on port '+PORT+' (memory-only)');
+  });
 });
