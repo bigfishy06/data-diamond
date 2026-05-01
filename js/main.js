@@ -1694,6 +1694,105 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
         '</div>' +
       '</div>';
     } // end gb > 0
+
+    // ── Spray direction donut + shift recommendation ─────────────────────────
+    var sprayHTML = '';
+    var pullC = 0, strC = 0, oppC = 0;
+    if (sc.length) {
+      var batted2 = sc.filter(function(s){
+        return ['Groundout','Flyout','Single','Double','Triple','Home Run',
+                'Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s.outcome) && s.spray;
+      });
+      pullC = batted2.filter(function(s){ return s.spray === 'Pull'; }).length;
+      strC  = batted2.filter(function(s){ return s.spray === 'Straightaway'; }).length;
+      oppC  = batted2.filter(function(s){ return s.spray === 'Opposite Field'; }).length;
+      var sprayTot = pullC + strC + oppC;
+
+      if (sprayTot >= 3) {
+        var pullPct = Math.round(pullC / sprayTot * 1000) / 10;
+        var strPct2 = Math.round(strC  / sprayTot * 1000) / 10;
+        var oppPct  = Math.round(oppC  / sprayTot * 1000) / 10;
+
+        var spraySegs = [
+          { label: 'Pull',        pct: pullPct, color: '#f87171' },
+          { label: 'Straightaway',pct: strPct2, color: '#FFB81C' },
+          { label: 'Oppo',       pct: oppPct,  color: '#60a5fa' }
+        ].filter(function(s){ return s.pct > 0; });
+
+        // Build donut SVG
+        var scx = 60, scy = 60, sR = 48, sr = 30;
+        var sPaths = '';
+        var sStart = -Math.PI / 2;
+        spraySegs.forEach(function(seg) {
+          var sweep = (seg.pct / 100) * 2 * Math.PI;
+          var sEnd = sStart + sweep;
+          var x1o = scx + sR * Math.cos(sStart), y1o = scy + sR * Math.sin(sStart);
+          var x2o = scx + sR * Math.cos(sEnd),   y2o = scy + sR * Math.sin(sEnd);
+          var x1i = scx + sr * Math.cos(sEnd),   y1i = scy + sr * Math.sin(sEnd);
+          var x2i = scx + sr * Math.cos(sStart), y2i = scy + sr * Math.sin(sStart);
+          var la = sweep > Math.PI ? 1 : 0;
+          var path = 'M '+x1o.toFixed(2)+' '+y1o.toFixed(2)+
+                     ' A '+sR+' '+sR+' 0 '+la+' 1 '+x2o.toFixed(2)+' '+y2o.toFixed(2)+
+                     ' L '+x1i.toFixed(2)+' '+y1i.toFixed(2)+
+                     ' A '+sr+' '+sr+' 0 '+la+' 0 '+x2i.toFixed(2)+' '+y2i.toFixed(2)+' Z';
+          sPaths += '<path d="'+path+'" fill="'+seg.color+'" opacity="0.9"/>';
+          var midA = sStart + sweep / 2;
+          var lR2 = (sR + sr) / 2;
+          var lx2 = scx + lR2 * Math.cos(midA), ly2 = scy + lR2 * Math.sin(midA);
+          if (seg.pct >= 8) {
+            sPaths += '<text x="'+lx2.toFixed(1)+'" y="'+(ly2+1).toFixed(1)+'"'+
+                      ' text-anchor="middle" dominant-baseline="middle"'+
+                      ' font-size="7" font-family="monospace" font-weight="bold" fill="#0e1525">'+
+                      Math.round(seg.pct)+'%</text>';
+          }
+          sStart = sEnd;
+        });
+
+        // Shift recommendation logic
+        var shiftLabel, shiftDesc, shiftColor;
+        if (pullPct >= 55) {
+          shiftLabel = 'STANDARD SHIFT';
+          shiftDesc  = 'Heavy pull hitter — shift defenders toward the pull side.';
+          shiftColor = '#f87171';
+        } else if (pullPct >= 45) {
+          shiftLabel = 'SLIGHT SHIFT';
+          shiftDesc  = 'Moderate pull tendency — consider a soft shift or shaded alignment.';
+          shiftColor = '#FFB81C';
+        } else if (oppPct >= 40) {
+          shiftLabel = 'NO SHIFT';
+          shiftDesc  = 'Hits well to the opposite field — play straight up.';
+          shiftColor = '#34d399';
+        } else {
+          shiftLabel = 'STRAIGHT UP';
+          shiftDesc  = 'Balanced spray — standard defensive alignment recommended.';
+          shiftColor = '#60a5fa';
+        }
+
+        var sprayLegend = spraySegs.map(function(seg) {
+          return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'+
+            '<div style="width:10px;height:10px;border-radius:2px;background:'+seg.color+';flex-shrink:0"></div>'+
+            '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.05em;width:36px">'+seg.label+'</div>'+
+            '<div style="font-family:var(--font-mono);font-size:13px;color:#fff;font-weight:600">'+seg.pct.toFixed(1)+'%</div>'+
+            '</div>';
+        }).join('');
+
+        sprayHTML =
+          '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">'+
+          '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px">Spray Direction</div>'+
+          '<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">'+
+            '<svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0">'+sPaths+'</svg>'+
+            '<div style="flex:1;min-width:120px">'+sprayLegend+'</div>'+
+            '<div style="flex:1;min-width:160px;border-left:1px solid rgba(255,255,255,0.07);padding-left:20px">'+
+              '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:8px">Shift Recommendation</div>'+
+              '<div style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:'+shiftColor+';letter-spacing:0.05em;margin-bottom:6px">'+shiftLabel+'</div>'+
+              '<div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5">'+shiftDesc+'</div>'+
+            '</div>'+
+          '</div>'+
+          '</div>';
+      }
+    }
+    donutHTML += sprayHTML;
+
   } // end batter
 
   // ── Pitcher time-to-plate gauge ──────────────────────────────────────────────
