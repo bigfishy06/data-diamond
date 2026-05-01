@@ -269,7 +269,13 @@ body { background:#080c12; color:#fff; font-family:'Inter',sans-serif; margin:0;
       <div class="topbar-score" id="topbar-score">0 – 0</div>
       <div class="topbar-inning" id="topbar-inning">TOP 1</div>
     </div>
-    <button class="export-btn" onclick="exportCSV()">⬇ EXPORT CSV</button>
+    <div style="display:flex;align-items:center;gap:10px">
+    <div id="server-status" style="display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35)">
+      <div id="status-dot" style="width:8px;height:8px;border-radius:50%;background:#f87171"></div>
+      <span id="status-label">Connecting...</span>
+    </div>
+    <div id="pitch-counter" style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25)">0 pitches</div>
+  </div>
   </div>
 
   <!-- Main grid -->
@@ -565,9 +571,23 @@ function startGame() {
   G.awayBatterIdx=0; G.homeBatterIdx=0;
   G.currentPitcher = G.homePitcher; // home team pitches first (top = away bats)
 
+  // POST game start to server
+  fetch('http://localhost:3747/api/game/start', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      home: G.homeTeam, away: G.awayTeam, date: G.date,
+      lineups:  { home: G.homeLineup,  away: G.awayLineup  },
+      pitchers: { home: G.homePitcher, away: G.awayPitcher }
+    })
+  }).then(function(r){ return r.json(); }).then(function(d){
+    console.log('Game started:', d.gameId);
+  }).catch(function(){ console.warn('Server not reachable — tracking locally only'); });
+
   document.getElementById('setup-screen').style.display='none';
   refreshUI();
   drawZone();
+  checkServerStatus();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -755,6 +775,18 @@ function recordPitch() {
 
   G.pitches.push(row);
 
+  // POST pitch to server — triggers stat rebuild
+  fetch('http://localhost:3747/api/pitch', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(row)
+  }).then(function(r){ return r.json(); }).then(function(d){
+    document.getElementById('pitch-counter').textContent = d.total + ' pitches';
+    setServerStatus(true);
+  }).catch(function(){
+    setServerStatus(false);
+  });
+
   // Add to pitch log dots
   if (G.pitchX != null) {
     currentPitchDots.push({ x:G.pitchX, y:G.pitchY, outcome:G.outcome });
@@ -905,11 +937,13 @@ function undoPitch() {
   if (!G.pitches.length) return;
   G.pitches.pop();
   currentPitchDots.pop();
-  // Recalculate count from remaining pitches in this PA
-  // Simple: just decrement count
   if (G.strikes>0 && G.outcome!=='Ball') G.strikes--;
   else if (G.balls>0) G.balls--;
   updateCount(); drawZone(); refreshPitchLog();
+  fetch('http://localhost:3747/api/pitch/undo', { method:'POST' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){ document.getElementById('pitch-counter').textContent = d.total + ' pitches'; })
+    .catch(function(){});
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1002,25 +1036,30 @@ function refreshPitchLog() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// EXPORT CSV
+// SERVER STATUS
 // ═══════════════════════════════════════════════════════════════════════════
-function exportCSV() {
-  var header = 'Half Inning,Inning,Outs,Balls,Strikes,Count,Batter_Team,Pitcher_Team,Date,Home Team,Away Team,Time To Plate (sec) with Man on First,Batter,Pitcher,Batter_Side,Pitcher_Side,Pitch_Type,Outcome,Quality of Contact,Spray Chart,Runners,Pitch_Location_X,Pitch_Location_Y';
-  var rows = G.pitches.map(function(p) {
-    return [
-      p.half_inning, p.inning, p.outs, p.balls, p.strikes, p.count,
-      p.batter_team, p.pitcher_team, p.date, p.home_team, p.away_team,
-      p.ttp, p.batter, p.pitcher, p.batter_side, p.pitcher_side,
-      p.pitch_type, p.outcome, p.contact, p.spray, p.runners,
-      p.pitch_x, p.pitch_y
-    ].map(function(v){ return '"'+(v||'').toString().replace(/"/g,'""')+'"'; }).join(',');
-  });
-  var csv = header+'\n'+rows.join('\n');
-  var blob = new Blob([csv], {type:'text/csv'});
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = G.awayTeam.replace(/\s/g,'_')+'_vs_'+G.homeTeam.replace(/\s/g,'_')+'_'+G.date+'.csv';
-  a.click();
+function setServerStatus(online) {
+  var dot   = document.getElementById('status-dot');
+  var label = document.getElementById('status-label');
+  if (!dot) return;
+  if (online) {
+    dot.style.background   = '#34d399';
+    label.textContent      = 'Live';
+    label.style.color      = '#34d399';
+  } else {
+    dot.style.background   = '#f87171';
+    label.textContent      = 'Server offline';
+    label.style.color      = 'rgba(255,255,255,0.35)';
+  }
+}
+
+function checkServerStatus() {
+  fetch('http://localhost:3747/api/ping')
+    .then(function(r){ return r.json(); })
+    .then(function(){ setServerStatus(true); })
+    .catch(function(){ setServerStatus(false); });
+  // Re-check every 10 seconds
+  setTimeout(checkServerStatus, 10000);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
