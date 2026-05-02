@@ -1793,8 +1793,8 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
   }
 
 
+  var pitcherGaugeHTML = '';
   if (type === 'pitcher') {
-    // Get avg_time_to_plate from DATA.pitchers (datadiamond)
     var pdG = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
     var ttp = pdG.avg_time_to_plate != null ? pdG.avg_time_to_plate : null;
 
