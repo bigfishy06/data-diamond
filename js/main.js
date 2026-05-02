@@ -1718,8 +1718,145 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     }
   } // end batter
 
-  // ── Pitcher time-to-plate gauge ──────────────────────────────────────────────
-  var pitcherGaugeHTML = '';
+  // ── Pitcher visual overview card ──────────────────────────────────────────
+  var pitcherOverviewHTML = '';
+  if (type === 'pitcher') {
+    var pdOv  = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
+    var scOv  = (pitch && pitch.scatter) ? pitch.scatter : [];
+    var totOv = scOv.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+    if (totOv >= 5) {
+      var ksOv  = scOv.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
+      var bbsOv = scOv.filter(function(s){ return s.outcome==='Walk'||s.outcome==='Intentional Walk'; }).length;
+      var strOv = scOv.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+      var inZOv = scOv.filter(function(s){ return s.x!=null&&s.x>=-1&&s.x<=1&&s.y!=null&&s.y>=0&&s.y<=1; }).length;
+      var swsOv = scOv.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
+      var foOv  = scOv.filter(function(s){ return s.outcome==='Foul'; }).length;
+      var ipOv  = scOv.filter(function(s){ return IN_PLAY.includes(s.outcome); }).length;
+      var swOv  = swsOv + foOv + ipOv;
+
+      var kPctOv   = totOv > 0 ? ksOv / totOv * 100 : 0;
+      var bbPctOv  = totOv > 0 ? bbsOv / totOv * 100 : 0;
+      var strPctOv = totOv > 0 ? strOv / totOv * 100 : 0;
+      var znPctOv  = totOv > 0 ? inZOv / totOv * 100 : 0;
+      var whiffOv  = swOv > 0  ? swsOv / swOv * 100 : 0;
+      var kbbOv    = bbsOv > 0 ? ksOv / bbsOv : null;
+
+      // Color for each bar
+      function barColor(val, thresholds) {
+        // thresholds = { great, good, bad } (higher = better unless invert)
+        if (val >= thresholds.great) return '#34d399';
+        if (val >= thresholds.good)  return '#FFB81C';
+        return '#f87171';
+      }
+      function barColorLow(val, thresholds) {
+        // lower = better
+        if (val <= thresholds.great) return '#34d399';
+        if (val <= thresholds.good)  return '#FFB81C';
+        return '#f87171';
+      }
+
+      function statBar(label, val, pct, color, sublabel) {
+        var clampedPct = Math.max(0, Math.min(100, pct));
+        return '<div style="margin-bottom:12px">'+
+          '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">'+
+            '<div style="display:flex;align-items:baseline;gap:8px">'+
+              '<span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.45);text-transform:uppercase">'+label+'</span>'+
+              (sublabel ? '<span style="font-family:var(--font-mono);font-size:8px;color:rgba(255,255,255,0.25)">'+sublabel+'</span>' : '')+
+            '</div>'+
+            '<span style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:'+color+'">'+val+'</span>'+
+          '</div>'+
+          '<div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.06);overflow:hidden">'+
+            '<div style="height:100%;width:'+clampedPct+'%;border-radius:3px;background:'+color+';transition:width .3s"></div>'+
+          '</div>'+
+        '</div>';
+      }
+
+      var strColor   = barColor(strPctOv,   { great: 68, good: 62 });
+      var bbColor    = barColorLow(bbPctOv, { great: 5,  good: 9  });
+      var kColor     = barColor(kPctOv,     { great: 22, good: 15 });
+      var whiffColor = barColor(whiffOv,    { great: 28, good: 20 });
+      var znColor    = barColor(znPctOv,    { great: 52, good: 44 });
+
+      // Pitch type breakdown donut
+      var ptCounts = {};
+      scOv.forEach(function(s){ var t=s.pitch_type||'Unknown'; ptCounts[t]=(ptCounts[t]||0)+1; });
+      var ptEntries = Object.entries(ptCounts).sort(function(a,b){return b[1]-a[1];});
+      var ptColors  = ['#60a5fa','#f87171','#34d399','#FFB81C','#a78bfa','#fb923c'];
+      var ptSegs    = ptEntries.map(function(e,i){ return { label:e[0], pct:Math.round(e[1]/totOv*1000)/10, color:ptColors[i%ptColors.length] }; }).filter(function(s){return s.pct>=2;});
+
+      var ptSVG = '';
+      if (ptSegs.length >= 2) {
+        var ptPaths='', ptStart=-Math.PI/2, ptR=44, ptr=26, ptCx=50, ptCy=50;
+        ptSegs.forEach(function(seg){
+          var sweep=(seg.pct/100)*2*Math.PI, ptEnd=ptStart+sweep;
+          var x1o=ptCx+ptR*Math.cos(ptStart),y1o=ptCy+ptR*Math.sin(ptStart);
+          var x2o=ptCx+ptR*Math.cos(ptEnd),  y2o=ptCy+ptR*Math.sin(ptEnd);
+          var x1i=ptCx+ptr*Math.cos(ptEnd),  y1i=ptCy+ptr*Math.sin(ptEnd);
+          var x2i=ptCx+ptr*Math.cos(ptStart),y2i=ptCy+ptr*Math.sin(ptStart);
+          var la=sweep>Math.PI?1:0;
+          ptPaths+='<path d="M '+x1o.toFixed(1)+' '+y1o.toFixed(1)+' A '+ptR+' '+ptR+' 0 '+la+' 1 '+x2o.toFixed(1)+' '+y2o.toFixed(1)+' L '+x1i.toFixed(1)+' '+y1i.toFixed(1)+' A '+ptr+' '+ptr+' 0 '+la+' 0 '+x2i.toFixed(1)+' '+y2i.toFixed(1)+' Z" fill="'+seg.color+'" opacity="0.9"/>';
+          var midA=ptStart+sweep/2,lRm=(ptR+ptr)/2;
+          var lx=ptCx+lRm*Math.cos(midA),ly=ptCy+lRm*Math.sin(midA);
+          if(seg.pct>=10) ptPaths+='<text x="'+lx.toFixed(1)+'" y="'+(ly+1).toFixed(1)+'" text-anchor="middle" dominant-baseline="middle" font-size="7" font-family="monospace" font-weight="bold" fill="#0e1525">'+Math.round(seg.pct)+'%</text>';
+          ptStart=ptEnd;
+        });
+        ptPaths+='<text x="'+ptCx+'" y="'+(ptCy-3)+'" text-anchor="middle" font-size="7" font-family="monospace" fill="rgba(255,255,255,0.35)">PITCH</text>';
+        ptPaths+='<text x="'+ptCx+'" y="'+(ptCy+8)+'" text-anchor="middle" font-size="7" font-family="monospace" fill="rgba(255,255,255,0.35)">MIX</text>';
+        ptSVG = '<svg width="100" height="100" viewBox="0 0 100 100" style="flex-shrink:0">'+ptPaths+'</svg>';
+      }
+
+      var ptLegend = ptSegs.map(function(seg){
+        return '<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">'+
+          '<div style="width:8px;height:8px;border-radius:2px;background:'+seg.color+';flex-shrink:0"></div>'+
+          '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.5);flex:1">'+seg.label+'</div>'+
+          '<div style="font-family:var(--font-mono);font-size:11px;color:#fff;font-weight:600">'+seg.pct.toFixed(1)+'%</div>'+
+        '</div>';
+      }).join('');
+
+      // K/BB badge
+      var kbbBadge = '';
+      if (kbbOv !== null) {
+        var kbbColor = kbbOv >= 3 ? '#34d399' : kbbOv >= 2 ? '#FFB81C' : '#f87171';
+        var kbbLabel = kbbOv >= 3 ? 'ELITE' : kbbOv >= 2 ? 'SOLID' : 'CONCERN';
+        kbbBadge =
+          '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px 16px;margin-top:4px;text-align:center">'+
+            '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-bottom:4px">K / BB RATIO</div>'+
+            '<div style="font-family:var(--font-mono);font-size:24px;font-weight:700;color:'+kbbColor+'">'+kbbOv.toFixed(1)+'</div>'+
+            '<div style="font-family:var(--font-mono);font-size:9px;color:'+kbbColor+';letter-spacing:0.1em;margin-top:2px">'+kbbLabel+'</div>'+
+            '<div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px">Strikeouts per Walk</div>'+
+          '</div>';
+      }
+
+      pitcherOverviewHTML =
+        '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">'+
+          '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:16px">Pitching Profile</div>'+
+          '<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:24px;align-items:start">'+
+            // Left col: command stats
+            '<div>'+
+              '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-bottom:10px">Command</div>'+
+              statBar('STR%',  strPctOv.toFixed(1)+'%',  strPctOv,       strColor,  'Strike rate — want 65%+') +
+              statBar('BB%',   bbPctOv.toFixed(1)+'%',   100-bbPctOv,    bbColor,   'Walk rate — want under 8%') +
+              statBar('Zone%', znPctOv.toFixed(1)+'%',   znPctOv,        znColor,   'In-zone rate') +
+              kbbBadge +
+            '</div>'+
+            // Middle col: stuff stats
+            '<div>'+
+              '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-bottom:10px">Stuff</div>'+
+              statBar('K%',     kPctOv.toFixed(1)+'%',  kPctOv,   kColor,     'Strikeout rate') +
+              statBar('Whiff%', whiffOv.toFixed(1)+'%', whiffOv,  whiffColor, 'Miss rate on swings') +
+            '</div>'+
+            // Right col: pitch mix donut
+            (ptSVG ? '<div style="display:flex;flex-direction:column;align-items:center;gap:8px">'+
+              '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-bottom:2px">Pitch Mix</div>'+
+              ptSVG+
+              '<div>'+ptLegend+'</div>'+
+            '</div>' : '') +
+          '</div>'+
+        '</div>';
+    }
+  }
+
+
   if (type === 'pitcher') {
     // Get avg_time_to_plate from DATA.pitchers (datadiamond)
     var pdG = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
@@ -1849,7 +1986,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     makeSection('Approach',  approach,  'blue',  'Not enough pitch location data yet.') +
     '</div>';
 
-  return identityCard + donutHTML + pitcherGaugeHTML + cols;
+  return identityCard + donutHTML + pitcherOverviewHTML + pitcherGaugeHTML + cols;
 }
 
 // ── PBP-based league percentile arrays ────────────────────────────────────
