@@ -765,25 +765,156 @@
       var card = document.createElement('div');
       card.className = 'player-report-card fade-up';
       card.style.setProperty('--tc', team.color);
+
       var statsHTML = '';
+      var visualHTML = '';
+
       if (selType==='batter' && p.summary) {
         var s=p.summary;
         statsHTML = '<span><span class="prc-stat-val">'+f3(s.AVG)+'</span> AVG</span>' +
           '<span><span class="prc-stat-val">'+f3(s.OPS)+'</span> OPS</span>' +
           '<span><span class="prc-stat-val">'+fN(s.HR)+'</span> HR</span>' +
           '<span><span class="prc-stat-val">'+fN(s.K)+'</span> K</span>';
+
+        // Build donuts
+        var allSc = p.pitch && p.pitch.scatter ? p.pitch.scatter : [];
+        // Batted ball
+        var batted = allSc.filter(function(s2){ return ['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s2.outcome); });
+        var gbC=batted.filter(function(s2){return s2.contact==='Ground Ball';}).length;
+        var fbC=batted.filter(function(s2){return s2.contact==='Fly Ball';}).length;
+        var loC=batted.filter(function(s2){return s2.contact==='Line Drive';}).length;
+        var poC=batted.filter(function(s2){return s2.contact==='Pop Up';}).length;
+        var bipTot=gbC+fbC+loC+poC;
+        // Spray
+        var batted2=allSc.filter(function(s2){return['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s2.outcome)&&s2.spray;});
+        var pullC=batted2.filter(function(s2){return s2.spray==='Pull';}).length;
+        var strC2=batted2.filter(function(s2){return s2.spray==='Straightaway';}).length;
+        var oppC=batted2.filter(function(s2){return s2.spray==='Opposite Field';}).length;
+        var sprayTot=pullC+strC2+oppC;
+
+        function miniDonut(segs, cx, cy, R, r, label) {
+          var paths='', startA=-Math.PI/2;
+          segs.forEach(function(seg){
+            var sweep=(seg.pct/100)*2*Math.PI, endA=startA+sweep;
+            var x1o=cx+R*Math.cos(startA),y1o=cy+R*Math.sin(startA);
+            var x2o=cx+R*Math.cos(endA),  y2o=cy+R*Math.sin(endA);
+            var x1i=cx+r*Math.cos(endA),  y1i=cy+r*Math.sin(endA);
+            var x2i=cx+r*Math.cos(startA),y2i=cy+r*Math.sin(startA);
+            var la=sweep>Math.PI?1:0;
+            paths+='<path d="M '+x1o.toFixed(1)+' '+y1o.toFixed(1)+' A '+R+' '+R+' 0 '+la+' 1 '+x2o.toFixed(1)+' '+y2o.toFixed(1)+' L '+x1i.toFixed(1)+' '+y1i.toFixed(1)+' A '+r+' '+r+' 0 '+la+' 0 '+x2i.toFixed(1)+' '+y2i.toFixed(1)+' Z" fill="'+seg.color+'" opacity="0.9"/>';
+            startA=endA;
+          });
+          paths+='<text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" font-size="8" font-family="monospace" fill="rgba(255,255,255,0.35)">'+label+'</text>';
+          return '<svg width="80" height="80" viewBox="0 0 80 80">'+paths+'</svg>';
+        }
+
+        function miniLegend(segs) {
+          return segs.map(function(seg){
+            return '<div style="display:flex;align-items:center;gap:4px;margin-bottom:3px">'+
+              '<div style="width:7px;height:7px;border-radius:1px;background:'+seg.color+';flex-shrink:0"></div>'+
+              '<span style="font-family:monospace;font-size:9px;color:rgba(255,255,255,0.45);flex:1">'+seg.label+'</span>'+
+              '<span style="font-family:monospace;font-size:10px;color:#fff;font-weight:600">'+seg.pct.toFixed(0)+'%</span>'+
+            '</div>';
+          }).join('');
+        }
+
+        var bbSVG='', spraySVG='', bbLeg='', sprayLeg='', shiftBadge='';
+        if (bipTot >= 5) {
+          var bbSegs=[{label:'GB',pct:Math.round(gbC/bipTot*100),color:'#fb923c'},{label:'FB',pct:Math.round(fbC/bipTot*100),color:'#60a5fa'},{label:'LD',pct:Math.round(loC/bipTot*100),color:'#34d399'},{label:'PU',pct:Math.round(poC/bipTot*100),color:'#a78bfa'}].filter(function(s){return s.pct>0;});
+          bbSVG = miniDonut(bbSegs, 40, 40, 34, 20, 'BIP');
+          bbLeg = miniLegend(bbSegs);
+        }
+        if (sprayTot >= 3) {
+          var pp2=Math.round(pullC/sprayTot*100), sp2=Math.round(strC2/sprayTot*100), op2=Math.round(oppC/sprayTot*100);
+          var spSegs=[{label:'Pull',pct:pp2,color:'#f87171'},{label:'Str',pct:sp2,color:'#FFB81C'},{label:'Oppo',pct:op2,color:'#60a5fa'}].filter(function(s){return s.pct>0;});
+          spraySVG = miniDonut(spSegs, 40, 40, 34, 20, 'DIR');
+          sprayLeg = miniLegend(spSegs);
+          var sLabel=pp2>=55?'SHIFT':pp2>=45?'SHADE':op2>=40?'NO SHIFT':'STR UP';
+          var sColor=pp2>=55?'#f87171':pp2>=45?'#FFB81C':op2>=40?'#34d399':'#60a5fa';
+          shiftBadge='<div style="font-family:monospace;font-size:9px;font-weight:700;color:'+sColor+';letter-spacing:0.05em;margin-top:4px;text-align:center">'+sLabel+'</div>';
+        }
+
+        if (bbSVG || spraySVG) {
+          visualHTML = '<div style="display:flex;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06)">';
+          if (bbSVG) visualHTML +=
+            '<div style="display:flex;align-items:center;gap:6px">'+
+              bbSVG+
+              '<div style="font-size:10px">'+bbLeg+'</div>'+
+            '</div>';
+          if (bbSVG && spraySVG) visualHTML += '<div style="width:1px;background:rgba(255,255,255,0.07);align-self:stretch"></div>';
+          if (spraySVG) visualHTML +=
+            '<div style="display:flex;flex-direction:column;align-items:center">'+
+              '<div style="display:flex;align-items:center;gap:6px">'+
+                spraySVG+
+                '<div style="font-size:10px">'+sprayLeg+'</div>'+
+              '</div>'+
+              shiftBadge+
+            '</div>';
+          visualHTML += '</div>';
+        }
+
       } else if (selType==='pitcher' && p.scatter) {
-        var tot=p.scatter.length;
-        var ks=p.scatter.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
-        var str=p.scatter.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
-        statsHTML = '<span><span class="prc-stat-val">'+tot+'</span> PITCHES</span>' +
+        var sc=p.scatter;
+        var tot=sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
+        var ks=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
+        var bbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+        var str=sc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+        var swS=sc.filter(function(s){return s.outcome==='Swinging Strike';}).length;
+        var foP=sc.filter(function(s){return s.outcome==='Foul';}).length;
+        var ipP=sc.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Error','Double Play','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
+        var swOv=swS+foP+ipP;
+        var strPct=tot>0?Math.round(str/tot*10)/10:0;
+        var bbPct=tot>0?Math.round(bbs/tot*100):0;
+        var kPct=tot>0?Math.round(ks/tot*100):0;
+        var whPct=swOv>0?Math.round(swS/swOv*100):0;
+        var kbb=bbs>0?(ks/bbs).toFixed(1):'—';
+
+        statsHTML = '<span><span class="prc-stat-val">'+tot+'</span> P</span>' +
           '<span><span class="prc-stat-val">'+ks+'</span> K</span>' +
-          '<span><span class="prc-stat-val">'+(tot>0?Math.round(xp(str,tot)):'—')+'%</span> STR</span>';
+          '<span><span class="prc-stat-val">'+bbs+'</span> BB</span>' +
+          '<span><span class="prc-stat-val">'+(tot>0?Math.round(str/tot*100):'—')+'%</span> STR</span>';
+
+        function pBar(label, val, pct, color) {
+          var cl=Math.max(0,Math.min(100,pct));
+          return '<div style="margin-bottom:7px">'+
+            '<div style="display:flex;justify-content:space-between;margin-bottom:2px">'+
+              '<span style="font-family:monospace;font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:0.06em">'+label+'</span>'+
+              '<span style="font-family:monospace;font-size:10px;font-weight:700;color:'+color+'">'+val+'</span>'+
+            '</div>'+
+            '<div style="height:5px;border-radius:3px;background:rgba(255,255,255,0.06)">'+
+              '<div style="height:100%;width:'+cl+'%;border-radius:3px;background:'+color+'"></div>'+
+            '</div>'+
+          '</div>';
+        }
+
+        var strColor2 = strPct>=68?'#34d399':strPct>=62?'#FFB81C':'#f87171';
+        var bbColor2  = bbPct<=5?'#34d399':bbPct<=9?'#FFB81C':'#f87171';
+        var kColor2   = kPct>=22?'#34d399':kPct>=14?'#FFB81C':'#f87171';
+        var whColor2  = whPct>=28?'#34d399':whPct>=18?'#FFB81C':'#f87171';
+        var kbbColor2 = bbs>0&&ks/bbs>=3?'#34d399':bbs>0&&ks/bbs>=2?'#FFB81C':'#f87171';
+
+        visualHTML =
+          '<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06)">'+
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 16px">'+
+              pBar('STR%', strPct.toFixed(1)+'%', strPct, strColor2)+
+              pBar('BB%',  bbPct+'%', 100-bbPct, bbColor2)+
+              pBar('K%',   kPct+'%',  kPct,      kColor2)+
+              pBar('WHIFF%', whPct+'%', whPct,   whColor2)+
+            '</div>'+
+            '<div style="display:flex;justify-content:center;margin-top:4px">'+
+              '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:4px 16px;text-align:center">'+
+                '<div style="font-family:monospace;font-size:8px;color:rgba(255,255,255,0.3);letter-spacing:0.08em">K/BB</div>'+
+                '<div style="font-family:monospace;font-size:16px;font-weight:700;color:'+kbbColor2+'">'+kbb+'</div>'+
+              '</div>'+
+            '</div>'+
+          '</div>';
       }
+
       card.innerHTML =
         '<div style="flex:1;min-width:0">' +
           '<div class="prc-name">'+p.name+'</div>' +
           '<div class="prc-stats">'+statsHTML+'</div>' +
+          visualHTML +
         '</div>' +
         '<div class="prc-dl-btn">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">' +

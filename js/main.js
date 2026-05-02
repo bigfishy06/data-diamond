@@ -1595,79 +1595,27 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     '</div>';
   }
 
-  // ── Batted ball donut + spray direction (batter only) ──────────────────────
+
   var donutHTML = '';
+  var pitcherOverviewHTML = '';
+
   if (type === 'batter') {
-    var pbpBD = pbpB || DATA.pbpBatters.find(function(p){
-      return p.batter.toLowerCase() === name.toLowerCase();
-    }) || null;
-
     var gb = 0, fb = 0, lo = 0, po = 0;
-    if (pbpBD && (pbpBD.GB_pct != null || pbpBD.FB_pct != null)) {
-      gb = pbpBD.GB_pct || 0; fb = pbpBD.FB_pct || 0;
-      lo = pbpBD.LO_pct || 0; po = pbpBD.PO_pct || 0;
-    } else if (sc.length) {
-      var batted = sc.filter(function(s){
-        return ['Groundout','Flyout','Single','Double','Triple','Home Run',
-                'Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s.outcome);
-      });
-      var gbC=batted.filter(function(s){return s.contact==='Ground Ball';}).length;
-      var fbC=batted.filter(function(s){return s.contact==='Fly Ball';}).length;
-      var loC=batted.filter(function(s){return s.contact==='Line Drive';}).length;
-      var poC=batted.filter(function(s){return s.contact==='Pop Up';}).length;
-      var tot=gbC+fbC+loC+poC;
-      if(tot>=5){
-        gb=Math.round(gbC/tot*1000)/10; fb=Math.round(fbC/tot*1000)/10;
-        lo=Math.round(loC/tot*1000)/10; po=Math.round(poC/tot*1000)/10;
-      }
+    var batted = sc.filter(function(s){
+      return ['Groundout','Flyout','Single','Double','Triple','Home Run',
+              'Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s.outcome);
+    });
+    var gbC=batted.filter(function(s){return s.contact==='Ground Ball';}).length;
+    var fbC=batted.filter(function(s){return s.contact==='Fly Ball';}).length;
+    var loC=batted.filter(function(s){return s.contact==='Line Drive';}).length;
+    var poC=batted.filter(function(s){return s.contact==='Pop Up';}).length;
+    var bipTot=gbC+fbC+loC+poC;
+    if(bipTot>=5){
+      gb=Math.round(gbC/bipTot*1000)/10; fb=Math.round(fbC/bipTot*1000)/10;
+      lo=Math.round(loC/bipTot*1000)/10; po=Math.round(poC/bipTot*1000)/10;
     }
 
-    function buildDonut(segments, total, cx, cy, R, r, centerLines) {
-      var paths='', startA=-Math.PI/2;
-      segments.forEach(function(seg){
-        var sweep=(seg.pct/100)*2*Math.PI, endA=startA+sweep;
-        var x1o=cx+R*Math.cos(startA),y1o=cy+R*Math.sin(startA);
-        var x2o=cx+R*Math.cos(endA),  y2o=cy+R*Math.sin(endA);
-        var x1i=cx+r*Math.cos(endA),  y1i=cy+r*Math.sin(endA);
-        var x2i=cx+r*Math.cos(startA),y2i=cy+r*Math.sin(startA);
-        var la=sweep>Math.PI?1:0;
-        paths+='<path d="M '+x1o.toFixed(2)+' '+y1o.toFixed(2)+
-               ' A '+R+' '+R+' 0 '+la+' 1 '+x2o.toFixed(2)+' '+y2o.toFixed(2)+
-               ' L '+x1i.toFixed(2)+' '+y1i.toFixed(2)+
-               ' A '+r+' '+r+' 0 '+la+' 0 '+x2i.toFixed(2)+' '+y2i.toFixed(2)+
-               ' Z" fill="'+seg.color+'" opacity="0.9"/>';
-        var midA=startA+sweep/2, lRm=(R+r)/2;
-        var lx=cx+lRm*Math.cos(midA), ly=cy+lRm*Math.sin(midA);
-        if(seg.pct>=8) paths+='<text x="'+lx.toFixed(1)+'" y="'+(ly+1).toFixed(1)+'" text-anchor="middle" dominant-baseline="middle" font-size="7" font-family="monospace" font-weight="bold" fill="#0e1525">'+Math.round(seg.pct)+'%</text>';
-        startA=endA;
-      });
-      centerLines.forEach(function(line, i){
-        paths+='<text x="'+cx+'" y="'+(cy+(i===0?-5:7))+'" text-anchor="middle" font-size="'+(i===0?8:7)+'" font-family="monospace" fill="rgba(255,255,255,'+(i===0?'0.4':'0.25')+')">'+line+'</text>';
-      });
-      return '<svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0">'+paths+'</svg>';
-    }
-
-    function buildLegend(segments) {
-      return segments.map(function(seg){
-        return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'+
-          '<div style="width:10px;height:10px;border-radius:2px;background:'+seg.color+';flex-shrink:0"></div>'+
-          '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.05em;width:36px">'+seg.label+'</div>'+
-          '<div style="font-family:var(--font-mono);font-size:13px;color:#fff;font-weight:600">'+seg.pct.toFixed(1)+'%</div>'+
-          '</div>';
-      }).join('');
-    }
-
-    // ── Batted ball donut ────────────────────────────────────────────────────
-    var bbSegs = [{label:'GB%',pct:gb,color:'#fb923c'},{label:'FB%',pct:fb,color:'#60a5fa'},
-                  {label:'LO%',pct:lo,color:'#34d399'},{label:'PO%',pct:po,color:'#a78bfa'}]
-                  .filter(function(s){return s.pct>0;});
-    var bbTotal = gb+fb+lo+po;
-    var bbSVG = bbTotal > 0 ? buildDonut(bbSegs, bbTotal, 60, 60, 48, 30, [Math.round(bbTotal)+'% BIP','tracked']) : '';
-    var bbLegend = bbTotal > 0 ? buildLegend(bbSegs) : '';
-
-    // ── Spray donut ──────────────────────────────────────────────────────────
-    var spraySVG = '', sprayLegendHTML = '', shiftHTML = '';
-    var batted2 = sc.filter(function(s){
+    var batted2=sc.filter(function(s){
       return ['Groundout','Flyout','Single','Double','Triple','Home Run',
               'Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s.outcome) && s.spray;
     });
@@ -1675,19 +1623,56 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     var strC =batted2.filter(function(s){return s.spray==='Straightaway';}).length;
     var oppC =batted2.filter(function(s){return s.spray==='Opposite Field';}).length;
     var sprayTot=pullC+strC+oppC;
+
+    function buildDonut(segs, cx, cy, R, r, centerLines) {
+      var paths='', startA=-Math.PI/2;
+      segs.forEach(function(seg){
+        var sweep=(seg.pct/100)*2*Math.PI, endA=startA+sweep;
+        var x1o=cx+R*Math.cos(startA),y1o=cy+R*Math.sin(startA);
+        var x2o=cx+R*Math.cos(endA),  y2o=cy+R*Math.sin(endA);
+        var x1i=cx+r*Math.cos(endA),  y1i=cy+r*Math.sin(endA);
+        var x2i=cx+r*Math.cos(startA),y2i=cy+r*Math.sin(startA);
+        var la=sweep>Math.PI?1:0;
+        paths+='<path d="M '+x1o.toFixed(2)+' '+y1o.toFixed(2)+' A '+R+' '+R+' 0 '+la+' 1 '+x2o.toFixed(2)+' '+y2o.toFixed(2)+' L '+x1i.toFixed(2)+' '+y1i.toFixed(2)+' A '+r+' '+r+' 0 '+la+' 0 '+x2i.toFixed(2)+' '+y2i.toFixed(2)+' Z" fill="'+seg.color+'" opacity="0.9"/>';
+        var midA=startA+sweep/2, lRm=(R+r)/2;
+        var lx=cx+lRm*Math.cos(midA), ly=cy+lRm*Math.sin(midA);
+        if(seg.pct>=8) paths+='<text x="'+lx.toFixed(1)+'" y="'+(ly+1).toFixed(1)+'" text-anchor="middle" dominant-baseline="middle" font-size="7" font-family="monospace" font-weight="bold" fill="#0e1525">'+Math.round(seg.pct)+'%</text>';
+        startA=endA;
+      });
+      centerLines.forEach(function(line,i){
+        paths+='<text x="'+cx+'" y="'+(cy+(i===0?-5:7))+'" text-anchor="middle" font-size="'+(i===0?8:7)+'" font-family="monospace" fill="rgba(255,255,255,'+(i===0?'0.4':'0.25')+')">'+line+'</text>';
+      });
+      return '<svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0">'+paths+'</svg>';
+    }
+
+    function buildLegend(segs) {
+      return segs.map(function(seg){
+        return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'+
+          '<div style="width:10px;height:10px;border-radius:2px;background:'+seg.color+';flex-shrink:0"></div>'+
+          '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.05em;width:36px">'+seg.label+'</div>'+
+          '<div style="font-family:var(--font-mono);font-size:13px;color:#fff;font-weight:600">'+seg.pct.toFixed(1)+'%</div>'+
+        '</div>';
+      }).join('');
+    }
+
+    var bbSegs=[{label:'GB%',pct:gb,color:'#fb923c'},{label:'FB%',pct:fb,color:'#60a5fa'},{label:'LO%',pct:lo,color:'#34d399'},{label:'PO%',pct:po,color:'#a78bfa'}].filter(function(s){return s.pct>0;});
+    var bbSVG   = bipTot>=5 ? buildDonut(bbSegs, 60,60,48,30, [Math.round(gb+fb+lo+po)+'% BIP','tracked']) : '';
+    var bbLegend= bipTot>=5 ? buildLegend(bbSegs) : '';
+
+    var spraySVG='', sprayLegend='', shiftHTML='';
     if(sprayTot>=3){
       var pullPct=Math.round(pullC/sprayTot*1000)/10;
-      var strPct =Math.round(strC /sprayTot*1000)/10;
+      var strPct2=Math.round(strC /sprayTot*1000)/10;
       var oppPct =Math.round(oppC /sprayTot*1000)/10;
-      var spraySegs=[{label:'Pull',pct:pullPct,color:'#f87171'},{label:'Str',pct:strPct,color:'#FFB81C'},{label:'Oppo',pct:oppPct,color:'#60a5fa'}].filter(function(s){return s.pct>0;});
-      spraySVG = buildDonut(spraySegs, 100, 60, 60, 48, 30, []);
-      sprayLegendHTML = buildLegend(spraySegs);
+      var spSegs=[{label:'Pull',pct:pullPct,color:'#f87171'},{label:'Str',pct:strPct2,color:'#FFB81C'},{label:'Oppo',pct:oppPct,color:'#60a5fa'}].filter(function(s){return s.pct>0;});
+      spraySVG   = buildDonut(spSegs, 60,60,48,30, []);
+      sprayLegend= buildLegend(spSegs);
       var sLabel,sDesc,sColor;
-      if(pullPct>=55){sLabel='STANDARD SHIFT';sDesc='Heavy pull hitter — shift defenders toward the pull side.';sColor='#f87171';}
+      if(pullPct>=55){sLabel='STANDARD SHIFT';sDesc='Heavy pull hitter — shift toward the pull side.';sColor='#f87171';}
       else if(pullPct>=45){sLabel='SLIGHT SHIFT';sDesc='Moderate pull tendency — consider a shaded alignment.';sColor='#FFB81C';}
-      else if(oppPct>=40){sLabel='NO SHIFT';sDesc='Hits well to the opposite field — play straight up.';sColor='#34d399';}
+      else if(oppPct>=40){sLabel='NO SHIFT';sDesc='Hits well to opposite field — play straight up.';sColor='#34d399';}
       else{sLabel='STRAIGHT UP';sDesc='Balanced spray — standard alignment recommended.';sColor='#60a5fa';}
-      shiftHTML =
+      shiftHTML=
         '<div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.07)"></div>'+
         '<div style="min-width:140px">'+
           '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:8px">Shift Recommendation</div>'+
@@ -1696,162 +1681,23 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
         '</div>';
     }
 
-    // ── Combined card ────────────────────────────────────────────────────────
-    if (bbTotal > 0 || spraySVG) {
-      var leftSection = bbTotal > 0 ?
+    if(bbSVG || spraySVG){
+      var leftSection = bbSVG ?
         '<div>'+
           '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:10px">Batted Ball Profile</div>'+
           '<div style="display:flex;align-items:center;gap:16px">'+bbSVG+'<div>'+bbLegend+'</div></div>'+
         '</div>' : '';
-      var divider = (bbTotal > 0 && spraySVG) ? '<div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.07)"></div>' : '';
+      var divider=(bbSVG&&spraySVG)?'<div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.07)"></div>':'';
       var rightSection = spraySVG ?
         '<div>'+
           '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:10px">Spray Direction</div>'+
-          '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'+spraySVG+'<div>'+sprayLegendHTML+'</div>'+shiftHTML+'</div>'+
+          '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'+spraySVG+'<div>'+sprayLegend+'</div>'+shiftHTML+'</div>'+
         '</div>' : '';
-      donutHTML =
+      donutHTML=
         '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">'+
         '<div style="display:flex;align-items:flex-start;gap:28px;flex-wrap:wrap">'+
-          leftSection + divider + rightSection +
+          leftSection+divider+rightSection+
         '</div>'+
-        '</div>';
-    }
-  } // end batter
-
-  // ── Pitcher visual overview card ──────────────────────────────────────────
-  var pitcherOverviewHTML = '';
-  if (type === 'pitcher') {
-    var pdOv  = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
-    var scOv  = (pitch && pitch.scatter) ? pitch.scatter : [];
-    var totOv = scOv.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
-    if (totOv >= 5) {
-      var ksOv  = scOv.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
-      var bbsOv = scOv.filter(function(s){ return s.outcome==='Walk'||s.outcome==='Intentional Walk'; }).length;
-      var strOv = scOv.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
-      var inZOv = scOv.filter(function(s){ return s.x!=null&&s.x>=-1&&s.x<=1&&s.y!=null&&s.y>=0&&s.y<=1; }).length;
-      var swsOv = scOv.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
-      var foOv  = scOv.filter(function(s){ return s.outcome==='Foul'; }).length;
-      var ipOv  = scOv.filter(function(s){ return IN_PLAY.includes(s.outcome); }).length;
-      var swOv  = swsOv + foOv + ipOv;
-
-      var kPctOv   = totOv > 0 ? ksOv / totOv * 100 : 0;
-      var bbPctOv  = totOv > 0 ? bbsOv / totOv * 100 : 0;
-      var strPctOv = totOv > 0 ? strOv / totOv * 100 : 0;
-      var znPctOv  = totOv > 0 ? inZOv / totOv * 100 : 0;
-      var whiffOv  = swOv > 0  ? swsOv / swOv * 100 : 0;
-      var kbbOv    = bbsOv > 0 ? ksOv / bbsOv : null;
-
-      // Color for each bar
-      function barColor(val, thresholds) {
-        // thresholds = { great, good, bad } (higher = better unless invert)
-        if (val >= thresholds.great) return '#34d399';
-        if (val >= thresholds.good)  return '#FFB81C';
-        return '#f87171';
-      }
-      function barColorLow(val, thresholds) {
-        // lower = better
-        if (val <= thresholds.great) return '#34d399';
-        if (val <= thresholds.good)  return '#FFB81C';
-        return '#f87171';
-      }
-
-      function statBar(label, val, pct, color, sublabel) {
-        var clampedPct = Math.max(0, Math.min(100, pct));
-        return '<div style="margin-bottom:12px">'+
-          '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">'+
-            '<div style="display:flex;align-items:baseline;gap:8px">'+
-              '<span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.45);text-transform:uppercase">'+label+'</span>'+
-              (sublabel ? '<span style="font-family:var(--font-mono);font-size:8px;color:rgba(255,255,255,0.25)">'+sublabel+'</span>' : '')+
-            '</div>'+
-            '<span style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:'+color+'">'+val+'</span>'+
-          '</div>'+
-          '<div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.06);overflow:hidden">'+
-            '<div style="height:100%;width:'+clampedPct+'%;border-radius:3px;background:'+color+';transition:width .3s"></div>'+
-          '</div>'+
-        '</div>';
-      }
-
-      var strColor   = barColor(strPctOv,   { great: 68, good: 62 });
-      var bbColor    = barColorLow(bbPctOv, { great: 5,  good: 9  });
-      var kColor     = barColor(kPctOv,     { great: 22, good: 15 });
-      var whiffColor = barColor(whiffOv,    { great: 28, good: 20 });
-      var znColor    = barColor(znPctOv,    { great: 52, good: 44 });
-
-      // Pitch type breakdown donut
-      var ptCounts = {};
-      scOv.forEach(function(s){ var t=s.pitch_type||'Unknown'; ptCounts[t]=(ptCounts[t]||0)+1; });
-      var ptEntries = Object.entries(ptCounts).sort(function(a,b){return b[1]-a[1];});
-      var ptColors  = ['#60a5fa','#f87171','#34d399','#FFB81C','#a78bfa','#fb923c'];
-      var ptSegs    = ptEntries.map(function(e,i){ return { label:e[0], pct:Math.round(e[1]/totOv*1000)/10, color:ptColors[i%ptColors.length] }; }).filter(function(s){return s.pct>=2;});
-
-      var ptSVG = '';
-      if (ptSegs.length >= 2) {
-        var ptPaths='', ptStart=-Math.PI/2, ptR=44, ptr=26, ptCx=50, ptCy=50;
-        ptSegs.forEach(function(seg){
-          var sweep=(seg.pct/100)*2*Math.PI, ptEnd=ptStart+sweep;
-          var x1o=ptCx+ptR*Math.cos(ptStart),y1o=ptCy+ptR*Math.sin(ptStart);
-          var x2o=ptCx+ptR*Math.cos(ptEnd),  y2o=ptCy+ptR*Math.sin(ptEnd);
-          var x1i=ptCx+ptr*Math.cos(ptEnd),  y1i=ptCy+ptr*Math.sin(ptEnd);
-          var x2i=ptCx+ptr*Math.cos(ptStart),y2i=ptCy+ptr*Math.sin(ptStart);
-          var la=sweep>Math.PI?1:0;
-          ptPaths+='<path d="M '+x1o.toFixed(1)+' '+y1o.toFixed(1)+' A '+ptR+' '+ptR+' 0 '+la+' 1 '+x2o.toFixed(1)+' '+y2o.toFixed(1)+' L '+x1i.toFixed(1)+' '+y1i.toFixed(1)+' A '+ptr+' '+ptr+' 0 '+la+' 0 '+x2i.toFixed(1)+' '+y2i.toFixed(1)+' Z" fill="'+seg.color+'" opacity="0.9"/>';
-          var midA=ptStart+sweep/2,lRm=(ptR+ptr)/2;
-          var lx=ptCx+lRm*Math.cos(midA),ly=ptCy+lRm*Math.sin(midA);
-          if(seg.pct>=10) ptPaths+='<text x="'+lx.toFixed(1)+'" y="'+(ly+1).toFixed(1)+'" text-anchor="middle" dominant-baseline="middle" font-size="7" font-family="monospace" font-weight="bold" fill="#0e1525">'+Math.round(seg.pct)+'%</text>';
-          ptStart=ptEnd;
-        });
-        ptPaths+='<text x="'+ptCx+'" y="'+(ptCy-3)+'" text-anchor="middle" font-size="7" font-family="monospace" fill="rgba(255,255,255,0.35)">PITCH</text>';
-        ptPaths+='<text x="'+ptCx+'" y="'+(ptCy+8)+'" text-anchor="middle" font-size="7" font-family="monospace" fill="rgba(255,255,255,0.35)">MIX</text>';
-        ptSVG = '<svg width="100" height="100" viewBox="0 0 100 100" style="flex-shrink:0">'+ptPaths+'</svg>';
-      }
-
-      var ptLegend = ptSegs.map(function(seg){
-        return '<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">'+
-          '<div style="width:8px;height:8px;border-radius:2px;background:'+seg.color+';flex-shrink:0"></div>'+
-          '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.5);flex:1">'+seg.label+'</div>'+
-          '<div style="font-family:var(--font-mono);font-size:11px;color:#fff;font-weight:600">'+seg.pct.toFixed(1)+'%</div>'+
-        '</div>';
-      }).join('');
-
-      // K/BB badge
-      var kbbBadge = '';
-      if (kbbOv !== null) {
-        var kbbColor = kbbOv >= 3 ? '#34d399' : kbbOv >= 2 ? '#FFB81C' : '#f87171';
-        var kbbLabel = kbbOv >= 3 ? 'ELITE' : kbbOv >= 2 ? 'SOLID' : 'CONCERN';
-        kbbBadge =
-          '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px 16px;margin-top:4px;text-align:center">'+
-            '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-bottom:4px">K / BB RATIO</div>'+
-            '<div style="font-family:var(--font-mono);font-size:24px;font-weight:700;color:'+kbbColor+'">'+kbbOv.toFixed(1)+'</div>'+
-            '<div style="font-family:var(--font-mono);font-size:9px;color:'+kbbColor+';letter-spacing:0.1em;margin-top:2px">'+kbbLabel+'</div>'+
-            '<div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px">Strikeouts per Walk</div>'+
-          '</div>';
-      }
-
-      pitcherOverviewHTML =
-        '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">'+
-          '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:16px">Pitching Profile</div>'+
-          '<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:24px;align-items:start">'+
-            // Left col: command stats
-            '<div>'+
-              '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-bottom:10px">Command</div>'+
-              statBar('STR%',  strPctOv.toFixed(1)+'%',  strPctOv,       strColor,  'Strike rate — want 65%+') +
-              statBar('BB%',   bbPctOv.toFixed(1)+'%',   100-bbPctOv,    bbColor,   'Walk rate — want under 8%') +
-              statBar('Zone%', znPctOv.toFixed(1)+'%',   znPctOv,        znColor,   'In-zone rate') +
-              kbbBadge +
-            '</div>'+
-            // Middle col: stuff stats
-            '<div>'+
-              '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-bottom:10px">Stuff</div>'+
-              statBar('K%',     kPctOv.toFixed(1)+'%',  kPctOv,   kColor,     'Strikeout rate') +
-              statBar('Whiff%', whiffOv.toFixed(1)+'%', whiffOv,  whiffColor, 'Miss rate on swings') +
-            '</div>'+
-            // Right col: pitch mix donut
-            (ptSVG ? '<div style="display:flex;flex-direction:column;align-items:center;gap:8px">'+
-              '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-bottom:2px">Pitch Mix</div>'+
-              ptSVG+
-              '<div>'+ptLegend+'</div>'+
-            '</div>' : '') +
-          '</div>'+
         '</div>';
     }
   }
@@ -1986,7 +1832,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     makeSection('Approach',  approach,  'blue',  'Not enough pitch location data yet.') +
     '</div>';
 
-  return identityCard + donutHTML + pitcherOverviewHTML + pitcherGaugeHTML + cols;
+  return identityCard + donutHTML + pitcherGaugeHTML + cols;
 }
 
 // ── PBP-based league percentile arrays ────────────────────────────────────
