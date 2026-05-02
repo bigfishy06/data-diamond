@@ -5,7 +5,188 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Scouting Reports — Data Diamond</title>
   <link rel="stylesheet" href="css/style.css" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
+<script>
+  const HASH = '2700114b0b68384c38a1018ac02dd3825205f695857ec23f9d1493280452b3a2';
+  const key  = 'dd_auth';
+
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function checkAuth() {
+    if (sessionStorage.getItem(key) === 'ok' || localStorage.getItem(key) === 'ok') return;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'auth-overlay';
+    overlay.innerHTML = `
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap');
+        #auth-overlay {
+          position:fixed;inset:0;z-index:99999;
+          background:#080c12;
+          display:flex;align-items:center;justify-content:center;
+          font-family:'Inter',sans-serif;
+        }
+        #auth-overlay .auth-bg {
+          position:absolute;inset:0;
+          background:
+            radial-gradient(ellipse 60% 60% at 50% 40%, rgba(255,184,28,0.06) 0%, transparent 70%),
+            radial-gradient(ellipse 40% 40% at 80% 80%, rgba(0,61,165,0.08) 0%, transparent 60%);
+        }
+        #auth-overlay .auth-box {
+          position:relative;z-index:1;
+          width:100%;max-width:420px;
+          padding:48px 40px;
+          background:rgba(13,20,32,0.95);
+          border:1px solid rgba(255,184,28,0.15);
+          border-radius:4px;
+          box-shadow:0 0 80px rgba(0,0,0,0.6), 0 0 40px rgba(255,184,28,0.04);
+          text-align:center;
+        }
+        #auth-overlay .auth-logo {
+          display:flex;align-items:center;justify-content:center;gap:10px;
+          margin-bottom:32px;
+        }
+        #auth-overlay .auth-logo svg { width:36px;height:36px; }
+        #auth-overlay .auth-logo-text {
+          font-family:'Bebas Neue',sans-serif;
+          font-size:28px;letter-spacing:0.05em;
+          color:#fff;
+        }
+        #auth-overlay .auth-logo-text em { color:#FFB81C;font-style:normal; }
+        #auth-overlay h2 {
+          font-family:'Bebas Neue',sans-serif;
+          font-size:13px;letter-spacing:0.15em;
+          color:rgba(255,255,255,0.35);
+          margin:0 0 32px;
+          text-transform:uppercase;
+        }
+        #auth-overlay .auth-input-wrap { position:relative;margin-bottom:16px; }
+        #auth-overlay input[type="password"] {
+          width:100%;box-sizing:border-box;
+          padding:14px 16px;
+          background:rgba(255,255,255,0.04);
+          border:1px solid rgba(255,255,255,0.1);
+          border-radius:3px;
+          color:#fff;
+          font-family:'DM Mono',monospace;
+          font-size:14px;letter-spacing:0.05em;
+          outline:none;
+          transition:border-color 0.2s;
+        }
+        #auth-overlay input[type="password"]:focus {
+          border-color:rgba(255,184,28,0.5);
+          background:rgba(255,184,28,0.03);
+        }
+        #auth-overlay input[type="password"]::placeholder { color:rgba(255,255,255,0.2); }
+        #auth-overlay .remember-wrap {
+          display:flex;align-items:center;justify-content:flex-start;
+          gap:10px;
+          margin-bottom:20px;
+          cursor:pointer;
+        }
+        #auth-overlay .remember-wrap input[type="checkbox"] {
+          appearance:none;-webkit-appearance:none;
+          width:18px;height:18px;
+          border:1px solid rgba(255,184,28,0.4);
+          border-radius:3px;
+          background:rgba(255,255,255,0.04);
+          cursor:pointer;
+          position:relative;
+          flex-shrink:0;
+          transition:background 0.2s, border-color 0.2s;
+        }
+        #auth-overlay .remember-wrap input[type="checkbox"]:checked {
+          background:#FFB81C;
+          border-color:#FFB81C;
+        }
+        #auth-overlay .remember-wrap input[type="checkbox"]:checked::after {
+          content:'';
+          position:absolute;
+          left:4px;top:1px;
+          width:5px;height:9px;
+          border:2px solid #080c12;
+          border-top:none;border-left:none;
+          transform:rotate(45deg);
+        }
+        #auth-overlay .remember-label {
+          font-family:'Inter',sans-serif;
+          font-size:13px;
+          color:rgba(255,255,255,0.45);
+          cursor:pointer;
+          user-select:none;
+        }
+        #auth-overlay button {
+          width:100%;padding:14px;
+          background:#FFB81C;
+          border:none;border-radius:3px;
+          color:#080c12;
+          font-family:'Bebas Neue',sans-serif;
+          font-size:18px;letter-spacing:0.1em;
+          cursor:pointer;
+          transition:background 0.2s, transform 0.1s;
+        }
+        #auth-overlay button:hover { background:#ffc94d; }
+        #auth-overlay button:active { transform:scale(0.98); }
+        #auth-overlay .auth-error {
+          margin-top:12px;height:16px;
+          font-size:12px;letter-spacing:0.05em;
+          color:#ff4444;
+          font-family:'DM Mono',monospace;
+        }
+      </style>
+      <div class="auth-bg"></div>
+      <div class="auth-box">
+        <div class="auth-logo">
+          <svg viewBox="0 0 40 40" fill="none">
+            <polygon points="20,2 38,20 20,38 2,20" stroke="#FFB81C" stroke-width="2.5" fill="none"/>
+            <polygon points="20,9 31,20 20,31 9,20" stroke="#FFB81C" stroke-width="1.5" fill="rgba(255,184,28,0.12)"/>
+            <circle cx="20" cy="20" r="3" fill="#FFB81C"/>
+          </svg>
+          <span class="auth-logo-text">Data<em>Diamond</em></span>
+        </div>
+        <h2>Canadian Baseball League · Restricted Access</h2>
+        <div class="auth-input-wrap">
+          <input type="password" id="auth-input" placeholder="Enter password" autocomplete="off" />
+        </div>
+        <label class="remember-wrap">
+          <input type="checkbox" id="auth-remember" />
+          <span class="remember-label">Remember me on this device</span>
+        </label>
+        <button id="auth-btn">Enter</button>
+        <div class="auth-error" id="auth-error"></div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    document.getElementById('auth-input').focus();
+
+    return new Promise(resolve => {
+      async function attempt() {
+        const pwd      = document.getElementById('auth-input').value;
+        const remember = document.getElementById('auth-remember').checked;
+        const hash     = await sha256(pwd);
+        if (hash === HASH) {
+          if (remember) { localStorage.setItem(key, 'ok'); }
+          else          { sessionStorage.setItem(key, 'ok'); }
+          overlay.style.opacity = '0';
+          overlay.style.transition = 'opacity 0.4s';
+          setTimeout(() => overlay.remove(), 400);
+          resolve();
+        } else {
+          document.getElementById('auth-error').textContent = 'Incorrect password — try again.';
+          document.getElementById('auth-input').value = '';
+          document.getElementById('auth-input').focus();
+        }
+      }
+      document.getElementById('auth-btn').addEventListener('click', attempt);
+      document.getElementById('auth-input').addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', checkAuth);
+</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
@@ -355,6 +536,7 @@
         <a href="teams.html"    class="nav-link">Team Stats</a>
         <a href="players.html"  class="nav-link">Player Stats</a>
         <a href="scouting.html" class="nav-link active">Scouting</a>
+        <a href="tracking.html" class="nav-link">Tracking</a>
       </nav>
       <div class="header-search">
         <input type="text" id="global-search" placeholder="Search players…" autocomplete="off" />
@@ -818,34 +1000,143 @@
   function genBatterPDF(player,team){
     var d=new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),s=player.summary;
     var sc=(player.pitch&&player.pitch.scatter)?player.pitch.scatter.filter(function(p){return p.x!=null&&p.y!=null;}):[];
+    var allSc=player.pitch&&player.pitch.scatter?player.pitch.scatter:[];
     drawBg(d);drawHdr(d,player.name,'BATTER',team);
     var y=MT+32;
+
+    // Key stats boxes
     y=drawBoxes(d,[['AVG',f3(s.AVG)],['OBP',f3(s.OBP)],['SLG',f3(s.SLG)],['OPS',f3(s.OPS)],['HR',fN(s.HR)],['K',fN(s.K)]],y);
     y+=4;
-    y=drawSec(d,'Counting Stats',y);
+
+    // Scout Summary — plain language
+    y=drawSec(d,'Scout Summary',y);
+    var avg=s.AVG||0,ops=s.OPS||0,hr=s.HR||0,k=s.K||0,pa=s.PA||1,bb=s.BB||0;
+    var kPct=k/pa,bbPct=bb/pa;
+    var summary=[];
+    if(avg>=0.300)summary.push('Strong hitter — batting above .300. One of the better averages in the league.');
+    else if(avg>=0.260)summary.push('Solid hitter — batting '+f3(avg)+', near league average.');
+    else if(avg>=0.220)summary.push('Below-average hitter — batting '+f3(avg)+'. Challenge him early in the count.');
+    else summary.push('Weak hitter — batting '+f3(avg)+'. Very low average. Pitchers can attack the zone.');
+    if(hr>=10)summary.push('Real power threat — '+fN(hr)+' home runs. Keep the ball down and away.');
+    else if(hr>=5)summary.push('Some pop — '+fN(hr)+' home runs. Avoid leaving fastballs in the middle of the zone.');
+    else summary.push('Limited power — only '+fN(hr)+' home runs. Less concern about giving up the big hit.');
+    if(kPct>=0.28)summary.push('Strikes out often ('+Math.round(kPct*100)+'%). Use breaking balls out of the zone to bury him.');
+    else if(kPct>=0.20)summary.push('Average strikeout rate ('+Math.round(kPct*100)+'%). Mix locations and pitch types.');
+    else summary.push('Hard to strikeout — only '+Math.round(kPct*100)+'% K rate. Work ahead, trust your defense.');
+    if(bbPct>=0.14)summary.push('Patient — walks a lot ('+Math.round(bbPct*100)+'% BB rate). Attack the zone early, no free passes.');
+    else if(bbPct<=0.05)summary.push('Aggressive — rarely walks ('+Math.round(bbPct*100)+'%). Will chase — use waste pitches when ahead in count.');
+    if(ops>=0.850)summary.push('DANGER LEVEL: HIGH. Pitch carefully. Use corners, mix speeds, do not groove anything.');
+    else if(ops>=0.720)summary.push('DANGER LEVEL: MODERATE. Respect his ability. No easy pitches in the zone.');
+    else summary.push('DANGER LEVEL: LOW. Stay aggressive, hit your spots, get him out early in the count.');
+    var lh=5.2;
+    d.setFillColor(13,20,40);d.rect(ML,y,CPW,summary.length*lh+4,'F');
+    sd(d,CO.navy2);d.setLineWidth(0.3);d.rect(ML,y,CPW,summary.length*lh+4,'S');
+    sf(d,CO.gold);d.rect(ML,y,1.5,summary.length*lh+4,'F');
+    summary.forEach(function(line,i){
+      d.setFont('helvetica','normal');d.setFontSize(7);
+      st(d,i===summary.length-1?CO.gold:CO.white);
+      d.text('• '+line,ML+4,y+3.5+i*lh);
+    });
+    y+=summary.length*lh+8;
+
+    // Counting Stats
+    y=drawSec(d,'Season At-Bat Breakdown',y);
     var ch=['PA','AB','H','1B','2B','3B','HR','BB','HBP','K','SF'];
-    y=drawTbl(d,ch,[ch.map(function(k){return fN(s[k]);})],Array(ch.length).fill(CPW/ch.length),y,[6,9]);
-    y+=2;y=drawSec(d,'Pitch Discipline',y);
+    var chL=['Plate App','At Bats','Hits','Singles','Doubles','Triples','Home Runs','Walks','Hit by Pitch','Strikeouts','Sac Flies'];
+    var colW=Array(ch.length).fill(CPW/ch.length);
+    sf(d,CO.navy2);d.rect(ML,y,CPW,9,'F');
+    sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+9,ML+CPW,y+9);
+    var cx=ML;
+    ch.forEach(function(h,i){
+      d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.gold);d.text(h,cx+colW[i]/2,y+3.5,{align:'center'});
+      d.setFont('helvetica','normal');d.setFontSize(4.2);st(d,CO.dim);d.text(chL[i],cx+colW[i]/2,y+7.5,{align:'center'});
+      cx+=colW[i];
+    });
+    sf(d,CO.navy3);d.rect(ML,y+9,CPW,7,'F');
+    cx=ML;
+    ch.forEach(function(k){
+      d.setFont('helvetica','bold');d.setFontSize(7);st(d,CO.white);
+      d.text(fN(s[k]),cx+colW[ch.indexOf(k)]/2,y+14,{align:'center'});
+      cx+=colW[ch.indexOf(k)];
+    });
+    sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(ML,y,CPW,16,'S');
+    y+=19;
+
+    // Plate Discipline
+    y=drawSec(d,'Plate Discipline — How He Handles Pitches',y);
     var ps=s.pitches_seen||1,zp=s.zone_pct!=null?(s.zone_pct<=1?s.zone_pct*100:s.zone_pct):0;
-    y=drawTbl(d,['PITCHES','ZONE%','CHASE','SW-K','CL-K','P/PA'],
-      [[fN(ps),f1(zp)+'%',fN(s.chase_pitches),fN(s.swinging_k),fN(s.called_k),f1(ps/(s.PA||1))]],
-      Array(6).fill(CPW/6),y);
-    y+=2;
+    var dH=['PITCHES SEEN','ZONE %','CHASE PITCHES','SWINGING K','CALLED K','PITCHES / PA'];
+    var dL=['Total pitches tracked','% of pitches in strike zone','Swings outside the zone','Struck out swinging','Struck out looking','Avg pitches per plate app'];
+    var dV=[fN(ps),f1(zp)+'%',fN(s.chase_pitches),fN(s.swinging_k),fN(s.called_k),f1(ps/(s.PA||1))];
+    var dW=CPW/6;
+    sf(d,CO.navy2);d.rect(ML,y,CPW,9,'F');
+    sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+9,ML+CPW,y+9);
+    var dx=ML;
+    dH.forEach(function(h,i){
+      d.setFont('helvetica','bold');d.setFontSize(5);st(d,CO.gold);d.text(h,dx+dW/2,y+3.5,{align:'center'});
+      d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);d.text(dL[i],dx+dW/2,y+7.5,{align:'center'});
+      dx+=dW;
+    });
+    sf(d,CO.navy3);d.rect(ML,y+9,CPW,7,'F');
+    dx=ML;
+    dV.forEach(function(v){
+      d.setFont('helvetica','bold');d.setFontSize(7);st(d,CO.white);
+      d.text(v,dx+dW/2,y+14,{align:'center'});dx+=dW;
+    });
+    sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(ML,y,CPW,16,'S');
+    y+=19;
+
+    // Pitch Mix Faced
     var pm=s.pitch_mix||{};
     if(Object.keys(pm).length){
-      y=drawSec(d,'Pitch Mix Faced',y);
+      y=drawSec(d,'Pitch Types He Has Faced (% of total pitches seen)',y);
       var pmH=Object.keys(pm);
       y=drawTbl(d,pmH,[pmH.map(function(k){var v=pm[k];return f1(v<=1?v*100:v)+'%';})],Array(pmH.length).fill(CPW/pmH.length),y);
-      y+=2;
+      d.setFont('helvetica','italic');d.setFontSize(6);st(d,CO.dim);
+      d.text('Tip: Pitch types he sees most often may indicate what pitchers have had success with against him.',ML,y+3);
+      y+=8;
     }
+
+    // Spray Direction & Shift
+    var batted2=allSc.filter(function(s2){return['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s2.outcome)&&s2.spray;});
+    var pullC=batted2.filter(function(s2){return s2.spray==='Pull';}).length;
+    var strC=batted2.filter(function(s2){return s2.spray==='Straightaway';}).length;
+    var oppC=batted2.filter(function(s2){return s2.spray==='Opposite Field';}).length;
+    var spTot=pullC+strC+oppC;
+    if(spTot>=3){
+      y=drawSec(d,'Spray Direction & Defensive Shift Recommendation',y);
+      var pp=Math.round(pullC/spTot*100),sp2=Math.round(strC/spTot*100),op2=Math.round(oppC/spTot*100);
+      y=drawTbl(d,['PULL %','STRAIGHTAWAY %','OPPOSITE FIELD %'],[[pp+'%',sp2+'%',op2+'%']],[CPW/3,CPW/3,CPW/3],y);
+      var sRec,sNote;
+      if(pp>=55){sRec='STANDARD SHIFT';sNote='Heavy pull hitter. Move middle infielders toward the pull side before each pitch.';}
+      else if(pp>=45){sRec='SLIGHT SHIFT / SHADE PULL SIDE';sNote='Moderate pull tendency. Shade infielders slightly toward the pull side.';}
+      else if(op2>=40){sRec='NO SHIFT — PLAY STRAIGHT UP';sNote='Goes the other way often. A shift would leave the opposite field open. Standard alignment.';}
+      else{sRec='STRAIGHT UP — BALANCED HITTER';sNote='Balanced spray. No shift needed. Trust standard defensive alignment.';}
+      d.setFont('helvetica','bold');d.setFontSize(7.5);st(d,CO.gold);
+      d.text('Shift: '+sRec,ML,y+2);
+      d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.white);
+      d.text(sNote,ML,y+7);
+      y+=13;
+    }
+
+    // Strike Zone Charts
     if(sc.length){
-      y=drawSec(d,'Strike Zone Analysis',y);y=addCharts(d,sc,y);
+      if(y>190){d.addPage();drawBg(d);y=MT+8;}
+      y=drawSec(d,'Strike Zone Charts — Where Pitches Have Been Thrown to This Batter',y);
+      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
+      d.text('Scatter = each pitch location.   Zone Grid = % of pitches per zone.   Heat Map = where pitches cluster most.',ML,y+1);
+      y+=6;
+      y=addCharts(d,sc,y);
       var inZ=sc.filter(function(p){return p.x>=-1&&p.x<=1&&p.y>=0&&p.y<=1;}).length;
-      var hits=sc.filter(function(p){return['Single','Double','Triple','Home Run'].includes(p.outcome);}).length;
-      var swS=sc.filter(function(p){return p.outcome==='Swinging Strike';}).length;
+      var hits2=sc.filter(function(p){return['Single','Double','Triple','Home Run'].includes(p.outcome);}).length;
+      var swS2=sc.filter(function(p){return p.outcome==='Swinging Strike';}).length;
       var chs=sc.filter(function(p){return(p.x<-1||p.x>1||p.y<0||p.y>1)&&(p.outcome==='Swinging Strike'||p.outcome==='Foul');}).length;
-      y=drawTbl(d,['PITCHES','ZONE%','HITS','SW-STR','CHASES'],
-        [[sc.length,f1(xp(inZ,sc.length))+'%',hits,swS,chs].map(String)],Array(5).fill(CPW/5),y,[1]);
+      y=drawTbl(d,
+        ['TOTAL PITCHES','IN ZONE %','HITS ALLOWED','WHIFFS (missed swings)','CHASES (swings outside zone)'],
+        [[sc.length,f1(xp(inZ,sc.length))+'%',hits2,swS2,chs].map(String)],
+        [28,22,26,46,48],y,[1]);
+      d.setFont('helvetica','italic');d.setFontSize(6);st(d,CO.dim);
+      d.text('Tip: Hot zones (bright on heat map) = where he gets pitches. Find zones with many Whiffs to exploit.',ML,y+3);
     }
     drawFoot(d,player.name,'BATTER');
     d.save('scouting_'+player.name.replace(/ /g,'_')+'_batter.pdf');
@@ -864,20 +1155,79 @@
     var inZ=sc.filter(function(s){return s.x!=null&&s.x>=-1&&s.x<=1&&s.y!=null&&s.y>=0&&s.y<=1;}).length;
     drawBg(d);drawHdr(d,player.name,'PITCHER',team);
     var y=MT+32;
+
+    // Key stat boxes
     y=drawBoxes(d,[['PITCHES',String(tot)],['K',String(ks)],['BB',String(bbs)],
       ['K%',f1(xp(ks,tot))+'%'],['STR%',f1(xp(str,tot))+'%'],['ZN%',f1(xp(inZ,tot))+'%']],y);
-    y+=4;y=drawSec(d,'Pitching Stats',y);
-    var ph=['PITCHES','K','BB','HIT','STR','SW-STR','CL-STR','BALL','K%','BB%','STR%','ZN%'];
-    y=drawTbl(d,ph,[[tot,ks,bbs,hits,str,swS,calS,balls,
-      f1(xp(ks,tot))+'%',f1(xp(bbs,tot))+'%',f1(xp(str,tot))+'%',f1(xp(inZ,tot))+'%'].map(String)],
-      Array(ph.length).fill(CPW/ph.length),y,[8,10]);
-    y+=2;
-    var tc2={};
-    sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
+    y+=4;
+
+    // Scout Summary — plain language for batters facing this pitcher
+    y=drawSec(d,'Scouting Summary — What Batters Should Know',y);
+    var kPct2=tot>0?ks/tot:0, bbPct2=tot>0?bbs/tot:0, strPct3=tot>0?str/tot:0, znPct=tot>0?inZ/tot:0;
+    var tc2={};sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
+    var topPitch=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];})[0];
+    var sum2=[];
+    if(kPct2>=0.25)sum2.push('Dominant strikeout pitcher — '+Math.round(kPct2*100)+'% K rate. Expect hard pitches and sharp breaking balls. Shorten your swing.');
+    else if(kPct2>=0.18)sum2.push('Good strikeout ability ('+Math.round(kPct2*100)+'% K rate). Will try to put you away with off-speed. Stay disciplined.');
+    else sum2.push('Low strikeout rate ('+Math.round(kPct2*100)+'%). Relies on weak contact and defense. Put the ball in play hard.');
+    if(bbPct2>=0.12)sum2.push('Poor command — walking batters at an alarming rate ('+Math.round(bbPct2*100)+'% BB rate). Be patient, work deep counts and make him throw strikes before you swing.');
+    else if(bbPct2>=0.08)sum2.push('Some control issues ('+Math.round(bbPct2*100)+'% BB rate). Take pitches early — he may gift you a walk if you stay patient.');
+    else if(bbPct2<=0.05)sum2.push('Excellent command — almost never walks batters (only '+Math.round(bbPct2*100)+'% BB rate). He will throw strikes. You must be ready to swing early in the count, no free passes coming.');
+    if(strPct3>=0.68)sum2.push('Gets ahead with strikes constantly ('+Math.round(strPct3*100)+'% strike rate). Expect first-pitch strikes. Do not fall behind.');
+    else if(strPct3<=0.55)sum2.push('Struggles to throw strikes ('+Math.round(strPct3*100)+'%). Take pitches early — let him work into trouble.');
+    if(znPct>=0.55)sum2.push('Stays in the zone ('+Math.round(znPct*100)+'% zone rate). Do not chase — he wants you to chase pitches over the plate.');
+    else sum2.push('Lots of pitches outside the zone ('+Math.round(znPct*100)+'% zone rate). Be disciplined — make him throw strikes before swinging.');
+    if(topPitch)sum2.push('Primary pitch: '+topPitch[0]+' ('+Math.round(topPitch[1]/tot*100)+'% usage). Expect this pitch often — especially early in the count.');
+    var lh2=5.2;
+    d.setFillColor(13,20,40);d.rect(ML,y,CPW,sum2.length*lh2+4,'F');
+    sd(d,CO.navy2);d.setLineWidth(0.3);d.rect(ML,y,CPW,sum2.length*lh2+4,'S');
+    sf(d,CO.gold);d.rect(ML,y,1.5,sum2.length*lh2+4,'F');
+    sum2.forEach(function(line,i){
+      d.setFont('helvetica','normal');d.setFontSize(7);
+      st(d,i===sum2.length-1?CO.gold:CO.white);
+      d.text('• '+line,ML+4,y+3.5+i*lh2);
+    });
+    y+=sum2.length*lh2+8;
+
+    // Overall Pitching Stats
+    y=drawSec(d,'Pitching Stats — All Tracked Pitches',y);
+    var ph=['PITCHES','K','BB','HITS','STRIKES','SW-STR','CL-STR','BALLS','K%','BB%','STR%','ZN%'];
+    var phL=['Total','Strikeouts','Walks','Hits allowed','Total strikes','Swinging miss','Looking strike','Balls thrown','K per PA','BB per PA','Strike rate','In-zone rate'];
+    var phV=[tot,ks,bbs,hits,str,swS,calS,balls,f1(xp(ks,tot))+'%',f1(xp(bbs,tot))+'%',f1(xp(str,tot))+'%',f1(xp(inZ,tot))+'%'].map(String);
+    var phW=Array(ph.length).fill(CPW/ph.length);
+    sf(d,CO.navy2);d.rect(ML,y,CPW,9,'F');
+    sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+9,ML+CPW,y+9);
+    var cx3=ML;
+    ph.forEach(function(h,i){
+      d.setFont('helvetica','bold');d.setFontSize(5);st(d,CO.gold);d.text(h,cx3+phW[i]/2,y+3.5,{align:'center'});
+      d.setFont('helvetica','normal');d.setFontSize(3.8);st(d,CO.dim);d.text(phL[i],cx3+phW[i]/2,y+7.5,{align:'center'});
+      cx3+=phW[i];
+    });
+    sf(d,CO.navy3);d.rect(ML,y+9,CPW,7,'F');
+    cx3=ML;
+    phV.forEach(function(v,i){
+      d.setFont('helvetica','bold');d.setFontSize(i>=8?6:7);st(d,CO.white);
+      d.text(v,cx3+phW[i]/2,y+14,{align:'center'});cx3+=phW[i];
+    });
+    sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(ML,y,CPW,16,'S');
+    y+=19;
+
+    // Pitch Arsenal
     var sT=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];});
     if(sT.length){
-      y=drawSec(d,'Pitch Arsenal',y);
-      var atH=['TYPE','COUNT','USAGE%','K','HIT','STR%','BALL%'],atW=[38,16,18,12,12,18,18];
+      y=drawSec(d,'Pitch Arsenal — What He Throws and How Effective Each Pitch Is',y);
+      var atH=['PITCH TYPE','# THROWN','USAGE %','STRIKEOUTS','HITS ALLOWED','STRIKE %','BALL %'];
+      var atL=['Name of pitch','How many thrown','% of all pitches','K on this pitch','Hits on this pitch','Strikes thrown','Balls thrown'];
+      var atW=[38,16,18,22,22,18,18];
+      // draw header with sub-labels
+      sf(d,CO.navy2);d.rect(ML,y,CPW,9,'F');
+      sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+9,ML+CPW,y+9);
+      var ax=ML;
+      atH.forEach(function(h,i){
+        d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.gold);d.text(h,ax+atW[i]/2,y+3.5,{align:'center'});
+        d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);d.text(atL[i],ax+atW[i]/2,y+7.5,{align:'center'});
+        ax+=atW[i];
+      });
       var atR=sT.map(function(e){
         var t=e[0],cnt=e[1],tp=sc.filter(function(s){return(s.pitch_type||s.type||'Unknown')===t;});
         var tk=tp.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
@@ -886,59 +1236,81 @@
         var tb=tp.filter(function(s){return s.outcome==='Ball';}).length;
         return[t,String(cnt),f1(xp(cnt,tot))+'%',String(tk),String(th),f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%'];
       });
-      y=drawTbl(d,atH,atR,atW,y,[2,5]);y+=2;
+      var ar=y+9;
+      atR.forEach(function(row,ri){
+        sf(d,ri%2===0?CO.navy3:CO.navy2);d.rect(ML,ar,CPW,7,'F');
+        var bx2=ML;
+        row.forEach(function(v,vi){
+          var isBold=vi<=2;
+          d.setFont('helvetica',isBold?'bold':'normal');d.setFontSize(vi===0?6.5:7);
+          st(d,vi===0?CO.white:vi===1||vi===2?CO.gold:CO.dim);
+          d.text(v,bx2+atW[vi]/2,ar+4.5,{align:'center'});bx2+=atW[vi];
+        });
+        ar+=7;
+      });
+      sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(ML,y+9,CPW,atR.length*7,'S');
+      y=ar+3;
+      d.setFont('helvetica','italic');d.setFontSize(6);st(d,CO.dim);
+      d.text('Tip: Pitches with high Strike % are his best pitches. Pitches with high Ball % are pitches to lay off.',ML,y);
+      y+=7;
     }
-    // Build RHH and LHH splits side by side
+
+    // LHH / RHH Splits
     var splitData=['R','L'].map(function(hand){
       var sub=sc.filter(function(s){return s.batter_side===hand;});
       var sk=sub.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
       var sb=sub.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
       var ss=sub.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
       var sz=sub.filter(function(s){return s.x!=null&&s.x>=-1&&s.x<=1&&s.y!=null&&s.y>=0&&s.y<=1;}).length;
-      return {hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(function(s){return s.x!=null&&s.y!=null;})};
+      return{hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(function(s){return s.x!=null&&s.y!=null;})};
     });
     var iw=CPW/2-4,ih=Math.round(iw*1.15),gap=8;
-    // Section headers side by side
-    if(y>200){d.addPage();drawBg(d);y=MT+8;}
+    if(y>190){d.addPage();drawBg(d);y=MT+8;}
+    y=drawSec(d,'Splits vs. Right-Handed Batters (RHH) and Left-Handed Batters (LHH)',y);
+    d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
+    d.text('These show how the pitcher performs differently against right vs. left-handed batters.',ML,y+1);
+    y+=6;
     splitData.forEach(function(sd2,i){
       if(!sd2.sub.length)return;
       var xOff=ML+i*(iw+gap);
       d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
-      d.text('VS '+(sd2.hand==='R'?'RHH':'LHH'),xOff+iw/2,y,{align:'center'});
+      d.text('vs. '+(sd2.hand==='R'?'RIGHT-HANDED BATTERS (RHH)':'LEFT-HANDED BATTERS (LHH)'),xOff+iw/2,y,{align:'center'});
     });
     y+=5;
-    // Stat rows side by side
     splitData.forEach(function(sd2,i){
       if(!sd2.sub.length)return;
-      var xOff=ML+i*(iw+gap);
-      var cw=iw/5;
-      var headers=['PITCHES','K','BB','STR%','ZN%'];
+      var xOff=ML+i*(iw+gap);var cw=iw/5;
+      var headers=['PITCHES','K','BB','STRIKE %','ZONE %'];
+      var hdesc=['Tracked','Strikeouts','Walks','Strike rate','In-zone rate'];
       var row=[sd2.sub.length,sd2.sk,sd2.sb,f1(xp(sd2.ss,sd2.sub.length))+'%',f1(xp(sd2.sz,sd2.sub.length))+'%'].map(String);
-      // header row
-      sf(d,CO.navy2);d.rect(xOff,y,iw,8,'F');
-      sd(d,CO.gold);d.setLineWidth(0.3);d.line(xOff,y+8,xOff+iw,y+8);
-      d.setFont('helvetica','bold');d.setFontSize(6);st(d,CO.gold);
-      var cx=xOff;
-      headers.forEach(function(h){d.text(h,cx+cw/2,y+5,{align:'center'});cx+=cw;});
-      // data row
-      sf(d,CO.navy3);d.rect(xOff,y+8,iw,7,'F');
-      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.white);
-      cx=xOff;
-      row.forEach(function(v,vi){
-        if(vi===0||vi===1||vi===2){d.setFont('helvetica','bold');st(d,CO.white);}else{d.setFont('helvetica','normal');st(d,CO.dim);}
-        d.text(v,cx+cw/2,y+13,{align:'center'});cx+=cw;
+      sf(d,CO.navy2);d.rect(xOff,y,iw,9,'F');
+      sd(d,CO.gold);d.setLineWidth(0.3);d.line(xOff,y+9,xOff+iw,y+9);
+      var cx4=xOff;
+      headers.forEach(function(h,hi){
+        d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.gold);d.text(h,cx4+cw/2,y+3.5,{align:'center'});
+        d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);d.text(hdesc[hi],cx4+cw/2,y+7.5,{align:'center'});
+        cx4+=cw;
       });
+      sf(d,CO.navy3);d.rect(xOff,y+9,iw,7,'F');
+      cx4=xOff;
+      row.forEach(function(v,vi){
+        d.setFont('helvetica',vi<=2?'bold':'normal');d.setFontSize(7);
+        st(d,vi<=2?CO.white:CO.dim);
+        d.text(v,cx4+cw/2,y+14,{align:'center'});cx4+=cw;
+      });
+      sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(xOff,y,iw,16,'S');
     });
     y+=20;
-    // Heat maps side by side
     splitData.forEach(function(sd2,i){
       if(!sd2.subXY.length)return;
       var xOff=ML+i*(iw+gap);
       d.addImage(mkHeat(sd2.subXY),'PNG',xOff,y,iw,ih);
       d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
-      d.text('vs. '+(sd2.hand==='R'?'RHH':'LHH')+' Heat Map',xOff+iw/2,y+ih+3,{align:'center'});
+      d.text('Heat map vs. '+(sd2.hand==='R'?'RHH (Right-Handed Batters)':'LHH (Left-Handed Batters)'),xOff+iw/2,y+ih+3,{align:'center'});
+      d.setFont('helvetica','italic');d.setFontSize(5.5);st(d,CO.dim);
+      d.text('Bright zones = where he pitches most. Attack zones that are cold (rarely pitched).',xOff+iw/2,y+ih+7,{align:'center'});
     });
-    y+=ih+10;
+    y+=ih+12;
     drawFoot(d,player.name,'PITCHER');
     d.save('scouting_'+player.name.replace(/ /g,'_')+'_pitcher.pdf');
   }

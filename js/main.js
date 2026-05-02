@@ -1477,33 +1477,34 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     });
 
     evalStat('STR%',     myStr!=null  ?fmt1(myStr*100)+'%'  :'—', pctRank(myStr,lgP.str),    true,
-      { elite:'Exceptional strike-throwing — in the zone at an elite rate.', strong:'Above-average strike rate, commanding the zone effectively.',
-        weak:'Below-average strike rate — falling behind in counts too often.', poor:'Very low strike rate — one of the least accurate pitchers in the league.' });
+      { elite:'OUTSTANDING strike thrower — working ahead and in the zone at an elite rate. The foundation of good pitching.', strong:'Above-average strike rate — commanding the zone and putting hitters on the defensive.',
+        weak:'CONCERN: Below-average strike rate — falling behind in counts too often. Must improve strike-throwing or walks will follow.', poor:'RED FLAG: Very low strike rate — one of the least accurate pitchers in the league. Walks and long counts are destroying effectiveness.' });
     evalStat('SWING%',   mySwing!=null?fmt1(mySwing*100)+'%':'—', pctRank(mySwing,lgP.swing), true,
-      { elite:'Induces swings at an elite rate — hitters find the pitches difficult to lay off.', strong:'Above-average induced swing rate — forcing hitters to offer.',
+      { elite:'Induces swings at an elite rate — hitters cannot lay off.', strong:'Above-average induced swing rate — forcing hitters to offer.',
         weak:'Below-average induced swing rate — hitters comfortable taking pitches.', poor:'One of the lowest induced swing rates — hitters lay off consistently.' });
     evalStat('WHIFF%',   myWhiff!=null?fmt1(myWhiff*100)+'%':'—', pctRank(myWhiff,lgP.whiff), true,
-      { elite:'Elite swing-and-miss stuff — generates whiffs at a top-tier rate.', strong:'Above-average whiff rate — pitches hitters struggle to square up.',
-        weak:'Below-average whiff rate — hitters squaring up swings too often.', poor:'Very few whiffs generated — hitters put the ball in play on nearly every swing.' });
+      { elite:'Elite swing-and-miss stuff — one of the most unhittable pitchers in the league.', strong:'Above-average whiff rate — pitches hitters struggle to square up.',
+        weak:'Below-average whiff rate — hitters squaring up swings too often.', poor:'Very few whiffs generated — hitters putting the ball in play on nearly every swing.' });
     evalStat('K%',       myK!=null    ?fmt1(myK*100)+'%'    :'—', pctRank(myK,lgP.k),        true,
-      { elite:'Elite strikeout rate — one of the most dominant strikeout pitchers in the league.', strong:'Above-average ability to put hitters away with strikeouts.',
-        weak:'Below-average strikeout rate — hitters making contact more often than ideal.', poor:'Very low strikeout rate — struggles to finish hitters off.' });
-    evalStat('BB%',      myBB!=null   ?fmt1(myBB*100)+'%'   :'—', pctRank(myBB,lgP.bb),      false,
-      { weak:'Walk rate is elevated — command is an issue, giving hitters too many free passes.', poor:'One of the highest walk rates in the league — significant control problems.' });
+      { elite:'Elite strikeout rate — one of the most dominant put-away pitchers in the league.', strong:'Above-average ability to finish hitters with strikeouts.',
+        weak:'Below-average strikeout rate — needs better put-away pitches to finish hitters.', poor:'Very low strikeout rate — struggles to put hitters away once ahead in the count.' });
+    evalStat('BB%',      myBB!=null   ?fmt1(myBB*100)+'%'   :'—', myBB!=null ? 1-pctRank(myBB,lgP.bb) : null, true,
+      { elite:'Elite command — walks almost nobody. The mark of a true strike thrower.', strong:'Low walk rate — rarely giving free passes, staying ahead and in control.',
+        weak:'RED FLAG: Walk rate is elevated — free passes are killing innings. Must throw strikes and challenge hitters.', poor:'CRITICAL ISSUE: One of the highest walk rates in the league. Walks are unacceptable — must attack the zone.' });
     evalStat('E+A%',     myEA!=null   ?fmt1(myEA)+'%'       :'—', pctRank(myEA,lgP.ea),      true,
-      { elite:'Works ahead in counts at an elite rate — dictates at-bats from the start.', strong:'Consistently gets into advantageous counts early.',
-        weak:'Falls behind in counts more often than most — hitters dictate the at-bat.', poor:'Rarely gets ahead in counts, one of the worst early-count rates in the league.' });
+      { elite:'Works ahead in counts at an elite rate — dictates every at-bat from pitch one.', strong:'Consistently gets into advantageous counts early — a sign of excellent command.',
+        weak:'Falls behind in counts too often — hitters dictate the at-bat. Must throw more first-pitch strikes.', poor:'Rarely gets ahead — almost never in the drivers seat. First-pitch strikes must be the priority.' });
     evalStat('K/BB',     myKBB!=null  ?fmt2(myKBB)          :'—', pctRank(myKBB,lgP.kbb),    true,
-      { elite:'Outstanding K/BB ratio — strikes out hitters while rarely walking them.', strong:'Good command-to-stuff ratio.',
-        weak:'Low K/BB — walks nearly as often as striking out.', poor:'Very poor K/BB — walks undermining an already-low strikeout rate.' });
+      { elite:'Outstanding K/BB ratio — strikes out hitters at a much higher rate than walking them. The ideal profile.', strong:'Good K/BB — strikeouts outpacing walks, a sign of quality command and stuff.',
+        weak:'Low K/BB — walks are nearly cancelling out strikeouts. Must cut walks to let stuff play up.', poor:'Very poor K/BB — walks are undermining everything. Cannot allow free bases at this rate.' });
     evalStat('ERA',      era!=null    ?fmt2(era)             :'—', pctRank(era,lgP.era),      false,
-      { weak:'ERA is above average — runs scoring at a higher-than-ideal rate.', poor:'One of the highest ERAs in the league — struggling to prevent runs.' });
+      { weak:'ERA is above average — runs scoring at a higher-than-ideal rate.', poor:'One of the highest ERAs in the league — struggling to prevent runs consistently.' });
     evalStat('WHIP',     whip!=null   ?fmt2(whip)            :'—', pctRank(whip,lgP.whip),    false,
-      { weak:'Elevated WHIP — giving up too many baserunners per inning.', poor:'One of the highest WHIPs in the league — runners on base constantly.' });
+      { weak:'Elevated WHIP — too many baserunners per inning, often from walks.', poor:'One of the highest WHIPs in the league — walks and hits creating constant traffic on the bases.' });
     evalStat('BA AGNST', baAgst!=null ?fmt3(baAgst)          :'—', pctRank(baAgst,lgP.baAgst),false,
-      { weak:'Hitters are batting above average against this pitcher.', poor:'One of the highest batting averages against in the league — hitters making consistent contact.' });
+      { weak:'Hitters batting above average against this pitcher — making too much contact.', poor:'One of the highest batting averages against in the league — hitters consistently squaring the ball up.' });
     evalStat('IP',       pd.IP>0      ?fmtIP(pd.IP)          :'—', pctRank(pd.IP||0,lgP.ip),  true,
-      { elite:'Elite innings pitched — a true workhorse on the mound.', strong:'Above-average innings total — consistently goes deep into games.',
+      { elite:'Elite innings pitched — a true workhorse, going deep into games and saving the bullpen.', strong:'Above-average innings total — consistently pitching deep into games.',
         weak:'Below-average innings total — often pitching in shorter stints.', poor:'One of the lowest innings pitched — limited workload this season.' });
 
 
