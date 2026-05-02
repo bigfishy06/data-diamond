@@ -1072,8 +1072,8 @@ function renderPlayerDetail(name, type, content) {
     _allSeasonOpts.sort(function(a, b) { return parseInt(b.year) - parseInt(a.year); });
   }
 
-  // Default to 2025
-  var activeSeasonFilter = '2025';
+  // Default to all (2025 is the only season anyway)
+  var activeSeasonFilter = 'all';
   var currentTab = 'overview';
 
   function renderSeasonFilterBar(activeTab) {
@@ -1091,7 +1091,7 @@ function renderPlayerDetail(name, type, content) {
              'color:' + (active ? '#FFB81C' : 'rgba(255,255,255,0.4)') + ';';
     }
     var btns = _allSeasonOpts.map(function(opt) {
-      return '<button style="' + btnStyle(activeSeasonFilter === opt.year) + '" data-sf="' + opt.year + '">' + opt.year + '</button>';
+      return '<button style="' + btnStyle(true) + '" data-sf="all">' + opt.year + '</button>';
     }).join('');
 
     _filterBar.innerHTML =
