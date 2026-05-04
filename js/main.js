@@ -19,7 +19,7 @@ const AUTH = {
 
   init: function() {
     // Load the saved session (survives page refreshes)
-    const saved = localStorage.getItem('dd_user');
+    const saved = sessionStorage.getItem('dd_user');
     if (saved) {
       try { AUTH._user = JSON.parse(saved); } catch(e) {}
     }
@@ -55,12 +55,12 @@ const AUTH = {
     }
 
     AUTH._user = { name: payload.given_name || payload.name, email: email, picture: payload.picture };
-    localStorage.setItem('dd_user', JSON.stringify(AUTH._user));
+    sessionStorage.setItem('dd_user', JSON.stringify(AUTH._user));
     window.location.href = getBase() + 'index.html';
   },
 
   signOut: function() {
-    localStorage.removeItem('dd_user');
+    sessionStorage.removeItem('dd_user');
     AUTH._user = null;
     if (typeof google !== 'undefined') google.accounts.id.disableAutoSelect();
     window.location.href = getBase() + 'login.html';
@@ -875,21 +875,39 @@ function renderPlayerDetail(name, type, content) {
   var _iblAll  = DATA.iblHistory[name] || [];
   var _ibl     = _iblAll.length ? _iblAll[0] : null;
 
-  // Derive bats/throws from scatter data (Batter_Side / Pitcher_Side columns).
-  // If a player appears with more than one distinct side value they are Switch.
-  function deriveHand(scatter, field) {
+  // Derive bats from scatter data using batter_side field.
+  // If 90%+ of plate appearances are from one side, use that side.
+  // Otherwise mark as Switch.
+  function deriveBats(scatter) {
+    var counts = {};
+    scatter.forEach(function(s) {
+      if (s.batter_side) counts[s.batter_side] = (counts[s.batter_side] || 0) + 1;
+    });
+    var total = Object.values(counts).reduce(function(a, b) { return a + b; }, 0);
+    if (total === 0) return null;
+    var dominant = Object.keys(counts).sort(function(a, b) { return counts[b] - counts[a]; })[0];
+    if (counts[dominant] / total >= 0.80) return dominant;
+    return 'S';
+  }
+
+  // Derive throws from scatter data.
+  // Only Akatsuka is a switch pitcher — everyone else uses their dominant side.
+  function deriveThrows(scatter, field, playerName) {
     var sides = new Set();
     scatter.forEach(function(s) { if (s[field]) sides.add(s[field]); });
     if (sides.size === 0) return null;
-    if (sides.size > 1)  return 'S';
-    return sides.values().next().value;
+    if (sides.size > 1 && playerName && playerName.toLowerCase().includes('akatsuka')) return 'S';
+    // For everyone else pick the dominant side
+    var counts = {};
+    scatter.forEach(function(s) { if (s[field]) counts[s[field]] = (counts[s[field]] || 0) + 1; });
+    return Object.keys(counts).sort(function(a, b) { return counts[b] - counts[a]; })[0];
   }
 
-  var _batterScatter = (pitch && pitch.scatter) ? pitch.scatter : [];
+  var _batterScatter  = (pitch && pitch.scatter) ? pitch.scatter : [];
   var _pitcherScatter = (type === 'pitcher' && pitchData && pitchData.scatter) ? pitchData.scatter : [];
 
-  var _bats   = deriveHand(_batterScatter,  'batter_side');
-  var _throws = deriveHand(_pitcherScatter, 'pitcher_side');
+  var _bats   = deriveBats(_batterScatter);
+  var _throws = deriveThrows(_pitcherScatter, 'pitcher_side', name);
 
   var playerInfo = {
     pos:      _ibl && _ibl.pos    ? _ibl.pos    : (type === 'pitcher' ? 'P' : '—'),
