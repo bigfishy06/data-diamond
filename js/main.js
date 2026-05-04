@@ -3779,91 +3779,49 @@ function buildSplitsTables(points) {
 
 // ── TABLE BUILDERS ────────────────────────────────
 function buildHittingTable(players) {
-  const rows = players.map(function(p) {
-    const teamField = p.batter_team;
-    const team = resolveTeam(teamField);
+  const sorted = players.slice().sort(function(a,b){ return a.batter.localeCompare(b.batter); });
+  const rows = sorted.map(function(p) {
+    const team = resolveTeam(p.batter_team);
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + p.batter + '" data-type="batter">' + p.batter + '</a></td>' +
       '<td>' + (team ? team.abbreviation : '—') + '</td>' +
-      '<td>' + fmtN(p.PA || p.AB) + '</td>' +
-      '<td>' + fmtN(p.AB) + '</td>' +
-      '<td class="highlight-val">' + fmt3(p.AVG) + '</td>' +
-      '<td>' + fmt3(p.OBP) + '</td>' +
-      '<td>' + fmt3(p.SLG) + '</td>' +
-      '<td class="highlight-val">' + fmt3(p.OPS) + '</td>' +
-      '<td>' + fmtN(p.H) + '</td>' +
-      '<td>' + fmtN(p['2B']) + '</td>' +
-      '<td>' + fmtN(p['3B']) + '</td>' +
-      '<td>' + fmtN(p.HR) + '</td>' +
-      '<td>' + fmtN(p.BB) + '</td>' +
-      '<td>' + fmtN(p.K) + '</td>' +
-      '<td>' + (p.K_pct != null ? fmt1(p.K_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.BB_pct != null ? fmt1(p.BB_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.SWING_pct != null ? fmt1(p.SWING_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.WHIFF_pct != null ? fmt1(p.WHIFF_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.GB_pct != null ? fmt1(p.GB_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.FB_pct != null ? fmt1(p.FB_pct)+'%' : '—') + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-    '<th style="text-align:left">Player</th><th>Team</th><th>PA</th><th>AB</th>' +
-    '<th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th>' +
-    '<th>H</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>K</th>' +
-    '<th>K%</th><th>BB%</th><th>SWING%</th><th>WHIFF%</th><th>GB%</th><th>FB%</th>' +
+    '<th style="text-align:left">Player</th><th>Team</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
 function buildPbpPitcherTable(pitchers) {
-  const rows = pitchers.map(function(p) {
+  const sorted = pitchers.slice().sort(function(a,b){ return a.pitcher.localeCompare(b.pitcher); });
+  const rows = sorted.map(function(p) {
     const team = resolveTeam(p.pitcher_team);
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + p.pitcher + '" data-type="pitcher">' + p.pitcher + '</a></td>' +
       '<td>' + (team ? team.abbreviation : '—') + '</td>' +
-      '<td>' + fmtIP(p.IP || 0) + '</td>' +
-      '<td>' + fmtN(p.BF) + '</td>' +
-      '<td class="highlight-val">' + (getSeasonERA(p.pitcher)  != null ? fmt2(getSeasonERA(p.pitcher))  : (p.ERA  != null ? fmt2(p.ERA)  : '—')) + '</td>' +
-      '<td>' +                              (getSeasonWHIP(p.pitcher) != null ? fmt2(getSeasonWHIP(p.pitcher)) : (p.WHIP != null ? fmt2(p.WHIP) : '—')) + '</td>' +
-      '<td>' + (p.BA_against != null ? fmt3(p.BA_against) : '—') + '</td>' +
-      '<td class="highlight-val">' + (p.K_pct != null ? fmt1(p.K_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.BB_pct != null ? fmt1(p.BB_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.K_BB != null ? fmt2(p.K_BB) : '—') + '</td>' +
-      '<td>' + (p.STR_pct != null ? fmt1(p.STR_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.SWING_pct != null ? fmt1(p.SWING_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.WHIFF_pct != null ? fmt1(p.WHIFF_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.EA_pct != null ? fmt1(p.EA_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.GB_pct != null ? fmt1(p.GB_pct)+'%' : '—') + '</td>' +
-      '<td>' + (p.FB_pct != null ? fmt1(p.FB_pct)+'%' : '—') + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-    '<th style="text-align:left">Pitcher</th><th>Team</th><th>IP</th><th>BF</th>' +
-    '<th>ERA</th><th>WHIP</th><th>BA AGN</th><th>K%</th><th>BB%</th><th>K/BB</th>' +
-    '<th>STR%</th><th>SWING%</th><th>WHIFF%</th><th>E+A%</th><th>GB%</th><th>FB%</th>' +
+    '<th style="text-align:left">Pitcher</th><th>Team</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
 function buildPitcherListTable(names) {
-  const rows = names.map(function(name) {
+  const sorted = names.slice().sort(function(a,b){ return a.localeCompare(b); });
+  const rows = sorted.map(function(name) {
     const pts = [];
     DATA.pitches.forEach(function(bp) {
       if (!bp.scatter) return;
       bp.scatter.forEach(function(s) { if (s.pitcher === name) pts.push(s); });
     });
-    const tot = pts.filter(function(s) { return s.outcome && s.outcome !== ''; }).length;
-    const ks  = pts.filter(function(s) { return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
-    const bbs = pts.filter(function(s) { return s.outcome === 'Walk'; }).length;
-    const str = pts.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+    const team = pts.length ? resolveTeam(pts[0].pitcher_team) : null;
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + name + '" data-type="pitcher">' + name + '</a></td>' +
-      '<td>' + tot + '</td>' +
-      '<td class="highlight-val">' + ks + '</td>' +
-      '<td>' + bbs + '</td>' +
-      '<td class="highlight-val">' + (tot > 0 ? fmt1(ks/tot*100) + '%' : '—') + '</td>' +
-      '<td>' + (tot > 0 ? fmt1(str/tot*100) + '%' : '—') + '</td>' +
+      '<td>' + (team ? team.abbreviation : '—') + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-    '<th style="text-align:left">Pitcher</th><th>Pitches</th><th>K</th><th>BB</th><th>K%</th><th>STR%</th>' +
+    '<th style="text-align:left">Pitcher</th><th>Team</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
