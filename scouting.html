@@ -742,7 +742,8 @@
           bp.scatter.forEach(function(s){ if (s.pitcher===name) sc.push(s); });
         });
         var pd = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
-        players.push({ name: name, scatter: sc, fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate });
+        players.push({ name: name, scatter: sc, fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
+          era: pd.ERA, whip: pd.WHIP, baa: pd.BA_against });
       });
       players.sort(function(a,b){ return a.name.localeCompare(b.name); });
     }
@@ -1146,7 +1147,7 @@
     var y=MT+32;
 
     // ── Key stats boxes ──────────────────────────────────────────────────
-    y=drawBoxes(d,[['AVG',f3(s.AVG)],['OBP',f3(s.OBP)],['SLG',f3(s.SLG)],['OPS',f3(s.OPS)],['HR',fN(s.HR)],['K',fN(s.K)]],y);
+    y=drawBoxes(d,[['AVG',f3(s.AVG)],['OBP',f3(s.OBP)],['SLG',f3(s.SLG)],['OPS',f3(s.OPS)],['HR',fN(s.HR)],['RBI',fN(s.RBI)]],y);
     y+=4;
 
     // ── Scout Summary — 6 highlight cards: AVG, OPS, FP Swing%, Swing%, Whiff%, Chase% ──
@@ -1231,7 +1232,7 @@
     });
     y+=cardH2+6;
 
-    // ── Plate Discipline — color-coded stat cards: PS/PA, CS%, SS%, K%, BB% ──
+    // ── Plate Discipline — pitcher-style highlight cards ──────────────────
     y=drawSec(d,'Plate Discipline',y);
     var pspa=s.pitches_seen&&pa>0?s.pitches_seen/pa:null;
     var csN=sc.filter(function(s2){return s2.outcome==='Called Strike';}).length;
@@ -1241,39 +1242,39 @@
 
     var discStats=[
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
-       color:pspa!=null?(pspa>=4.0?'#34d399':pspa>=3.5?'#FFB81C':'#f87171'):'#666',
-       note:pspa!=null?(pspa>=4.0?'Works counts — tires pitchers.':pspa>=3.5?'Average pitch count.':'First-pitch swinger.'):''},
+       color:pspa!=null?(pspa>=4.0?'#34d399':pspa>=3.5?'#FFB81C':'#f87171'):'#555',
+       note:pspa!=null?(pspa>=4.0?'Works counts deeply':pspa>=3.5?'Average pitch count':'First-pitch aggressive'):''},
       {label:'CS%',sub:'Called strike rate',val:sc.length>=5?f1(csN/sc.length*100)+'%':'—',
-       color:sc.length>=5?(csN/sc.length>=0.20?'#34d399':csN/sc.length>=0.14?'#FFB81C':'#f87171'):'#666',
-       note:sc.length>=5?(csN/sc.length>=0.20?'Gets called often — throw strikes.':csN/sc.length>=0.14?'Average called strikes.':'Rarely caught looking.'):''},
+       color:sc.length>=5?(csN/sc.length>=0.20?'#34d399':csN/sc.length>=0.14?'#FFB81C':'#f87171'):'#555',
+       note:sc.length>=5?(csN/sc.length>=0.20?'Gets called often':csN/sc.length>=0.14?'Average called strikes':'Rarely caught looking'):''},
       {label:'SS%',sub:'Swinging strike rate',val:sc.length>=5?f1(ssN/sc.length*100)+'%':'—',
-       color:sc.length>=5?(ssN/sc.length>=0.12?'#34d399':ssN/sc.length>=0.07?'#FFB81C':'#f87171'):'#666',
-       note:sc.length>=5?(ssN/sc.length>=0.12?'Misses often — use off-speed.':ssN/sc.length>=0.07?'Average swinging strikes.':'Rarely misses — very tough.'):''},
+       color:sc.length>=5?(ssN/sc.length>=0.12?'#34d399':ssN/sc.length>=0.07?'#FFB81C':'#f87171'):'#555',
+       note:sc.length>=5?(ssN/sc.length>=0.12?'Misses often — use off-speed':ssN/sc.length>=0.07?'Average swinging strikes':'Rarely misses contact'):''},
       {label:'K%',sub:'Strikeout rate',val:f1(kPct2*100)+'%',
        color:kPct2>=0.28?'#34d399':kPct2>=0.18?'#FFB81C':'#f87171',
-       note:kPct2>=0.28?'Strikeout prone — use put-away pitch.':kPct2>=0.18?'Average K rate.':'Hard to strikeout.'},
+       note:kPct2>=0.28?'Strikeout prone':kPct2>=0.18?'Average K rate':'Hard to strikeout'},
       {label:'BB%',sub:'Walk rate',val:f1(bbPct2*100)+'%',
        color:bbPct2>=0.14?'#f87171':bbPct2>=0.08?'#FFB81C':'#34d399',
-       note:bbPct2>=0.14?'Very patient — attack the zone.':bbPct2>=0.08?'Moderate patience.':'Aggressive — will chase.'},
+       note:bbPct2>=0.14?'Very patient hitter':bbPct2>=0.08?'Moderate patience':'Aggressive — will chase'},
     ];
-    var dW2=(CPW-4*5)/5,dH2=28;
+    var nDisc=discStats.length, dW2=(CPW-(nDisc-1)*4)/nDisc, dH2=26;
     discStats.forEach(function(stat,i){
-      var hx=ML+i*(dW2+5);
+      var hx=ML+i*(dW2+4);
       var cr=parseInt(stat.color.slice(1,3),16),cg=parseInt(stat.color.slice(3,5),16),cb=parseInt(stat.color.slice(5,7),16);
       d.setFillColor(13,20,40);d.rect(hx,y,dW2,dH2,'F');
       d.setFillColor(cr,cg,cb);d.rect(hx,y,dW2,2.5,'F');
-      d.setDrawColor(cr,cg,cb);d.setLineWidth(0.4);d.rect(hx,y,dW2,dH2,'S');
+      d.setDrawColor(cr,cg,cb);d.setLineWidth(0.35);d.rect(hx,y,dW2,dH2,'S');
       d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(cr,cg,cb);
       d.text(stat.label,hx+dW2/2,y+7,{align:'center'});
       d.setFont('helvetica','normal');d.setFontSize(4.2);st(d,CO.dim);
       d.text(stat.sub,hx+dW2/2,y+11,{align:'center'});
       d.setFont('helvetica','bold');d.setFontSize(10);st(d,CO.white);
-      d.text(stat.val,hx+dW2/2,y+19,{align:'center'});
+      d.text(stat.val,hx+dW2/2,y+18.5,{align:'center'});
       d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);
-      var wds2=stat.note.split(' '),ln2='',lns2=[];
-      wds2.forEach(function(w){var t=ln2?ln2+' '+w:w;if(d.getTextWidth(t)>dW2-2){lns2.push(ln2);ln2=w;}else ln2=t;});
-      if(ln2)lns2.push(ln2);
-      lns2.slice(0,2).forEach(function(l,li){d.text(l,hx+dW2/2,y+23+li*3,{align:'center'});});
+      var wds=stat.note.split(' '),ln='',lns=[];
+      wds.forEach(function(w){var t=ln?ln+' '+w:w;if(d.getTextWidth(t)>dW2-2){lns.push(ln);ln=w;}else ln=t;});
+      if(ln)lns.push(ln);
+      lns.slice(0,1).forEach(function(l){d.text(l,hx+dW2/2,y+23.5,{align:'center'});});
     });
     y+=dH2+6;
 
@@ -1334,19 +1335,18 @@
         if(pp4>=55){sRec2='STANDARD SHIFT';sColor2='#f87171';sNote2='Heavy pull — move infield to pull side.';}
         else if(pp4>=45){sRec2='SLIGHT SHIFT';sColor2='#FFB81C';sNote2='Moderate pull — shade infield pull side.';}
         else if(op4>=40){sRec2='NO SHIFT';sColor2='#34d399';sNote2='Goes oppo often — play straight up.';}
-        else{sRec2='STRAIGHT UP';sColor2='#60a5fa';sNote2='Balanced — standard alignment.';}
-        // Prominent shift badge below legend
+        else{sRec2='STRAIGHT UP';sColor2='#FFB81C';sNote2='Balanced — standard alignment.';}
         var shiftY=legy2+18;
         var shiftCr=parseInt(sColor2.slice(1,3),16),shiftCg=parseInt(sColor2.slice(3,5),16),shiftCb=parseInt(sColor2.slice(5,7),16);
-        d.setFillColor(shiftCr,shiftCg,shiftCb);d.setGState&&d.setGState(d.GState?new d.GState({opacity:0.15}):undefined);
-        d.setFillColor(13,20,40);d.rect(rightX,shiftY,chartW,14,'F');
-        d.setFillColor(shiftCr,shiftCg,shiftCb);d.rect(rightX,shiftY,chartW,2,'F');
-        d.setDrawColor(shiftCr,shiftCg,shiftCb);d.setLineWidth(0.4);d.rect(rightX,shiftY,chartW,14,'S');
-        d.setFont('helvetica','bold');d.setFontSize(9);
+        d.setFillColor(Math.round(shiftCr*0.08),Math.round(shiftCg*0.08),Math.round(shiftCb*0.08));
+        d.rect(rightX,shiftY,chartW,16,'F');
+        d.setFillColor(shiftCr,shiftCg,shiftCb);d.rect(rightX,shiftY,chartW,3,'F');
+        d.setDrawColor(shiftCr,shiftCg,shiftCb);d.setLineWidth(0.5);d.rect(rightX,shiftY,chartW,16,'S');
+        d.setFont('helvetica','bold');d.setFontSize(10);
         d.setTextColor(shiftCr,shiftCg,shiftCb);
-        d.text('SHIFT: '+sRec2,rightX+chartW/2,shiftY+8,{align:'center'});
-        d.setFont('helvetica','normal');d.setFontSize(5.5);st(d,CO.dim);
-        d.text(sNote2,rightX+chartW/2,shiftY+12,{align:'center'});
+        d.text('⬤  SHIFT: '+sRec2,rightX+chartW/2,shiftY+9.5,{align:'center'});
+        d.setFont('helvetica','normal');d.setFontSize(5.5);st(d,CO.white);
+        d.text(sNote2,rightX+chartW/2,shiftY+13.5,{align:'center'});
       }
       y+=3+chartH+26;
     }
@@ -1381,10 +1381,14 @@
     drawBg(d);drawHdr(d,player.name,'PITCHER',team);
     var y=MT+32;
 
-    // Key stat boxes — replace ZN% with FPS%
-    var fpsVal = fpsPct!=null ? f1(fpsPct)+'%' : '—';
-    y=drawBoxes(d,[['PITCHES',String(tot)],['K',String(ks)],['BB',String(bbs)],
-      ['K%',f1(xp(ks,tot))+'%'],['STR%',f1(xp(str,tot))+'%'],['FPS%',fpsVal]],y);
+    // Key stat boxes — ERA, WHIP, BAA
+    var eraVal  = player.era  != null ? f1(player.era)   : (tot>0?'—':'—');
+    var whipVal = player.whip != null ? f1(player.whip)  : (tot>0?f1(xp(bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length,tot/3)):'—');
+    var baaVal  = player.baa  != null ? f3(player.baa)   : '—';
+    var kPctVal = f1(xp(ks,tot))+'%';
+    var strVal  = f1(xp(str,tot))+'%';
+    var fpsVal  = fpsPct!=null ? f1(fpsPct)+'%' : '—';
+    y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['BAA',baaVal],['K%',kPctVal],['STR%',strVal],['FPS%',fpsVal]],y);
     y+=4;
 
     // Scouting Summary — highlighted area cards
