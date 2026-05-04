@@ -19,7 +19,7 @@ const AUTH = {
 
   init: function() {
     // Load the saved session (survives page refreshes)
-    const saved = sessionStorage.getItem('dd_user');
+    const saved = localStorage.getItem('dd_user');
     if (saved) {
       try { AUTH._user = JSON.parse(saved); } catch(e) {}
     }
@@ -55,12 +55,12 @@ const AUTH = {
     }
 
     AUTH._user = { name: payload.given_name || payload.name, email: email, picture: payload.picture };
-    sessionStorage.setItem('dd_user', JSON.stringify(AUTH._user));
+    localStorage.setItem('dd_user', JSON.stringify(AUTH._user));
     window.location.href = getBase() + 'index.html';
   },
 
   signOut: function() {
-    sessionStorage.removeItem('dd_user');
+    localStorage.removeItem('dd_user');
     AUTH._user = null;
     if (typeof google !== 'undefined') google.accounts.id.disableAutoSelect();
     window.location.href = getBase() + 'login.html';

@@ -151,8 +151,7 @@
           email:   email,
           picture: payload.picture || ""
         };
-        sessionStorage.setItem("dd_user", JSON.stringify(user));
-        // Small delay lets sessionStorage flush on mobile Safari/Chrome before redirect
+        localStorage.setItem("dd_user", JSON.stringify(user));
         setTimeout(function() { window.location.replace("index.html"); }, 100);
 
       } catch(e) {
@@ -163,7 +162,7 @@
     }
 
     try {
-      var saved = sessionStorage.getItem("dd_user");
+      var saved = localStorage.getItem("dd_user");
       if (saved && JSON.parse(saved).email) {
         window.location.replace("index.html");
       }
