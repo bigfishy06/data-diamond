@@ -1181,47 +1181,53 @@
       if(pbp.WHIFF_pct!=null)whiffPct=pbp.WHIFF_pct;
     }
 
-    function hCard(label,value,color,note){return{label:label,value:value,color:color,note:note};}
+    function hCard(label,value,color,note,sub){return{label:label,value:value,color:color,note:note,sub:sub||''};}
     var hl=[];
     var avgC=avg>=0.300?'#34d399':avg>=0.240?'#FFB81C':'#f87171';
-    hl.push(hCard(avg>=0.300?'STRONG HITTER':avg>=0.240?'AVG HITTER':'WEAK HITTER',f3(avg)+' AVG',avgC,
-      avg>=0.300?'Dangerous — no easy pitches.':avg>=0.240?'Respect ability, mix locations.':'Challenge early in count.'));
+    hl.push(hCard(avg>=0.300?'STRONG HITTER':avg>=0.240?'AVG HITTER':'WEAK HITTER',f3(avg),avgC,
+      avg>=0.300?'Dangerous — no easy pitches.':avg>=0.240?'Respect ability, mix locations.':'Challenge early in count.','Batting Average'));
     var opsC=ops>=0.850?'#f87171':ops>=0.720?'#FFB81C':'#34d399';
-    hl.push(hCard(ops>=0.850?'HIGH DANGER':ops>=0.720?'MODERATE':'LOW DANGER',f3(ops)+' OPS',opsC,
-      ops>=0.850?'Use corners — no easy pitches.':ops>=0.720?'No free gifts in the zone.':'Attack zone aggressively.'));
+    hl.push(hCard(ops>=0.850?'HIGH DANGER':ops>=0.720?'MODERATE':'LOW DANGER',f3(ops),opsC,
+      ops>=0.850?'Use corners — no easy pitches.':ops>=0.720?'No free gifts in the zone.':'Attack zone aggressively.','OPS (OBP + SLG)'));
     var fpSwC=fpSwingPct!=null?(fpSwingPct>=55?'#f87171':fpSwingPct>=40?'#FFB81C':'#34d399'):'#666';
     hl.push(hCard(fpSwingPct!=null?(fpSwingPct>=55?'AGGRESSIVE FP':fpSwingPct>=40?'AVG FP SWING':'PASSIVE FP'):'FP SWING',
       fpSwingPct!=null?f1(fpSwingPct)+'%':'—',fpSwC,
-      fpSwingPct!=null?(fpSwingPct>=55?'Attacks first pitch — throw strikes.':fpSwingPct>=40?'Sometimes swings early.':'Takes pitches — work ahead.'):'No data.'));
+      fpSwingPct!=null?(fpSwingPct>=55?'Attacks first pitch — throw strikes.':fpSwingPct>=40?'Sometimes swings early.':'Takes pitches — work ahead.'):'No data.','1st Pitch Swing %'));
     var swC=swingPct!=null?(swingPct>=52?'#f87171':swingPct>=42?'#FFB81C':'#34d399'):'#666';
     hl.push(hCard(swingPct!=null?(swingPct>=52?'FREE SWINGER':swingPct>=42?'AVG SWINGER':'PASSIVE'):'SWING %',
       swingPct!=null?f1(swingPct)+'%':'—',swC,
-      swingPct!=null?(swingPct>=52?'Swings often — use off-speed away.':swingPct>=42?'Mix pitches in and out.':'Be careful — very selective.'):'No data.'));
+      swingPct!=null?(swingPct>=52?'Swings often — use off-speed away.':swingPct>=42?'Mix pitches in and out.':'Be careful — very selective.'):'No data.','Overall Swing %'));
     var whC=whiffPct!=null?(whiffPct>=30?'#34d399':whiffPct>=20?'#FFB81C':'#f87171'):'#666';
     hl.push(hCard(whiffPct!=null?(whiffPct>=30?'HIGH WHIFF':whiffPct>=20?'AVG WHIFF':'LOW WHIFF'):'WHIFF %',
       whiffPct!=null?f1(whiffPct)+'%':'—',whC,
-      whiffPct!=null?(whiffPct>=30?'Misses often — use breaking stuff.':whiffPct>=20?'Some swing and miss ability.':'Makes contact well — be precise.'):'No data.'));
+      whiffPct!=null?(whiffPct>=30?'Misses often — use breaking stuff.':whiffPct>=20?'Some swing and miss ability.':'Makes contact well — be precise.'):'No data.','Whiff % on Swings'));
     var chC=chasePct!=null?(chasePct>=35?'#34d399':chasePct>=22?'#FFB81C':'#f87171'):'#666';
     hl.push(hCard(chasePct!=null?(chasePct>=35?'CHASES OFTEN':chasePct>=22?'SOME CHASE':'DISCIPLINED'):'CHASE %',
       chasePct!=null?f1(chasePct)+'%':'—',chC,
-      chasePct!=null?(chasePct>=35?'Use waste pitches — he bites.':chasePct>=22?'Occasional chase — mix off-speed.':'Does not chase — stay in zone.'):'No data.'));
+      chasePct!=null?(chasePct>=35?'Use waste pitches — he bites.':chasePct>=22?'Occasional chase — mix off-speed.':'Does not chase — stay in zone.'):'No data.','Chase % (out of zone)'));
 
-    var cardW2=(CPW-5*4)/6,cardH2=24;
+    var cardW2=(CPW-5*4)/6,cardH2=28;
     hl.forEach(function(h,i){
       var hx=ML+i*(cardW2+4);
       d.setFillColor(13,20,40);d.rect(hx,y,cardW2,cardH2,'F');
       var cr=parseInt(h.color.slice(1,3),16),cg=parseInt(h.color.slice(3,5),16),cb=parseInt(h.color.slice(5,7),16);
       d.setFillColor(cr,cg,cb);d.rect(hx,y,cardW2,2.5,'F');
       d.setDrawColor(cr,cg,cb);d.setLineWidth(0.3);d.rect(hx,y,cardW2,cardH2,'S');
-      d.setFont('helvetica','bold');d.setFontSize(4.5);d.setTextColor(cr,cg,cb);
-      d.text(h.label,hx+cardW2/2,y+6,{align:'center'});
+      // Stat name (sublabel)
+      d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);
+      d.text(h.sub||'',hx+cardW2/2,y+6,{align:'center'});
+      // Value (large)
       d.setFont('helvetica','bold');d.setFontSize(9);st(d,CO.white);
       d.text(h.value,hx+cardW2/2,y+13,{align:'center'});
-      d.setFont('helvetica','normal');d.setFontSize(4.2);st(d,CO.dim);
+      // Label (colored)
+      d.setFont('helvetica','bold');d.setFontSize(4.5);d.setTextColor(cr,cg,cb);
+      d.text(h.label,hx+cardW2/2,y+18,{align:'center'});
+      // Note
+      d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);
       var wds=h.note.split(' '),ln='',lns=[];
       wds.forEach(function(w){var t=ln?ln+' '+w:w;if(d.getTextWidth(t)>cardW2-2){lns.push(ln);ln=w;}else ln=t;});
       if(ln)lns.push(ln);
-      lns.slice(0,2).forEach(function(l,li){d.text(l,hx+cardW2/2,y+17.5+li*3.5,{align:'center'});});
+      lns.slice(0,2).forEach(function(l,li){d.text(l,hx+cardW2/2,y+22+li*3,{align:'center'});});
     });
     y+=cardH2+6;
 
@@ -1324,14 +1330,23 @@
           d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.white);
           d.text(seg.label+': '+seg.pct+'%',lx+6,ly);
         });
-        var sRec2,sColor2;
-        if(pp4>=55){sRec2='STANDARD SHIFT';sColor2='#f87171';}
-        else if(pp4>=45){sRec2='SLIGHT SHIFT';sColor2='#FFB81C';}
-        else if(op4>=40){sRec2='NO SHIFT';sColor2='#34d399';}
-        else{sRec2='STRAIGHT UP';sColor2='#60a5fa';}
-        d.setFont('helvetica','bold');d.setFontSize(7);
-        d.setTextColor(parseInt(sColor2.slice(1,3),16),parseInt(sColor2.slice(3,5),16),parseInt(sColor2.slice(5,7),16));
-        d.text('Shift: '+sRec2,rightX+chartW/2,legy2+16,{align:'center'});
+        var sRec2,sColor2,sNote2;
+        if(pp4>=55){sRec2='STANDARD SHIFT';sColor2='#f87171';sNote2='Heavy pull — move infield to pull side.';}
+        else if(pp4>=45){sRec2='SLIGHT SHIFT';sColor2='#FFB81C';sNote2='Moderate pull — shade infield pull side.';}
+        else if(op4>=40){sRec2='NO SHIFT';sColor2='#34d399';sNote2='Goes oppo often — play straight up.';}
+        else{sRec2='STRAIGHT UP';sColor2='#60a5fa';sNote2='Balanced — standard alignment.';}
+        // Prominent shift badge below legend
+        var shiftY=legy2+18;
+        var shiftCr=parseInt(sColor2.slice(1,3),16),shiftCg=parseInt(sColor2.slice(3,5),16),shiftCb=parseInt(sColor2.slice(5,7),16);
+        d.setFillColor(shiftCr,shiftCg,shiftCb);d.setGState&&d.setGState(d.GState?new d.GState({opacity:0.15}):undefined);
+        d.setFillColor(13,20,40);d.rect(rightX,shiftY,chartW,14,'F');
+        d.setFillColor(shiftCr,shiftCg,shiftCb);d.rect(rightX,shiftY,chartW,2,'F');
+        d.setDrawColor(shiftCr,shiftCg,shiftCb);d.setLineWidth(0.4);d.rect(rightX,shiftY,chartW,14,'S');
+        d.setFont('helvetica','bold');d.setFontSize(9);
+        d.setTextColor(shiftCr,shiftCg,shiftCb);
+        d.text('SHIFT: '+sRec2,rightX+chartW/2,shiftY+8,{align:'center'});
+        d.setFont('helvetica','normal');d.setFontSize(5.5);st(d,CO.dim);
+        d.text(sNote2,rightX+chartW/2,shiftY+12,{align:'center'});
       }
       y+=3+chartH+26;
     }
@@ -1476,10 +1491,9 @@
     var sT=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];});
     if(sT.length){
       y=drawSec(d,'Pitch Arsenal — What He Throws and How Effective Each Pitch Is',y);
-      var atH=['PITCH TYPE','# THROWN','USAGE %','STRIKEOUTS','HITS ALLOWED','STRIKE %','BALL %'];
-      var atL=['Name of pitch','How many thrown','% of all pitches','K on this pitch','Hits on this pitch','Strikes thrown','Balls thrown'];
-      var atW=[38,16,18,22,22,18,18];
-      // draw header with sub-labels
+      var atH=['PITCH TYPE','USAGE %','STRIKE %','BALL %','WHIFF %'];
+      var atL=['Name of pitch','% of all pitches','Strike rate','Ball rate','Miss rate on swings'];
+      var atW=[50,28,28,28,28];
       sf(d,CO.navy2);d.rect(ML,y,CPW,9,'F');
       sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+9,ML+CPW,y+9);
       var ax=ML;
@@ -1490,20 +1504,19 @@
       });
       var atR=sT.map(function(e){
         var t=e[0],cnt=e[1],tp=sc.filter(function(s){return(s.pitch_type||s.type||'Unknown')===t;});
-        var tk=tp.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
-        var th=tp.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
         var ts=tp.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
         var tb=tp.filter(function(s){return s.outcome==='Ball';}).length;
-        return[t,String(cnt),f1(xp(cnt,tot))+'%',String(tk),String(th),f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%'];
+        var tSwings=tp.filter(function(s){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging'].includes(s.outcome);}).length;
+        var tWhiff=tp.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Strikeout Swinging';}).length;
+        return[t,f1(xp(cnt,tot))+'%',f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%',tSwings>0?f1(tWhiff/tSwings*100)+'%':'—'];
       });
       var ar=y+9;
       atR.forEach(function(row,ri){
         sf(d,ri%2===0?CO.navy3:CO.navy2);d.rect(ML,ar,CPW,7,'F');
         var bx2=ML;
         row.forEach(function(v,vi){
-          var isBold=vi<=2;
-          d.setFont('helvetica',isBold?'bold':'normal');d.setFontSize(vi===0?6.5:7);
-          st(d,vi===0?CO.white:vi===1||vi===2?CO.gold:CO.dim);
+          d.setFont('helvetica',vi<=1?'bold':'normal');d.setFontSize(vi===0?6.5:7);
+          st(d,vi===0?CO.white:vi===1?CO.gold:CO.dim);
           d.text(v,bx2+atW[vi]/2,ar+4.5,{align:'center'});bx2+=atW[vi];
         });
         ar+=7;
@@ -1511,7 +1524,7 @@
       sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(ML,y+9,CPW,atR.length*7,'S');
       y=ar+3;
       d.setFont('helvetica','italic');d.setFontSize(6);st(d,CO.dim);
-      d.text('Tip: Pitches with high Strike % are his best pitches. Pitches with high Ball % are pitches to lay off.',ML,y);
+      d.text('Tip: High Strike % = best pitch. High Ball % = lay off. High Whiff % = chase this pitch.',ML,y);
       y+=7;
     }
 
@@ -1539,9 +1552,9 @@
     y+=5;
     splitData.forEach(function(sd2,i){
       if(!sd2.sub.length)return;
-      var xOff=ML+i*(iw+gap);var cw=iw/5;
-      var headers=['PITCHES','K','BB','STRIKE %','FPS%'];
-      var hdesc=['Tracked','Strikeouts','Walks','Strike rate','1st pitch strike'];
+      var xOff=ML+i*(iw+gap);var cw=iw/2;
+      var headers=['STRIKE %','FPS%'];
+      var hdesc=['Strike rate','1st pitch strike %'];
       var fpSplit=sd2.sub.filter(function(s,i){
         if(i===0)return true;
         var prev=sd2.sub[i-1];
@@ -1549,25 +1562,24 @@
       });
       var fpStrSplit=fpSplit.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
       var fpsPctSplit=fpSplit.length>=3?f1(fpStrSplit/fpSplit.length*100)+'%':'—';
-      var row=[sd2.sub.length,sd2.sk,sd2.sb,f1(xp(sd2.ss,sd2.sub.length))+'%',fpsPctSplit].map(String);
+      var row=[f1(xp(sd2.ss,sd2.sub.length))+'%',fpsPctSplit];
       sf(d,CO.navy2);d.rect(xOff,y,iw,9,'F');
       sd(d,CO.gold);d.setLineWidth(0.3);d.line(xOff,y+9,xOff+iw,y+9);
       var cx4=xOff;
       headers.forEach(function(h,hi){
-        d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.gold);d.text(h,cx4+cw/2,y+3.5,{align:'center'});
-        d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);d.text(hdesc[hi],cx4+cw/2,y+7.5,{align:'center'});
+        d.setFont('helvetica','bold');d.setFontSize(6);st(d,CO.gold);d.text(h,cx4+cw/2,y+3.5,{align:'center'});
+        d.setFont('helvetica','normal');d.setFontSize(4.5);st(d,CO.dim);d.text(hdesc[hi],cx4+cw/2,y+7.5,{align:'center'});
         cx4+=cw;
       });
-      sf(d,CO.navy3);d.rect(xOff,y+9,iw,7,'F');
+      sf(d,CO.navy3);d.rect(xOff,y+9,iw,8,'F');
       cx4=xOff;
-      row.forEach(function(v,vi){
-        d.setFont('helvetica',vi<=2?'bold':'normal');d.setFontSize(7);
-        st(d,vi<=2?CO.white:CO.dim);
-        d.text(v,cx4+cw/2,y+14,{align:'center'});cx4+=cw;
+      row.forEach(function(v){
+        d.setFont('helvetica','bold');d.setFontSize(9);st(d,CO.white);
+        d.text(v,cx4+cw/2,y+15,{align:'center'});cx4+=cw;
       });
-      sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(xOff,y,iw,16,'S');
+      sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(xOff,y,iw,17,'S');
     });
-    y+=20;
+    y+=21;
     splitData.forEach(function(sd2,i){
       if(!sd2.subXY.length)return;
       var xOff=ML+i*(iw+gap);
