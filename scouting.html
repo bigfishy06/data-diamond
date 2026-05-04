@@ -708,6 +708,27 @@
     if (selTeam) renderPlayerList();
   });
 
+  function resolveTeam(val) {
+    if (!val) return null;
+    var v = String(val).trim().toLowerCase();
+    return TEAMS_SC.find(function(t) {
+      return t.id === v ||
+             t.abbr.toLowerCase() === v ||
+             t.name.toLowerCase() === v ||
+             v.indexOf(t.name.toLowerCase()) !== -1 ||
+             t.name.toLowerCase().indexOf(v) !== -1;
+    }) || null;
+  }
+
+  function getPitchPlayer(batterName) {
+    var sc = [];
+    DATA.pitches.forEach(function(bp) {
+      if (!bp.scatter) return;
+      bp.scatter.forEach(function(s) { if (s.batter === batterName) sc.push(s); });
+    });
+    return sc.length ? { scatter: sc } : null;
+  }
+
   function f3(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(3).replace('0.','.'); }
   function f1(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(1); }
   function fN(v){ if(v==null||isNaN(v)) return '—'; return String(Math.round(v)); }
@@ -739,7 +760,12 @@
         var sc = [];
         DATA.pitches.forEach(function(bp){
           if (!bp.scatter) return;
-          bp.scatter.forEach(function(s){ if (s.pitcher===name) sc.push(s); });
+          bp.scatter.forEach(function(s){
+            if (s.pitcher===name) {
+              var pt = resolveTeam(s.pitcher_team);
+              if (pt && pt.id === selTeam) sc.push(s);
+            }
+          });
         });
         var pd = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
         players.push({ name: name, scatter: sc, fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
@@ -851,22 +877,22 @@
     d.text(name.toUpperCase(),ML+38,MT+12);
     d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
     d.text(role+'  •  '+team.name+'  •  CBL 2025',ML+38,MT+21);
-    // Logo — diamond shape like website
-    var lx=ML+CPW-18,ly=MT+13,ls=8;
-    // Outer diamond
-    sd(d,CO.gold);d.setLineWidth(0.8);
-    d.lines([[ls,ls],[-ls,ls],[-ls,-ls],[ls,-ls]],lx,ly-ls,[1,1],'S',true);
-    // Inner diamond (smaller, filled slightly)
-    var si=ls*0.45;
-    sf(d,CO.navy2);
-    d.lines([[si,si],[-si,si],[-si,-si],[si,-si]],lx,ly-si,[1,1],'FD',true);
-    sd(d,CO.gold);d.setLineWidth(0.5);
+    // Logo — matches site SVG (viewBox 40x40 diamond-in-diamond + dot)
+    var lx=ML+CPW-22, ly=MT+13;
+    var lo=8, li=lo*0.6;
+    // Outer diamond — gold stroke only
+    sd(d,CO.gold); d.setLineWidth(0.7);
+    d.lines([[lo,lo],[-lo,lo],[-lo,-lo],[lo,-lo]], lx, ly-lo, [1,1], 'S', true);
+    // Inner diamond — navy fill + gold stroke
+    sf(d,CO.navy2); sd(d,CO.gold); d.setLineWidth(0.4);
+    d.lines([[li,li],[-li,li],[-li,-li],[li,-li]], lx, ly-li, [1,1], 'FD', true);
     // Center dot
-    sf(d,CO.gold);d.circle(lx,ly,1.5,'F');
-    // Logo text
-    d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.white);
-    d.text('Data',lx+11,ly-3);
-    st(d,CO.gold);d.text('Diamond',lx+11,ly+4);
+    sf(d,CO.gold); d.circle(lx, ly, 1.4, 'F');
+    // Logo text stacked right of diamond
+    d.setFont('helvetica','bold'); d.setFontSize(7.5); st(d,CO.white);
+    d.text('Data', lx+lo+3, ly-1.5);
+    st(d,CO.gold);
+    d.text('Diamond', lx+lo+3, ly+5);
     sd(d,CO.gold);d.setLineWidth(0.4);d.line(ML,MT+27,ML+CPW,MT+27);
   }
   function drawBoxes(d,stats,y){
