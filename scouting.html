@@ -855,11 +855,11 @@
     var lx=ML+CPW-18,ly=MT+13,ls=8;
     // Outer diamond
     sd(d,CO.gold);d.setLineWidth(0.8);
-    d.lines([[ls,ls],[-ls,ls],[-ls,-ls],[ls,-ls]],lx,ly-ls,[1,1],true);
+    d.lines([[ls,ls],[-ls,ls],[-ls,-ls],[ls,-ls]],lx,ly-ls,[1,1],'S',true);
     // Inner diamond (smaller, filled slightly)
     var si=ls*0.45;
     sf(d,CO.navy2);
-    d.lines([[si,si],[-si,si],[-si,-si],[si,-si]],lx,ly-si,[1,1],'FD');
+    d.lines([[si,si],[-si,si],[-si,-si],[si,-si]],lx,ly-si,[1,1],'FD',true);
     sd(d,CO.gold);d.setLineWidth(0.5);
     // Center dot
     sf(d,CO.gold);d.circle(lx,ly,1.5,'F');
