@@ -843,15 +843,30 @@
     var tc=hx(team.color==='#888888'?'#666666':team.color);
     sf(d,CO.navy2);d.roundedRect(ML,MT,CPW,26,3,3,'F');
     d.setFillColor(tc[0],tc[1],tc[2]);d.roundedRect(ML,MT,4,26,2,2,'F');
+    // Team abbr
     d.setFont('helvetica','bold');d.setFontSize(20);d.setTextColor(tc[0],tc[1],tc[2]);
     d.text(team.abbr,ML+10,MT+17);
+    // Player name & role
     d.setFont('helvetica','bold');d.setFontSize(15);st(d,CO.white);
     d.text(name.toUpperCase(),ML+38,MT+12);
     d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
     d.text(role+'  •  '+team.name+'  •  CBL 2025',ML+38,MT+21);
-    d.setFont('helvetica','bold');d.setFontSize(9);st(d,CO.white);
-    d.text('DATA',ML+CPW-22,MT+10,{align:'right'});
-    st(d,CO.gold);d.text('DIAMOND',ML+CPW-2,MT+17,{align:'right'});
+    // Logo — diamond shape like website
+    var lx=ML+CPW-18,ly=MT+13,ls=8;
+    // Outer diamond
+    sd(d,CO.gold);d.setLineWidth(0.8);
+    d.lines([[ls,ls],[-ls,ls],[-ls,-ls],[ls,-ls]],lx,ly-ls,1,1,true);
+    // Inner diamond (smaller, filled slightly)
+    var si=ls*0.45;
+    sf(d,[255,184,28,0.12]);
+    d.lines([[si,si],[-si,si],[-si,-si],[si,-si]],lx,ly-si,1,1,'FD');
+    sd(d,CO.gold);d.setLineWidth(0.5);
+    // Center dot
+    sf(d,CO.gold);d.circle(lx,ly,1.5,'F');
+    // Logo text
+    d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.white);
+    d.text('Data',lx+11,ly-3);
+    st(d,CO.gold);d.text('Diamond',lx+11,ly+4);
     sd(d,CO.gold);d.setLineWidth(0.4);d.line(ML,MT+27,ML+CPW,MT+27);
   }
   function drawBoxes(d,stats,y){
@@ -867,10 +882,10 @@
     return y+18;
   }
   function drawSec(d,text,y){
-    d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
-    d.text('-- '+text.toUpperCase(),ML,y);
-    sd(d,CO.navy3);d.setLineWidth(0.3);d.line(ML+32,y-1,ML+CPW,y-1);
-    return y+5;
+    d.setFont('helvetica','bold');d.setFontSize(7.5);st(d,CO.gold);
+    d.text(text.toUpperCase(),ML,y);
+    sd(d,CO.navy3);d.setLineWidth(0.3);d.line(ML,y+2,ML+CPW,y+2);
+    return y+7;
   }
   function drawTbl(d,headers,rows,colW,y,hlCols){
     hlCols=hlCols||[];
@@ -1184,30 +1199,24 @@
 
     function hCard(label,value,color,note,sub){return{label:label,value:value,color:color,note:note,sub:sub||''};}
     var hl=[];
-    var avgC=avg>=0.300?'#34d399':avg>=0.240?'#FFB81C':'#f87171';
-    hl.push(hCard(avg>=0.300?'STRONG HITTER':avg>=0.240?'AVG HITTER':'WEAK HITTER',f3(avg),avgC,
-      avg>=0.300?'Dangerous — no easy pitches.':avg>=0.240?'Respect ability, mix locations.':'Challenge early in count.','Batting Average'));
-    var opsC=ops>=0.850?'#f87171':ops>=0.720?'#FFB81C':'#34d399';
-    hl.push(hCard(ops>=0.850?'HIGH DANGER':ops>=0.720?'MODERATE':'LOW DANGER',f3(ops),opsC,
-      ops>=0.850?'Use corners — no easy pitches.':ops>=0.720?'No free gifts in the zone.':'Attack zone aggressively.','OPS (OBP + SLG)'));
     var fpSwC=fpSwingPct!=null?(fpSwingPct>=55?'#f87171':fpSwingPct>=40?'#FFB81C':'#34d399'):'#666';
-    hl.push(hCard(fpSwingPct!=null?(fpSwingPct>=55?'AGGRESSIVE FP':fpSwingPct>=40?'AVG FP SWING':'PASSIVE FP'):'FP SWING',
+    hl.push(hCard(fpSwingPct!=null?(fpSwingPct>=55?'AGGRESSIVE':'PASSIVE'):'FP SWING %',
       fpSwingPct!=null?f1(fpSwingPct)+'%':'—',fpSwC,
       fpSwingPct!=null?(fpSwingPct>=55?'Attacks first pitch — throw strikes.':fpSwingPct>=40?'Sometimes swings early.':'Takes pitches — work ahead.'):'No data.','1st Pitch Swing %'));
     var swC=swingPct!=null?(swingPct>=52?'#f87171':swingPct>=42?'#FFB81C':'#34d399'):'#666';
-    hl.push(hCard(swingPct!=null?(swingPct>=52?'FREE SWINGER':swingPct>=42?'AVG SWINGER':'PASSIVE'):'SWING %',
+    hl.push(hCard(swingPct!=null?(swingPct>=52?'FREE SWINGER':swingPct>=42?'MODERATE':'PASSIVE'):'SWING %',
       swingPct!=null?f1(swingPct)+'%':'—',swC,
       swingPct!=null?(swingPct>=52?'Swings often — use off-speed away.':swingPct>=42?'Mix pitches in and out.':'Be careful — very selective.'):'No data.','Overall Swing %'));
     var whC=whiffPct!=null?(whiffPct>=30?'#34d399':whiffPct>=20?'#FFB81C':'#f87171'):'#666';
-    hl.push(hCard(whiffPct!=null?(whiffPct>=30?'HIGH WHIFF':whiffPct>=20?'AVG WHIFF':'LOW WHIFF'):'WHIFF %',
+    hl.push(hCard(whiffPct!=null?(whiffPct>=30?'HIGH WHIFF':whiffPct>=20?'MODERATE':'LOW WHIFF'):'WHIFF %',
       whiffPct!=null?f1(whiffPct)+'%':'—',whC,
-      whiffPct!=null?(whiffPct>=30?'Misses often — use breaking stuff.':whiffPct>=20?'Some swing and miss ability.':'Makes contact well — be precise.'):'No data.','Whiff % on Swings'));
+      whiffPct!=null?(whiffPct>=30?'Misses often — use breaking stuff.':whiffPct>=20?'Some swing and miss.':'Makes contact — be precise.'):'No data.','Whiff % on Swings'));
     var chC=chasePct!=null?(chasePct>=35?'#34d399':chasePct>=22?'#FFB81C':'#f87171'):'#666';
     hl.push(hCard(chasePct!=null?(chasePct>=35?'CHASES OFTEN':chasePct>=22?'SOME CHASE':'DISCIPLINED'):'CHASE %',
       chasePct!=null?f1(chasePct)+'%':'—',chC,
-      chasePct!=null?(chasePct>=35?'Use waste pitches — he bites.':chasePct>=22?'Occasional chase — mix off-speed.':'Does not chase — stay in zone.'):'No data.','Chase % (out of zone)'));
+      chasePct!=null?(chasePct>=35?'Use waste pitches — he bites.':chasePct>=22?'Occasional chase — mix.':'Does not chase — stay in zone.'):'No data.','Chase % (out of zone)'));
 
-    var cardW2=(CPW-5*4)/6,cardH2=28;
+    var cardW2=(CPW-3*4)/4,cardH2=28;
     hl.forEach(function(h,i){
       var hx=ML+i*(cardW2+4);
       d.setFillColor(13,20,40);d.rect(hx,y,cardW2,cardH2,'F');
@@ -1344,7 +1353,7 @@
         d.setDrawColor(shiftCr,shiftCg,shiftCb);d.setLineWidth(0.5);d.rect(rightX,shiftY,chartW,16,'S');
         d.setFont('helvetica','bold');d.setFontSize(10);
         d.setTextColor(shiftCr,shiftCg,shiftCb);
-        d.text('⬤  SHIFT: '+sRec2,rightX+chartW/2,shiftY+9.5,{align:'center'});
+        d.text('SHIFT: '+sRec2,rightX+chartW/2,shiftY+9.5,{align:'center'});
         d.setFont('helvetica','normal');d.setFontSize(5.5);st(d,CO.white);
         d.text(sNote2,rightX+chartW/2,shiftY+13.5,{align:'center'});
       }
