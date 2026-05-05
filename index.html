@@ -435,21 +435,16 @@
           </div>
         </div>
         <div class="gp-btns">
-          <button class="gp-btn" onclick="togglePicker(this,'pitcher-scouting','${opp}',${idx})">
-            <span class="gp-btn-icon"></span>
-            <span class="gp-btn-label">OPP PITCHERS</span>
+          <button class="gp-btn" onclick="genOppPitchersPDF('${opp}',this)">
+            <span class="gp-btn-label">OPP PITCHERS PDF</span>
           </button>
-          <button class="gp-btn" onclick="togglePicker(this,'batter-scouting','${opp}',${idx})">
-            <span class="gp-btn-icon"></span>
-            <span class="gp-btn-label">OPP BATTERS</span>
+          <button class="gp-btn" onclick="genOppBattersPDF('${opp}',this)">
+            <span class="gp-btn-label">OPP BATTERS PDF</span>
           </button>
           <button class="gp-btn" onclick="openFielderSheet('${opp}',this)">
-            <span class="gp-btn-icon"></span>
             <span class="gp-btn-label">FIELDER SHEET</span>
           </button>
         </div>
-        <div class="gp-picker" id="picker-pitcher-${idx}"></div>
-        <div class="gp-picker" id="picker-batter-${idx}"></div>
       </div>`;
     }).join('');
   }
@@ -755,6 +750,293 @@
     var result = null;
     DATA.pitches.forEach(function(bp) { if (bp.batter === name) result = bp; });
     return result;
+  }
+
+  function ensureJsPDF(cb) {
+    if (window.jspdf) { setTimeout(cb, 50); return; }
+    var sc = document.createElement('script');
+    sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    sc.onload = function() { setTimeout(cb, 50); };
+    document.head.appendChild(sc);
+  }
+
+  // ── OPP BATTERS PDF ───────────────────────────────────────────────────
+  function genOppBattersPDF(oppName, btn) {
+    btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…';
+    ensureJsPDF(function() {
+      var oppT = resolveTeam(oppName);
+      var team = oppT ? { abbr: oppT.abbreviation, name: oppT.name, color: oppT.primaryColor }
+                      : { abbr: oppName.slice(0,3).toUpperCase(), name: oppName, color: '#888888' };
+
+      var batters = DATA.summary.filter(function(p) {
+        var t = resolveTeam(p.batter_team); return t && t.name === oppName;
+      }).sort(function(a,b){ return (b.AB||0)-(a.AB||0); });
+
+      if (!batters.length) {
+        btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF'; return;
+      }
+
+      var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4' });
+      var tc = hx(team.color === '#888888' ? '#666666' : team.color);
+
+      // Cover header
+      function drawPageHdr(title) {
+        drawBg(d);
+        sf(d,CO.navy2); d.roundedRect(ML,MT,CPW,20,3,3,'F');
+        d.setFillColor(tc[0],tc[1],tc[2]); d.roundedRect(ML,MT,4,20,2,2,'F');
+        d.setFont('helvetica','bold'); d.setFontSize(11); d.setTextColor(tc[0],tc[1],tc[2]);
+        d.text(team.abbr, ML+10, MT+13);
+        d.setFont('helvetica','bold'); d.setFontSize(13); st(d,CO.white);
+        d.text(title.toUpperCase(), ML+30, MT+13);
+        st(d,CO.gold);
+        d.setFont('helvetica','normal'); d.setFontSize(7);
+        d.text('Data Diamond  —  CBL 2025', ML+CPW, MT+13, {align:'right'});
+        sd(d,CO.gold); d.setLineWidth(0.4); d.line(ML,MT+21,ML+CPW,MT+21);
+        return MT+26;
+      }
+
+      var firstPage = true;
+      batters.forEach(function(s) {
+        var sc = (function(){
+          var nl = s.batter.toLowerCase(), arr = [];
+          DATA.pitches.forEach(function(bp){ if(bp.scatter) bp.scatter.forEach(function(p){ if(p.batter&&p.batter.toLowerCase()===nl) arr.push(p); }); });
+          return arr;
+        })();
+        var pbp = DATA.pbpBatters.find(function(p){ return p.batter === s.batter; }) || null;
+        var iblS = ((DATA.iblHistory[s.batter]||[]).filter(function(r){return r.AB>0;}))[0]||null;
+
+        if (!firstPage) { d.addPage(); }
+        firstPage = false;
+        var y = drawPageHdr(team.name + ' — Opposing Batters');
+
+        // Name bar
+        sf(d,CO.navy3); d.rect(ML,y,CPW,10,'F');
+        d.setFont('helvetica','bold'); d.setFontSize(12); st(d,CO.white);
+        d.text(s.batter.toUpperCase(), ML+4, y+7);
+        // Bats
+        var batSc = sc.filter(function(p){ return p.batter_side; });
+        var rCnt = batSc.filter(function(p){ return p.batter_side==='R'; }).length;
+        var lCnt = batSc.filter(function(p){ return p.batter_side==='L'; }).length;
+        var batsStr = batSc.length ? (rCnt/batSc.length>=0.8?'R':lCnt/batSc.length>=0.8?'L':'S') : '?';
+        d.setFont('helvetica','normal'); d.setFontSize(8); st(d,CO.dim);
+        d.text('BATS: '+batsStr, ML+CPW-2, y+7, {align:'right'});
+        y += 13;
+
+        // Key stat boxes — IBL history for slash stats
+        var ops  = iblS && iblS.OPS  != null ? f3(iblS.OPS)  : (pbp ? f3(pbp.OPS)  : f3(s.OPS));
+        var avg  = iblS && iblS.AVG  != null ? f3(iblS.AVG)  : f3(s.AVG);
+        var obp  = iblS && iblS.OBP  != null ? f3(iblS.OBP)  : f3(s.OBP);
+        var slg  = iblS && iblS.SLG  != null ? f3(iblS.SLG)  : f3(s.SLG);
+        var hr   = iblS && iblS.HR   != null ? fN(iblS.HR)   : fN(s.HR);
+        var rbi  = iblS && iblS.RBI  != null ? fN(iblS.RBI)  : fN(s.RBI);
+        // FP Swing % from PBP then scatter
+        var fpSwing = pbp && pbp.FP_SWING_pct != null ? f1(pbp.FP_SWING_pct)+'%' : (function(){
+          var fps = sc.filter(function(p,i){
+            if(i===0) return true;
+            var prev=sc[i-1]; return p.batter!==prev.batter||p.inning!==prev.inning;
+          });
+          var sw = fps.filter(function(p){ return ['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Strikeout Swinging'].includes(p.outcome); }).length;
+          return fps.length>=5 ? f1(sw/fps.length*100)+'%' : '—';
+        })();
+
+        y = drawBoxes(d,[['AVG',avg],['OBP',obp],['SLG',slg],['OPS',ops],['HR',hr],['RBI',rbi],['FP SW%',fpSwing]], y);
+        y += 4;
+
+        // Batted ball profile
+        var batted = sc.filter(function(p){ return ['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(p.outcome); });
+        var bipTot = batted.length;
+        if (bipTot >= 5) {
+          var gb = batted.filter(function(p){return p.outcome==='Groundout'||p.outcome==='Double Play';}).length/bipTot*100;
+          var fb = batted.filter(function(p){return p.outcome==='Flyout'||p.outcome==='Home Run';}).length/bipTot*100;
+          var lo = batted.filter(function(p){return p.outcome==='Lineout'||p.outcome==='Single'||p.outcome==='Double'||p.outcome==='Triple';}).length/bipTot*100;
+          var po = batted.filter(function(p){return p.outcome==='Popout';}).length/bipTot*100;
+          y = drawSec(d,'Batted Ball Profile', y);
+          y = drawTbl(d,['GB%','FB%','LD%','PO%'],
+            [[f1(gb)+'%', f1(fb)+'%', f1(lo)+'%', f1(po)+'%']],
+            [CPW/4,CPW/4,CPW/4,CPW/4], y);
+          y += 3;
+        }
+
+        // Spray direction + shift
+        var spBatted = batted.filter(function(p){return p.spray;});
+        var spTot = spBatted.length;
+        if (spTot >= 3) {
+          var pullC = spBatted.filter(function(p){return p.spray==='Pull';}).length;
+          var strC  = spBatted.filter(function(p){return p.spray==='Straightaway';}).length;
+          var oppC  = spBatted.filter(function(p){return p.spray==='Opposite Field';}).length;
+          var pullPct = pullC/spTot*100, strPct3 = strC/spTot*100, oppPct = oppC/spTot*100;
+          var shiftLabel = pullPct>=55?'SHIFT':pullPct>=45?'SHADE':oppPct>=40?'NO SHIFT':'STRAIGHT UP';
+          y = drawSec(d, 'Spray Direction & Shift', y);
+          y = drawTbl(d,['PULL%','STRAIGHT%','OPPO%','RECOMMENDATION'],
+            [[f1(pullPct)+'%', f1(strPct3)+'%', f1(oppPct)+'%', shiftLabel]],
+            [CPW*0.2,CPW*0.2,CPW*0.2,CPW*0.4], y);
+          y += 3;
+        }
+
+        // Strike zone charts
+        var scXY = sc.filter(function(p){return p.x!=null&&p.y!=null;});
+        if (scXY.length >= 3) {
+          y = drawSec(d, 'Strike Zone', y);
+          var iw2=CPW/2-4, ih2=Math.round(iw2*1.15);
+          var scR = scXY.filter(function(p){return p.batter_side==='R';});
+          var scL = scXY.filter(function(p){return p.batter_side==='L';});
+          if(scR.length) { d.addImage(mkHeat(scR),'PNG',ML,y,iw2,ih2); d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);d.text('vs RHP',ML+iw2/2,y+ih2+3,{align:'center'}); }
+          if(scL.length) { d.addImage(mkHeat(scL),'PNG',ML+iw2+8,y,iw2,ih2); d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);d.text('vs LHP',ML+iw2+8+iw2/2,y+ih2+3,{align:'center'}); }
+        }
+
+        // Footer
+        d.setFont('helvetica','normal'); d.setFontSize(6.5); st(d,CO.dim);
+        d.text('Data Diamond  —  CBL Scouting Report 2025', ML, PH-6);
+        d.text(s.batter+'  •  BATTER', ML+CPW, PH-6, {align:'right'});
+        sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
+      });
+
+      d.save(team.abbr+'_Opposing_Batters.pdf');
+      btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF';
+    });
+  }
+
+  // ── OPP PITCHERS PDF ─────────────────────────────────────────────────
+  function genOppPitchersPDF(oppName, btn) {
+    btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…';
+    ensureJsPDF(function() {
+      var oppT = resolveTeam(oppName);
+      var team = oppT ? { abbr: oppT.abbreviation, name: oppT.name, color: oppT.primaryColor }
+                      : { abbr: oppName.slice(0,3).toUpperCase(), name: oppName, color: '#888888' };
+      var tc = hx(team.color === '#888888' ? '#666666' : team.color);
+
+      var seen = new Set();
+      DATA.pitches.forEach(function(bp) {
+        if (!bp.scatter) return;
+        bp.scatter.forEach(function(s) {
+          if (!s.pitcher_team) return;
+          var pt = resolveTeam(s.pitcher_team);
+          if (pt && pt.name === oppName) seen.add(s.pitcher);
+        });
+      });
+
+      if (!seen.size) {
+        btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP PITCHERS PDF'; return;
+      }
+
+      var pitchers = [];
+      seen.forEach(function(name) {
+        var sc = [];
+        DATA.pitches.forEach(function(bp) {
+          if (!bp.scatter) return;
+          bp.scatter.forEach(function(s) {
+            if (s.pitcher === name) { var pt = resolveTeam(s.pitcher_team); if(pt&&pt.name===oppName) sc.push(s); }
+          });
+        });
+        pitchers.push({ name: name, sc: sc });
+      });
+      pitchers.sort(function(a,b){ return a.name.localeCompare(b.name); });
+
+      var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4' });
+      var today2 = new Date(); today2.setHours(0,0,0,0);
+
+      function drawPageHdr2(title) {
+        drawBg(d);
+        sf(d,CO.navy2); d.roundedRect(ML,MT,CPW,20,3,3,'F');
+        d.setFillColor(tc[0],tc[1],tc[2]); d.roundedRect(ML,MT,4,20,2,2,'F');
+        d.setFont('helvetica','bold'); d.setFontSize(11); d.setTextColor(tc[0],tc[1],tc[2]);
+        d.text(team.abbr, ML+10, MT+13);
+        d.setFont('helvetica','bold'); d.setFontSize(13); st(d,CO.white);
+        d.text(title.toUpperCase(), ML+30, MT+13);
+        st(d,CO.gold);
+        d.setFont('helvetica','normal'); d.setFontSize(7);
+        d.text('Data Diamond  —  CBL 2025', ML+CPW, MT+13, {align:'right'});
+        sd(d,CO.gold); d.setLineWidth(0.4); d.line(ML,MT+21,ML+CPW,MT+21);
+        return MT+26;
+      }
+
+      var firstPage = true;
+      pitchers.forEach(function(p) {
+        var sc = p.sc;
+        var pd = DATA.pitchers.find(function(x){ return x.pitcher === p.name; }) || {};
+        var pbpP = DATA.pbpPitchers.find(function(x){ return x.pitcher === p.name; }) || null;
+        var iblP = ((DATA.iblHistory[p.name]||[]).filter(function(r){return r.IP>0;}))[0]||null;
+
+        if (!firstPage) { d.addPage(); }
+        firstPage = false;
+        var y = drawPageHdr2(team.name + ' — Opposing Pitchers');
+
+        // Availability
+        var daysRest = pd.last_game_date ? Math.floor((today2 - new Date(pd.last_game_date+'T00:00:00'))/86400000) : 99;
+        var lastCount = pd.last_pitch_count || 0;
+        var avail, availHex;
+        if      (daysRest <= 1)                    { avail='UNAVAILABLE'; availHex='#f87171'; }
+        else if (daysRest === 2 && lastCount >= 20) { avail='QUESTIONABLE'; availHex='#FFB81C'; }
+        else                                        { avail='AVAILABLE';   availHex='#34d399'; }
+        var restNote = daysRest===99?'No recent data':daysRest===0?'Pitched today':daysRest===1?'Pitched yesterday ('+lastCount+' pitches)':daysRest+' days rest — last: '+lastCount+' pitches';
+
+        // Name bar
+        sf(d,CO.navy3); d.rect(ML,y,CPW,10,'F');
+        d.setFont('helvetica','bold'); d.setFontSize(12); st(d,CO.white);
+        d.text(p.name.toUpperCase(), ML+4, y+7);
+        var ac = hx(availHex==='#f87171'?'#f87171':availHex==='#FFB81C'?'#FFB81C':'#34d399');
+        d.setFont('helvetica','bold'); d.setFontSize(7); d.setTextColor(ac[0],ac[1],ac[2]);
+        d.text(avail, ML+CPW-2, y+5, {align:'right'});
+        d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
+        d.text(restNote, ML+CPW-2, y+9, {align:'right'});
+        y += 13;
+
+        // Stat boxes — ERA IBL, WHIP PBP, STR%/K%/FPS% PBP then scatter
+        var tot = sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
+        var ks  = sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
+        var bbs = sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+        var hits = sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
+        var str = sc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+
+        var eraVal  = iblP&&iblP.ERA!=null  ? f3(iblP.ERA)  : '—';
+        var whipVal = pbpP&&pbpP.WHIP!=null ? f3(pbpP.WHIP) : (pd.WHIP!=null?f3(pd.WHIP):'—');
+        var strVal  = pbpP&&pbpP.STR_pct!=null  ? f1(pbpP.STR_pct)+'%'    : (tot>0?f1(xp(str,tot))+'%':'—');
+        var kVal    = pbpP&&pbpP.K_pct!=null    ? f1(pbpP.K_pct)+'%'      : (tot>0?f1(xp(ks,tot))+'%':'—');
+        var ttp     = pd.avg_time_to_plate != null ? pd.avg_time_to_plate.toFixed(2)+'s' : '—';
+        var ttpLabel = pd.avg_time_to_plate==null?'':pd.avg_time_to_plate<=1.1?'QUICK':pd.avg_time_to_plate<=1.3?'AVG':'SLOW';
+
+        y = drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['STR%',strVal],['K%',kVal],['TIME/PLATE',ttp],['DELIVERY',ttpLabel]], y);
+        y += 4;
+
+        // Pitch arsenal
+        var tc2 = {};
+        sc.forEach(function(s){ var t=s.pitch_type||s.type||'Unknown'; tc2[t]=(tc2[t]||0)+1; });
+        var sT = Object.entries(tc2).sort(function(a,b){return b[1]-a[1];});
+        if (sT.length) {
+          y = drawSec(d,'Pitch Arsenal',y);
+          var atH=['TYPE','USAGE%','STR%','WHIFF%'], atW=[50,CPW*0.2,CPW*0.2,CPW*0.2];
+          var atR = sT.map(function(e){
+            var t=e[0], cnt=e[1];
+            var tp=sc.filter(function(s){return(s.pitch_type||s.type||'Unknown')===t;});
+            var ts=tp.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+            var tw=tp.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Strikeout Swinging';}).length;
+            var tSwings=tp.filter(function(s){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Strikeout Swinging'].includes(s.outcome);}).length;
+            return[t, f1(xp(cnt,tot))+'%', f1(xp(ts,cnt))+'%', tSwings>0?f1(xp(tw,tSwings))+'%':'—'];
+          });
+          y = drawTbl(d,atH,atR,atW,y,[1]); y += 3;
+        }
+
+        // Heat maps vs R and L
+        var scXY = sc.filter(function(s){return s.x!=null&&s.y!=null;});
+        var scR = scXY.filter(function(s){return s.batter_side==='R';});
+        var scL = scXY.filter(function(s){return s.batter_side==='L';});
+        if (scR.length || scL.length) {
+          y = drawSec(d,'Heat Maps',y);
+          var iw2=CPW/2-4, ih2=Math.round(iw2*1.15);
+          if(scR.length>=3){d.addImage(mkHeat(scR),'PNG',ML,y,iw2,ih2);d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);d.text('vs RHH ('+scR.length+' pitches)',ML+iw2/2,y+ih2+3,{align:'center'});}
+          if(scL.length>=3){d.addImage(mkHeat(scL),'PNG',ML+iw2+8,y,iw2,ih2);d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);d.text('vs LHH ('+scL.length+' pitches)',ML+iw2+8+iw2/2,y+ih2+3,{align:'center'});}
+        }
+
+        // Footer
+        d.setFont('helvetica','normal'); d.setFontSize(6.5); st(d,CO.dim);
+        d.text('Data Diamond  —  CBL Scouting Report 2025', ML, PH-6);
+        d.text(p.name+'  •  PITCHER', ML+CPW, PH-6, {align:'right'});
+        sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
+      });
+
+      d.save(team.abbr+'_Opposing_Pitchers.pdf');
+      btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP PITCHERS PDF';
+    });
   }
 
   function togglePicker(btn, type, oppName, cardIdx) {
