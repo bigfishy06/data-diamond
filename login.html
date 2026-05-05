@@ -4,14 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Diamond — Sign In</title>
-
-  <!--  Replace with your actual Google Client ID in both places below -->
   <meta name="google-signin-client_id" content="348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       min-height: 100vh;
       display: flex;
@@ -21,7 +18,6 @@
       font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
       color: #e8eaf0;
     }
-
     .login-card {
       background: #161e30;
       border: 1px solid rgba(255, 184, 28, 0.2);
@@ -32,82 +28,65 @@
       text-align: center;
       box-shadow: 0 8px 40px rgba(0,0,0,0.5);
     }
-
-    .login-logo {
-      font-size: 40px;
-      margin-bottom: 8px;
-    }
-
+    .login-logo { display:flex; align-items:center; justify-content:center; margin-bottom:8px; }
     .login-title {
-      font-size: 26px;
-      font-weight: 700;
-      color: #FFB81C;
-      letter-spacing: -0.5px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 0.05em;
+      color: #fff;
       margin-bottom: 4px;
     }
-
-    .login-subtitle {
-      font-size: 13px;
-      color: #8a93a8;
-      margin-bottom: 36px;
-    }
-
+    .login-title em { color: #FFB81C; font-style: normal; }
+    .login-subtitle { font-size: 13px; color: #8a93a8; margin-bottom: 36px; }
     .divider {
-      display: flex;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 28px; color: #3a4255;
+      font-size: 12px; font-family: 'DM Mono', monospace; letter-spacing: 0.08em;
+    }
+    .divider::before, .divider::after { content:''; flex:1; height:1px; background:rgba(255,184,28,0.1); }
+    .google-btn-wrap { display:flex; justify-content:center; margin-bottom:16px; }
+    #manual-signin-btn {
+      display: none;
+      width: 100%;
+      padding: 13px 20px;
+      background: #fff;
+      border: none;
+      border-radius: 6px;
+      color: #1f1f1f;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 28px;
-      color: #3a4255;
-      font-size: 12px;
-    }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(255,184,28,0.1);
-    }
-
-    /* Centre the Google button */
-    .google-btn-wrap {
-      display: flex;
       justify-content: center;
-      margin-bottom: 20px;
+      gap: 12px;
+      transition: background 0.2s;
+      margin-bottom: 16px;
     }
-
-    #login-error {
-      min-height: 20px;
-      font-size: 13px;
-      color: #ff6b6b;
-      margin-top: 16px;
-    }
-
-    .login-footer {
-      margin-top: 32px;
-      font-size: 11px;
-      color: #3a4255;
-    }
+    #manual-signin-btn:hover { background: #f0f0f0; }
+    #login-error { min-height:20px; font-size:13px; color:#ff6b6b; margin-top:8px; font-family:'DM Mono',monospace; }
+    .login-footer { margin-top:32px; font-size:11px; color:#3a4255; letter-spacing:0.05em; }
   </style>
 </head>
 <body>
-
   <div class="login-card">
-    <div class="login-logo"></div>
-    <div class="login-title">Data Diamond</div>
-    <div class="login-subtitle">IBL Advanced Analytics</div>
-
+    <div class="login-logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px">
+        <polygon points="20,2 38,20 20,38 2,20" stroke="#FFB81C" stroke-width="2.5" fill="none"/>
+        <polygon points="20,9 31,20 20,31 9,20" stroke="#FFB81C" stroke-width="1.5" fill="rgba(255,184,28,0.12)"/>
+        <circle cx="20" cy="20" r="3" fill="#FFB81C"/>
+      </svg>
+    </div>
+    <div class="login-title">Data<em>Diamond</em></div>
+    <div class="login-subtitle">CBL Advanced Analytics</div>
     <div class="divider">sign in to continue</div>
 
     <div class="google-btn-wrap">
-      <!--
-        data-client_id   → paste your Client ID here too
-        data-callback    → must match the function name in main.js / below
-        data-theme       → filled | outline
-        data-size        → large | medium | small
-      -->
       <div id="g_id_onload"
            data-client_id="348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com"
            data-callback="handleGoogleSignIn"
-           data-auto_prompt="false">
+           data-auto_prompt="false"
+           data-ux_mode="popup">
       </div>
       <div class="g_id_signin"
            data-type="standard"
@@ -119,49 +98,104 @@
       </div>
     </div>
 
-    <div id="login-error"></div>
+    <button id="manual-signin-btn">
+      <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
+        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+        <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+      </svg>
+      Sign in with Google
+    </button>
 
+    <div id="login-error"></div>
     <div class="login-footer">Access is restricted to authorised users only.</div>
   </div>
 
   <script>
-    const ALLOWED_EMAILS = ["christiansturgeon06@gmail.com"];
+    var CLIENT_ID = "348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com";
+    var ALLOWED_EMAILS = ["christiansturgeon06@gmail.com"];
 
+    // Already signed in — go straight to app
+    try {
+      var saved = localStorage.getItem("dd_user");
+      if (saved && JSON.parse(saved).email) {
+        window.location.replace("index.html");
+      }
+    } catch(e) {}
+
+    function storeAndRedirect(email, name, picture) {
+      if (!ALLOWED_EMAILS.includes(email)) {
+        document.getElementById("login-error").textContent =
+          "Blocked: " + email + " is not authorised.";
+        return;
+      }
+      localStorage.setItem("dd_user", JSON.stringify({ name: name, email: email, picture: picture }));
+      setTimeout(function() { window.location.replace("index.html"); }, 150);
+    }
+
+    // Called by GSI iframe button (desktop / some mobile)
     function handleGoogleSignIn(response) {
       try {
-        var base64 = response.credential.split(".")[1]
-          .replace(/-/g, "+").replace(/_/g, "/");
-        var payload = JSON.parse(atob(base64));
-        var email = (payload.email || "").toLowerCase().trim();
-
-        if (!ALLOWED_EMAILS.includes(email)) {
-          document.getElementById("login-error").textContent =
-            "Blocked: " + email + " is not authorised to access this site.";
-          return;
-        }
-
-        var user = {
-          name:    payload.given_name || payload.name || "User",
-          email:   email,
-          picture: payload.picture || ""
-        };
-        sessionStorage.setItem("dd_user", JSON.stringify(user));
-        window.location.href = "index.html";
-
+        var b64 = response.credential.split(".")[1].replace(/-/g,"+").replace(/_/g,"/");
+        while (b64.length % 4) b64 += "=";
+        var p = JSON.parse(atob(b64));
+        storeAndRedirect(
+          (p.email || "").toLowerCase().trim(),
+          p.given_name || p.name || "User",
+          p.picture || ""
+        );
       } catch(e) {
-        document.getElementById("login-error").textContent =
-          "Sign-in failed. Please try again.";
-        console.error("Auth error:", e);
+        document.getElementById("login-error").textContent = "Sign-in failed. Please try again.";
+        console.error(e);
       }
     }
 
-    try {
-      var saved = sessionStorage.getItem("dd_user");
-      if (saved && JSON.parse(saved).email) {
-        window.location.href = "index.html";
-      }
-    } catch(e) {}
-  </script>
+    // Mobile fallback: OAuth2 token flow (no iframe, no third-party cookie issues)
+    function isMobile() {
+      return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
 
+    window.addEventListener("load", function() {
+      var btn = document.getElementById("manual-signin-btn");
+      // Always show the manual button on mobile; hide the GSI iframe button
+      if (isMobile()) {
+        btn.style.display = "flex";
+        document.querySelector(".google-btn-wrap").style.display = "none";
+      }
+
+      btn.addEventListener("click", function() {
+        if (typeof google === "undefined" || !google.accounts || !google.accounts.oauth2) {
+          document.getElementById("login-error").textContent = "Google not loaded yet — please wait a moment and try again.";
+          return;
+        }
+        var client = google.accounts.oauth2.initTokenClient({
+          client_id: CLIENT_ID,
+          scope: "email profile openid",
+          callback: function(tokenResponse) {
+            if (tokenResponse.error) {
+              document.getElementById("login-error").textContent = "Sign-in cancelled or failed.";
+              return;
+            }
+            fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+              headers: { Authorization: "Bearer " + tokenResponse.access_token }
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(info) {
+              storeAndRedirect(
+                (info.email || "").toLowerCase().trim(),
+                info.given_name || info.name || "User",
+                info.picture || ""
+              );
+            })
+            .catch(function() {
+              document.getElementById("login-error").textContent = "Sign-in failed. Please try again.";
+            });
+          }
+        });
+        client.requestAccessToken();
+      });
+    });
+  </script>
 </body>
 </html>
