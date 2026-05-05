@@ -29,9 +29,6 @@
         <a href="players.html" class="nav-link">Player Stats</a>
         <a href="scouting.html" class="nav-link">Scouting</a>
       </nav>
-      <div class="header-search">
-        <input type="text" id="global-search" placeholder="Search players…" autocomplete="off" />
-        <div id="search-dropdown" class="search-dropdown hidden"></div>
       </div>
     </div>
   </header>
@@ -143,7 +140,7 @@
         const now  = Date.now();
         const diff = target - now;
         if (diff <= 0) {
-          document.getElementById('countdown-blocks').innerHTML = '<span class="countdown-done"> PLAY BALL!</span>';
+          document.getElementById('countdown-blocks').innerHTML = '<span class="countdown-done">⚾ PLAY BALL!</span>';
           return;
         }
         const d = Math.floor(diff / 86400000);
@@ -439,15 +436,15 @@
         </div>
         <div class="gp-btns">
           <button class="gp-btn" onclick="togglePicker(this,'pitcher-scouting','${opp}',${idx})">
-            <span class="gp-btn-icon"></span>
+            <span class="gp-btn-icon">⚾</span>
             <span class="gp-btn-label">OPP PITCHERS</span>
           </button>
           <button class="gp-btn" onclick="togglePicker(this,'batter-scouting','${opp}',${idx})">
-            <span class="gp-btn-icon"></span>
+            <span class="gp-btn-icon">🏏</span>
             <span class="gp-btn-label">OPP BATTERS</span>
           </button>
           <button class="gp-btn" onclick="openFielderSheet('${opp}',this)">
-            <span class="gp-btn-icon"></span>
+            <span class="gp-btn-icon">📋</span>
             <span class="gp-btn-label">FIELDER SHEET</span>
           </button>
         </div>
@@ -832,7 +829,7 @@
     headerSpan.textContent = oppName.toUpperCase() + ' — ' + label;
     var closeBtn = document.createElement('button');
     closeBtn.className = 'gp-picker-close';
-    closeBtn.textContent = 'x';
+    closeBtn.textContent = '✕';
     closeBtn.addEventListener('click', function() {
       picker.classList.remove('open');
       picker.innerHTML = '';
@@ -979,7 +976,7 @@
         a.href = canvas.toDataURL('image/png');
         a.click();
         btn.classList.remove('gp-generating');
-        btn.innerHTML = '<span class="gp-btn-icon"></span><span class="gp-btn-label">FIELDER SHEET</span>';
+        btn.innerHTML = '<span class="gp-btn-icon">📋</span><span class="gp-btn-label">FIELDER SHEET</span>';
       });
     }
 
