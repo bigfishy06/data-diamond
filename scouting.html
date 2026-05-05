@@ -728,6 +728,7 @@
   function f3(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(3).replace('0.','.'); }
   function hexRGB(hex){ var h=hex.length===4?'#'+hex[1]+hex[1]+hex[2]+hex[2]+hex[3]+hex[3]:hex; return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]; }
   function f1(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(1); }
+  function f2(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(2); }
   function fN(v){ if(v==null||isNaN(v)) return '—'; return String(Math.round(v)); }
   function xp(n,d){ return d>0?n/d*100:0; }
 
@@ -1184,8 +1185,16 @@
     drawBg(d);drawHdr(d,player.name,'BATTER',team);
     var y=MT+32;
 
-    // ── Key stats boxes ──────────────────────────────────────────────────
-    y=drawBoxes(d,[['AVG',f3(s.AVG)],['OBP',f3(s.OBP)],['SLG',f3(s.SLG)],['OPS',f3(s.OPS)],['HR',fN(s.HR)],['RBI',fN(s.RBI)]],y);
+    // ── Key stats boxes — IBL history for AVG/OBP/SLG/OPS/HR/RBI ────────────
+    var _iblPDF=(DATA.iblHistory[player.name]||[]).filter(function(r){return r.AB>0;});
+    var _iblPDFS=_iblPDF.length?_iblPDF[0]:null;
+    var pdfAVG=_iblPDFS&&_iblPDFS.AVG!=null?f3(_iblPDFS.AVG):(s?f3(s.AVG):'—');
+    var pdfOBP=_iblPDFS&&_iblPDFS.OBP!=null?f3(_iblPDFS.OBP):(s?f3(s.OBP):'—');
+    var pdfSLG=_iblPDFS&&_iblPDFS.SLG!=null?f3(_iblPDFS.SLG):(s?f3(s.SLG):'—');
+    var pdfOPS=_iblPDFS&&_iblPDFS.OPS!=null?f3(_iblPDFS.OPS):(s?f3(s.OPS):'—');
+    var pdfHR =_iblPDFS&&_iblPDFS.HR !=null?fN(_iblPDFS.HR) :(s?fN(s.HR):'—');
+    var pdfRBI=_iblPDFS&&_iblPDFS.RBI!=null?fN(_iblPDFS.RBI):(s?fN(s.RBI):'—');
+    y=drawBoxes(d,[['AVG',pdfAVG],['OBP',pdfOBP],['SLG',pdfSLG],['OPS',pdfOPS],['HR',pdfHR],['RBI',pdfRBI]],y);
     y+=4;
 
     // ── Scout Summary — 6 highlight cards: AVG, OPS, FP Swing%, Swing%, Whiff%, Chase% ──
@@ -1212,12 +1221,13 @@
     var chaseN=outOfZone.filter(function(s2){return['Swinging Strike','Foul','Strikeout Swinging'].includes(s2.outcome);}).length;
     var chasePct=outOfZone.length>=5?chaseN/outOfZone.length*100:null;
 
-    // Use pbpBatters if available
+    // PBP is authoritative for all discipline rates
     var pbp=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return p.batter===player.name;}):null;
     if(pbp){
       if(pbp.FP_SWING_pct!=null)fpSwingPct=pbp.FP_SWING_pct;
       if(pbp.SWING_pct!=null)swingPct=pbp.SWING_pct;
       if(pbp.WHIFF_pct!=null)whiffPct=pbp.WHIFF_pct;
+      if(pbp.CHASE_pct!=null)chasePct=pbp.CHASE_pct;
     }
 
     function hCard(label,value,color,note,sub){return{label:label,value:value,color:color,note:note,sub:sub||''};}
@@ -1415,13 +1425,18 @@
     drawBg(d);drawHdr(d,player.name,'PITCHER',team);
     var y=MT+32;
 
-    // Key stat boxes — ERA, WHIP, BAA
-    var eraVal  = player.era  != null ? f1(player.era)   : (tot>0?'—':'—');
-    var whipVal = player.whip != null ? f1(player.whip)  : (tot>0?f1(xp(bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length,tot/3)):'—');
-    var baaVal  = player.baa  != null ? f3(player.baa)   : '—';
-    var kPctVal = f1(xp(ks,tot))+'%';
-    var strVal  = f1(xp(str,tot))+'%';
-    var fpsVal  = fpsPct!=null ? f1(fpsPct)+'%' : '—';
+    // Key stat boxes — ERA/WHIP from IBL history; BAA from scatter; K%/STR%/FPS% from PBP then scatter
+    var _iblPitPDF=(DATA.iblHistory[player.name]||[]).filter(function(r){return r.IP>0;});
+    var _iblPitPDFS=_iblPitPDF.length?_iblPitPDF[0]:null;
+    var eraVal  = _iblPitPDFS&&_iblPitPDFS.ERA !=null ? f2(_iblPitPDFS.ERA)  : '—';
+    var whipVal = _iblPitPDFS&&_iblPitPDFS.WHIP!=null ? f2(_iblPitPDFS.WHIP) : '—';
+    var baaAB=sc.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+    var baaH =sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
+    var baaVal  = baaAB>=5 ? f3(baaH/baaAB) : '—';
+    var _pbpPit=DATA.pbpPitchers?DATA.pbpPitchers.find(function(p){return p.pitcher===player.name;}):null;
+    var kPctVal = _pbpPit&&_pbpPit.K_pct  !=null ? f1(_pbpPit.K_pct)+'%'   : (tot>0?f1(xp(ks,tot))+'%':'—');
+    var strVal  = _pbpPit&&_pbpPit.STR_pct !=null ? f1(_pbpPit.STR_pct)+'%' : (tot>0?f1(xp(str,tot))+'%':'—');
+    var fpsVal  = _pbpPit&&_pbpPit.FP_STR_pct!=null ? f1(_pbpPit.FP_STR_pct)+'%' : (fpsPct!=null?f1(fpsPct)+'%':'—');
     y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['BAA',baaVal],['K%',kPctVal],['STR%',strVal],['FPS%',fpsVal]],y);
     y+=4;
 
