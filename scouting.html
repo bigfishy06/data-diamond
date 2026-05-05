@@ -718,9 +718,12 @@
 
   function getPitchPlayer(batterName) {
     var sc = [];
+    var nameLower = batterName.toLowerCase();
     DATA.pitches.forEach(function(bp) {
       if (!bp.scatter) return;
-      bp.scatter.forEach(function(s) { if (s.batter === batterName) sc.push(s); });
+      bp.scatter.forEach(function(s) {
+        if (s.batter && s.batter.toLowerCase() === nameLower) sc.push(s);
+      });
     });
     return sc.length ? { scatter: sc } : null;
   }
@@ -1167,14 +1170,12 @@
   }
 
   function addCharts(d,sc,y){
-    var iw=58,ih=66,gap=(CPW-iw*3)/2;
+    var iw=80,ih=72,gap=CPW-iw*2;
     d.addImage(mkScatter(sc),'PNG',ML,y,iw,ih);
-    d.addImage(mkGrid(sc),'PNG',ML+iw+gap,y,iw,ih);
-    d.addImage(mkHeat(sc),'PNG',ML+(iw+gap)*2,y,iw,ih);
+    d.addImage(mkHeat(sc),'PNG',ML+iw+gap,y,iw,ih);
     d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
     d.text('Scatter',ML+iw/2,y+ih+3,{align:'center'});
-    d.text('Zone Grid',ML+iw+gap+iw/2,y+ih+3,{align:'center'});
-    d.text('Heat Map',ML+(iw+gap)*2+iw/2,y+ih+3,{align:'center'});
+    d.text('Heat Map',ML+iw+gap+iw/2,y+ih+3,{align:'center'});
     return y+ih+8;
   }
 

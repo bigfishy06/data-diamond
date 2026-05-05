@@ -941,7 +941,7 @@ function renderPlayerDetail(name, type, content) {
     var dispOPS = _iblBatS && _iblBatS.OPS != null ? fmt3(_iblBatS.OPS) : (pbpB ? fmt3(pbpB.OPS) : (sum ? fmt3(sum.OPS) : '—'));
     var dispHR  = getSeasonHR(name)  != null ? fmtN(getSeasonHR(name))  : (pbpB ? fmtN(pbpB.HR)  : (sum ? fmtN(sum.HR)  : '—'));
     var dispRBI = getSeasonRBI(name) != null ? fmtN(getSeasonRBI(name)) : '—';
-    [['AVG', dispAVG], ['OPS', dispOPS], ['HR', dispHR], ['RBI', dispRBI]].forEach(function(s) {
+    [['AVG', dispAVG], ['HR', dispHR], ['RBI', dispRBI]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   } else if (type === 'pitcher' && pitchData && pitchData.scatter) {
@@ -958,9 +958,18 @@ function renderPlayerDetail(name, type, content) {
     var _iblPitS = _iblPit.length ? _iblPit[0] : null;
     const hlIP   = _iblPitS && _iblPitS.IP   != null ? fmtIP(_iblPitS.IP) : (pbpP ? fmtIP(pbpP.IP) : (pd.IP != null ? fmtIP(pd.IP) : '—'));
     const hlERA  = _iblPitS && _iblPitS.ERA  != null ? fmt2(_iblPitS.ERA)  : (pbpP ? fmt2(pbpP.ERA)  : '—');
-    const hlWHIP = _iblPitS && _iblPitS.WHIP != null ? fmt2(_iblPitS.WHIP) : (pbpP ? fmt2(pbpP.WHIP) : '—');
-    const hlKpct = pbpP ? fmt1(pbpP.K_pct)+'%' : '—';
-    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP], ['K%', hlKpct]].forEach(function(s) {
+    var _iblPitHL = ((DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;}))[0]||null;
+    var pbpPHL = getPbpPitcher(name);
+    const hlIP  = _iblPitHL && _iblPitHL.IP  != null ? fmtIP(_iblPitHL.IP) : '—';
+    const hlERA = _iblPitHL && _iblPitHL.ERA != null ? fmt2(_iblPitHL.ERA)  : '—';
+    const hlSTR = pbpPHL && pbpPHL.STR_pct != null ? fmt1(pbpPHL.STR_pct)+'%'
+      : (function(){
+          var sc2 = pitchData ? pitchData.scatter : [];
+          var tot2 = sc2.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
+          var str2 = sc2.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+          return tot2>0 ? fmt1(str2/tot2*100)+'%' : '—';
+        })();
+    [['IP', hlIP], ['ERA', hlERA], ['STR%', hlSTR]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   }
