@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Diamond — Sign In</title>
   <meta name="google-signin-client_id" content="348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://accounts.google.com/gsi/client" onload="initGSI()"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -84,19 +84,7 @@
     <div class="divider">sign in to continue</div>
 
     <div class="google-btn-wrap">
-      <div id="g_id_onload"
-           data-client_id="348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com"
-           data-callback="handleGoogleSignIn"
-           data-auto_prompt="false">
-      </div>
-      <div class="g_id_signin"
-           data-type="standard"
-           data-shape="rectangular"
-           data-theme="filled_black"
-           data-text="sign_in_with"
-           data-size="large"
-           data-logo_alignment="left">
-      </div>
+      <div id="g_signin_btn"></div>
     </div>
 
     <div id="login-error"></div>
@@ -106,10 +94,24 @@
   <script>
     var ALLOWED_EMAILS = ["christiansturgeon06@gmail.com"];
 
+    function initGSI() {
+      google.accounts.id.initialize({
+        client_id: "348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com",
+        callback:  handleGoogleSignIn,
+        auto_select: false
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("g_signin_btn"),
+        { type: "standard", shape: "rectangular", theme: "filled_black",
+          text: "sign_in_with", size: "large", logo_alignment: "left" }
+      );
+    }
+
     function handleGoogleSignIn(response) {
       try {
         var base64 = response.credential.split(".")[1]
           .replace(/-/g, "+").replace(/_/g, "/");
+        while (base64.length % 4) base64 += "=";
         var payload = JSON.parse(atob(base64));
         var email = (payload.email || "").toLowerCase().trim();
 
@@ -119,17 +121,15 @@
           return;
         }
 
-        var user = {
+        localStorage.setItem("dd_user", JSON.stringify({
           name:    payload.given_name || payload.name || "User",
           email:   email,
           picture: payload.picture || ""
-        };
-        localStorage.setItem("dd_user", JSON.stringify(user));
+        }));
         setTimeout(function() { window.location.replace("index.html"); }, 100);
 
       } catch(e) {
-        document.getElementById("login-error").textContent =
-          "Sign-in failed. Please try again.";
+        document.getElementById("login-error").textContent = "Sign-in failed. Please try again.";
         console.error("Auth error:", e);
       }
     }
