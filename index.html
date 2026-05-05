@@ -140,7 +140,7 @@
         const now  = Date.now();
         const diff = target - now;
         if (diff <= 0) {
-          document.getElementById('countdown-blocks').innerHTML = '<span class="countdown-done">⚾ PLAY BALL!</span>';
+          document.getElementById('countdown-blocks').innerHTML = '<span class="countdown-done"> PLAY BALL!</span>';
           return;
         }
         const d = Math.floor(diff / 86400000);
@@ -436,15 +436,15 @@
         </div>
         <div class="gp-btns">
           <button class="gp-btn" onclick="togglePicker(this,'pitcher-scouting','${opp}',${idx})">
-            <span class="gp-btn-icon">⚾</span>
+            <span class="gp-btn-icon"></span>
             <span class="gp-btn-label">OPP PITCHERS</span>
           </button>
           <button class="gp-btn" onclick="togglePicker(this,'batter-scouting','${opp}',${idx})">
-            <span class="gp-btn-icon">🏏</span>
+            <span class="gp-btn-icon"></span>
             <span class="gp-btn-label">OPP BATTERS</span>
           </button>
           <button class="gp-btn" onclick="openFielderSheet('${opp}',this)">
-            <span class="gp-btn-icon">📋</span>
+            <span class="gp-btn-icon"></span>
             <span class="gp-btn-label">FIELDER SHEET</span>
           </button>
         </div>
@@ -762,14 +762,12 @@
     var picker = document.getElementById(pickerId);
     if (!picker) return;
 
-    // Close if already open
     if (picker.classList.contains('open')) {
       picker.classList.remove('open');
       picker.innerHTML = '';
       return;
     }
 
-    // Close any other open pickers on this card
     var card = btn.closest('.gp-card');
     card.querySelectorAll('.gp-picker.open').forEach(function(p) {
       p.classList.remove('open'); p.innerHTML = '';
@@ -778,13 +776,124 @@
     var oppT = resolveTeam(oppName);
     var team = oppT ? { id: oppT.id, abbr: oppT.abbreviation, name: oppT.name, color: oppT.primaryColor } : { id:'', abbr:'OPP', name: oppName, color:'#888888' };
 
-    var players = [];
+    picker.innerHTML = '';
+    var header = document.createElement('div');
+    header.className = 'gp-picker-header';
+    var headerSpan = document.createElement('span');
+    headerSpan.textContent = oppName.toUpperCase() + ' — ' + (type === 'pitcher-scouting' ? 'PITCHERS' : 'BATTERS');
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'gp-picker-close';
+    closeBtn.textContent = 'x';
+    closeBtn.addEventListener('click', function() { picker.classList.remove('open'); picker.innerHTML = ''; });
+    header.appendChild(headerSpan);
+    header.appendChild(closeBtn);
+    picker.appendChild(header);
+
+    // ── BATTER SUMMARY PANEL ─────────────────────────────────────────────
     if (type === 'batter-scouting') {
-      players = DATA.summary.filter(function(p) {
+      var batters = DATA.summary.filter(function(p) {
         var t = resolveTeam(p.batter_team); return t && t.name === oppName;
-      }).sort(function(a,b){ return (b.AB||0)-(a.AB||0); }).map(function(s) {
-        return { name: s.batter, stat: 'AVG ' + f3(s.AVG), player: { name: s.batter, summary: s, pitch: getPitchPlayer(s.batter) } };
+      }).sort(function(a,b){ return (b.AB||0)-(a.AB||0); });
+
+      if (!batters.length) {
+        picker.innerHTML += '<div style="padding:16px;color:rgba(255,255,255,0.4);font-family:var(--font-mono);font-size:12px">No data available.</div>';
+        picker.classList.add('open'); return;
+      }
+
+      batters.forEach(function(s) {
+        var sc = (function(){
+          var nameLower = s.batter.toLowerCase(), arr = [];
+          DATA.pitches.forEach(function(bp){ if(bp.scatter) bp.scatter.forEach(function(p){ if(p.batter&&p.batter.toLowerCase()===nameLower) arr.push(p); }); });
+          return arr;
+        })();
+        var pbp = DATA.pbpBatters.find(function(p){ return p.batter === s.batter; }) || null;
+
+        // First pitch swing %
+        var fpSwing = pbp && pbp.FP_SWING_pct != null ? pbp.FP_SWING_pct : (function(){
+          var fps = sc.filter(function(p,i){
+            if(i===0) return true;
+            var prev=sc[i-1]; return p.batter!==prev.batter||p.inning!==prev.inning;
+          });
+          var swung = fps.filter(function(p){ return ['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Strikeout Swinging'].includes(p.outcome); }).length;
+          return fps.length >= 5 ? swung/fps.length*100 : null;
+        })();
+
+        // OPS from IBL history
+        var iblS = ((DATA.iblHistory[s.batter]||[]).filter(function(r){return r.AB>0;}))[0]||null;
+        var ops = iblS && iblS.OPS != null ? iblS.OPS : (pbp ? pbp.OPS : s.OPS);
+
+        // Batted ball %
+        var batted = sc.filter(function(p){ return ['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(p.outcome); });
+        var bipTot = batted.length;
+        var gb = bipTot ? batted.filter(function(p){return p.outcome==='Groundout'||p.outcome==='Double Play';}).length/bipTot*100 : 0;
+        var fb = bipTot ? batted.filter(function(p){return p.outcome==='Flyout'||p.outcome==='Home Run';}).length/bipTot*100 : 0;
+        var lo = bipTot ? batted.filter(function(p){return p.outcome==='Lineout'||p.outcome==='Single'||p.outcome==='Double'||p.outcome==='Triple';}).length/bipTot*100 : 0;
+        var po = bipTot ? batted.filter(function(p){return p.outcome==='Popout';}).length/bipTot*100 : 0;
+
+        // Spray direction & shift
+        var sprayBatted = batted.filter(function(p){return p.spray;});
+        var spTot = sprayBatted.length;
+        var pullC = spTot ? sprayBatted.filter(function(p){return p.spray==='Pull';}).length : 0;
+        var strC  = spTot ? sprayBatted.filter(function(p){return p.spray==='Straightaway';}).length : 0;
+        var oppC  = spTot ? sprayBatted.filter(function(p){return p.spray==='Opposite Field';}).length : 0;
+        var pullPct = spTot ? pullC/spTot*100 : 0;
+        var oppPct  = spTot ? oppC/spTot*100 : 0;
+        var shiftLabel, shiftColor;
+        if      (pullPct >= 55) { shiftLabel = 'SHIFT';        shiftColor = '#f87171'; }
+        else if (pullPct >= 45) { shiftLabel = 'SHADE';        shiftColor = '#FFB81C'; }
+        else if (oppPct  >= 40) { shiftLabel = 'NO SHIFT';     shiftColor = '#34d399'; }
+        else                    { shiftLabel = 'STRAIGHT UP';  shiftColor = '#60a5fa'; }
+
+        // Donut builder
+        function donut(segs, label) {
+          var cx=40,cy=40,R=34,r=20,paths='',startA=-Math.PI/2;
+          segs.forEach(function(seg){
+            if(!seg.pct) return;
+            var sw=seg.pct/100*2*Math.PI, endA=startA+sw;
+            var x1o=cx+R*Math.cos(startA),y1o=cy+R*Math.sin(startA);
+            var x2o=cx+R*Math.cos(endA),  y2o=cy+R*Math.sin(endA);
+            var x1i=cx+r*Math.cos(endA),  y1i=cy+r*Math.sin(endA);
+            var x2i=cx+r*Math.cos(startA),y2i=cy+r*Math.sin(startA);
+            var la=sw>Math.PI?1:0;
+            paths+='<path d="M'+x1o.toFixed(1)+' '+y1o.toFixed(1)+' A'+R+' '+R+' 0 '+la+' 1 '+x2o.toFixed(1)+' '+y2o.toFixed(1)+' L'+x1i.toFixed(1)+' '+y1i.toFixed(1)+' A'+r+' '+r+' 0 '+la+' 0 '+x2i.toFixed(1)+' '+y2i.toFixed(1)+'Z" fill="'+seg.color+'"/>';
+            startA=endA;
+          });
+          paths+='<text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" font-size="7" font-family="monospace" fill="rgba(255,255,255,0.4)">'+label+'</text>';
+          return '<svg width="80" height="80" viewBox="0 0 80 80">'+paths+'</svg>';
+        }
+
+        var bbSegs=[{pct:gb,color:'#fb923c'},{pct:fb,color:'#60a5fa'},{pct:lo,color:'#34d399'},{pct:po,color:'#a78bfa'}];
+        var spSegs=[{pct:pullPct,color:'#f87171'},{pct:spTot?strC/spTot*100:0,color:'#FFB81C'},{pct:oppPct,color:'#60a5fa'}];
+
+        var row = document.createElement('div');
+        row.style.cssText = 'padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.06);';
+        row.innerHTML =
+          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">' +
+            '<div style="font-family:var(--font-display);font-size:14px;letter-spacing:0.05em;color:#fff">' + s.batter + '</div>' +
+            '<div style="display:flex;gap:16px">' +
+              '<div style="text-align:center"><div style="font-family:var(--font-mono);font-size:15px;font-weight:700;color:#FFB81C">' + (ops != null ? f3(ops) : '—') + '</div><div style="font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:0.1em">OPS</div></div>' +
+              '<div style="text-align:center"><div style="font-family:var(--font-mono);font-size:15px;font-weight:700;color:#FFB81C">' + (fpSwing != null ? f1(fpSwing)+'%' : '—') + '</div><div style="font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:0.1em">FP SWING</div></div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' +
+            (bipTot >= 5 ?
+              '<div style="display:flex;flex-direction:column;align-items:center">' + donut(bbSegs,'BIP') +
+                '<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:4px">' +
+                  '<span style="font-family:var(--font-mono);font-size:9px;color:#fb923c">GB '+Math.round(gb)+'%</span>' +
+                  '<span style="font-family:var(--font-mono);font-size:9px;color:#60a5fa">FB '+Math.round(fb)+'%</span>' +
+                  '<span style="font-family:var(--font-mono);font-size:9px;color:#34d399">LD '+Math.round(lo)+'%</span>' +
+                  '<span style="font-family:var(--font-mono);font-size:9px;color:#a78bfa">PO '+Math.round(po)+'%</span>' +
+                '</div>' +
+              '</div>' : '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.25)">No BIP data</div>') +
+            (spTot >= 3 ?
+              '<div style="display:flex;flex-direction:column;align-items:center">' + donut(spSegs,'SPRAY') +
+                '<div style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:' + shiftColor + ';letter-spacing:0.08em;margin-top:4px">' + shiftLabel + '</div>' +
+              '</div>' : '') +
+          '</div>';
+        picker.appendChild(row);
       });
+
+    // ── PITCHER SUMMARY PANEL ────────────────────────────────────────────
     } else {
       var seen = new Set();
       DATA.pitches.forEach(function(bp) {
@@ -795,90 +904,152 @@
           if (pt && pt.name === oppName) seen.add(s.pitcher);
         });
       });
+
+      if (!seen.size) {
+        picker.innerHTML += '<div style="padding:16px;color:rgba(255,255,255,0.4);font-family:var(--font-mono);font-size:12px">No data available.</div>';
+        picker.classList.add('open'); return;
+      }
+
+      var pitcherList = [];
       seen.forEach(function(name) {
         var sc = [];
         DATA.pitches.forEach(function(bp) {
           if (!bp.scatter) return;
-          bp.scatter.forEach(function(s) { if (s.pitcher === name) sc.push(s); });
+          bp.scatter.forEach(function(s) {
+            if (s.pitcher === name) {
+              var pt = resolveTeam(s.pitcher_team);
+              if (pt && pt.name === oppName) sc.push(s);
+            }
+          });
         });
-        var ks = sc.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
-        players.push({ name: name, stat: sc.length + ' pitches', player: { name: name, scatter: sc } });
+        pitcherList.push({ name: name, sc: sc });
       });
-      players.sort(function(a,b){ return a.name.localeCompare(b.name); });
-    }
+      pitcherList.sort(function(a,b){ return a.name.localeCompare(b.name); });
 
-    if (!players.length) {
-      picker.innerHTML = '<div class="gp-picker-header"><span>NO DATA AVAILABLE</span></div>';
-      picker.classList.add('open');
-      return;
-    }
+      // Schedule data for availability
+      var today2 = new Date(); today2.setHours(0,0,0,0);
 
-    // Store data on element — no string injection into onclick
-    picker._players = players;
-    picker._team = team;
-    picker._type = type;
+      pitcherList.forEach(function(p) {
+        var sc = p.sc;
+        var pd = DATA.pitchers.find(function(x){ return x.pitcher === p.name; }) || {};
 
-    var label = type === 'pitcher-scouting' ? 'PITCHERS' : 'BATTERS';
+        // Availability
+        var daysRest = pd.last_game_date ? Math.floor((today2 - new Date(pd.last_game_date+'T00:00:00')) / 86400000) : 99;
+        var lastCount = pd.last_pitch_count || 0;
+        var avail, availBg, availColor;
+        if      (daysRest <= 1)                     { avail='UNAVAILABLE'; availBg='rgba(220,50,50,0.15)';   availColor='#f87171'; }
+        else if (daysRest === 2 && lastCount >= 20)  { avail='QUESTIONABLE'; availBg='rgba(255,140,0,0.15)'; availColor='#FFB81C'; }
+        else                                         { avail='AVAILABLE';    availBg='rgba(50,200,100,0.15)';availColor='#34d399'; }
+        var restNote = daysRest===99 ? 'No recent data' : daysRest===0 ? 'Pitched today' : daysRest===1 ? 'Pitched yesterday ('+lastCount+' pitches)' : daysRest+' days rest — last: '+lastCount+' pitches';
 
-    // Build DOM directly to avoid any quote/apostrophe issues
-    picker.innerHTML = '';
+        // Time to plate
+        var ttp = pd.avg_time_to_plate != null ? pd.avg_time_to_plate : null;
+        var ttpColor = ttp == null ? '#888' : ttp <= 1.1 ? '#34d399' : ttp <= 1.3 ? '#FFB81C' : '#f87171';
+        var ttpLabel = ttp == null ? '—' : ttp <= 1.1 ? 'QUICK' : ttp <= 1.3 ? 'AVERAGE' : 'SLOW';
 
-    var header = document.createElement('div');
-    header.className = 'gp-picker-header';
-    var headerSpan = document.createElement('span');
-    headerSpan.textContent = oppName.toUpperCase() + ' — ' + label;
-    var closeBtn = document.createElement('button');
-    closeBtn.className = 'gp-picker-close';
-    closeBtn.textContent = '✕';
-    closeBtn.addEventListener('click', function() {
-      picker.classList.remove('open');
-      picker.innerHTML = '';
-    });
-    header.appendChild(headerSpan);
-    header.appendChild(closeBtn);
-    picker.appendChild(header);
+        // Heat maps vs R and L
+        var scR = sc.filter(function(s){ return s.batter_side==='R' && s.x!=null && s.y!=null; });
+        var scL = sc.filter(function(s){ return s.batter_side==='L' && s.x!=null && s.y!=null; });
 
-    players.forEach(function(p, i) {
-      var row = document.createElement('div');
-      row.className = 'gp-picker-row';
-
-      var nameEl = document.createElement('span');
-      nameEl.className = 'gp-picker-name';
-      nameEl.textContent = p.name;
-
-      var statEl = document.createElement('span');
-      statEl.className = 'gp-picker-stat';
-      statEl.textContent = p.stat;
-
-      var dlBtn = document.createElement('button');
-      dlBtn.className = 'gp-picker-dl';
-      dlBtn.textContent = '⬇ PDF';
-      (function(player, btn) {
-        btn.addEventListener('click', function() {
-          btn.disabled = true;
-          btn.textContent = '…';
-          function run() {
-            if (type === 'batter-scouting') genBatterPDF(player.player, team);
-            else genPitcherPDF(player.player, team);
-            btn.disabled = false;
-            btn.textContent = '⬇ PDF';
+        function buildMiniHeat(pts) {
+          var W=120,H=138,SIG=3,GW=30,GH=35;
+          var xmn=-2.5,xmx=2.5,ymn=-0.8,ymx=1.5;
+          var c=document.createElement('canvas'); c.width=W; c.height=H;
+          var ctx=c.getContext('2d');
+          ctx.fillStyle='#0e1525'; ctx.fillRect(0,0,W,H);
+          if(pts.length >= 3) {
+            var den=new Float32Array(GW*GH);
+            pts.forEach(function(s){
+              var gx=((s.x-xmn)/(xmx-xmn))*GW, gy=GH-((s.y-ymn)/(ymx-ymn))*GH, rad=Math.ceil(SIG*3);
+              for(var dy=-rad;dy<=rad;dy++) for(var dx=-rad;dx<=rad;dx++){
+                var px_=Math.round(gx+dx),py_=Math.round(gy+dy);
+                if(px_<0||px_>=GW||py_<0||py_>=GH) continue;
+                den[py_*GW+px_]+=Math.exp(-(dx*dx+dy*dy)/(2*SIG*SIG));
+              }
+            });
+            var maxD=0; for(var i=0;i<den.length;i++) if(den[i]>maxD) maxD=den[i];
+            if(maxD){
+              var off=document.createElement('canvas'); off.width=GW; off.height=GH;
+              var oc=off.getContext('2d'), img=oc.createImageData(GW,GH);
+              for(var py2=0;py2<GH;py2++) for(var px2=0;px2<GW;px2++){
+                var val=den[py2*GW+px2]/maxD; if(val<0.02) continue;
+                var r,g,b;
+                if(val<0.33){var t=val/0.33;r=0;g=Math.round(t*120);b=Math.round(180+t*75);}
+                else if(val<0.66){var t=(val-0.33)/0.33;r=Math.round(t*255);g=255;b=Math.round(255*(1-t));}
+                else{var t=(val-0.66)/0.34;r=255;g=Math.round(255*(1-t));b=0;}
+                var idx=(py2*GW+px2)*4;
+                img.data[idx]=r;img.data[idx+1]=g;img.data[idx+2]=b;img.data[idx+3]=Math.round((0.2+val*0.75)*255);
+              }
+              oc.putImageData(img,0,0);
+              ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+              ctx.drawImage(off,0,0,W,H);
+            }
           }
-          if (window.jspdf) {
-            setTimeout(run, 50);
+          function px3(x){return((x-xmn)/(xmx-xmn))*(W);}
+          function py3(y){return H-((y-ymn)/(ymx-ymn))*(H);}
+          ctx.strokeStyle='rgba(255,184,28,0.9)'; ctx.lineWidth=1.5;
+          ctx.strokeRect(px3(-1),py3(1),px3(1)-px3(-1),py3(0)-py3(1));
+          return c.toDataURL('image/png');
+        }
+
+        var row = document.createElement('div');
+        row.style.cssText = 'padding:16px;border-bottom:1px solid rgba(255,255,255,0.06);';
+
+        // Name + availability
+        var nameRow = document.createElement('div');
+        nameRow.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px';
+        nameRow.innerHTML =
+          '<div style="font-family:var(--font-display);font-size:15px;letter-spacing:0.05em;color:#fff">' + p.name + '</div>' +
+          '<div style="display:flex;align-items:center;gap:12px">' +
+            '<div style="padding:4px 10px;background:'+availBg+';border:1px solid '+availColor+';border-radius:4px;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.1em;color:'+availColor+'">'+avail+'</div>' +
+            '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.35)">'+restNote+'</div>' +
+          '</div>';
+        row.appendChild(nameRow);
+
+        // Time to plate
+        var ttpRow = document.createElement('div');
+        ttpRow.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:12px';
+        ttpRow.innerHTML =
+          '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.3)">TIME TO PLATE</div>' +
+          '<div style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:'+ttpColor+'">' + (ttp != null ? ttp.toFixed(2)+'s' : '—') + '</div>' +
+          '<div style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.1em;color:'+ttpColor+'">'+ttpLabel+'</div>';
+        row.appendChild(ttpRow);
+
+        // Heat maps
+        var heatRow = document.createElement('div');
+        heatRow.style.cssText = 'display:flex;gap:16px;flex-wrap:wrap';
+
+        function makeHeatCell(pts, label) {
+          var wrap = document.createElement('div');
+          wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:4px';
+          var lbl = document.createElement('div');
+          lbl.style.cssText = 'font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;color:rgba(255,255,255,0.35)';
+          lbl.textContent = label;
+          wrap.appendChild(lbl);
+          if (pts.length >= 3) {
+            var img = document.createElement('img');
+            img.src = buildMiniHeat(pts);
+            img.style.cssText = 'width:120px;height:138px;border-radius:4px;border:1px solid rgba(255,255,255,0.08)';
+            wrap.appendChild(img);
+            var cnt = document.createElement('div');
+            cnt.style.cssText = 'font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.25)';
+            cnt.textContent = pts.length + ' pitches';
+            wrap.appendChild(cnt);
           } else {
-            var sc = document.createElement('script');
-            sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-            sc.onload = function() { setTimeout(run, 50); };
-            document.head.appendChild(sc);
+            var na = document.createElement('div');
+            na.style.cssText = 'width:120px;height:138px;border-radius:4px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.2)';
+            na.textContent = 'No data';
+            wrap.appendChild(na);
           }
-        });
-      })(p, dlBtn);
+          return wrap;
+        }
 
-      row.appendChild(nameEl);
-      row.appendChild(statEl);
-      row.appendChild(dlBtn);
-      picker.appendChild(row);
-    });
+        heatRow.appendChild(makeHeatCell(scR, 'vs RHH'));
+        heatRow.appendChild(makeHeatCell(scL, 'vs LHH'));
+        row.appendChild(heatRow);
+        picker.appendChild(row);
+      });
+    }
 
     picker.classList.add('open');
   }
@@ -976,7 +1147,7 @@
         a.href = canvas.toDataURL('image/png');
         a.click();
         btn.classList.remove('gp-generating');
-        btn.innerHTML = '<span class="gp-btn-icon">📋</span><span class="gp-btn-label">FIELDER SHEET</span>';
+        btn.innerHTML = '<span class="gp-btn-icon"></span><span class="gp-btn-label">FIELDER SHEET</span>';
       });
     }
 

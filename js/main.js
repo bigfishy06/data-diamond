@@ -9,7 +9,7 @@ function getBase() { return '/'; }
 const AUTH = {
   CLIENT_ID: '348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com',
 
-  // ✅ Add every email address that is allowed to access the site
+  //  Add every email address that is allowed to access the site
   ALLOWED_EMAILS: [
     'christiansturgeon06@gmail.com'
   ],
@@ -19,7 +19,7 @@ const AUTH = {
 
   init: function() {
     // Load the saved session (survives page refreshes)
-    const saved = sessionStorage.getItem('dd_user');
+    const saved = localStorage.getItem('dd_user');
     if (saved) {
       try { AUTH._user = JSON.parse(saved); } catch(e) {}
     }
@@ -50,17 +50,17 @@ const AUTH = {
 
     if (!AUTH.ALLOWED_EMAILS.map(function(e){ return e.toLowerCase(); }).includes(email)) {
       document.getElementById('login-error').textContent =
-        '⛔ ' + email + ' is not authorised to access this site.';
+        ' ' + email + ' is not authorised to access this site.';
       return;
     }
 
     AUTH._user = { name: payload.given_name || payload.name, email: email, picture: payload.picture };
-    sessionStorage.setItem('dd_user', JSON.stringify(AUTH._user));
+    localStorage.setItem('dd_user', JSON.stringify(AUTH._user));
     window.location.href = getBase() + 'index.html';
   },
 
   signOut: function() {
-    sessionStorage.removeItem('dd_user');
+    localStorage.removeItem('dd_user');
     AUTH._user = null;
     if (typeof google !== 'undefined') google.accounts.id.disableAutoSelect();
     window.location.href = getBase() + 'login.html';
@@ -382,7 +382,7 @@ function initLeaguePage() {
 function renderHittingLeaderboards(container) {
   const players = DATA.summary.filter(function(p) { return p.AB > 0; });
   if (!players.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No data yet</h3></div>';
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon"></div><h3>No data yet</h3></div>';
     return;
   }
 
@@ -454,7 +454,7 @@ function renderPitchingLeaderboards(container) {
   const pitchers = DATA.pitchers;
 
   if (!pitchers.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No pitcher data</h3></div>';
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon"></div><h3>No pitcher data</h3></div>';
     return;
   }
 
@@ -621,7 +621,7 @@ function renderTeamDetail(teamId, content) {
 
     if (type === 'hitting') {
       if (!players.length) {
-        statsContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No hitting data</h3></div>';
+        statsContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon"></div><h3>No hitting data</h3></div>';
         return;
       }
 
@@ -674,7 +674,7 @@ function renderTeamDetail(teamId, content) {
     } else {
       // PITCHING
       if (!teamPitchers.length) {
-        statsContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No pitching data</h3></div>';
+        statsContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon"></div><h3>No pitching data</h3></div>';
         return;
       }
 
@@ -2666,7 +2666,7 @@ function renderSeasonStats(name, type, sum, pitch) {
   });
 
   if (!seasons.length) {
-    return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No historical data available</h3></div>';
+    return '<div class="empty-state"><div class="empty-state-icon"></div><h3>No historical data available</h3></div>';
   }
 
   var html = '<div class="stat-card"><div class="stat-card-header">' +
@@ -3652,7 +3652,7 @@ function renderSplits(name, type, pitch, seasonFilter) {
   }
 
   if (!points.length) {
-    return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No split data</h3></div>';
+    return '<div class="empty-state"><div class="empty-state-icon"></div><h3>No split data</h3></div>';
   }
 
   var total = points.length;
@@ -3691,7 +3691,7 @@ function renderSplits(name, type, pitch, seasonFilter) {
 
 function buildSplitsTables(points) {
   var total = points.length;
-  if (!total) return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No data for this filter</h3></div>';
+  if (!total) return '<div class="empty-state"><div class="empty-state-icon"></div><h3>No data for this filter</h3></div>';
 
   var COUNT_GROUPS = [
     { key: 'all',    label: 'All Counts',    test: function()     { return true; } },
