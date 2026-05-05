@@ -961,9 +961,7 @@ function renderPlayerDetail(name, type, content) {
     const hlIP   = _iblPitS && _iblPitS.IP   != null ? fmtIP(_iblPitS.IP)  : '—';
     const hlERA  = _iblPitS && _iblPitS.ERA  != null ? fmt2(_iblPitS.ERA)  : '—';
     const hlWHIP = _iblPitS && _iblPitS.WHIP != null ? fmt2(_iblPitS.WHIP) : '—';
-    // K% — PBP only
-    const hlKpct = pbpP && pbpP.K_pct != null ? fmt1(pbpP.K_pct)+'%' : '—';
-    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP], ['K%', hlKpct]].forEach(function(s) {
+    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   }
@@ -2353,8 +2351,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No data available</h3></div>';
     }
 
-    return buildFilteredCard('pct-batter', 'Percentile Stats', pitchCount + ' pitches seen', allBars, 110, null,
-      ['BA','OBP','SLG','OPS','SWING%','WHIFF%','CONTACT%','K%','BB%','BB/K','PS/PA','FP SWING%','GB%','FB%']);
+    return buildFilteredCard('pct-batter', 'Percentile Stats', pitchCount + ' pitches seen', allBars, 110, null, null);
   }
 
   // ══════════════════════════════════════════════
@@ -2559,8 +2556,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         '</div>'
       : '';
 
-    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', (tot || (pbpPitData && pbpPitData.BF) || 0) + ' batters faced', allBars, 80, seasonSelectHTML,
-      ['ERA','WHIP','STR%','SWING%','WHIFF%','CONTACT%','K%','BB%','E+A%','K/BB','GB%','FB%']);
+    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', (tot || (pbpPitData && pbpPitData.BF) || 0) + ' batters faced', allBars, 80, seasonSelectHTML, null);
 
     // Wire season dropdown — updates pitch count subtitle and re-renders bars
     setTimeout(function() {
