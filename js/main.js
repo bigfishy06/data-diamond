@@ -875,21 +875,39 @@ function renderPlayerDetail(name, type, content) {
   var _iblAll  = DATA.iblHistory[name] || [];
   var _ibl     = _iblAll.length ? _iblAll[0] : null;
 
-  // Derive bats/throws from scatter data (Batter_Side / Pitcher_Side columns).
-  // If a player appears with more than one distinct side value they are Switch.
-  function deriveHand(scatter, field) {
-    var sides = new Set();
-    scatter.forEach(function(s) { if (s[field]) sides.add(s[field]); });
-    if (sides.size === 0) return null;
-    if (sides.size > 1)  return 'S';
-    return sides.values().next().value;
+  // Derive bats — 80%+ from one side uses that side, otherwise Switch
+  function deriveBats(scatter) {
+    var counts = {};
+    scatter.forEach(function(s) {
+      if (s.batter_side) counts[s.batter_side] = (counts[s.batter_side] || 0) + 1;
+    });
+    var total = Object.values(counts).reduce(function(a, b) { return a + b; }, 0);
+    if (total === 0) return null;
+    var dominant = Object.keys(counts).sort(function(a, b) { return counts[b] - counts[a]; })[0];
+    if (counts[dominant] / total >= 0.80) return dominant;
+    return 'S';
   }
 
-  var _batterScatter = (pitch && pitch.scatter) ? pitch.scatter : [];
+  // Derive throws — 80%+ from one side uses that side.
+  // Only Akatsuka is a true switch pitcher.
+  function deriveThrows(scatter, playerName) {
+    var counts = {};
+    scatter.forEach(function(s) {
+      if (s.pitcher_side) counts[s.pitcher_side] = (counts[s.pitcher_side] || 0) + 1;
+    });
+    var total = Object.values(counts).reduce(function(a, b) { return a + b; }, 0);
+    if (total === 0) return null;
+    var dominant = Object.keys(counts).sort(function(a, b) { return counts[b] - counts[a]; })[0];
+    if (counts[dominant] / total >= 0.80) return dominant;
+    if (playerName && playerName.toLowerCase().includes('akatsuka')) return 'S';
+    return dominant; // non-Akatsuka: always use dominant side
+  }
+
+  var _batterScatter  = (pitch && pitch.scatter) ? pitch.scatter : [];
   var _pitcherScatter = (type === 'pitcher' && pitchData && pitchData.scatter) ? pitchData.scatter : [];
 
-  var _bats   = deriveHand(_batterScatter,  'batter_side');
-  var _throws = deriveHand(_pitcherScatter, 'pitcher_side');
+  var _bats   = deriveBats(_batterScatter);
+  var _throws = deriveThrows(_pitcherScatter, name);
 
   var playerInfo = {
     pos:      _ibl && _ibl.pos    ? _ibl.pos    : (type === 'pitcher' ? 'P' : '—'),
