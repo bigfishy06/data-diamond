@@ -951,15 +951,8 @@ function renderPlayerDetail(name, type, content) {
     const bbs = sc.filter(function(s) { return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
     const strPct = tot > 0 ? Math.round(sc.filter(function(s) { return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length / tot * 100) : 0;
     const pd = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
-    // ERA from IBL history (most recent season with IP)
-    const iblP = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
-    var pbpP = getPbpPitcher(name);
-    var _iblPit = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
-    var _iblPitS = _iblPit.length ? _iblPit[0] : null;
-    const hlIP   = _iblPitS && _iblPitS.IP   != null ? fmtIP(_iblPitS.IP) : (pbpP ? fmtIP(pbpP.IP) : (pd.IP != null ? fmtIP(pd.IP) : '—'));
-    const hlERA  = _iblPitS && _iblPitS.ERA  != null ? fmt2(_iblPitS.ERA)  : (pbpP ? fmt2(pbpP.ERA)  : '—');
-    var _iblPitHL = ((DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;}))[0]||null;
     var pbpPHL = getPbpPitcher(name);
+    var _iblPitHL = ((DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;}))[0]||null;
     const hlIP  = _iblPitHL && _iblPitHL.IP  != null ? fmtIP(_iblPitHL.IP) : '—';
     const hlERA = _iblPitHL && _iblPitHL.ERA != null ? fmt2(_iblPitHL.ERA)  : '—';
     const hlSTR = pbpPHL && pbpPHL.STR_pct != null ? fmt1(pbpPHL.STR_pct)+'%'
