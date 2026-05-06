@@ -870,55 +870,57 @@
           d.text(c[0],x+scw/2,y+10.8,{align:'center'});
         });
 
-        // Donut helper — renders to canvas then adds as image
+        // Donut helper — high-res canvas render
         function drawDonut(cx,cy,R,r,segs,label) {
-          var size=Math.round(R*2+4)*4;
+          var px=8; // pixels per mm — high resolution
+          var size=Math.round((R*2+2)*px);
           var can=document.createElement('canvas'); can.width=size; can.height=size;
           var ctx=can.getContext('2d');
-          var ox=size/2, oy=size/2, scale=size/(R*2+4);
+          var ox=size/2, oy=size/2;
+          var Rs=R*px, rs=r*px;
           var start=-Math.PI/2;
           segs.forEach(function(seg){
             if(!seg.v||seg.v<=0) return;
             var sweep=seg.v/100*2*Math.PI;
             ctx.beginPath();
-            ctx.moveTo(ox+r*scale*Math.cos(start),oy+r*scale*Math.sin(start));
-            ctx.arc(ox,oy,R*scale,start,start+sweep);
-            ctx.arc(ox,oy,r*scale,start+sweep,start,true);
+            ctx.moveTo(ox+rs*Math.cos(start),oy+rs*Math.sin(start));
+            ctx.arc(ox,oy,Rs,start,start+sweep);
+            ctx.arc(ox,oy,rs,start+sweep,start,true);
             ctx.closePath();
             ctx.fillStyle='rgb('+seg.c[0]+','+seg.c[1]+','+seg.c[2]+')';
             ctx.fill();
             start+=sweep;
           });
-          // center hole fill
-          ctx.beginPath(); ctx.arc(ox,oy,r*scale,0,2*Math.PI);
+          ctx.beginPath(); ctx.arc(ox,oy,rs,0,2*Math.PI);
           ctx.fillStyle='rgb(14,21,37)'; ctx.fill();
           var img=can.toDataURL('image/png');
-          var mmSize=R*2+2;
+          var mmSize=R*2;
           d.addImage(img,'PNG',cx-R,cy-R,mmSize,mmSize);
           d.setFont('helvetica','bold'); d.setFontSize(4); st(d,CO.dim);
           d.text(label, cx, cy+1.5, {align:'center'});
         }
 
-        // Donut 1: BIP profile
-        var dR=7, dr=3.5;
-        var d1cx = xOff+dR+2;
+        // blockH = name(5) + stats(6) + donut area(16) + shift(4) + divider(1) = 32mm
+        blockH = 32;
+        var dR=6, dr=3;
         var d1cy = y+5+6+dR+1;
+        var d1cx = xOff+dR+2;
         var bipSegs=[
-          {v:bipTot?parseFloat(gb):0,   c:[251,146,60]},  // GB orange
-          {v:bipTot?parseFloat(fb):0,   c:[96,165,250]},  // FB blue
-          {v:bipTot?parseFloat(lo):0,   c:[52,211,153]},  // LD green
-          {v:bipTot?parseFloat(po):0,   c:[167,139,250]}  // PO purple
+          {v:bipTot?parseFloat(gb):0,   c:[251,146,60]},
+          {v:bipTot?parseFloat(fb):0,   c:[96,165,250]},
+          {v:bipTot?parseFloat(lo):0,   c:[52,211,153]},
+          {v:bipTot?parseFloat(po):0,   c:[167,139,250]}
         ];
         if(bipTot>=3) drawDonut(d1cx,d1cy,dR,dr,bipSegs,'BIP');
         else { sf(d,CO.navy2);d.circle(d1cx,d1cy,dR,'F'); d.setFont('helvetica','normal');d.setFontSize(3.5);st(d,CO.dim);d.text('—',d1cx,d1cy+1,{align:'center'}); }
 
         // BIP legend
-        var legX=d1cx+dR+2, legY=d1cy-6;
+        var legX=d1cx+dR+2, legY=d1cy-5;
         [['GB',gb,[251,146,60]],['FB',fb,[96,165,250]],['LD',lo,[52,211,153]],['PO',po,[167,139,250]]].forEach(function(l){
           d.setFillColor(l[2][0],l[2][1],l[2][2]); d.rect(legX,legY,2,2,'F');
           d.setFont('helvetica','normal'); d.setFontSize(3.8); st(d,CO.dim);
           d.text(l[0]+' '+l[1], legX+3, legY+1.7);
-          legY+=3.5;
+          legY+=3.2;
         });
 
         // Donut 2: Spray
@@ -935,17 +937,19 @@
         if(spTot>=3) drawDonut(d2cx,d2cy,dR,dr,spraySegs,'SPRAY');
         else { sf(d,CO.navy2);d.circle(d2cx,d2cy,dR,'F'); d.setFont('helvetica','normal');d.setFontSize(3.5);st(d,CO.dim);d.text('—',d2cx,d2cy+1,{align:'center'}); }
 
-        // Spray legend + shift
-        var leg2X=d2cx-dR-18, leg2Y=d2cy-4;
+        // Spray legend
+        var leg2X=d2cx-dR-18, leg2Y=d2cy-5;
         [['PULL',pullPctV+'%',[248,113,113]],['STR',strPctV+'%',[255,184,28]],['OPP',oppPctV+'%',[96,165,250]]].forEach(function(l){
           d.setFillColor(l[2][0],l[2][1],l[2][2]); d.rect(leg2X,leg2Y,2,2,'F');
           d.setFont('helvetica','normal'); d.setFontSize(3.8); st(d,CO.dim);
           d.text(l[0]+' '+l[1], leg2X+3, leg2Y+1.7);
-          leg2Y+=3.5;
+          leg2Y+=3.2;
         });
-        // Shift label
-        d.setFont('helvetica','bold'); d.setFontSize(4.5); st(d,shiftColor);
-        d.text(shiftLabel, d2cx, d2cy+dR+3.5, {align:'center'});
+
+        // Shift label — below both donuts with room to breathe
+        var shiftY = y+5+6+dR*2+4;
+        d.setFont('helvetica','bold'); d.setFontSize(5); st(d,shiftColor);
+        d.text(shiftLabel, xOff+batW/2, shiftY, {align:'center'});
 
         // Vertical divider
         if(col===0){sd(d,CO.navy3);d.setLineWidth(0.15);d.line(xOff+batW+2,y,xOff+batW+2,y+blockH-1);}
@@ -1060,7 +1064,16 @@
         var ks=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
         var str=sc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
         var eraVal=iblP&&iblP.ERA!=null?f3(iblP.ERA):'—';
-        var whipVal=pbpP&&pbpP.WHIP!=null?f3(pbpP.WHIP):(pd.WHIP!=null?f3(pd.WHIP):'—');
+        var whipVal=(function(){
+          if(pbpP&&pbpP.WHIP!=null) return f2(pbpP.WHIP);
+          if(pd.WHIP!=null) return f2(pd.WHIP);
+          // compute from scatter: (BB + H) / IP
+          var scBbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+          var scHits=sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
+          var scOuts=sc.filter(function(s){return['Groundout','Flyout','Popout','Lineout','Strikeout Swinging','Strikeout Looking','Double Play','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
+          var scIP=scOuts/3;
+          return scIP>0?f2((scBbs+scHits)/scIP):'—';
+        })();
         var strVal=pbpP&&pbpP.STR_pct!=null?f1(pbpP.STR_pct)+'%':(tot>0?f1(xp(str,tot))+'%':'—');
         var kVal=pbpP&&pbpP.K_pct!=null?f1(pbpP.K_pct)+'%':(tot>0?f1(xp(ks,tot))+'%':'—');
         var ttpVal=pd.avg_time_to_plate!=null?pd.avg_time_to_plate.toFixed(2)+'s':'—';
@@ -1115,99 +1128,25 @@
           aX += pitW3*0.38;
         });
 
-        // ── Strike Throwing Tendencies — compact zone grid ──────────────
+        // ── Heat Maps vs RHH and LHH ────────────────────────────────────
         var tendY = aY+7;
         var zTotalH = hmH3 + 4;
+        var hmW2 = (pitW3 - 3) / 2;
 
-        if (scXY.length >= 5) {
-          // Count pitches in 3x3 zone grid + shadow zones
-          var zoneCounts = new Array(9).fill(0);
-          var shadowH2=0, shadowL=0, shadowI=0, shadowO=0;
-          var fpTotal=0, fpStrikes=0;
-          var upCount=0, downCount=0, inCount=0, outCount=0;
-          var inZoneTotal=0;
-
-          scXY.forEach(function(s, si) {
-            var x=parseFloat(s.x), yv=parseFloat(s.y);
-            var isStr=['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);
-            if(si===0||s.pa_start){fpTotal++;if(isStr)fpStrikes++;}
-            if(x>=-1&&x<=1&&yv>=0&&yv<=1){
-              var c2=x<-0.33?0:x>0.33?2:1;
-              var r2=yv>0.67?0:yv<0.33?2:1;
-              zoneCounts[r2*3+c2]++; inZoneTotal++;
-              if(yv>0.67)upCount++; if(yv<0.33)downCount++;
-              if(x<-0.33)inCount++;  if(x>0.33)outCount++;
-            } else {
-              if(yv>1)shadowH2++; if(yv<0)shadowL++;
-              if(x<-1)shadowI++;   if(x>1)shadowO++;
-            }
-          });
-
-          var maxZ=Math.max.apply(null,zoneCounts)+1;
-          var inZonePct=Math.round(inZoneTotal/scXY.length*100);
-          var upPct=inZoneTotal?Math.round(upCount/inZoneTotal*100):0;
-          var downPct=inZoneTotal?Math.round(downCount/inZoneTotal*100):0;
-          var fpsPct2=fpTotal?Math.round(fpStrikes/fpTotal*100):0;
-          var workUp=upPct>=40, workDown=downPct>=40;
-
-          // Layout: zone grid on left, tendency list on right
-          var gW=pitW3*0.55, gH=zTotalH-2;
-          var cellW3=(gW-2)/3, cellH3=(gH-2)/3;
-          var gx3=xOff+1, gy3=tendY+1;
-
-          // Draw 3x3 grid cells — color by frequency, no text
-          for(var row3=0;row3<3;row3++){
-            for(var col3=0;col3<3;col3++){
-              var cnt=zoneCounts[row3*3+col3];
-              var t=cnt/maxZ;
-              var fc;
-              if(t<0.15)      fc=[14,21,37];
-              else if(t<0.35) fc=[60,100,200];
-              else if(t<0.55) fc=[200,200,220];
-              else if(t<0.75) fc=[220,80,80];
-              else            fc=[210,20,20];
-              d.setFillColor(fc[0],fc[1],fc[2]);
-              var cx3=gx3+col3*cellW3+col3*0.4;
-              var cy3=gy3+row3*cellH3+row3*0.4;
-              d.rect(cx3,cy3,cellW3,cellH3,'F');
-              // Percentage label inside if significant
-              if(inZoneTotal>0&&cnt>0){
-                var pct3=Math.round(cnt/inZoneTotal*100);
-                d.setFont('helvetica','bold');d.setFontSize(4.5);
-                st(d,t>0.4?CO.white:[150,170,200]);
-                d.text(pct3+'%',cx3+cellW3/2,cy3+cellH3/2+1.5,{align:'center'});
-              }
-              // Zone border
-              sd(d,[30,50,80]);d.setLineWidth(0.2);d.rect(cx3,cy3,cellW3,cellH3,'S');
-            }
-          }
-          // Strike zone border
-          sd(d,CO.gold);d.setLineWidth(0.5);d.rect(gx3,gy3,gW-2,gH-2,'S');
-          // Zone label
-          d.setFont('helvetica','normal');d.setFontSize(3.5);st(d,CO.dim);
-          d.text('STRIKE ZONE',gx3+(gW-2)/2,tendY+0.5,{align:'center'});
-
-          // Tendency labels on right
-          var tlX=xOff+pitW3-1, tlY=tendY+4;
-          function tendRow(lbl, val, highlight) {
+        function drawSmallHeat(pts, x2, y2, w2, h2, label2) {
+          if (pts.length >= 3) {
+            d.addImage(mkHeat(pts),'PNG',x2,y2,w2,h2);
+          } else {
+            sf(d,CO.navy2); d.rect(x2,y2,w2,h2,'F');
             d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);
-            d.text(lbl,tlX,tlY,{align:'right'});
-            tlY+=4;
-            d.setFont('helvetica','bold');d.setFontSize(5.5);
-            st(d,highlight?[52,211,153]:CO.white);
-            d.text(val,tlX,tlY,{align:'right'});
-            tlY+=5;
+            d.text('no data',x2+w2/2,y2+h2/2,{align:'center'});
           }
-          tendRow('IN ZONE',inZonePct+'%', inZonePct>=55);
-          tendRow('WORKS UP',upPct+'%',    workUp);
-          tendRow('WORKS DOWN',downPct+'%',workDown);
-          tendRow('FPS',fpsPct2+'%',       fpsPct2>=60);
-
-        } else {
-          sf(d,CO.navy2);d.rect(xOff,tendY,pitW3,zTotalH,'F');
-          d.setFont('helvetica','normal');d.setFontSize(5);st(d,CO.dim);
-          d.text('No zone data',xOff+pitW3/2,tendY+zTotalH/2,{align:'center'});
+          d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);
+          d.text(label2,x2+w2/2,y2+h2+2.5,{align:'center'});
         }
+
+        drawSmallHeat(scR, xOff,         tendY, hmW2, zTotalH, 'vs RHH');
+        drawSmallHeat(scL, xOff+hmW2+3, tendY, hmW2, zTotalH, 'vs LHH');
 
         col++;
         if(col===cols3){
