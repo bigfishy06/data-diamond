@@ -930,6 +930,7 @@ function attachNotesHandlers(panel, name) {
       saveNotes(name, notes);
       input.value = '';
       refreshNotesList(panel, name);
+      document.dispatchEvent(new CustomEvent('dd-notes-updated', { detail: name }));
     });
     var input = panel.querySelector('#dd-notes-input-'+slug);
     if (input) {
@@ -946,6 +947,7 @@ function attachNotesHandlers(panel, name) {
       notes.splice(idx, 1);
       saveNotes(name, notes);
       refreshNotesList(panel, name);
+      document.dispatchEvent(new CustomEvent('dd-notes-updated', { detail: name }));
     }
   });
 }
@@ -1030,7 +1032,10 @@ function renderPlayerDetail(name, type, content) {
     '<span class="badge badge-pos">' + playerInfo.pos + '</span>' +
     (team ? '<span class="badge badge-team">' + team.abbreviation + '</span>' : '') +
     '</div>' +
+    '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap">' +
     '<h1 class="player-name-hero">' + name.toUpperCase() + '</h1>' +
+    '<div id="hero-notes-preview" style="flex-shrink:0;max-width:280px;margin-top:8px"></div>' +
+    '</div>' +
     '<div class="headline-stats" id="headline-stats"></div>' +
     '</div></section>' +
     '<div class="tabs-bar" style="margin-top:0"><div class="container"><div class="tabs">' +
@@ -1049,6 +1054,36 @@ function renderPlayerDetail(name, type, content) {
     document.getElementById('player-hero-bg').style.background =
       'radial-gradient(ellipse 80% 60% at 20% 50%, ' + hexToRgba(team.primaryColor, 0.18) + ' 0%, transparent 70%)';
   }
+
+  // Hero notes preview
+  (function() {
+    var heroNotes = document.getElementById('hero-notes-preview');
+    if (!heroNotes) return;
+    function renderHeroNotes() {
+      var notes = getNotes(name);
+      if (!notes.length) {
+        heroNotes.innerHTML = '<div style="font-family:var(--font-mono,monospace);font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.08em;cursor:pointer" onclick="document.querySelector(\'[data-tab=notes]\').click()">NO NOTES — ADD ONE</div>';
+        return;
+      }
+      heroNotes.innerHTML =
+        '<div style="background:rgba(255,184,28,0.07);border:1px solid rgba(255,184,28,0.18);border-radius:6px;padding:10px 14px;cursor:pointer" onclick="document.querySelector(\'[data-tab=notes]\').click()">' +
+        '<div style="font-family:var(--font-mono,monospace);font-size:9px;letter-spacing:0.12em;color:#FFB81C;margin-bottom:6px">NOTES (' + notes.length + ')</div>' +
+        notes.slice(-2).reverse().map(function(n) {
+          return '<div style="margin-bottom:5px">' +
+            '<span style="font-family:var(--font-mono,monospace);font-size:9px;color:#FFB81C;font-weight:600">' + escHtml(n.author) + '</span>' +
+            '<span style="font-family:var(--font-mono,monospace);font-size:9px;color:rgba(255,255,255,0.25);margin-left:6px">' + n.time + '</span>' +
+            '<div style="font-family:var(--font-body,sans-serif);font-size:11px;color:rgba(255,255,255,0.65);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px">' + escHtml(n.text.slice(0,80)) + (n.text.length>80?'…':'') + '</div>' +
+          '</div>';
+        }).join('') +
+        (notes.length > 2 ? '<div style="font-family:var(--font-mono,monospace);font-size:9px;color:rgba(255,255,255,0.3);margin-top:4px">+ ' + (notes.length-2) + ' more</div>' : '') +
+        '</div>';
+    }
+    renderHeroNotes();
+    // Refresh when notes tab posts a note
+    document.addEventListener('dd-notes-updated', function(e) {
+      if (e.detail === name) renderHeroNotes();
+    });
+  })();
 
   const hl = document.getElementById('headline-stats');
   if (type === 'batter') {
