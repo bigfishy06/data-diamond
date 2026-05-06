@@ -309,14 +309,27 @@ function getAllBatters() {
   DATA.summary.forEach(function(p) { names.add(p.batter); });
   DATA.pitches.forEach(function(p) { names.add(p.batter); });
   DATA.pbpBatters.forEach(function(p) { names.add(p.batter); });
+  // Include anyone with IBL history in 2025 who has AB > 0 (batter)
+  Object.keys(DATA.iblHistory).forEach(function(name) {
+    var seasons = DATA.iblHistory[name];
+    var has2025 = seasons.some(function(s) { return (s.season||'').indexOf('2025') !== -1 && (s.AB||0) > 0; });
+    if (has2025) names.add(name);
+  });
   return Array.from(names).sort();
 }
+
 function getAllPitchers() {
   const names = new Set();
   DATA.pitches.forEach(function(p) {
     if (p.scatter) p.scatter.forEach(function(s) { if (s.pitcher) names.add(s.pitcher); });
   });
   DATA.pbpPitchers.forEach(function(p) { names.add(p.pitcher); });
+  // Include anyone with IBL history in 2025 who has IP > 0 (pitcher)
+  Object.keys(DATA.iblHistory).forEach(function(name) {
+    var seasons = DATA.iblHistory[name];
+    var has2025 = seasons.some(function(s) { return (s.season||'').indexOf('2025') !== -1 && (s.IP||0) > 0; });
+    if (has2025) names.add(name);
+  });
   return Array.from(names).sort();
 }
 
@@ -882,9 +895,16 @@ function renderPlayerList(content) {
     listContent.innerHTML = '';
 
     if (type === 'batters') {
-      const players = DATA.pbpBatters.length
+      var players = DATA.pbpBatters.length
         ? DATA.pbpBatters.filter(function(p) { return p.AB >= 5; })
         : DATA.summary.filter(function(p) { return p.AB > 0; });
+      // Add IBL-only 2025 batters not already in the list
+      var existingNames = new Set(players.map(function(p){ return (p.batter||'').toLowerCase(); }));
+      Object.keys(DATA.iblHistory).forEach(function(name) {
+        if (existingNames.has(name.toLowerCase())) return;
+        var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1 && (s.AB||0)>0; });
+        if (s2025) players = players.concat([Object.assign({batter:name}, s2025)]);
+      });
       const card = document.createElement('div');
       card.className = 'stat-card fade-up';
       card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">All Batters</span>' +
@@ -904,12 +924,22 @@ function renderPlayerList(content) {
     } else {
       const card  = document.createElement('div');
       card.className = 'stat-card fade-up';
+      var basePitchers = DATA.pbpPitchers.length
+        ? DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; })
+        : [];
+      var existingPitcherNames = new Set(basePitchers.map(function(p){ return (p.pitcher||'').toLowerCase(); }));
+      // Add IBL-only 2025 pitchers and scatter-only pitchers
+      var allPNames = getAllPitchers();
+      allPNames.forEach(function(name) {
+        if (!existingPitcherNames.has(name.toLowerCase())) {
+          existingPitcherNames.add(name.toLowerCase());
+        }
+      });
       var pitcherHTML = DATA.pbpPitchers.length
-        ? buildPbpPitcherTable(DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; }))
-        : buildPitcherListTable(getAllPitchers());
-      var pitcherCount = DATA.pbpPitchers.length
-        ? DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; }).length
-        : getAllPitchers().length;
+        ? buildPbpPitcherTable(basePitchers)
+        : buildPitcherListTable(allPNames);
+      // If we have pbp pitchers, append IBL-only names as extra rows
+      var pitcherCount = allPNames.length;
       card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">All Pitchers</span>' +
         '<span class="stat-card-subtitle">' + pitcherCount + ' pitchers</span></div>' +
         '<div style="padding:16px 24px 0">' +
@@ -948,6 +978,14 @@ function renderPlayerDetail(name, type, content) {
   if (!team && type === 'pitcher' && pitchData && pitchData.scatter && pitchData.scatter.length) {
     const pt = pitchData.scatter[0].pitcher_team;
     if (pt) team = resolveTeam(pt);
+  }
+  // Fallback: resolve team from IBL history
+  if (!team) {
+    var _iblTeamSearch = (DATA.iblHistory[name] || []);
+    for (var _ti = 0; _ti < _iblTeamSearch.length; _ti++) {
+      var _ts = _iblTeamSearch[_ti];
+      if (_ts.team) { team = resolveTeam(_ts.team); if (team) break; }
+    }
   }
 
   document.title = name + ' — Data Diamond';
