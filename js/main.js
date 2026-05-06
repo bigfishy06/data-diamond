@@ -1171,27 +1171,18 @@ function renderPlayerDetail(name, type, content) {
     _allSeasonOpts.push({ label: yr, year: yr });
   });
 
-  // Fallback: if no scatter dates, pull years from iblHistory
+  // Fallback: if no scatter dates, pull years from iblHistory — but only show 2025
   if (!_allSeasonOpts.length) {
-    (DATA.iblHistory[name] || []).forEach(function(s) {
-      if (!s.season) return;
-      var m = s.season.match(/(\d{4})/);
-      if (!m) return;
-      var yr = m[1];
-      var hasData = type === 'pitcher' ? s.IP > 0 : s.AB > 0;
-      if (!hasData || _seenYears[yr]) return;
-      _seenYears[yr] = true;
-      _allSeasonOpts.push({ label: yr, year: yr });
+    var has2025ibl = (DATA.iblHistory[name] || []).some(function(s) {
+      return (s.season||'').indexOf('2025') !== -1 && (type === 'pitcher' ? s.IP > 0 : s.AB > 0);
     });
+    if (has2025ibl && !_seenYears['2025']) {
+      _seenYears['2025'] = true;
+      _allSeasonOpts.push({ label: '2025', year: '2025' });
+    }
   }
 
   _allSeasonOpts.sort(function(a, b) { return parseInt(b.year) - parseInt(a.year); });
-
-  // Always ensure 2025 is present
-  if (!_allSeasonOpts.find(function(o){ return o.year === '2025'; })) {
-    _allSeasonOpts.push({ label: '2025', year: '2025' });
-    _allSeasonOpts.sort(function(a, b) { return parseInt(b.year) - parseInt(a.year); });
-  }
 
   // Default to all (2025 is the only season anyway)
   var activeSeasonFilter = 'all';
@@ -2455,6 +2446,26 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     }
 
     if (!allBars.length) {
+      // IBL-only fallback — show slash stats from IBL history
+      var _iblPct = ((DATA.iblHistory[name]||[]).filter(function(s){ return s.AB>0; }))[0]||null;
+      if (_iblPct) {
+        var lgAvg  = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length?s[0].AVG:null; }).filter(function(v){return v!=null;});
+        var lgObp  = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length?s[0].OBP:null; }).filter(function(v){return v!=null;});
+        var lgSlg  = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length?s[0].SLG:null; }).filter(function(v){return v!=null;});
+        var lgOps  = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length?s[0].OPS:null; }).filter(function(v){return v!=null;});
+        function lpIbl(val, arr) { if (!arr.length||val==null) return 0; var below=arr.filter(function(v){return v<val;}).length; return (below+0.5)/arr.length; }
+        allBars = [
+          { lbl:'BA',  val:_iblPct.AVG!=null?fmt3(_iblPct.AVG):'—', pct:lpIbl(_iblPct.AVG,lgAvg),  good:true },
+          { lbl:'OBP', val:_iblPct.OBP!=null?fmt3(_iblPct.OBP):'—', pct:lpIbl(_iblPct.OBP,lgObp),  good:true },
+          { lbl:'SLG', val:_iblPct.SLG!=null?fmt3(_iblPct.SLG):'—', pct:lpIbl(_iblPct.SLG,lgSlg),  good:true },
+          { lbl:'OPS', val:_iblPct.OPS!=null?fmt3(_iblPct.OPS):'—', pct:lpIbl(_iblPct.OPS,lgOps),  good:true },
+          { lbl:'HR',  val:_iblPct.HR !=null?fmtN(_iblPct.HR) :'—', pct:pctRankB(_iblPct.HR,lgHr2), good:true },
+          { lbl:'RBI', val:_iblPct.RBI!=null?fmtN(_iblPct.RBI):'—', pct:pctRankB(_iblPct.RBI,lgRbi2),good:true },
+        ].filter(function(b){return b.val!=='—';});
+      }
+    }
+
+    if (!allBars.length) {
       return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No data available</h3></div>';
     }
 
@@ -2691,6 +2702,23 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     }, 80);
 
     return html;
+  }
+
+  // IBL-only pitcher fallback
+  var _iblPitPct = ((DATA.iblHistory[name]||[]).filter(function(s){ return s.IP>0; }))[0]||null;
+  if (_iblPitPct) {
+    var lgEra2 = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.IP>0;}); return s.length&&s[0].ERA!=null?s[0].ERA:null; }).filter(function(v){return v!=null;});
+    var lgWhip2= Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.IP>0;}); return s.length&&s[0].WHIP!=null?s[0].WHIP:null; }).filter(function(v){return v!=null;});
+    function lpIbl2(val,arr,invert){ if(!arr.length||val==null) return 0; var below=arr.filter(function(v){return v<val;}).length; var p=(below+0.5)/arr.length; return invert?1-p:p; }
+    var iblBars = [
+      { lbl:'ERA',  val:_iblPitPct.ERA !=null?fmt2(_iblPitPct.ERA) :'—', pct:lpIbl2(_iblPitPct.ERA, lgEra2, true), good:true },
+      { lbl:'WHIP', val:_iblPitPct.WHIP!=null?fmt2(_iblPitPct.WHIP):'—', pct:lpIbl2(_iblPitPct.WHIP,lgWhip2,true), good:true },
+      { lbl:'IP',   val:_iblPitPct.IP  !=null?fmtIP(_iblPitPct.IP) :'—', pct:0.5, good:true },
+    ].filter(function(b){return b.val!=='—';});
+    if (iblBars.length) {
+      return buildFilteredCard('pct-pitcher','Percentile Stats',
+        (_iblPitPct.IP||0)+' IP', iblBars, 80, null, null);
+    }
   }
 
   return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No data available</h3></div>';
@@ -3901,10 +3929,16 @@ function buildSplitsTables(points) {
 function buildHittingTable(players) {
   const sorted = players.slice().sort(function(a,b){ return a.batter.localeCompare(b.batter); });
   const rows = sorted.map(function(p) {
-    const team = resolveTeam(p.batter_team);
+    const team = resolveTeam(p.batter_team || p.team);
+    // Also try IBL history for team if still not found
+    var teamDisplay = team ? team.abbreviation : (function() {
+      var iblS = (DATA.iblHistory[p.batter] || []).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
+      if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
+      return '—';
+    })();
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + p.batter + '" data-type="batter">' + p.batter + '</a></td>' +
-      '<td>' + (team ? team.abbreviation : '—') + '</td>' +
+      '<td>' + teamDisplay + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
@@ -3935,9 +3969,14 @@ function buildPitcherListTable(names) {
       bp.scatter.forEach(function(s) { if (s.pitcher === name) pts.push(s); });
     });
     const team = pts.length ? resolveTeam(pts[0].pitcher_team) : null;
+    var teamDisplay = team ? team.abbreviation : (function() {
+      var iblS = (DATA.iblHistory[name] || []).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
+      if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
+      return '—';
+    })();
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + name + '" data-type="pitcher">' + name + '</a></td>' +
-      '<td>' + (team ? team.abbreviation : '—') + '</td>' +
+      '<td>' + teamDisplay + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
