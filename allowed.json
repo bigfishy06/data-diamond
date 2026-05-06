@@ -1,9 +1,31 @@
 {
   "users": [
-    {
-      "email": "christiansturgeon06@gmail.com",
-      "role": "catcher",
-      "player": "Christian Meagher-Sturgeon"
-    }
+    { "email": "christiansturgeon06@gmail.com", "role": "admin", "player": "Christian Meagher-Sturgeon" },
+    { "email": "gugliettisean@gmail.com",        "role": "admin", "player": "Sean Guglietti" },
+    { "email": "jeffbermudez@gmail.com",          "role": "admin", "player": "Jeff Bermudez" },
+    { "email": "davisnickel@gmail.com",           "role": "admin", "player": "Davis Nickel" },
+    { "email": "colin@shier.ca",                  "role": "admin", "player": "Colin Shier" },
+    { "email": "colin@gordshier.com",             "role": "admin", "player": "Colin Shier" },
+    { "email": "76marcanthony76@gmail.com",       "role": "admin", "player": "Marc-Anthony Armenio" },
+    { "email": "eakinryan13@gmail.com",           "role": "admin", "player": "Ryan Eakin" },
+
+    { "email": "damontopolie@gmail.com",          "role": "catcher", "player": "Damon Topolie" },
+    { "email": "mattyward10.01@gmail.com",        "role": "catcher", "player": "Matthew Ward" },
+
+    { "email": "andyleader27@gmail.com",          "role": "position_player", "player": "Andy Leader" },
+    { "email": "bdeans9191@gmail.com",            "role": "position_player", "player": "Brandon Deans" },
+    { "email": "carsonburns10@gmail.com",         "role": "position_player", "player": "Carson Burns" },
+    { "email": "morroconner@gmail.com",           "role": "position_player", "player": "Conner Morro" },
+    { "email": "franktorres305@gmail.com",        "role": "position_player", "player": "Franklin Torres" },
+    { "email": "garrett.takamatsu41@gmail.com",  "role": "position_player", "player": "Garrett Takamatsu" },
+    { "email": "jdsalmonwilliams@gmail.com",      "role": "position_player", "player": "J.D. Williams" },
+    { "email": "jacob.8kush@gmail.com",           "role": "position_player", "player": "Jacob Kush" },
+    { "email": "k.kush319@gmail.com",             "role": "position_player", "player": "Kyle Kush" },
+    { "email": "marekdeska33@gmail.com",          "role": "position_player", "player": "Marek Deska" },
+    { "email": "ryanbsantos4@gmail.com",          "role": "position_player", "player": "Ryan Dos Santos" },
+    { "email": "marcoscas2017@gmail.com",         "role": "position_player", "player": "Marcos Castillo" },
+    { "email": "luca.boscarino11@gmail.com",      "role": "position_player", "player": "Luca Boscarino" },
+    { "email": "dustinrichardson54@gmail.com",    "role": "position_player", "player": "Dustin Richardson" },
+    { "email": "lirianoelvin@gmail.com",          "role": "position_player", "player": "Elvin Liriano" }
   ]
 }
