@@ -870,31 +870,31 @@
           d.text(c[0],x+scw/2,y+10.8,{align:'center'});
         });
 
-        // Donut helper using jsPDF polygon (lines with closed path)
+        // Donut helper — renders to canvas then adds as image
         function drawDonut(cx,cy,R,r,segs,label) {
-          var start = -Math.PI/2;
-          var steps = 16;
+          var size=Math.round(R*2+4)*4;
+          var can=document.createElement('canvas'); can.width=size; can.height=size;
+          var ctx=can.getContext('2d');
+          var ox=size/2, oy=size/2, scale=size/(R*2+4);
+          var start=-Math.PI/2;
           segs.forEach(function(seg){
             if(!seg.v||seg.v<=0) return;
-            var sweep = seg.v/100 * 2*Math.PI;
-            var end = start+sweep;
-            var lines = [];
-            // outer arc forward
-            for(var k=0;k<steps;k++){
-              var a1=start+k/steps*sweep, a2=start+(k+1)/steps*sweep;
-              lines.push([R*Math.cos(a2)-R*Math.cos(a1), R*Math.sin(a2)-R*Math.sin(a1)]);
-            }
-            // line to inner arc
-            lines.push([r*Math.cos(end)-R*Math.cos(end), r*Math.sin(end)-R*Math.sin(end)]);
-            // inner arc backward
-            for(var k2=steps;k2>0;k2--){
-              var a3=start+k2/steps*sweep, a4=start+(k2-1)/steps*sweep;
-              lines.push([r*Math.cos(a4)-r*Math.cos(a3), r*Math.sin(a4)-r*Math.sin(a3)]);
-            }
-            d.setFillColor(seg.c[0],seg.c[1],seg.c[2]);
-            d.lines(lines, cx+R*Math.cos(start), cy+R*Math.sin(start), [1,1], 'F', true);
-            start = end;
+            var sweep=seg.v/100*2*Math.PI;
+            ctx.beginPath();
+            ctx.moveTo(ox+r*scale*Math.cos(start),oy+r*scale*Math.sin(start));
+            ctx.arc(ox,oy,R*scale,start,start+sweep);
+            ctx.arc(ox,oy,r*scale,start+sweep,start,true);
+            ctx.closePath();
+            ctx.fillStyle='rgb('+seg.c[0]+','+seg.c[1]+','+seg.c[2]+')';
+            ctx.fill();
+            start+=sweep;
           });
+          // center hole fill
+          ctx.beginPath(); ctx.arc(ox,oy,r*scale,0,2*Math.PI);
+          ctx.fillStyle='rgb(14,21,37)'; ctx.fill();
+          var img=can.toDataURL('image/png');
+          var mmSize=R*2+2;
+          d.addImage(img,'PNG',cx-R,cy-R,mmSize,mmSize);
           d.setFont('helvetica','bold'); d.setFontSize(4); st(d,CO.dim);
           d.text(label, cx, cy+1.5, {align:'center'});
         }
@@ -1162,10 +1162,10 @@
               var t=cnt/maxZ;
               var fc;
               if(t<0.15)      fc=[14,21,37];
-              else if(t<0.35) fc=[20,60,120];
-              else if(t<0.55) fc=[0,120,180];
-              else if(t<0.75) fc=[220,120,0];
-              else            fc=[200,40,40];
+              else if(t<0.35) fc=[60,100,200];
+              else if(t<0.55) fc=[200,200,220];
+              else if(t<0.75) fc=[220,80,80];
+              else            fc=[210,20,20];
               d.setFillColor(fc[0],fc[1],fc[2]);
               var cx3=gx3+col3*cellW3+col3*0.4;
               var cy3=gy3+row3*cellH3+row3*0.4;
