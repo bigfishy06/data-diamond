@@ -126,33 +126,74 @@ function resolveTeam(rawName) {
 
 let DATA = { summary: [], pitches: [], pitchers: [], iblHistory: {}, pbpBatters: [], pbpPitchers: [] };
 
+// ── ACCESS CONTROL ─────────────────────────────────
+const ACCESS = {
+  GUELPH_NAMES: ['Guelph Royals', 'guelph royals', 'GUE', 'gue'],
+
+  getUser: function() {
+    try { return JSON.parse(localStorage.getItem('dd_user') || '{}'); } catch(e) { return {}; }
+  },
+
+  isGuelph: function(teamName) {
+    if (!teamName) return false;
+    var t = teamName.toLowerCase();
+    return t.includes('guelph') || t === 'gue';
+  },
+
+  // Can this user view this player page?
+  canViewPlayer: function(playerName, playerType, playerTeamName) {
+    var u = this.getUser();
+    var role = u.role || 'admin';
+    if (role === 'admin') return true;
+
+    var ownPlayer = (u.player || '').toLowerCase().trim();
+    var isOwnPlayer = ownPlayer && playerName.toLowerCase().trim() === ownPlayer;
+    if (isOwnPlayer) return true;
+
+    var isGuelphPlayer = this.isGuelph(playerTeamName);
+
+    if (role === 'catcher') {
+      // Own player + all Guelph pitchers + all non-Guelph players
+      if (!isGuelphPlayer) return true;
+      if (playerType === 'pitcher' && isGuelphPlayer) return true;
+      return false; // Guelph batter that isn't them
+    }
+
+    if (role === 'position_player') {
+      // Own player + all non-Guelph players
+      if (!isGuelphPlayer) return true;
+      return false; // any other Guelph player
+    }
+
+    return false;
+  },
+
+  // Can this user view/generate scouting for this team?
+  canScoutTeam: function(teamName) {
+    var u = this.getUser();
+    var role = u.role || 'admin';
+    if (role === 'admin') return true;
+    return !this.isGuelph(teamName);
+  },
+
+  // Restricted message HTML
+  restrictedHTML: function(playerName) {
+    return '<div style="display:flex;align-items:center;justify-content:center;min-height:300px">' +
+      '<div style="text-align:center;max-width:420px;padding:40px">' +
+      '<div style="font-family:var(--font-display),sans-serif;font-size:32px;letter-spacing:0.1em;color:#f87171;margin-bottom:12px">ACCESS RESTRICTED</div>' +
+      '<div style="font-family:var(--font-mono),monospace;font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7">' +
+      'You do not have permission to view <strong style="color:rgba(255,255,255,0.7)">' + (playerName||'this player') + '</strong>.<br>' +
+      'Access to teammate data is restricted for security and competitive reasons.<br><br>' +
+      'Contact your administrator if you believe this is an error.' +
+      '</div></div></div>';
+  }
+};
+
+
 // ── INIT ──────────────────────────────────────────
 async function init() {
+  // Auth gate: stop here if user is not signed in
   if (!AUTH.init()) return;
-
-  // Inject notes styles
-  var notesSt = document.createElement('style');
-  notesSt.textContent = `
-    .dd-notes-panel { background:var(--card-bg,#161e30); border:1px solid rgba(255,184,28,0.15); border-radius:6px; padding:20px; max-width:700px; }
-    .dd-notes-header { font-family:var(--font-display,'Bebas Neue'),sans-serif; font-size:16px; letter-spacing:0.12em; color:#FFB81C; margin-bottom:14px; }
-    .dd-notes-list { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
-    .dd-note { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:5px; padding:10px 14px; }
-    .dd-note-meta { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
-    .dd-note-author { font-family:var(--font-mono,'DM Mono'),monospace; font-size:11px; font-weight:600; color:#FFB81C; }
-    .dd-note-time { font-family:var(--font-mono,'DM Mono'),monospace; font-size:10px; color:rgba(255,255,255,0.3); flex:1; }
-    .dd-note-del { background:none; border:1px solid rgba(255,255,255,0.1); border-radius:3px; color:rgba(255,255,255,0.3); cursor:pointer; font-size:11px; padding:1px 6px; line-height:1.4; }
-    .dd-note-del:hover { color:#f87171; border-color:#f87171; }
-    .dd-note-text { font-family:var(--font-body,'Inter'),sans-serif; font-size:13px; color:rgba(255,255,255,0.8); line-height:1.6; white-space:pre-wrap; }
-    .dd-note-empty { font-family:var(--font-mono,'DM Mono'),monospace; font-size:12px; color:rgba(255,255,255,0.2); padding:8px 0; }
-    .dd-notes-compose { display:flex; flex-direction:column; gap:8px; border-top:1px solid rgba(255,255,255,0.06); padding-top:14px; }
-    .dd-notes-input { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:4px; color:#fff; font-family:var(--font-body,'Inter'),sans-serif; font-size:13px; padding:10px 12px; resize:vertical; outline:none; min-height:80px; }
-    .dd-notes-input:focus { border-color:rgba(255,184,28,0.4); background:rgba(255,184,28,0.03); }
-    .dd-notes-input::placeholder { color:rgba(255,255,255,0.2); }
-    .dd-notes-submit { align-self:flex-end; background:#FFB81C; border:none; border-radius:4px; color:#0e1525; font-family:var(--font-display,'Bebas Neue'),sans-serif; font-size:15px; letter-spacing:0.08em; padding:8px 22px; cursor:pointer; transition:background 0.2s; }
-    .dd-notes-submit:hover { background:#ffc94d; }
-    .dd-notes-hint { font-family:var(--font-mono,'DM Mono'),monospace; font-size:10px; color:rgba(255,255,255,0.2); align-self:flex-end; }
-  `;
-  document.head.appendChild(notesSt);
 
   await loadAll();
   buildTicker();
@@ -795,7 +836,24 @@ function initPlayersPage() {
   const content    = document.getElementById('page-content');
 
   if (playerName) {
-    renderPlayerDetail(decodeURIComponent(playerName), playerType, content);
+    var decodedName = decodeURIComponent(playerName);
+    // Resolve team for access check
+    var _sum = DATA.summary.find(function(p){ return p.batter === decodedName; });
+    var _pit = DATA.pitchers.find(function(p){ return p.pitcher === decodedName; });
+    var _teamName = _sum ? _sum.batter_team : (_pit ? _pit.team : null);
+    if (!_teamName) {
+      // Try from scatter
+      DATA.pitches.forEach(function(bp) {
+        if (!bp.scatter) return;
+        var hit = bp.scatter.find(function(s){ return (s.pitcher===decodedName||s.batter===decodedName); });
+        if (hit && !_teamName) _teamName = hit.pitcher_team || hit.batter_team;
+      });
+    }
+    if (!ACCESS.canViewPlayer(decodedName, playerType, _teamName)) {
+      content.innerHTML = ACCESS.restrictedHTML(decodedName);
+    } else {
+      renderPlayerDetail(decodedName, playerType, content);
+    }
   } else {
     renderPlayerList(content);
   }
@@ -872,102 +930,6 @@ function renderPlayerList(content) {
   renderList('batters');
 }
 
-// ── PLAYER NOTES ─────────────────────────────────────────────────────────
-function notesKey(name) { return 'dd_notes_' + name.toLowerCase().replace(/\s+/g,'_'); }
-
-function getNotes(name) {
-  try { return JSON.parse(localStorage.getItem(notesKey(name)) || '[]'); } catch(e) { return []; }
-}
-
-function saveNotes(name, notes) {
-  localStorage.setItem(notesKey(name), JSON.stringify(notes));
-}
-
-function buildNotesPanel(name) {
-  var user = (function(){ try { return JSON.parse(localStorage.getItem('dd_user')||'{}'); } catch(e){ return {}; } })();
-  var userName = user.name || user.email || 'Anonymous';
-  var notes = getNotes(name);
-  var notesHTML = notes.length ? notes.map(function(n, i) {
-    return '<div class="dd-note" data-idx="'+i+'">' +
-      '<div class="dd-note-meta"><span class="dd-note-author">'+escHtml(n.author)+'</span>' +
-      '<span class="dd-note-time">'+n.time+'</span>' +
-      '<button class="dd-note-del" data-idx="'+i+'" title="Delete">x</button></div>' +
-      '<div class="dd-note-text">'+escHtml(n.text)+'</div>' +
-    '</div>';
-  }).join('') : '<div class="dd-note-empty">No notes yet.</div>';
-
-  return '<div class="dd-notes-panel">' +
-    '<div class="dd-notes-header">NOTES — ' + escHtml(name.toUpperCase()) + '</div>' +
-    '<div class="dd-notes-list" id="dd-notes-list-'+slugify(name)+'">'+notesHTML+'</div>' +
-    '<div class="dd-notes-compose">' +
-      '<textarea class="dd-notes-input" id="dd-notes-input-'+slugify(name)+'" placeholder="Add a scouting note… (Ctrl+Enter to post)" rows="4"></textarea>' +
-      '<div style="display:flex;align-items:center;justify-content:space-between">' +
-        '<span class="dd-notes-hint">Posting as ' + escHtml(userName) + '</span>' +
-        '<button class="dd-notes-submit" data-player="'+escHtml(name)+'">Post Note</button>' +
-      '</div>' +
-    '</div>' +
-  '</div>';
-}
-
-function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]/g,'_'); }
-function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-function attachNotesHandlers(panel, name) {
-  var user = (function(){ try { return JSON.parse(localStorage.getItem('dd_user')||'{}'); } catch(e){ return {}; } })();
-  var userName = user.name || user.email || 'Anonymous';
-  var slug = slugify(name);
-
-  var submitBtn = panel.querySelector('.dd-notes-submit[data-player]');
-  if (submitBtn) {
-    submitBtn.addEventListener('click', function() {
-      var input = panel.querySelector('#dd-notes-input-'+slug);
-      var text = (input.value || '').trim();
-      if (!text) return;
-      var notes = getNotes(name);
-      var now = new Date();
-      var timeStr = now.toLocaleDateString('en-CA') + ' ' + now.toLocaleTimeString('en-CA', {hour:'2-digit',minute:'2-digit'});
-      notes.push({ author: userName, text: text, time: timeStr });
-      saveNotes(name, notes);
-      input.value = '';
-      refreshNotesList(panel, name);
-      document.dispatchEvent(new CustomEvent('dd-notes-updated', { detail: name }));
-    });
-    var input = panel.querySelector('#dd-notes-input-'+slug);
-    if (input) {
-      input.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) submitBtn.click();
-      });
-    }
-  }
-
-  panel.addEventListener('click', function(e) {
-    if (e.target.classList.contains('dd-note-del')) {
-      var idx = parseInt(e.target.dataset.idx);
-      var notes = getNotes(name);
-      notes.splice(idx, 1);
-      saveNotes(name, notes);
-      refreshNotesList(panel, name);
-      document.dispatchEvent(new CustomEvent('dd-notes-updated', { detail: name }));
-    }
-  });
-}
-
-function refreshNotesList(panel, name) {
-  var slug = slugify(name);
-  var list = panel.querySelector('#dd-notes-list-'+slug);
-  if (!list) return;
-  var notes = getNotes(name);
-  if (!notes.length) { list.innerHTML = '<div class="dd-note-empty">No notes yet.</div>'; return; }
-  list.innerHTML = notes.map(function(n, i) {
-    return '<div class="dd-note" data-idx="'+i+'">' +
-      '<div class="dd-note-meta"><span class="dd-note-author">'+escHtml(n.author)+'</span>' +
-      '<span class="dd-note-time">'+n.time+'</span>' +
-      '<button class="dd-note-del" data-idx="'+i+'" title="Delete">x</button></div>' +
-      '<div class="dd-note-text">'+escHtml(n.text)+'</div>' +
-    '</div>';
-  }).join('');
-}
-
 function renderPlayerDetail(name, type, content) {
   const sum   = getSummaryPlayer(name);
   const pitch = getPitchPlayer(name);
@@ -1032,10 +994,7 @@ function renderPlayerDetail(name, type, content) {
     '<span class="badge badge-pos">' + playerInfo.pos + '</span>' +
     (team ? '<span class="badge badge-team">' + team.abbreviation + '</span>' : '') +
     '</div>' +
-    '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap">' +
     '<h1 class="player-name-hero">' + name.toUpperCase() + '</h1>' +
-    '<div id="hero-notes-preview" style="flex-shrink:0;max-width:280px;margin-top:8px"></div>' +
-    '</div>' +
     '<div class="headline-stats" id="headline-stats"></div>' +
     '</div></section>' +
     '<div class="tabs-bar" style="margin-top:0"><div class="container"><div class="tabs">' +
@@ -1045,7 +1004,6 @@ function renderPlayerDetail(name, type, content) {
     '<button class="tab-btn" data-tab="zone">Strike Zone</button>' +
     '<button class="tab-btn" data-tab="splits">Splits</button>' +
     (type === 'pitcher' ? '<button class="tab-btn" data-tab="usage">Pitch Usage</button>' : '') +
-    '<button class="tab-btn" data-tab="notes">Notes</button>' +
     '</div></div></div>' +
 
     '<div class="container" style="padding-top:32px;padding-bottom:80px"><div id="season-filter-bar"></div><div id="player-tab-content"></div></div>';
@@ -1054,36 +1012,6 @@ function renderPlayerDetail(name, type, content) {
     document.getElementById('player-hero-bg').style.background =
       'radial-gradient(ellipse 80% 60% at 20% 50%, ' + hexToRgba(team.primaryColor, 0.18) + ' 0%, transparent 70%)';
   }
-
-  // Hero notes preview
-  (function() {
-    var heroNotes = document.getElementById('hero-notes-preview');
-    if (!heroNotes) return;
-    function renderHeroNotes() {
-      var notes = getNotes(name);
-      if (!notes.length) {
-        heroNotes.innerHTML = '<div style="font-family:var(--font-mono,monospace);font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.08em;cursor:pointer" onclick="document.querySelector(\'[data-tab=notes]\').click()">NO NOTES — ADD ONE</div>';
-        return;
-      }
-      heroNotes.innerHTML =
-        '<div style="background:rgba(255,184,28,0.07);border:1px solid rgba(255,184,28,0.18);border-radius:6px;padding:10px 14px;cursor:pointer" onclick="document.querySelector(\'[data-tab=notes]\').click()">' +
-        '<div style="font-family:var(--font-mono,monospace);font-size:9px;letter-spacing:0.12em;color:#FFB81C;margin-bottom:6px">NOTES (' + notes.length + ')</div>' +
-        notes.slice(-2).reverse().map(function(n) {
-          return '<div style="margin-bottom:5px">' +
-            '<span style="font-family:var(--font-mono,monospace);font-size:9px;color:#FFB81C;font-weight:600">' + escHtml(n.author) + '</span>' +
-            '<span style="font-family:var(--font-mono,monospace);font-size:9px;color:rgba(255,255,255,0.25);margin-left:6px">' + n.time + '</span>' +
-            '<div style="font-family:var(--font-body,sans-serif);font-size:11px;color:rgba(255,255,255,0.65);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px">' + escHtml(n.text.slice(0,80)) + (n.text.length>80?'…':'') + '</div>' +
-          '</div>';
-        }).join('') +
-        (notes.length > 2 ? '<div style="font-family:var(--font-mono,monospace);font-size:9px;color:rgba(255,255,255,0.3);margin-top:4px">+ ' + (notes.length-2) + ' more</div>' : '') +
-        '</div>';
-    }
-    renderHeroNotes();
-    // Refresh when notes tab posts a note
-    document.addEventListener('dd-notes-updated', function(e) {
-      if (e.detail === name) renderHeroNotes();
-    });
-  })();
 
   const hl = document.getElementById('headline-stats');
   if (type === 'batter') {
@@ -1156,12 +1084,8 @@ function renderPlayerDetail(name, type, content) {
       });
     }
     tabContent.appendChild(panel);
-    if (t === 'zone')  renderZone(name, type, pitchData, panel, activeSeasonFilter);
-    if (t === 'usage') panel.innerHTML = renderPitchUsage(name, pitchData);
-    if (t === 'notes') {
-      panel.innerHTML = buildNotesPanel(name);
-      attachNotesHandlers(panel, name);
-    }
+    if (t === 'zone')     renderZone(name, type, pitchData, panel, activeSeasonFilter);
+    if (t === 'usage')    panel.innerHTML = renderPitchUsage(name, pitchData);
     setTimeout(function() {
       panel.querySelectorAll('.sbr-fill').forEach(function(el) {
         if (el.dataset.width) el.style.width = el.dataset.width;
@@ -4009,9 +3933,22 @@ function initTableSort(table) {
 
 function initPlayerLinks(container, type) {
   container.querySelectorAll('[data-name]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      navigate('players.html?player=' + encodeURIComponent(el.dataset.name) + '&type=' + (el.dataset.type || type));
-    });
+    var pName = el.dataset.name;
+    var pType = el.dataset.type || type;
+    // Resolve team
+    var _s = DATA.summary.find(function(p){ return p.batter === pName; });
+    var _p = DATA.pitchers.find(function(p){ return p.pitcher === pName; });
+    var _t = _s ? _s.batter_team : (_p ? _p.team : null);
+    if (!ACCESS.canViewPlayer(pName, pType, _t)) {
+      el.style.cursor = 'not-allowed';
+      el.style.opacity = '0.4';
+      el.title = 'Access restricted';
+      el.addEventListener('click', function(e) { e.stopPropagation(); e.preventDefault(); });
+    } else {
+      el.addEventListener('click', function() {
+        navigate('players.html?player=' + encodeURIComponent(pName) + '&type=' + pType);
+      });
+    }
   });
 }
 

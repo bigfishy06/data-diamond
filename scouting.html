@@ -536,7 +536,11 @@
         <a href="teams.html"    class="nav-link">Team Stats</a>
         <a href="players.html"  class="nav-link">Player Stats</a>
         <a href="scouting.html" class="nav-link active">Scouting</a>
+        <a href="tracking.html" class="nav-link">Tracking</a>
       </nav>
+      <div class="header-search">
+        <input type="text" id="global-search" placeholder="Search players…" autocomplete="off" />
+        <div id="search-dropdown" class="search-dropdown hidden"></div>
       </div>
     </div>
   </header>
@@ -674,19 +678,43 @@
 
   var selTeam = null, selType = 'batter';
 
+  // ── Scouting access control ──────────────────────
+  function scoutingAccess() {
+    try { return JSON.parse(localStorage.getItem('dd_user') || '{}'); } catch(e) { return {}; }
+  }
+  function canScoutTeam(teamName) {
+    var u = scoutingAccess();
+    if (!u.role || u.role === 'admin') return true;
+    return !(teamName||'').toLowerCase().includes('guelph') && (teamName||'').toLowerCase() !== 'gue';
+  }
+  function canScoutPlayer(playerName) {
+    var u = scoutingAccess();
+    if (!u.role || u.role === 'admin') return true;
+    if (u.player && playerName.toLowerCase().trim() === u.player.toLowerCase().trim()) return true;
+    return true; // individual player access is handled at team level
+  }
+
   function buildTeamPicker() {
     var grid = document.getElementById('team-picker');
     TEAMS_SC.forEach(function(t) {
       var btn = document.createElement('button');
-      btn.className = 'team-pick-btn';
-      btn.innerHTML = '<div class="team-pick-abbr" style="color:'+t.color+'">'+t.abbr+'</div>' +
-                      '<div class="team-pick-name">'+t.name+'</div>';
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.team-pick-btn').forEach(function(b){ b.classList.remove('active'); });
-        btn.classList.add('active');
-        selTeam = t.id;
-        renderPlayerList();
-      });
+      var allowed = canScoutTeam(t.name);
+      btn.className = 'team-pick-btn' + (allowed ? '' : ' team-pick-locked');
+      btn.innerHTML = '<div class="team-pick-abbr" style="color:'+(allowed?t.color:'#555')+'">'+t.abbr+'</div>' +
+                      '<div class="team-pick-name" style="color:'+(allowed?'':'rgba(255,255,255,0.3)')+'">'+t.name+'</div>' +
+                      (!allowed ? '<div style="font-size:9px;color:#f87171;letter-spacing:0.05em">RESTRICTED</div>' : '');
+      if (allowed) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.team-pick-btn').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          selTeam = t.id;
+          renderPlayerList();
+        });
+      } else {
+        btn.style.cursor = 'not-allowed';
+        btn.style.opacity = '0.5';
+        btn.title = 'Access restricted — Guelph Royals scouting not available';
+      }
       grid.appendChild(btn);
     });
   }
@@ -718,20 +746,15 @@
 
   function getPitchPlayer(batterName) {
     var sc = [];
-    var nameLower = batterName.toLowerCase();
     DATA.pitches.forEach(function(bp) {
       if (!bp.scatter) return;
-      bp.scatter.forEach(function(s) {
-        if (s.batter && s.batter.toLowerCase() === nameLower) sc.push(s);
-      });
+      bp.scatter.forEach(function(s) { if (s.batter === batterName) sc.push(s); });
     });
     return sc.length ? { scatter: sc } : null;
   }
 
   function f3(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(3).replace('0.','.'); }
-  function hexRGB(hex){ var h=hex.length===4?'#'+hex[1]+hex[1]+hex[2]+hex[2]+hex[3]+hex[3]:hex; return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]; }
   function f1(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(1); }
-  function f2(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(2); }
   function fN(v){ if(v==null||isNaN(v)) return '—'; return String(Math.round(v)); }
   function xp(n,d){ return d>0?n/d*100:0; }
 
@@ -1170,12 +1193,14 @@
   }
 
   function addCharts(d,sc,y){
-    var iw=80,ih=72,gap=CPW-iw*2;
+    var iw=58,ih=66,gap=(CPW-iw*3)/2;
     d.addImage(mkScatter(sc),'PNG',ML,y,iw,ih);
-    d.addImage(mkHeat(sc),'PNG',ML+iw+gap,y,iw,ih);
+    d.addImage(mkGrid(sc),'PNG',ML+iw+gap,y,iw,ih);
+    d.addImage(mkHeat(sc),'PNG',ML+(iw+gap)*2,y,iw,ih);
     d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
     d.text('Scatter',ML+iw/2,y+ih+3,{align:'center'});
-    d.text('Heat Map',ML+iw+gap+iw/2,y+ih+3,{align:'center'});
+    d.text('Zone Grid',ML+iw+gap+iw/2,y+ih+3,{align:'center'});
+    d.text('Heat Map',ML+(iw+gap)*2+iw/2,y+ih+3,{align:'center'});
     return y+ih+8;
   }
 
@@ -1186,50 +1211,40 @@
     drawBg(d);drawHdr(d,player.name,'BATTER',team);
     var y=MT+32;
 
-    // ── Key stats boxes — IBL history for AVG/OBP/SLG/OPS/HR/RBI ────────────
-    var _iblPDF=(DATA.iblHistory[player.name]||[]).filter(function(r){return r.AB>0;});
-    var _iblPDFS=_iblPDF.length?_iblPDF[0]:null;
-    var pdfAVG=_iblPDFS&&_iblPDFS.AVG!=null?f3(_iblPDFS.AVG):(s?f3(s.AVG):'—');
-    var pdfOBP=_iblPDFS&&_iblPDFS.OBP!=null?f3(_iblPDFS.OBP):(s?f3(s.OBP):'—');
-    var pdfSLG=_iblPDFS&&_iblPDFS.SLG!=null?f3(_iblPDFS.SLG):(s?f3(s.SLG):'—');
-    var pdfOPS=_iblPDFS&&_iblPDFS.OPS!=null?f3(_iblPDFS.OPS):(s?f3(s.OPS):'—');
-    var pdfHR =_iblPDFS&&_iblPDFS.HR !=null?fN(_iblPDFS.HR) :(s?fN(s.HR):'—');
-    var pdfRBI=_iblPDFS&&_iblPDFS.RBI!=null?fN(_iblPDFS.RBI):(s?fN(s.RBI):'—');
-    y=drawBoxes(d,[['AVG',pdfAVG],['OBP',pdfOBP],['SLG',pdfSLG],['OPS',pdfOPS],['HR',pdfHR],['RBI',pdfRBI]],y);
+    // ── Key stats boxes ──────────────────────────────────────────────────
+    y=drawBoxes(d,[['AVG',f3(s.AVG)],['OBP',f3(s.OBP)],['SLG',f3(s.SLG)],['OPS',f3(s.OPS)],['HR',fN(s.HR)],['RBI',fN(s.RBI)]],y);
     y+=4;
 
     // ── Scout Summary — 6 highlight cards: AVG, OPS, FP Swing%, Swing%, Whiff%, Chase% ──
     y=drawSec(d,'Scout Summary',y);
     var avg=s.AVG||0,ops=s.OPS||0,pa=s.PA||1,bb=s.BB||0,k=s.K||0;
 
-    // Compute scatter-based discipline stats — use allSc (not just x/y filtered sc)
-    var discSc = allSc.length >= sc.length ? allSc : sc;
-    var fpPitches=discSc.filter(function(s2,i){
+    // Compute scatter-based discipline stats
+    var fpPitches=sc.filter(function(s2,i){
       if(i===0)return true;
-      var prev=discSc[i-1];
+      var prev=sc[i-1];
       return(s2.batter!==prev.batter||s2.inning!==prev.inning||s2.half_inning!==prev.half_inning);
     });
     var fpSwingN=fpPitches.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
     var fpSwingPct=fpPitches.length>=5?fpSwingN/fpPitches.length*100:null;
 
-    var swingPitches=discSc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-    var swingPct=discSc.length>=5?swingPitches/discSc.length*100:null;
+    var swingPitches=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
+    var swingPct=sc.length>=5?swingPitches/sc.length*100:null;
 
-    var whiffSwings=discSc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-    var whiffN=discSc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
+    var whiffSwings=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
+    var whiffN=sc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
     var whiffPct=whiffSwings>=5?whiffN/whiffSwings*100:null;
 
-    var outOfZone=discSc.filter(function(s2){return s2.x!=null&&(s2.x<-1||s2.x>1||s2.y<0||s2.y>1);});
+    var outOfZone=sc.filter(function(s2){return s2.x!=null&&(s2.x<-1||s2.x>1||s2.y<0||s2.y>1);});
     var chaseN=outOfZone.filter(function(s2){return['Swinging Strike','Foul','Strikeout Swinging'].includes(s2.outcome);}).length;
     var chasePct=outOfZone.length>=5?chaseN/outOfZone.length*100:null;
 
-    // PBP is authoritative for all discipline rates
+    // Use pbpBatters if available
     var pbp=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return p.batter===player.name;}):null;
     if(pbp){
       if(pbp.FP_SWING_pct!=null)fpSwingPct=pbp.FP_SWING_pct;
       if(pbp.SWING_pct!=null)swingPct=pbp.SWING_pct;
       if(pbp.WHIFF_pct!=null)whiffPct=pbp.WHIFF_pct;
-      if(pbp.CHASE_pct!=null)chasePct=pbp.CHASE_pct;
     }
 
     function hCard(label,value,color,note,sub){return{label:label,value:value,color:color,note:note,sub:sub||''};}
@@ -1255,9 +1270,7 @@
     hl.forEach(function(h,i){
       var hx=ML+i*(cardW2+4);
       d.setFillColor(13,20,40);d.rect(hx,y,cardW2,cardH2,'F');
-      var hc=h.color;
-      if(hc.length===4) hc='#'+hc[1]+hc[1]+hc[2]+hc[2]+hc[3]+hc[3];
-      var cr=parseInt(hc.slice(1,3),16),cg=parseInt(hc.slice(3,5),16),cb=parseInt(hc.slice(5,7),16);
+      var cr=parseInt(h.color.slice(1,3),16),cg=parseInt(h.color.slice(3,5),16),cb=parseInt(h.color.slice(5,7),16);
       d.setFillColor(cr,cg,cb);d.rect(hx,y,cardW2,2.5,'F');
       d.setDrawColor(cr,cg,cb);d.setLineWidth(0.3);d.rect(hx,y,cardW2,cardH2,'S');
       // Stat name (sublabel)
@@ -1280,24 +1293,22 @@
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
     y=drawSec(d,'Plate Discipline',y);
-    var pspa=s&&s.pitches_seen&&pa>0?s.pitches_seen/pa:(pbp&&pbp.PS_PA?pbp.PS_PA:null);
-    var csN=discSc.filter(function(s2){return s2.outcome==='Called Strike';}).length;
-    var ssN=discSc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
-    var discLen=discSc.length;
-    // K% and BB% — PBP first, then summary
-    var kPct2=pbp&&pbp.K_pct!=null?pbp.K_pct/100:(pa>0?k/pa:0);
-    var bbPct2=pbp&&pbp.BB_pct!=null?pbp.BB_pct/100:(pa>0?bb/pa:0);
+    var pspa=s.pitches_seen&&pa>0?s.pitches_seen/pa:null;
+    var csN=sc.filter(function(s2){return s2.outcome==='Called Strike';}).length;
+    var ssN=sc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
+    var kPct2=pa>0?k/pa:0;
+    var bbPct2=pa>0?bb/pa:0;
 
     var discStats=[
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
        color:pspa!=null?(pspa>=4.0?'#34d399':pspa>=3.5?'#FFB81C':'#f87171'):'#555',
        note:pspa!=null?(pspa>=4.0?'Works counts deeply':pspa>=3.5?'Average pitch count':'First-pitch aggressive'):''},
-      {label:'CS%',sub:'Called strike rate',val:discLen>=5?f1(csN/discLen*100)+'%':'—',
-       color:discLen>=5?(csN/discLen>=0.20?'#34d399':csN/discLen>=0.14?'#FFB81C':'#f87171'):'#555',
-       note:discLen>=5?(csN/discLen>=0.20?'Gets called often':csN/discLen>=0.14?'Average called strikes':'Rarely caught looking'):''},
-      {label:'SS%',sub:'Swinging strike rate',val:discLen>=5?f1(ssN/discLen*100)+'%':'—',
-       color:discLen>=5?(ssN/discLen>=0.12?'#34d399':ssN/discLen>=0.07?'#FFB81C':'#f87171'):'#555',
-       note:discLen>=5?(ssN/discLen>=0.12?'Misses often — use off-speed':ssN/discLen>=0.07?'Average swinging strikes':'Rarely misses contact'):''},
+      {label:'CS%',sub:'Called strike rate',val:sc.length>=5?f1(csN/sc.length*100)+'%':'—',
+       color:sc.length>=5?(csN/sc.length>=0.20?'#34d399':csN/sc.length>=0.14?'#FFB81C':'#f87171'):'#555',
+       note:sc.length>=5?(csN/sc.length>=0.20?'Gets called often':csN/sc.length>=0.14?'Average called strikes':'Rarely caught looking'):''},
+      {label:'SS%',sub:'Swinging strike rate',val:sc.length>=5?f1(ssN/sc.length*100)+'%':'—',
+       color:sc.length>=5?(ssN/sc.length>=0.12?'#34d399':ssN/sc.length>=0.07?'#FFB81C':'#f87171'):'#555',
+       note:sc.length>=5?(ssN/sc.length>=0.12?'Misses often — use off-speed':ssN/sc.length>=0.07?'Average swinging strikes':'Rarely misses contact'):''},
       {label:'K%',sub:'Strikeout rate',val:f1(kPct2*100)+'%',
        color:kPct2>=0.28?'#34d399':kPct2>=0.18?'#FFB81C':'#f87171',
        note:kPct2>=0.28?'Strikeout prone':kPct2>=0.18?'Average K rate':'Hard to strikeout'},
@@ -1308,7 +1319,7 @@
     var nDisc=discStats.length, dW2=(CPW-(nDisc-1)*4)/nDisc, dH2=26;
     discStats.forEach(function(stat,i){
       var hx=ML+i*(dW2+4);
-      var cr=hexRGB(stat.color)[0],cg=hexRGB(stat.color)[1],cb=hexRGB(stat.color)[2];
+      var cr=parseInt(stat.color.slice(1,3),16),cg=parseInt(stat.color.slice(3,5),16),cb=parseInt(stat.color.slice(5,7),16);
       d.setFillColor(13,20,40);d.rect(hx,y,dW2,dH2,'F');
       d.setFillColor(cr,cg,cb);d.rect(hx,y,dW2,2.5,'F');
       d.setDrawColor(cr,cg,cb);d.setLineWidth(0.35);d.rect(hx,y,dW2,dH2,'S');
@@ -1355,7 +1366,7 @@
         var legy=y+3+chartH+2;
         bbSegs2.forEach(function(seg,i){
           var lx=leftX+(i%2)*(chartW/2),ly=legy+Math.floor(i/2)*7;
-          d.setFillColor(...hexRGB(seg.color));
+          d.setFillColor(parseInt(seg.color.slice(1,3),16),parseInt(seg.color.slice(3,5),16),parseInt(seg.color.slice(5,7),16));
           d.rect(lx,ly-3,4,4,'F');
           d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.white);
           d.text(seg.label+': '+seg.pct+'%',lx+6,ly);
@@ -1374,7 +1385,7 @@
         [{label:'Pull',pct:pp4,color:'#f87171'},{label:'Straightaway',pct:sp4,color:'#FFB81C'},{label:'Oppo',pct:op4,color:'#60a5fa'}].forEach(function(seg,i){
           var lx=rightX+(i%2)*(chartW/2),ly=legy2+Math.floor(i/2)*7;
           if(i===2)lx=rightX;
-          d.setFillColor(...hexRGB(seg.color));
+          d.setFillColor(parseInt(seg.color.slice(1,3),16),parseInt(seg.color.slice(3,5),16),parseInt(seg.color.slice(5,7),16));
           d.rect(lx,ly-3,4,4,'F');
           d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.white);
           d.text(seg.label+': '+seg.pct+'%',lx+6,ly);
@@ -1424,29 +1435,19 @@
     });
     var fpStr=fp.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
     var fpsPct = fp.length>=5 ? fpStr/fp.length*100 : (player.fps_pct!=null?player.fps_pct:null);
-
+    var ttp = player.avg_ttp != null ? player.avg_ttp : null;
 
     drawBg(d);drawHdr(d,player.name,'PITCHER',team);
     var y=MT+32;
 
-    // Key stat boxes
-    var _iblPitPDF=(DATA.iblHistory[player.name]||[]).filter(function(r){return r.IP>0;});
-    var _iblPitPDFS=_iblPitPDF.length?_iblPitPDF[0]:null;
-    var _pbpPit=DATA.pbpPitchers?DATA.pbpPitchers.find(function(p){return p.pitcher===player.name;}):null;
-    var _scPD=DATA.pitchers?DATA.pitchers.find(function(p){return p.pitcher===player.name;}):null;
-    // ERA — IBL history
-    var eraVal  = _iblPitPDFS&&_iblPitPDFS.ERA!=null ? f2(_iblPitPDFS.ERA) : '—';
-    // WHIP — PBP first, then scatter-computed
-    var whipVal = _pbpPit&&_pbpPit.WHIP!=null ? f2(_pbpPit.WHIP) : (_scPD&&_scPD.WHIP!=null ? f2(_scPD.WHIP) : (bbs+hits>0&&tot>0?f2((bbs+hits)/(tot/3)):'—'));
-    // BAA — datadiamond scatter
-    var baaAB=sc.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
-    var baaH =sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
-    var baaVal  = baaAB>=5 ? f3(baaH/baaAB) : '—';
-    // STR%, FPS%, K% — PBP first, then scatter
-    var strVal  = _pbpPit&&_pbpPit.STR_pct   !=null ? f1(_pbpPit.STR_pct)+'%'    : (tot>0?f1(xp(str,tot))+'%':'—');
-    var fpsVal  = _pbpPit&&_pbpPit.FP_STR_pct!=null ? f1(_pbpPit.FP_STR_pct)+'%' : (fpsPct!=null?f1(fpsPct)+'%':'—');
-    var kPctVal = _pbpPit&&_pbpPit.K_pct     !=null ? f1(_pbpPit.K_pct)+'%'      : (tot>0?f1(xp(ks,tot))+'%':'—');
-    y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['BAA',baaVal],['STR%',strVal],['FPS%',fpsVal],['K%',kPctVal]],y);
+    // Key stat boxes — ERA, WHIP, BAA
+    var eraVal  = player.era  != null ? f1(player.era)   : (tot>0?'—':'—');
+    var whipVal = player.whip != null ? f1(player.whip)  : (tot>0?f1(xp(bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length,tot/3)):'—');
+    var baaVal  = player.baa  != null ? f3(player.baa)   : '—';
+    var kPctVal = f1(xp(ks,tot))+'%';
+    var strVal  = f1(xp(str,tot))+'%';
+    var fpsVal  = fpsPct!=null ? f1(fpsPct)+'%' : '—';
+    y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['BAA',baaVal],['K%',kPctVal],['STR%',strVal],['FPS%',fpsVal]],y);
     y+=4;
 
     // Scouting Summary — highlighted area cards
@@ -1479,12 +1480,12 @@
     ph2.forEach(function(h,i){
       var hx=ML+i*(cW2+4);
       d.setFillColor(13,20,40);d.rect(hx,y,cW2,cH2,'F');
-      d.setFillColor(...hexRGB(h.color));
+      d.setFillColor(parseInt(h.color.slice(1,3),16),parseInt(h.color.slice(3,5),16),parseInt(h.color.slice(5,7),16));
       d.rect(hx,y,cW2,2.5,'F');
-      d.setDrawColor(...hexRGB(h.color));
+      d.setDrawColor(parseInt(h.color.slice(1,3),16),parseInt(h.color.slice(3,5),16),parseInt(h.color.slice(5,7),16));
       d.setLineWidth(0.3);d.rect(hx,y,cW2,cH2,'S');
       d.setFont('helvetica','bold');d.setFontSize(4.8);
-      d.setTextColor(...hexRGB(h.color));
+      d.setTextColor(parseInt(h.color.slice(1,3),16),parseInt(h.color.slice(3,5),16),parseInt(h.color.slice(5,7),16));
       d.text(h.label,hx+cW2/2,y+6.5,{align:'center'});
       d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.white);
       d.text(h.value,hx+cW2/2,y+13,{align:'center'});
@@ -1495,6 +1496,59 @@
       lns2.slice(0,2).forEach(function(ln,li){d.text(ln,hx+cW2/2,y+18+li*3.5,{align:'center'});});
     });
     y+=cH2+6;
+
+    // TTP highlight card (if data available)
+    if(ttp!=null){
+      var ttpColor=ttp<=1.1?'#f87171':ttp<=1.3?'#FFB81C':'#34d399';
+      var ttpLabel=ttp<=1.1?'FAST DELIVERY':ttp<=1.3?'AVERAGE DELIVERY':'SLOW DELIVERY';
+      var ttpNote=ttp<=1.1?'Quick to plate — running game is very risky. Do not attempt to steal.':
+                  ttp<=1.3?'Average delivery — stolen base possible with good jump.':
+                           'Slow to plate — running game is on. Good opportunity to steal.';
+      // Wide card spanning full width
+      d.setFillColor(13,20,40);d.rect(ML,y,CPW,20,'F');
+      d.setFillColor(parseInt(ttpColor.slice(1,3),16),parseInt(ttpColor.slice(3,5),16),parseInt(ttpColor.slice(5,7),16));
+      d.rect(ML,y,CPW,2,'F');
+      d.setDrawColor(parseInt(ttpColor.slice(1,3),16),parseInt(ttpColor.slice(3,5),16),parseInt(ttpColor.slice(5,7),16));
+      d.setLineWidth(0.3);d.rect(ML,y,CPW,20,'S');
+
+      // Label left
+      d.setFont('helvetica','bold');d.setFontSize(6);
+      d.setTextColor(parseInt(ttpColor.slice(1,3),16),parseInt(ttpColor.slice(3,5),16),parseInt(ttpColor.slice(5,7),16));
+      d.text('TIME TO PLATE',ML+4,y+7);
+      d.setFont('helvetica','bold');d.setFontSize(12);st(d,CO.white);
+      d.text(ttp.toFixed(2)+'s',ML+4,y+15);
+
+      // Label center
+      d.setFont('helvetica','bold');d.setFontSize(7);
+      d.setTextColor(parseInt(ttpColor.slice(1,3),16),parseInt(ttpColor.slice(3,5),16),parseInt(ttpColor.slice(5,7),16));
+      d.text(ttpLabel,ML+CPW/2,y+9,{align:'center'});
+
+      // Gauge bar
+      var barX=ML+40,barW=CPW-80,barY=y+13,barH=3;
+      var minT=0.9,maxT=1.7;
+      var filledPct=Math.max(0,Math.min(1,(ttp-minT)/(maxT-minT)));
+      d.setFillColor(30,40,60);d.rect(barX,barY,barW,barH,'F');
+      // Red zone (fast = dangerous)
+      d.setFillColor(248,113,113);d.rect(barX,barY,barW*0.25,barH,'F');
+      // Gold zone
+      d.setFillColor(255,184,28);d.rect(barX+barW*0.25,barY,barW*0.35,barH,'F');
+      // Green zone (slow = opportunity)
+      d.setFillColor(52,211,153);d.rect(barX+barW*0.6,barY,barW*0.4,barH,'F');
+      // Needle
+      var needleX=barX+filledPct*barW;
+      d.setFillColor(255,255,255);d.rect(needleX-0.5,barY-1,1,barH+2,'F');
+
+      // Note right
+      d.setFont('helvetica','normal');d.setFontSize(5.5);st(d,CO.dim);
+      d.text(ttpNote,ML+CPW-4,y+10,{align:'right',maxWidth:CPW*0.45});
+
+      // Scale labels
+      d.setFont('helvetica','normal');d.setFontSize(4.5);st(d,CO.dim);
+      d.text('0.9s (Fast)',barX,barY+5.5);
+      d.text('1.7s (Slow)',barX+barW,barY+5.5,{align:'right'});
+
+      y+=24;
+    }
 
     // Pitch Arsenal
     var sT=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];});

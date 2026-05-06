@@ -131,8 +131,9 @@
         fetch("/allowed.json?_=" + Date.now())
           .then(function(r) { return r.json(); })
           .then(function(data) {
-            var allowed = (data.emails || []).map(function(e){ return e.toLowerCase().trim(); });
-            if (!allowed.includes(email)) {
+            var users = data.users || [];
+            var match = users.find(function(u){ return (u.email||'').toLowerCase().trim() === email; });
+            if (!match) {
               document.getElementById("login-error").textContent =
                 "Blocked: " + email + " is not authorised.";
               return;
@@ -140,7 +141,9 @@
             localStorage.setItem("dd_user", JSON.stringify({
               name:    payload.given_name || payload.name || "User",
               email:   email,
-              picture: payload.picture || ""
+              picture: payload.picture || "",
+              role:    match.role   || "admin",
+              player:  match.player || null
             }));
             setTimeout(function(){ window.location.replace("index.html"); }, 100);
           })

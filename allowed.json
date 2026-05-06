@@ -1,5 +1,9 @@
 {
-  "emails": [
-    "christiansturgeon06@gmail.com"
+  "users": [
+    {
+      "email": "christiansturgeon06@gmail.com",
+      "role": "catcher",
+      "player": "Christian Meagher-Sturgeon"
+    }
   ]
 }
