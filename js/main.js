@@ -4138,6 +4138,7 @@ function refreshBadge(playerName, notes) {
 }
 
 function loadNoteBadge(playerName) {
+  if (!window.storage) return;
   var storageKey = 'notes:' + playerName.toLowerCase().replace(/\s+/g, '_');
   window.storage.get(storageKey, true).then(function(res) {
     var notes = res ? JSON.parse(res.value) : [];
