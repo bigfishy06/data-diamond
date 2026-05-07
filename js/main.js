@@ -218,21 +218,25 @@ async function loadAll() {
 
   try {
     const base = getBase();
-    const [sumRes, pitRes, pitcherRes, iblRes] = await Promise.all([
+    const [sumRes, pitRes, pitcherRes, iblRes, pbpBRes, pbpPRes] = await Promise.all([
       fetch(base + 'data/summary.json'),
       fetch(base + 'data/pitches.json'),
       fetch(base + 'data/pitchers.json'),
       fetch(base + 'data/ibl_history.json'),
+      fetch(base + 'data/pbp_batters.json'),
+      fetch(base + 'data/pbp_pitchers.json'),
     ]);
     if (sumRes.ok)     DATA.summary     = await sumRes.json();
     if (pitRes.ok)     DATA.pitches     = await pitRes.json();
     if (pitcherRes.ok) DATA.pitchers    = await pitcherRes.json();
     if (iblRes.ok)     DATA.iblHistory  = await iblRes.json();
-    DATA.pbpBatters  = [];
-    DATA.pbpPitchers = [];
+    if (pbpBRes.ok)    DATA.pbpBatters  = await pbpBRes.json();
+    if (pbpPRes.ok)    DATA.pbpPitchers = await pbpPRes.json();
     console.log('summary players:', DATA.summary.length);
     console.log('pitches players:', DATA.pitches.length);
     console.log('pitchers:', DATA.pitchers.length);
+    console.log('pbp batters:', DATA.pbpBatters.length);
+    console.log('pbp pitchers:', DATA.pbpPitchers.length);
   } catch(e) {
     console.error('loadAll failed:', e.message);
   }
@@ -1057,10 +1061,11 @@ function renderPlayerDetail(name, type, content) {
     var _iblBat = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
     var _iblBatS = _iblBat.length ? _iblBat[0] : null;
     var dispAVG = _iblBatS && _iblBatS.AVG != null ? fmt3(_iblBatS.AVG) : (pbpB ? fmt3(pbpB.AVG) : (sum ? fmt3(sum.AVG) : '—'));
-    var dispOPS = _iblBatS && _iblBatS.OPS != null ? fmt3(_iblBatS.OPS) : (pbpB ? fmt3(pbpB.OPS) : (sum ? fmt3(sum.OPS) : '—'));
+    var dispOBP = _iblBatS && _iblBatS.OBP != null ? fmt3(_iblBatS.OBP) : (pbpB ? fmt3(pbpB.OBP) : (sum ? fmt3(sum.OBP) : '—'));
+    var dispSLG = _iblBatS && _iblBatS.SLG != null ? fmt3(_iblBatS.SLG) : (pbpB ? fmt3(pbpB.SLG) : (sum ? fmt3(sum.SLG) : '—'));
     var dispHR  = getSeasonHR(name)  != null ? fmtN(getSeasonHR(name))  : (pbpB ? fmtN(pbpB.HR)  : (sum ? fmtN(sum.HR)  : '—'));
     var dispRBI = getSeasonRBI(name) != null ? fmtN(getSeasonRBI(name)) : '—';
-    [['AVG', dispAVG], ['HR', dispHR], ['RBI', dispRBI]].forEach(function(s) {
+    [['BA', dispAVG], ['OBP', dispOBP], ['SLG', dispSLG], ['HR', dispHR], ['RBI', dispRBI]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   } else if (type === 'pitcher' && pitchData && pitchData.scatter) {
@@ -1072,16 +1077,10 @@ function renderPlayerDetail(name, type, content) {
     const pd = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
     var pbpPHL = getPbpPitcher(name);
     var _iblPitHL = ((DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;}))[0]||null;
-    const hlIP  = _iblPitHL && _iblPitHL.IP  != null ? fmtIP(_iblPitHL.IP) : '—';
-    const hlERA = _iblPitHL && _iblPitHL.ERA != null ? fmt2(_iblPitHL.ERA)  : '—';
-    const hlSTR = pbpPHL && pbpPHL.STR_pct != null ? fmt1(pbpPHL.STR_pct)+'%'
-      : (function(){
-          var sc2 = pitchData ? pitchData.scatter : [];
-          var tot2 = sc2.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
-          var str2 = sc2.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
-          return tot2>0 ? fmt1(str2/tot2*100)+'%' : '—';
-        })();
-    [['IP', hlIP], ['ERA', hlERA], ['STR%', hlSTR]].forEach(function(s) {
+    const hlIP  = _iblPitHL && _iblPitHL.IP  != null ? fmtIP(_iblPitHL.IP)  : (pbpPHL && pbpPHL.IP  != null ? fmtIP(pbpPHL.IP)  : '—');
+    const hlERA = _iblPitHL && _iblPitHL.ERA != null ? fmt2(_iblPitHL.ERA)   : (pbpPHL && pbpPHL.ERA != null ? fmt2(pbpPHL.ERA)  : '—');
+    const hlK   = _iblPitHL && _iblPitHL.KP  != null ? fmtN(_iblPitHL.KP)   : (pbpPHL && pbpPHL.K_tot != null ? fmtN(pbpPHL.K_tot) : fmtN(ks));
+    [['ERA', hlERA], ['IP', hlIP], ['K', hlK]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   }
@@ -2470,7 +2469,10 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     }
 
     return buildFilteredCard('pct-batter', 'Percentile Stats', pitchCount + ' pitches seen', allBars, 110, null,
-      ['BA','OBP','SLG','OPS','SWING%','WHIFF%','CONTACT%','K%','BB%','BB/K','PS/PA','FP SWING%','GB%','FB%']);
+      // Player card / scouting defaults: traditional stats first, PBP discipline second, DataDiamond location third
+      ['BA','OBP','SLG','HR','RBI',
+       'SWING%','WHIFF%','CONTACT%','K%','BB%','PS/PA','GB%','FB%','PO%','LO%',
+       'IZ SWING%','IZ CONTACT%','CHASE%']);
   }
 
   // ══════════════════════════════════════════════
@@ -2632,6 +2634,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       allBars = [
         { lbl: 'ERA',  val: getSeasonERA(name)  != null ? fmt2(getSeasonERA(name))  : (dp.ERA  != null ? fmt2(dp.ERA)  : '—'),
                    pct: getSeasonERA(name)  != null ? 1-lpP(getSeasonERA(name),  lgPpbp.era)  : (dp.ERA  != null ? 1-lpP(dp.ERA,  lgPpbp.era)  : 0), good: true },
+        { lbl: 'IP',   val: dp.IP != null ? fmtIP(dp.IP) : '—',
+                   pct: dp.IP != null ? lpP(dp.IP, lgPpbp.era.map(function(_,i){ return DATA.pbpPitchers[i] ? DATA.pbpPitchers[i].IP||0 : 0; })) : 0, good: true },
         { lbl: 'WHIP', val: getSeasonWHIP(name) != null ? fmt2(getSeasonWHIP(name)) : (dp.WHIP != null ? fmt2(dp.WHIP) : '—'),
                    pct: getSeasonWHIP(name) != null ? 1-lpP(getSeasonWHIP(name), lgPpbp.whip) : (dp.WHIP != null ? 1-lpP(dp.WHIP, lgPpbp.whip) : 0), good: true },
         { lbl: 'BA AGNST', val: dp.BA_against != null ? fmt3(dp.BA_against)       : '—', pct: dp.BA_against != null ? 1-lpP(dp.BA_against, lgPpbp.baAgst)  : 0, good: true },
@@ -2668,7 +2672,9 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       : '';
 
     var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', (tot || (pbpPitData && pbpPitData.BF) || 0) + ' batters faced', allBars, 80, seasonSelectHTML,
-      ['ERA','WHIP','STR%','SWING%','WHIFF%','CONTACT%','K%','BB%','E+A%','K/BB','GB%','FB%']);
+      // Player card / scouting defaults: traditional stats first, PBP second, DataDiamond location third
+      ['ERA','IP','K%','WHIP','BB%',
+       'STR%','SWING%','WHIFF%','CONTACT%','E+A%','K/BB','GB%','FB%','PO%','LO%']);
 
     // Wire season dropdown — updates pitch count subtitle and re-renders bars
     setTimeout(function() {
