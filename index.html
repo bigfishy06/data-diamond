@@ -464,6 +464,21 @@
   function fN(v){if(v==null||isNaN(v))return'—';return String(Math.round(v));}
   function xp(n,d){return d>0?n/d*100:0;}
 
+  function drawLogoImg(d, lx, ly, size) {
+    var px=8, sz=Math.round(size*px);
+    var can=document.createElement('canvas'); can.width=sz; can.height=sz;
+    var ctx=can.getContext('2d');
+    var cx=sz/2, cy=sz/2, R=(size*0.45)*px, r=(size*0.27)*px, dot=(size*0.1)*px;
+    ctx.beginPath(); ctx.moveTo(cx,cy-R); ctx.lineTo(cx+R,cy); ctx.lineTo(cx,cy+R); ctx.lineTo(cx-R,cy); ctx.closePath();
+    ctx.strokeStyle='#FFB81C'; ctx.lineWidth=2.5*px/8; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx,cy-r); ctx.lineTo(cx+r,cy); ctx.lineTo(cx,cy+r); ctx.lineTo(cx-r,cy); ctx.closePath();
+    ctx.fillStyle='rgba(255,184,28,0.15)'; ctx.fill();
+    ctx.strokeStyle='#FFB81C'; ctx.lineWidth=1.5*px/8; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx,cy,dot,0,2*Math.PI);
+    ctx.fillStyle='#FFB81C'; ctx.fill();
+    d.addImage(can.toDataURL('image/png'),'PNG',lx-size/2,ly-size/2,size,size);
+  }
+
   function drawBg(d){sf(d,CO.navy);d.rect(0,0,PW,PH,'F');sf(d,CO.gold);d.rect(0,0,PW,1.2,'F');}
   function drawHdr(d,name,role,team){
     var tc=hx(team.color==='#888888'?'#666666':team.color);
@@ -474,10 +489,13 @@
     d.setFont('helvetica','bold');d.setFontSize(15);st(d,CO.white);
     d.text(name.toUpperCase(),ML+38,MT+12);
     d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
-    d.text(role+'  •  '+team.name+'  •  CBL 2025',ML+38,MT+21);
-    d.setFont('helvetica','bold');d.setFontSize(9);st(d,CO.white);
-    d.text('DATA',ML+CPW-22,MT+10,{align:'right'});
-    st(d,CO.gold);d.text('DIAMOND',ML+CPW-2,MT+17,{align:'right'});
+    d.text(role+'  •  '+team.name+'  •  CBL',ML+38,MT+21);
+    // Canvas logo
+    var lx=ML+CPW-14, ly=MT+13, logoSize=14;
+    drawLogoImg(d, lx, ly, logoSize);
+    d.setFont('helvetica','bold'); d.setFontSize(7); st(d,CO.white);
+    d.text('Data', lx+8, ly-1.5);
+    st(d,CO.gold); d.text('Diamond', lx+8, ly+5);
     sd(d,CO.gold);d.setLineWidth(0.4);d.line(ML,MT+27,ML+CPW,MT+27);
   }
   function drawBoxes(d,stats,y){
@@ -522,7 +540,7 @@
   }
   function drawFoot(d,name,role){
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.dim);
-    d.text('Data Diamond  —  CBL Scouting Report 2025',ML,PH-6);
+    d.text('Data Diamond  —  CBL Scouting Report',ML,PH-6);
     d.text(name+'  •  '+role,ML+CPW,PH-6,{align:'right'});
     sf(d,CO.gold);d.rect(0,PH-1.5,PW,1.5,'F');
   }
@@ -793,7 +811,7 @@
       d.setFont('helvetica','bold'); d.setFontSize(10); st(d,CO.white);
       d.text((team.name+' — OPPOSING BATTERS').toUpperCase(), ML+24, MT+10);
       d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond  —  CBL 2025', ML+CPW, MT+10, {align:'right'});
+      d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
       sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
 
       var y = MT+20;
@@ -871,7 +889,7 @@
 
       // Footer
       d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond  —  CBL Scouting Report 2025', ML, PH-5);
+      d.text('Data Diamond  —  CBL Scouting Report', ML, PH-5);
       d.text(team.name+' Opposing Batters', ML+CPW, PH-5, {align:'right'});
       sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
 
@@ -929,7 +947,7 @@
       d.setFont('helvetica','bold'); d.setFontSize(10); st(d,CO.white);
       d.text((team.name+' — OPPOSING PITCHERS').toUpperCase(), ML+24, MT+10);
       d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond  —  CBL 2025', ML+CPW, MT+10, {align:'right'});
+      d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
       sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
 
       var y = MT+20;
@@ -964,10 +982,33 @@
 
         var daysRest=pd.last_game_date?Math.floor((today2-new Date(pd.last_game_date+'T00:00:00'))/86400000):99;
         var lastCount=pd.last_pitch_count||0;
+        var recentGames=pd.recent_games||[]; // array of {date, pitches} for multi-day check
+        // Check 3 consecutive days pitched
+        var consec3=false;
+        if(recentGames.length>=3){
+          var sorted=recentGames.slice().sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+          var d0=Math.floor((today2-new Date(sorted[0].date+'T00:00:00'))/86400000);
+          var d1=Math.floor((today2-new Date(sorted[1].date+'T00:00:00'))/86400000);
+          var d2=Math.floor((today2-new Date(sorted[2].date+'T00:00:00'))/86400000);
+          if(d0<=1&&d1<=2&&d2<=3&&d1===d0+1&&d2===d1+1) consec3=true;
+        }
+        // 100+ pitches in last 1-3 days
+        var highPitchRecent=false;
+        if(recentGames.length>0){
+          recentGames.forEach(function(g){
+            var dr=Math.floor((today2-new Date(g.date+'T00:00:00'))/86400000);
+            if(dr>=1&&dr<=3&&(g.pitches||0)>=100) highPitchRecent=true;
+          });
+        } else if(daysRest>=1&&daysRest<=3&&lastCount>=100) highPitchRecent=true;
+
         var avail,availC;
-        if(daysRest<=1){avail='UNAVAIL';availC=[248,113,113];}
-        else if(daysRest===2&&lastCount>=20){avail='QUEST';availC=[255,184,28];}
-        else{avail='AVAIL';availC=[52,211,153];}
+        if(consec3||highPitchRecent){
+          avail='UNAVAIL'; availC=[248,113,113];
+        } else if(daysRest===1||daysRest===2){
+          avail='QUEST'; availC=[255,184,28];
+        } else {
+          avail='AVAIL'; availC=[52,211,153];
+        }
 
         var tot=sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
         var ks=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
@@ -1013,7 +1054,7 @@
 
       // Footer
       d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond  —  CBL Scouting Report 2025', ML, PH-5);
+      d.text('Data Diamond  —  CBL Scouting Report', ML, PH-5);
       d.text(team.name+' Opposing Pitchers', ML+CPW, PH-5, {align:'right'});
       sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
 
