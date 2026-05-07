@@ -2439,7 +2439,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         { lbl: 'FB%',        val: d.FB_pct != null ? fmt1(d.FB_pct)+'%'  : '—', pct: lpB(d.FB_pct,       lgB.fb),      good: true  },
         { lbl: 'LO%',        val: d.LO_pct != null ? fmt1(d.LO_pct)+'%'  : '—', pct: lpB(d.LO_pct,       lgB.lo),      good: true  },
         { lbl: 'PO%',        val: d.PO_pct != null ? fmt1(d.PO_pct)+'%'  : '—', pct: 1-lpB(d.PO_pct,     lgB.po),      good: true  },
-      ].filter(function(b){ return b.val !== '—'; });
+      ]).filter(function(b){ return b.val !== '—'; });
     } else if (sc.length) {
       // Fall back to scatter-derived discipline stats, slash from ibl_history
       allBars = iblSlashBars.concat([
