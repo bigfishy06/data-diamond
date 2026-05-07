@@ -1036,7 +1036,7 @@ function renderPlayerDetail(name, type, content) {
     '<span class="badge badge-pos">' + playerInfo.pos + '</span>' +
     (team ? '<span class="badge badge-team">' + team.abbreviation + '</span>' : '') +
     '</div>' +
-    '<h1 class="player-name-hero">' + name.toUpperCase() + '</h1>' +
+    '<h1 class="player-name-hero">' + name.toUpperCase() + '<span id="player-note-badge"></span></h1>' +
     '<div class="headline-stats" id="headline-stats"></div>' +
     '</div></section>' +
     '<div class="tabs-bar" style="margin-top:0"><div class="container"><div class="tabs">' +
@@ -1046,6 +1046,7 @@ function renderPlayerDetail(name, type, content) {
     '<button class="tab-btn" data-tab="zone">Strike Zone</button>' +
     '<button class="tab-btn" data-tab="splits">Splits</button>' +
     (type === 'pitcher' ? '<button class="tab-btn" data-tab="usage">Pitch Usage</button>' : '') +
+    '<button class="tab-btn" data-tab="notes">Notes</button>' +
     '</div></div></div>' +
 
     '<div class="container" style="padding-top:32px;padding-bottom:80px"><div id="season-filter-bar"></div><div id="player-tab-content"></div></div>';
@@ -1055,17 +1056,17 @@ function renderPlayerDetail(name, type, content) {
       'radial-gradient(ellipse 80% 60% at 20% 50%, ' + hexToRgba(team.primaryColor, 0.18) + ' 0%, transparent 70%)';
   }
 
+  loadNoteBadge(name);
+
   const hl = document.getElementById('headline-stats');
   if (type === 'batter') {
     var pbpB = getPbpBatter(name);
     var _iblBat = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
     var _iblBatS = _iblBat.length ? _iblBat[0] : null;
     var dispAVG = _iblBatS && _iblBatS.AVG != null ? fmt3(_iblBatS.AVG) : (pbpB ? fmt3(pbpB.AVG) : (sum ? fmt3(sum.AVG) : '—'));
-    var dispOBP = _iblBatS && _iblBatS.OBP != null ? fmt3(_iblBatS.OBP) : (pbpB ? fmt3(pbpB.OBP) : (sum ? fmt3(sum.OBP) : '—'));
-    var dispSLG = _iblBatS && _iblBatS.SLG != null ? fmt3(_iblBatS.SLG) : (pbpB ? fmt3(pbpB.SLG) : (sum ? fmt3(sum.SLG) : '—'));
     var dispHR  = getSeasonHR(name)  != null ? fmtN(getSeasonHR(name))  : (pbpB ? fmtN(pbpB.HR)  : (sum ? fmtN(sum.HR)  : '—'));
     var dispRBI = getSeasonRBI(name) != null ? fmtN(getSeasonRBI(name)) : '—';
-    [['BA', dispAVG], ['OBP', dispOBP], ['SLG', dispSLG], ['HR', dispHR], ['RBI', dispRBI]].forEach(function(s) {
+    [['AVG', dispAVG], ['HR', dispHR], ['RBI', dispRBI]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   } else if (type === 'pitcher' && pitchData && pitchData.scatter) {
@@ -1077,10 +1078,10 @@ function renderPlayerDetail(name, type, content) {
     const pd = DATA.pitchers.find(function(p) { return p.pitcher === name; }) || {};
     var pbpPHL = getPbpPitcher(name);
     var _iblPitHL = ((DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;}))[0]||null;
-    const hlIP  = _iblPitHL && _iblPitHL.IP  != null ? fmtIP(_iblPitHL.IP)  : (pbpPHL && pbpPHL.IP  != null ? fmtIP(pbpPHL.IP)  : '—');
-    const hlERA = _iblPitHL && _iblPitHL.ERA != null ? fmt2(_iblPitHL.ERA)   : (pbpPHL && pbpPHL.ERA != null ? fmt2(pbpPHL.ERA)  : '—');
-    const hlK   = _iblPitHL && _iblPitHL.KP  != null ? fmtN(_iblPitHL.KP)   : (pbpPHL && pbpPHL.K_tot != null ? fmtN(pbpPHL.K_tot) : fmtN(ks));
-    [['ERA', hlERA], ['IP', hlIP], ['K', hlK]].forEach(function(s) {
+    const hlIP   = _iblPitHL && _iblPitHL.IP   != null ? fmtIP(_iblPitHL.IP)   : (pbpPHL && pbpPHL.IP   != null ? fmtIP(pbpPHL.IP)   : '—');
+    const hlERA  = _iblPitHL && _iblPitHL.ERA  != null ? fmt2(_iblPitHL.ERA)   : (pbpPHL && pbpPHL.ERA  != null ? fmt2(pbpPHL.ERA)   : '—');
+    const hlWHIP = _iblPitHL && _iblPitHL.WHIP != null ? fmt2(_iblPitHL.WHIP)  : (pbpPHL && pbpPHL.WHIP != null ? fmt2(pbpPHL.WHIP)  : '—');
+    [['IP', hlIP], ['ERA', hlERA], ['WHIP', hlWHIP]].forEach(function(s) {
       hl.innerHTML += '<div class="hs-stat"><span class="hs-val">' + s[1] + '</span><span class="hs-lbl">' + s[0] + '</span></div>';
     });
   }
@@ -1123,6 +1124,7 @@ function renderPlayerDetail(name, type, content) {
     tabContent.appendChild(panel);
     if (t === 'zone')     renderZone(name, type, pitchData, panel, activeSeasonFilter);
     if (t === 'usage')    panel.innerHTML = renderPitchUsage(name, pitchData);
+    if (t === 'notes')    renderNotes(name, panel);
     setTimeout(function() {
       panel.querySelectorAll('.sbr-fill').forEach(function(el) {
         if (el.dataset.width) el.style.width = el.dataset.width;
@@ -2399,16 +2401,27 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     }).filter(function(v){return v!=null;});
 
     var allBars = [];
+    // IBL slash stats (always from ibl_history)
+    var _iblB2 = (DATA.iblHistory[name]||[]).filter(function(s){ return s.AB > 0; });
+    var _iblS2 = _iblB2.length ? _iblB2[0] : null;
+    var lgIblAvg = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].AVG!=null?s[0].AVG:null; }).filter(function(v){return v!=null;});
+    var lgIblObp = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].OBP!=null?s[0].OBP:null; }).filter(function(v){return v!=null;});
+    var lgIblSlg = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].SLG!=null?s[0].SLG:null; }).filter(function(v){return v!=null;});
+    var lgIblOps = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].OPS!=null?s[0].OPS:null; }).filter(function(v){return v!=null;});
+    function lpIbl(val, arr) { if (!arr.length||val==null) return 0; var below=arr.filter(function(v){return v<val;}).length; return (below+0.5)/arr.length; }
+    var iblSlashBars = [
+      { lbl:'BA',  val:_iblS2&&_iblS2.AVG!=null?fmt3(_iblS2.AVG):'—', pct:lpIbl(_iblS2&&_iblS2.AVG,lgIblAvg), good:true },
+      { lbl:'OBP', val:_iblS2&&_iblS2.OBP!=null?fmt3(_iblS2.OBP):'—', pct:lpIbl(_iblS2&&_iblS2.OBP,lgIblObp), good:true },
+      { lbl:'SLG', val:_iblS2&&_iblS2.SLG!=null?fmt3(_iblS2.SLG):'—', pct:lpIbl(_iblS2&&_iblS2.SLG,lgIblSlg), good:true },
+      { lbl:'OPS', val:_iblS2&&_iblS2.OPS!=null?fmt3(_iblS2.OPS):'—', pct:lpIbl(_iblS2&&_iblS2.OPS,lgIblOps), good:true },
+      { lbl:'HR',  val:getSeasonHR(name)!=null?fmtN(getSeasonHR(name)):'—',  pct:lpB(getSeasonHR(name),lgHr2),  good:true },
+      { lbl:'RBI', val:getSeasonRBI(name)!=null?fmtN(getSeasonRBI(name)):'—', pct:lpB(getSeasonRBI(name),lgRbi2), good:true },
+    ].filter(function(b){ return b.val !== '—'; });
+
     if (pbpBatterData) {
       // ── PBP-derived bars ──
       var d = pbpBatterData;
-      allBars = [
-        { lbl: 'BA',         val: d.AVG   != null ? fmt3(d.AVG)           : '—', pct: lpB(d.AVG,           lgB.avg),     good: true  },
-        { lbl: 'HR',         val: getSeasonHR(name)  != null ? fmtN(getSeasonHR(name))  : (d.HR  != null ? fmtN(d.HR)  : '—'), pct: pctRankB(getSeasonHR(name) != null ? getSeasonHR(name) : d.HR, lgHr2), good: true },
-        { lbl: 'RBI',        val: getSeasonRBI(name) != null ? fmtN(getSeasonRBI(name)) : '—', pct: pctRankB(getSeasonRBI(name), lgRbi2), good: true },
-        { lbl: 'OBP',        val: d.OBP   != null ? fmt3(d.OBP)           : '—', pct: lpB(d.OBP,           lgB.obp),     good: true  },
-        { lbl: 'SLG',        val: d.SLG   != null ? fmt3(d.SLG)           : '—', pct: lpB(d.SLG,           lgB.slg),     good: true  },
-        { lbl: 'OPS',        val: d.OPS   != null ? fmt3(d.OPS)           : '—', pct: lpB(d.OPS,           lgB.ops),     good: true  },
+      allBars = iblSlashBars.concat([
         { lbl: 'ISO',        val: d.ISO   != null ? fmt3(d.ISO)           : '—', pct: lpB(d.ISO,           lgB.iso),     good: true  },
         { lbl: 'BABIP',      val: d.BABIP != null ? fmt3(d.BABIP)         : '—', pct: lpB(d.BABIP,         lgB.babip),   good: true  },
         { lbl: 'SWING%',     val: d.SWING_pct   != null ? fmt1(d.SWING_pct)+'%'   : '—', pct: lpB(d.SWING_pct,   lgB.swing),   good: false },
@@ -2428,12 +2441,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         { lbl: 'PO%',        val: d.PO_pct != null ? fmt1(d.PO_pct)+'%'  : '—', pct: 1-lpB(d.PO_pct,     lgB.po),      good: true  },
       ].filter(function(b){ return b.val !== '—'; });
     } else if (sc.length) {
-      // Fall back to scatter-derived bars
-      allBars = [
-        { lbl: 'BA',         val: sum && sum.AVG  != null ? fmt3(sum.AVG)         : '—', pct: lp(sum && sum.AVG,  leagueDisc.avg),  good: true  },
-        { lbl: 'OBP',        val: sum && sum.OBP  != null ? fmt3(sum.OBP)         : '—', pct: lp(sum && sum.OBP,  leagueDisc.obp),  good: true  },
-        { lbl: 'SLG',        val: sum && sum.SLG  != null ? fmt3(sum.SLG)         : '—', pct: lp(sum && sum.SLG,  leagueDisc.slg),  good: true  },
-        { lbl: 'OPS',        val: sum && sum.OPS  != null ? fmt3(sum.OPS)         : '—', pct: lp(sum && sum.OPS,  leagueDisc.ops),  good: true  },
+      // Fall back to scatter-derived discipline stats, slash from ibl_history
+      allBars = iblSlashBars.concat([
         { lbl: 'SWING%',     val: mySwing    != null ? fmt1(mySwing*100)+'%'    : '—', pct: mySwing    != null ? 1-lp(mySwing,    leagueDisc.swing)    : 0, good: true },
         { lbl: 'WHIFF%',     val: myWhiff    != null ? fmt1(myWhiff*100)+'%'    : '—', pct: myWhiff    != null ? 1-lp(myWhiff,    leagueDisc.whiff)    : 0, good: true },
         { lbl: 'K%',         val: myK        != null ? fmt1(myK*100)+'%'        : '—', pct: myK        != null ? 1-lp(myK,        leagueDisc.k)        : 0, good: true },
@@ -2441,27 +2450,12 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         { lbl: 'IZ SWING%',  val: myIzSwing  != null ? fmt1(myIzSwing*100)+'%' : '—', pct: myIzSwing  != null ? lp(myIzSwing,    leagueDisc.izSwing)  : 0, good: true },
         { lbl: 'IZ CONTACT%',val: myIzContact!= null ? fmt1(myIzContact*100)+'%': '—', pct: myIzContact!= null ? lp(myIzContact, leagueDisc.izContact) : 0, good: true },
         { lbl: 'CHASE%',     val: myChase    != null ? fmt1(myChase*100)+'%'    : '—', pct: myChase    != null ? 1-lp(myChase,    leagueDisc.chase)    : 0, good: true },
-      ].filter(function(b){ return b.val !== '—'; });
+      ]).filter(function(b){ return b.val !== '—'; });
     }
 
     if (!allBars.length) {
-      // IBL-only fallback — show slash stats from IBL history
-      var _iblPct = ((DATA.iblHistory[name]||[]).filter(function(s){ return s.AB>0; }))[0]||null;
-      if (_iblPct) {
-        var lgAvg  = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length?s[0].AVG:null; }).filter(function(v){return v!=null;});
-        var lgObp  = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length?s[0].OBP:null; }).filter(function(v){return v!=null;});
-        var lgSlg  = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length?s[0].SLG:null; }).filter(function(v){return v!=null;});
-        var lgOps  = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length?s[0].OPS:null; }).filter(function(v){return v!=null;});
-        function lpIbl(val, arr) { if (!arr.length||val==null) return 0; var below=arr.filter(function(v){return v<val;}).length; return (below+0.5)/arr.length; }
-        allBars = [
-          { lbl:'BA',  val:_iblPct.AVG!=null?fmt3(_iblPct.AVG):'—', pct:lpIbl(_iblPct.AVG,lgAvg),  good:true },
-          { lbl:'OBP', val:_iblPct.OBP!=null?fmt3(_iblPct.OBP):'—', pct:lpIbl(_iblPct.OBP,lgObp),  good:true },
-          { lbl:'SLG', val:_iblPct.SLG!=null?fmt3(_iblPct.SLG):'—', pct:lpIbl(_iblPct.SLG,lgSlg),  good:true },
-          { lbl:'OPS', val:_iblPct.OPS!=null?fmt3(_iblPct.OPS):'—', pct:lpIbl(_iblPct.OPS,lgOps),  good:true },
-          { lbl:'HR',  val:_iblPct.HR !=null?fmtN(_iblPct.HR) :'—', pct:pctRankB(_iblPct.HR,lgHr2), good:true },
-          { lbl:'RBI', val:_iblPct.RBI!=null?fmtN(_iblPct.RBI):'—', pct:pctRankB(_iblPct.RBI,lgRbi2),good:true },
-        ].filter(function(b){return b.val!=='—';});
-      }
+      // IBL-only fallback
+      allBars = iblSlashBars;
     }
 
     if (!allBars.length) {
@@ -4033,6 +4027,122 @@ function initPlayerLinks(container, type) {
       });
     }
   });
+}
+
+// ── NOTES TAB ─────────────────────────────────────
+function renderNotes(playerName, container) {
+  var user = AUTH._user || {};
+  var storageKey = 'notes:' + playerName.toLowerCase().replace(/\s+/g, '_');
+
+  function loadNotes(cb) {
+    window.storage.get(storageKey, true).then(function(res) {
+      cb(res ? JSON.parse(res.value) : []);
+    }).catch(function() { cb([]); });
+  }
+
+  function saveNotes(notes, cb) {
+    window.storage.set(storageKey, JSON.stringify(notes), true).then(cb).catch(cb);
+  }
+
+  function renderList(notes) {
+    if (!notes.length) {
+      return '<div style="font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.25);text-align:center;padding:32px 0">No notes yet.</div>';
+    }
+    return notes.map(function(n, i) {
+      return '<div style="padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;gap:12px;align-items:flex-start">' +
+        '<div style="flex:1">' +
+          '<div style="font-size:14px;color:rgba(255,255,255,0.85);line-height:1.6;white-space:pre-wrap">' + n.text.replace(/</g,'&lt;') + '</div>' +
+          '<div style="margin-top:6px;display:flex;gap:12px;align-items:center">' +
+            '<span style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.3)">' + n.author + '</span>' +
+            '<span style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.2)">' + n.date + '</span>' +
+          '</div>' +
+        '</div>' +
+        (n.author === user.email
+          ? '<button data-idx="' + i + '" class="note-delete-btn" style="background:transparent;border:none;color:rgba(220,80,80,0.5);font-size:16px;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0" title="Delete">×</button>'
+          : '') +
+      '</div>';
+    }).join('');
+  }
+
+  container.innerHTML =
+    '<div class="stat-card">' +
+      '<div class="stat-card-header"><span class="stat-card-title">Scout Notes</span><span class="stat-card-subtitle" id="notes-count"></span></div>' +
+      '<div style="padding:16px 24px 0" id="notes-list"></div>' +
+      '<div style="padding:16px 24px 20px;border-top:1px solid rgba(255,255,255,0.06);margin-top:8px">' +
+        '<textarea id="note-input" placeholder="Add a note..." style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#fff;font-size:13px;font-family:inherit;padding:10px 12px;resize:vertical;min-height:80px;outline:none;transition:border-color .2s"></textarea>' +
+        '<div style="display:flex;justify-content:flex-end;margin-top:8px">' +
+          '<button id="note-submit" style="background:rgba(255,184,28,0.15);border:1px solid rgba(255,184,28,0.4);color:#FFB81C;font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;padding:8px 18px;border-radius:4px;cursor:pointer;transition:all .2s">ADD NOTE</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  var listEl  = container.querySelector('#notes-list');
+  var countEl = container.querySelector('#notes-count');
+
+  function refresh() {
+    loadNotes(function(notes) {
+      listEl.innerHTML = renderList(notes);
+      countEl.textContent = notes.length + ' note' + (notes.length !== 1 ? 's' : '');
+      refreshBadge(playerName, notes);
+      // Wire delete buttons
+      listEl.querySelectorAll('.note-delete-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var idx = parseInt(btn.dataset.idx);
+          loadNotes(function(latest) {
+            latest.splice(idx, 1);
+            saveNotes(latest, function() { refresh(); });
+          });
+        });
+      });
+    });
+  }
+
+  container.querySelector('#note-submit').addEventListener('click', function() {
+    var text = container.querySelector('#note-input').value.trim();
+    if (!text) return;
+    loadNotes(function(notes) {
+      notes.unshift({
+        text: text,
+        author: user.email || 'unknown',
+        date: new Date().toLocaleDateString('en-CA', { year:'numeric', month:'short', day:'numeric' })
+      });
+      saveNotes(notes, function() {
+        container.querySelector('#note-input').value = '';
+        refresh();
+      });
+    });
+  });
+
+  refresh();
+}
+
+function refreshBadge(playerName, notes) {
+  var badge = document.getElementById('player-note-badge');
+  if (!badge) return;
+  if (notes && notes.length) {
+    badge.innerHTML = '&nbsp;<span style="display:inline-flex;align-items:center;justify-content:center;' +
+      'background:rgba(255,184,28,0.2);border:1px solid rgba(255,184,28,0.45);border-radius:12px;' +
+      'font-family:var(--font-mono);font-size:11px;color:#FFB81C;padding:2px 10px;' +
+      'vertical-align:middle;letter-spacing:0.05em;cursor:pointer" id="note-badge-pill">' +
+      '📝 ' + notes.length + ' note' + (notes.length !== 1 ? 's' : '') + '</span>';
+    var pill = document.getElementById('note-badge-pill');
+    if (pill) {
+      pill.addEventListener('click', function() {
+        var btn = document.querySelector('.tab-btn[data-tab="notes"]');
+        if (btn) btn.click();
+      });
+    }
+  } else {
+    badge.innerHTML = '';
+  }
+}
+
+function loadNoteBadge(playerName) {
+  var storageKey = 'notes:' + playerName.toLowerCase().replace(/\s+/g, '_');
+  window.storage.get(storageKey, true).then(function(res) {
+    var notes = res ? JSON.parse(res.value) : [];
+    refreshBadge(playerName, notes);
+  }).catch(function() {});
 }
 
 init();
