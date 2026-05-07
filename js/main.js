@@ -746,7 +746,7 @@ function renderTeamDetail(teamId, content) {
       // Full player hitting table
       const tableCard = document.createElement('div');
       tableCard.className = 'stat-card fade-up';
-      tableCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Players</span></div>' +
+      tableCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Player Breakdown</span></div>' +
         buildHittingTable(players);
       statsContent.appendChild(tableCard);
       initTableSort(tableCard.querySelector('table'));
@@ -802,7 +802,7 @@ function renderTeamDetail(teamId, content) {
       // Full pitcher table
       const tableCard = document.createElement('div');
       tableCard.className = 'stat-card fade-up';
-      tableCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Pitchers</span></div>' +
+      tableCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Pitcher Breakdown</span></div>' +
         buildTeamPitcherTable(teamPitchers);
       statsContent.appendChild(tableCard);
       initTableSort(tableCard.querySelector('table'));
