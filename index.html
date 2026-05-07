@@ -769,9 +769,14 @@
       var team = oppT ? { abbr: oppT.abbreviation, name: oppT.name, color: oppT.primaryColor }
                       : { abbr: oppName.slice(0,3).toUpperCase(), name: oppName, color: '#888888' };
 
-      var batters = DATA.summary.filter(function(p) {
-        var t = resolveTeam(p.batter_team); return t && t.name === oppName && (p.AB||0) >= 3;
-      }).sort(function(a,b){ return (b.AB||0)-(a.AB||0); });
+      // Deduplicate batters by name, keep highest AB entry
+      var batterMap = {};
+      DATA.summary.forEach(function(p) {
+        var t = resolveTeam(p.batter_team);
+        if (!t || t.name !== oppName || (p.AB||0) < 3) return;
+        if (!batterMap[p.batter] || (p.AB||0) > (batterMap[p.batter].AB||0)) batterMap[p.batter] = p;
+      });
+      var batters = Object.values(batterMap).sort(function(a,b){ return (b.AB||0)-(a.AB||0); });
 
       if (!batters.length) {
         btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF'; return;
@@ -781,7 +786,6 @@
       var tc = hx(team.color === '#888888' ? '#666666' : team.color);
 
       drawBg(d);
-      // Header
       sf(d,CO.navy2); d.roundedRect(ML,MT,CPW,16,2,2,'F');
       d.setFillColor(tc[0],tc[1],tc[2]); d.roundedRect(ML,MT,3,16,1,1,'F');
       d.setFont('helvetica','bold'); d.setFontSize(9); d.setTextColor(tc[0],tc[1],tc[2]);
@@ -796,9 +800,8 @@
       var colW = (CPW-6)/2;
       var cols2 = 2;
 
-      // Column headers
-      var hdrs = ['PLAYER','B','AVG','OPS','FP%','GB%','FB%','LD%','PULL%','SHIFT'];
-      var cWs  = [colW*0.28, colW*0.06, colW*0.1, colW*0.1, colW*0.1, colW*0.09, colW*0.09, colW*0.09, colW*0.1, colW*0.09];
+      var hdrs = ['PLAYER','B','AVG','OPS','FP%','GB%','FB%','LD%','PULL','STR','OPP','SHIFT'];
+      var cWs  = [colW*0.24,colW*0.05,colW*0.09,colW*0.09,colW*0.09,colW*0.08,colW*0.08,colW*0.08,colW*0.07,colW*0.07,colW*0.07,colW*0.09];
 
       function drawColHeaders(x0) {
         sf(d,CO.navy3); d.rect(x0,y,colW,5,'F');
@@ -837,6 +840,8 @@
         var spBatted=batted.filter(function(p){return p.spray;});
         var spTot=spBatted.length;
         var pullPct=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Pull';}).length/spTot*100)+'%':'—';
+        var strPct2=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Straightaway';}).length/spTot*100)+'%':'—';
+        var oppPct2=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Opposite Field';}).length/spTot*100)+'%':'—';
         var pullV=spTot>=3?spBatted.filter(function(p){return p.spray==='Pull';}).length/spTot*100:0;
         var oppV =spTot>=3?spBatted.filter(function(p){return p.spray==='Opposite Field';}).length/spTot*100:0;
         var shift=spTot>=3?(pullV>=55?'SHIFT':pullV>=45?'SHADE':oppV>=40?'NO SH':'STR'):'—';
@@ -846,7 +851,7 @@
         var lC=batSc.filter(function(p){return p.batter_side==='L';}).length;
         var bats=batSc.length?(rC/batSc.length>=0.8?'R':lC/batSc.length>=0.8?'L':'S'):'?';
 
-        var vals=[s.batter,bats,avg,ops,fpSwing,gb,fb,lo,pullPct,shift];
+        var vals=[s.batter,bats,avg,ops,fpSwing,gb,fb,lo,pullPct,strPct2,oppPct2,shift];
         var x0=ML+col*(colW+6);
         sf(d,col%2===0?CO.navy2:CO.navy2);
         sf(d,[14,21,37]); d.rect(x0,y,colW,rowH,'F');
