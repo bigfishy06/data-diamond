@@ -1110,7 +1110,7 @@ function renderPlayerDetail(name, type, content) {
     '<span class="badge badge-pos">' + playerInfo.pos + '</span>' +
     (team ? '<span class="badge badge-team">' + team.abbreviation + '</span>' : '') +
     '</div>' +
-    '<h1 class="player-name-hero">' + name.toUpperCase() + '<span id="player-note-badge"></span></h1>' +
+    '<h1 class="player-name-hero" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">' + name.toUpperCase() + '<span id="player-note-badge" style="font-size:0;line-height:1"></span></h1>' +
     '<div class="headline-stats" id="headline-stats"></div>' +
     '</div></section>' +
     '<div class="tabs-bar" style="margin-top:0"><div class="container"><div class="tabs">' +
@@ -1280,11 +1280,15 @@ function renderPlayerDetail(name, type, content) {
     var btns = _allSeasonOpts.map(function(opt) {
       return '<button style="' + btnStyle(true) + '" data-sf="all">' + opt.year + '</button>';
     }).join('');
+    var btn2026 = '<button style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;' +
+      'padding:5px 14px;border-radius:4px;cursor:default;' +
+      'border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.01);' +
+      'color:rgba(255,255,255,0.2)" title="Data will be added soon under datadiamond2026">2026 — Coming Soon</button>';
 
     _filterBar.innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;padding:8px 0 14px;border-bottom:1px solid rgba(255,255,255,0.05)">' +
       '<span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:rgba(255,255,255,0.25);text-transform:uppercase;white-space:nowrap">Season</span>' +
-      '<div style="display:flex;gap:6px">' + btns + '</div></div>';
+      '<div style="display:flex;gap:6px">' + btns + btn2026 + '</div></div>';
 
     _filterBar.querySelectorAll('[data-sf]').forEach(function(btn) {
       btn.addEventListener('click', function() {
@@ -1693,17 +1697,18 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     var swings = swS + fo + ipO;
     var pdH  = sc.filter(function(s){ return HITS.includes(s.outcome); }).length;
 
-    var myStr   = tot > 0    ? str / tot    : (pd.STR_pct != null ? pd.STR_pct / 100 : null);
-    var mySwing = tot > 0    ? swings / tot : null;
-    var myWhiff = swings > 0 ? swS / swings : null;
-    var myK     = tot > 0    ? ks / tot     : (pd.K_pct   != null ? pd.K_pct   / 100 : null);
-    var myBB    = tot > 0    ? bbs / tot    : (pd.BB_pct  != null ? pd.BB_pct  / 100 : null);
-    var myEA    = pbpPO.EA_pct != null ? pbpPO.EA_pct : (pd.EA_pct  != null ? pd.EA_pct : null);
-    var myKBB   = pbpPO.K_BB   != null ? pbpPO.K_BB   : (pd.K_BB    != null ? pd.K_BB   : null);
+    // Prefer pbpPO (pbpPitchers) as primary source; fall back to scatter computation
+    var myStr   = pbpPO.STR_pct   != null ? pbpPO.STR_pct   / 100 : (tot > 0    ? str / tot    : (pd.STR_pct != null ? pd.STR_pct / 100 : null));
+    var mySwing = pbpPO.SWING_pct != null ? pbpPO.SWING_pct / 100 : (tot > 0    ? swings / tot : null);
+    var myWhiff = pbpPO.WHIFF_pct != null ? pbpPO.WHIFF_pct / 100 : (swings > 0 ? swS / swings : null);
+    var myK     = pbpPO.K_pct     != null ? pbpPO.K_pct     / 100 : (tot > 0    ? ks / tot     : (pd.K_pct   != null ? pd.K_pct   / 100 : null));
+    var myBB    = pbpPO.BB_pct    != null ? pbpPO.BB_pct    / 100 : (tot > 0    ? bbs / tot    : (pd.BB_pct  != null ? pd.BB_pct  / 100 : null));
+    var myEA    = pbpPO.EA_pct    != null ? pbpPO.EA_pct    : (pd.EA_pct  != null ? pd.EA_pct : null);
+    var myKBB   = pbpPO.K_BB      != null ? pbpPO.K_BB      : (pd.K_BB    != null ? pd.K_BB   : null);
 
     var era    = getSeasonERA(name);
-    var whip   = pd.WHIP != null ? pd.WHIP : (pd.IP > 0 ? (bbs + pdH) / pd.IP : null);
-    var baAgst = (function(){
+    var whip   = pbpPO.WHIP != null ? pbpPO.WHIP : (pd.WHIP != null ? pd.WHIP : (pd.IP > 0 ? (bbs + pdH) / pd.IP : null));
+    var baAgst = pbpPO.BA_against != null ? pbpPO.BA_against : (function(){
       var ab=sc.filter(function(s){return IN_PLAY.concat(KS).includes(s.outcome);}).length;
       var h=sc.filter(function(s){return HITS.includes(s.outcome);}).length;
       return ab>=5?h/ab:null;
@@ -1986,16 +1991,18 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     var ttp = pdG.avg_time_to_plate != null ? pdG.avg_time_to_plate : null;
 
     if (ttp != null) {
-      // Scale: 0.8s (fast) → 2.1s (slow). Steal threshold = 1.3s
-      var minT = 0.8, maxT = 2.1, stealThresh = 1.3;
+      // Scale: 1.0s (fast) → 1.8s (slow). Midpoint = 1.35s
+      var minT = 1.0, maxT = 1.8;
+      // Gold band: 1.25–1.45, with 1.35 as exact visual midpoint
+      var goldStart = 1.25, goldEnd = 1.45;
 
-      // Color: green if <= 1.1 (very fast), yellow if 1.1-1.3, red if > 1.3
+      // Color: green<=1.25 (fast/good), gold 1.25-1.45, red>1.45 (slow/bad for pitcher)
       var gaugeColor, riskLabel, riskDesc;
-      if (ttp <= 1.1) {
+      if (ttp <= 1.25) {
         gaugeColor = '#34d399'; // green
         riskLabel  = 'QUICK DELIVERY';
         riskDesc   = 'Delivers quickly — base runners have a very difficult time stealing.';
-      } else if (ttp <= 1.3) {
+      } else if (ttp <= 1.45) {
         gaugeColor = '#FFB81C'; // gold
         riskLabel  = 'AVERAGE DELIVERY';
         riskDesc   = 'Near the steal threshold — runners may attempt with a good jump.';
@@ -2007,94 +2014,81 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
 
       // Build SVG gauge (semicircle)
       var gR = 54, gCx = 70, gCy = 74;
-      var startDeg = 180, endDeg = 0; // left to right semicircle
 
       // Needle angle: map ttp to 180°→0° (left=fast, right=slow)
       var clampedT  = Math.max(minT, Math.min(maxT, ttp));
       var needlePct = (clampedT - minT) / (maxT - minT);
-      var needleDeg = 180 - needlePct * 180; // 180=left, 0=right
+      var needleDeg = 180 - needlePct * 180;
       var needleRad = needleDeg * Math.PI / 180;
       var nLen = gR - 6;
       var nx   = gCx + nLen * Math.cos(needleRad);
       var ny   = gCy - nLen * Math.sin(needleRad);
 
-      // Steal threshold marker
-      var stealPct = (stealThresh - minT) / (maxT - minT);
-      var stealDeg = 180 - stealPct * 180;
-      var stealRad = stealDeg * Math.PI / 180;
-      var sx1 = gCx + (gR - 2) * Math.cos(stealRad);
-      var sy1 = gCy - (gR - 2) * Math.sin(stealRad);
-      var sx2 = gCx + (gR + 6) * Math.cos(stealRad);
-      var sy2 = gCy - (gR + 6) * Math.sin(stealRad);
-
-      // Arc segments: green (fast) → gold → red (slow)
-      // Green arc: 180° → stealThreshold angle
-      var greenEnd = stealDeg * Math.PI / 180;
-      var gx1 = gCx + gR * Math.cos(Math.PI);
-      var gy1 = gCy - gR * Math.sin(Math.PI);
-      var gx2 = gCx + gR * Math.cos(greenEnd);
-      var gy2 = gCy - gR * Math.sin(greenEnd);
       var ir = gR - 12;
-      var gix1 = gCx + ir * Math.cos(greenEnd);
-      var giy1 = gCy - ir * Math.sin(greenEnd);
-      var gix2 = gCx + ir * Math.cos(Math.PI);
-      var giy2 = gCy - ir * Math.sin(Math.PI);
 
-      var greenArc = 'M ' + gx1.toFixed(1) + ' ' + gy1.toFixed(1) +
-        ' A ' + gR + ' ' + gR + ' 0 0 1 ' + gx2.toFixed(1) + ' ' + gy2.toFixed(1) +
-        ' L ' + gix1.toFixed(1) + ' ' + giy1.toFixed(1) +
-        ' A ' + ir + ' ' + ir + ' 0 0 0 ' + gix2.toFixed(1) + ' ' + giy2.toFixed(1) + ' Z';
+      // Helper: build a donut arc segment between two angles (in radians)
+      function makeArc(a1Rad, a2Rad) {
+        var ax1 = gCx + gR * Math.cos(a1Rad), ay1 = gCy - gR * Math.sin(a1Rad);
+        var ax2 = gCx + gR * Math.cos(a2Rad), ay2 = gCy - gR * Math.sin(a2Rad);
+        var ix1 = gCx + ir * Math.cos(a2Rad), iy1 = gCy - ir * Math.sin(a2Rad);
+        var ix2 = gCx + ir * Math.cos(a1Rad), iy2 = gCy - ir * Math.sin(a1Rad);
+        return 'M ' + ax1.toFixed(1) + ' ' + ay1.toFixed(1) +
+          ' A ' + gR + ' ' + gR + ' 0 0 1 ' + ax2.toFixed(1) + ' ' + ay2.toFixed(1) +
+          ' L ' + ix1.toFixed(1) + ' ' + iy1.toFixed(1) +
+          ' A ' + ir + ' ' + ir + ' 0 0 0 ' + ix2.toFixed(1) + ' ' + iy2.toFixed(1) + ' Z';
+      }
 
-      // Red arc: stealThreshold → 0°
-      var rx1 = gx2, ry1 = gy2;
-      var rx2 = gCx + gR; var ry2 = gCy;
-      var rix1 = gCx + ir; var riy1 = gCy;
-      var rix2 = gix1; var riy2 = giy1;
+      // Zone boundary angles (180°=left/fast, 0°=right/slow)
+      var gsRad  = Math.PI;
+      var geDeg  = 180 - ((goldStart - minT) / (maxT - minT)) * 180;
+      var geRad  = geDeg * Math.PI / 180;
+      var geDeg2 = 180 - ((goldEnd   - minT) / (maxT - minT)) * 180;
+      var geRad2 = geDeg2 * Math.PI / 180;
 
-      var redArc = 'M ' + rx1.toFixed(1) + ' ' + ry1.toFixed(1) +
-        ' A ' + gR + ' ' + gR + ' 0 0 1 ' + rx2.toFixed(1) + ' ' + ry2.toFixed(1) +
-        ' L ' + rix1.toFixed(1) + ' ' + riy1.toFixed(1) +
-        ' A ' + ir + ' ' + ir + ' 0 0 0 ' + rix2.toFixed(1) + ' ' + riy2.toFixed(1) + ' Z';
+      // Midpoint marker at 1.35s
+      var midPct = (1.35 - minT) / (maxT - minT);
+      var midDeg = 180 - midPct * 180;
+      var midRad = midDeg * Math.PI / 180;
+      var mx1 = gCx + (gR - 2) * Math.cos(midRad);
+      var my1 = gCy - (gR - 2) * Math.sin(midRad);
+      var mx2 = gCx + (gR + 6) * Math.cos(midRad);
+      var my2 = gCy - (gR + 6) * Math.sin(midRad);
+
+      var greenArc = makeArc(gsRad,  geRad);
+      var goldArc  = makeArc(geRad,  geRad2);
+      var redArc   = makeArc(geRad2, 0);
 
       pitcherGaugeHTML =
         '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">' +
           '<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px">Time to Plate</div>' +
           '<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">' +
-            // SVG gauge
             '<div style="flex-shrink:0;text-align:center">' +
               '<svg width="140" height="90" viewBox="0 0 140 90">' +
-                // Background track
                 '<path d="M ' + (gCx - gR) + ' ' + gCy + ' A ' + gR + ' ' + gR + ' 0 0 1 ' + (gCx + gR) + ' ' + gCy +
                       ' L ' + (gCx + ir) + ' ' + gCy + ' A ' + ir + ' ' + ir + ' 0 0 0 ' + (gCx - ir) + ' ' + gCy + ' Z"' +
                       ' fill="rgba(255,255,255,0.06)"/>' +
-                // Green zone (fast)
                 '<path d="' + greenArc + '" fill="rgba(52,211,153,0.25)"/>' +
-                // Red zone (slow / steal risk)
-                '<path d="' + redArc + '" fill="rgba(248,113,113,0.25)"/>' +
-                // Steal threshold marker
-                '<line x1="' + sx1.toFixed(1) + '" y1="' + sy1.toFixed(1) + '" x2="' + sx2.toFixed(1) + '" y2="' + sy2.toFixed(1) + '"' +
+                '<path d="' + goldArc  + '" fill="rgba(255,184,28,0.25)"/>' +
+                '<path d="' + redArc   + '" fill="rgba(248,113,113,0.25)"/>' +
+                '<line x1="' + mx1.toFixed(1) + '" y1="' + my1.toFixed(1) + '" x2="' + mx2.toFixed(1) + '" y2="' + my2.toFixed(1) + '"' +
                       ' stroke="#FFB81C" stroke-width="2" stroke-dasharray="2,2"/>' +
-                '<text x="' + (sx2 + 2).toFixed(1) + '" y="' + (sy2 - 2).toFixed(1) + '"' +
-                      ' font-size="5.5" font-family="monospace" fill="#FFB81C">1.3s</text>' +
-                // Needle
+                '<text x="' + (mx2 + 2).toFixed(1) + '" y="' + (my2 - 2).toFixed(1) + '"' +
+                      ' font-size="5.5" font-family="monospace" fill="#FFB81C">1.35s</text>' +
                 '<line x1="' + gCx + '" y1="' + gCy + '" x2="' + nx.toFixed(1) + '" y2="' + ny.toFixed(1) + '"' +
                       ' stroke="' + gaugeColor + '" stroke-width="2.5" stroke-linecap="round"/>' +
                 '<circle cx="' + gCx + '" cy="' + gCy + '" r="4" fill="' + gaugeColor + '"/>' +
-                // Value label
                 '<text x="' + gCx + '" y="' + (gCy + 14) + '"' +
                       ' text-anchor="middle" font-size="13" font-family="monospace" font-weight="bold" fill="' + gaugeColor + '">' + ttp.toFixed(2) + 's</text>' +
-                // Scale labels
-                '<text x="' + (gCx - gR - 2) + '" y="' + (gCy + 3) + '" font-size="6" font-family="monospace" fill="rgba(255,255,255,0.3)" text-anchor="end">0.8s</text>' +
-                '<text x="' + (gCx + gR + 2) + '" y="' + (gCy + 3) + '" font-size="6" font-family="monospace" fill="rgba(255,255,255,0.3)">2.1s</text>' +
+                '<text x="' + (gCx - gR - 2) + '" y="' + (gCy + 3) + '" font-size="6" font-family="monospace" fill="rgba(255,255,255,0.3)" text-anchor="end">1.0s</text>' +
+                '<text x="' + (gCx + gR + 2) + '" y="' + (gCy + 3) + '" font-size="6" font-family="monospace" fill="rgba(255,255,255,0.3)">1.8s</text>' +
               '</svg>' +
             '</div>' +
-            // Text info
             '<div style="flex:1;min-width:140px">' +
               '<div style="font-family:var(--font-mono);font-size:13px;font-weight:600;color:' + gaugeColor + ';letter-spacing:0.05em;margin-bottom:6px">' + riskLabel + '</div>' +
               '<div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5;margin-bottom:10px">' + riskDesc + '</div>' +
               '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:8px 12px">' +
                 '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.08em;margin-bottom:2px">STEAL THRESHOLD</div>' +
-                '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.7)">Above <span style="color:#FFB81C;font-weight:600">1.30s</span> = runners can steal freely</div>' +
+                '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.7)">Above <span style="color:#FFB81C;font-weight:600">1.35s</span> = runners can steal freely</div>' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -2536,11 +2530,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No data available</h3></div>';
     }
 
-    return buildFilteredCard('pct-batter', 'Percentile Stats', pitchCount + ' pitches seen', allBars, 110, null,
-      // Player card / scouting defaults: traditional stats first, PBP discipline second, DataDiamond location third
-      ['BA','OBP','SLG','HR','RBI',
-       'SWING%','WHIFF%','CONTACT%','K%','BB%','PS/PA','GB%','FB%','PO%','LO%',
-       'IZ SWING%','IZ CONTACT%','CHASE%']);
+    return buildFilteredCard('pct-batter', 'Percentile Stats', pitchCount + ' pitches seen', allBars, 110, null, null);
   }
 
   // ══════════════════════════════════════════════
@@ -2735,14 +2725,12 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
           '<select id="pm-season-select" style="background:#0e1525;border:1.5px solid rgba(255,184,28,0.35);border-radius:6px;color:#FFB81C;font-family:var(--font-mono);font-size:11px;padding:8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px">' +
             '<option value="season">All</option>' +
             pmYears.map(function(y){ return '<option value="'+y+'">Summer '+y+'</option>'; }).join('') +
+            '<option value="" disabled style="color:rgba(255,184,28,0.3)">2026 — Coming Soon</option>' +
           '</select>' +
         '</div>'
       : '';
 
-    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', (tot || (pbpPitData && pbpPitData.BF) || 0) + ' batters faced', allBars, 80, seasonSelectHTML,
-      // Player card / scouting defaults: traditional stats first, PBP second, DataDiamond location third
-      ['ERA','IP','K%','WHIP','BB%',
-       'STR%','SWING%','WHIFF%','CONTACT%','E+A%','K/BB','GB%','FB%','PO%','LO%']);
+    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', (tot || (pbpPitData && pbpPitData.BF) || 0) + ' batters faced', allBars, 80, null, null);
 
     // Wire season dropdown — updates pitch count subtitle and re-renders bars
     setTimeout(function() {
@@ -4109,13 +4097,23 @@ function renderNotes(playerName, container) {
   var storageKey = 'notes:' + playerName.toLowerCase().replace(/\s+/g, '_');
 
   function loadNotes(cb) {
-    window.storage.get(storageKey, true).then(function(res) {
-      cb(res ? JSON.parse(res.value) : []);
-    }).catch(function() { cb([]); });
+    if (window.storage) {
+      window.storage.get(storageKey, true).then(function(res) {
+        cb(res ? JSON.parse(res.value) : []);
+      }).catch(function() { cb([]); });
+    } else {
+      try { cb(JSON.parse(localStorage.getItem(storageKey) || '[]')); }
+      catch(e) { cb([]); }
+    }
   }
 
   function saveNotes(notes, cb) {
-    window.storage.set(storageKey, JSON.stringify(notes), true).then(cb).catch(cb);
+    if (window.storage) {
+      window.storage.set(storageKey, JSON.stringify(notes), true).then(cb).catch(cb);
+    } else {
+      try { localStorage.setItem(storageKey, JSON.stringify(notes)); } catch(e) {}
+      if (cb) cb();
+    }
   }
 
   function renderList(notes) {
@@ -4131,7 +4129,7 @@ function renderNotes(playerName, container) {
             '<span style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.2)">' + n.date + '</span>' +
           '</div>' +
         '</div>' +
-        (n.author === user.email
+        (n.author === (user.name || user.email)
           ? '<button data-idx="' + i + '" class="note-delete-btn" style="background:transparent;border:none;color:rgba(220,80,80,0.5);font-size:16px;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0" title="Delete">×</button>'
           : '') +
       '</div>';
@@ -4177,7 +4175,7 @@ function renderNotes(playerName, container) {
     loadNotes(function(notes) {
       notes.unshift({
         text: text,
-        author: user.email || 'unknown',
+        author: user.name || user.email || 'unknown',
         date: new Date().toLocaleDateString('en-CA', { year:'numeric', month:'short', day:'numeric' })
       });
       saveNotes(notes, function() {
@@ -4194,11 +4192,12 @@ function refreshBadge(playerName, notes) {
   var badge = document.getElementById('player-note-badge');
   if (!badge) return;
   if (notes && notes.length) {
-    badge.innerHTML = '&nbsp;<span style="display:inline-flex;align-items:center;justify-content:center;' +
+    badge.style.fontSize = '';
+    badge.innerHTML = '<span style="display:inline-flex;align-items:center;justify-content:center;' +
       'background:rgba(255,184,28,0.2);border:1px solid rgba(255,184,28,0.45);border-radius:12px;' +
-      'font-family:var(--font-mono);font-size:11px;color:#FFB81C;padding:2px 10px;' +
-      'vertical-align:middle;letter-spacing:0.05em;cursor:pointer" id="note-badge-pill">' +
-      '📝 ' + notes.length + ' note' + (notes.length !== 1 ? 's' : '') + '</span>';
+      'font-family:var(--font-mono);font-size:11px;color:#FFB81C;padding:4px 12px;' +
+      'letter-spacing:0.05em;cursor:pointer;white-space:nowrap" id="note-badge-pill">' +
+      notes.length + ' note' + (notes.length !== 1 ? 's' : '') + '</span>';
     var pill = document.getElementById('note-badge-pill');
     if (pill) {
       pill.addEventListener('click', function() {
@@ -4207,17 +4206,24 @@ function refreshBadge(playerName, notes) {
       });
     }
   } else {
+    badge.style.fontSize = '0';
     badge.innerHTML = '';
   }
 }
 
 function loadNoteBadge(playerName) {
-  if (!window.storage) return;
   var storageKey = 'notes:' + playerName.toLowerCase().replace(/\s+/g, '_');
-  window.storage.get(storageKey, true).then(function(res) {
-    var notes = res ? JSON.parse(res.value) : [];
-    refreshBadge(playerName, notes);
-  }).catch(function() {});
+  if (window.storage) {
+    window.storage.get(storageKey, true).then(function(res) {
+      var notes = res ? JSON.parse(res.value) : [];
+      refreshBadge(playerName, notes);
+    }).catch(function() {});
+  } else {
+    try {
+      var notes = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      refreshBadge(playerName, notes);
+    } catch(e) {}
+  }
 }
 
 init();
