@@ -404,20 +404,8 @@ function buildHomeTeamsGrid() {
   const grid = document.getElementById('teams-grid');
   if (!grid) return;
   TEAMS.forEach(function(team, i) {
-    const batterCount = DATA.summary.filter(function(p) {
-      const t = resolveTeam(p.batter_team);
-      return t && t.id === team.id;
-    }).length;
-    const pitcherNames = new Set();
-    DATA.pitches.forEach(function(bp) {
-      if (!bp.scatter) return;
-      bp.scatter.forEach(function(s) {
-        if (!s.pitcher) return;
-        const pt = resolveTeam(s.pitcher_team);
-        if (pt && pt.id === team.id) pitcherNames.add(s.pitcher);
-      });
-    });
-    const playerCount = batterCount + pitcherNames.size;
+    // Use same roster as players page for accurate count
+    const playerCount = getTeamBatters(team.id).length + getTeamPitchers(team.id).length;
     const card = document.createElement('div');
     card.className = 'team-card fade-up';
     card.style.setProperty('--team-color', team.primaryColor);
@@ -609,6 +597,71 @@ function renderPitchingLeaderboards(container) {
 // ══════════════════════════════════════════════════
 // TEAMS PAGE
 // ══════════════════════════════════════════════════
+// ── Shared team roster helpers (match players page exactly) ────────────────
+function getTeamBatters(teamId) {
+  var seen = new Set();
+  var result = [];
+  // Primary: pbpBatters AB>=5 with matching team
+  var base = DATA.pbpBatters.length
+    ? DATA.pbpBatters.filter(function(p){ return p.AB >= 5; })
+    : DATA.summary.filter(function(p){ return p.AB > 0; });
+  base.forEach(function(p) {
+    var t = resolveTeam(p.batter_team || p.team);
+    if (t && t.id === teamId && !seen.has(p.batter)) {
+      seen.add(p.batter);
+      var sum = DATA.summary.find(function(s){ return s.batter === p.batter; }) || p;
+      result.push({ batter: p.batter, pbp: p, summary: sum });
+    }
+  });
+  // Supplement: iblHistory 2025 batters not yet included
+  Object.keys(DATA.iblHistory).forEach(function(name) {
+    if (seen.has(name)) return;
+    var s2025 = (DATA.iblHistory[name]||[]).find(function(s){
+      return (s.season||'').indexOf('2025') !== -1 && (s.AB||0) > 0;
+    });
+    if (!s2025) return;
+    var t = resolveTeam(s2025.team);
+    if (t && t.id === teamId) {
+      seen.add(name);
+      var sum = DATA.summary.find(function(s){ return s.batter === name; }) || Object.assign({batter:name}, s2025);
+      result.push({ batter: name, pbp: null, summary: sum, ibl: s2025 });
+    }
+  });
+  return result;
+}
+
+function getTeamPitchers(teamId) {
+  var seen = new Set();
+  var result = [];
+  // Primary: pbpPitchers BF>=5 with matching team
+  if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
+    DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; }).forEach(function(p) {
+      var t = resolveTeam(p.pitcher_team);
+      if (t && t.id === teamId && !seen.has(p.pitcher)) {
+        seen.add(p.pitcher);
+        var pd = DATA.pitchers.find(function(d){ return d.pitcher === p.pitcher; }) || {};
+        result.push({ pitcher: p.pitcher, pbp: p, pd: pd });
+      }
+    });
+  }
+  // Supplement: scatter-only pitchers
+  DATA.pitches.forEach(function(bp) {
+    if (!bp.scatter) return;
+    bp.scatter.forEach(function(s) {
+      if (!s.pitcher || seen.has(s.pitcher)) return;
+      var pt = resolveTeam(s.pitcher_team);
+      if (pt && pt.id === teamId) seen.add(s.pitcher);
+    });
+  });
+  seen.forEach(function(name) {
+    if (result.some(function(r){ return r.pitcher === name; })) return;
+    var pd = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
+    result.push({ pitcher: name, pbp: null, pd: pd });
+  });
+  result.sort(function(a,b){ return a.pitcher.localeCompare(b.pitcher); });
+  return result;
+}
+
 function initTeamsPage() {
   const params = new URLSearchParams(window.location.search);
   const teamId = params.get('team');
@@ -630,17 +683,27 @@ function renderTeamGrid(content) {
 
   const grid = document.getElementById('teams-grid');
   TEAMS.forEach(function(team, i) {
-    const teamPlayers = DATA.summary.filter(function(p) {
-      const t = resolveTeam(p.batter_team);
-      return t && t.id === team.id;
+    // Use same roster as players page
+    var teamBatters  = getTeamBatters(team.id);
+    var teamPitchersList = getTeamPitchers(team.id);
+    var playerCount = teamBatters.length + teamPitchersList.length;
+
+    // AVG and OPS from pbp/summary
+    var totalAB = 0, totalH = 0, totalTB = 0, totalBB = 0, totalHBP = 0, totalSF = 0;
+    teamBatters.forEach(function(b) {
+      var src = b.pbp || b.summary || {};
+      totalAB  += src.AB  || 0;
+      totalH   += src.H   || 0;
+      totalBB  += src.BB  || 0;
+      totalHBP += src.HBP || 0;
+      totalSF  += src.SF  || 0;
+      // TB for SLG
+      totalTB  += (src.H||0) + (src['2B']||0) + (src['3B']||0)*2 + (src.HR||0)*3;
     });
-    // Aggregate team AVG and OPS for the card preview
-    const qualified = teamPlayers.filter(function(p) { return p.AB > 0; });
-    const totalAB = qualified.reduce(function(s,p){ return s + (p.AB||0); }, 0);
-    const totalH  = qualified.reduce(function(s,p){ return s + (p.H||0);  }, 0);
-    const teamAVG = totalAB > 0 ? fmt3(totalH / totalAB) : '—';
-    const teamOPS = qualified.length > 0
-      ? fmt3(qualified.reduce(function(s,p){ return s + (p.OPS||0); }, 0) / qualified.length)
+    var teamAVG = totalAB > 0 ? fmt3(totalH / totalAB) : '—';
+    var obpDen = totalAB + totalBB + totalHBP + totalSF;
+    var teamOPS = totalAB > 0 && obpDen > 0
+      ? fmt3((totalH + totalBB + totalHBP) / obpDen + totalTB / totalAB)
       : '—';
 
     const card = document.createElement('div');
@@ -655,7 +718,7 @@ function renderTeamGrid(content) {
       '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">OPS <span style="color:var(--text)">' + teamOPS + '</span></span>' +
       '</div>' +
       '<div class="team-footer">' +
-      '<span class="team-player-count">' + teamPlayers.length + ' player' + (teamPlayers.length !== 1 ? 's' : '') + '</span>' +
+      '<span class="team-player-count">' + playerCount + ' player' + (playerCount !== 1 ? 's' : '') + '</span>' +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--text-dim)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>' +
       '</div>';
     card.addEventListener('click', function() { navigate('teams.html?team=' + team.id); });
@@ -667,15 +730,23 @@ function renderTeamDetail(teamId, content) {
   const team = TEAMS.find(function(t) { return t.id === teamId; });
   if (!team) { content.innerHTML = '<div class="container"><div class="empty-state"><h3>Team not found</h3></div></div>'; return; }
 
-  const players = DATA.summary.filter(function(p) {
-    const t = resolveTeam(p.batter_team);
-    return t && t.id === teamId;
-  });
-
-  // Collect all pitchers for this team from pitchers array
-  const teamPitchers = DATA.pitchers.filter(function(pd) {
-    const t = resolveTeam(pd.pitcher_team);
-    return t && t.id === teamId;
+  // Use same roster as players page
+  const teamBattersRaw = getTeamBatters(teamId);
+  const teamPitchersRaw = getTeamPitchers(teamId);
+  // players array in summary shape for backward compat with buildHittingTable
+  const players = teamBattersRaw.map(function(b){ return b.pbp || b.summary; }).filter(Boolean);
+  // teamPitchers in pd shape for buildTeamPitcherTable (prefer pbp data)
+  const teamPitchers = teamPitchersRaw.map(function(p){
+    var src = p.pbp || p.pd || {};
+    return Object.assign({ pitcher: p.pitcher }, p.pd || {}, p.pbp ? {
+      K_pct:   p.pbp.K_pct,
+      BB_pct:  p.pbp.BB_pct,
+      STR_pct: p.pbp.STR_pct,
+      EA_pct:  p.pbp.EA_pct,
+      K_BB:    p.pbp.K_BB,
+      IP:      p.pbp.IP || (p.pd||{}).IP,
+      total_pitches: p.pbp.pitches || (p.pd||{}).total_pitches
+    } : {});
   });
 
   content.innerHTML =
@@ -706,17 +777,20 @@ function renderTeamDetail(teamId, content) {
         return;
       }
 
-      // Aggregate team hitting totals
-      const qual = players.filter(function(p) { return p.AB > 0; });
-      const totAB = qual.reduce(function(s,p){ return s+(p.AB||0); },0);
-      const totH  = qual.reduce(function(s,p){ return s+(p.H||0);  },0);
-      const tot2B = qual.reduce(function(s,p){ return s+(p['2B']||0); },0);
-      const tot3B = qual.reduce(function(s,p){ return s+(p['3B']||0); },0);
-      const totHR = qual.reduce(function(s,p){ return s+(p.HR||0); },0);
-      const totBB = qual.reduce(function(s,p){ return s+(p.BB||0); },0);
-      const totK  = qual.reduce(function(s,p){ return s+(p.K||0);  },0);
-      const totHBP= qual.reduce(function(s,p){ return s+(p.HBP||0); },0);
-      const totSF = qual.reduce(function(s,p){ return s+(p.SF||0);  },0);
+      // Aggregate from same roster as players page (pbp preferred, summary fallback)
+      var totAB=0,totH=0,tot2B=0,tot3B=0,totHR=0,totBB=0,totK=0,totHBP=0,totSF=0;
+      teamBattersRaw.forEach(function(b) {
+        var src = b.pbp || b.summary || {};
+        totAB  += src.AB  || 0;
+        totH   += src.H   || 0;
+        tot2B  += src['2B'] || 0;
+        tot3B  += src['3B'] || 0;
+        totHR  += src.HR  || 0;
+        totBB  += src.BB  || 0;
+        totK   += src.K   || 0;
+        totHBP += src.HBP || 0;
+        totSF  += src.SF  || 0;
+      });
       const teamAVG = totAB > 0 ? totH / totAB : null;
       const teamOBP = (totAB + totBB + totHBP + totSF) > 0
         ? (totH + totBB + totHBP) / (totAB + totBB + totHBP + totSF) : null;
@@ -739,7 +813,7 @@ function renderTeamDetail(teamId, content) {
       const summaryCard = document.createElement('div');
       summaryCard.className = 'stat-card fade-up';
       summaryCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Team Hitting</span>' +
-        '<span class="stat-card-subtitle">' + qual.length + ' players · ' + totAB + ' AB</span></div>' +
+        '<span class="stat-card-subtitle">' + teamBattersRaw.length + ' players · ' + totAB + ' AB</span></div>' +
         summaryHTML;
       statsContent.appendChild(summaryCard);
 
@@ -759,19 +833,19 @@ function renderTeamDetail(teamId, content) {
         return;
       }
 
-      // Aggregate team pitching totals
+      // Aggregate from same roster as players page (pbp preferred, pd fallback)
+      var pitchWithData = teamPitchers.filter(function(p){ return p.K_pct != null || p.STR_pct != null; });
       const totPitches = teamPitchers.reduce(function(s,p){ return s+(p.total_pitches||0); },0);
       const totIP      = teamPitchers.reduce(function(s,p){ return s+(p.IP||0); },0);
-      const totKs      = teamPitchers.reduce(function(s,p){ return s+Math.round((p.K_pct||0)/100*(p.total_pitches||0)); },0);
-      const totBBs     = teamPitchers.reduce(function(s,p){ return s+Math.round((p.BB_pct||0)/100*(p.total_pitches||0)); },0);
-      const avgSTR     = teamPitchers.length > 0
-        ? teamPitchers.reduce(function(s,p){ return s+(p.STR_pct||0); },0) / teamPitchers.length : null;
-      const avgK       = teamPitchers.length > 0
-        ? teamPitchers.reduce(function(s,p){ return s+(p.K_pct||0); },0) / teamPitchers.length : null;
-      const avgBB      = teamPitchers.length > 0
-        ? teamPitchers.reduce(function(s,p){ return s+(p.BB_pct||0); },0) / teamPitchers.length : null;
-      const avgEA      = teamPitchers.length > 0
-        ? teamPitchers.reduce(function(s,p){ return s+(p.EA_pct||0); },0) / teamPitchers.length : null;
+      const avgSTR = pitchWithData.length > 0
+        ? pitchWithData.reduce(function(s,p){ return s+(p.STR_pct||0); },0) / pitchWithData.length : null;
+      const avgK   = pitchWithData.length > 0
+        ? pitchWithData.reduce(function(s,p){ return s+(p.K_pct||0); },0) / pitchWithData.length : null;
+      const avgBB  = pitchWithData.length > 0
+        ? pitchWithData.reduce(function(s,p){ return s+(p.BB_pct||0); },0) / pitchWithData.length : null;
+      const avgEA  = pitchWithData.length > 0
+        ? pitchWithData.filter(function(p){ return p.EA_pct!=null; }).reduce(function(s,p){ return s+(p.EA_pct||0); },0) /
+          (pitchWithData.filter(function(p){ return p.EA_pct!=null; }).length||1) : null;
 
       // ERA from ibl_history
       var eraSum = 0, eraCount = 0;
@@ -1206,16 +1280,11 @@ function renderPlayerDetail(name, type, content) {
     var btns = _allSeasonOpts.map(function(opt) {
       return '<button style="' + btnStyle(true) + '" data-sf="all">' + opt.year + '</button>';
     }).join('');
-    // 2026 coming soon button
-    var btn2026 = '<button style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;' +
-      'padding:5px 14px;border-radius:4px;cursor:default;' +
-      'border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.01);' +
-      'color:rgba(255,255,255,0.2);" title="Data will be added soon under datadiamond2026">2026 — Coming Soon</button>';
 
     _filterBar.innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;padding:8px 0 14px;border-bottom:1px solid rgba(255,255,255,0.05)">' +
       '<span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:rgba(255,255,255,0.25);text-transform:uppercase;white-space:nowrap">Season</span>' +
-      '<div style="display:flex;gap:6px">' + btns + btn2026 + '</div></div>';
+      '<div style="display:flex;gap:6px">' + btns + '</div></div>';
 
     _filterBar.querySelectorAll('[data-sf]').forEach(function(btn) {
       btn.addEventListener('click', function() {
@@ -2666,7 +2735,6 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
           '<select id="pm-season-select" style="background:#0e1525;border:1.5px solid rgba(255,184,28,0.35);border-radius:6px;color:#FFB81C;font-family:var(--font-mono);font-size:11px;padding:8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px">' +
             '<option value="season">All</option>' +
             pmYears.map(function(y){ return '<option value="'+y+'">Summer '+y+'</option>'; }).join('') +
-            '<option value="" disabled style="color:rgba(255,184,28,0.3)">2026 — Coming Soon</option>' +
           '</select>' +
         '</div>'
       : '';
