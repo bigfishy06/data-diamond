@@ -1036,7 +1036,7 @@ function renderPlayerDetail(name, type, content) {
     '<span class="badge badge-pos">' + playerInfo.pos + '</span>' +
     (team ? '<span class="badge badge-team">' + team.abbreviation + '</span>' : '') +
     '</div>' +
-    '<h1 class="player-name-hero">' + name.toUpperCase() + '<span id="player-note-badge"></span></h1>' +
+    '<h1 class="player-name-hero" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">' + name.toUpperCase() + '<span id="player-note-badge" style="font-size:0;line-height:1"></span></h1>' +
     '<div class="headline-stats" id="headline-stats"></div>' +
     '</div></section>' +
     '<div class="tabs-bar" style="margin-top:0"><div class="container"><div class="tabs">' +
@@ -4120,10 +4120,11 @@ function refreshBadge(playerName, notes) {
   var badge = document.getElementById('player-note-badge');
   if (!badge) return;
   if (notes && notes.length) {
-    badge.innerHTML = '&nbsp;<span style="display:inline-flex;align-items:center;justify-content:center;' +
+    badge.style.fontSize = '';
+    badge.innerHTML = '<span style="display:inline-flex;align-items:center;justify-content:center;' +
       'background:rgba(255,184,28,0.2);border:1px solid rgba(255,184,28,0.45);border-radius:12px;' +
-      'font-family:var(--font-mono);font-size:11px;color:#FFB81C;padding:2px 10px;' +
-      'vertical-align:middle;letter-spacing:0.05em;cursor:pointer" id="note-badge-pill">' +
+      'font-family:var(--font-mono);font-size:11px;color:#FFB81C;padding:4px 12px;' +
+      'letter-spacing:0.05em;cursor:pointer;white-space:nowrap" id="note-badge-pill">' +
       '📝 ' + notes.length + ' note' + (notes.length !== 1 ? 's' : '') + '</span>';
     var pill = document.getElementById('note-badge-pill');
     if (pill) {
@@ -4133,6 +4134,7 @@ function refreshBadge(playerName, notes) {
       });
     }
   } else {
+    badge.style.fontSize = '0';
     badge.innerHTML = '';
   }
 }
