@@ -555,21 +555,21 @@
     <div class="selector-card">
       <div class="selector-label">00 — Select Season</div>
       <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap">
-        <button class="type-btn active" id="btn-season-2025" style="flex:none;padding:10px 28px">⚾ &nbsp;2025 Season</button>
-        <button class="type-btn" id="btn-season-2026" style="flex:none;padding:10px 28px;cursor:default;opacity:0.4" disabled title="Data will be added soon under datadiamond2026">🔜 &nbsp;2026 — Coming Soon</button>
+        <button class="type-btn active" id="btn-season-2025" style="flex:none;padding:10px 28px">2025 Season</button>
+        <button class="type-btn" id="btn-season-2026" style="flex:none;padding:10px 28px;cursor:default;opacity:0.4" disabled title="Data will be added soon under datadiamond2026">2026 — Coming Soon</button>
       </div>
       <div class="selector-label">01 — Select Team</div>
       <div class="team-picker-grid" id="team-picker"></div>
       <div class="selector-label">02 — Select Role</div>
       <div class="type-toggle">
-        <button class="type-btn active" id="btn-batter">⚾ &nbsp;BATTERS</button>
-        <button class="type-btn"        id="btn-pitcher">🥎 &nbsp;PITCHERS</button>
+        <button class="type-btn active" id="btn-batter">BATTERS</button>
+        <button class="type-btn"        id="btn-pitcher">PITCHERS</button>
       </div>
     </div>
 
     <div id="player-list-section">
       <div class="scout-empty">
-        <div class="scout-empty-icon">📋</div>
+        
         <div class="scout-empty-title">SELECT A TEAM</div>
         <div class="scout-empty-sub">Choose a team above to see available players</div>
       </div>
@@ -756,13 +756,14 @@
 
   function f3(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(3).replace('0.','.'); }
   function f1(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(1); }
+  function f2(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(2); }
   function fN(v){ if(v==null||isNaN(v)) return '—'; return String(Math.round(v)); }
   function xp(n,d){ return d>0?n/d*100:0; }
 
   function renderPlayerList() {
     var section = document.getElementById('player-list-section');
     if (!DATA.summary.length && !DATA.pitches.length) {
-      section.innerHTML = '<div class="scout-empty"><div class="scout-empty-icon">⏳</div><div class="scout-empty-title">LOADING DATA</div></div>';
+      section.innerHTML = '<div class="scout-empty"><div class="scout-empty-title">LOADING DATA</div></div>';
       setTimeout(renderPlayerList, 300); return;
     }
     var team = TEAMS_SC.find(function(t){ return t.id === selTeam; });
@@ -843,7 +844,7 @@
     }
 
     if (!players.length) {
-      section.innerHTML = '<div class="scout-empty"><div class="scout-empty-icon">🔍</div>' +
+      section.innerHTML = '<div class="scout-empty">' +
         '<div class="scout-empty-title">NO DATA</div>' +
         '<div class="scout-empty-sub">No '+selType+' records for '+team.name+'</div></div>';
       return;
@@ -907,7 +908,7 @@
           try {
             if (selType==='batter') genBatterPDF(p, team);
             else                    genPitcherPDF(p, team);
-            showToast('✓  Downloaded: '+p.name, '#34d399');
+            showToast('Downloaded: '+p.name, '#34d399');
           } catch(e) { console.error(e); showToast('Error generating PDF','#f87171'); }
           card.classList.remove('generating');
         }, 50);
@@ -1427,7 +1428,8 @@
         var legy=y+3+chartH+2;
         bbSegs2.forEach(function(seg,i){
           var lx=leftX+(i%2)*(chartW/2),ly=legy+Math.floor(i/2)*7;
-          d.setFillColor(parseInt(seg.color.slice(1,3),16),parseInt(seg.color.slice(3,5),16),parseInt(seg.color.slice(5,7),16));
+          var br=parseInt(seg.color.slice(1,3),16)||1,bg2=parseInt(seg.color.slice(3,5),16)||1,bb2=parseInt(seg.color.slice(5,7),16)||1;
+          d.setFillColor(br,bg2,bb2);
           d.rect(lx,ly-3,4,4,'F');
           d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.white);
           d.text(seg.label+': '+seg.pct+'%',lx+6,ly);
@@ -1443,10 +1445,11 @@
         d.text('SPRAY DIRECTION',rightX+chartW/2,y,{align:'center'});
         d.addImage(sprayImg,'PNG',rightX,y+3,chartW,chartH);
         var legy2=y+3+chartH+2;
-        [{label:'Pull',pct:pp4,color:'#f87171'},{label:'Straightaway',pct:sp4,color:'#FFB81C'},{label:'Oppo',pct:op4,color:'#60a5fa'}].forEach(function(seg,i){
+        spraySegs.forEach(function(seg,i){
           var lx=rightX+(i%2)*(chartW/2),ly=legy2+Math.floor(i/2)*7;
           if(i===2)lx=rightX;
-          d.setFillColor(parseInt(seg.color.slice(1,3),16),parseInt(seg.color.slice(3,5),16),parseInt(seg.color.slice(5,7),16));
+          var sr=parseInt(seg.color.slice(1,3),16)||1,sg2=parseInt(seg.color.slice(3,5),16)||1,sb2=parseInt(seg.color.slice(5,7),16)||1;
+          d.setFillColor(sr,sg2,sb2);
           d.rect(lx,ly-3,4,4,'F');
           d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.white);
           d.text(seg.label+': '+seg.pct+'%',lx+6,ly);
@@ -1458,7 +1461,7 @@
         else{sRec2='STRAIGHT UP';sColor2='#FFB81C';sNote2='Balanced — standard alignment.';}
         var shiftY=legy2+18;
         var shiftCr=parseInt(sColor2.slice(1,3),16),shiftCg=parseInt(sColor2.slice(3,5),16),shiftCb=parseInt(sColor2.slice(5,7),16);
-        d.setFillColor(Math.round(shiftCr*0.08),Math.round(shiftCg*0.08),Math.round(shiftCb*0.08));
+        d.setFillColor(Math.max(1,Math.round(shiftCr*0.08)),Math.max(1,Math.round(shiftCg*0.08)),Math.max(1,Math.round(shiftCb*0.08)));
         d.rect(rightX,shiftY,chartW,16,'F');
         d.setFillColor(shiftCr,shiftCg,shiftCb);d.rect(rightX,shiftY,chartW,3,'F');
         d.setDrawColor(shiftCr,shiftCg,shiftCb);d.setLineWidth(0.5);d.rect(rightX,shiftY,chartW,16,'S');
@@ -1501,19 +1504,26 @@
     drawBg(d);drawHdr(d,player.name,'PITCHER',team);
     var y=MT+32;
 
-    // Key stat boxes — ERA, WHIP, BAA
-    var eraVal  = player.era  != null ? f1(player.era)   : (tot>0?'—':'—');
-    var whipVal = player.whip != null ? f1(player.whip)  : (tot>0?f1(xp(bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length,tot/3)):'—');
-    var baaVal  = player.baa  != null ? f3(player.baa)   : '—';
-    var kPctVal = f1(xp(ks,tot))+'%';
-    var strVal  = f1(xp(str,tot))+'%';
-    var fpsVal  = fpsPct!=null ? f1(fpsPct)+'%' : '—';
+    // Key stat boxes — prefer pbpPitchers, fall back to player/scatter
+    var pbpP2=DATA.pbpPitchers?DATA.pbpPitchers.find(function(p){return p.pitcher===player.name;}):null;
+    var iblP2=((DATA.iblHistory[player.name]||[]).filter(function(s){return s.IP>0;}))[0]||null;
+    var eraVal  = iblP2&&iblP2.ERA!=null  ? f1(iblP2.ERA)   : (player.era!=null?f1(player.era):'—');
+    var whipVal = pbpP2&&pbpP2.WHIP!=null ? f2(pbpP2.WHIP)  : (iblP2&&iblP2.WHIP!=null?f1(iblP2.WHIP):(player.whip!=null?f1(player.whip):(tot>0?f1(xp(bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length,tot/3)):'—')));
+    var baaVal  = pbpP2&&pbpP2.BA_against!=null ? f3(pbpP2.BA_against) : (player.baa!=null?f3(player.baa):'—');
+    var kPctVal = pbpP2&&pbpP2.K_pct!=null   ? f1(pbpP2.K_pct)+'%'   : f1(xp(ks,tot))+'%';
+    var strVal  = pbpP2&&pbpP2.STR_pct!=null  ? f1(pbpP2.STR_pct)+'%' : f1(xp(str,tot))+'%';
+    var fpsVal  = pbpP2&&pbpP2.FP_STR_pct!=null ? f1(pbpP2.FP_STR_pct)+'%' : (fpsPct!=null ? f1(fpsPct)+'%' : '—');
     y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['BAA',baaVal],['K%',kPctVal],['STR%',strVal],['FPS%',fpsVal]],y);
     y+=4;
 
     // Scouting Summary — highlighted area cards
     y=drawSec(d,'Scouting Summary — What Batters Should Know',y);
-    var kPct2=tot>0?ks/tot:0, bbPct2=tot>0?bbs/tot:0, strPct3=tot>0?str/tot:0, znPct=tot>0?inZ/tot:0;
+    // Prefer pbpPitchers for scouting summary rates
+    var kPct2  = pbpP2&&pbpP2.K_pct!=null   ? pbpP2.K_pct/100   : (tot>0?ks/tot:0);
+    var bbPct2 = pbpP2&&pbpP2.BB_pct!=null  ? pbpP2.BB_pct/100  : (tot>0?bbs/tot:0);
+    var strPct3= pbpP2&&pbpP2.STR_pct!=null ? pbpP2.STR_pct/100 : (tot>0?str/tot:0);
+    var znPct=tot>0?inZ/tot:0;
+    if(pbpP2&&pbpP2.FP_STR_pct!=null) fpsPct=pbpP2.FP_STR_pct;
     var tc2={};sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
     var topPitch=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];})[0];
 
