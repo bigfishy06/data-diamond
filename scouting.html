@@ -359,7 +359,6 @@
       text-align: center;
       padding: 64px 20px;
     }
-    .scout-empty-icon { font-size: 44px; opacity: .3; margin-bottom: 14px; }
     .scout-empty-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 20px;
@@ -569,7 +568,6 @@
 
     <div id="player-list-section">
       <div class="scout-empty">
-        
         <div class="scout-empty-title">SELECT A TEAM</div>
         <div class="scout-empty-sub">Choose a team above to see available players</div>
       </div>
@@ -762,7 +760,7 @@
 
   function renderPlayerList() {
     var section = document.getElementById('player-list-section');
-    if (!DATA.summary.length && !DATA.pitches.length) {
+    if (!DATA.summary.length && !DATA.pitches.length && !DATA.pbpBatters.length) {
       section.innerHTML = '<div class="scout-empty"><div class="scout-empty-title">LOADING DATA</div></div>';
       setTimeout(renderPlayerList, 300); return;
     }
@@ -1280,32 +1278,38 @@
     y=drawSec(d,'Scout Summary',y);
     var avg=s.AVG||0,ops=s.OPS||0,pa=s.PA||1,bb=s.BB||0,k=s.K||0;
 
-    // Compute scatter-based discipline stats
-    var fpPitches=sc.filter(function(s2,i){
-      if(i===0)return true;
-      var prev=sc[i-1];
-      return(s2.batter!==prev.batter||s2.inning!==prev.inning||s2.half_inning!==prev.half_inning);
-    });
-    var fpSwingN=fpPitches.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-    var fpSwingPct=fpPitches.length>=5?fpSwingN/fpPitches.length*100:null;
-
-    var swingPitches=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-    var swingPct=sc.length>=5?swingPitches/sc.length*100:null;
-
-    var whiffSwings=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-    var whiffN=sc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
-    var whiffPct=whiffSwings>=5?whiffN/whiffSwings*100:null;
-
-    var outOfZone=sc.filter(function(s2){return s2.x!=null&&(s2.x<-1||s2.x>1||s2.y<0||s2.y>1);});
-    var chaseN=outOfZone.filter(function(s2){return['Swinging Strike','Foul','Strikeout Swinging'].includes(s2.outcome);}).length;
-    var chasePct=outOfZone.length>=5?chaseN/outOfZone.length*100:null;
-
-    // Use pbpBatters if available
+    // Prefer pbpBatters as primary source; fall back to scatter
     var pbp=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return p.batter===player.name;}):null;
-    if(pbp){
-      if(pbp.FP_SWING_pct!=null)fpSwingPct=pbp.FP_SWING_pct;
-      if(pbp.SWING_pct!=null)swingPct=pbp.SWING_pct;
-      if(pbp.WHIFF_pct!=null)whiffPct=pbp.WHIFF_pct;
+
+    var fpSwingPct=null;
+    if(pbp&&pbp.FP_SWING_pct!=null){fpSwingPct=pbp.FP_SWING_pct;}
+    else{
+      var fpPitches=sc.filter(function(s2,i){if(i===0)return true;var prev=sc[i-1];return(s2.batter!==prev.batter||s2.inning!==prev.inning||s2.half_inning!==prev.half_inning);});
+      var fpSwingN=fpPitches.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
+      fpSwingPct=fpPitches.length>=5?fpSwingN/fpPitches.length*100:null;
+    }
+
+    var swingPct=null;
+    if(pbp&&pbp.SWING_pct!=null){swingPct=pbp.SWING_pct;}
+    else{
+      var swingPitches=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
+      swingPct=sc.length>=5?swingPitches/sc.length*100:null;
+    }
+
+    var whiffPct=null;
+    if(pbp&&pbp.WHIFF_pct!=null){whiffPct=pbp.WHIFF_pct;}
+    else{
+      var whiffSwings=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
+      var whiffN=sc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
+      whiffPct=whiffSwings>=5?whiffN/whiffSwings*100:null;
+    }
+
+    var chasePct=null;
+    if(pbp&&pbp.CHASE_pct!=null){chasePct=pbp.CHASE_pct;}
+    else{
+      var outOfZone=sc.filter(function(s2){return s2.x!=null&&(s2.x<-1||s2.x>1||s2.y<0||s2.y>1);});
+      var chaseN=outOfZone.filter(function(s2){return['Swinging Strike','Foul','Strikeout Swinging'].includes(s2.outcome);}).length;
+      chasePct=outOfZone.length>=5?chaseN/outOfZone.length*100:null;
     }
 
     function hCard(label,value,color,note,sub){return{label:label,value:value,color:color,note:note,sub:sub||''};}
@@ -1355,11 +1359,12 @@
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
     y=drawSec(d,'Plate Discipline',y);
-    var pspa=s.pitches_seen&&pa>0?s.pitches_seen/pa:null;
+    var pspa=pbp&&pbp.PS_PA!=null?pbp.PS_PA:(s.pitches_seen&&pa>0?s.pitches_seen/pa:null);
     var csN=sc.filter(function(s2){return s2.outcome==='Called Strike';}).length;
     var ssN=sc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
-    var kPct2=pa>0?k/pa:0;
-    var bbPct2=pa>0?bb/pa:0;
+    var kPct2=pbp&&pbp.K_pct!=null?pbp.K_pct/100:(pa>0?k/pa:0);
+    var bbPct2=pbp&&pbp.BB_pct!=null?pbp.BB_pct/100:(pa>0?bb/pa:0);
+    var ssPct=pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct/100:(sc.length>=5?ssN/sc.length:null);
 
     var discStats=[
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
@@ -1368,9 +1373,9 @@
       {label:'CS%',sub:'Called strike rate',val:sc.length>=5?f1(csN/sc.length*100)+'%':'—',
        color:sc.length>=5?(csN/sc.length>=0.20?'#34d399':csN/sc.length>=0.14?'#FFB81C':'#f87171'):'#555',
        note:sc.length>=5?(csN/sc.length>=0.20?'Gets called often':csN/sc.length>=0.14?'Average called strikes':'Rarely caught looking'):''},
-      {label:'SS%',sub:'Swinging strike rate',val:sc.length>=5?f1(ssN/sc.length*100)+'%':'—',
-       color:sc.length>=5?(ssN/sc.length>=0.12?'#34d399':ssN/sc.length>=0.07?'#FFB81C':'#f87171'):'#555',
-       note:sc.length>=5?(ssN/sc.length>=0.12?'Misses often — use off-speed':ssN/sc.length>=0.07?'Average swinging strikes':'Rarely misses contact'):''},
+      {label:'SS%',sub:'Swinging strike rate',val:ssPct!=null?f1(ssPct*100)+'%':'—',
+       color:ssPct!=null?(ssPct>=0.12?'#34d399':ssPct>=0.07?'#FFB81C':'#f87171'):'#555',
+       note:ssPct!=null?(ssPct>=0.12?'Misses often — use off-speed':ssPct>=0.07?'Average swinging strikes':'Rarely misses contact'):''},
       {label:'K%',sub:'Strikeout rate',val:f1(kPct2*100)+'%',
        color:kPct2>=0.28?'#34d399':kPct2>=0.18?'#FFB81C':'#f87171',
        note:kPct2>=0.28?'Strikeout prone':kPct2>=0.18?'Average K rate':'Hard to strikeout'},
