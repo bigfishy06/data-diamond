@@ -897,23 +897,20 @@ function statBox(label, value, color) {
 
 function buildTeamPitcherTable(pitchers) {
   const rows = pitchers.map(function(pd) {
-    const ibl = (DATA.iblHistory[pd.pitcher] || []).filter(function(s){ return s.IP > 0; });
-    const era = ibl.length && ibl[0].ERA != null ? fmt2(ibl[0].ERA) : '—';
+    // Derive handedness from scatter pitcher_side
+    var handVal = '—';
+    DATA.pitches.forEach(function(bp) {
+      if (!bp.scatter || handVal !== '—') return;
+      var hit = bp.scatter.find(function(s){ return s.pitcher === pd.pitcher && s.pitcher_side; });
+      if (hit) handVal = hit.pitcher_side;
+    });
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + pd.pitcher + '" data-type="pitcher">' + pd.pitcher + '</a></td>' +
-      '<td>' + fmt1(pd.IP||0) + '</td>' +
-      '<td>' + fmtN(pd.total_pitches||0) + '</td>' +
-      '<td class="highlight-val">' + era + '</td>' +
-      '<td>' + (pd.K_pct   != null ? fmt1(pd.K_pct)+'%'   : '—') + '</td>' +
-      '<td>' + (pd.BB_pct  != null ? fmt1(pd.BB_pct)+'%'  : '—') + '</td>' +
-      '<td>' + (pd.STR_pct != null ? fmt1(pd.STR_pct)+'%' : '—') + '</td>' +
-      '<td>' + (pd.EA_pct  != null ? fmt1(pd.EA_pct)+'%'  : '—') + '</td>' +
-      '<td>' + (pd.K_BB    != null ? fmt2(pd.K_BB)        : '—') + '</td>' +
+      '<td style="text-align:center;color:rgba(255,255,255,0.6)">' + handVal + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-    '<th style="text-align:left">Pitcher</th><th>IP</th><th>Pitches</th><th>ERA</th>' +
-    '<th>K%</th><th>BB%</th><th>STR%</th><th>E+A%</th><th>K/BB</th>' +
+    '<th style="text-align:left">Pitcher</th><th>Hand</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
@@ -1938,7 +1935,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     }
 
     var bbSegs=[{label:'GB%',pct:gb,color:'#fb923c'},{label:'FB%',pct:fb,color:'#60a5fa'},{label:'LO%',pct:lo,color:'#34d399'},{label:'PO%',pct:po,color:'#a78bfa'}].filter(function(s){return s.pct>0;});
-    var bbSVG   = bipTot>=5 ? buildDonut(bbSegs, 60,60,48,30, [Math.round(gb+fb+lo+po)+'% BIP','tracked']) : '';
+    var bbSVG   = bipTot>=5 ? buildDonut(bbSegs, 60,60,48,30, []) : '';
     var bbLegend= bipTot>=5 ? buildLegend(bbSegs) : '';
 
     var spraySVG='', sprayLegend='', shiftHTML='';
@@ -2137,9 +2134,14 @@ function buildPbpBatterLeague() {
 function buildPbpPitcherLeague() {
   var o = { era:[], whip:[], baAgst:[], babip:[], kpct:[], bbpct:[], kbb:[], str:[], swing:[],
             whiff:[], contact:[], fpStr:[], putaway:[], ea:[], gb:[], fb:[], lo:[], po:[] };
+  // ERA league array from iblHistory (same source as getSeasonERA)
+  Object.keys(DATA.iblHistory).forEach(function(name) {
+    var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
+    if (ibl.length && ibl[0].ERA != null) o.era.push(ibl[0].ERA);
+  });
   DATA.pbpPitchers.forEach(function(p) {
     if (!p.BF || p.BF < 5) return;
-    if (p.ERA        != null) o.era.push(p.ERA);
+    // ERA already built from iblHistory above
     if (p.WHIP       != null) o.whip.push(p.WHIP);
     if (p.BA_against != null) o.baAgst.push(p.BA_against);
     if (p.BABIP      != null) o.babip.push(p.BABIP);
@@ -3984,7 +3986,7 @@ function buildSplitsTables(points) {
     }).join('') +
     '</tbody></table></div></div>';
 
-  return countTableHTML + pitchMixHTML;
+  return pitchMixHTML + countTableHTML;
 }
 
 // ── TABLE BUILDERS ────────────────────────────────
