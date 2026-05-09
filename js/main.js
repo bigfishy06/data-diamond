@@ -102,13 +102,13 @@ const AUTH = {
 };
 
 const TEAMS = [
-  { id: 'bar', name: 'Barrie Baycats',             abbreviation: 'BAR', primaryColor: '#C8102E' },
+  { id: 'bar', name: 'Barrie Baycats',             abbreviation: 'BAR', primaryColor: '#002D62' },
   { id: 'bra', name: 'Brantford Red Sox',           abbreviation: 'BRA', primaryColor: '#BD3039' },
   { id: 'ckb', name: 'Chatham-Kent Barnstormers',   abbreviation: 'CKB', primaryColor: '#E87722' },
   { id: 'gue', name: 'Guelph Royals',               abbreviation: 'GUE', primaryColor: '#003DA5' },
   { id: 'ham', name: 'Hamilton Cardinals',           abbreviation: 'HAM', primaryColor: '#C8102E' },
-  { id: 'kit', name: 'Kitchener Panthers',           abbreviation: 'KIT', primaryColor: '#000000' },
-  { id: 'lon', name: 'London Majors',                abbreviation: 'LON', primaryColor: '#003DA5' },
+  { id: 'kit', name: 'Kitchener Panthers',           abbreviation: 'KIT', primaryColor: '#F5A800' },
+  { id: 'lon', name: 'London Majors',                abbreviation: 'LON', primaryColor: '#072B61' },
   { id: 'tor', name: 'Toronto Maple Leafs',          abbreviation: 'TOR', primaryColor: '#134A8E' },
   { id: 'wel', name: 'Welland Jackfish',             abbreviation: 'WEL', primaryColor: '#00703C' }
 ];
@@ -988,7 +988,14 @@ function renderPlayerList(content) {
       Object.keys(DATA.iblHistory).forEach(function(name) {
         if (existingNames.has(name.toLowerCase())) return;
         var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1 && (s.AB||0)>0; });
-        if (s2025) players = players.concat([Object.assign({batter:name}, s2025)]);
+        if (s2025) { players = players.concat([Object.assign({batter:name}, s2025)]); existingNames.add(name.toLowerCase()); }
+      });
+      // Add DATA.pitches top-level batters not yet included (catches everyone like getAllBatters)
+      DATA.pitches.forEach(function(bp) {
+        if (!bp.batter || existingNames.has(bp.batter.toLowerCase())) return;
+        existingNames.add(bp.batter.toLowerCase());
+        var sum = DATA.summary.find(function(s){ return s.batter === bp.batter; }) || { batter: bp.batter };
+        players = players.concat([sum]);
       });
       const card = document.createElement('div');
       card.className = 'stat-card fade-up';
@@ -1957,10 +1964,10 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       spraySVG   = buildDonut(spSegs, 60,60,48,30, []);
       sprayLegend= buildLegend(spSegs);
       var sLabel,sDesc,sColor;
-      if(pullPct>=55){sLabel='STANDARD SHIFT';sDesc='Heavy pull hitter — shift toward the pull side.';sColor='#f87171';}
-      else if(pullPct>=45){sLabel='SLIGHT SHIFT';sDesc='Moderate pull tendency — consider a shaded alignment.';sColor='#FFB81C';}
-      else if(oppPct>=40){sLabel='NO SHIFT';sDesc='Hits well to opposite field — play straight up.';sColor='#34d399';}
-      else{sLabel='STRAIGHT UP';sDesc='Balanced spray — standard alignment recommended.';sColor='#60a5fa';}
+      if(pullPct>=55){sLabel='PULL';sDesc='Heavy pull hitter — shift infield to pull side.';sColor='#f87171';}
+      else if(oppPct>=40){sLabel='OPPO';sDesc='Goes opposite often — shade that way.';sColor='#60a5fa';}
+      else if(pullPct>=50){sLabel='STRAIGHT';sDesc='Hits straight — play standard alignment.';sColor='#FFB81C';}
+      else{sLabel='NONE';sDesc='Balanced — no shift needed.';sColor='rgba(255,255,255,0.4)';}
       shiftHTML=
         '<div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.07)"></div>'+
         '<div style="min-width:140px">'+
@@ -2000,21 +2007,16 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     if (ttp != null) {
       // Scale: 1.0s (fast) → 1.8s (slow). Midpoint = 1.35s
       var minT = 1.0, maxT = 1.8;
-      // Gold band: 1.25–1.45, with 1.35 as exact visual midpoint
-      var goldStart = 1.25, goldEnd = 1.45;
+      var midT = 1.35;
 
-      // Color: green<=1.25 (fast/good), gold 1.25-1.45, red>1.45 (slow/bad for pitcher)
+      // Two zones: <1.35 = quick (green/good for pitcher), >=1.35 = slow (red/bad for pitcher)
       var gaugeColor, riskLabel, riskDesc;
-      if (ttp <= 1.25) {
-        gaugeColor = '#34d399'; // green
+      if (ttp < 1.35) {
+        gaugeColor = '#34d399'; // green — quick delivery, hard to steal
         riskLabel  = 'QUICK DELIVERY';
         riskDesc   = 'Delivers quickly — base runners have a very difficult time stealing.';
-      } else if (ttp <= 1.45) {
-        gaugeColor = '#FFB81C'; // gold
-        riskLabel  = 'AVERAGE DELIVERY';
-        riskDesc   = 'Near the steal threshold — runners may attempt with a good jump.';
       } else {
-        gaugeColor = '#f87171'; // red
+        gaugeColor = '#f87171'; // red — slow delivery, steal risk
         riskLabel  = 'SLOW DELIVERY';
         riskDesc   = 'Slow to the plate — base runners can steal freely. Alert your catcher.';
       }
@@ -2045,15 +2047,9 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
           ' A ' + ir + ' ' + ir + ' 0 0 0 ' + ix2.toFixed(1) + ' ' + iy2.toFixed(1) + ' Z';
       }
 
-      // Zone boundary angles (180°=left/fast, 0°=right/slow)
+      // Two zone boundary angles (180°=left/fast, 0°=right/slow)
       var gsRad  = Math.PI;
-      var geDeg  = 180 - ((goldStart - minT) / (maxT - minT)) * 180;
-      var geRad  = geDeg * Math.PI / 180;
-      var geDeg2 = 180 - ((goldEnd   - minT) / (maxT - minT)) * 180;
-      var geRad2 = geDeg2 * Math.PI / 180;
-
-      // Midpoint marker at 1.35s
-      var midPct = (1.35 - minT) / (maxT - minT);
+      var midPct = (midT - minT) / (maxT - minT);
       var midDeg = 180 - midPct * 180;
       var midRad = midDeg * Math.PI / 180;
       var mx1 = gCx + (gR - 2) * Math.cos(midRad);
@@ -2061,9 +2057,8 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       var mx2 = gCx + (gR + 6) * Math.cos(midRad);
       var my2 = gCy - (gR + 6) * Math.sin(midRad);
 
-      var greenArc = makeArc(gsRad,  geRad);
-      var goldArc  = makeArc(geRad,  geRad2);
-      var redArc   = makeArc(geRad2, 0);
+      var greenArc = makeArc(gsRad, midRad);
+      var redArc   = makeArc(midRad, 0);
 
       pitcherGaugeHTML =
         '<div style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:20px 24px;margin-bottom:16px">' +
@@ -2075,7 +2070,6 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
                       ' L ' + (gCx + ir) + ' ' + gCy + ' A ' + ir + ' ' + ir + ' 0 0 0 ' + (gCx - ir) + ' ' + gCy + ' Z"' +
                       ' fill="rgba(255,255,255,0.06)"/>' +
                 '<path d="' + greenArc + '" fill="rgba(52,211,153,0.25)"/>' +
-                '<path d="' + goldArc  + '" fill="rgba(255,184,28,0.25)"/>' +
                 '<path d="' + redArc   + '" fill="rgba(248,113,113,0.25)"/>' +
                 '<line x1="' + mx1.toFixed(1) + '" y1="' + my1.toFixed(1) + '" x2="' + mx2.toFixed(1) + '" y2="' + my2.toFixed(1) + '"' +
                       ' stroke="#FFB81C" stroke-width="2" stroke-dasharray="2,2"/>' +
@@ -2088,6 +2082,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
                       ' text-anchor="middle" font-size="13" font-family="monospace" font-weight="bold" fill="' + gaugeColor + '">' + ttp.toFixed(2) + 's</text>' +
                 '<text x="' + (gCx - gR - 2) + '" y="' + (gCy + 3) + '" font-size="6" font-family="monospace" fill="rgba(255,255,255,0.3)" text-anchor="end">1.0s</text>' +
                 '<text x="' + (gCx + gR + 2) + '" y="' + (gCy + 3) + '" font-size="6" font-family="monospace" fill="rgba(255,255,255,0.3)">1.8s</text>' +
+                '<text x="' + gCx + '" y="' + (gCy + 20) + '" text-anchor="middle" font-size="5" font-family="monospace" fill="rgba(255,255,255,0.25)">threshold: 1.35s</text>' +
               '</svg>' +
             '</div>' +
             '<div style="flex:1;min-width:140px">' +
@@ -2095,7 +2090,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
               '<div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5;margin-bottom:10px">' + riskDesc + '</div>' +
               '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:8px 12px">' +
                 '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.08em;margin-bottom:2px">STEAL THRESHOLD</div>' +
-                '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.7)">Above <span style="color:#FFB81C;font-weight:600">1.35s</span> = runners can steal freely</div>' +
+                '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.7)">At or above <span style="color:#f87171;font-weight:600">1.35s</span> = runners can steal freely</div>' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -2704,8 +2699,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       allBars = [
         { lbl: 'ERA',  val: getSeasonERA(name)  != null ? fmt2(getSeasonERA(name))  : (dp.ERA  != null ? fmt2(dp.ERA)  : '—'),
                    pct: getSeasonERA(name)  != null ? 1-lpP(getSeasonERA(name),  lgPpbp.era)  : (dp.ERA  != null ? 1-lpP(dp.ERA,  lgPpbp.era)  : 0), good: true },
-        { lbl: 'IP',   val: dp.IP != null ? fmtIP(dp.IP) : '—',
-                   pct: dp.IP != null ? lpP(dp.IP, lgPpbp.era.map(function(_,i){ return DATA.pbpPitchers[i] ? DATA.pbpPitchers[i].IP||0 : 0; })) : 0, good: true },
+        { lbl: 'IP',   val: dp.IP != null ? fmtIP(dp.IP) : (function(){ var ibl=(DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;}); return ibl.length?fmtIP(ibl[0].IP):'—'; })(),
+                   pct: (function(){ var ipArr=Object.values(DATA.iblHistory).map(function(ss){var r=(ss||[]).filter(function(s){return s.IP>0;});return r.length?r[0].IP:null;}).filter(function(v){return v!=null;}); var myIP=dp.IP||(function(){var ibl=(DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;});return ibl.length?ibl[0].IP:null;})(); return myIP!=null&&ipArr.length?lpP(myIP,ipArr):0; })(), good: true },
         { lbl: 'WHIP', val: getSeasonWHIP(name) != null ? fmt2(getSeasonWHIP(name)) : (dp.WHIP != null ? fmt2(dp.WHIP) : '—'),
                    pct: getSeasonWHIP(name) != null ? 1-lpP(getSeasonWHIP(name), lgPpbp.whip) : (dp.WHIP != null ? 1-lpP(dp.WHIP, lgPpbp.whip) : 0), good: true },
         { lbl: 'BA AGNST', val: dp.BA_against != null ? fmt3(dp.BA_against)       : '—', pct: dp.BA_against != null ? 1-lpP(dp.BA_against, lgPpbp.baAgst)  : 0, good: true },
