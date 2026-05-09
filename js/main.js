@@ -627,6 +627,17 @@ function getTeamBatters(teamId) {
       result.push({ batter: name, pbp: null, summary: sum, ibl: s2025 });
     }
   });
+  // Supplement: DATA.pitches top-level batter field (same as getAllBatters)
+  DATA.pitches.forEach(function(bp) {
+    if (!bp.batter || seen.has(bp.batter)) return;
+    var t = resolveTeam(bp.team);
+    if (t && t.id === teamId) {
+      seen.add(bp.batter);
+      var sum = DATA.summary.find(function(sm){ return sm.batter === bp.batter; }) || { batter: bp.batter };
+      result.push({ batter: bp.batter, pbp: null, summary: sum });
+    }
+  });
+  result.sort(function(a,b){ return a.batter.localeCompare(b.batter); });
   return result;
 }
 

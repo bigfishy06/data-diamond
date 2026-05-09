@@ -792,6 +792,16 @@
           players.push({ name: name, summary: sum, pitch: getPitchPlayer(name) });
         }
       });
+      // Add DATA.pitches top-level batter field (same as getAllBatters on players page)
+      DATA.pitches.forEach(function(bp) {
+        if (!bp.batter || seenBatters.has(bp.batter)) return;
+        var t = resolveTeam(bp.team);
+        if (t && t.id === selTeam) {
+          seenBatters.add(bp.batter);
+          var sum = DATA.summary.find(function(sm){ return sm.batter === bp.batter; }) || { batter: bp.batter };
+          players.push({ name: bp.batter, summary: sum, pitch: getPitchPlayer(bp.batter) });
+        }
+      });
       players.sort(function(a,b){ return a.name.localeCompare(b.name); });
     } else {
       // Match players page: prefer pbpPitchers (BF>=5), supplement with scatter
