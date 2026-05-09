@@ -984,6 +984,7 @@ function renderPlayerList(content) {
         ? DATA.pbpBatters.filter(function(p) { return p.AB >= 5; })
         : DATA.summary.filter(function(p) { return p.AB > 0; });
       // Add IBL-only 2025 batters not already in the list
+      players = players.map(function(p){ return Object.assign({}, p, { batter: (p.batter||'').trim() }); });
       var existingNames = new Set(players.map(function(p){ return (p.batter||'').toLowerCase(); }));
       Object.keys(DATA.iblHistory).forEach(function(name) {
         if (existingNames.has(name.toLowerCase())) return;
@@ -992,10 +993,11 @@ function renderPlayerList(content) {
       });
       // Add DATA.pitches top-level batters not yet included (catches everyone like getAllBatters)
       DATA.pitches.forEach(function(bp) {
-        if (!bp.batter || existingNames.has(bp.batter.toLowerCase())) return;
-        existingNames.add(bp.batter.toLowerCase());
-        var sum = DATA.summary.find(function(s){ return s.batter === bp.batter; }) || { batter: bp.batter };
-        players = players.concat([sum]);
+        var bname = (bp.batter||'').trim();
+        if (!bname || existingNames.has(bname.toLowerCase())) return;
+        existingNames.add(bname.toLowerCase());
+        var sum = DATA.summary.find(function(s){ return (s.batter||'').trim() === bname; }) || { batter: bname };
+        players = players.concat([Object.assign({}, sum, { batter: bname })]);
       });
       const card = document.createElement('div');
       card.className = 'stat-card fade-up';
@@ -1016,24 +1018,11 @@ function renderPlayerList(content) {
     } else {
       const card  = document.createElement('div');
       card.className = 'stat-card fade-up';
-      var basePitchers = DATA.pbpPitchers.length
-        ? DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; })
-        : [];
-      var existingPitcherNames = new Set(basePitchers.map(function(p){ return (p.pitcher||'').toLowerCase(); }));
-      // Add IBL-only 2025 pitchers and scatter-only pitchers
+      // Always use getAllPitchers so every pitcher (pbp, ibl, scatter) is shown
       var allPNames = getAllPitchers();
-      allPNames.forEach(function(name) {
-        if (!existingPitcherNames.has(name.toLowerCase())) {
-          existingPitcherNames.add(name.toLowerCase());
-        }
-      });
-      var pitcherHTML = DATA.pbpPitchers.length
-        ? buildPbpPitcherTable(basePitchers)
-        : buildPitcherListTable(allPNames);
-      // If we have pbp pitchers, append IBL-only names as extra rows
-      var pitcherCount = allPNames.length;
+      var pitcherHTML = buildPitcherListTable(allPNames);
       card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">All Pitchers</span>' +
-        '<span class="stat-card-subtitle">' + pitcherCount + ' pitchers</span></div>' +
+        '<span class="stat-card-subtitle">' + allPNames.length + ' pitchers</span></div>' +
         '<div style="padding:16px 24px 0">' +
         '<input class="roster-search" id="pitcher-search" placeholder="Search pitchers..." /></div>' +
         pitcherHTML;

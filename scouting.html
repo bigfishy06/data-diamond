@@ -616,6 +616,16 @@
           <table id="fielder-card-table" style="width:100%;border-collapse:collapse;font-size:8px;"></table>
         </div>
       </div>
+
+      <!-- Opposing Pitchers section -->
+      <div id="opp-pitcher-section" style="margin-top:32px;display:none">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#FFB81C;margin-bottom:14px;border-bottom:1px solid rgba(255,184,28,0.3);padding-bottom:6px">
+          <span id="opp-pitcher-title">OPPOSING PITCHERS</span>
+        </div>
+        <div style="overflow-x:auto">
+          <table id="opp-pitcher-table" style="width:100%;border-collapse:collapse;font-size:11px;font-family:'DM Mono',monospace"></table>
+        </div>
+      </div>
     </div>
 
     <style>
@@ -1798,22 +1808,10 @@
         else if (strPct2  >= 0.50) shift = 'STRAIGHT';
         else                        shift = 'NONE';
       }
-      var pbpB = DATA.pbpBatters ? DATA.pbpBatters.find(function(p){ return p.batter === entry.batter; }) : null;
-      var avgVal = pbpB && pbpB.AVG != null ? f3(pbpB.AVG) : (sum ? f3(sum.AVG) : '—');
-      var opsVal = pbpB && pbpB.OPS != null ? f3(pbpB.OPS) : (sum ? f3(sum.OPS) : '—');
       return {
         name: entry.batter,
-        bats: entry.batter_side || (entry.scatter&&entry.scatter[0]?entry.scatter[0].batter_side:'') || '—',
-        avg:  avgVal,
-        ops:  opsVal,
-        fps:  pct(entry.scatter ? entry.scatter.filter(function(s,i){
-                var prev=entry.scatter[i-1];
-                return i===0||(prev&&(s.batter!==prev.batter||s.inning!==prev.inning||s.half_inning!==prev.half_inning));
-              }).filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s.outcome); }).length : 0,
-              entry.scatter ? entry.scatter.filter(function(s,i){
-                var prev=entry.scatter[i-1];
-                return i===0||(prev&&(s.batter!==prev.batter||s.inning!==prev.inning||s.half_inning!==prev.half_inning));
-              }).length : 0),
+        avg:  sum ? f3(sum.AVG) : '—',
+        hr:   sum ? fN(sum.HR)  : '—',
         pull: pct(pull,sprayTot), straight: pct(straight,sprayTot), opp: pct(opp,sprayTot),
         gb:   pct(gb,contactTot), fb: pct(fb,contactTot), ld: pct(ld,contactTot),
         shift: shift,
@@ -1822,10 +1820,10 @@
     });
 
     var gold = '#FFB81C';
-    var headers = ['PLAYER','BATS','AVG','OPS','FP SW%','PULL%','STR%','OPP%','GB%','FB%','LD%','SHIFT'];
+    var headers = ['PLAYER','AVG','HR','PULL%','STR%','OPP%','GB%','FB%','LD%','SHIFT'];
     var html = '<thead><tr>';
     headers.forEach(function(h, i) {
-      var sep  = (i===5||i===8||i===11) ? 'border-left:1px solid rgba(255,255,255,0.1);' : '';
+      var sep  = (i===3||i===6||i===9) ? 'border-left:1px solid rgba(255,255,255,0.1);' : '';
       var align = i===0 ? 'text-align:left' : 'text-align:center';
       html += '<th style="padding:4px 7px;'+align+';'+sep+'color:'+gold+';font-size:8px;letter-spacing:1.2px;font-weight:500;white-space:nowrap;border-bottom:1px solid rgba(255,184,28,0.45)">'+h+'</th>';
     });
@@ -1833,21 +1831,93 @@
 
     rows.forEach(function(r, i) {
       var bg = i%2===0 ? 'rgba(255,255,255,0.025)' : 'transparent';
-      // Shift color coding
       var shiftColor = r.shift==='PULL'?'#f87171':r.shift==='OPPO'?'#60a5fa':r.shift==='STRAIGHT'?'#FFB81C':'rgba(255,255,255,0.3)';
-      var vals = [r.name, r.bats, r.avg, r.ops, r.fps, r.pull, r.straight, r.opp, r.gb, r.fb, r.ld, r.shift];
+      var vals = [r.name, r.avg, r.hr, r.pull, r.straight, r.opp, r.gb, r.fb, r.ld, r.shift];
       html += '<tr style="background:'+bg+'">';
       vals.forEach(function(v, ci) {
-        var sep   = (ci===5||ci===8||ci===11) ? 'border-left:1px solid rgba(255,255,255,0.07);' : '';
+        var sep   = (ci===3||ci===6||ci===9) ? 'border-left:1px solid rgba(255,255,255,0.07);' : '';
         var align = ci===0 ? 'text-align:left;color:#fff;font-weight:500' : 'text-align:center;color:rgba(255,255,255,0.8)';
         var extra = 'font-size:9px';
-        var shiftStyle = ci===11 ? 'color:'+shiftColor+';font-weight:700;font-size:8px;letter-spacing:0.5px' : '';
+        var shiftStyle = ci===9 ? 'color:'+shiftColor+';font-weight:700;font-size:8px;letter-spacing:0.5px' : '';
         html += '<td style="padding:2px 7px;'+align+';'+sep+extra+';'+shiftStyle+';border-bottom:1px solid rgba(255,255,255,0.04);white-space:nowrap">'+v+'</td>';
       });
       html += '</tr>';
     });
     html += '</tbody>';
     table.innerHTML = html;
+
+    // ── Opposing Pitchers table ────────────────────────────────────────
+    var pitcherSection = document.getElementById('opp-pitcher-section');
+    var pitcherTable   = document.getElementById('opp-pitcher-table');
+    document.getElementById('opp-pitcher-title').textContent = team.name.toUpperCase() + ' — OPPOSING PITCHERS';
+
+    var seenP = new Set();
+    var oppPitchers = [];
+    // Primary: pbpPitchers BF>=5
+    if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
+      DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; }).forEach(function(p) {
+        var pt = resolveTeam(p.pitcher_team);
+        if (pt && pt.id === teamId && !seenP.has(p.pitcher)) {
+          seenP.add(p.pitcher);
+          var ibl = (DATA.iblHistory[p.pitcher]||[]).filter(function(s){return s.IP>0;});
+          var hand = '—';
+          DATA.pitches.forEach(function(bp) {
+            if (!bp.scatter || hand !== '—') return;
+            var hit = bp.scatter.find(function(s){ return s.pitcher===p.pitcher && s.pitcher_side; });
+            if (hit) hand = hit.pitcher_side;
+          });
+          oppPitchers.push({ name:p.pitcher, hand:hand,
+            era: ibl.length&&ibl[0].ERA!=null?ibl[0].ERA:null,
+            whip: p.WHIP!=null?p.WHIP:(ibl.length&&ibl[0].WHIP!=null?ibl[0].WHIP:null),
+            str: p.STR_pct!=null?p.STR_pct:null, kpct: p.K_pct!=null?p.K_pct:null });
+        }
+      });
+    }
+    // Supplement: scatter-only pitchers
+    DATA.pitches.forEach(function(bp) {
+      if (!bp.scatter) return;
+      bp.scatter.forEach(function(s) {
+        if (!s.pitcher || seenP.has(s.pitcher)) return;
+        var pt = resolveTeam(s.pitcher_team);
+        if (pt && pt.id === teamId) {
+          seenP.add(s.pitcher);
+          var pd = DATA.pitchers.find(function(d){ return d.pitcher===s.pitcher; }) || {};
+          var ibl = (DATA.iblHistory[s.pitcher]||[]).filter(function(r){return r.IP>0;});
+          oppPitchers.push({ name:s.pitcher, hand:s.pitcher_side||'—',
+            era: ibl.length&&ibl[0].ERA!=null?ibl[0].ERA:null,
+            whip: pd.WHIP||null, str: pd.STR_pct||null, kpct: pd.K_pct||null });
+        }
+      });
+    });
+    oppPitchers.sort(function(a,b){return a.name.localeCompare(b.name);});
+
+    if (oppPitchers.length) {
+      pitcherSection.style.display = 'block';
+      var pGold = '#FFB81C';
+      var pHeaders = ['PITCHER','HAND','ERA','WHIP','STR%','K%'];
+      var pH = '<thead><tr>';
+      pHeaders.forEach(function(h,i){
+        var align = i===0?'text-align:left':'text-align:center';
+        pH += '<th style="padding:4px 7px;'+align+';color:'+pGold+';font-size:8px;letter-spacing:1.2px;font-weight:500;white-space:nowrap;border-bottom:1px solid rgba(255,184,28,0.45)">'+h+'</th>';
+      });
+      pH += '</tr></thead><tbody>';
+      oppPitchers.forEach(function(p,i){
+        var bg = i%2===0?'rgba(255,255,255,0.025)':'transparent';
+        var f1v=function(v){return v!=null?parseFloat(v).toFixed(1)+'%':'—';};
+        var f2v=function(v){return v!=null?parseFloat(v).toFixed(2):'—';};
+        var vals=[p.name, p.hand, f2v(p.era), f2v(p.whip), f1v(p.str), f1v(p.kpct)];
+        pH += '<tr style="background:'+bg+'">';
+        vals.forEach(function(v,ci){
+          var align=ci===0?'text-align:left;color:#fff;font-weight:500':'text-align:center;color:rgba(255,255,255,0.8)';
+          pH += '<td style="padding:2px 7px;'+align+';font-size:9px;border-bottom:1px solid rgba(255,255,255,0.04);white-space:nowrap">'+v+'</td>';
+        });
+        pH += '</tr>';
+      });
+      pH += '</tbody>';
+      pitcherTable.innerHTML = pH;
+    } else {
+      pitcherSection.style.display = 'none';
+    }
   }
 
     buildTeamPicker();
