@@ -897,20 +897,19 @@ function statBox(label, value, color) {
 
 function buildTeamPitcherTable(pitchers) {
   const rows = pitchers.map(function(pd) {
-    // Derive handedness from scatter pitcher_side
-    var handVal = '—';
-    DATA.pitches.forEach(function(bp) {
-      if (!bp.scatter || handVal !== '—') return;
-      var hit = bp.scatter.find(function(s){ return s.pitcher === pd.pitcher && s.pitcher_side; });
-      if (hit) handVal = hit.pitcher_side;
-    });
+    const team = resolveTeam(pd.pitcher_team);
+    var teamDisplay = team ? team.abbreviation : (function() {
+      var iblS = (DATA.iblHistory[pd.pitcher] || []).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
+      if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
+      return '—';
+    })();
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + pd.pitcher + '" data-type="pitcher">' + pd.pitcher + '</a></td>' +
-      '<td style="text-align:center;color:rgba(255,255,255,0.6)">' + handVal + '</td>' +
+      '<td>' + teamDisplay + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-    '<th style="text-align:left">Pitcher</th><th>Hand</th>' +
+    '<th style="text-align:left">Pitcher</th><th>Team</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
