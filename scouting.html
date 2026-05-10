@@ -574,8 +574,9 @@
   }
 
   function getPitchPlayer(batterName) {
-    // scatter entries have no batter field — match on top-level bp.batter
-    var bp = DATA.pitches.find(function(p) { return p.batter === batterName; });
+    // scatter entries have no batter field — match on top-level bp.batter, trim whitespace
+    var name = (batterName||'').trim();
+    var bp = DATA.pitches.find(function(p) { return (p.batter||'').trim() === name; });
     return (bp && bp.scatter && bp.scatter.length) ? { scatter: bp.scatter } : null;
   }
 
@@ -597,8 +598,8 @@
       // Match players page: prefer pbpBatters (AB>=5), supplement with iblHistory 2025
       var seenBatters = new Set();
       var rawBatters = DATA.pbpBatters.length
-        ? DATA.pbpBatters.filter(function(p){ return p.AB >= 5; })
-        : DATA.summary.filter(function(p){ return p.AB > 0; });
+        ? DATA.pbpBatters
+        : DATA.summary;
       rawBatters.forEach(function(p){
         var t = resolveTeam(p.batter_team || p.team);
         if (t && t.id === selTeam && !seenBatters.has(p.batter)) {
@@ -610,13 +611,22 @@
       // Add IBL-only 2025 batters not already included
       Object.keys(DATA.iblHistory).forEach(function(name) {
         if (seenBatters.has(name)) return;
-        var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1 && (s.AB||0)>0; });
+        var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
         if (!s2025) return;
         var t = resolveTeam(s2025.team);
         if (t && t.id === selTeam) {
           seenBatters.add(name);
           var sum = DATA.summary.find(function(s){ return s.batter === name; }) || Object.assign({batter:name}, s2025);
           players.push({ name: name, summary: sum, pitch: getPitchPlayer(name) });
+        }
+      });
+      // Add DATA.summary batters not yet included (matches getAllBatters)
+      DATA.summary.forEach(function(p) {
+        if (!p.batter || seenBatters.has(p.batter)) return;
+        var t = resolveTeam(p.batter_team);
+        if (t && t.id === selTeam) {
+          seenBatters.add(p.batter);
+          players.push({ name: p.batter, summary: p, pitch: getPitchPlayer(p.batter) });
         }
       });
       // Add DATA.pitches top-level batter field (same as getAllBatters on players page)
@@ -629,13 +639,26 @@
           players.push({ name: bp.batter, summary: sum, pitch: getPitchPlayer(bp.batter) });
         }
       });
+      // Add iblHistory 2025 pitchers not yet included (matches getAllPitchers)
+      Object.keys(DATA.iblHistory).forEach(function(name) {
+        if (seenPitchers.has(name)) return;
+        var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
+        if (!s2025) return;
+        var t = resolveTeam(s2025.team);
+        if (t && t.id === selTeam) {
+          seenPitchers.add(name);
+          var pd = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
+          players.push({ name: name, scatter: [], fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
+            era: s2025.ERA, whip: s2025.WHIP, baa: pd.BA_against });
+        }
+      });
       players.sort(function(a,b){ return a.name.localeCompare(b.name); });
     } else {
       // Match players page: prefer pbpPitchers (BF>=5), supplement with scatter
       var seenPitchers = new Set();
       // First: pbpPitchers with team match
       if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
-        DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; }).forEach(function(p){
+        DATA.pbpPitchers.forEach(function(p){
           var t = resolveTeam(p.pitcher_team);
           if (t && t.id === selTeam && !seenPitchers.has(p.pitcher)) {
             seenPitchers.add(p.pitcher);
@@ -674,6 +697,19 @@
         var pd = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
         players.push({ name: name, scatter: sc, fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
           era: pd.ERA, whip: pd.WHIP, baa: pd.BA_against });
+      });
+      // Add iblHistory 2025 pitchers not yet included (matches getAllPitchers)
+      Object.keys(DATA.iblHistory).forEach(function(name) {
+        if (seenPitchers.has(name)) return;
+        var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
+        if (!s2025) return;
+        var t = resolveTeam(s2025.team);
+        if (t && t.id === selTeam) {
+          seenPitchers.add(name);
+          var pd = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
+          players.push({ name: name, scatter: [], fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
+            era: s2025.ERA, whip: s2025.WHIP, baa: pd.BA_against });
+        }
       });
       players.sort(function(a,b){ return a.name.localeCompare(b.name); });
     }
@@ -1102,22 +1138,29 @@
 
   function genBatterPDF(player,team){
     var d=new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),s=player.summary;
-    var sc=(player.pitch&&player.pitch.scatter)?player.pitch.scatter.filter(function(p){return p.x!=null&&p.y!=null;}):[];
-    var allSc=player.pitch&&player.pitch.scatter?player.pitch.scatter:[];
+    var _pitchObj=player.pitch||(DATA.pitches?DATA.pitches.find(function(p){return (p.batter||'').trim()===player.name.trim();}):null);
+    var sc=(_pitchObj&&_pitchObj.scatter)?_pitchObj.scatter.filter(function(p){return p.x!=null&&p.y!=null;}):[]; 
+    var allSc=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
     drawBg(d);drawHdr(d,player.name,'BATTER',team);
     var y=MT+32;
 
     // ── Key stats boxes ──────────────────────────────────────────────────
     // RBI from iblHistory first, then summary
-    var iblB=(DATA.iblHistory[player.name]||[]).filter(function(r){return r.AB>0;})[0]||null;
+    // iblHistory: prefer 2025 season, fall back to most recent with AB>0
+    var _iblAll=(DATA.iblHistory[player.name]||[]);
+    var iblB=_iblAll.find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.AB>0;})||_iblAll.filter(function(r){return r.AB>0;})[0]||null;
     var rbiVal=iblB&&iblB.RBI!=null?fN(iblB.RBI):fN(s.RBI);
     var hrVal=iblB&&iblB.HR!=null?fN(iblB.HR):fN(s.HR);
-    y=drawBoxes(d,[['AVG',f3(s.AVG)],['OBP',f3(s.OBP)],['SLG',f3(s.SLG)],['OPS',f3(s.OPS)],['HR',hrVal],['RBI',rbiVal]],y);
+    var avgVal2=iblB&&iblB.AVG!=null?f3(iblB.AVG):f3(s.AVG);
+    var obpVal2=iblB&&iblB.OBP!=null?f3(iblB.OBP):f3(s.OBP);
+    var slgVal2=iblB&&iblB.SLG!=null?f3(iblB.SLG):f3(s.SLG);
+    var opsVal2=iblB&&iblB.OPS!=null?f3(iblB.OPS):f3(s.OPS);
+    y=drawBoxes(d,[['AVG',avgVal2],['OBP',obpVal2],['SLG',slgVal2],['OPS',opsVal2],['HR',hrVal],['RBI',rbiVal]],y);
     y+=4;
 
     // ── Scout Summary — 6 highlight cards: AVG, OPS, FP Swing%, Swing%, Whiff%, Chase% ──
     y=drawSec(d,'Scout Summary',y);
-    var avg=s.AVG||0,ops=s.OPS||0,pa=s.PA||1,bb=s.BB||0,k=s.K||0;
+    var avg=(iblB&&iblB.AVG!=null?iblB.AVG:s.AVG)||0,ops=(iblB&&iblB.OPS!=null?iblB.OPS:s.OPS)||0,pa=s.PA||1,bb=s.BB||0,k=s.K||0;
 
     // Prefer pbpBatters as primary source; fall back to scatter
     var pbp=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return p.batter===player.name;}):null;
@@ -1146,7 +1189,7 @@
     }
 
     // Chase% from x/y coordinates (datadiamond)
-    var allSc3=player.pitch&&player.pitch.scatter?player.pitch.scatter:[];
+    var allSc3=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
     var oozSc=allSc3.filter(function(s2){return s2.in_zone===false;});
     var chaseSwings=oozSc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Foul';}).length;
     var chasePct=oozSc.length>=5?chaseSwings/oozSc.length*100:null;
@@ -1237,7 +1280,9 @@
     y+=dH2+6;
 
     // ── Two donuts: Spray Direction (left) + Batted Ball Profile (right) ──
-    var allSc2=player.pitch&&player.pitch.scatter?player.pitch.scatter:[];
+    // Re-fetch scatter in case player.pitch was not set at render time
+    var _pitchObj=player.pitch||(DATA.pitches?DATA.pitches.find(function(p){return (p.batter||'').trim()===player.name.trim();}):null);
+    var allSc2=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
     var batted4=allSc2.filter(function(s2){return['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s2.outcome);});
     // Spray direction from scatter
     var spBatted=batted4.filter(function(s2){return s2.spray;});
