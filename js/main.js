@@ -204,6 +204,7 @@ async function init() {
   if (path === 'league.html')                initLeaguePage();
   if (path === 'teams.html')                 initTeamsPage();
   if (path === 'players.html')               initPlayersPage();
+  if (path === 'scouting.html')              { if (typeof initScoutingPage === 'function') initScoutingPage(); }
 }
 
 async function loadAll() {

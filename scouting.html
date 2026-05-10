@@ -1275,9 +1275,9 @@
         // Shift box
         var sRec2,sColor2,sNote2;
         if(spTot2<5){sRec2='NONE';sColor2='rgba(255,255,255,0.3)';sNote2='Not enough data — play standard.';}
-        else if(pp4>=55){sRec2='PULL';sColor2='#f87171';sNote2='Heavy pull — shift infield to pull side.';}
-        else if(op4>=45){sRec2='OPPO';sColor2='#60a5fa';sNote2='Goes opposite often — shade that way.';}
-        else if(sp4>=50){sRec2='STRAIGHT';sColor2='#FFB81C';sNote2='Hits straight — play standard alignment.';}
+        else if(pp4>=50){sRec2='PULL';sColor2='#f87171';sNote2='Pull hitter — shift infield to pull side.';}
+        else if(op4>=40){sRec2='OPPO';sColor2='#60a5fa';sNote2='Goes opposite often — shade that way.';}
+        else if(sp4>=50){sRec2='STRAIGHT';sColor2='#FFB81C';sNote2='Hits up the middle — play standard alignment.';}
         else{sRec2='NONE';sColor2='rgba(255,255,255,0.3)';sNote2='Balanced — no shift needed.';}
         var shiftY=legy2+18;
         var shiftHex=sColor2.startsWith('#')?sColor2:'#888888';
@@ -1731,7 +1731,10 @@
     }
   }
 
-    buildTeamPicker();
+    // initScoutingPage is called by main.js init() after DATA is loaded
+    function initScoutingPage() { buildTeamPicker(); }
+    // Fallback: if DATA already loaded (e.g. cached), call directly
+    if (typeof DATA !== 'undefined' && DATA.summary && DATA.summary.length) buildTeamPicker();
 
   function downloadCheatCard() {
     var wrap = document.getElementById('fielder-card-wrap');
