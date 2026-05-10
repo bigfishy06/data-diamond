@@ -1442,35 +1442,21 @@
     var oppC2=batted4.filter(function(s2){return s2.spray==='Opposite Field';}).length;
     var spTot2=pullC2+strC3+oppC2;
 
-    // Fall back to pbpBatters for BIP and spray when scatter is insufficient
-    var usePbpBip=false, usePbpSpray=false;
-    var pbpGb=0,pbpFb=0,pbpLo=0,pbpPo=0,pbpBipTot=0;
-    var pbpPull=0,pbpStr=0,pbpOpp=0,pbpSpTot=0;
-    if(pbp){
-      if(bipTot2<5&&pbp.GB_pct!=null&&pbp.FB_pct!=null){
-        // Estimate counts from percentages using total BIP from pbp
-        var pbpBip=pbp.BIP||0;
-        if(pbpBip>=5){
-          pbpGb=Math.round(pbp.GB_pct/100*pbpBip);pbpFb=Math.round(pbp.FB_pct/100*pbpBip);
-          pbpLo=Math.round((pbp.LO_pct||pbp.LD_pct||0)/100*pbpBip);pbpPo=Math.round((pbp.PO_pct||0)/100*pbpBip);
-          pbpBipTot=pbpGb+pbpFb+pbpLo+pbpPo;
-          if(pbpBipTot>=5)usePbpBip=true;
-        }
-      }
-      if(spTot2<3&&pbp.PULL_pct!=null&&pbp.STR_pct!=null&&pbp.OPP_pct!=null){
-        var pbpBip2=pbp.BIP||0;
-        if(pbpBip2>=3){
-          pbpPull=Math.round(pbp.PULL_pct/100*pbpBip2);pbpStr=Math.round(pbp.STR_pct/100*pbpBip2);
-          pbpOpp=Math.round(pbp.OPP_pct/100*pbpBip2);pbpSpTot=pbpPull+pbpStr+pbpOpp;
-          if(pbpSpTot>=3)usePbpSpray=true;
-        }
-      }
+    // Fall back to pbpBatters GB/FB/LO/PO percentages when scatter BIP is insufficient
+    // pbpBatters has GB_pct/FB_pct/LO_pct/PO_pct but no spray direction fields
+    var usePbpBip = bipTot2<5 && pbp && pbp.GB_pct!=null && pbp.FB_pct!=null;
+    var finalGbPct,finalFbPct,finalLoPct,finalPoPct,finalBipTot;
+    if(usePbpBip){
+      finalGbPct=pbp.GB_pct; finalFbPct=pbp.FB_pct;
+      finalLoPct=pbp.LO_pct||0; finalPoPct=pbp.PO_pct||0;
+      finalBipTot=10; // sentinel: enough to render
+    } else {
+      finalBipTot=bipTot2;
+      finalGbPct=bipTot2>0?gbC2/bipTot2*100:0; finalFbPct=bipTot2>0?fbC2/bipTot2*100:0;
+      finalLoPct=bipTot2>0?loC2/bipTot2*100:0; finalPoPct=bipTot2>0?poC2/bipTot2*100:0;
     }
-    var finalGb=usePbpBip?pbpGb:gbC2,finalFb=usePbpBip?pbpFb:fbC2;
-    var finalLo=usePbpBip?pbpLo:loC2,finalPo=usePbpBip?pbpPo:poC2;
-    var finalBipTot=usePbpBip?pbpBipTot:bipTot2;
-    var finalPull=usePbpSpray?pbpPull:pullC2,finalStr=usePbpSpray?pbpStr:strC3;
-    var finalOpp=usePbpSpray?pbpOpp:oppC2,finalSpTot=usePbpSpray?pbpSpTot:spTot2;
+    // Spray: scatter only (pbpBatters has no pull/oppo/straight fields)
+    var finalSpTot=spTot2,finalPull=pullC2,finalStr=strC3,finalOpp=oppC2;
 
     if(finalBipTot>=5||finalSpTot>=3){
       if(y>185){d.addPage();drawBg(d);y=MT+8;}
@@ -1478,7 +1464,7 @@
       var leftX=ML,rightX=ML+chartW+12;
 
       if(finalBipTot>=5){
-        var gPct=Math.round(finalGb/finalBipTot*100),fPct=Math.round(finalFb/finalBipTot*100),lPct=Math.round(finalLo/finalBipTot*100),pPct=Math.round(finalPo/finalBipTot*100);
+        var gPct=Math.round(finalGbPct),fPct=Math.round(finalFbPct),lPct=Math.round(finalLoPct),pPct=Math.round(finalPoPct);
         var bbSegs2=[{label:'GB%',pct:gPct,color:'#fb923c'},{label:'FB%',pct:fPct,color:'#60a5fa'},{label:'LO%',pct:lPct,color:'#34d399'},{label:'PO%',pct:pPct,color:'#a78bfa'}].filter(function(sg){return sg.pct>0;});
         var donutImg=mkDonut(bbSegs2,'BIP');
         d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
@@ -1496,7 +1482,7 @@
       }
 
       if(finalSpTot>=3){
-        var pp4=Math.round(finalPull/finalSpTot*100),sp4=Math.round(finalStr/finalSpTot*100),op4=Math.round(finalOpp/finalSpTot*100);
+        var pp4=Math.round(finalPull/finalSpTot*100),sp4=Math.round(finalStr/finalSpTot*100),op4=Math.round(100-pp4-sp4);
         // Spray Direction as donut (not field diagram)
         var spraySegs=[{label:'Pull',pct:pp4,color:'#f87171'},{label:'Str',pct:sp4,color:'#FFB81C'},{label:'Oppo',pct:op4,color:'#60a5fa'}].filter(function(sg){return sg.pct>0;});
         var sprayImg=mkDonut(spraySegs,'DIR');
