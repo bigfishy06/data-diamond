@@ -987,7 +987,7 @@
     d.setFont('helvetica','bold');d.setFontSize(15);st(d,CO.white);
     d.text(name.toUpperCase(),ML+38,MT+12);
     d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
-    d.text(role+'  •  '+team.name+'  •  CBL',ML+38,MT+21);
+    d.text(role+'  •  '+team.name+'  •  CBL 2025',ML+38,MT+21);
     // Logo — canvas rendered SVG match
     var lx=ML+CPW-14, ly=MT+13, logoSize=14;
     drawLogoImg(d, lx, ly, logoSize);
@@ -1040,7 +1040,7 @@
   }
   function drawFoot(d,name,role){
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.dim);
-    d.text('Data Diamond  —  CBL Scouting Report',ML,PH-6);
+    d.text('Data Diamond  —  CBL Scouting Report 2025',ML,PH-6);
     d.text(name+'  •  '+role,ML+CPW,PH-6,{align:'right'});
     sf(d,CO.gold);d.rect(0,PH-1.5,PW,1.5,'F');
   }
@@ -1535,7 +1535,7 @@
     // Key stat boxes — prefer pbpPitchers, fall back to player/scatter
     var pbpP2=DATA.pbpPitchers?DATA.pbpPitchers.find(function(p){return p.pitcher===player.name;}):null;
     var iblP2=((DATA.iblHistory[player.name]||[]).filter(function(s){return s.IP>0;}))[0]||null;
-    var eraVal  = iblP2&&iblP2.ERA!=null  ? f1(iblP2.ERA)   : (player.era!=null?f1(player.era):'—');
+    var eraVal  = iblP2&&iblP2.ERA!=null  ? f2(iblP2.ERA)   : (player.era!=null?f2(player.era):'—');
     var whipVal = pbpP2&&pbpP2.WHIP!=null ? f2(pbpP2.WHIP)  : (iblP2&&iblP2.WHIP!=null?f1(iblP2.WHIP):(player.whip!=null?f1(player.whip):(tot>0?f1(xp(bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length,tot/3)):'—')));
     var baaVal  = pbpP2&&pbpP2.BA_against!=null ? f3(pbpP2.BA_against) : (player.baa!=null?f3(player.baa):'—');
     var kPctVal = pbpP2&&pbpP2.K_pct!=null   ? f1(pbpP2.K_pct)+'%'   : f1(xp(ks,tot))+'%';
