@@ -1981,9 +1981,9 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       spraySVG   = buildDonut(spSegs, 60,60,48,30, []);
       sprayLegend= buildLegend(spSegs);
       var sLabel,sDesc,sColor;
-      if(pullPct>=55){sLabel='PULL';sDesc='Heavy pull hitter — shift infield to pull side.';sColor='#f87171';}
+      if(pullPct>=50){sLabel='PULL';sDesc='Pull hitter — shift infield to pull side.';sColor='#f87171';}
       else if(oppPct>=40){sLabel='OPPO';sDesc='Goes opposite often — shade that way.';sColor='#60a5fa';}
-      else if(pullPct>=50){sLabel='STRAIGHT';sDesc='Hits straight — play standard alignment.';sColor='#FFB81C';}
+      else if(strPct2>=50){sLabel='STRAIGHT';sDesc='Hits up the middle — play standard alignment.';sColor='#FFB81C';}
       else{sLabel='NONE';sDesc='Balanced — no shift needed.';sColor='rgba(255,255,255,0.4)';}
       shiftHTML=
         '<div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.07)"></div>'+
