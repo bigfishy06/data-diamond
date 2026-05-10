@@ -754,12 +754,9 @@
   }
 
   function getPitchPlayer(batterName) {
-    var sc = [];
-    DATA.pitches.forEach(function(bp) {
-      if (!bp.scatter) return;
-      bp.scatter.forEach(function(s) { if (s.batter === batterName) sc.push(s); });
-    });
-    return sc.length ? { scatter: sc } : null;
+    // scatter entries have no batter field — match on top-level bp.batter
+    var bp = DATA.pitches.find(function(p) { return p.batter === batterName; });
+    return (bp && bp.scatter && bp.scatter.length) ? { scatter: bp.scatter } : null;
   }
 
   function f3(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(3).replace('0.','.'); }
@@ -1428,14 +1425,12 @@
     var strC3=spBatted.filter(function(s2){return s2.spray==='Straightaway';}).length;
     var oppC2=spBatted.filter(function(s2){return s2.spray==='Opposite Field';}).length;
     var spTot2=pullC2+strC3+oppC2;
-    // Batted ball profile from scatter contact field
-    var gbC2=batted4.filter(function(s2){return s2.contact==='Ground Ball';}).length;
-    var fbC2=batted4.filter(function(s2){return s2.contact==='Fly Ball';}).length;
-    var loC2=batted4.filter(function(s2){return s2.contact==='Line Drive';}).length;
-    var poC2=batted4.filter(function(s2){return s2.contact==='Pop Up';}).length;
-    var bipTot2=gbC2+fbC2+loC2+poC2;
+    // Batted ball profile from pbpBatters (GB_pct/FB_pct/LO_pct/PO_pct)
+    var hasBip=pbp&&pbp.GB_pct!=null&&pbp.FB_pct!=null;
+    var bipGb=hasBip?pbp.GB_pct:0, bipFb=hasBip?pbp.FB_pct:0;
+    var bipLo=hasBip?(pbp.LO_pct||0):0, bipPo=hasBip?(pbp.PO_pct||0):0;
 
-    var hasSpray=spTot2>=3, hasBip=bipTot2>=5;
+    var hasSpray=spTot2>=3;
     if(hasSpray||hasBip){
       if(y>170){d.addPage();drawBg(d);y=MT+8;}
       var chartW=CPW/2-10,chartH=chartW*0.75;
@@ -1477,9 +1472,9 @@
         d.text(sNote2,leftX+chartW/2,shiftY+13.5,{align:'center'});
       }
 
-      // ── RIGHT: Batted Ball Profile (LD%, GB%, PU%, FB%) ───────────────
+      // ── RIGHT: Batted Ball Profile from pbpBatters ────────────────────
       if(hasBip){
-        var gPct=Math.round(gbC2/bipTot2*100),fPct=Math.round(fbC2/bipTot2*100),lPct=Math.round(loC2/bipTot2*100),pPct=Math.round(poC2/bipTot2*100);
+        var gPct=Math.round(bipGb),fPct=Math.round(bipFb),lPct=Math.round(bipLo),pPct=Math.round(bipPo);
         var bbSegs2=[{label:'LD%',pct:lPct,color:'#34d399'},{label:'GB%',pct:gPct,color:'#fb923c'},{label:'PU%',pct:pPct,color:'#a78bfa'},{label:'FB%',pct:fPct,color:'#60a5fa'}].filter(function(sg){return sg.pct>0;});
         var donutImg=mkDonut(bbSegs2,'BIP');
         d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
