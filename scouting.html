@@ -1291,7 +1291,11 @@
     var y=MT+32;
 
     // ── Key stats boxes ──────────────────────────────────────────────────
-    y=drawBoxes(d,[['AVG',f3(s.AVG)],['OBP',f3(s.OBP)],['SLG',f3(s.SLG)],['OPS',f3(s.OPS)],['HR',fN(s.HR)],['RBI',fN(s.RBI)]],y);
+    // RBI from iblHistory first, then summary
+    var iblB=(DATA.iblHistory[player.name]||[]).filter(function(r){return r.AB>0;})[0]||null;
+    var rbiVal=iblB&&iblB.RBI!=null?fN(iblB.RBI):fN(s.RBI);
+    var hrVal=iblB&&iblB.HR!=null?fN(iblB.HR):fN(s.HR);
+    y=drawBoxes(d,[['AVG',f3(s.AVG)],['OBP',f3(s.OBP)],['SLG',f3(s.SLG)],['OPS',f3(s.OPS)],['HR',hrVal],['RBI',rbiVal]],y);
     y+=4;
 
     // ── Scout Summary — 6 highlight cards: AVG, OPS, FP Swing%, Swing%, Whiff%, Chase% ──
@@ -1438,13 +1442,43 @@
     var oppC2=batted4.filter(function(s2){return s2.spray==='Opposite Field';}).length;
     var spTot2=pullC2+strC3+oppC2;
 
-    if(bipTot2>=5||spTot2>=3){
+    // Fall back to pbpBatters for BIP and spray when scatter is insufficient
+    var usePbpBip=false, usePbpSpray=false;
+    var pbpGb=0,pbpFb=0,pbpLo=0,pbpPo=0,pbpBipTot=0;
+    var pbpPull=0,pbpStr=0,pbpOpp=0,pbpSpTot=0;
+    if(pbp){
+      if(bipTot2<5&&pbp.GB_pct!=null&&pbp.FB_pct!=null){
+        // Estimate counts from percentages using total BIP from pbp
+        var pbpBip=pbp.BIP||0;
+        if(pbpBip>=5){
+          pbpGb=Math.round(pbp.GB_pct/100*pbpBip);pbpFb=Math.round(pbp.FB_pct/100*pbpBip);
+          pbpLo=Math.round((pbp.LO_pct||pbp.LD_pct||0)/100*pbpBip);pbpPo=Math.round((pbp.PO_pct||0)/100*pbpBip);
+          pbpBipTot=pbpGb+pbpFb+pbpLo+pbpPo;
+          if(pbpBipTot>=5)usePbpBip=true;
+        }
+      }
+      if(spTot2<3&&pbp.PULL_pct!=null&&pbp.STR_pct!=null&&pbp.OPP_pct!=null){
+        var pbpBip2=pbp.BIP||0;
+        if(pbpBip2>=3){
+          pbpPull=Math.round(pbp.PULL_pct/100*pbpBip2);pbpStr=Math.round(pbp.STR_pct/100*pbpBip2);
+          pbpOpp=Math.round(pbp.OPP_pct/100*pbpBip2);pbpSpTot=pbpPull+pbpStr+pbpOpp;
+          if(pbpSpTot>=3)usePbpSpray=true;
+        }
+      }
+    }
+    var finalGb=usePbpBip?pbpGb:gbC2,finalFb=usePbpBip?pbpFb:fbC2;
+    var finalLo=usePbpBip?pbpLo:loC2,finalPo=usePbpBip?pbpPo:poC2;
+    var finalBipTot=usePbpBip?pbpBipTot:bipTot2;
+    var finalPull=usePbpSpray?pbpPull:pullC2,finalStr=usePbpSpray?pbpStr:strC3;
+    var finalOpp=usePbpSpray?pbpOpp:oppC2,finalSpTot=usePbpSpray?pbpSpTot:spTot2;
+
+    if(finalBipTot>=5||finalSpTot>=3){
       if(y>185){d.addPage();drawBg(d);y=MT+8;}
       var chartW=CPW/2-6,chartH=chartW;
       var leftX=ML,rightX=ML+chartW+12;
 
-      if(bipTot2>=5){
-        var gPct=Math.round(gbC2/bipTot2*100),fPct=Math.round(fbC2/bipTot2*100),lPct=Math.round(loC2/bipTot2*100),pPct=Math.round(poC2/bipTot2*100);
+      if(finalBipTot>=5){
+        var gPct=Math.round(finalGb/finalBipTot*100),fPct=Math.round(finalFb/finalBipTot*100),lPct=Math.round(finalLo/finalBipTot*100),pPct=Math.round(finalPo/finalBipTot*100);
         var bbSegs2=[{label:'GB%',pct:gPct,color:'#fb923c'},{label:'FB%',pct:fPct,color:'#60a5fa'},{label:'LO%',pct:lPct,color:'#34d399'},{label:'PO%',pct:pPct,color:'#a78bfa'}].filter(function(sg){return sg.pct>0;});
         var donutImg=mkDonut(bbSegs2,'BIP');
         d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
@@ -1461,8 +1495,8 @@
         });
       }
 
-      if(spTot2>=3){
-        var pp4=Math.round(pullC2/spTot2*100),sp4=Math.round(strC3/spTot2*100),op4=Math.round(oppC2/spTot2*100);
+      if(finalSpTot>=3){
+        var pp4=Math.round(finalPull/finalSpTot*100),sp4=Math.round(finalStr/finalSpTot*100),op4=Math.round(finalOpp/finalSpTot*100);
         // Spray Direction as donut (not field diagram)
         var spraySegs=[{label:'Pull',pct:pp4,color:'#f87171'},{label:'Str',pct:sp4,color:'#FFB81C'},{label:'Oppo',pct:op4,color:'#60a5fa'}].filter(function(sg){return sg.pct>0;});
         var sprayImg=mkDonut(spraySegs,'DIR');
@@ -1480,8 +1514,8 @@
           d.text(seg.label+': '+seg.pct+'%',lx+6,ly);
         });
         var sRec2,sColor2,sNote2;
-        var pullPct3=spTot2>=5?pp4/100:0,oppPct3=spTot2>=5?op4/100:0,strPct4=spTot2>=5?sp4/100:0;
-        if(spTot2<5){sRec2='NONE';sColor2='rgba(255,255,255,0.3)';sNote2='Not enough data — play standard.';}
+        var pullPct3=finalSpTot>=5?pp4/100:0,oppPct3=finalSpTot>=5?op4/100:0,strPct4=finalSpTot>=5?sp4/100:0;
+        if(finalSpTot<5){sRec2='NONE';sColor2='rgba(255,255,255,0.3)';sNote2='Not enough data — play standard.';}
         else if(pullPct3>=0.55){sRec2='PULL';sColor2='#f87171';sNote2='Heavy pull — shift infield to pull side.';}
         else if(oppPct3>=0.45){sRec2='OPPO';sColor2='#60a5fa';sNote2='Goes opposite often — shade that way.';}
         else if(strPct4>=0.50){sRec2='STRAIGHT';sColor2='#FFB81C';sNote2='Hits straight — play standard alignment.';}
