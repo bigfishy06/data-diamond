@@ -139,6 +139,11 @@
       "email": "liamdevine31@gmail.com",
       "role": "coach",
       "player": "Liam Devine"
+    },
+    {
+      "email": "drew@arcware.net",
+      "role": "position_player",
+      "player": "Drew Donaldson"
     }
   ]
 }
