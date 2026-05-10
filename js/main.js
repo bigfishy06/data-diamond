@@ -294,6 +294,22 @@ function getSeasonRBI(name) {
   var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return ibl.length && ibl[0].RBI != null ? ibl[0].RBI : null;
 }
+function getSeasonAVG(name) {
+  var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
+  return ibl.length && ibl[0].AVG != null ? ibl[0].AVG : null;
+}
+function getSeasonOBP(name) {
+  var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
+  return ibl.length && ibl[0].OBP != null ? ibl[0].OBP : null;
+}
+function getSeasonSLG(name) {
+  var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
+  return ibl.length && ibl[0].SLG != null ? ibl[0].SLG : null;
+}
+function getSeasonOPS(name) {
+  var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
+  return ibl.length && ibl[0].OPS != null ? ibl[0].OPS : null;
+}
 function getPitchPlayer(name) {
   return DATA.pitches.find(function(p) { return p.batter === name; }) || null;
 }
@@ -1481,18 +1497,23 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       return (below + equal * 0.5) / arr.length;
     }
 
-    // Slash line — use pbpB if available, else sum
-    var srcAVG = d ? d.AVG  : (sum ? sum.AVG  : null);
-    var srcOBP = d ? d.OBP  : (sum ? sum.OBP  : null);
-    var srcSLG = d ? d.SLG  : (sum ? sum.SLG  : null);
-    var srcOPS = d ? d.OPS  : (sum ? sum.OPS  : null);
+    // Slash line — iblHistory first, then pbpB, then sum
+    var srcAVG = getSeasonAVG(name) != null ? getSeasonAVG(name) : (d ? d.AVG : (sum ? sum.AVG : null));
+    var srcOBP = getSeasonOBP(name) != null ? getSeasonOBP(name) : (d ? d.OBP : (sum ? sum.OBP : null));
+    var srcSLG = getSeasonSLG(name) != null ? getSeasonSLG(name) : (d ? d.SLG : (sum ? sum.SLG : null));
+    var srcOPS = getSeasonOPS(name) != null ? getSeasonOPS(name) : (d ? d.OPS : (sum ? sum.OPS : null));
     var srcHR  = getSeasonHR(name)  != null ? getSeasonHR(name)  : (d ? d.HR  : (sum ? sum.HR  : null));
     var srcRBI = getSeasonRBI(name) != null ? getSeasonRBI(name) : null;
 
-    var lgAvg  = lgB.avg.length  ? lgB.avg  : DATA.summary.filter(function(p){return p.AB>=5;}).map(function(p){return p.AVG||0;});
-    var lgObp  = lgB.obp.length  ? lgB.obp  : DATA.summary.filter(function(p){return p.AB>=5;}).map(function(p){return p.OBP||0;});
-    var lgSlg  = lgB.slg.length  ? lgB.slg  : DATA.summary.filter(function(p){return p.AB>=5;}).map(function(p){return p.SLG||0;});
-    var lgOps  = lgB.ops.length  ? lgB.ops  : DATA.summary.filter(function(p){return p.AB>=5;}).map(function(p){return p.OPS||0;});
+    // League arrays for slash line from iblHistory
+    var lgAvg = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].AVG!=null?s[0].AVG:null; }).filter(function(v){return v!=null;});
+    var lgObp = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].OBP!=null?s[0].OBP:null; }).filter(function(v){return v!=null;});
+    var lgSlg = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].SLG!=null?s[0].SLG:null; }).filter(function(v){return v!=null;});
+    var lgOps = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].OPS!=null?s[0].OPS:null; }).filter(function(v){return v!=null;});
+    if(!lgAvg.length) lgAvg = DATA.summary.filter(function(p){return p.AB>=5;}).map(function(p){return p.AVG||0;});
+    if(!lgObp.length) lgObp = DATA.summary.filter(function(p){return p.AB>=5;}).map(function(p){return p.OBP||0;});
+    if(!lgSlg.length) lgSlg = DATA.summary.filter(function(p){return p.AB>=5;}).map(function(p){return p.SLG||0;});
+    if(!lgOps.length) lgOps = DATA.summary.filter(function(p){return p.AB>=5;}).map(function(p){return p.OPS||0;});
     var lgHr   = DATA.pbpBatters.filter(function(p){ return p.AB>=5; }).map(function(p){ return p.HR||0; });
     var lgRbi  = DATA.iblHistory ? Object.values(DATA.iblHistory).map(function(seasons){
       var s = (seasons||[]).filter(function(s){ return s.AB > 0; });
@@ -2694,8 +2715,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       allBars = [
         { lbl: 'ERA',  val: getSeasonERA(name)  != null ? fmt2(getSeasonERA(name))  : (dp.ERA  != null ? fmt2(dp.ERA)  : '—'),
                    pct: getSeasonERA(name)  != null ? 1-lpP(getSeasonERA(name),  lgPpbp.era)  : (dp.ERA  != null ? 1-lpP(dp.ERA,  lgPpbp.era)  : 0), good: true },
-        { lbl: 'IP',   val: dp.IP != null ? fmtIP(dp.IP) : (function(){ var ibl=(DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;}); return ibl.length?fmtIP(ibl[0].IP):'—'; })(),
-                   pct: (function(){ var ipArr=Object.values(DATA.iblHistory).map(function(ss){var r=(ss||[]).filter(function(s){return s.IP>0;});return r.length?r[0].IP:null;}).filter(function(v){return v!=null;}); var myIP=dp.IP||(function(){var ibl=(DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;});return ibl.length?ibl[0].IP:null;})(); return myIP!=null&&ipArr.length?lpP(myIP,ipArr):0; })(), good: true },
+        { lbl: 'IP',   val: (function(){ var ibl=(DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;}); return ibl.length?fmtIP(ibl[0].IP):'—'; })(),
+                   pct: (function(){ var ipArr=Object.values(DATA.iblHistory).map(function(ss){var r=(ss||[]).filter(function(s){return s.IP>0;});return r.length?r[0].IP:null;}).filter(function(v){return v!=null;}); var myIP=(function(){var ibl=(DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;});return ibl.length?ibl[0].IP:null;})(); return myIP!=null&&ipArr.length?lpP(myIP,ipArr):0; })(), good: true },
         { lbl: 'WHIP', val: getSeasonWHIP(name) != null ? fmt2(getSeasonWHIP(name)) : (dp.WHIP != null ? fmt2(dp.WHIP) : '—'),
                    pct: getSeasonWHIP(name) != null ? 1-lpP(getSeasonWHIP(name), lgPpbp.whip) : (dp.WHIP != null ? 1-lpP(dp.WHIP, lgPpbp.whip) : 0), good: true },
         { lbl: 'BA AGNST', val: dp.BA_against != null ? fmt3(dp.BA_against)       : '—', pct: dp.BA_against != null ? 1-lpP(dp.BA_against, lgPpbp.baAgst)  : 0, good: true },
