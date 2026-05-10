@@ -1280,7 +1280,7 @@ function renderPlayerDetail(name, type, content) {
   _allSeasonOpts.sort(function(a, b) { return parseInt(b.year) - parseInt(a.year); });
 
   // Default to all (2025 is the only season anyway)
-  var activeSeasonFilter = 'all';
+  var activeSeasonFilter = 'year:2026';
   var currentTab = 'overview';
 
   function renderSeasonFilterBar(activeTab) {
@@ -1297,18 +1297,15 @@ function renderPlayerDetail(name, type, content) {
              'background:' + (active ? 'rgba(255,184,28,0.12)' : 'rgba(255,255,255,0.03)') + ';' +
              'color:' + (active ? '#FFB81C' : 'rgba(255,255,255,0.4)') + ';';
     }
+    var btn2026 = '<button style="' + btnStyle(activeSeasonFilter === 'year:2026') + '" data-sf="year:2026">2026</button>';
     var btns = _allSeasonOpts.map(function(opt) {
-      return '<button style="' + btnStyle(true) + '" data-sf="all">' + opt.year + '</button>';
+      return '<button style="' + btnStyle(activeSeasonFilter === 'year:' + opt.year) + '" data-sf="year:' + opt.year + '">' + opt.year + '</button>';
     }).join('');
-    var btn2026 = '<button style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;' +
-      'padding:5px 14px;border-radius:4px;cursor:default;' +
-      'border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.01);' +
-      'color:rgba(255,255,255,0.2)" title="Data will be added soon under datadiamond2026">2026 — Coming Soon</button>';
 
     _filterBar.innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;padding:8px 0 14px;border-bottom:1px solid rgba(255,255,255,0.05)">' +
       '<span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:rgba(255,255,255,0.25);text-transform:uppercase;white-space:nowrap">Season</span>' +
-      '<div style="display:flex;gap:6px">' + btns + btn2026 + '</div></div>';
+      '<div style="display:flex;gap:6px">' + btn2026 + btns + '</div></div>';
 
     _filterBar.querySelectorAll('[data-sf]').forEach(function(btn) {
       btn.addEventListener('click', function() {
@@ -2748,8 +2745,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
           '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Season</div>' +
           '<select id="pm-season-select" style="background:#0e1525;border:1.5px solid rgba(255,184,28,0.35);border-radius:6px;color:#FFB81C;font-family:var(--font-mono);font-size:11px;padding:8px 12px;cursor:pointer;outline:none;letter-spacing:0.5px">' +
             '<option value="season">All</option>' +
+            '<option value="2026">2026</option>' +
             pmYears.map(function(y){ return '<option value="'+y+'">Summer '+y+'</option>'; }).join('') +
-            '<option value="" disabled style="color:rgba(255,184,28,0.3)">2026 — Coming Soon</option>' +
           '</select>' +
         '</div>'
       : '';

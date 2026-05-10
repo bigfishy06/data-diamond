@@ -613,6 +613,7 @@
         if (seenBatters.has(name)) return;
         var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
         if (!s2025) return;
+        if (s2025.pos === 'P') return; // exclude pitchers from batter list
         var t = resolveTeam(s2025.team);
         if (t && t.id === selTeam) {
           seenBatters.add(name);
@@ -690,6 +691,7 @@
         if (seenPitchers.has(name)) return;
         var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
         if (!s2025) return;
+        if (s2025.pos !== 'P') return; // only include pitchers
         var t = resolveTeam(s2025.team);
         if (t && t.id === selTeam) {
           seenPitchers.add(name);
