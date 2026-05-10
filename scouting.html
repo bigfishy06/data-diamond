@@ -639,19 +639,6 @@
           players.push({ name: bp.batter, summary: sum, pitch: getPitchPlayer(bp.batter) });
         }
       });
-      // Add iblHistory 2025 pitchers not yet included (matches getAllPitchers)
-      Object.keys(DATA.iblHistory).forEach(function(name) {
-        if (seenPitchers.has(name)) return;
-        var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
-        if (!s2025) return;
-        var t = resolveTeam(s2025.team);
-        if (t && t.id === selTeam) {
-          seenPitchers.add(name);
-          var pd = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
-          players.push({ name: name, scatter: [], fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
-            era: s2025.ERA, whip: s2025.WHIP, baa: pd.BA_against });
-        }
-      });
       players.sort(function(a,b){ return a.name.localeCompare(b.name); });
     } else {
       // Match players page: prefer pbpPitchers (BF>=5), supplement with scatter
