@@ -124,33 +124,35 @@ function resolveTeam(rawName) {
   }) || null;
 }
 
-// ── Raw data store (never access directly — use DATA proxy below) ─────────────
-const _RAW = {
+// ── Data store — all years kept separately, never merged ─────────────────────
+let DATA = {
   summary: [], pitches: [], pitchers: [], iblHistory: {},
   pbpBatters: [], pbpPitchers: [],
   summary2026: [], pitches2026: [], pitchers2026: []
 };
 
-// ── DATA proxy — automatically returns correct year based on activeSeasonFilter ─
-// All existing DATA.xxx references work correctly without any other changes
-const DATA = new Proxy(_RAW, {
-  get: function(raw, prop) {
-    var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026');
-    var is2026 = (yr === 'year:2026');
-    if (prop === 'summary')     return is2026 ? raw.summary2026   : raw.summary;
-    if (prop === 'pitches')     return is2026 ? raw.pitches2026   : raw.pitches;
-    if (prop === 'pitchers')    return is2026 ? raw.pitchers2026  : raw.pitchers;
-    if (prop === 'pbpBatters')  return is2026 ? []                : raw.pbpBatters;
-    if (prop === 'pbpPitchers') return is2026 ? []                : raw.pbpPitchers;
-    return raw[prop]; // iblHistory, summary2026, pitches2026, pitchers2026, etc.
-  },
-  set: function(raw, prop, value) {
-    raw[prop] = value;
-    return true;
-  }
-});
+// ── Global season tracker (set by season filter buttons) ──────────────────────
+var _activeSeason = 'year:2025'; // default 2025 until filter chosen
 
-// ── Season data helper (kept for explicit use where needed) ───────────────────
+// ── swapSeasonData: swap DATA.summary/pitches/pitchers to the selected year ───
+function swapSeasonData(yr) {
+  _activeSeason = yr;
+  if (yr === 'year:2026') {
+    DATA.summary     = DATA.summary2026;
+    DATA.pitches     = DATA.pitches2026;
+    DATA.pitchers    = DATA.pitchers2026;
+    DATA.pbpBatters  = [];
+    DATA.pbpPitchers = [];
+  } else {
+    // Restore from stored 2025 copies
+    DATA.summary     = DATA._summary25;
+    DATA.pitches     = DATA._pitches25;
+    DATA.pitchers    = DATA._pitchers25;
+    DATA.pbpBatters  = DATA._pbpBatters25;
+    DATA.pbpPitchers = DATA._pbpPitchers25;
+  }
+}
+
 function getSeasonData() {
   return {
     summary:     DATA.summary,
@@ -286,11 +288,19 @@ async function loadAll() {
     DATA.pitches2026   = pit26Res.ok     ? await pit26Res.json()     : [];
     DATA.pitchers2026  = pitcher26Res.ok ? await pitcher26Res.json() : [];
 
-    console.log('summary players:', DATA.summary.length);
-    console.log('pitches players:', DATA.pitches.length);
-    console.log('pitchers:', DATA.pitchers.length);
-    console.log('pbp batters:', DATA.pbpBatters.length);
-    console.log('pbp pitchers:', DATA.pbpPitchers.length);
+    // Store 2025 originals so swapSeasonData can restore them
+    DATA._summary25     = DATA.summary;
+    DATA._pitches25     = DATA.pitches;
+    DATA._pitchers25    = DATA.pitchers;
+    DATA._pbpBatters25  = DATA.pbpBatters;
+    DATA._pbpPitchers25 = DATA.pbpPitchers;
+
+    // Default to 2025 — data is already in DATA.summary/pitches/pitchers
+    _activeSeason = 'year:2025';
+
+    console.log('2025 summary:', DATA.summary.length, '| 2026 summary:', DATA.summary2026.length);
+    console.log('2025 pitches:', DATA.pitches.length, '| 2026 pitches:', DATA.pitches2026.length);
+    console.log('2025 pitchers:', DATA.pitchers.length, '| 2026 pitchers:', DATA.pitchers2026.length);
   } catch(e) {
     console.error('loadAll failed:', e.message);
   }
@@ -328,68 +338,65 @@ function navigate(url) { window.location.href = getBase() + url; }
 
 function getPbpBatter(name) {
   // No pbp for 2026 — returns null, callers fall back to summary/scatter
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026');
-  if (yr === 'year:2026') return null;
+  if (_activeSeason === 'year:2026') return null;
   return DATA.pbpBatters.find(function(p) { return p.batter === name; }) || null;
 }
 function getPbpPitcher(name) {
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026');
-  if (yr === 'year:2026') return null;
+  if (_activeSeason === 'year:2026') return null;
   return DATA.pbpPitchers.find(function(p) { return p.pitcher === name; }) || null;
 }
 function _iblForYear(name, field) {
   // Return the iblHistory entry for the active season year
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026')
-             .replace('year:', '');
+  var yr = _activeSeason.replace('year:', '');
   var entries = DATA.iblHistory[name] || [];
   var match = entries.find(function(s){ return (s.season||'').indexOf(yr) !== -1; });
   if (!match) match = entries[0]; // fallback to most recent
   return (match && match[field] != null) ? match[field] : null;
 }
 function getSeasonERA(name) {
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026').replace('year:','');
+  var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(yr) !== -1; });
   if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
   return entries.length && entries[0].ERA != null ? entries[0].ERA : null;
 }
 function getSeasonWHIP(name) {
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026').replace('year:','');
+  var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(yr) !== -1; });
   if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
   return entries.length && entries[0].WHIP != null ? entries[0].WHIP : null;
 }
 function getSeasonHR(name) {
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026').replace('year:','');
+  var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].HR != null ? entries[0].HR : null;
 }
 function getSeasonRBI(name) {
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026').replace('year:','');
+  var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].RBI != null ? entries[0].RBI : null;
 }
 function getSeasonAVG(name) {
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026').replace('year:','');
+  var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].AVG != null ? entries[0].AVG : null;
 }
 function getSeasonOBP(name) {
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026').replace('year:','');
+  var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].OBP != null ? entries[0].OBP : null;
 }
 function getSeasonSLG(name) {
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026').replace('year:','');
+  var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].SLG != null ? entries[0].SLG : null;
 }
 function getSeasonOPS(name) {
-  var yr = (typeof activeSeasonFilter !== 'undefined' ? activeSeasonFilter : 'year:2026').replace('year:','');
+  var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].OPS != null ? entries[0].OPS : null;
@@ -1363,7 +1370,7 @@ function renderPlayerDetail(name, type, content) {
   _allSeasonOpts.sort(function(a, b) { return parseInt(b.year) - parseInt(a.year); });
 
   // Default to all (2025 is the only season anyway)
-  var activeSeasonFilter = 'year:2026';
+  var activeSeasonFilter = 'year:2025';
   var currentTab = 'overview';
 
   function renderSeasonFilterBar(activeTab) {
@@ -1393,6 +1400,7 @@ function renderPlayerDetail(name, type, content) {
     _filterBar.querySelectorAll('[data-sf]').forEach(function(btn) {
       btn.addEventListener('click', function() {
         activeSeasonFilter = btn.dataset.sf;
+        swapSeasonData(btn.dataset.sf);
         activateTab(currentTab);
       });
     });
