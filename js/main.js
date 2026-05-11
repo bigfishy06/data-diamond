@@ -1425,18 +1425,19 @@ function renderPlayerDetail(name, type, content) {
 // ── OVERVIEW TAB ──────────────────────────────────
 function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
   seasonFilter = seasonFilter || 'all';
+  var seasonYear = seasonFilter.replace('year:', ''); // strip 'year:' prefix
   var pi  = playerInfo || {};
   var pbpB = getPbpBatter(name);
   // Filter scatter by season
   var _scRaw = (pitch && pitch.scatter) ? pitch.scatter : [];
-  var sc = seasonFilter === 'all' ? _scRaw : _scRaw.filter(function(s){
+  var sc = (seasonFilter === 'all' || !seasonYear) ? _scRaw : _scRaw.filter(function(s){
     if (!s.date) return true;
     // Handle YYYY-MM-DD format
-    if (s.date.length === 10 && s.date[4] === '-') return s.date.slice(0,4) === seasonFilter;
+    if (s.date.length === 10 && s.date[4] === '-') return s.date.slice(0,4) === seasonYear;
     // Handle DD-Mon-YY format e.g. "01-Jun-25"
     var parts = s.date.split('-');
     if (parts.length === 3 && parts[2].length === 2) {
-      return ('20' + parts[2]) === seasonFilter;
+      return ('20' + parts[2]) === seasonYear;
     }
     return true;
   });
@@ -2280,6 +2281,7 @@ function buildPbpPitcherLeague() {
 
 function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
   seasonFilter = seasonFilter || 'all';
+  var seasonYear = seasonFilter.replace('year:', '');
 
   // ── Shared bar renderer ───────────────────────
   function makeSavantBar(b, labelWidth) {
@@ -3824,7 +3826,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
       if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
       if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
       if (allDates.length > 1) {
-        if (activeSeasonFilter !== 'all' && s.date && !s.date.startsWith(activeSeasonFilter.replace('year:',''))) return false;
+        if (activeSeasonFilter !== 'all' && s.date && !s.date.startsWith(activeSeasonFilter.replace('year:', ''))) return false;
         if (activeZoneDate !== 'all' && s.date !== activeZoneDate) return false;
       }
       return true;
@@ -3863,7 +3865,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
       if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
       if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
       if (allDates.length > 1) {
-        if (activeSeasonFilter !== 'all' && s.date && !s.date.startsWith(activeSeasonFilter.replace('year:',''))) return false;
+        if (activeSeasonFilter !== 'all' && s.date && !s.date.startsWith(activeSeasonFilter.replace('year:', ''))) return false;
         if (activeZoneDate !== 'all' && s.date !== activeZoneDate) return false;
       }
       return true;
