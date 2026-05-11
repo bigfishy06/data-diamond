@@ -1,18 +1,19 @@
 library(dplyr)
 library(jsonlite)
-library(readxl)
 
 # ── Load ───────────────────────────────────────────────────────────────────────
-pitches_raw <- read_excel("C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/datadiamond2026.xlsx",
-                          col_names = c("inning", "outs", "balls", "strikes", "count",
-                                        "date", "batter_team", "pitcher_team",
-                                        "time_to_plate",
-                                        "batter", "pitcher",
-                                        "batter_side", "pitcher_side", "pitch_type",
-                                        "outcome", "contact_quality", "spray_chart",
-                                        "runners", "pitch_x", "pitch_y"))
+pitches_raw <- read.csv("C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/datadiamond2026.csv",
+                         header = TRUE,
+                         stringsAsFactors = FALSE)
 
 pitches <- as.data.frame(pitches_raw)
+colnames(pitches) <- c("inning", "outs", "balls", "strikes", "count",
+                       "date", "batter_team", "pitcher_team",
+                       "time_to_plate",
+                       "batter", "pitcher",
+                       "batter_side", "pitcher_side", "pitch_type",
+                       "outcome", "contact_quality", "spray_chart",
+                       "runners", "pitch_x", "pitch_y")
 
 pitches$pitch_x       <- suppressWarnings(as.numeric(pitches$pitch_x))
 pitches$pitch_y       <- suppressWarnings(as.numeric(pitches$pitch_y))
@@ -30,6 +31,14 @@ NON_AB_PA_OUTCOMES <- c(
   "Caught Stealing", "Truncated Out",
   "Batter Interference", "Additional Out"
 )
+
+# ── wOBA weights (standard linear weights) ────────────────────────────────────
+wOBA_BB  <- 0.690
+wOBA_HBP <- 0.720
+wOBA_1B  <- 0.880
+wOBA_2B  <- 1.247
+wOBA_3B  <- 1.578
+wOBA_HR  <- 2.031
 
 # ── Classify outcomes ──────────────────────────────────────────────────────────
 pitches <- pitches %>%
@@ -65,8 +74,8 @@ pitches <- pitches %>%
     is_cs         = outcome == "Caught Stealing",
     is_truncated  = outcome == "Truncated Out",
     is_add_out    = outcome == "Additional Out",
-    is_pa = !(outcome %in% PITCH_OUTCOMES),
-    is_ab = !(outcome %in% c(PITCH_OUTCOMES, NON_AB_PA_OUTCOMES)),
+    is_pa         = !(outcome %in% PITCH_OUTCOMES),
+    is_ab         = !(outcome %in% c(PITCH_OUTCOMES, NON_AB_PA_OUTCOMES)),
     is_productive_out = outcome %in% c("Groundout", "Flyout", "Lineout",
                                        "Popout", "Double Play", "Triple Play")
   )
@@ -112,14 +121,37 @@ summary_stats <- pitches %>%
     .groups        = "drop"
   ) %>%
   mutate(
-    AVG  = ifelse(AB > 0, round(H / AB, 3), 0),
-    SLG  = ifelse(AB > 0, round((`1B` + 2*`2B` + 3*`3B` + 4*HR) / AB, 3), 0),
-    OBP  = ifelse((AB + BB + HBP + SF) > 0,
-                  round((H + BB + HBP + CI) / (AB + BB + HBP + SF), 3), 0),
-    OPS  = round(OBP + SLG, 3),
+    # ── Existing stats ─────────────────────────────────────────────────────────
+    AVG    = ifelse(AB > 0, round(H / AB, 3), 0),
+    SLG    = ifelse(AB > 0, round((`1B` + 2*`2B` + 3*`3B` + 4*HR) / AB, 3), 0),
+    OBP    = ifelse((AB + BB + HBP + SF) > 0,
+                    round((H + BB + HBP + CI) / (AB + BB + HBP + SF), 3), 0),
+    OPS    = round(OBP + SLG, 3),
     K_pct  = ifelse(PA > 0, round((K + DTS) / PA * 100, 1), 0),
-    BB_pct = ifelse(PA > 0, round(BB / PA * 100, 1), 0)
-  )
+    BB_pct = ifelse(PA > 0, round(BB / PA * 100, 1), 0),
+
+    # ── NEW: ISO = SLG - AVG ───────────────────────────────────────────────────
+    ISO    = ifelse(AB > 0, round(SLG - AVG, 3), NA),
+
+    # ── NEW: BABIP = (H - HR) / (AB - K - HR + SF) ───────────────────────────
+    BABIP  = ifelse((AB - K - HR + SF) > 0,
+                    round((H - HR) / (AB - K - HR + SF), 3),
+                    NA),
+
+    # ── NEW: wOBA ─────────────────────────────────────────────────────────────
+    # wOBA = (wBB*uBB + wHBP*HBP + w1B*1B + w2B*2B + w3B*3B + wHR*HR) /
+    #        (AB + BB - IBB + SF + HBP)
+    # uBB = unintentional walks = BB - IBB
+    wOBA_num = (wOBA_BB  * (BB - IBB)) +
+               (wOBA_HBP * HBP)        +
+               (wOBA_1B  * `1B`)       +
+               (wOBA_2B  * `2B`)       +
+               (wOBA_3B  * `3B`)       +
+               (wOBA_HR  * HR),
+    wOBA_den = AB + BB - IBB + SF + HBP,
+    wOBA     = ifelse(wOBA_den > 0, round(wOBA_num / wOBA_den, 3), NA)
+  ) %>%
+  select(-wOBA_num, -wOBA_den)
 
 # ── Pitch mix ──────────────────────────────────────────────────────────────────
 pitch_mix <- pitches %>%
@@ -158,7 +190,8 @@ final <- summary_stats %>%
 
 write_json(final,
            "C:/Users/chris/OneDrive/Documents/summary2026.json",
-           auto_unbox = TRUE, pretty = TRUE)
+           auto_unbox = TRUE, pretty = TRUE, na = "null")
 
 cat("Done! summary2026.json written with", nrow(final), "players\n")
+cat("New batter columns: ISO, BABIP, wOBA\n")
 cat("Columns:", paste(names(final), collapse = ", "), "\n")

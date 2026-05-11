@@ -1,5 +1,59 @@
 [
   {
+    "batter": "Batter",
+    "batter_team": "Batter_Team",
+    "PA": 1,
+    "AB": 1,
+    "H": 0,
+    "1B": 0,
+    "2B": 0,
+    "3B": 0,
+    "HR": 0,
+    "BB": 0,
+    "IBB": 0,
+    "HBP": 0,
+    "K": 0,
+    "K_L": 0,
+    "K_S": 0,
+    "DTS": 0,
+    "DTS_L": 0,
+    "DTS_S": 0,
+    "Groundout": 0,
+    "DP": 0,
+    "TP": 0,
+    "Popout": 0,
+    "Flyout": 0,
+    "Lineout": 0,
+    "SF": 0,
+    "SF_DP": 0,
+    "SacB": 0,
+    "SacB_DP": 0,
+    "CI": 0,
+    "BI": 0,
+    "Error": 0,
+    "Pickoff": 0,
+    "CS": 0,
+    "Truncated": 0,
+    "Additional_Out": 0,
+    "pitches_seen": 1,
+    "AVG": 0,
+    "SLG": 0,
+    "OBP": 0,
+    "OPS": 0,
+    "K_pct": 0,
+    "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0,
+    "pitch_mix": {
+      "Pitch_Type": 100
+    },
+    "zone_pct": 0,
+    "swinging_k": 0,
+    "called_k": 0,
+    "chase_pitches": 0
+  },
+  {
     "batter": "Charlie Towers",
     "batter_team": "Kitchener Panthers",
     "PA": 2,
@@ -42,6 +96,9 @@
     "OPS": 0,
     "K_pct": 0,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0,
     "pitch_mix": {
       "Fastball": 66.7,
       "Offspeed": 33.3
@@ -94,6 +151,9 @@
     "OPS": 1.833,
     "K_pct": 25,
     "BB_pct": 25,
+    "ISO": 1,
+    "BABIP": 0,
+    "wOBA": 0.68,
     "pitch_mix": {
       "Fastball": 46.7,
       "Offspeed": 53.3
@@ -146,6 +206,9 @@
     "OPS": 0,
     "K_pct": 50,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0,
     "pitch_mix": {
       "Fastball": 50,
       "Offspeed": 50
@@ -198,6 +261,9 @@
     "OPS": 1,
     "K_pct": 0,
     "BB_pct": 100,
+    "ISO": null,
+    "BABIP": null,
+    "wOBA": 0.69,
     "pitch_mix": {
       "Fastball": 83.3,
       "Offspeed": 16.7
@@ -250,6 +316,9 @@
     "OPS": 0,
     "K_pct": 100,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": null,
+    "wOBA": 0,
     "pitch_mix": {
       "Fastball": 100
     },
@@ -301,6 +370,9 @@
     "OPS": 1.417,
     "K_pct": 25,
     "BB_pct": 25,
+    "ISO": 0,
+    "BABIP": 1,
+    "wOBA": 0.613,
     "pitch_mix": {
       "Fastball": 61.5,
       "Offspeed": 38.5
@@ -353,6 +425,9 @@
     "OPS": 0,
     "K_pct": 0,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0,
     "pitch_mix": {
       "Fastball": 100
     },
@@ -404,6 +479,9 @@
     "OPS": 1,
     "K_pct": 0,
     "BB_pct": 0,
+    "ISO": 0.334,
+    "BABIP": 0.333,
+    "wOBA": 0.416,
     "pitch_mix": {
       "Fastball": 57.1,
       "Offspeed": 42.9
@@ -456,6 +534,9 @@
     "OPS": 0.833,
     "K_pct": 25,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0.5,
+    "wOBA": 0.4,
     "pitch_mix": {
       "Fastball": 62.5,
       "Offspeed": 37.5
@@ -508,6 +589,9 @@
     "OPS": 0.4,
     "K_pct": 40,
     "BB_pct": 40,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0.276,
     "pitch_mix": {
       "Fastball": 48,
       "Offspeed": 52
@@ -560,6 +644,9 @@
     "OPS": 0.5,
     "K_pct": 0,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0.25,
+    "wOBA": 0.22,
     "pitch_mix": {
       "Fastball": 55.6,
       "Offspeed": 44.4
@@ -612,6 +699,9 @@
     "OPS": 0.2,
     "K_pct": 20,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0.144,
     "pitch_mix": {
       "Fastball": 68.2,
       "Offspeed": 31.8
@@ -664,6 +754,9 @@
     "OPS": 0,
     "K_pct": 33.3,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0,
     "pitch_mix": {
       "Fastball": 53.3,
       "Offspeed": 46.7
@@ -716,6 +809,9 @@
     "OPS": 0.2,
     "K_pct": 33.3,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0.144,
     "pitch_mix": {
       "Fastball": 38.9,
       "Offspeed": 61.1
@@ -768,6 +864,9 @@
     "OPS": 0.6,
     "K_pct": 20,
     "BB_pct": 20,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0.426,
     "pitch_mix": {
       "Fastball": 47.6,
       "Offspeed": 52.4
@@ -820,6 +919,9 @@
     "OPS": 1,
     "K_pct": 0,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0.5,
+    "wOBA": 0.44,
     "pitch_mix": {
       "Fastball": 80,
       "Offspeed": 20
@@ -872,6 +974,9 @@
     "OPS": 2.5,
     "K_pct": 50,
     "BB_pct": 0,
+    "ISO": 1.5,
+    "BABIP": null,
+    "wOBA": 1.016,
     "pitch_mix": {
       "Fastball": 50,
       "Offspeed": 50
@@ -924,6 +1029,9 @@
     "OPS": 5,
     "K_pct": 0,
     "BB_pct": 50,
+    "ISO": 3,
+    "BABIP": null,
+    "wOBA": 1.36,
     "pitch_mix": {
       "Fastball": 85,
       "Offspeed": 15
@@ -976,6 +1084,9 @@
     "OPS": 0.75,
     "K_pct": 50,
     "BB_pct": 0,
+    "ISO": 0.25,
+    "BABIP": 0.5,
+    "wOBA": 0.312,
     "pitch_mix": {
       "Fastball": 58.3,
       "Offspeed": 41.7
@@ -1028,6 +1139,9 @@
     "OPS": 0.9,
     "K_pct": 40,
     "BB_pct": 20,
+    "ISO": 0.25,
+    "BABIP": 0.5,
+    "wOBA": 0.387,
     "pitch_mix": {
       "Fastball": 50,
       "Offspeed": 50
@@ -1080,6 +1194,9 @@
     "OPS": 1.8,
     "K_pct": 0,
     "BB_pct": 20,
+    "ISO": 0.25,
+    "BABIP": 0.75,
+    "wOBA": 0.739,
     "pitch_mix": {
       "Fastball": 61.1,
       "Offspeed": 38.9
@@ -1132,6 +1249,9 @@
     "OPS": 0.2,
     "K_pct": 20,
     "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0.144,
     "pitch_mix": {
       "Fastball": 61.9,
       "Offspeed": 38.1
@@ -1184,6 +1304,9 @@
     "OPS": 0.5,
     "K_pct": 0,
     "BB_pct": 50,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0.345,
     "pitch_mix": {
       "Fastball": 55.6,
       "Offspeed": 44.4
