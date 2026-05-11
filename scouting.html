@@ -374,8 +374,8 @@
     <div class="selector-card">
       <div class="selector-label">00 — Select Season</div>
       <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap">
-        <button class="type-btn active" id="btn-season-2025" style="flex:none;padding:10px 28px">2025 Season</button>
-        <button class="type-btn" id="btn-season-2026" style="flex:none;padding:10px 28px;cursor:default;opacity:0.4" disabled title="Data will be added soon under datadiamond2026">2026 — Coming Soon</button>
+        <button class="type-btn active" id="btn-season-2025" style="flex:none;padding:10px 28px">2025</button>
+        <button class="type-btn" id="btn-season-2026" style="flex:none;padding:10px 28px">2026</button>
       </div>
       <div class="selector-label">01 — Select Team</div>
       <div class="team-picker-grid" id="team-picker"></div>
@@ -505,7 +505,22 @@
     { id:'wel', abbr:'WEL', name:'Welland Jackfish',           color:'#00703C' }
   ];
 
-  var selTeam = null, selType = 'batter';
+  var selTeam = null, selType = 'batter', selSeason = '2025';
+
+  document.getElementById('btn-season-2025').addEventListener('click', function() {
+    selSeason = '2025';
+    document.getElementById('btn-season-2025').classList.add('active');
+    document.getElementById('btn-season-2026').classList.remove('active');
+    if (typeof swapSeasonData === 'function') swapSeasonData('year:2025');
+    if (selTeam) renderPlayerList();
+  });
+  document.getElementById('btn-season-2026').addEventListener('click', function() {
+    selSeason = '2026';
+    document.getElementById('btn-season-2026').classList.add('active');
+    document.getElementById('btn-season-2025').classList.remove('active');
+    if (typeof swapSeasonData === 'function') swapSeasonData('year:2026');
+    if (selTeam) renderPlayerList();
+  });
 
   // ── Scouting access control — uses same Google OAuth as main.js ──
   function scoutingAccess() {
@@ -602,40 +617,41 @@
         : DATA.summary;
       rawBatters.forEach(function(p){
         var t = resolveTeam(p.batter_team || p.team);
-        if (t && t.id === selTeam && !seenBatters.has(p.batter)) {
-          seenBatters.add(p.batter);
+        var _bkey = (p.batter||'').trim().toLowerCase();
+        if (t && t.id === selTeam && !seenBatters.has(_bkey)) {
+          seenBatters.add(_bkey);
           var sum = DATA.summary.find(function(s){ return s.batter === p.batter; }) || p;
           players.push({ name: p.batter, summary: sum, pbp: p, pitch: getPitchPlayer(p.batter) });
         }
       });
       // Add IBL-only 2025 batters not already included
       Object.keys(DATA.iblHistory).forEach(function(name) {
-        if (seenBatters.has(name)) return;
+        if (seenBatters.has((name||'').trim().toLowerCase())) return;
         var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
         if (!s2025) return;
         if (s2025.pos === 'P') return; // exclude pitchers from batter list
         var t = resolveTeam(s2025.team);
         if (t && t.id === selTeam) {
-          seenBatters.add(name);
+          seenBatters.add((name||'').trim().toLowerCase());
           var sum = DATA.summary.find(function(s){ return s.batter === name; }) || Object.assign({batter:name}, s2025);
           players.push({ name: name, summary: sum, pitch: getPitchPlayer(name) });
         }
       });
       // Add DATA.summary batters not yet included (matches getAllBatters)
       DATA.summary.forEach(function(p) {
-        if (!p.batter || seenBatters.has(p.batter)) return;
+        if (!p.batter || seenBatters.has(p.batter.trim().toLowerCase())) return;
         var t = resolveTeam(p.batter_team);
         if (t && t.id === selTeam) {
-          seenBatters.add(p.batter);
+          seenBatters.add(p.batter.trim().toLowerCase());
           players.push({ name: p.batter, summary: p, pitch: getPitchPlayer(p.batter) });
         }
       });
       // Add DATA.pitches top-level batter field (same as getAllBatters on players page)
       DATA.pitches.forEach(function(bp) {
-        if (!bp.batter || seenBatters.has(bp.batter)) return;
+        if (!bp.batter || seenBatters.has(bp.batter.trim().toLowerCase())) return;
         var t = resolveTeam(bp.team);
         if (t && t.id === selTeam) {
-          seenBatters.add(bp.batter);
+          seenBatters.add(bp.batter.trim().toLowerCase());
           var sum = DATA.summary.find(function(sm){ return sm.batter === bp.batter; }) || { batter: bp.batter };
           players.push({ name: bp.batter, summary: sum, pitch: getPitchPlayer(bp.batter) });
         }
