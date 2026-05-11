@@ -1177,11 +1177,19 @@ function renderPlayerDetail(name, type, content) {
   // Derive bats/throws from scatter data (Batter_Side / Pitcher_Side columns).
   // If a player appears with more than one distinct side value they are Switch.
   function deriveHand(scatter, field) {
-    var sides = new Set();
-    scatter.forEach(function(s) { if (s[field]) sides.add(s[field]); });
-    if (sides.size === 0) return null;
-    if (sides.size > 1)  return 'S';
-    return sides.values().next().value;
+    var counts = {};
+    var total = 0;
+    scatter.forEach(function(s) {
+      var v = s[field];
+      if (v) { counts[v] = (counts[v] || 0) + 1; total++; }
+    });
+    if (total === 0) return null;
+    // If one side is used 50%+ of the time, use that side
+    var sides = Object.keys(counts);
+    if (sides.length === 1) return sides[0];
+    var dominant = sides.reduce(function(a, b) { return counts[a] >= counts[b] ? a : b; });
+    if (counts[dominant] / total >= 0.5) return dominant;
+    return 'S';
   }
 
   var _batterScatter = (pitch && pitch.scatter) ? pitch.scatter : [];
