@@ -47,7 +47,7 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 2,0,2,1,'2-1,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Yunior Ibarra,Yadian Martinez,R,R,Fastball,Hit By Pitch,,,0,1.147584895,0.5508776
 2,0,0,0,'0-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,1.29,Yosuke Fujie,Yadian Martinez,L,R,Fastball,Called Strike,,,100,0.505942623,0.494925563
 2,0,0,1,'0-1,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,1.38,Yosuke Fujie,Yadian Martinez,L,R,Offspeed,Ball,,,100,0.973580211,0.477709552
-2,0,1,1,'1-1,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,1.22,Yosuke Fujie,Yadian Martinez,L,R,Fastball,Error,,,100,0.766949649,0.563789608
+2,0,1,1,'1-1,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,1.22,Yosuke Fujie,Yadian Martinez,L,R,Fastball,Error,Ground Ball,Pull,100,0.766949649,0.563789608
 2,0,0,0,'0-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Malik Williams,Yadian Martinez,R,R,Offspeed,Ball,,,101,-0.77734192,0.370109483
 2,0,1,0,'1-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Malik Williams,Yadian Martinez,R,R,Fastball,Double Play,Ground Ball,Pull,101,0.01655445,0.507837572
 2,2,0,0,'0-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Trent Lawson,Yadian Martinez,R,R,Fastball,Ball,,,0,-0.799092506,0.740253722
@@ -68,7 +68,7 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 2,1,1,1,'1-1,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Matthew Fabian,Owen Macneil,R,R,Offspeed,Ball,,,101,-0.342330211,0.232381394
 2,1,2,1,'2-1,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Matthew Fabian,Owen Macneil,R,R,Fastball,Called Strike,,,101,-0.603337237,0.395933499
 2,1,2,2,'2-2,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Matthew Fabian,Owen Macneil,R,R,Offspeed,Ball,,,101,-0.820843091,0.163517349
-2,1,3,2,'3-2,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Matthew Fabian,Owen Macneil,R,R,Fastball,Sacrifice Fly,,,101,0.669072014,0.464797544
+2,1,3,2,'3-2,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Matthew Fabian,Owen Macneil,R,R,Fastball,Sacrifice Fly,Fly Ball,Pull,101,0.669072014,0.464797544
 2,2,0,0,'0-0,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Marcus Knecht,Owen Macneil,R,R,Fastball,Swinging Strike,,,10,0.310187354,0.572397613
 2,2,0,1,'0-1,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Marcus Knecht,Owen Macneil,R,R,Offspeed,Ball,,,10,-0.320579625,0.116173319
 2,2,1,1,'1-1,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Marcus Knecht,Owen Macneil,R,R,Offspeed,Hit By Pitch,,,10,0.995330796,0.490621561
@@ -139,7 +139,7 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 4,1,3,2,'3-2,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Marcus Knecht,Samuel Quintana,R,L,Fastball,Foul,,,110,-0.440207845,0.275421422
 4,1,3,2,'3-2,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Marcus Knecht,Samuel Quintana,R,L,Offspeed,Foul,,,110,0.745199063,0.25820541
 4,1,3,2,'3-2,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Marcus Knecht,Samuel Quintana,R,L,Offspeed,Foul,,,110,-0.157450234,0.245293402
-4,1,3,2,'3-2,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Marcus Knecht,Samuel Quintana,R,L,Offspeed,Double Play,,,110,-0.483709016,0.413149511
+4,1,3,2,'3-2,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Marcus Knecht,Samuel Quintana,R,L,Offspeed,Double Play,Ground Ball,Pull,110,-0.483709016,0.413149511
 5,0,0,0,'0-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Trent Lawson,Yadian Martinez,R,R,,Ball,,,0,,
 5,0,1,0,'1-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Trent Lawson,Yadian Martinez,R,R,Fastball,Ball,,,0,-0.070447892,0.44327753
 5,0,2,0,'2-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Trent Lawson,Yadian Martinez,R,R,Fastball,Called Strike,,,0,0.060055621,0.413149511
@@ -212,7 +212,7 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,0,1,0,'1-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Malik Williams,Wilgenis Alvarado,R,L,,Ball,,,0,NA,
 7,0,2,0,'2-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Malik Williams,Wilgenis Alvarado,R,L,Fastball,Called Strike,,,0,-0.0595726,0.309853444
 7,0,2,1,'2-1,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Malik Williams,Wilgenis Alvarado,R,L,Fastball,Swinging Strike,,,0,0.038305035,0.348589469
-7,0,2,2,'2-2,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Malik Williams,Wilgenis Alvarado,R,L,Fastball,Double,,,0,0.201434426,0.374413486
+7,0,2,2,'2-2,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Malik Williams,Wilgenis Alvarado,R,L,Fastball,Double,Line Drive,Pull,0,0.201434426,0.374413486
 7,0,0,0,'0-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Jamie Cabral,Wilgenis Alvarado,R,L,Fastball,Swinging Strike,,,10,0.060055621,0.460493541
 7,0,0,1,'0-1,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Jamie Cabral,Wilgenis Alvarado,R,L,Offspeed,Called Strike,,,10,0.01655445,0.413149511
 7,0,0,2,'0-2,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Jamie Cabral,Wilgenis Alvarado,R,L,Offspeed,Lineout,Line Drive,Straightaway,10,-0.037822014,0.456189538
