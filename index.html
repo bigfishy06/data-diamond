@@ -1477,7 +1477,7 @@
     // Wait for DATA to load before building grid
     var attempts = 0;
     function tryBuild() {
-      if ((DATA.summary && DATA.summary.length) || attempts > 20) {
+      if ((typeof DATA !== 'undefined' && DATA.summary && DATA.summary.length) || attempts > 20) {
         buildGamePrepGrid();
       } else {
         attempts++;
