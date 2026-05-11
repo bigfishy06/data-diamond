@@ -356,49 +356,41 @@ function _iblForYear(name, field) {
 function getSeasonERA(name) {
   var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(yr) !== -1; });
-  if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
   return entries.length && entries[0].ERA != null ? entries[0].ERA : null;
 }
 function getSeasonWHIP(name) {
   var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(yr) !== -1; });
-  if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0; });
   return entries.length && entries[0].WHIP != null ? entries[0].WHIP : null;
 }
 function getSeasonHR(name) {
   var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
-  if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].HR != null ? entries[0].HR : null;
 }
 function getSeasonRBI(name) {
   var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
-  if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].RBI != null ? entries[0].RBI : null;
 }
 function getSeasonAVG(name) {
   var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
-  if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].AVG != null ? entries[0].AVG : null;
 }
 function getSeasonOBP(name) {
   var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
-  if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].OBP != null ? entries[0].OBP : null;
 }
 function getSeasonSLG(name) {
   var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
-  if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].SLG != null ? entries[0].SLG : null;
 }
 function getSeasonOPS(name) {
   var yr = _activeSeason.replace('year:','');
   var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
-  if (!entries.length) entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0; });
   return entries.length && entries[0].OPS != null ? entries[0].OPS : null;
 }
 function getPitchPlayer(name) {
@@ -1319,8 +1311,8 @@ function renderPlayerDetail(name, type, content) {
       });
     }
     tabContent.appendChild(panel);
-    if (t === 'zone')     renderZone(name, type, pitchData, panel, activeSeasonFilter);
-    if (t === 'usage')    panel.innerHTML = renderPitchUsage(name, pitchData);
+    if (t === 'zone')     renderZone(name, type, currentPitchData, panel, activeSeasonFilter);
+    if (t === 'usage')    panel.innerHTML = renderPitchUsage(name, currentPitchData);
     if (t === 'notes')    renderNotes(name, panel);
     setTimeout(function() {
       panel.querySelectorAll('.sbr-fill').forEach(function(el) {
@@ -2595,12 +2587,13 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
 
     var allBars = [];
     // IBL slash stats (always from ibl_history)
-    var _iblB2 = (DATA.iblHistory[name]||[]).filter(function(s){ return s.AB > 0; });
+    var _iblYrB = _activeSeason.replace('year:','');
+    var _iblB2 = (DATA.iblHistory[name]||[]).filter(function(s){ return s.AB>0&&(s.season||'').indexOf(_iblYrB)!==-1; });
     var _iblS2 = _iblB2.length ? _iblB2[0] : null;
-    var lgIblAvg = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].AVG!=null?s[0].AVG:null; }).filter(function(v){return v!=null;});
-    var lgIblObp = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].OBP!=null?s[0].OBP:null; }).filter(function(v){return v!=null;});
-    var lgIblSlg = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].SLG!=null?s[0].SLG:null; }).filter(function(v){return v!=null;});
-    var lgIblOps = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0;}); return s.length&&s[0].OPS!=null?s[0].OPS:null; }).filter(function(v){return v!=null;});
+    var lgIblAvg = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0&&(r.season||'').indexOf(_iblYrB)!==-1;}); return s.length&&s[0].AVG!=null?s[0].AVG:null; }).filter(function(v){return v!=null;});
+    var lgIblObp = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0&&(r.season||'').indexOf(_iblYrB)!==-1;}); return s.length&&s[0].OBP!=null?s[0].OBP:null; }).filter(function(v){return v!=null;});
+    var lgIblSlg = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0&&(r.season||'').indexOf(_iblYrB)!==-1;}); return s.length&&s[0].SLG!=null?s[0].SLG:null; }).filter(function(v){return v!=null;});
+    var lgIblOps = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.AB>0&&(r.season||'').indexOf(_iblYrB)!==-1;}); return s.length&&s[0].OPS!=null?s[0].OPS:null; }).filter(function(v){return v!=null;});
     function lpIbl(val, arr) { if (!arr.length||val==null) return 0; var below=arr.filter(function(v){return v<val;}).length; return (below+0.5)/arr.length; }
     var iblSlashBars = [
       { lbl:'BA',  val:_iblS2&&_iblS2.AVG!=null?fmt3(_iblS2.AVG):'—', pct:lpIbl(_iblS2&&_iblS2.AVG,lgIblAvg), good:true },
@@ -2815,9 +2808,9 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     if (pbpPitData) {
       var dp = pbpPitData;
       allBars = [
-        { lbl: 'ERA',  val: getSeasonERA(name)  != null ? fmt2(getSeasonERA(name))  : (dp.ERA  != null ? fmt2(dp.ERA)  : '—'),
+        { lbl: 'ERA',  val: getSeasonERA(name)  != null ? fmt2(getSeasonERA(name))  : '—',
                    pct: getSeasonERA(name)  != null ? 1-lpP(getSeasonERA(name),  lgPpbp.era)  : (dp.ERA  != null ? 1-lpP(dp.ERA,  lgPpbp.era)  : 0), good: true },
-        { lbl: 'IP',   val: (function(){ var ibl=(DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;}); return ibl.length?fmtIP(ibl[0].IP):'—'; })(),
+        { lbl: 'IP',   val: (function(){ var yr=_activeSeason.replace('year:',''); var ibl=(DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0&&(s.season||'').indexOf(yr)!==-1;}); return ibl.length?fmtIP(ibl[0].IP):'—'; })(),
                    pct: (function(){ var ipArr=Object.values(DATA.iblHistory).map(function(ss){var r=(ss||[]).filter(function(s){return s.IP>0;});return r.length?r[0].IP:null;}).filter(function(v){return v!=null;}); var myIP=(function(){var ibl=(DATA.iblHistory[name]||[]).filter(function(s){return s.IP>0;});return ibl.length?ibl[0].IP:null;})(); return myIP!=null&&ipArr.length?lpP(myIP,ipArr):0; })(), good: true },
         { lbl: 'WHIP', val: getSeasonWHIP(name) != null ? fmt2(getSeasonWHIP(name)) : (dp.WHIP != null ? fmt2(dp.WHIP) : '—'),
                    pct: getSeasonWHIP(name) != null ? 1-lpP(getSeasonWHIP(name), lgPpbp.whip) : (dp.WHIP != null ? 1-lpP(dp.WHIP, lgPpbp.whip) : 0), good: true },
@@ -2892,9 +2885,10 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
   }
 
   // IBL-only pitcher fallback
-  var _iblPitPct = ((DATA.iblHistory[name]||[]).filter(function(s){ return s.IP>0; }))[0]||null;
+  var _iblYr = _activeSeason.replace('year:','');
+  var _iblPitPct = ((DATA.iblHistory[name]||[]).filter(function(s){ return s.IP>0&&(s.season||'').indexOf(_iblYr)!==-1; }))[0]||null;
   if (_iblPitPct) {
-    var lgEra2 = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.IP>0;}); return s.length&&s[0].ERA!=null?s[0].ERA:null; }).filter(function(v){return v!=null;});
+    var lgEra2 = Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.IP>0&&(r.season||'').indexOf(_iblYr)!==-1;}); return s.length&&s[0].ERA!=null?s[0].ERA:null; }).filter(function(v){return v!=null;});
     var lgWhip2= Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.IP>0;}); return s.length&&s[0].WHIP!=null?s[0].WHIP:null; }).filter(function(v){return v!=null;});
     function lpIbl2(val,arr,invert){ if(!arr.length||val==null) return 0; var below=arr.filter(function(v){return v<val;}).length; var p=(below+0.5)/arr.length; return invert?1-p:p; }
     var iblBars = [
