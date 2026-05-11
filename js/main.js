@@ -1274,18 +1274,31 @@ function renderPlayerDetail(name, type, content) {
   const tabs = content.querySelectorAll('.tab-btn');
 
   function activateTab(t) {
+    // Re-fetch data for the active season in case season was switched
+    var currentSum       = getSummaryPlayer(name);
+    var currentPitchData;
+    if (type === 'pitcher') {
+      var pts2 = [];
+      DATA.pitches.forEach(function(bp) {
+        if (!bp.scatter) return;
+        bp.scatter.forEach(function(s) { if (s.pitcher === name) pts2.push(s); });
+      });
+      currentPitchData = pts2.length ? { batter: name, scatter: pts2 } : null;
+    } else {
+      currentPitchData = getPitchPlayer(name);
+    }
     tabs.forEach(function(tb) { tb.classList.toggle('active', tb.dataset.tab === t); });
     tabContent.innerHTML = '';
     var panel = document.createElement('div');
     panel.className = 'fade-up';
-    if (t === 'overview')   panel.innerHTML = renderOverview(name, type, sum, pitchData, playerInfo, activeSeasonFilter);
-    if (t === 'percentile') panel.innerHTML = renderPercentileStats(name, type, sum, pitchData, activeSeasonFilter);
-    if (t === 'season')   panel.innerHTML = renderSeasonStats(name, type, sum, pitchData);
+    if (t === 'overview')   panel.innerHTML = renderOverview(name, type, currentSum, currentPitchData, playerInfo, activeSeasonFilter);
+    if (t === 'percentile') panel.innerHTML = renderPercentileStats(name, type, currentSum, currentPitchData, activeSeasonFilter);
+    if (t === 'season')   panel.innerHTML = renderSeasonStats(name, type, currentSum, currentPitchData);
     if (t === 'splits') {
-      panel.innerHTML = renderSplits(name, type, pitchData, activeSeasonFilter);
+      panel.innerHTML = renderSplits(name, type, currentPitchData, activeSeasonFilter);
       var allPoints = [];
-      if (type === 'batter' && pitchData && pitchData.scatter) {
-        allPoints = pitchData.scatter;
+      if (type === 'batter' && currentPitchData && currentPitchData.scatter) {
+        allPoints = currentPitchData.scatter;
       } else if (type === 'pitcher') {
         DATA.pitches.forEach(function(bp) {
           if (!bp.scatter) return;
