@@ -825,54 +825,239 @@ function initTeamsPage() {
 
 function renderTeamGrid(content) {
   content.innerHTML = '<section class="page-hero"><div class="hero-bg"></div><div class="container">' +
-    '<p class="hero-eyebrow">Canadian Baseball League</p>' +
-    '<h1 class="hero-title">TEAM<br><span>STATS</span></h1></div></section>' +
+    '<p class="hero-eyebrow">Canadian Baseball League · 2026</p>' +
+    '<h1 class="hero-title">LEAGUE<br><span>STATS</span></h1></div></section>' +
     '<div class="container" style="padding-top:40px;padding-bottom:80px">' +
-    '<div class="teams-grid" id="teams-grid"></div></div>';
 
-  const grid = document.getElementById('teams-grid');
-  TEAMS.forEach(function(team, i) {
-    // Use same roster as players page
-    var teamBatters  = getTeamBatters(team.id);
-    var teamPitchersList = getTeamPitchers(team.id);
-    var playerCount = teamBatters.length + teamPitchersList.length;
+    // ── Tab bar ──────────────────────────────────────────────────────────────
+    '<div class="tabs-bar"><div class="tabs">' +
+    '<button class="tab-btn active" data-ltab="pitching">Pitching</button>' +
+    '<button class="tab-btn" data-ltab="hitting">Hitting</button>' +
+    '</div></div>' +
 
-    // AVG and OPS from pbp/summary
-    var totalAB = 0, totalH = 0, totalTB = 0, totalBB = 0, totalHBP = 0, totalSF = 0;
-    teamBatters.forEach(function(b) {
-      var src = b.pbp || b.summary || {};
-      totalAB  += src.AB  || 0;
-      totalH   += src.H   || 0;
-      totalBB  += src.BB  || 0;
-      totalHBP += src.HBP || 0;
-      totalSF  += src.SF  || 0;
-      // TB for SLG
-      totalTB  += (src.H||0) + (src['2B']||0) + (src['3B']||0)*2 + (src.HR||0)*3;
+    // ── Search / filter row ──────────────────────────────────────────────────
+    '<div style="display:flex;align-items:center;gap:12px;margin:18px 0 16px;flex-wrap:wrap">' +
+    '<input id="ls-search" placeholder="Search player…" style="' +
+      'background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);' +
+      'border-radius:4px;color:#fff;font-size:13px;font-family:var(--font-mono);' +
+      'padding:7px 12px;outline:none;width:180px;transition:border-color .2s" />' +
+    '<select id="ls-team" style="background:#0e1525;border:1px solid rgba(255,255,255,0.12);' +
+      'border-radius:4px;color:rgba(255,255,255,0.7);font-size:12px;font-family:var(--font-mono);' +
+      'padding:7px 10px;cursor:pointer;outline:none">' +
+    '<option value="">All Teams</option>' +
+    TEAMS.map(function(t){ return '<option value="' + t.id + '">' + t.abbreviation + ' – ' + t.name + '</option>'; }).join('') +
+    '</select>' +
+    '<span id="ls-row-count" style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.3);margin-left:auto"></span>' +
+    '</div>' +
+
+    // ── Table container ──────────────────────────────────────────────────────
+    '<div id="ls-table-wrap"></div>' +
+    '</div>';
+
+  var _lsTab    = 'pitching';
+  var _lsSearch = '';
+  var _lsTeam   = '';
+  var _lsSortCol  = -1;
+  var _lsSortAsc  = true;
+
+  // ── Column definitions — strictly 2026 datadiamond fields ──────────────────
+  // Pitchers: from pitchers2026 (IP, K_pct, BB_pct, STR_pct, EA_pct, K_BB,
+  //           Early_pct, Ahead_pct, total_pitches) + WHIP computed from pitches2026 scatter
+  var PITCH_COLS = [
+    { key: 'pitcher',       label: 'Pitcher', align: 'left',  fmt: null,                                   desc: false, link: true },
+    { key: '_team',         label: 'Team',    align: 'left',  fmt: null,                                   desc: false },
+    { key: 'total_pitches', label: 'Pitches', align: 'right', fmt: fmtN,                                   desc: true  },
+    { key: 'IP',            label: 'IP',      align: 'right', fmt: fmtIP,                                  desc: true  },
+    { key: 'WHIP',          label: 'WHIP',    align: 'right', fmt: fmt2,                                   desc: false },
+    { key: 'STR_pct',       label: 'STR%',    align: 'right', fmt: function(v){ return fmt1(v)+'%'; },     desc: true  },
+    { key: 'K_pct',         label: 'K%',      align: 'right', fmt: function(v){ return fmt1(v)+'%'; },     desc: true  },
+    { key: 'BB_pct',        label: 'BB%',     align: 'right', fmt: function(v){ return fmt1(v)+'%'; },     desc: false },
+    { key: 'K_BB',          label: 'K/BB',    align: 'right', fmt: fmt2,                                   desc: true  },
+    { key: 'EA_pct',        label: 'E+A%',    align: 'right', fmt: function(v){ return fmt1(v)+'%'; },     desc: true  },
+    { key: 'Early_pct',     label: 'EARLY%',  align: 'right', fmt: function(v){ return fmt1(v)+'%'; },     desc: true  },
+    { key: 'Ahead_pct',     label: 'AHEAD%',  align: 'right', fmt: function(v){ return fmt1(v)+'%'; },     desc: true  }
+  ];
+
+  // Batters: from summary2026 (AB, H, AVG, OBP, SLG, OPS, HR, BB, K, 2B, 3B, HBP, SF)
+  var HIT_COLS = [
+    { key: 'batter', label: 'Batter', align: 'left',  fmt: null,  desc: false, link: true },
+    { key: '_team',  label: 'Team',   align: 'left',  fmt: null,  desc: false },
+    { key: 'AB',     label: 'AB',     align: 'right', fmt: fmtN,  desc: true  },
+    { key: 'H',      label: 'H',      align: 'right', fmt: fmtN,  desc: true  },
+    { key: 'AVG',    label: 'AVG',    align: 'right', fmt: fmt3,  desc: true  },
+    { key: 'OBP',    label: 'OBP',    align: 'right', fmt: fmt3,  desc: true  },
+    { key: 'SLG',    label: 'SLG',    align: 'right', fmt: fmt3,  desc: true  },
+    { key: 'OPS',    label: 'OPS',    align: 'right', fmt: fmt3,  desc: true  },
+    { key: 'HR',     label: 'HR',     align: 'right', fmt: fmtN,  desc: true  },
+    { key: 'BB',     label: 'BB',     align: 'right', fmt: fmtN,  desc: true  },
+    { key: 'K',      label: 'K',      align: 'right', fmt: fmtN,  desc: false }
+  ];
+
+  // ── Build rows strictly from 2026 datadiamond sources ──────────────────────
+  function buildPitcherRows() {
+    // Pre-compute WHIP from pitches2026 scatter (BB + H) / IP for each pitcher
+    var whipMap = {};
+    DATA.pitches2026.forEach(function(bp) {
+      (bp.scatter || []).forEach(function(s) {
+        var n = s.pitcher; if (!n) return;
+        if (!whipMap[n]) whipMap[n] = { bb: 0, h: 0 };
+        if (s.outcome === 'Walk' || s.outcome === 'Intentional Walk') whipMap[n].bb++;
+        if (['Single','Double','Triple','Home Run'].includes(s.outcome)) whipMap[n].h++;
+      });
     });
-    var teamAVG = totalAB > 0 ? fmt3(totalH / totalAB) : '—';
-    var obpDen = totalAB + totalBB + totalHBP + totalSF;
-    var teamOPS = totalAB > 0 && obpDen > 0
-      ? fmt3((totalH + totalBB + totalHBP) / obpDen + totalTB / totalAB)
-      : '—';
 
-    const card = document.createElement('div');
-    card.className = 'team-card fade-up';
-    card.style.setProperty('--team-color', team.primaryColor);
-    card.style.animationDelay = (i * 0.04) + 's';
-    card.innerHTML =
-      '<div class="team-abbr">' + team.abbreviation + '</div>' +
-      '<div class="team-name">' + team.name + '</div>' +
-      '<div class="team-meta" style="display:flex;gap:16px;margin-top:6px">' +
-      '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">AVG <span style="color:var(--text)">' + teamAVG + '</span></span>' +
-      '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">OPS <span style="color:var(--text)">' + teamOPS + '</span></span>' +
-      '</div>' +
-      '<div class="team-footer">' +
-      '<span class="team-player-count">' + playerCount + ' player' + (playerCount !== 1 ? 's' : '') + '</span>' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--text-dim)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>' +
-      '</div>';
-    card.addEventListener('click', function() { navigate('teams.html?team=' + team.id); });
-    grid.appendChild(card);
+    return DATA.pitchers2026.map(function(pd) {
+      var name = pd.pitcher;
+      var teamObj = resolveTeam(pd.pitcher_team || pd.team);
+      var w = whipMap[name];
+      var whip = (pd.IP > 0 && w) ? (w.bb + w.h) / pd.IP : null;
+      return Object.assign({}, pd, {
+        WHIP:    whip,
+        _team:   teamObj ? teamObj.abbreviation : '—',
+        _teamId: teamObj ? teamObj.id           : null
+      });
+    });
+  }
+
+  function buildHitterRows() {
+    // summary2026 is the direct datadiamond2026 batter output — use it as-is
+    return DATA.summary2026.filter(function(p) { return p.AB > 0; }).map(function(p) {
+      var teamObj = resolveTeam(p.batter_team || p.team);
+      return Object.assign({}, p, {
+        _team:   teamObj ? teamObj.abbreviation : '—',
+        _teamId: teamObj ? teamObj.id           : null
+      });
+    });
+  }
+
+  // ── Render table ────────────────────────────────────────────────────────────
+  function renderTable() {
+    var cols    = _lsTab === 'pitching' ? PITCH_COLS : HIT_COLS;
+    var rows    = _lsTab === 'pitching' ? buildPitcherRows() : buildHitterRows();
+    var nameKey = _lsTab === 'pitching' ? 'pitcher' : 'batter';
+    var type    = _lsTab === 'pitching' ? 'pitcher' : 'batter';
+
+    // Filter
+    var filtered = rows.filter(function(r) {
+      var nm = (r[nameKey] || '').toLowerCase();
+      if (_lsSearch && !nm.includes(_lsSearch)) return false;
+      if (_lsTeam   && r._teamId !== _lsTeam)   return false;
+      return true;
+    });
+
+    // Sort
+    if (_lsSortCol >= 0 && _lsSortCol < cols.length) {
+      var col = cols[_lsSortCol];
+      var asc = _lsSortAsc;
+      filtered.sort(function(a, b) {
+        var av = a[col.key], bv = b[col.key];
+        if (av == null && bv == null) return 0;
+        if (av == null) return 1;
+        if (bv == null) return -1;
+        var an = parseFloat(av), bn = parseFloat(bv);
+        if (!isNaN(an) && !isNaN(bn)) return asc ? an - bn : bn - an;
+        return asc ? String(av).localeCompare(String(bv)) : String(bv).localeCompare(String(av));
+      });
+    }
+
+    // Row count
+    var countEl = document.getElementById('ls-row-count');
+    if (countEl) countEl.textContent = filtered.length + ' players';
+
+    // thead
+    var thHTML = cols.map(function(col, i) {
+      var arrow = (_lsSortCol === i) ? (_lsSortAsc ? ' ▲' : ' ▼') : '';
+      return '<th style="text-align:' + col.align + ';white-space:nowrap;cursor:pointer;' +
+        'padding:10px 12px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;' +
+        'color:' + (_lsSortCol === i ? '#FFB81C' : 'rgba(255,255,255,0.45)') + ';' +
+        'border-bottom:1px solid rgba(255,255,255,0.08);user-select:none" data-ci="' + i + '">' +
+        col.label + arrow + '</th>';
+    }).join('');
+
+    // tbody
+    var tbHTML = filtered.map(function(r) {
+      return '<tr style="border-bottom:1px solid rgba(255,255,255,0.04);transition:background .15s" ' +
+        'onmouseover="this.style.background=\'rgba(255,255,255,0.03)\'" ' +
+        'onmouseout="this.style.background=\'\'">' +
+        cols.map(function(col) {
+          var val  = r[col.key];
+          var disp = (val == null) ? '—' : (col.fmt ? col.fmt(val) : val);
+          var style = 'padding:9px 12px;font-family:var(--font-mono);font-size:12px;' +
+            'text-align:' + col.align + ';white-space:nowrap;';
+          if (col.link) {
+            return '<td style="' + style + '">' +
+              '<a class="player-name-cell ls-player-link" data-name="' + r[nameKey] + '" data-type="' + type + '" ' +
+              'style="cursor:pointer;color:#FFB81C;text-decoration:none">' + disp + '</a></td>';
+          }
+          return '<td style="' + style + 'color:rgba(255,255,255,0.75)">' + disp + '</td>';
+        }).join('') + '</tr>';
+    }).join('') || '<tr><td colspan="' + cols.length + '" style="text-align:center;padding:40px;' +
+      'font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.2)">No results</td></tr>';
+
+    var wrap = document.getElementById('ls-table-wrap');
+    if (!wrap) return;
+    wrap.innerHTML =
+      '<div class="table-wrap" style="overflow-x:auto">' +
+      '<table class="stat-table" style="width:100%;border-collapse:collapse;min-width:600px">' +
+      '<thead><tr style="border-bottom:2px solid rgba(255,255,255,0.1)">' + thHTML + '</tr></thead>' +
+      '<tbody>' + tbHTML + '</tbody>' +
+      '</table></div>';
+
+    // Sort click handlers
+    wrap.querySelectorAll('th[data-ci]').forEach(function(th) {
+      th.addEventListener('click', function() {
+        var ci = parseInt(th.getAttribute('data-ci'));
+        if (_lsSortCol === ci) { _lsSortAsc = !_lsSortAsc; }
+        else { _lsSortCol = ci; _lsSortAsc = cols[ci].desc ? false : true; }
+        renderTable();
+      });
+    });
+
+    // Player link handlers — always navigate to 2026 season
+    wrap.querySelectorAll('.ls-player-link').forEach(function(el) {
+      var pName = el.dataset.name;
+      var pType = el.dataset.type;
+      var _s = DATA.summary2026.find(function(p){ return p.batter === pName; });
+      var _p = DATA.pitchers2026.find(function(p){ return p.pitcher === pName; });
+      var _t = _s ? (_s.batter_team || _s.team) : (_p ? (_p.pitcher_team || _p.team) : null);
+      if (!ACCESS.canViewPlayer(pName, pType, _t)) {
+        el.style.opacity = '0.4'; el.style.cursor = 'not-allowed'; el.title = 'Access restricted';
+        el.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); });
+      } else {
+        el.addEventListener('click', function() {
+          navigate('players.html?player=' + encodeURIComponent(pName) + '&type=' + pType + '&season=2026');
+        });
+      }
+    });
+  }
+
+  // ── Tab switching ───────────────────────────────────────────────────────────
+  content.querySelectorAll('.tab-btn[data-ltab]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      content.querySelectorAll('.tab-btn[data-ltab]').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      _lsTab = btn.dataset.ltab;
+      _lsSortCol = -1; _lsSortAsc = true;
+      // Default sort per tab: pitchers → Pitches desc, hitters → AVG desc
+      if (_lsTab === 'pitching') { _lsSortCol = 2; _lsSortAsc = false; }
+      else                       { _lsSortCol = 4; _lsSortAsc = false; } // AVG col
+      renderTable();
+    });
   });
+
+  // ── Search / team filter ────────────────────────────────────────────────────
+  var searchEl = document.getElementById('ls-search');
+  if (searchEl) {
+    searchEl.addEventListener('input', function() { _lsSearch = searchEl.value.toLowerCase().trim(); renderTable(); });
+  }
+  var teamEl = document.getElementById('ls-team');
+  if (teamEl) {
+    teamEl.addEventListener('change', function() { _lsTeam = teamEl.value; renderTable(); });
+  }
+
+  // Initial render: pitchers sorted by Pitches desc
+  _lsSortCol = 2; _lsSortAsc = false;
+  renderTable();
 }
 
 function renderTeamDetail(teamId, content) {
