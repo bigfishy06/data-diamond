@@ -132,7 +132,7 @@ let DATA = {
 };
 
 // ── Global season tracker (set by season filter buttons) ──────────────────────
-var _activeSeason = 'year:2025'; // default 2025 until filter chosen
+var _activeSeason = 'year:2026'; // default to current datadiamond season
 
 // ── swapSeasonData: swap DATA.summary/pitches/pitchers to the selected year ───
 function swapSeasonData(yr) {
@@ -295,8 +295,8 @@ async function loadAll() {
     DATA._pbpBatters25  = DATA.pbpBatters;
     DATA._pbpPitchers25 = DATA.pbpPitchers;
 
-    // Default to 2025 — data is already in DATA.summary/pitches/pitchers
-    _activeSeason = 'year:2025';
+    // Default players/player cards to 2026. 2025 remains available via season filter.
+    swapSeasonData('year:2026');
 
     console.log('2025 summary:', DATA.summary.length, '| 2026 summary:', DATA.summary2026.length);
     console.log('2025 pitches:', DATA.pitches.length, '| 2026 pitches:', DATA.pitches2026.length);
