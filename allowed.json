@@ -132,12 +132,12 @@
     },
     {
       "email": "iamcoachdonny@gmail.com",
-      "role": "coach",
+      "role": "admin",
       "player": "Donny Fell"
     },
     {
       "email": "liamdevine31@gmail.com",
-      "role": "coach",
+      "role": "admin",
       "player": "Liam Devine"
     },
     {
@@ -149,6 +149,11 @@
       "email": "ny.alfred.vega@gmail.com
       "role": "position_player",
       "player": "Alfred Vega"
+    },
+    {
+      "email": "jkennedypitching@gmail.com
+      "role": "admin",
+      "player": "Jared Kennedy"
     }
   ]
 }
