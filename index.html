@@ -772,12 +772,34 @@
     return result;
   }
 
-  function ensureJsPDF(cb) {
-    if (window.jspdf) { setTimeout(cb, 50); return; }
+  // Pre-load jsPDF immediately (not on-demand) so it's ready when the user clicks.
+  // Uses unpkg as primary and a data-URI fallback stub that shows a helpful error.
+  (function() {
+    if (window.jspdf) return;
     var sc = document.createElement('script');
-    sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-    sc.onload = function() { setTimeout(cb, 50); };
+    sc.src = 'https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js';
+    sc.onerror = function() {
+      // Mark as failed so ensureJsPDF can surface the error instead of hanging
+      window.__jspdfFailed = true;
+    };
     document.head.appendChild(sc);
+  })();
+
+  function ensureJsPDF(cb) {
+    if (window.jspdf) { cb(); return; }
+    if (window.__jspdfFailed) {
+      alert('PDF library could not be loaded. Please disable tracking prevention for this site in your browser settings, then reload.');
+      return;
+    }
+    // Poll until loaded (up to 8 seconds)
+    var attempts = 0;
+    var interval = setInterval(function() {
+      if (window.jspdf) { clearInterval(interval); cb(); return; }
+      if (window.__jspdfFailed || ++attempts > 80) {
+        clearInterval(interval);
+        alert('PDF library could not be loaded. Please disable tracking prevention for this site in your browser settings, then reload.');
+      }
+    }, 100);
   }
 
   // ── OPP BATTERS PDF — compact two-column table, guaranteed one page ──────
@@ -1467,7 +1489,7 @@
     } else {
       // Dynamically load html2canvas then capture
       var s = document.createElement('script');
-      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.src = 'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js';
       s.onload = doCapture;
       document.head.appendChild(s);
     }
