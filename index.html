@@ -970,7 +970,10 @@
         var pitchObj = DATA.pitches.find(function(p){ return p.batter&&p.batter.toLowerCase()===s.batter.toLowerCase(); });
         var sc = pitchObj&&pitchObj.scatter ? pitchObj.scatter : [];
         var pbp = DATA.pbpBatters.find(function(p){ return p.batter===s.batter; })||null;
-        var iblS = ((DATA.iblHistory[s.batter]||[]).filter(function(r){return r.AB>0;}))[0]||null;
+        var iblYear=(typeof _activeSeason!=='undefined')?_activeSeason.replace('year:',''):'2026';
+        var iblAllS=DATA.iblHistory[s.batter]||[];
+        var iblS=iblAllS.filter(function(r){return r.AB>0&&(r.season||'').indexOf(iblYear)!==-1;})[0]
+                 ||iblAllS.filter(function(r){return r.AB>0;})[0]||null;
 
         var avg = iblS&&iblS.AVG!=null?f3(iblS.AVG):f3(s.AVG);
         var ops = iblS&&iblS.OPS!=null?f3(iblS.OPS):(pbp?f3(pbp.OPS):f3(s.OPS));
@@ -1117,7 +1120,10 @@
         var sc=p.sc;
         var pd=DATA.pitchers.find(function(x){return x.pitcher===p.name;})||{};
         var pbpP=DATA.pbpPitchers.find(function(x){return x.pitcher===p.name;})||null;
-        var iblP=((DATA.iblHistory[p.name]||[]).filter(function(r){return r.IP>0;}))[0]||null;
+        var iblYear=(typeof _activeSeason!=='undefined')?_activeSeason.replace('year:',''):'2026';
+        var iblAll=DATA.iblHistory[p.name]||[];
+        var iblP=iblAll.filter(function(r){return r.IP>0&&(r.season||'').indexOf(iblYear)!==-1;})[0]
+                 ||iblAll.filter(function(r){return r.IP>0;})[0]||null;
 
         var daysRest=pd.last_game_date?Math.floor((today2-new Date(pd.last_game_date+'T00:00:00'))/86400000):99;
         var lastCount=pd.last_pitch_count||0;
@@ -1630,18 +1636,6 @@
     tryBuild();
   });
   </script>
-
-  <!-- TEAMS -->
-  <div class="container" style="padding-top:48px;padding-bottom:80px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
-      <h2 class="section-title" style="margin-bottom:0">CBL <span>TEAMS</span></h2>
-      <div style="display:flex;gap:8px">
-        <button class="zone-filter-btn active">All 9 Teams</button>
-        <button class="zone-filter-btn">CBL</button>
-      </div>
-    </div>
-    <div class="teams-grid" id="teams-grid"></div>
-  </div>
 
   <footer class="site-footer">
     <div class="container">
