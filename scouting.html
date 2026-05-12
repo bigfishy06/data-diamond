@@ -677,66 +677,78 @@
       });
       players.sort(function(a,b){ return a.name.localeCompare(b.name); });
     } else {
-      // Match players page: prefer pbpPitchers (BF>=5), supplement with scatter
-      var seenPitchers = new Set();
+      // Match players page: prefer pbpPitchers (BF>=5), supplement with scatter.
+      // Use a canonical-name map (lowercase key → display name) to prevent
+      // whitespace variants (e.g. "Dennis Dei Banning" vs "Dennis Dei Baning")
+      // from producing duplicate rows.
+      function normPName(n) { return (n || '').replace(/\s+/g, ' ').trim(); }
+      var pitcherCanon = {}; // lowerKey -> display name (first seen wins)
+      function addPitcher(raw) {
+        var n = normPName(raw);
+        if (!n) return;
+        var k = n.toLowerCase();
+        if (!pitcherCanon[k]) pitcherCanon[k] = n;
+      }
+
       // First: pbpPitchers with team match
       if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
         DATA.pbpPitchers.forEach(function(p){
           var t = resolveTeam(p.pitcher_team);
-          if (t && t.id === selTeam && !seenPitchers.has(p.pitcher)) {
-            seenPitchers.add(p.pitcher);
-            var sc = [];
-            DATA.pitches.forEach(function(bp){
-              if (!bp.scatter) return;
-              bp.scatter.forEach(function(s){
-                if (s.pitcher===p.pitcher){ var pt=resolveTeam(s.pitcher_team); if(pt&&pt.id===selTeam) sc.push(s); }
-              });
-            });
-            var pd = DATA.pitchers.find(function(d){ return d.pitcher === p.pitcher; }) || {};
-            players.push({ name: p.pitcher, scatter: sc, pbp: p,
-              fps_pct: p.FP_STR_pct||pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
-              era: pd.ERA, whip: pitcherWhipFromData(p.pitcher, pd, sc), baa: pd.BA_against });
-          }
+          if (t && t.id === selTeam) addPitcher(p.pitcher);
         });
       }
       // Then: scatter-only pitchers not already included
       DATA.pitches.forEach(function(bp){
         if (!bp.scatter) return;
         bp.scatter.forEach(function(s){
-          if (!s.pitcher || seenPitchers.has(s.pitcher)) return;
+          if (!s.pitcher) return;
           var pt = resolveTeam(s.pitcher_team);
-          if (pt && pt.id === selTeam) seenPitchers.add(s.pitcher);
+          if (pt && pt.id === selTeam) addPitcher(s.pitcher);
         });
       });
-      seenPitchers.forEach(function(name){
-        if (players.some(function(p){ return p.name===name; })) return;
+      // IBL-only 2025 pitchers — only if they also have DataDiamond data
+      // (prevents IBL-only names with no stats from appearing)
+      if (selSeason !== '2026') {
+        Object.keys(DATA.iblHistory).forEach(function(name) {
+          var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
+          if (!s2025 || s2025.pos !== 'P') return;
+          var t = resolveTeam(s2025.team);
+          if (!(t && t.id === selTeam)) return;
+          var nLow = normPName(name).toLowerCase();
+          // Only add if already known from DataDiamond sources
+          if (pitcherCanon[nLow]) return; // already in
+          var hasDD = DATA.pitchers.some(function(p){ return normPName(p.pitcher).toLowerCase() === nLow; }) ||
+                      DATA.pitches.some(function(bp){ return bp.scatter && bp.scatter.some(function(s){ return normPName(s.pitcher).toLowerCase() === nLow; }); }) ||
+                      (DATA.pbpPitchers && DATA.pbpPitchers.some(function(p){ return normPName(p.pitcher).toLowerCase() === nLow; }));
+          if (hasDD) addPitcher(name);
+        });
+      }
+
+      // Build player objects using canonical display names
+      Object.values(pitcherCanon).forEach(function(name){
+        var nLow = name.toLowerCase();
+        // Find pbp entry (case-insensitive)
+        var pbpEntry = DATA.pbpPitchers && DATA.pbpPitchers.find(function(p){ return normPName(p.pitcher).toLowerCase() === nLow; });
         var sc = [];
         DATA.pitches.forEach(function(bp){
           if (!bp.scatter) return;
           bp.scatter.forEach(function(s){
-            if (s.pitcher===name){ var pt=resolveTeam(s.pitcher_team); if(pt&&pt.id===selTeam) sc.push(s); }
+            if (normPName(s.pitcher).toLowerCase() === nLow){
+              var pt = resolveTeam(s.pitcher_team);
+              if (pt && pt.id === selTeam) sc.push(s);
+            }
           });
         });
-        var pd = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
-        players.push({ name: name, scatter: sc, fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
-          era: pd.ERA, whip: pitcherWhipFromData(name, pd, sc), baa: pd.BA_against });
+        var pd = DATA.pitchers.find(function(p){ return normPName(p.pitcher).toLowerCase() === nLow; }) || {};
+        if (pbpEntry) {
+          players.push({ name: name, scatter: sc, pbp: pbpEntry,
+            fps_pct: pbpEntry.FP_STR_pct||pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
+            era: pd.ERA, whip: pitcherWhipFromData(name, pd, sc), baa: pd.BA_against });
+        } else {
+          players.push({ name: name, scatter: sc, fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
+            era: pd.ERA, whip: pitcherWhipFromData(name, pd, sc), baa: pd.BA_against });
+        }
       });
-      // Add iblHistory 2025 pitchers not yet included (matches getAllPitchers)
-      if (selSeason !== '2026') {
-        Object.keys(DATA.iblHistory).forEach(function(name) {
-          if (seenPitchers.has(name)) return;
-          var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
-          if (!s2025) return;
-          if (s2025.pos !== 'P') return; // only include pitchers
-          var t = resolveTeam(s2025.team);
-          if (t && t.id === selTeam) {
-            seenPitchers.add(name);
-            var pd = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
-            players.push({ name: name, scatter: [], fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
-              era: s2025.ERA, whip: s2025.WHIP, baa: pd.BA_against });
-          }
-        });
-      }
       players.sort(function(a,b){ return a.name.localeCompare(b.name); });
     }
 
