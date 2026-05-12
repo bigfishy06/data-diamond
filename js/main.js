@@ -441,37 +441,63 @@ function getPitcherScatter(name) {
   return pts;
 }
 function getAllBatters() {
-  const names = new Set();
-  DATA.summary.forEach(function(p) { names.add(p.batter); });
-  DATA.pitches.forEach(function(p) { names.add(p.batter); });
-  DATA.pbpBatters.forEach(function(p) { names.add(p.batter); });
+  function normName(n) { return (n || '').replace(/\s+/g, ' ').trim(); }
+  var canonical = {};
+  function addName(raw) {
+    var n = normName(raw);
+    if (!n) return;
+    var key = n.toLowerCase();
+    if (!canonical[key]) canonical[key] = n;
+  }
+
+  DATA.summary.forEach(function(p) { addName(p.batter); });
+  DATA.pitches.forEach(function(p) { addName(p.batter); });
+  DATA.pbpBatters.forEach(function(p) { addName(p.batter); });
   if (_activeSeason !== 'year:2026') {
     // Include anyone with IBL history in 2025 who has AB > 0 (batter)
     Object.keys(DATA.iblHistory).forEach(function(name) {
       var seasons = DATA.iblHistory[name];
       var has2025 = seasons.some(function(s) { return (s.season||'').indexOf('2025') !== -1 && (s.AB||0) > 0; });
-      if (has2025) names.add(name);
+      if (has2025) addName(name);
     });
   }
-  return Array.from(names).sort();
+  return Object.values(canonical).sort(function(a,b){ return a.localeCompare(b); });
 }
 
 function getAllPitchers() {
-  const names = new Set();
-  DATA.pitchers.forEach(function(p) { if (p.pitcher) names.add(p.pitcher); });
+  // Normalise helper — trim + collapse internal whitespace to prevent duplicates
+  // caused by a trailing space or double-space in one data source vs another.
+  function normName(n) { return (n || '').replace(/\s+/g, ' ').trim(); }
+
+  // Use a canonical-name map so we always keep the cleanest form of each name.
+  var canonical = {};  // lower -> display
+  function addName(raw) {
+    var n = normName(raw);
+    if (!n) return;
+    var key = n.toLowerCase();
+    if (!canonical[key]) canonical[key] = n;
+  }
+
+  DATA.pitchers.forEach(function(p) { addName(p.pitcher); });
   DATA.pitches.forEach(function(p) {
-    if (p.scatter) p.scatter.forEach(function(s) { if (s.pitcher) names.add(s.pitcher); });
+    if (p.scatter) p.scatter.forEach(function(s) { addName(s.pitcher); });
   });
-  DATA.pbpPitchers.forEach(function(p) { names.add(p.pitcher); });
+  DATA.pbpPitchers.forEach(function(p) { addName(p.pitcher); });
+
   if (_activeSeason !== 'year:2026') {
-    // Include anyone with IBL history in 2025 who has IP > 0 (pitcher)
+    // Include IBL history 2025 pitchers only if they also have DataDiamond pitch data.
+    // This prevents IBL-only names from appearing with no stats.
     Object.keys(DATA.iblHistory).forEach(function(name) {
       var seasons = DATA.iblHistory[name];
       var has2025 = seasons.some(function(s) { return (s.season||'').indexOf('2025') !== -1 && (s.IP||0) > 0; });
-      if (has2025) names.add(name);
+      if (!has2025) return;
+      var nLow = normName(name).toLowerCase();
+      var hasDD = Object.keys(canonical).some(function(k){ return k === nLow; });
+      if (hasDD) addName(name);
     });
   }
-  return Array.from(names).sort();
+
+  return Object.values(canonical).sort(function(a,b){ return a.localeCompare(b); });
 }
 
 // ── TICKER ────────────────────────────────────────
