@@ -804,6 +804,9 @@
 
   // ── OPP BATTERS PDF — compact two-column table, guaranteed one page ──────
   function genOppBattersPDF(oppName, btn) {
+    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.summary) {
+      alert('Data is still loading. Please wait a moment and try again.'); return;
+    }
     btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…';
     ensureJsPDF(function() {
       var oppT = resolveTeam(oppName);
@@ -814,13 +817,15 @@
       var batterMap = {};
       DATA.summary.forEach(function(p) {
         var t = resolveTeam(p.batter_team);
-        if (!t || t.name !== oppName || (p.AB||0) < 3) return;
+        if (!t || t.name !== oppName) return;
         if (!batterMap[p.batter] || (p.AB||0) > (batterMap[p.batter].AB||0)) batterMap[p.batter] = p;
       });
       var batters = Object.values(batterMap).sort(function(a,b){ return (b.AB||0)-(a.AB||0); });
 
       if (!batters.length) {
-        btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF'; return;
+        btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF';
+        alert('No batter data found for ' + oppName + '. Make sure data has been loaded for this team.');
+        return;
       }
 
       var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4' });
@@ -924,6 +929,9 @@
 
   // ── OPP PITCHERS PDF — compact two-column table, guaranteed one page ─────
   function genOppPitchersPDF(oppName, btn) {
+    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.pitches) {
+      alert('Data is still loading. Please wait a moment and try again.'); return;
+    }
     btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…';
     ensureJsPDF(function() {
       function f2(v){if(v==null||isNaN(v))return'—';return parseFloat(v).toFixed(2);}
@@ -958,7 +966,9 @@
       pitchers.sort(function(a,b){return a.name.localeCompare(b.name);});
 
       if (!pitchers.length) {
-        btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF'; return;
+        btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF';
+        alert('No pitcher data found for ' + oppName + '. Make sure data has been loaded for this team.');
+        return;
       }
 
       var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4' });
@@ -1388,6 +1398,9 @@
   }
 
   function openFielderSheet(oppName, btn) {
+    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined') {
+      alert('Data is still loading. Please wait a moment and try again.'); return;
+    }
     btn.classList.add('gp-generating');
     btn.textContent = '…';
 
