@@ -337,6 +337,47 @@
     }
     .gp-picker-dl:hover { background: rgba(255,184,28,0.22); }
     .gp-picker-dl:disabled { opacity: 0.4; pointer-events: none; }
+    .gp-year-picker {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(255,184,28,0.04);
+      border: 1px solid rgba(255,184,28,0.18);
+      border-radius: 3px;
+      margin-top: -6px;
+    }
+    .gp-year-picker.open { display: flex; }
+    .gp-year-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.35);
+      flex: 1;
+    }
+    .gp-year-btn {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      padding: 4px 16px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,184,28,0.3);
+      background: rgba(255,184,28,0.08);
+      color: #FFB81C;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .gp-year-btn:hover { background: rgba(255,184,28,0.22); border-color: rgba(255,184,28,0.55); }
+    .gp-year-cancel {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.25);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 0 2px;
+      line-height: 1;
+    }
+    .gp-year-cancel:hover { color: #FFB81C; }
   </style>
   <script>
   // ── SCHEDULE (Guelph games only, 2026) ─────────────
@@ -436,16 +477,17 @@
           </div>
         </div>
         <div class="gp-btns">
-          <button class="gp-btn" onclick="genOppPitchersPDF('${opp}',this)">
+          <button class="gp-btn" onclick="showYearPicker('${opp}',this,'pitchers-pdf')">
             <span class="gp-btn-label">OPP PITCHERS PDF</span>
           </button>
-          <button class="gp-btn" onclick="genOppBattersPDF('${opp}',this)">
+          <button class="gp-btn" onclick="showYearPicker('${opp}',this,'batters-pdf')">
             <span class="gp-btn-label">OPP BATTERS PDF</span>
           </button>
-          <button class="gp-btn" onclick="openFielderSheet('${opp}',this)">
+          <button class="gp-btn" onclick="showYearPicker('${opp}',this,'fielder-sheet')">
             <span class="gp-btn-label">FIELDER SHEET</span>
           </button>
         </div>
+        <div class="gp-year-picker" id="year-picker-${idx}"></div>
       </div>`;
     }).join('');
   }
@@ -802,10 +844,71 @@
     }, 100);
   }
 
-  // ── OPP BATTERS PDF — compact two-column table, guaranteed one page ──────
-  function genOppBattersPDF(oppName, btn) {
-    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.summary) {
+  // ── YEAR PICKER ───────────────────────────────────────────────────────────
+  function showYearPicker(oppName, btn, action) {
+    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined') {
       alert('Data is still loading. Please wait a moment and try again.'); return;
+    }
+    // Find the year-picker container in the same card
+    var card = btn.closest('.gp-card');
+    var picker = card ? card.querySelector('.gp-year-picker') : null;
+    if (!picker) return;
+
+    // If already open for the same action, close it
+    if (picker.classList.contains('open') && picker.dataset.action === action) {
+      picker.classList.remove('open'); picker.innerHTML = ''; return;
+    }
+
+    picker.dataset.action = action;
+    picker.innerHTML =
+      '<span class="gp-year-label">SELECT SEASON</span>' +
+      '<button class="gp-year-btn" onclick="runGamePrepAction(\'' + oppName + '\',\'' + action + '\',2025,this)">2025</button>' +
+      '<button class="gp-year-btn" onclick="runGamePrepAction(\'' + oppName + '\',\'' + action + '\',2026,this)">2026</button>' +
+      '<button class="gp-year-cancel" onclick="this.closest(\'.gp-year-picker\').classList.remove(\'open\');this.closest(\'.gp-year-picker\').innerHTML=\'\'">×</button>';
+    picker.classList.add('open');
+  }
+
+  function runGamePrepAction(oppName, action, year, yearBtn) {
+    // Close the picker
+    var picker = yearBtn.closest('.gp-year-picker');
+    picker.classList.remove('open'); picker.innerHTML = '';
+
+    // Swap DATA to the chosen year, run the action, then restore
+    var prevSeason = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
+    if (typeof swapSeasonData === 'function') swapSeasonData('year:' + year);
+
+    function restore() {
+      if (typeof swapSeasonData === 'function') swapSeasonData(prevSeason);
+    }
+
+    // Find the matching action button in the card to pass as `btn`
+    var card = picker.closest('.gp-card');
+    var actionBtn = card ? card.querySelector('.gp-btn') : null;
+    // Pick the right button by label
+    if (card) {
+      var btns = card.querySelectorAll('.gp-btn');
+      btns.forEach(function(b) {
+        var lbl = (b.querySelector('.gp-btn-label') || {}).textContent || '';
+        if (action === 'pitchers-pdf' && lbl.includes('PITCHERS')) actionBtn = b;
+        if (action === 'batters-pdf'  && lbl.includes('BATTERS'))  actionBtn = b;
+        if (action === 'fielder-sheet'&& lbl.includes('FIELDER'))  actionBtn = b;
+      });
+    }
+
+    if (action === 'pitchers-pdf') {
+      genOppPitchersPDF(oppName, actionBtn, restore);
+    } else if (action === 'batters-pdf') {
+      genOppBattersPDF(oppName, actionBtn, restore);
+    } else if (action === 'fielder-sheet') {
+      openFielderSheet(oppName, actionBtn, restore);
+    }
+  }
+
+  // ── OPP BATTERS PDF — compact two-column table, guaranteed one page ──────
+  function genOppBattersPDF(oppName, btn, restore) {
+    restore = restore || function(){};
+    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.summary) {
+      alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
     }
     btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…';
     ensureJsPDF(function() {
@@ -825,7 +928,7 @@
       if (!batters.length) {
         btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF';
         alert('No batter data found for ' + oppName + '. Make sure data has been loaded for this team.');
-        return;
+        restore(); return;
       }
 
       var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4' });
@@ -924,13 +1027,15 @@
 
       d.save(team.abbr+'_Opposing_Batters.pdf');
       btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF';
+      restore();
     });
   }
 
   // ── OPP PITCHERS PDF — compact two-column table, guaranteed one page ─────
-  function genOppPitchersPDF(oppName, btn) {
+  function genOppPitchersPDF(oppName, btn, restore) {
+    restore = restore || function(){};
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.pitches) {
-      alert('Data is still loading. Please wait a moment and try again.'); return;
+      alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
     }
     btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…';
     ensureJsPDF(function() {
@@ -968,7 +1073,7 @@
       if (!pitchers.length) {
         btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF';
         alert('No pitcher data found for ' + oppName + '. Make sure data has been loaded for this team.');
-        return;
+        restore(); return;
       }
 
       var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4' });
@@ -1096,6 +1201,7 @@
 
       d.save(team.abbr+'_Opposing_Pitchers.pdf');
       btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF';
+      restore();
     });
   }
 
@@ -1397,9 +1503,10 @@
     picker.classList.add('open');
   }
 
-  function openFielderSheet(oppName, btn) {
+  function openFielderSheet(oppName, btn, restore) {
+    restore = restore || function(){};
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined') {
-      alert('Data is still loading. Please wait a moment and try again.'); return;
+      alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
     }
     btn.classList.add('gp-generating');
     btn.textContent = '…';
@@ -1494,6 +1601,7 @@
         a.click();
         btn.classList.remove('gp-generating');
         btn.innerHTML = '<span class="gp-btn-icon"></span><span class="gp-btn-label">FIELDER SHEET</span>';
+        restore();
       });
     }
 
