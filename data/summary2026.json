@@ -45,6 +45,12 @@
     "ISO": 0,
     "BABIP": 0,
     "wOBA": 0,
+    "Swing_pct": 50,
+    "Whiff_pct": 0,
+    "FP_Swing_pct": 50,
+    "Pull_pct": 0,
+    "Str_pct": 50,
+    "Oppo_pct": 50,
     "pitch_mix": {
       "Fastball": 66.7,
       "Offspeed": 33.3
@@ -100,6 +106,12 @@
     "ISO": 1,
     "BABIP": 0,
     "wOBA": 0.68,
+    "Swing_pct": 40,
+    "Whiff_pct": 66.7,
+    "FP_Swing_pct": 0,
+    "Pull_pct": 50,
+    "Str_pct": 0,
+    "Oppo_pct": 50,
     "pitch_mix": {
       "Fastball": 46.7,
       "Offspeed": 53.3
@@ -155,6 +167,12 @@
     "ISO": 0,
     "BABIP": 0,
     "wOBA": 0,
+    "Swing_pct": 50,
+    "Whiff_pct": 75,
+    "FP_Swing_pct": 50,
+    "Pull_pct": 0,
+    "Str_pct": 100,
+    "Oppo_pct": 0,
     "pitch_mix": {
       "Fastball": 50,
       "Offspeed": 50
@@ -210,6 +228,12 @@
     "ISO": null,
     "BABIP": null,
     "wOBA": 0.69,
+    "Swing_pct": 16.7,
+    "Whiff_pct": 100,
+    "FP_Swing_pct": 100,
+    "Pull_pct": null,
+    "Str_pct": null,
+    "Oppo_pct": null,
     "pitch_mix": {
       "Fastball": 83.3,
       "Offspeed": 16.7
@@ -265,6 +289,12 @@
     "ISO": 0,
     "BABIP": null,
     "wOBA": 0,
+    "Swing_pct": 100,
+    "Whiff_pct": 66.7,
+    "FP_Swing_pct": 100,
+    "Pull_pct": null,
+    "Str_pct": null,
+    "Oppo_pct": null,
     "pitch_mix": {
       "Fastball": 100
     },
@@ -319,6 +349,12 @@
     "ISO": 0,
     "BABIP": 1,
     "wOBA": 0.613,
+    "Swing_pct": 30.8,
+    "Whiff_pct": 25,
+    "FP_Swing_pct": 0,
+    "Pull_pct": 0,
+    "Str_pct": 50,
+    "Oppo_pct": 50,
     "pitch_mix": {
       "Fastball": 61.5,
       "Offspeed": 38.5
@@ -374,6 +410,12 @@
     "ISO": 0,
     "BABIP": 0,
     "wOBA": 0,
+    "Swing_pct": 100,
+    "Whiff_pct": 0,
+    "FP_Swing_pct": 100,
+    "Pull_pct": 0,
+    "Str_pct": 100,
+    "Oppo_pct": 0,
     "pitch_mix": {
       "Fastball": 100
     },
@@ -428,6 +470,12 @@
     "ISO": 0.334,
     "BABIP": 0.333,
     "wOBA": 0.416,
+    "Swing_pct": 50,
+    "Whiff_pct": 25,
+    "FP_Swing_pct": 33.3,
+    "Pull_pct": 50,
+    "Str_pct": 0,
+    "Oppo_pct": 50,
     "pitch_mix": {
       "Fastball": 57.1,
       "Offspeed": 42.9
@@ -483,6 +531,12 @@
     "ISO": 0,
     "BABIP": 0.5,
     "wOBA": 0.4,
+    "Swing_pct": 45.8,
+    "Whiff_pct": 18.2,
+    "FP_Swing_pct": 25,
+    "Pull_pct": 100,
+    "Str_pct": 0,
+    "Oppo_pct": 0,
     "pitch_mix": {
       "Fastball": 62.5,
       "Offspeed": 37.5
@@ -538,6 +592,12 @@
     "ISO": 0,
     "BABIP": 0,
     "wOBA": 0.276,
+    "Swing_pct": 20,
+    "Whiff_pct": 60,
+    "FP_Swing_pct": 0,
+    "Pull_pct": 0,
+    "Str_pct": 0,
+    "Oppo_pct": 100,
     "pitch_mix": {
       "Fastball": 48,
       "Offspeed": 52
@@ -593,6 +653,12 @@
     "ISO": 0,
     "BABIP": 0.25,
     "wOBA": 0.22,
+    "Swing_pct": 61.1,
+    "Whiff_pct": 18.2,
+    "FP_Swing_pct": 25,
+    "Pull_pct": 75,
+    "Str_pct": 25,
+    "Oppo_pct": 0,
     "pitch_mix": {
       "Fastball": 55.6,
       "Offspeed": 44.4
@@ -648,6 +714,12 @@
     "ISO": 0,
     "BABIP": 0,
     "wOBA": 0.144,
+    "Swing_pct": 27.3,
+    "Whiff_pct": 33.3,
+    "FP_Swing_pct": 0,
+    "Pull_pct": 50,
+    "Str_pct": 0,
+    "Oppo_pct": 50,
     "pitch_mix": {
       "Fastball": 68.2,
       "Offspeed": 31.8
@@ -703,6 +775,12 @@
     "ISO": 0,
     "BABIP": 0,
     "wOBA": 0,
+    "Swing_pct": 37.5,
+    "Whiff_pct": 50,
+    "FP_Swing_pct": 33.3,
+    "Pull_pct": 100,
+    "Str_pct": 0,
+    "Oppo_pct": 0,
     "pitch_mix": {
       "Fastball": 53.3,
       "Offspeed": 46.7
@@ -758,6 +836,12 @@
     "ISO": 0,
     "BABIP": 0,
     "wOBA": 0.144,
+    "Swing_pct": 47.4,
+    "Whiff_pct": 44.4,
+    "FP_Swing_pct": 16.7,
+    "Pull_pct": 50,
+    "Str_pct": 50,
+    "Oppo_pct": 0,
     "pitch_mix": {
       "Fastball": 38.9,
       "Offspeed": 61.1
@@ -813,6 +897,12 @@
     "ISO": 0,
     "BABIP": 0,
     "wOBA": 0.426,
+    "Swing_pct": 42.9,
+    "Whiff_pct": 44.4,
+    "FP_Swing_pct": 40,
+    "Pull_pct": 100,
+    "Str_pct": 0,
+    "Oppo_pct": 0,
     "pitch_mix": {
       "Fastball": 47.6,
       "Offspeed": 52.4
@@ -868,6 +958,12 @@
     "ISO": 0,
     "BABIP": 0.5,
     "wOBA": 0.44,
+    "Swing_pct": 60,
+    "Whiff_pct": 0,
+    "FP_Swing_pct": 50,
+    "Pull_pct": 25,
+    "Str_pct": 25,
+    "Oppo_pct": 50,
     "pitch_mix": {
       "Fastball": 80,
       "Offspeed": 20
@@ -923,6 +1019,12 @@
     "ISO": 1.5,
     "BABIP": null,
     "wOBA": 1.016,
+    "Swing_pct": 11.1,
+    "Whiff_pct": 0,
+    "FP_Swing_pct": 0,
+    "Pull_pct": 0,
+    "Str_pct": 100,
+    "Oppo_pct": 0,
     "pitch_mix": {
       "Fastball": 50,
       "Offspeed": 50
@@ -978,6 +1080,12 @@
     "ISO": 3,
     "BABIP": null,
     "wOBA": 1.36,
+    "Swing_pct": 30,
+    "Whiff_pct": 50,
+    "FP_Swing_pct": 0,
+    "Pull_pct": 100,
+    "Str_pct": 0,
+    "Oppo_pct": 0,
     "pitch_mix": {
       "Fastball": 85,
       "Offspeed": 15
@@ -1033,6 +1141,12 @@
     "ISO": 0.25,
     "BABIP": 0.5,
     "wOBA": 0.312,
+    "Swing_pct": 66.7,
+    "Whiff_pct": 37.5,
+    "FP_Swing_pct": 50,
+    "Pull_pct": 50,
+    "Str_pct": 0,
+    "Oppo_pct": 50,
     "pitch_mix": {
       "Fastball": 58.3,
       "Offspeed": 41.7
@@ -1088,6 +1202,12 @@
     "ISO": 0.25,
     "BABIP": 0.5,
     "wOBA": 0.387,
+    "Swing_pct": 47.6,
+    "Whiff_pct": 50,
+    "FP_Swing_pct": 20,
+    "Pull_pct": 0,
+    "Str_pct": 0,
+    "Oppo_pct": 100,
     "pitch_mix": {
       "Fastball": 50,
       "Offspeed": 50
@@ -1143,6 +1263,12 @@
     "ISO": 0.25,
     "BABIP": 0.75,
     "wOBA": 0.739,
+    "Swing_pct": 38.9,
+    "Whiff_pct": 0,
+    "FP_Swing_pct": 40,
+    "Pull_pct": 0,
+    "Str_pct": 75,
+    "Oppo_pct": 25,
     "pitch_mix": {
       "Fastball": 61.1,
       "Offspeed": 38.9
@@ -1198,6 +1324,12 @@
     "ISO": 0,
     "BABIP": 0,
     "wOBA": 0.144,
+    "Swing_pct": 42.9,
+    "Whiff_pct": 44.4,
+    "FP_Swing_pct": 20,
+    "Pull_pct": 66.7,
+    "Str_pct": 33.3,
+    "Oppo_pct": 0,
     "pitch_mix": {
       "Fastball": 61.9,
       "Offspeed": 38.1
@@ -1253,6 +1385,12 @@
     "ISO": 0,
     "BABIP": 0,
     "wOBA": 0.345,
+    "Swing_pct": 11.1,
+    "Whiff_pct": 0,
+    "FP_Swing_pct": 0,
+    "Pull_pct": 0,
+    "Str_pct": 0,
+    "Oppo_pct": 100,
     "pitch_mix": {
       "Fastball": 55.6,
       "Offspeed": 44.4

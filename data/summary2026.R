@@ -77,7 +77,34 @@ pitches <- pitches %>%
     is_pa         = !(outcome %in% PITCH_OUTCOMES),
     is_ab         = !(outcome %in% c(PITCH_OUTCOMES, NON_AB_PA_OUTCOMES)),
     is_productive_out = outcome %in% c("Groundout", "Flyout", "Lineout",
-                                       "Popout", "Double Play", "Triple Play")
+                                       "Popout", "Double Play", "Triple Play"),
+
+    # ── Swing / Whiff / First-pitch flags ────────────────────────────────────
+    is_swing = outcome %in% c(
+      "Swinging Strike", "Foul",
+      "Strikeout Swinging", "Dropped Third Strike Swinging",
+      "Single", "Double", "Triple", "Home Run",
+      "Groundout", "Flyout", "Popout", "Lineout",
+      "Double Play", "Triple Play", "Error",
+      "Sacrifice Fly", "Sac Fly Double Play",
+      "Sacrifice Bunt", "Sac Bunt Double Play"
+    ),
+    is_whiff       = outcome %in% c("Swinging Strike", "Strikeout Swinging",
+                                    "Dropped Third Strike Swinging"),
+    is_first_pitch = gsub("^'", "", count) == "0-0",
+    is_fp_swing    = is_first_pitch & is_swing,
+
+    # ── Spray direction ───────────────────────────────────────────────────────
+    is_batted  = outcome %in% c(
+      "Single", "Double", "Triple", "Home Run",
+      "Groundout", "Flyout", "Popout", "Lineout",
+      "Double Play", "Triple Play", "Error",
+      "Sacrifice Fly", "Sac Fly Double Play",
+      "Sacrifice Bunt", "Sac Bunt Double Play"
+    ),
+    spray_pull = is_batted & trimws(spray_chart) == "Pull",
+    spray_str  = is_batted & trimws(spray_chart) == "Straightaway",
+    spray_oppo = is_batted & trimws(spray_chart) == "Opposite Field"
   )
 
 # ── Aggregate per batter ───────────────────────────────────────────────────────
@@ -118,6 +145,14 @@ summary_stats <- pitches %>%
     Truncated      = sum(is_truncated),
     Additional_Out = sum(is_add_out),
     pitches_seen   = n(),
+    swings         = sum(is_swing),
+    whiffs         = sum(is_whiff),
+    fp_pitches     = sum(is_first_pitch),
+    fp_swings      = sum(is_fp_swing),
+    batted_balls   = sum(is_batted),
+    pull_balls     = sum(spray_pull),
+    str_balls      = sum(spray_str),
+    oppo_balls     = sum(spray_oppo),
     .groups        = "drop"
   ) %>%
   mutate(
@@ -139,9 +174,6 @@ summary_stats <- pitches %>%
                     NA),
 
     # ── NEW: wOBA ─────────────────────────────────────────────────────────────
-    # wOBA = (wBB*uBB + wHBP*HBP + w1B*1B + w2B*2B + w3B*3B + wHR*HR) /
-    #        (AB + BB - IBB + SF + HBP)
-    # uBB = unintentional walks = BB - IBB
     wOBA_num = (wOBA_BB  * (BB - IBB)) +
                (wOBA_HBP * HBP)        +
                (wOBA_1B  * `1B`)       +
@@ -149,9 +181,21 @@ summary_stats <- pitches %>%
                (wOBA_3B  * `3B`)       +
                (wOBA_HR  * HR),
     wOBA_den = AB + BB - IBB + SF + HBP,
-    wOBA     = ifelse(wOBA_den > 0, round(wOBA_num / wOBA_den, 3), NA)
+    wOBA     = ifelse(wOBA_den > 0, round(wOBA_num / wOBA_den, 3), NA),
+
+    # ── NEW: Swing%, Whiff%, FP Swing% ────────────────────────────────────────
+    Swing_pct    = ifelse(pitches_seen > 0, round(swings    / pitches_seen * 100, 1), NA),
+    Whiff_pct    = ifelse(swings > 0,       round(whiffs    / swings       * 100, 1), NA),
+    FP_Swing_pct = ifelse(fp_pitches > 0,   round(fp_swings / fp_pitches   * 100, 1), NA),
+
+    # ── NEW: Spray direction % (of batted balls with spray data) ─────────────
+    spray_total  = pull_balls + str_balls + oppo_balls,
+    Pull_pct     = ifelse(spray_total > 0, round(pull_balls / spray_total * 100, 1), NA),
+    Str_pct      = ifelse(spray_total > 0, round(str_balls  / spray_total * 100, 1), NA),
+    Oppo_pct     = ifelse(spray_total > 0, round(oppo_balls / spray_total * 100, 1), NA)
   ) %>%
-  select(-wOBA_num, -wOBA_den)
+  select(-wOBA_num, -wOBA_den, -swings, -whiffs, -fp_pitches, -fp_swings,
+         -batted_balls, -pull_balls, -str_balls, -oppo_balls, -spray_total)
 
 # ── Pitch mix ──────────────────────────────────────────────────────────────────
 pitch_mix <- pitches %>%
@@ -193,5 +237,5 @@ write_json(final,
            auto_unbox = TRUE, pretty = TRUE, na = "null")
 
 cat("Done! summary2026.json written with", nrow(final), "players\n")
-cat("New batter columns: ISO, BABIP, wOBA\n")
+cat("New batter columns: ISO, BABIP, wOBA, Swing_pct, Whiff_pct, FP_Swing_pct, Pull_pct, Str_pct, Oppo_pct\n")
 cat("Columns:", paste(names(final), collapse = ", "), "\n")
