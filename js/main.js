@@ -2978,7 +2978,8 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
   if (pi.teamName) bioItems.push({ label: 'Team', val: pi.teamName });
   if (pi.pos && pi.pos !== '\u2014') bioItems.push({ label: 'Position', val: pi.pos });
   function fmtHand(h) { return h || '?'; }
-  if (pi.bats || pi.throws) bioItems.push({ label: 'Bats / Throws', val: fmtHand(pi.bats)+' / '+fmtHand(pi.throws) });
+  if (type === 'batter' && pi.bats) bioItems.push({ label: 'Bats', val: fmtHand(pi.bats) });
+  if (type === 'pitcher' && pi.throws) bioItems.push({ label: 'Throws', val: fmtHand(pi.throws) });
   if (pi.height) bioItems.push({ label: 'Height', val: pi.height });
   if (pi.weight) bioItems.push({ label: 'Weight', val: pi.weight + ' lbs' });
 
