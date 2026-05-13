@@ -531,7 +531,7 @@ Ben Scartz,Brantford Red Sox
 Benjamin Sitarenios,Toronto Maple Leafs
 Benjamin Sterritt,Toronto Maple Leafs
 Brad Grieveson,Barrie Baycats
-Braedan Pakkala,Barrie Baycats
+Braeden Pakkala,Barrie Baycats
 Brandon Deans,Guelph Royals
 Brandon Hernandez,Barrie Baycats
 Brandon Hupe,Welland Jackfish
@@ -827,8 +827,26 @@ Zane Skansi,Kitchener Panthers`;
     return bp.batter_team || bp.team || (hit && hit.batter_team) || null;
   }
 
+  // Canonical name aliases: maps lowercase misspelling/variant -> correct display name.
+  // Used by canonicalName() so all lookups automatically resolve to the right player.
+  var NAME_ALIASES = {
+    'braedan pakkala':           'Braeden Pakkala',
+    'evan elliot':               'Evan Elliott',
+    'koki takashi':              'Koki Togashi',
+    'ricardo alvarez delugo':    'Ricardo Alvarez de Lugo',
+    'ricardo de lugo':           'Ricardo Alvarez de Lugo',
+    'teo ortega':                'Teodoro Ortega',
+    'yuri yikoyama':             'Yuri Yokoyama'
+  };
+
+  // Return the canonical display name for a player, resolving any known alias.
+  function canonicalName(n) {
+    var t = (n || '').replace(/\s+/g, ' ').trim();
+    return NAME_ALIASES[t.toLowerCase()] || t;
+  }
+
   function normRosterName(n) {
-    return (n || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    return canonicalName(n).toLowerCase();
   }
 
   function findByName(arr, field, name) {
@@ -837,7 +855,8 @@ Zane Skansi,Kitchener Panthers`;
   }
 
   function getIblRowsByName(name) {
-    var direct = DATA.iblHistory[name];
+    var canon = canonicalName(name);
+    var direct = DATA.iblHistory[canon];
     if (direct) return direct;
     var k = normRosterName(name);
     var hit = Object.keys(DATA.iblHistory || {}).find(function(key) { return normRosterName(key) === k; });
@@ -885,6 +904,7 @@ Zane Skansi,Kitchener Panthers`;
   }
 
   function makeRosterBatter2025(name) {
+    name = canonicalName(name);
     var pbp = findByName(DATA.pbpBatters, 'batter', name);
     var sum = findByName(DATA.summary, 'batter', name);
     var pitch = getPitchPlayerForRoster(name);
@@ -895,6 +915,7 @@ Zane Skansi,Kitchener Panthers`;
   }
 
   function makeRosterPitcher2025(name) {
+    name = canonicalName(name);
     var k = normRosterName(name);
     var pbpEntry = findByName(DATA.pbpPitchers, 'pitcher', name);
     var sc = [];
@@ -939,8 +960,9 @@ Zane Skansi,Kitchener Panthers`;
         var bkey = normRosterName(p.batter);
         if (t && t.id === teamId && !seenBatters.has(bkey)) {
           seenBatters.add(bkey);
-          var sum = findByName(DATA.summary, 'batter', p.batter) || p;
-          players.push({ name: p.batter, summary: sum, pbp: p, pitch: getPitchPlayerForRoster(p.batter) });
+          var cname = canonicalName(p.batter);
+          var sum = findByName(DATA.summary, 'batter', cname) || p;
+          players.push({ name: cname, summary: sum, pbp: p, pitch: getPitchPlayerForRoster(cname) });
         }
       });
 
@@ -952,8 +974,9 @@ Zane Skansi,Kitchener Panthers`;
         var t = resolveTeam(s2025.team);
         if (t && t.id === teamId) {
           seenBatters.add(nkey);
-          var sum = findByName(DATA.summary, 'batter', name) || Object.assign({ batter: name }, s2025);
-          players.push({ name: name, summary: sum, pitch: getPitchPlayerForRoster(name) });
+          var cname = canonicalName(name);
+          var sum = findByName(DATA.summary, 'batter', cname) || Object.assign({ batter: cname }, s2025);
+          players.push({ name: cname, summary: sum, pitch: getPitchPlayerForRoster(cname) });
         }
       });
 
@@ -963,7 +986,8 @@ Zane Skansi,Kitchener Panthers`;
         var t = resolveTeam(p.batter_team);
         if (t && t.id === teamId) {
           seenBatters.add(bkey);
-          players.push({ name: p.batter, summary: p, pitch: getPitchPlayerForRoster(p.batter) });
+          var cname = canonicalName(p.batter);
+          players.push({ name: cname, summary: p, pitch: getPitchPlayerForRoster(cname) });
         }
       });
 
@@ -973,14 +997,15 @@ Zane Skansi,Kitchener Panthers`;
         var t = resolveTeam(pitchBatterTeam(bp));
         if (t && t.id === teamId) {
           seenBatters.add(bkey);
-          var sum = findByName(DATA.summary, 'batter', bp.batter) || { batter: bp.batter };
-          players.push({ name: bp.batter, summary: sum, pitch: getPitchPlayerForRoster(bp.batter) });
+          var cname = canonicalName(bp.batter);
+          var sum = findByName(DATA.summary, 'batter', cname) || { batter: cname };
+          players.push({ name: cname, summary: sum, pitch: getPitchPlayerForRoster(cname) });
         }
       });
     } else {
       var pitcherCanon = {};
       function addPitcher(raw) {
-        var n = (raw || '').replace(/\s+/g, ' ').trim();
+        var n = canonicalName(raw);
         if (!n) return;
         var k = normRosterName(n);
         if (!pitcherCanon[k]) pitcherCanon[k] = n;
@@ -1057,45 +1082,49 @@ Zane Skansi,Kitchener Panthers`;
         : DATA.summary;
       rawBatters.forEach(function(p){
         var t = resolveTeam(p.batter_team || p.team);
-        var _bkey = (p.batter||'').trim().toLowerCase();
+        var _bkey = normRosterName(p.batter);
         if (t && t.id === selTeam && !seenBatters.has(_bkey)) {
           seenBatters.add(_bkey);
-          var sum = DATA.summary.find(function(s){ return s.batter === p.batter; }) || p;
-          players.push({ name: p.batter, summary: sum, pbp: p, pitch: getPitchPlayer(p.batter) });
+          var cname = canonicalName(p.batter);
+          var sum = DATA.summary.find(function(s){ return normRosterName(s.batter) === _bkey; }) || p;
+          players.push({ name: cname, summary: sum, pbp: p, pitch: getPitchPlayer(cname) });
         }
       });
       // Add IBL-only 2025 batters not already included
       if (selSeason !== '2026') {
         Object.keys(DATA.iblHistory).forEach(function(name) {
-          if (seenBatters.has((name||'').trim().toLowerCase())) return;
+          if (seenBatters.has(normRosterName(name))) return;
           var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
           if (!s2025) return;
           if (s2025.pos === 'P') return; // exclude pitchers from batter list
           var t = resolveTeam(s2025.team);
           if (t && t.id === selTeam) {
-            seenBatters.add((name||'').trim().toLowerCase());
-            var sum = DATA.summary.find(function(s){ return s.batter === name; }) || Object.assign({batter:name}, s2025);
-            players.push({ name: name, summary: sum, pitch: getPitchPlayer(name) });
+            seenBatters.add(normRosterName(name));
+            var cname = canonicalName(name);
+            var sum = DATA.summary.find(function(s){ return normRosterName(s.batter) === normRosterName(name); }) || Object.assign({batter:cname}, s2025);
+            players.push({ name: cname, summary: sum, pitch: getPitchPlayer(cname) });
           }
         });
       }
       // Add DATA.summary batters not yet included (matches getAllBatters)
       DATA.summary.forEach(function(p) {
-        if (!p.batter || seenBatters.has(p.batter.trim().toLowerCase())) return;
+        if (!p.batter || seenBatters.has(normRosterName(p.batter))) return;
         var t = resolveTeam(p.batter_team);
         if (t && t.id === selTeam) {
-          seenBatters.add(p.batter.trim().toLowerCase());
-          players.push({ name: p.batter, summary: p, pitch: getPitchPlayer(p.batter) });
+          seenBatters.add(normRosterName(p.batter));
+          var cname = canonicalName(p.batter);
+          players.push({ name: cname, summary: p, pitch: getPitchPlayer(cname) });
         }
       });
       // Add DATA.pitches top-level batter field (same as getAllBatters on players page)
       DATA.pitches.forEach(function(bp) {
-        if (!bp.batter || seenBatters.has(bp.batter.trim().toLowerCase())) return;
+        if (!bp.batter || seenBatters.has(normRosterName(bp.batter))) return;
         var t = resolveTeam(pitchBatterTeam(bp));
         if (t && t.id === selTeam) {
-          seenBatters.add(bp.batter.trim().toLowerCase());
-          var sum = DATA.summary.find(function(sm){ return sm.batter === bp.batter; }) || { batter: bp.batter };
-          players.push({ name: bp.batter, summary: sum, pitch: getPitchPlayer(bp.batter) });
+          seenBatters.add(normRosterName(bp.batter));
+          var cname = canonicalName(bp.batter);
+          var sum = DATA.summary.find(function(sm){ return normRosterName(sm.batter) === normRosterName(bp.batter); }) || { batter: cname };
+          players.push({ name: cname, summary: sum, pitch: getPitchPlayer(cname) });
         }
       });
       players.sort(function(a,b){ return a.name.localeCompare(b.name); });
@@ -1104,7 +1133,7 @@ Zane Skansi,Kitchener Panthers`;
       // Use a canonical-name map (lowercase key → display name) to prevent
       // whitespace variants (e.g. "Dennis Dei Banning" vs "Dennis Dei Baning")
       // from producing duplicate rows.
-      function normPName(n) { return (n || '').replace(/\s+/g, ' ').trim(); }
+      function normPName(n) { return canonicalName(n); }
       var pitcherCanon = {}; // lowerKey -> display name (first seen wins)
       function addPitcher(raw) {
         var n = normPName(raw);
