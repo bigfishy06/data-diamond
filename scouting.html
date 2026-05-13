@@ -817,8 +817,8 @@ Zane Skansi,Kitchener Panthers`;
 
   function getPitchPlayer(batterName) {
     // scatter entries have no batter field — match on top-level bp.batter, trim whitespace
-    var name = (batterName||'').trim();
-    var bp = DATA.pitches.find(function(p) { return (p.batter||'').trim() === name; });
+    var name = normRosterName(batterName);
+    var bp = DATA.pitches.find(function(p) { return normRosterName(p.batter) === name; });
     return (bp && bp.scatter && bp.scatter.length) ? { scatter: bp.scatter } : null;
   }
 
@@ -831,12 +831,22 @@ Zane Skansi,Kitchener Panthers`;
   // Used by canonicalName() so all lookups automatically resolve to the right player.
   var NAME_ALIASES = {
     'braedan pakkala':           'Braeden Pakkala',
+    'braeden pakkala':           'Braeden Pakkala',
+    'andy groening':             'Andrew Groening',
+    'spencer-thompson':          'Antonino Spencer-Thompson',
+    'leliis beltran':            'Lelis Beltran',
+    'osafa jones':               'Asafa Jones',
     'evan elliot':               'Evan Elliott',
+    'evan elliott':              'Evan Elliott',
     'koki takashi':              'Koki Togashi',
+    'koki togashi':              'Koki Togashi',
     'ricardo alvarez delugo':    'Ricardo Alvarez de Lugo',
     'ricardo de lugo':           'Ricardo Alvarez de Lugo',
+    'ricardo alvarez de lugo':   'Ricardo Alvarez de Lugo',
     'teo ortega':                'Teodoro Ortega',
-    'yuri yikoyama':             'Yuri Yokoyama'
+    'teodoro ortega':            'Teodoro Ortega',
+    'yuri yikoyama':             'Yuri Yokoyama',
+    'yuri yokoyama':             'Yuri Yokoyama'
   };
 
   // Return the canonical display name for a player, resolving any known alias.
@@ -1619,8 +1629,8 @@ Zane Skansi,Kitchener Panthers`;
 
   function genBatterPDF(player,team){
     var d=new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),s=player.summary||{};
-    function normName(n){return(n||'').replace(/\s+/g,' ').trim().toLowerCase();}
-    var _pitchObj=player.pitch||(DATA.pitches?DATA.pitches.find(function(p){return (p.batter||'').trim()===player.name.trim();}):null);
+    function normName(n){return normRosterName(n);}
+    var _pitchObj=player.pitch||getPitchPlayer(player.name);
     var sc=(_pitchObj&&_pitchObj.scatter)?_pitchObj.scatter.filter(function(p){return p.x!=null&&p.y!=null;}):[]; 
     var allSc=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
     drawBg(d);drawHdr(d,player.name,'BATTER',team);
@@ -1629,7 +1639,7 @@ Zane Skansi,Kitchener Panthers`;
     // ── Key stats boxes ──────────────────────────────────────────────────
     // 2026: s = summary2026 row (has AVG/OBP/SLG/OPS/HR/BB/K/PA). RBI from iblHistory.
     // 2025: iblHistory first, then s/pbp (unchanged).
-    var _iblAll=(DATA.iblHistory[player.name]||[]);
+    var _iblAll=getIblRowsByName(player.name);
     var iblB=selSeason==='2026'
       ? null
       : (_iblAll.find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.AB>0;})||_iblAll.filter(function(r){return r.AB>0;})[0]||null);
@@ -1837,7 +1847,7 @@ Zane Skansi,Kitchener Panthers`;
     y+=dH2+5;
 
     // ── Two donuts: Spray Direction (left) + Batted Ball Profile (right) ──
-    var _pitchObj2=player.pitch||(DATA.pitches?DATA.pitches.find(function(p){return (p.batter||'').trim()===player.name.trim();}):null);
+    var _pitchObj2=player.pitch||getPitchPlayer(player.name);
     var allSc2=_pitchObj2&&_pitchObj2.scatter?_pitchObj2.scatter:[];
 
     // Spray direction
@@ -1971,7 +1981,7 @@ Zane Skansi,Kitchener Panthers`;
   }
 
   function genPitcherPDF(player,team){
-    function normName(n){return(n||'').replace(/\s+/g,' ').trim().toLowerCase();}
+    function normName(n){return normRosterName(n);}
     var d=new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),sc=player.scatter||[];
     var tot=sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
     var ks=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
@@ -2001,7 +2011,7 @@ Zane Skansi,Kitchener Panthers`;
     // 2026: DATA.pitchers = pitchers2026.json (K_pct, BB_pct, STR_pct, FPS_pct, BAA, GB_pct etc). No pbp.
     // 2025: pbpPitchers first, then iblHistory (unchanged).
     var pbpP2=selSeason==='2026'?null:(DATA.pbpPitchers?DATA.pbpPitchers.find(function(p){return normName(p.pitcher)===normName(player.name);}):null);
-    var _iblAllP=(DATA.iblHistory[player.name]||[]);
+    var _iblAllP=getIblRowsByName(player.name);
     var iblP2=selSeason==='2026'?null:(_iblAllP.filter(function(s){return s.IP>0;})[0]||null);
     // ERA always from iblHistory
     var _iblERA=_iblAllP.find(function(r){return (r.season||'').indexOf(selSeason==='2026'?'2026':'2025')!==-1&&r.ERA!=null;})||_iblAllP.find(function(r){return r.ERA!=null;})||null;
@@ -2265,8 +2275,9 @@ Zane Skansi,Kitchener Panthers`;
       if (!e.scatter || !e.scatter.length) return;
       var t = resolveTeam(e.team);
       if (!(t && t.id === teamId)) return;
-      if (seen[e.batter]) return;
-      seen[e.batter] = e;
+      var bkey = normRosterName(e.batter);
+      if (seen[bkey]) return;
+      seen[bkey] = Object.assign({}, e, { batter: canonicalName(e.batter) });
     });
 
     var batters = Object.values(seen).sort(function(a,b){ return a.batter.localeCompare(b.batter); });
@@ -2292,7 +2303,7 @@ Zane Skansi,Kitchener Panthers`;
       var pu = batted.filter(function(s){ return s.contact === 'Pop Up'; }).length;
       var contactTot = gb + fb + ld + pu;
       function pct(n, tot) { return tot ? Math.round(n/tot*100)+'%' : '—'; }
-      var sum = DATA.summary.find(function(p){ return p.batter === entry.batter; });
+      var sum = findByName(DATA.summary, 'batter', entry.batter);
       // Shift recommendation based on spray distribution
       var shift;
       if (sprayTot < 5) {
@@ -2353,16 +2364,18 @@ Zane Skansi,Kitchener Panthers`;
     if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
       DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; }).forEach(function(p) {
         var pt = resolveTeam(p.pitcher_team);
-        if (pt && pt.id === teamId && !seenP.has(p.pitcher)) {
-          seenP.add(p.pitcher);
-          var ibl = (DATA.iblHistory[p.pitcher]||[]).filter(function(s){return s.IP>0;});
+        var pkey = normRosterName(p.pitcher);
+        if (pt && pt.id === teamId && !seenP.has(pkey)) {
+          seenP.add(pkey);
+          var pname = canonicalName(p.pitcher);
+          var ibl = getIblRowsByName(pname).filter(function(s){return s.IP>0;});
           var hand = '—';
           DATA.pitches.forEach(function(bp) {
             if (!bp.scatter || hand !== '—') return;
-            var hit = bp.scatter.find(function(s){ return s.pitcher===p.pitcher && s.pitcher_side; });
+            var hit = bp.scatter.find(function(s){ return normRosterName(s.pitcher)===pkey && s.pitcher_side; });
             if (hit) hand = hit.pitcher_side;
           });
-          oppPitchers.push({ name:p.pitcher, hand:hand,
+          oppPitchers.push({ name:pname, hand:hand,
             era: ibl.length&&ibl[0].ERA!=null?ibl[0].ERA:null,
             whip: p.WHIP!=null?p.WHIP:(ibl.length&&ibl[0].WHIP!=null?ibl[0].WHIP:null),
             str: p.STR_pct!=null?p.STR_pct:null, kpct: p.K_pct!=null?p.K_pct:null });
@@ -2373,13 +2386,15 @@ Zane Skansi,Kitchener Panthers`;
     DATA.pitches.forEach(function(bp) {
       if (!bp.scatter) return;
       bp.scatter.forEach(function(s) {
-        if (!s.pitcher || seenP.has(s.pitcher)) return;
+        var skey = normRosterName(s.pitcher);
+        if (!s.pitcher || seenP.has(skey)) return;
         var pt = resolveTeam(s.pitcher_team);
         if (pt && pt.id === teamId) {
-          seenP.add(s.pitcher);
-          var pd = DATA.pitchers.find(function(d){ return d.pitcher===s.pitcher; }) || {};
-          var ibl = (DATA.iblHistory[s.pitcher]||[]).filter(function(r){return r.IP>0;});
-          oppPitchers.push({ name:s.pitcher, hand:s.pitcher_side||'—',
+          seenP.add(skey);
+          var sname = canonicalName(s.pitcher);
+          var pd = findByName(DATA.pitchers, 'pitcher', sname) || {};
+          var ibl = getIblRowsByName(sname).filter(function(r){return r.IP>0;});
+          oppPitchers.push({ name:sname, hand:s.pitcher_side||'—',
             era: ibl.length&&ibl[0].ERA!=null?ibl[0].ERA:null,
             whip: pd.WHIP||null, str: pd.STR_pct||null, kpct: pd.K_pct||null });
         }

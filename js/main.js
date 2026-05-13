@@ -139,7 +139,7 @@ Ben Scartz,Brantford Red Sox
 Benjamin Sitarenios,Toronto Maple Leafs
 Benjamin Sterritt,Toronto Maple Leafs
 Brad Grieveson,Barrie Baycats
-Braedan Pakkala,Barrie Baycats
+Braeden Pakkala,Barrie Baycats
 Brandon Deans,Guelph Royals
 Brandon Hernandez,Barrie Baycats
 Brandon Hupe,Welland Jackfish
@@ -354,6 +354,10 @@ function resolveTeam(rawName) {
 const PLAYER_NAME_ALIASES = {
   'braedan pakkala': 'Braeden Pakkala',
   'braeden pakkala': 'Braeden Pakkala',
+  'andy groening': 'Andrew Groening',
+  'spencer-thompson': 'Antonino Spencer-Thompson',
+  'leliis beltran': 'Lelis Beltran',
+  'osafa jones': 'Asafa Jones',
   'evan elliot': 'Evan Elliott',
   'evan elliott': 'Evan Elliott',
   'koki takashi': 'Koki Togashi',
