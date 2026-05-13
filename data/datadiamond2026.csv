@@ -178,7 +178,7 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 5,1,2,1,'2-1,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Mike Cecchetto,Samuel Quintana,R,L,Fastball,Swinging Strike,,,101,-0.016071429,0.90810983
 5,1,2,2,'2-2,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Mike Cecchetto,Samuel Quintana,R,L,Offspeed,Ball,,,101,-0.124824356,0.124781324
 5,1,3,2,'3-2,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Mike Cecchetto,Samuel Quintana,R,L,,Additional Out,,,101,,
-5,2,0,0,'0-0,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,MIke Cecchetto,Samuel Quintana,R,L,Fastball,Groundout,Ground Ball,Straightaway,0,-0.603337237,0.701517697
+5,2,0,0,'0-0,2026-05-10,Toronto Maple Leafs,Kitchener Panthers,,Mike Cecchetto,Samuel Quintana,R,L,Fastball,Groundout,Ground Ball,Straightaway,0,-0.603337237,0.701517697
 6,0,0,0,'0-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Mateo Zeppieri,Wilgenis Alvarado,L,L,Offspeed,Called Strike,,,0,-0.53808548,0.352893472
 6,0,0,1,'0-1,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Mateo Zeppieri,Wilgenis Alvarado,L,L,Offspeed,Called Strike,,,0,0.201434426,0.602525633
 6,0,0,2,'0-2,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Mateo Zeppieri,Wilgenis Alvarado,L,L,Fastball,Strikeout Swinging,,,0,-0.092198478,0.52074958

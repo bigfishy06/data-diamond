@@ -950,6 +950,110 @@ Zane Skansi,Kitchener Panthers`;
     }).sort(function(a, b) { return a.name.localeCompare(b.name); });
   }
 
+  function getTeamBatterReports2026(teamId) {
+    var seen = new Set();
+    var players = [];
+    var base = DATA.pbpBatters.length
+      ? DATA.pbpBatters.filter(function(p) { return p.AB >= 5; })
+      : DATA.summary.filter(function(p) { return p.AB > 0; });
+
+    base.forEach(function(p) {
+      var t = resolveTeam(p.batter_team || p.team);
+      var bkey = normRosterName(p.batter);
+      if (t && t.id === teamId && !seen.has(bkey)) {
+        seen.add(bkey);
+        var cname = canonicalName(p.batter);
+        var sum = findByName(DATA.summary, 'batter', cname) || p;
+        players.push({ name: cname, summary: sum, pbp: p, pitch: getPitchPlayer(cname) });
+      }
+    });
+
+    Object.keys(DATA.iblHistory).forEach(function(name) {
+      var nkey = normRosterName(name);
+      if (seen.has(nkey)) return;
+      var s2025 = (DATA.iblHistory[name] || []).find(function(s) {
+        return (s.season || '').indexOf('2025') !== -1 && (s.AB || 0) > 0;
+      });
+      if (!s2025) return;
+      var t = resolveTeam(s2025.team);
+      if (t && t.id === teamId) {
+        seen.add(nkey);
+        var cname = canonicalName(name);
+        var sum = findByName(DATA.summary, 'batter', cname) || Object.assign({ batter: cname }, s2025);
+        players.push({ name: cname, summary: sum, pbp: null, pitch: getPitchPlayer(cname) });
+      }
+    });
+
+    DATA.pitches.forEach(function(bp) {
+      var bkey = normRosterName(bp.batter);
+      if (!bp.batter || seen.has(bkey)) return;
+      var t = resolveTeam(bp.team);
+      if (t && t.id === teamId) {
+        seen.add(bkey);
+        var cname = canonicalName(bp.batter);
+        var sum = findByName(DATA.summary, 'batter', cname) || { batter: cname };
+        players.push({ name: cname, summary: sum, pbp: null, pitch: getPitchPlayer(cname) });
+      }
+    });
+
+    return players.sort(function(a, b) { return a.name.localeCompare(b.name); });
+  }
+
+  function getTeamPitcherReports2026(teamId) {
+    var seen = new Set();
+    var names = [];
+
+    function addName(raw) {
+      var name = canonicalName(raw);
+      if (!name) return;
+      var key = normRosterName(name);
+      if (!seen.has(key)) {
+        seen.add(key);
+        names.push(name);
+      }
+    }
+
+    if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
+      DATA.pbpPitchers.filter(function(p) { return p.BF >= 5; }).forEach(function(p) {
+        var t = resolveTeam(p.pitcher_team);
+        if (t && t.id === teamId) addName(p.pitcher);
+      });
+    }
+
+    DATA.pitches.forEach(function(bp) {
+      if (!bp.scatter) return;
+      bp.scatter.forEach(function(s) {
+        if (!s.pitcher || seen.has(normRosterName(s.pitcher))) return;
+        var pt = resolveTeam(s.pitcher_team);
+        if (pt && pt.id === teamId) addName(s.pitcher);
+      });
+    });
+
+    return names.map(function(name) {
+      var k = normRosterName(name);
+      var pbpEntry = (DATA.pbpPitchers || []).find(function(p) { return p.BF >= 5 && normRosterName(p.pitcher) === k; }) || null;
+      var sc = [];
+      DATA.pitches.forEach(function(bp) {
+        if (!bp.scatter) return;
+        bp.scatter.forEach(function(s) {
+          if (normRosterName(s.pitcher) === k) {
+            var pt = resolveTeam(s.pitcher_team);
+            if (pt && pt.id === teamId) sc.push(s);
+          }
+        });
+      });
+      var pd = findByName(DATA.pitchers, 'pitcher', name) || {};
+      return {
+        name: name, scatter: sc, pbp: pbpEntry,
+        fps_pct: (pbpEntry && pbpEntry.FP_STR_pct) || pd.FP_STR_pct,
+        avg_ttp: pd.avg_time_to_plate,
+        era: pd.ERA,
+        whip: pitcherWhipFromData(name, pd, sc),
+        baa: pd.BA_against
+      };
+    }).sort(function(a, b) { return a.name.localeCompare(b.name); });
+  }
+
   function getInferredReportPlayers2025(teamId, role) {
     var players = [];
     if (role === 'batter') {
@@ -1075,133 +1179,9 @@ Zane Skansi,Kitchener Panthers`;
       players = getRosterReportPlayers2025(selTeam, selType);
       inactivePlayers = getInactiveReportPlayers2025(selTeam, selType);
     } else if (selType === 'batter') {
-      // 2026 uses datadiamond-derived rows only; 2025 keeps the existing broader player pool.
-      var seenBatters = new Set();
-      var rawBatters = DATA.pbpBatters.length
-        ? DATA.pbpBatters
-        : DATA.summary;
-      rawBatters.forEach(function(p){
-        var t = resolveTeam(p.batter_team || p.team);
-        var _bkey = normRosterName(p.batter);
-        if (t && t.id === selTeam && !seenBatters.has(_bkey)) {
-          seenBatters.add(_bkey);
-          var cname = canonicalName(p.batter);
-          var sum = DATA.summary.find(function(s){ return normRosterName(s.batter) === _bkey; }) || p;
-          players.push({ name: cname, summary: sum, pbp: p, pitch: getPitchPlayer(cname) });
-        }
-      });
-      // Add IBL-only 2025 batters not already included
-      if (selSeason !== '2026') {
-        Object.keys(DATA.iblHistory).forEach(function(name) {
-          if (seenBatters.has(normRosterName(name))) return;
-          var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
-          if (!s2025) return;
-          if (s2025.pos === 'P') return; // exclude pitchers from batter list
-          var t = resolveTeam(s2025.team);
-          if (t && t.id === selTeam) {
-            seenBatters.add(normRosterName(name));
-            var cname = canonicalName(name);
-            var sum = DATA.summary.find(function(s){ return normRosterName(s.batter) === normRosterName(name); }) || Object.assign({batter:cname}, s2025);
-            players.push({ name: cname, summary: sum, pitch: getPitchPlayer(cname) });
-          }
-        });
-      }
-      // Add DATA.summary batters not yet included (matches getAllBatters)
-      DATA.summary.forEach(function(p) {
-        if (!p.batter || seenBatters.has(normRosterName(p.batter))) return;
-        var t = resolveTeam(p.batter_team);
-        if (t && t.id === selTeam) {
-          seenBatters.add(normRosterName(p.batter));
-          var cname = canonicalName(p.batter);
-          players.push({ name: cname, summary: p, pitch: getPitchPlayer(cname) });
-        }
-      });
-      // Add DATA.pitches top-level batter field (same as getAllBatters on players page)
-      DATA.pitches.forEach(function(bp) {
-        if (!bp.batter || seenBatters.has(normRosterName(bp.batter))) return;
-        var t = resolveTeam(pitchBatterTeam(bp));
-        if (t && t.id === selTeam) {
-          seenBatters.add(normRosterName(bp.batter));
-          var cname = canonicalName(bp.batter);
-          var sum = DATA.summary.find(function(sm){ return normRosterName(sm.batter) === normRosterName(bp.batter); }) || { batter: cname };
-          players.push({ name: cname, summary: sum, pitch: getPitchPlayer(cname) });
-        }
-      });
-      players.sort(function(a,b){ return a.name.localeCompare(b.name); });
+      players = getTeamBatterReports2026(selTeam);
     } else {
-      // Match players page: prefer pbpPitchers (BF>=5), supplement with scatter.
-      // Use a canonical-name map (lowercase key → display name) to prevent
-      // whitespace variants (e.g. "Dennis Dei Banning" vs "Dennis Dei Baning")
-      // from producing duplicate rows.
-      function normPName(n) { return canonicalName(n); }
-      var pitcherCanon = {}; // lowerKey -> display name (first seen wins)
-      function addPitcher(raw) {
-        var n = normPName(raw);
-        if (!n) return;
-        var k = n.toLowerCase();
-        if (!pitcherCanon[k]) pitcherCanon[k] = n;
-      }
-
-      // First: pbpPitchers with team match
-      if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
-        DATA.pbpPitchers.forEach(function(p){
-          var t = resolveTeam(p.pitcher_team);
-          if (t && t.id === selTeam) addPitcher(p.pitcher);
-        });
-      }
-      // Then: scatter-only pitchers not already included
-      DATA.pitches.forEach(function(bp){
-        if (!bp.scatter) return;
-        bp.scatter.forEach(function(s){
-          if (!s.pitcher) return;
-          var pt = resolveTeam(s.pitcher_team);
-          if (pt && pt.id === selTeam) addPitcher(s.pitcher);
-        });
-      });
-      // IBL-only 2025 pitchers — only if they also have DataDiamond data
-      // (prevents IBL-only names with no stats from appearing)
-      if (selSeason !== '2026') {
-        Object.keys(DATA.iblHistory).forEach(function(name) {
-          var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
-          if (!s2025 || s2025.pos !== 'P') return;
-          var t = resolveTeam(s2025.team);
-          if (!(t && t.id === selTeam)) return;
-          var nLow = normPName(name).toLowerCase();
-          // Only add if already known from DataDiamond sources
-          if (pitcherCanon[nLow]) return; // already in
-          var hasDD = DATA.pitchers.some(function(p){ return normPName(p.pitcher).toLowerCase() === nLow; }) ||
-                      DATA.pitches.some(function(bp){ return bp.scatter && bp.scatter.some(function(s){ return normPName(s.pitcher).toLowerCase() === nLow; }); }) ||
-                      (DATA.pbpPitchers && DATA.pbpPitchers.some(function(p){ return normPName(p.pitcher).toLowerCase() === nLow; }));
-          if (hasDD) addPitcher(name);
-        });
-      }
-
-      // Build player objects using canonical display names
-      Object.values(pitcherCanon).forEach(function(name){
-        var nLow = name.toLowerCase();
-        // Find pbp entry (case-insensitive)
-        var pbpEntry = DATA.pbpPitchers && DATA.pbpPitchers.find(function(p){ return normPName(p.pitcher).toLowerCase() === nLow; });
-        var sc = [];
-        DATA.pitches.forEach(function(bp){
-          if (!bp.scatter) return;
-          bp.scatter.forEach(function(s){
-            if (normPName(s.pitcher).toLowerCase() === nLow){
-              var pt = resolveTeam(s.pitcher_team);
-              if (pt && pt.id === selTeam) sc.push(s);
-            }
-          });
-        });
-        var pd = DATA.pitchers.find(function(p){ return normPName(p.pitcher).toLowerCase() === nLow; }) || {};
-        if (pbpEntry) {
-          players.push({ name: name, scatter: sc, pbp: pbpEntry,
-            fps_pct: pbpEntry.FP_STR_pct||pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
-            era: pd.ERA, whip: pitcherWhipFromData(name, pd, sc), baa: pd.BA_against });
-        } else {
-          players.push({ name: name, scatter: sc, fps_pct: pd.FP_STR_pct, avg_ttp: pd.avg_time_to_plate,
-            era: pd.ERA, whip: pitcherWhipFromData(name, pd, sc), baa: pd.BA_against });
-        }
-      });
-      players.sort(function(a,b){ return a.name.localeCompare(b.name); });
+      players = getTeamPitcherReports2026(selTeam);
     }
 
     if (!players.length && !inactivePlayers.length) {
