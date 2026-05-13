@@ -1251,7 +1251,7 @@
 
     batterPoints=batterPoints.slice(0,5);
 
-    var kpBoxHB=7+batterPoints.length*6.5;
+    var kpBoxHB=7+batterPoints.length*6.5+4;
     d.setFillColor(13,20,40);d.rect(ML,y,CPW,kpBoxHB,'F');
     d.setDrawColor(255,184,28);d.setLineWidth(0.3);d.rect(ML,y,CPW,kpBoxHB,'S');
     d.setFillColor(255,184,28);d.rect(ML,y,CPW,2,'F');
@@ -1328,17 +1328,17 @@
     var cardW2=(CPW-3*4)/4,cardH2=28;
     hl.forEach(function(h,i){
       var hx=ML+i*(cardW2+4);
-      d.setFillColor(13,20,40);d.rect(hx,y,cardW2,cardH2,'F');
       var hex=h.color.slice(1);if(hex.length===3){hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];}
       var cr=parseInt(hex.slice(0,2),16)||1,cg=parseInt(hex.slice(2,4),16)||1,cb=parseInt(hex.slice(4,6),16)||1;
+      d.setFillColor(13,20,40);d.rect(hx,y,cardW2,cardH2,'F');
       d.setFillColor(cr,cg,cb);d.rect(hx,y,cardW2,2.5,'F');
-      d.setDrawColor(cr,cg,cb);d.setLineWidth(0.3);d.rect(hx,y,cardW2,cardH2,'S');
+      d.setDrawColor(cr,cg,cb);d.setLineWidth(0.35);d.rect(hx,y,cardW2,cardH2,'S');
+      d.setFont('helvetica','bold');d.setFontSize(7);d.setTextColor(cr,cg,cb);
+      d.text(h.label,hx+cardW2/2,y+7,{align:'center'});
       d.setFont('helvetica','normal');d.setFontSize(4.5);st(d,CO.dim);
-      d.text(h.sub||'',hx+cardW2/2,y+7,{align:'center'});
-      d.setFont('helvetica','bold');d.setFontSize(10);st(d,CO.white);
-      d.text(h.value,hx+cardW2/2,y+15,{align:'center'});
-      d.setFont('helvetica','bold');d.setFontSize(5);d.setTextColor(cr,cg,cb);
-      d.text(h.label,hx+cardW2/2,y+19.5,{align:'center'});
+      d.text(h.sub||'',hx+cardW2/2,y+11,{align:'center'});
+      d.setFont('helvetica','bold');d.setFontSize(11);st(d,CO.white);
+      d.text(h.value,hx+cardW2/2,y+19,{align:'center'});
       d.setFont('helvetica','normal');d.setFontSize(4.5);st(d,CO.dim);
       var wds=h.note.split(' '),ln='',lns=[];
       wds.forEach(function(w){var t=ln?ln+' '+w:w;if(d.getTextWidth(t)>cardW2-2){lns.push(ln);ln=w;}else ln=t;});
@@ -1403,11 +1403,14 @@
     var pullC2,strC3,oppC2,spTot2;
     if(selSeason==='2026'){
       var hasSprayPcts=s.Pull_pct!=null||s.Str_pct!=null||s.Oppo_pct!=null;
-      // Reconstruct counts from pcts using batted ball total for proportional display
+      // Reconstruct counts from pcts using batted ball total for proportional display.
+      // If bip26tot2 is 0 (e.g. early-season, only popouts), use a synthetic total of 100
+      // so the donut still renders from the pre-computed pct fields.
       var bip26tot2=(s.Groundout||0)+(s.DP||0)+(s.TP||0)+(s.Flyout||0)+(s.SF||0)+(s.SF_DP||0)+(s.Lineout||0)+(s.Popout||0);
-      pullC2=hasSprayPcts?Math.round((s.Pull_pct||0)/100*bip26tot2):0;
-      strC3 =hasSprayPcts?Math.round((s.Str_pct ||0)/100*bip26tot2):0;
-      oppC2 =hasSprayPcts?Math.round((s.Oppo_pct||0)/100*bip26tot2):0;
+      var spBase=bip26tot2>0?bip26tot2:100;
+      pullC2=hasSprayPcts?Math.round((s.Pull_pct||0)/100*spBase):0;
+      strC3 =hasSprayPcts?Math.round((s.Str_pct ||0)/100*spBase):0;
+      oppC2 =hasSprayPcts?Math.round((s.Oppo_pct||0)/100*spBase):0;
       spTot2=pullC2+strC3+oppC2;
     } else {
       var batted4=allSc2.filter(function(s2){return['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s2.outcome);});
@@ -1441,7 +1444,7 @@
       bipPo=hasBip?(pbp.PO_pct||0):0;
     }
 
-    var hasSpray=spTot2>=3;
+    var hasSpray=selSeason==='2026'?((s.Pull_pct!=null||s.Str_pct!=null||s.Oppo_pct!=null)&&spTot2>=1):spTot2>=3;
     if(hasSpray||hasBip){
       // Each chart occupies half the content width
       // Layout: side-by-side if both present, centred single if only one
@@ -1514,7 +1517,10 @@
         });
       }
 
-      y+=4+chartH+3+14+19; // title + chart + legend + shift + padding
+      // title(5) + chart + legend rows + shift box (only when spray shown) + padding
+      var legRowsCount=hasSpray?Math.ceil(([pullC2>0,strC3>0,oppC2>0].filter(Boolean).length)/2):0;
+      var shiftBoxH=hasSpray?(legRowsCount*6.5+3+14):0;
+      y+=5+chartH+shiftBoxH+4;
     }
 
     drawFoot(d,player.name,'BATTER');
@@ -1627,7 +1633,7 @@
     pitcherPoints = pitcherPoints.slice(0,5);
 
     // Draw the key points box — compact single-line rows
-    var kpRH=6.5, kpBoxH=7+pitcherPoints.length*kpRH;
+    var kpRH=6.5, kpBoxH=7+pitcherPoints.length*kpRH+4;
     d.setFillColor(13,20,40);d.rect(ML,y,CPW,kpBoxH,'F');
     d.setDrawColor(255,184,28);d.setLineWidth(0.3);d.rect(ML,y,CPW,kpBoxH,'S');
     d.setFillColor(255,184,28);d.rect(ML,y,CPW,2,'F');
