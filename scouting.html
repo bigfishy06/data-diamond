@@ -878,7 +878,7 @@
     d.setFont('helvetica','bold');d.setFontSize(15);st(d,CO.white);
     d.text(name.toUpperCase(),ML+38,MT+12);
     d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
-    d.text(role+'  •  '+team.name+'  •  CBL 2025',ML+38,MT+21);
+    d.text(role+'  •  '+team.name+'  •  CBL '+selSeason,ML+38,MT+21);
     // Logo — canvas rendered SVG match
     var lx=ML+CPW-14, ly=MT+13, logoSize=14;
     drawLogoImg(d, lx, ly, logoSize);
@@ -931,7 +931,7 @@
   }
   function drawFoot(d,name,role){
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.dim);
-    d.text('Data Diamond  —  CBL Scouting Report 2025',ML,PH-6);
+    d.text('Data Diamond  —  CBL Scouting Report '+selSeason,ML,PH-6);
     d.text(name+'  •  '+role,ML+CPW,PH-6,{align:'right'});
     sf(d,CO.gold);d.rect(0,PH-1.5,PW,1.5,'F');
   }
@@ -1184,37 +1184,36 @@
     var y=MT+32;
 
     // ── Key stats boxes ──────────────────────────────────────────────────
-    // 2026: DATA.summary = summary2026.json (has AVG/OBP/SLG/OPS/HR). RBI from iblHistory.
-    // 2025: iblHistory first, then summary/pbp (unchanged).
+    // 2026: s = summary2026 row (has AVG/OBP/SLG/OPS/HR/BB/K/PA). RBI from iblHistory.
+    // 2025: iblHistory first, then s/pbp (unchanged).
     var _iblAll=(DATA.iblHistory[player.name]||[]);
-    var _pbpEarly=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null;
-    var iblB;
-    if(selSeason==='2026'){
-      iblB=null; // stats come from DATA.summary (summary2026)
-    } else {
-      iblB=_iblAll.find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.AB>0;})||_iblAll.filter(function(r){return r.AB>0;})[0]||null;
-    }
-    // RBI always from iblHistory (both seasons)
-    var _iblRBI=_iblAll.find(function(r){return (r.season||'').indexOf(selSeason==='2026'?'2026':'2025')!==-1&&r.RBI!=null;})||_iblAll.find(function(r){return r.RBI!=null;})||null;
-    var rbiVal=_iblRBI?fN(_iblRBI.RBI):fN(s&&s.RBI);
-    var hrVal =iblB&&iblB.HR!=null?fN(iblB.HR):fN(s&&s.HR);
-    var avgVal2=iblB&&iblB.AVG!=null?f3(iblB.AVG):f3(s&&s.AVG);
-    var obpVal2=iblB&&iblB.OBP!=null?f3(iblB.OBP):f3(s&&s.OBP);
-    var slgVal2=iblB&&iblB.SLG!=null?f3(iblB.SLG):f3(s&&s.SLG);
-    var opsVal2=iblB&&iblB.OPS!=null?f3(iblB.OPS):f3(s&&s.OPS);
+    var iblB=selSeason==='2026'
+      ? null
+      : (_iblAll.find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.AB>0;})||_iblAll.filter(function(r){return r.AB>0;})[0]||null);
+    // RBI always from iblHistory — find matching season entry first
+    var _iblRBI=_iblAll.find(function(r){return (r.season||'').indexOf(selSeason)!==-1&&r.RBI!=null;})||_iblAll.find(function(r){return r.RBI!=null;})||null;
+    var rbiVal=_iblRBI?fN(_iblRBI.RBI):(s.RBI!=null?fN(s.RBI):'—');
+    var hrVal =iblB&&iblB.HR!=null?fN(iblB.HR):(s.HR!=null?fN(s.HR):'—');
+    var avgVal2=iblB&&iblB.AVG!=null?f3(iblB.AVG):(s.AVG!=null?f3(s.AVG):'—');
+    var obpVal2=iblB&&iblB.OBP!=null?f3(iblB.OBP):(s.OBP!=null?f3(s.OBP):'—');
+    var slgVal2=iblB&&iblB.SLG!=null?f3(iblB.SLG):(s.SLG!=null?f3(s.SLG):'—');
+    var opsVal2=iblB&&iblB.OPS!=null?f3(iblB.OPS):(s.OPS!=null?f3(s.OPS):'—');
     y=drawBoxes(d,[['AVG',avgVal2],['OBP',obpVal2],['SLG',slgVal2],['OPS',opsVal2],['HR',hrVal],['RBI',rbiVal]],y);
     y+=4;
 
-    // ── Key Scouting Points — computed before scout summary so stats are available ──
-    // Pull stat values needed for bullet generation (duplicated below but needed here early)
-    var _pbpEarly=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return p.batter===player.name;}):null;
-    var _avgEarly=(iblB&&iblB.AVG!=null?iblB.AVG:(s&&s.AVG))||0;
-    var _opsEarly=(iblB&&iblB.OPS!=null?iblB.OPS:(s&&s.OPS))||0;
-    var _bbEarly=_pbpEarly&&_pbpEarly.BB_pct!=null?_pbpEarly.BB_pct:((s.BB||0)/(s.PA||1)*100);
-    var _kEarly=_pbpEarly&&_pbpEarly.K_pct!=null?_pbpEarly.K_pct:((s.K||0)/(s.AB||1)*100);
-    var _swEarly=_pbpEarly&&_pbpEarly.SWING_pct!=null?_pbpEarly.SWING_pct:null;
-    var _whEarly=_pbpEarly&&_pbpEarly.WHIFF_pct!=null?_pbpEarly.WHIFF_pct:null;
-    var _fpEarly=_pbpEarly&&_pbpEarly.FP_SWING_pct!=null?_pbpEarly.FP_SWING_pct:null;
+    // ── Key Scouting Points ───────────────────────────────────────────────
+    var _pbpEarly=selSeason==='2026'?null:(DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null);
+    var _avgEarly=(iblB&&iblB.AVG!=null?iblB.AVG:(s.AVG!=null?parseFloat(s.AVG):0))||0;
+    var _opsEarly=(iblB&&iblB.OPS!=null?iblB.OPS:(s.OPS!=null?parseFloat(s.OPS):0))||0;
+    var _bbEarly=selSeason==='2026'
+      ? (s.BB_pct!=null?s.BB_pct:((s.BB||0)/(s.PA||1)*100))
+      : (_pbpEarly&&_pbpEarly.BB_pct!=null?_pbpEarly.BB_pct:((s.BB||0)/(s.PA||1)*100));
+    var _kEarly=selSeason==='2026'
+      ? (s.K_pct!=null?s.K_pct:((s.K||0)/(s.AB||1)*100))
+      : (_pbpEarly&&_pbpEarly.K_pct!=null?_pbpEarly.K_pct:((s.K||0)/(s.AB||1)*100));
+    var _swEarly=selSeason==='2026'?(s.Swing_pct!=null?s.Swing_pct:null):(_pbpEarly&&_pbpEarly.SWING_pct!=null?_pbpEarly.SWING_pct:null);
+    var _whEarly=selSeason==='2026'?(s.Whiff_pct!=null?s.Whiff_pct:null):(_pbpEarly&&_pbpEarly.WHIFF_pct!=null?_pbpEarly.WHIFF_pct:null);
+    var _fpEarly=selSeason==='2026'?(s.FP_Swing_pct!=null?s.FP_Swing_pct:null):(_pbpEarly&&_pbpEarly.FP_SWING_pct!=null?_pbpEarly.FP_SWING_pct:null);
 
     var batterPoints=[];
 
@@ -1269,41 +1268,43 @@
     });
     y+=kpBoxHB+4;
 
-    // ── Scout Summary — 6 highlight cards: AVG, OPS, FP Swing%, Swing%, Whiff%, Chase% ──
+    // ── Scout Summary ──────────────────────────────────────────────────────
     y=drawSec(d,'Scout Summary',y);
     var pbp=selSeason==='2026'?null:(DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null);
-    var avg=(iblB&&iblB.AVG!=null?iblB.AVG:(s&&s.AVG))||0;
-    var ops=(iblB&&iblB.OPS!=null?iblB.OPS:(s&&s.OPS))||0;
-    var pa=(pbp&&pbp.PA!=null?pbp.PA:(s&&s.PA))||1,bb=(s&&s.BB)||0,k=(s&&s.K)||0;
+    var pa=(s.PA)||1, bb=(s.BB)||0, k=(s.K)||0;
 
-    var fpSwingPct=null;
-    if(pbp&&pbp.FP_SWING_pct!=null){fpSwingPct=pbp.FP_SWING_pct;}
-    else{
-      var fpPitches=sc.filter(function(s2,i){if(i===0)return true;var prev=sc[i-1];return(s2.batter!==prev.batter||s2.inning!==prev.inning||s2.half_inning!==prev.half_inning);});
-      var fpSwingN=fpPitches.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-      fpSwingPct=fpPitches.length>=5?fpSwingN/fpPitches.length*100:null;
-    }
+    // 2026: read directly from summary2026. 2025: pbpBatters then scatter fallback.
+    var fpSwingPct=selSeason==='2026'
+      ? (s.FP_Swing_pct!=null?s.FP_Swing_pct:null)
+      : (pbp&&pbp.FP_SWING_pct!=null?pbp.FP_SWING_pct:(function(){
+          var fpP=sc.filter(function(s2,i){if(i===0)return true;var prev=sc[i-1];return(s2.batter!==prev.batter||s2.inning!==prev.inning||s2.half_inning!==prev.half_inning);});
+          var fpN=fpP.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
+          return fpP.length>=5?fpN/fpP.length*100:null;
+        })());
 
-    var swingPct=null;
-    if(pbp&&pbp.SWING_pct!=null){swingPct=pbp.SWING_pct;}
-    else{
-      var swingPitches=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-      swingPct=sc.length>=5?swingPitches/sc.length*100:null;
-    }
+    var swingPct=selSeason==='2026'
+      ? (s.Swing_pct!=null?s.Swing_pct:null)
+      : (pbp&&pbp.SWING_pct!=null?pbp.SWING_pct:(function(){
+          var swN=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
+          return sc.length>=5?swN/sc.length*100:null;
+        })());
 
-    var whiffPct=null;
-    if(pbp&&pbp.WHIFF_pct!=null){whiffPct=pbp.WHIFF_pct;}
-    else{
-      var whiffSwings=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-      var whiffN=sc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
-      whiffPct=whiffSwings>=5?whiffN/whiffSwings*100:null;
-    }
+    var whiffPct=selSeason==='2026'
+      ? (s.Whiff_pct!=null?s.Whiff_pct:null)
+      : (pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct:(function(){
+          var swN2=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
+          var wN=sc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
+          return swN2>=5?wN/swN2*100:null;
+        })());
 
-    // Chase% from x/y coordinates (datadiamond)
-    var allSc3=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
-    var oozSc=allSc3.filter(function(s2){return s2.in_zone===false;});
-    var chaseSwings=oozSc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Foul';}).length;
-    var chasePct=oozSc.length>=5?chaseSwings/oozSc.length*100:null;
+    var chasePct=selSeason==='2026'
+      ? (s.chase_pitches!=null&&s.pitches_seen>0?s.chase_pitches/s.pitches_seen*100:null)
+      : (function(){
+          var allSc3=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
+          var ooz=allSc3.filter(function(s2){return s2.in_zone===false;});
+          var csw=ooz.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Foul';}).length;
+          return ooz.length>=5?csw/ooz.length*100:null;
+        })();
 
     function hCard(label,value,color,note,sub){return{label:label,value:value,color:color,note:note,sub:sub||''};}
     var hl=[];
@@ -1348,10 +1349,16 @@
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
     y=drawSec(d,'Plate Discipline',y);
-    var pspa=pbp&&pbp.PS_PA!=null?pbp.PS_PA:(s.pitches_seen&&pa>0?s.pitches_seen/pa:null);
+    var pspa=selSeason==='2026'
+      ? (s.pitches_seen&&pa>0?s.pitches_seen/pa:null)
+      : (pbp&&pbp.PS_PA!=null?pbp.PS_PA:(s.pitches_seen&&pa>0?s.pitches_seen/pa:null));
     var ssN=sc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
-    var kPct2=pbp&&pbp.K_pct!=null?pbp.K_pct/100:(pa>0?k/pa:0);
-    var bbPct2=pbp&&pbp.BB_pct!=null?pbp.BB_pct/100:(pa>0?bb/pa:0);
+    var kPct2=selSeason==='2026'
+      ? (s.K_pct!=null?s.K_pct/100:(pa>0?k/pa:0))
+      : (pbp&&pbp.K_pct!=null?pbp.K_pct/100:(pa>0?k/pa:0));
+    var bbPct2=selSeason==='2026'
+      ? (s.BB_pct!=null?s.BB_pct/100:(pa>0?bb/pa:0))
+      : (pbp&&pbp.BB_pct!=null?pbp.BB_pct/100:(pa>0?bb/pa:0));
     var ssPct=pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct/100:(sc.length>=5?ssN/sc.length:null);
 
     var discStats=[
@@ -1387,20 +1394,52 @@
     y+=dH2+5;
 
     // ── Two donuts: Spray Direction (left) + Batted Ball Profile (right) ──
-    // Re-fetch scatter in case player.pitch was not set at render time
-    var _pitchObj=player.pitch||(DATA.pitches?DATA.pitches.find(function(p){return (p.batter||'').trim()===player.name.trim();}):null);
-    var allSc2=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
-    var batted4=allSc2.filter(function(s2){return['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s2.outcome);});
-    // Spray direction from scatter
-    var spBatted=batted4.filter(function(s2){return s2.spray;});
-    var pullC2=spBatted.filter(function(s2){return s2.spray==='Pull';}).length;
-    var strC3=spBatted.filter(function(s2){return s2.spray==='Straightaway';}).length;
-    var oppC2=spBatted.filter(function(s2){return s2.spray==='Opposite Field';}).length;
-    var spTot2=pullC2+strC3+oppC2;
-    // Batted ball profile from pbpBatters (GB_pct/FB_pct/LO_pct/PO_pct)
-    var hasBip=pbp&&pbp.GB_pct!=null&&pbp.FB_pct!=null;
-    var bipGb=hasBip?pbp.GB_pct:0, bipFb=hasBip?pbp.FB_pct:0;
-    var bipLo=hasBip?(pbp.LO_pct||0):0, bipPo=hasBip?(pbp.PO_pct||0):0;
+    var _pitchObj2=player.pitch||(DATA.pitches?DATA.pitches.find(function(p){return (p.batter||'').trim()===player.name.trim();}):null);
+    var allSc2=_pitchObj2&&_pitchObj2.scatter?_pitchObj2.scatter:[];
+
+    // Spray direction
+    // 2026: Pull_pct/Str_pct/Oppo_pct from summary2026 (pre-computed in R)
+    // 2025: scatter spray field
+    var pullC2,strC3,oppC2,spTot2;
+    if(selSeason==='2026'){
+      var hasSprayPcts=s.Pull_pct!=null||s.Str_pct!=null||s.Oppo_pct!=null;
+      // Reconstruct counts from pcts using batted ball total for proportional display
+      var bip26tot2=(s.Groundout||0)+(s.DP||0)+(s.TP||0)+(s.Flyout||0)+(s.SF||0)+(s.SF_DP||0)+(s.Lineout||0)+(s.Popout||0);
+      pullC2=hasSprayPcts?Math.round((s.Pull_pct||0)/100*bip26tot2):0;
+      strC3 =hasSprayPcts?Math.round((s.Str_pct ||0)/100*bip26tot2):0;
+      oppC2 =hasSprayPcts?Math.round((s.Oppo_pct||0)/100*bip26tot2):0;
+      spTot2=pullC2+strC3+oppC2;
+    } else {
+      var batted4=allSc2.filter(function(s2){return['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s2.outcome);});
+      var spBatted=batted4.filter(function(s2){return s2.spray;});
+      pullC2=spBatted.filter(function(s2){return s2.spray==='Pull';}).length;
+      strC3 =spBatted.filter(function(s2){return s2.spray==='Straightaway';}).length;
+      oppC2 =spBatted.filter(function(s2){return s2.spray==='Opposite Field';}).length;
+      spTot2=pullC2+strC3+oppC2;
+    }
+
+    // Batted Ball Profile
+    // 2026: raw counts from summary2026
+    // 2025: pbpBatters GB_pct/FB_pct/LO_pct/PO_pct
+    var hasBip,bipGb,bipFb,bipLo,bipPo;
+    if(selSeason==='2026'){
+      var gb26=(s.Groundout||0)+(s.DP||0)+(s.TP||0);
+      var fb26=(s.Flyout||0)+(s.SF||0)+(s.SF_DP||0);
+      var lo26=(s.Lineout||0);
+      var pu26=(s.Popout||0);
+      var bip26tot=gb26+fb26+lo26+pu26;
+      hasBip=bip26tot>0;
+      bipGb=hasBip?gb26/bip26tot*100:0;
+      bipFb=hasBip?fb26/bip26tot*100:0;
+      bipLo=hasBip?lo26/bip26tot*100:0;
+      bipPo=hasBip?pu26/bip26tot*100:0;
+    } else {
+      hasBip=pbp&&pbp.GB_pct!=null&&pbp.FB_pct!=null;
+      bipGb=hasBip?pbp.GB_pct:0;
+      bipFb=hasBip?pbp.FB_pct:0;
+      bipLo=hasBip?(pbp.LO_pct||0):0;
+      bipPo=hasBip?(pbp.PO_pct||0):0;
+    }
 
     var hasSpray=spTot2>=3;
     if(hasSpray||hasBip){
@@ -1507,31 +1546,42 @@
     drawBg(d);drawHdr(d,player.name,'PITCHER',team);
     var y=MT+32;
 
-    // Key stat boxes — prefer pbpPitchers, fall back to player/scatter
-    // 2026: DATA.pitchers = pitchers2026.json — primary source, no pbp.
+    // Key stat boxes
+    // 2026: DATA.pitchers = pitchers2026.json (K_pct, BB_pct, STR_pct, FPS_pct, BAA, GB_pct etc). No pbp.
     // 2025: pbpPitchers first, then iblHistory (unchanged).
     var pbpP2=selSeason==='2026'?null:(DATA.pbpPitchers?DATA.pbpPitchers.find(function(p){return normName(p.pitcher)===normName(player.name);}):null);
     var _iblAllP=(DATA.iblHistory[player.name]||[]);
     var iblP2=selSeason==='2026'?null:(_iblAllP.filter(function(s){return s.IP>0;})[0]||null);
-    // ERA always from iblHistory (both seasons); other stats from pbp (2025) or player/scatter (2026)
+    // ERA always from iblHistory
     var _iblERA=_iblAllP.find(function(r){return (r.season||'').indexOf(selSeason==='2026'?'2026':'2025')!==-1&&r.ERA!=null;})||_iblAllP.find(function(r){return r.ERA!=null;})||null;
-    var eraVal  = _iblERA?f2(_iblERA.ERA):(player.era!=null?f2(player.era):'—');
-    var whipVal = pbpP2&&pbpP2.WHIP!=null ? f2(pbpP2.WHIP) : (iblP2&&iblP2.WHIP!=null?f1(iblP2.WHIP):(player.whip!=null?f1(player.whip):(tot>0?f1(xp(bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length,tot/3)):'—')));
-    var baaVal  = pbpP2&&pbpP2.BA_against!=null ? f3(pbpP2.BA_against) : (player.baa!=null?f3(player.baa):'—');
-    var kPctVal = pbpP2&&pbpP2.K_pct!=null   ? f1(pbpP2.K_pct)+'%'   : f1(xp(ks,tot))+'%';
-    var strVal  = pbpP2&&pbpP2.STR_pct!=null  ? f1(pbpP2.STR_pct)+'%' : f1(xp(str,tot))+'%';
-    var fpsVal  = pbpP2&&pbpP2.FP_STR_pct!=null ? f1(pbpP2.FP_STR_pct)+'%' : (fpsPct!=null ? f1(fpsPct)+'%' : '—');
+    var eraVal=_iblERA?f2(_iblERA.ERA):(player.era!=null?f2(player.era):'—');
+    // 2026: WHIP from scatter (BB+H per IP), BAA from pitchers2026.BAA, K%/STR%/FPS% direct fields
+    var pd26=selSeason==='2026'?(DATA.pitchers.find(function(p){return normName(p.pitcher)===normName(player.name);})||{}):null;
+    var whipVal=selSeason==='2026'
+      ? (pd26&&pd26.IP>0?f2((bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length)/(pd26.IP)):'—')
+      : (pbpP2&&pbpP2.WHIP!=null?f2(pbpP2.WHIP):(iblP2&&iblP2.WHIP!=null?f1(iblP2.WHIP):(player.whip!=null?f1(player.whip):'—')));
+    var baaVal=selSeason==='2026'
+      ? (pd26&&pd26.BAA!=null?f3(pd26.BAA):'—')
+      : (pbpP2&&pbpP2.BA_against!=null?f3(pbpP2.BA_against):(player.baa!=null?f3(player.baa):'—'));
+    var kPctVal=selSeason==='2026'
+      ? (pd26&&pd26.K_pct!=null?f1(pd26.K_pct)+'%':f1(xp(ks,tot))+'%')
+      : (pbpP2&&pbpP2.K_pct!=null?f1(pbpP2.K_pct)+'%':f1(xp(ks,tot))+'%');
+    var strVal=selSeason==='2026'
+      ? (pd26&&pd26.STR_pct!=null?f1(pd26.STR_pct)+'%':f1(xp(str,tot))+'%')
+      : (pbpP2&&pbpP2.STR_pct!=null?f1(pbpP2.STR_pct)+'%':f1(xp(str,tot))+'%');
+    var fpsVal=selSeason==='2026'
+      ? (pd26&&pd26.FPS_pct!=null?f1(pd26.FPS_pct)+'%':(fpsPct!=null?f1(fpsPct)+'%':'—'))
+      : (pbpP2&&pbpP2.FP_STR_pct!=null?f1(pbpP2.FP_STR_pct)+'%':(fpsPct!=null?f1(fpsPct)+'%':'—'));
     y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['BAA',baaVal],['K%',kPctVal],['STR%',strVal],['FPS%',fpsVal]],y);
     y+=4;
 
-    // Scouting Summary — highlighted area cards
     y=drawSec(d,'Scouting Summary — What Batters Should Know',y);
-    // Prefer pbpPitchers for scouting summary rates
-    var kPct2  = pbpP2&&pbpP2.K_pct!=null   ? pbpP2.K_pct/100   : (tot>0?ks/tot:0);
-    var bbPct2 = pbpP2&&pbpP2.BB_pct!=null  ? pbpP2.BB_pct/100  : (tot>0?bbs/tot:0);
-    var strPct3= pbpP2&&pbpP2.STR_pct!=null ? pbpP2.STR_pct/100 : (tot>0?str/tot:0);
+    var kPct2  = selSeason==='2026'?(pd26&&pd26.K_pct!=null?pd26.K_pct/100:(tot>0?ks/tot:0)):(pbpP2&&pbpP2.K_pct!=null?pbpP2.K_pct/100:(tot>0?ks/tot:0));
+    var bbPct2 = selSeason==='2026'?(pd26&&pd26.BB_pct!=null?pd26.BB_pct/100:(tot>0?bbs/tot:0)):(pbpP2&&pbpP2.BB_pct!=null?pbpP2.BB_pct/100:(tot>0?bbs/tot:0));
+    var strPct3= selSeason==='2026'?(pd26&&pd26.STR_pct!=null?pd26.STR_pct/100:(tot>0?str/tot:0)):(pbpP2&&pbpP2.STR_pct!=null?pbpP2.STR_pct/100:(tot>0?str/tot:0));
     var znPct=tot>0?inZ/tot:0;
-    if(pbpP2&&pbpP2.FP_STR_pct!=null) fpsPct=pbpP2.FP_STR_pct;
+    if(selSeason==='2026'){if(pd26&&pd26.FPS_pct!=null)fpsPct=pd26.FPS_pct;}
+    else{if(pbpP2&&pbpP2.FP_STR_pct!=null)fpsPct=pbpP2.FP_STR_pct;}
     var tc2={};sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
     var topPitch=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];})[0];
 
