@@ -978,22 +978,6 @@ Zane Skansi,Kitchener Panthers`;
       }
     });
 
-    Object.keys(DATA.iblHistory).forEach(function(name) {
-      var nkey = normRosterName(name);
-      if (seen.has(nkey)) return;
-      var s2025 = (DATA.iblHistory[name] || []).find(function(s) {
-        return (s.season || '').indexOf('2025') !== -1 && (s.AB || 0) > 0;
-      });
-      if (!s2025) return;
-      var t = resolveTeam(s2025.team);
-      if (t && t.id === teamId) {
-        seen.add(nkey);
-        var cname = canonicalName(name);
-        var sum = findByName(DATA.summary, 'batter', cname) || Object.assign({ batter: cname }, s2025);
-        players.push({ name: cname, summary: sum, pbp: null, pitch: getPitchPlayer(cname) });
-      }
-    });
-
     DATA.pitches.forEach(function(bp) {
       var bkey = normRosterName(bp.batter);
       if (!bp.batter || seen.has(bkey)) return;
