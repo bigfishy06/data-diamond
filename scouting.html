@@ -1175,7 +1175,8 @@
   }
 
   function genBatterPDF(player,team){
-    var d=new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),s=player.summary;
+    var d=new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),s=player.summary||{};
+    function normName(n){return(n||'').replace(/\s+/g,' ').trim().toLowerCase();}
     var _pitchObj=player.pitch||(DATA.pitches?DATA.pitches.find(function(p){return (p.batter||'').trim()===player.name.trim();}):null);
     var sc=(_pitchObj&&_pitchObj.scatter)?_pitchObj.scatter.filter(function(p){return p.x!=null&&p.y!=null;}):[]; 
     var allSc=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
@@ -1183,24 +1184,32 @@
     var y=MT+32;
 
     // ── Key stats boxes ──────────────────────────────────────────────────
-    // RBI from iblHistory first, then summary
-    // iblHistory: prefer 2025 season, fall back to most recent with AB>0
+    // 2026: DATA.summary = summary2026.json (has AVG/OBP/SLG/OPS/HR). RBI from iblHistory.
+    // 2025: iblHistory first, then summary/pbp (unchanged).
     var _iblAll=(DATA.iblHistory[player.name]||[]);
-    var iblB=_iblAll.find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.AB>0;})||_iblAll.filter(function(r){return r.AB>0;})[0]||null;
-    var rbiVal=iblB&&iblB.RBI!=null?fN(iblB.RBI):fN(s.RBI);
-    var hrVal=iblB&&iblB.HR!=null?fN(iblB.HR):fN(s.HR);
-    var avgVal2=iblB&&iblB.AVG!=null?f3(iblB.AVG):f3(s.AVG);
-    var obpVal2=iblB&&iblB.OBP!=null?f3(iblB.OBP):f3(s.OBP);
-    var slgVal2=iblB&&iblB.SLG!=null?f3(iblB.SLG):f3(s.SLG);
-    var opsVal2=iblB&&iblB.OPS!=null?f3(iblB.OPS):f3(s.OPS);
+    var _pbpEarly=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null;
+    var iblB;
+    if(selSeason==='2026'){
+      iblB=null; // stats come from DATA.summary (summary2026)
+    } else {
+      iblB=_iblAll.find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.AB>0;})||_iblAll.filter(function(r){return r.AB>0;})[0]||null;
+    }
+    // RBI always from iblHistory (both seasons)
+    var _iblRBI=_iblAll.find(function(r){return (r.season||'').indexOf(selSeason==='2026'?'2026':'2025')!==-1&&r.RBI!=null;})||_iblAll.find(function(r){return r.RBI!=null;})||null;
+    var rbiVal=_iblRBI?fN(_iblRBI.RBI):fN(s&&s.RBI);
+    var hrVal =iblB&&iblB.HR!=null?fN(iblB.HR):fN(s&&s.HR);
+    var avgVal2=iblB&&iblB.AVG!=null?f3(iblB.AVG):f3(s&&s.AVG);
+    var obpVal2=iblB&&iblB.OBP!=null?f3(iblB.OBP):f3(s&&s.OBP);
+    var slgVal2=iblB&&iblB.SLG!=null?f3(iblB.SLG):f3(s&&s.SLG);
+    var opsVal2=iblB&&iblB.OPS!=null?f3(iblB.OPS):f3(s&&s.OPS);
     y=drawBoxes(d,[['AVG',avgVal2],['OBP',obpVal2],['SLG',slgVal2],['OPS',opsVal2],['HR',hrVal],['RBI',rbiVal]],y);
     y+=4;
 
     // ── Key Scouting Points — computed before scout summary so stats are available ──
     // Pull stat values needed for bullet generation (duplicated below but needed here early)
     var _pbpEarly=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return p.batter===player.name;}):null;
-    var _avgEarly=(iblB&&iblB.AVG!=null?iblB.AVG:s.AVG)||0;
-    var _opsEarly=(iblB&&iblB.OPS!=null?iblB.OPS:s.OPS)||0;
+    var _avgEarly=(iblB&&iblB.AVG!=null?iblB.AVG:(s&&s.AVG))||0;
+    var _opsEarly=(iblB&&iblB.OPS!=null?iblB.OPS:(s&&s.OPS))||0;
     var _bbEarly=_pbpEarly&&_pbpEarly.BB_pct!=null?_pbpEarly.BB_pct:((s.BB||0)/(s.PA||1)*100);
     var _kEarly=_pbpEarly&&_pbpEarly.K_pct!=null?_pbpEarly.K_pct:((s.K||0)/(s.AB||1)*100);
     var _swEarly=_pbpEarly&&_pbpEarly.SWING_pct!=null?_pbpEarly.SWING_pct:null;
@@ -1262,10 +1271,10 @@
 
     // ── Scout Summary — 6 highlight cards: AVG, OPS, FP Swing%, Swing%, Whiff%, Chase% ──
     y=drawSec(d,'Scout Summary',y);
-    var avg=(iblB&&iblB.AVG!=null?iblB.AVG:s.AVG)||0,ops=(iblB&&iblB.OPS!=null?iblB.OPS:s.OPS)||0,pa=s.PA||1,bb=s.BB||0,k=s.K||0;
-
-    // Prefer pbpBatters as primary source; fall back to scatter
-    var pbp=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return p.batter===player.name;}):null;
+    var pbp=selSeason==='2026'?null:(DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null);
+    var avg=(iblB&&iblB.AVG!=null?iblB.AVG:(s&&s.AVG))||0;
+    var ops=(iblB&&iblB.OPS!=null?iblB.OPS:(s&&s.OPS))||0;
+    var pa=(pbp&&pbp.PA!=null?pbp.PA:(s&&s.PA))||1,bb=(s&&s.BB)||0,k=(s&&s.K)||0;
 
     var fpSwingPct=null;
     if(pbp&&pbp.FP_SWING_pct!=null){fpSwingPct=pbp.FP_SWING_pct;}
@@ -1472,6 +1481,7 @@
   }
 
   function genPitcherPDF(player,team){
+    function normName(n){return(n||'').replace(/\s+/g,' ').trim().toLowerCase();}
     var d=new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),sc=player.scatter||[];
     var tot=sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
     var ks=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
@@ -1498,10 +1508,15 @@
     var y=MT+32;
 
     // Key stat boxes — prefer pbpPitchers, fall back to player/scatter
-    var pbpP2=DATA.pbpPitchers?DATA.pbpPitchers.find(function(p){return p.pitcher===player.name;}):null;
-    var iblP2=((DATA.iblHistory[player.name]||[]).filter(function(s){return s.IP>0;}))[0]||null;
-    var eraVal  = iblP2&&iblP2.ERA!=null  ? f2(iblP2.ERA)   : (player.era!=null?f2(player.era):'—');
-    var whipVal = pbpP2&&pbpP2.WHIP!=null ? f2(pbpP2.WHIP)  : (iblP2&&iblP2.WHIP!=null?f1(iblP2.WHIP):(player.whip!=null?f1(player.whip):(tot>0?f1(xp(bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length,tot/3)):'—')));
+    // 2026: DATA.pitchers = pitchers2026.json — primary source, no pbp.
+    // 2025: pbpPitchers first, then iblHistory (unchanged).
+    var pbpP2=selSeason==='2026'?null:(DATA.pbpPitchers?DATA.pbpPitchers.find(function(p){return normName(p.pitcher)===normName(player.name);}):null);
+    var _iblAllP=(DATA.iblHistory[player.name]||[]);
+    var iblP2=selSeason==='2026'?null:(_iblAllP.filter(function(s){return s.IP>0;})[0]||null);
+    // ERA always from iblHistory (both seasons); other stats from pbp (2025) or player/scatter (2026)
+    var _iblERA=_iblAllP.find(function(r){return (r.season||'').indexOf(selSeason==='2026'?'2026':'2025')!==-1&&r.ERA!=null;})||_iblAllP.find(function(r){return r.ERA!=null;})||null;
+    var eraVal  = _iblERA?f2(_iblERA.ERA):(player.era!=null?f2(player.era):'—');
+    var whipVal = pbpP2&&pbpP2.WHIP!=null ? f2(pbpP2.WHIP) : (iblP2&&iblP2.WHIP!=null?f1(iblP2.WHIP):(player.whip!=null?f1(player.whip):(tot>0?f1(xp(bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length,tot/3)):'—')));
     var baaVal  = pbpP2&&pbpP2.BA_against!=null ? f3(pbpP2.BA_against) : (player.baa!=null?f3(player.baa):'—');
     var kPctVal = pbpP2&&pbpP2.K_pct!=null   ? f1(pbpP2.K_pct)+'%'   : f1(xp(ks,tot))+'%';
     var strVal  = pbpP2&&pbpP2.STR_pct!=null  ? f1(pbpP2.STR_pct)+'%' : f1(xp(str,tot))+'%';
