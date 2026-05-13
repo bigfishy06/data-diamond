@@ -113,6 +113,233 @@ const TEAMS = [
   { id: 'wel', name: 'Welland Jackfish',             abbreviation: 'WEL', primaryColor: '#00703C' }
 ];
 
+const ACTIVE_ROSTER_2025_CSV = `Player,Team
+Adam Odd,Barrie Baycats
+Adam Thuss,London Majors
+Aden Ryan,Chatham-Kent Barnstormers
+Aidan Armitage,Brantford Red Sox
+AJ Karosas,Brantford Red Sox
+Alex Lanigan,Toronto Maple Leafs
+Alex Springer,London Majors
+Alfred Vega,Guelph Royals
+Anderson Feliz,Hamilton Cardinals
+Andrew Case,Guelph Royals
+Andrew Savage,Brantford Red Sox
+Andy Groening,Chatham-Kent Barnstormers
+Andy Leader,Guelph Royals
+Angel Guerrero,Hamilton Cardinals
+Anthony Porcellato,Brantford Red Sox
+Anthony Porcellato,Welland Jackfish
+Ashton Patterson,Guelph Royals
+Axel Rosario,Brantford Red Sox
+Bawin Colon,Kitchener Panthers
+Ben Abram,Welland Jackfish
+Ben Hewitt,Kitchener Panthers
+Ben Scartz,Brantford Red Sox
+Benjamin Sitarenios,Toronto Maple Leafs
+Benjamin Sterritt,Toronto Maple Leafs
+Brad Grieveson,Barrie Baycats
+Braedan Pakkala,Barrie Baycats
+Brandon Deans,Guelph Royals
+Brandon Hernandez,Barrie Baycats
+Brandon Hupe,Welland Jackfish
+Brandon Nicoll,Hamilton Cardinals
+Brandon Sekulovich,Brantford Red Sox
+Branfy Infante,Barrie Baycats
+Breidy Encarnacion,Barrie Baycats
+Brendan Luther,Welland Jackfish
+Brendon Daley,Barrie Baycats
+Brett Reid,Kitchener Panthers
+Brody Black,Brantford Red Sox
+Bryce Arnold,Welland Jackfish
+Caleb Cassie,London Majors
+Caleb Seroski,Hamilton Cardinals
+Cam Bauer,Kitchener Panthers
+Canice Ejoh,Barrie Baycats
+Carlos Dominguez,Hamilton Cardinals
+Carlos Sano,Barrie Baycats
+Carson Barker,Barrie Baycats
+Carson Burns,Guelph Royals
+Carson Johnson,Welland Jackfish
+Casey Bouillere-Howard,Hamilton Cardinals
+Cassidy Watt,Brantford Red Sox
+Catalin Morin,Chatham-Kent Barnstormers
+Cesilio Pimentel,London Majors
+Charlie Towers,Kitchener Panthers
+Chris Boatto,Hamilton Cardinals
+Chris Lazar,Guelph Royals
+Clayton Keyes,Barrie Baycats
+Cleveland Brownlee,London Majors
+Colbey Klepper,Brantford Red Sox
+Conner Morro,Guelph Royals
+Connor Cory,Hamilton Cardinals
+Connor Irvine,Brantford Red Sox
+Cooper Tomkinson,Toronto Maple Leafs
+Cory Lawson,Kitchener Panthers
+Dakota Parsons,Chatham-Kent Barnstormers
+Damon Topolie,Guelph Royals
+Danny Garcia,Hamilton Cardinals
+Danny Howat,Welland Jackfish
+Darlin German,Hamilton Cardinals
+David Draayers,London Majors
+Deivis Nadal,Guelph Royals
+Deivy Mendez,Welland Jackfish
+Dennis Dei Baning,Toronto Maple Leafs
+Drew Donaldson,Guelph Royals
+Drew Howard,Toronto Maple Leafs
+Dustin Davidson,London Majors
+Edgar Figueroa,Barrie Baycats
+Edgar Garcia,Guelph Royals
+Eduardo De Oleo,London Majors
+Elian Serrata,Kitchener Panthers
+Elvin Liriano,Guelph Royals
+Erasmo Pinales,London Majors
+Eric Pettipiece,Chatham-Kent Barnstormers
+Ethan Mann,Welland Jackfish
+Ethan Paulos,Brantford Red Sox
+Euclides Leyer,Welland Jackfish
+Evan Elliott,Kitchener Panthers
+Evan Magill,Hamilton Cardinals
+Evan Morrison,Chatham-Kent Barnstormers
+Francisco Hernandez,Barrie Baycats
+Francisco Martinez,Brantford Red Sox
+Frank Garces,Barrie Baycats
+Frankie Gulko,Toronto Maple Leafs
+Freisis Adames,Hamilton Cardinals
+Garret Day,Chatham-Kent Barnstormers
+Garrett Takamatsu,Guelph Royals
+Gavin McLean,Kitchener Panthers
+Gianfranco Morello,Welland Jackfish
+Graham Tebbit,Brantford Red Sox
+Greg Marco,Welland Jackfish
+Greg Rapp,Brantford Red Sox
+Greyson Barrett,Chatham-Kent Barnstormers
+Hayden Jaco,Barrie Baycats
+Hector Yan,Hamilton Cardinals
+J.D. Williams,Guelph Royals
+Jacob Bonzon,Toronto Maple Leafs
+Jacob Gajic,Hamilton Cardinals
+Jacob Kush,Guelph Royals
+Jacob Liberta,Kitchener Panthers
+Jaden Babiuk,London Majors
+Jaden Brown,Hamilton Cardinals
+Jake Sanford,Guelph Royals
+Jakob Cantor,Brantford Red Sox
+James Smibert,Welland Jackfish
+Jamie Cabral,Kitchener Panthers
+Jarrett Burney,London Majors
+Jeremie Veilleux,Hamilton Cardinals
+Jhon Javier,Toronto Maple Leafs
+Jonah Weisner,Welland Jackfish
+Jordis Ramos,Brantford Red Sox
+Jorge De La Cruz,Brantford Red Sox
+Jose Arias,Brantford Red Sox
+Joshua Williams,Kitchener Panthers
+Juan Benitez,Barrie Baycats
+Juan Mejia,Barrie Baycats
+Julien Monks,Chatham-Kent Barnstormers
+Justin Gideon,Welland Jackfish
+Justin Groves,Barrie Baycats
+Kade Douglas,London Majors
+Kade Kozak,Brantford Red Sox
+Kevin Escorcia,Guelph Royals
+Kian Johnston,Chatham-Kent Barnstormers
+Kirk Gibson,Toronto Maple Leafs
+Kristyan Puyol-Genossar,Barrie Baycats
+Kyle Kush,Guelph Royals
+Kyle Maves,London Majors
+Kyle Poapst,Toronto Maple Leafs
+Leandro Mejia,Brantford Red Sox
+Lee Kucera,Chatham-Kent Barnstormers
+Liam Wilson,Guelph Royals
+Logan Warkentin,Hamilton Cardinals
+Luca Boscarino,Guelph Royals
+Lucas Bateman,Brantford Red Sox
+Lucas Lefebvre,Brantford Red Sox
+Luis Florentino,Toronto Maple Leafs
+Luis Jean,London Majors
+Luis Perez,London Majors
+Luis Ramirez,Hamilton Cardinals
+Maikol Escotto,London Majors
+Malik Williams,Kitchener Panthers
+Marcos Castillo,Guelph Royals
+Marcus Knecht,Toronto Maple Leafs
+Marek Deska,Guelph Royals
+Mateo Zeppieri,Kitchener Panthers
+Matt Brandt,Toronto Maple Leafs
+Matthew Fabian,Toronto Maple Leafs
+Matthew Ward,Guelph Royals
+Miguel Hiraldo,Guelph Royals
+Mike Cecchetto,Toronto Maple Leafs
+Mitsuki Fukuda,Chatham-Kent Barnstormers
+Mizuki Akatsuka,Chatham-Kent Barnstormers
+Moises Brito,Chatham-Kent Barnstormers
+Myles Martinez,Welland Jackfish
+Nick Iannantone,Brantford Red Sox
+Nick Veselinovic,Toronto Maple Leafs
+Noah Hull,Barrie Baycats
+Noah Law,Brantford Red Sox
+Noel McGarry Doyle,Barrie Baycats
+Nolan Machibroda,Barrie Baycats
+Oscar Moreta,Barrie Baycats
+Owen Boon,Hamilton Cardinals
+Owen Constantineau,Chatham-Kent Barnstormers
+Owen MacNeil,Kitchener Panthers
+Owen Ozanich,Welland Jackfish
+Pedro De Los Santos,Welland Jackfish
+Petey Kiefer,Kitchener Panthers
+Rafael Gross,Kitchener Panthers
+Reinaldo De Paula,Toronto Maple Leafs
+Reyny Reyes,Hamilton Cardinals
+Robert Mackie,Chatham-Kent Barnstormers
+Robert Mullen,Welland Jackfish
+Roberto Caro,London Majors
+Ryan Capuano,Toronto Maple Leafs
+Ryan Dos Santos,Guelph Royals
+Ryan Rijo,Barrie Baycats
+Ryder Hancock,London Majors
+Samuel Quintana,Kitchener Panthers
+Samuele Bruno,Kitchener Panthers
+Saul Vasquez,Barrie Baycats
+Scott Gillespie,Welland Jackfish
+Skylar Janisse,London Majors
+Spencer Morin,Chatham-Kent Barnstormers
+Spenser Ross,Toronto Maple Leafs
+Steven Hospital,Hamilton Cardinals
+Tanner Rempel,Hamilton Cardinals
+Teodoro Ortega,Welland Jackfish
+Thibault Mercadier,Chatham-Kent Barnstormers
+Thomas Green,Chatham-Kent Barnstormers
+Tim Holyk,Brantford Red Sox
+Travis Keys,London Majors
+Trent Lawson,Kitchener Panthers
+Trent Lenihan,London Majors
+Tucker Zdunich,London Majors
+Tyler Duncan,Hamilton Cardinals
+Tyler Plumpton,Barrie Baycats
+Tyson Gomm,Welland Jackfish
+Vasilios Kaloudis,Toronto Maple Leafs
+Victor Payano,London Majors
+Wandy Ciprian,Barrie Baycats
+Wilgenis Alvarado,Toronto Maple Leafs
+Xavier Whittle,London Majors
+Yadian Martinez,Toronto Maple Leafs
+Yasiel Puig,Toronto Maple Leafs
+Yolki Pena,Hamilton Cardinals
+Yordan Manduley,Toronto Maple Leafs
+Yosuke Fujie,Kitchener Panthers
+Yosvani Penalver,Kitchener Panthers
+Yunior Ibarra,Kitchener Panthers
+Yuri Yokoyama,Chatham-Kent Barnstormers
+Yushin Ohta,Chatham-Kent Barnstormers
+Zachary Laird,London Majors
+Zane Skansi,Kitchener Panthers`;
+
+const ACTIVE_ROSTER_2025 = ACTIVE_ROSTER_2025_CSV.trim().split(/\r?\n/).slice(1).map(function(line) {
+  var ix = line.lastIndexOf(',');
+  return { player: line.slice(0, ix).trim(), team: line.slice(ix + 1).trim() };
+});
+
 function resolveTeam(rawName) {
   if (!rawName) return null;
   const s = rawName.trim().toLowerCase();
@@ -122,6 +349,121 @@ function resolveTeam(rawName) {
            t.id === s ||
            t.name.toLowerCase().includes(s.split(' ')[0]);
   }) || null;
+}
+
+const PLAYER_NAME_ALIASES = {
+  'braedan pakkala': 'Braeden Pakkala',
+  'braeden pakkala': 'Braeden Pakkala',
+  'evan elliot': 'Evan Elliott',
+  'evan elliott': 'Evan Elliott',
+  'koki takashi': 'Koki Togashi',
+  'koki togashi': 'Koki Togashi',
+  'ricardo alvarez delugo': 'Ricardo Alvarez de Lugo',
+  'ricardo de lugo': 'Ricardo Alvarez de Lugo',
+  'ricardo alvarez de lugo': 'Ricardo Alvarez de Lugo',
+  'teo ortega': 'Teodoro Ortega',
+  'teodoro ortega': 'Teodoro Ortega',
+  'yuri yikoyama': 'Yuri Yokoyama',
+  'yuri yokoyama': 'Yuri Yokoyama'
+};
+
+function basePlayerNameKey(name) {
+  return (name || '').replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
+function canonicalPlayerName(name) {
+  var raw = (name || '').replace(/\s+/g, ' ').trim();
+  var key = raw.toLowerCase();
+  return PLAYER_NAME_ALIASES[key] || raw;
+}
+
+function normPlayerName(name) {
+  return canonicalPlayerName(name).toLowerCase();
+}
+
+function findByPlayerName(arr, field, name) {
+  var k = normPlayerName(name);
+  return (arr || []).find(function(row) { return normPlayerName(row[field]) === k; }) || null;
+}
+
+function getIblRowsForPlayer(name) {
+  var direct = DATA.iblHistory[name];
+  if (direct) return direct;
+  var k = normPlayerName(name);
+  var rows = [];
+  Object.keys(DATA.iblHistory || {}).forEach(function(key) {
+    if (normPlayerName(key) === k) rows = rows.concat(DATA.iblHistory[key] || []);
+  });
+  return rows;
+}
+
+function getIblSeasonForPlayer(name, year, test) {
+  return (getIblRowsForPlayer(name) || []).find(function(row) {
+    return (row.season || '').indexOf(year) !== -1 && (!test || test(row));
+  }) || null;
+}
+
+function getActiveRosterRows2025(teamId) {
+  var seen = {};
+  return ACTIVE_ROSTER_2025.filter(function(row) {
+    var team = resolveTeam(row.team);
+    if (teamId && !(team && team.id === teamId)) return false;
+    var key = normPlayerName(row.player) + '|' + (team ? team.id : row.team);
+    if (seen[key]) return false;
+      seen[key] = true;
+      return true;
+  }).map(function(row) { return Object.assign({}, row, { player: canonicalPlayerName(row.player) }); });
+}
+
+function getActiveRosterTeam2025(name) {
+  var k = normPlayerName(name);
+  var row = ACTIVE_ROSTER_2025.find(function(r) { return normPlayerName(r.player) === k; });
+  return row ? resolveTeam(row.team) : null;
+}
+
+function isOnActiveRoster2025(name) {
+  return !!getActiveRosterTeam2025(name);
+}
+
+function displayTeamForPlayer(name, fallbackTeam) {
+  if (_activeSeason === 'year:2025') {
+    var fallback = resolveTeam(fallbackTeam);
+    if (fallback && ACTIVE_ROSTER_2025.some(function(row) {
+      var rowTeam = resolveTeam(row.team);
+      return normPlayerName(row.player) === normPlayerName(name) && rowTeam && rowTeam.id === fallback.id;
+    })) return fallback.abbreviation;
+    var activeTeam = getActiveRosterTeam2025(name);
+    if (activeTeam) return activeTeam.abbreviation;
+  }
+  var t = resolveTeam(fallbackTeam);
+  return t ? t.abbreviation : (fallbackTeam || '—');
+}
+
+function playerHasSeasonData(name, type, year) {
+  var k = normPlayerName(name);
+  if (year === '2026') {
+    if (type === 'pitcher') {
+      return DATA.pitchers2026.some(function(p) { return normPlayerName(p.pitcher) === k && ((p.IP || 0) > 0 || (p.BF || 0) > 0 || (p.total_pitches || 0) > 0); }) ||
+        DATA.pitches2026.some(function(bp) { return bp.scatter && bp.scatter.some(function(s) { return normPlayerName(s.pitcher) === k; }); });
+    }
+    return DATA.summary2026.some(function(p) { return normPlayerName(p.batter) === k && ((p.PA || 0) > 0 || (p.AB || 0) > 0); }) ||
+      DATA.pitches2026.some(function(bp) { return normPlayerName(bp.batter) === k && bp.scatter && bp.scatter.length; });
+  }
+  var summary25 = DATA._summary25 || DATA.summary;
+  var pitches25 = DATA._pitches25 || DATA.pitches;
+  var pitchers25 = DATA._pitchers25 || DATA.pitchers;
+  var pbpBatters25 = DATA._pbpBatters25 || DATA.pbpBatters;
+  var pbpPitchers25 = DATA._pbpPitchers25 || DATA.pbpPitchers;
+  if (type === 'pitcher') {
+    return !!getIblSeasonForPlayer(name, '2025', function(s) { return (s.IP || 0) > 0 || s.pos === 'P'; }) ||
+      pbpPitchers25.some(function(p) { return normPlayerName(p.pitcher) === k && (p.BF || 0) > 0; }) ||
+      pitchers25.some(function(p) { return normPlayerName(p.pitcher) === k; }) ||
+      pitches25.some(function(bp) { return bp.scatter && bp.scatter.some(function(s) { return normPlayerName(s.pitcher) === k; }); });
+  }
+  return !!getIblSeasonForPlayer(name, '2025', function(s) { return (s.AB || 0) > 0 || (s.PA || 0) > 0; }) ||
+    pbpBatters25.some(function(p) { return normPlayerName(p.batter) === k && ((p.PA || 0) > 0 || (p.AB || 0) > 0); }) ||
+    summary25.some(function(p) { return normPlayerName(p.batter) === k && ((p.PA || 0) > 0 || (p.AB || 0) > 0); }) ||
+    pitches25.some(function(bp) { return normPlayerName(bp.batter) === k && bp.scatter && bp.scatter.length; });
 }
 
 // ── Data store — all years kept separately, never merged ─────────────────────
@@ -501,6 +843,84 @@ function getAllPitchers() {
 }
 
 // ── TICKER ────────────────────────────────────────
+function makeRosterBatterRecord2025(name, teamName) {
+  var pbp = findByPlayerName(DATA.pbpBatters, 'batter', name);
+  var sum = findByPlayerName(DATA.summary, 'batter', name);
+  var ibl = getIblSeasonForPlayer(name, '2025', function(s) { return s.pos !== 'P' && ((s.AB || 0) > 0 || (s.PA || 0) > 0); });
+  var pitch = DATA.pitches.find(function(bp) { return normPlayerName(bp.batter) === normPlayerName(name) && bp.scatter && bp.scatter.length; });
+  var hasBatterData = !!(pbp || sum || ibl || pitch);
+  if (!hasBatterData && playerHasSeasonData(name, 'pitcher', '2025')) return null;
+  return Object.assign({}, ibl || {}, sum || {}, pbp || {}, { batter: name, batter_team: teamName });
+}
+
+function makeRosterPitcherName2025(name) {
+  return playerHasSeasonData(name, 'pitcher', '2025') ? name : null;
+}
+
+function getActiveBatterRecords2025(teamId) {
+  return getActiveRosterRows2025(teamId).map(function(row) {
+    return makeRosterBatterRecord2025(row.player, row.team);
+  }).filter(Boolean).sort(function(a, b) { return a.batter.localeCompare(b.batter); });
+}
+
+function getActivePitcherNames2025(teamId) {
+  var seen = {};
+  return getActiveRosterRows2025(teamId).map(function(row) {
+    return makeRosterPitcherName2025(row.player);
+  }).filter(Boolean).filter(function(name) {
+    var k = normPlayerName(name);
+    if (seen[k]) return false;
+    seen[k] = true;
+    return true;
+  }).sort(function(a, b) { return a.localeCompare(b); });
+}
+
+function getInferredBatterRecords2025(teamId) {
+  var seen = {};
+  var players = [];
+  function add(row, rawTeam) {
+    var name = canonicalPlayerName(row.batter);
+    if (!name) return;
+    var key = normPlayerName(name);
+    if (seen[key] || isOnActiveRoster2025(name)) return;
+    var team = resolveTeam(rawTeam || row.batter_team || row.team);
+    if (teamId && !(team && team.id === teamId)) return;
+    seen[key] = true;
+    players.push(Object.assign({}, row, { batter: name, batter_team: rawTeam || row.batter_team || row.team }));
+  }
+  (DATA.pbpBatters.length ? DATA.pbpBatters : DATA.summary).forEach(function(p) { add(p, p.batter_team || p.team); });
+  Object.keys(DATA.iblHistory).forEach(function(name) {
+    var s2025 = getIblSeasonForPlayer(name, '2025', function(s) { return s.pos !== 'P' && ((s.AB || 0) > 0 || (s.PA || 0) > 0); });
+    if (s2025) add(Object.assign({ batter: name }, s2025), s2025.team);
+  });
+  DATA.pitches.forEach(function(bp) {
+    if (!bp.batter) return;
+    var hit = (bp.scatter || []).find(function(s) { return s.batter_team; });
+    add({ batter: bp.batter }, bp.batter_team || bp.team || (hit && hit.batter_team));
+  });
+  return players.sort(function(a, b) { return a.batter.localeCompare(b.batter); });
+}
+
+function getInferredPitcherNames2025(teamId) {
+  var seen = {};
+  function add(raw, rawTeam) {
+    var name = canonicalPlayerName(raw);
+    if (!name || isOnActiveRoster2025(name)) return;
+    var team = resolveTeam(rawTeam);
+    if (teamId && !(team && team.id === teamId)) return;
+    seen[normPlayerName(name)] = name;
+  }
+  DATA.pbpPitchers.forEach(function(p) { add(p.pitcher, p.pitcher_team); });
+  DATA.pitches.forEach(function(bp) {
+    (bp.scatter || []).forEach(function(s) { add(s.pitcher, s.pitcher_team); });
+  });
+  Object.keys(DATA.iblHistory).forEach(function(name) {
+    var s2025 = getIblSeasonForPlayer(name, '2025', function(s) { return s.pos === 'P' || (s.IP || 0) > 0; });
+    if (s2025 && playerHasSeasonData(name, 'pitcher', '2025')) add(name, s2025.team);
+  });
+  return Object.values(seen).sort(function(a, b) { return a.localeCompare(b); });
+}
+
 function buildTicker() {
   const track = document.getElementById('stat-ticker');
   if (!track) return;
@@ -762,6 +1182,11 @@ function renderPitchingLeaderboards(container) {
 // ══════════════════════════════════════════════════
 // ── Shared team roster helpers (match players page exactly) ────────────────
 function getTeamBatters(teamId) {
+  if (_activeSeason === 'year:2025') {
+    return getActiveBatterRecords2025(teamId).concat(getInferredBatterRecords2025(teamId)).map(function(p) {
+      return { batter: p.batter, pbp: p, summary: p, ibl: getIblSeasonForPlayer(p.batter, '2025') };
+    });
+  }
   var seen = new Set();
   var result = [];
   // Primary: pbpBatters AB>=5 with matching team
@@ -805,6 +1230,13 @@ function getTeamBatters(teamId) {
 }
 
 function getTeamPitchers(teamId) {
+  if (_activeSeason === 'year:2025') {
+    return getActivePitcherNames2025(teamId).concat(getInferredPitcherNames2025(teamId)).map(function(name) {
+      var pd = findByPlayerName(DATA.pitchers, 'pitcher', name) || {};
+      var pbp = findByPlayerName(DATA.pbpPitchers, 'pitcher', name);
+      return { pitcher: name, pbp: pbp, pd: pd };
+    });
+  }
   var seen = new Set();
   var result = [];
   // Primary: pbpPitchers BF>=5 with matching team
@@ -1583,63 +2015,72 @@ function renderPlayerList(content) {
     listContent.innerHTML = '';
 
     if (type === 'batters') {
-      var players = DATA.pbpBatters.length
-        ? DATA.pbpBatters.filter(function(p) { return p.AB >= 5; })
-        : DATA.summary.filter(function(p) { return p.AB > 0; });
-      // Add IBL-only 2025 batters not already in the list. For 2026, keep this
-      // strictly to players present in the datadiamond2026-derived files.
-      players = players.map(function(p){ return Object.assign({}, p, { batter: (p.batter||'').trim() }); });
-      var existingNames = new Set(players.map(function(p){ return (p.batter||'').toLowerCase(); }));
-      if (_activeSeason !== 'year:2026') {
-        Object.keys(DATA.iblHistory).forEach(function(name) {
-          if (existingNames.has(name.toLowerCase())) return;
-          var s2025 = (DATA.iblHistory[name]||[]).find(function(s){ return (s.season||'').indexOf('2025')!==-1 && (s.AB||0)>0; });
-          if (s2025) { players = players.concat([Object.assign({batter:name}, s2025)]); existingNames.add(name.toLowerCase()); }
+      function renderBatterCard(title, players, searchId) {
+        const card = document.createElement('div');
+        card.className = 'stat-card fade-up';
+        card.style.marginTop = listContent.children.length ? '20px' : '';
+        card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">'+title+'</span>' +
+          '<span class="stat-card-subtitle">' + players.length + ' players</span></div>' +
+          '<div style="padding:16px 24px 0">' +
+          '<input class="roster-search" id="'+searchId+'" placeholder="Search batters..." /></div>' +
+          buildHittingTable(players);
+        listContent.appendChild(card);
+        initTableSort(card.querySelector('table'));
+        initPlayerLinks(card, 'batter');
+        document.getElementById(searchId).addEventListener('input', function(e) {
+          const q = e.target.value.toLowerCase();
+          card.querySelectorAll('tbody tr').forEach(function(row) {
+            row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+          });
         });
       }
-      // Add DATA.pitches top-level batters not yet included (catches everyone like getAllBatters)
-      DATA.pitches.forEach(function(bp) {
-        var bname = (bp.batter||'').trim();
-        if (!bname || existingNames.has(bname.toLowerCase())) return;
-        existingNames.add(bname.toLowerCase());
-        var sum = DATA.summary.find(function(s){ return (s.batter||'').trim() === bname; }) || { batter: bname };
-        players = players.concat([Object.assign({}, sum, { batter: bname })]);
-      });
-      const card = document.createElement('div');
-      card.className = 'stat-card fade-up';
-      card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">All Batters</span>' +
-        '<span class="stat-card-subtitle">' + players.length + ' players</span></div>' +
-        '<div style="padding:16px 24px 0">' +
-        '<input class="roster-search" id="player-search" placeholder="Search batters..." /></div>' +
-        buildHittingTable(players);
-      listContent.appendChild(card);
-      initTableSort(card.querySelector('table'));
-      initPlayerLinks(card, 'batter');
-      document.getElementById('player-search').addEventListener('input', function(e) {
-        const q = e.target.value.toLowerCase();
-        card.querySelectorAll('tbody tr').forEach(function(row) {
-          row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+
+      if (_activeSeason === 'year:2025') {
+        renderBatterCard('Active Roster Batters', getActiveBatterRecords2025(), 'player-search-active');
+        var inactiveBatters = getInferredBatterRecords2025();
+        if (inactiveBatters.length) renderBatterCard('Inactive Batters', inactiveBatters, 'player-search-inactive');
+      } else {
+        var players = DATA.pbpBatters.length
+          ? DATA.pbpBatters.filter(function(p) { return p.AB >= 5; })
+          : DATA.summary.filter(function(p) { return p.AB > 0; });
+        players = players.map(function(p){ return Object.assign({}, p, { batter: (p.batter||'').trim() }); });
+        var existingNames = new Set(players.map(function(p){ return (p.batter||'').toLowerCase(); }));
+        DATA.pitches.forEach(function(bp) {
+          var bname = (bp.batter||'').trim();
+          if (!bname || existingNames.has(bname.toLowerCase())) return;
+          existingNames.add(bname.toLowerCase());
+          var sum = DATA.summary.find(function(s){ return (s.batter||'').trim() === bname; }) || { batter: bname };
+          players = players.concat([Object.assign({}, sum, { batter: bname })]);
         });
-      });
+        renderBatterCard('All Batters', players, 'player-search');
+      }
     } else {
-      const card  = document.createElement('div');
-      card.className = 'stat-card fade-up';
-      // Always use getAllPitchers so every pitcher (pbp, ibl, scatter) is shown
-      var allPNames = getAllPitchers();
-      var pitcherHTML = buildPitcherListTable(allPNames);
-      card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">All Pitchers</span>' +
-        '<span class="stat-card-subtitle">' + allPNames.length + ' pitchers</span></div>' +
-        '<div style="padding:16px 24px 0">' +
-        '<input class="roster-search" id="pitcher-search" placeholder="Search pitchers..." /></div>' +
-        pitcherHTML;
-      listContent.appendChild(card);
-      initPlayerLinks(card, 'pitcher');
-      document.getElementById('pitcher-search').addEventListener('input', function(e) {
-        const q = e.target.value.toLowerCase();
-        card.querySelectorAll('tbody tr').forEach(function(row) {
-          row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+      function renderPitcherCard(title, names, searchId) {
+        const card  = document.createElement('div');
+        card.className = 'stat-card fade-up';
+        card.style.marginTop = listContent.children.length ? '20px' : '';
+        card.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">'+title+'</span>' +
+          '<span class="stat-card-subtitle">' + names.length + ' pitchers</span></div>' +
+          '<div style="padding:16px 24px 0">' +
+          '<input class="roster-search" id="'+searchId+'" placeholder="Search pitchers..." /></div>' +
+          buildPitcherListTable(names);
+        listContent.appendChild(card);
+        initPlayerLinks(card, 'pitcher');
+        document.getElementById(searchId).addEventListener('input', function(e) {
+          const q = e.target.value.toLowerCase();
+          card.querySelectorAll('tbody tr').forEach(function(row) {
+            row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+          });
         });
-      });
+      }
+
+      if (_activeSeason === 'year:2025') {
+        renderPitcherCard('Active Roster Pitchers', getActivePitcherNames2025(), 'pitcher-search-active');
+        var inactivePitchers = getInferredPitcherNames2025();
+        if (inactivePitchers.length) renderPitcherCard('Inactive Pitchers', inactivePitchers, 'pitcher-search-inactive');
+      } else {
+        renderPitcherCard('All Pitchers', getAllPitchers(), 'pitcher-search');
+      }
     }
   }
 
@@ -1654,6 +2095,11 @@ function renderPlayerList(content) {
 }
 
 function renderPlayerDetail(name, type, content) {
+  var requestedSeasonYear = _activeSeason.replace('year:', '');
+  if (!playerHasSeasonData(name, type, requestedSeasonYear)) {
+    var availableSeason = ['2026', '2025'].find(function(yr) { return playerHasSeasonData(name, type, yr); });
+    if (availableSeason) swapSeasonData('year:' + availableSeason);
+  }
   const sum   = getSummaryPlayer(name);
   const pitch = getPitchPlayer(name);
 
@@ -1679,6 +2125,10 @@ function renderPlayerDetail(name, type, content) {
       var _ts = _iblTeamSearch[_ti];
       if (_ts.team) { team = resolveTeam(_ts.team); if (team) break; }
     }
+  }
+  if (_activeSeason === 'year:2025') {
+    var rosterTeam = getActiveRosterTeam2025(name);
+    if (rosterTeam) team = rosterTeam;
   }
 
   document.title = name + ' — Data Diamond';
@@ -1921,9 +2371,18 @@ function renderPlayerDetail(name, type, content) {
     }
   }
 
-  _allSeasonOpts = [{ label: '2026', year: '2026' }, { label: '2025', year: '2025' }];
+  _allSeasonOpts = ['2026', '2025'].map(function(yr) {
+    return { label: yr, year: yr, available: playerHasSeasonData(name, type, yr) };
+  });
 
   var activeSeasonFilter = _activeSeason;
+  if (!_allSeasonOpts.some(function(opt) { return opt.available && activeSeasonFilter === 'year:' + opt.year; })) {
+    var firstAvailableSeason = _allSeasonOpts.find(function(opt) { return opt.available; });
+    if (firstAvailableSeason) {
+      activeSeasonFilter = 'year:' + firstAvailableSeason.year;
+      swapSeasonData(activeSeasonFilter);
+    }
+  }
   var currentTab = 'overview';
 
   function renderSeasonFilterBar(activeTab) {
@@ -1933,15 +2392,17 @@ function renderPlayerDetail(name, type, content) {
     var SEASON_TABS = ['overview', 'percentile', 'zone', 'splits'];
     if (!SEASON_TABS.includes(activeTab)) { _filterBar.innerHTML = ''; return; }
 
-    function btnStyle(active) {
+    function btnStyle(active, unavailable) {
       return 'font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;' +
-             'padding:5px 14px;border-radius:4px;cursor:pointer;transition:all .15s;' +
+             'padding:5px 14px;border-radius:4px;transition:all .15s;' +
+             'cursor:' + (unavailable ? 'not-allowed' : 'pointer') + ';' +
              'border:1px solid ' + (active ? '#FFB81C' : 'rgba(255,255,255,0.1)') + ';' +
              'background:' + (active ? 'rgba(255,184,28,0.12)' : 'rgba(255,255,255,0.03)') + ';' +
-             'color:' + (active ? '#FFB81C' : 'rgba(255,255,255,0.4)') + ';';
+             'color:' + (unavailable ? 'rgba(255,255,255,0.18)' : (active ? '#FFB81C' : 'rgba(255,255,255,0.4)')) + ';' +
+             'opacity:' + (unavailable ? '.55' : '1') + ';';
     }
     var btns = _allSeasonOpts.map(function(opt) {
-      return '<button style="' + btnStyle(activeSeasonFilter === 'year:' + opt.year) + '" data-sf="year:' + opt.year + '">' + opt.year + '</button>';
+      return '<button style="' + btnStyle(activeSeasonFilter === 'year:' + opt.year, !opt.available) + '" data-sf="year:' + opt.year + '" ' + (!opt.available ? 'disabled title="No '+opt.year+' data for this player"' : '') + '>' + opt.year + '</button>';
     }).join('');
 
     _filterBar.innerHTML =
@@ -1950,6 +2411,7 @@ function renderPlayerDetail(name, type, content) {
       '<div style="display:flex;gap:6px">' + btns + '</div></div>';
 
     _filterBar.querySelectorAll('[data-sf]').forEach(function(btn) {
+      if (btn.disabled) return;
       btn.addEventListener('click', function() {
         activeSeasonFilter = btn.dataset.sf;
         swapSeasonData(btn.dataset.sf);
@@ -4668,11 +5130,13 @@ function buildHittingTable(players) {
   const rows = sorted.map(function(p) {
     const team = resolveTeam(p.batter_team || p.team);
     // Also try IBL history for team if still not found
-    var teamDisplay = team ? team.abbreviation : (function() {
+    var teamDisplay = (_activeSeason === 'year:2025' && isOnActiveRoster2025(p.batter))
+      ? displayTeamForPlayer(p.batter, p.batter_team || p.team)
+      : (team ? team.abbreviation : (function() {
       var iblS = (DATA.iblHistory[p.batter] || []).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
       if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
       return '—';
-    })();
+    })());
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + p.batter + '" data-type="batter">' + p.batter + '</a></td>' +
       '<td>' + teamDisplay + '</td>' +
@@ -4707,11 +5171,13 @@ function buildPitcherListTable(names) {
     });
     var pd = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
     const team = pts.length ? resolveTeam(pts[0].pitcher_team) : resolveTeam(pd.pitcher_team || pd.team);
-    var teamDisplay = team ? team.abbreviation : (function() {
+    var teamDisplay = (_activeSeason === 'year:2025' && isOnActiveRoster2025(name))
+      ? displayTeamForPlayer(name, pd.pitcher_team || pd.team)
+      : (team ? team.abbreviation : (function() {
       var iblS = (DATA.iblHistory[name] || []).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
       if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
       return '—';
-    })();
+    })());
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + name + '" data-type="pitcher">' + name + '</a></td>' +
       '<td>' + teamDisplay + '</td>' +
@@ -4754,6 +5220,10 @@ function initPlayerLinks(container, type) {
     var _s = DATA.summary.find(function(p){ return p.batter === pName; });
     var _p = DATA.pitchers.find(function(p){ return p.pitcher === pName; });
     var _t = _s ? _s.batter_team : (_p ? (_p.pitcher_team || _p.team) : null);
+    if (_activeSeason === 'year:2025') {
+      var _rt = getActiveRosterTeam2025(pName);
+      if (_rt) _t = _rt.name;
+    }
     if (!ACCESS.canViewPlayer(pName, pType, _t)) {
       el.style.cursor = 'not-allowed';
       el.style.opacity = '0.4';
