@@ -1328,14 +1328,19 @@ Zane Skansi,Kitchener Panthers`;
     d.text(name.toUpperCase(),ML+38,MT+12);
     d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
     d.text(role+'  •  '+team.name+'  •  CBL '+selSeason,ML+38,MT+21);
-    // Logo — canvas rendered SVG match
-    var lx=ML+CPW-14, ly=MT+13, logoSize=14;
+    // Logo — top right, matching website style (diamond left, text right, right-aligned in header)
+    var logoSize=16, ly=MT+13;
+    // right edge of content area
+    var rightEdge=ML+CPW-2;
+    // text block: "Data" + "Diamond" stacked, estimate ~16mm wide at fontSize 9
+    var txtW=16, gap=2;
+    var lx=rightEdge-txtW-gap-logoSize/2;
     drawLogoImg(d, lx, ly, logoSize);
-    // Logo text
-    d.setFont('helvetica','bold'); d.setFontSize(7); st(d,CO.white);
-    d.text('Data', lx+8, ly-1.5);
-    st(d,CO.gold);
-    d.text('Diamond', lx+8, ly+5);
+    var txLeft=lx+logoSize/2+gap;
+    d.setFont('helvetica','bold'); d.setFontSize(9); st(d,CO.white);
+    d.text('Data', txLeft, ly-2);
+    d.setFont('helvetica','bold'); d.setFontSize(9); st(d,CO.gold);
+    d.text('Diamond', txLeft, ly+6);
     sd(d,CO.gold);d.setLineWidth(0.4);d.line(ML,MT+27,ML+CPW,MT+27);
   }
   function drawBoxes(d,stats,y){
@@ -1746,19 +1751,19 @@ Zane Skansi,Kitchener Panthers`;
     function hCard(label,value,color,note,sub){return{label:label,value:value,color:color,note:note,sub:sub||''};}
     var hl=[];
     var fpSwC=fpSwingPct!=null?(fpSwingPct>=55?'#f87171':fpSwingPct>=40?'#FFB81C':'#34d399'):'#666';
-    hl.push(hCard(fpSwingPct!=null?(fpSwingPct>=55?'AGGRESSIVE':'PASSIVE'):'FP SWING %',
+    hl.push(hCard('FP SWING %',
       fpSwingPct!=null?f1(fpSwingPct)+'%':'—',fpSwC,
       fpSwingPct!=null?(fpSwingPct>=55?'Attacks first pitch — throw strikes.':fpSwingPct>=40?'Sometimes swings early.':'Takes pitches — work ahead.'):'No data.','1st Pitch Swing %'));
     var swC=swingPct!=null?(swingPct>=52?'#34d399':swingPct>=42?'#FFB81C':'#f87171'):'#666';
-    hl.push(hCard(swingPct!=null?(swingPct>=52?'FREE SWINGER':swingPct>=42?'MODERATE':'SELECTIVE'):'SWING %',
+    hl.push(hCard('SWING %',
       swingPct!=null?f1(swingPct)+'%':'—',swC,
       swingPct!=null?(swingPct>=52?'Swings often — use off-speed away.':swingPct>=42?'Mix pitches in and out.':'Very selective — waits for his pitch, work the zone.'):'No data.','Overall Swing %'));
     var whC=whiffPct!=null?(whiffPct>=30?'#34d399':whiffPct>=20?'#FFB81C':'#f87171'):'#666';
-    hl.push(hCard(whiffPct!=null?(whiffPct>=30?'HIGH WHIFF':whiffPct>=20?'MODERATE':'LOW WHIFF'):'WHIFF %',
+    hl.push(hCard('WHIFF %',
       whiffPct!=null?f1(whiffPct)+'%':'—',whC,
       whiffPct!=null?(whiffPct>=30?'Misses often — use breaking stuff.':whiffPct>=20?'Some swing and miss.':'Makes contact — be precise.'):'No data.','Whiff % on Swings'));
     var chC=chasePct!=null?(chasePct>=35?'#34d399':chasePct>=22?'#FFB81C':'#f87171'):'#666';
-    hl.push(hCard(chasePct!=null?(chasePct>=35?'CHASES OFTEN':chasePct>=22?'SOME CHASE':'DISCIPLINED'):'CHASE %',
+    hl.push(hCard('CHASE %',
       chasePct!=null?f1(chasePct)+'%':'—',chC,
       chasePct!=null?(chasePct>=35?'Use waste pitches — he bites.':chasePct>=22?'Occasional chase — mix.':'Does not chase — stay in zone.'):'No data.','Chase % (out of zone)'));
 
