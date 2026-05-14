@@ -42,7 +42,7 @@
     },
     {
       "email": "damontopolie@gmail.com",
-      "role": "catcher",
+      "role": "admin",
       "player": "Damon Topolie"
     },
     {
@@ -112,7 +112,7 @@
     },
     {
       "email": "luca.boscarino11@gmail.com",
-      "role": "position_player",
+      "role": "catcher",
       "player": "Luca Boscarino"
     },
     {
@@ -154,6 +154,11 @@
       "email": "jkennedypitching@gmail.com",
       "role": "admin",
       "player": "Jared Kennedy"
+    },
+    {
+      "email": "liamrawilson@gmail.com",
+      "role": "position_player",
+      "player": "Liam Wilson"
     }
   ]
 }
