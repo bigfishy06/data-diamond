@@ -906,7 +906,7 @@ Zane Skansi,Kitchener Panthers`;
     var k = normRosterName(name);
     var iblP = getIblSeasonByName(name, function(s){ return s.pos === 'P' || (s.IP || 0) > 0; });
     if (iblP) return true;
-    if (findByName(DATA.pbpPitchers, 'pitcher', name)) return true;
+    // 2025: pitchers.json (datadiamond) is the pbp pitcher source
     if (findByName(DATA.pitchers, 'pitcher', name)) return true;
     return DATA.pitches.some(function(bp) {
       return bp.scatter && bp.scatter.some(function(s) { return normRosterName(s.pitcher) === k; });
@@ -915,36 +915,41 @@ Zane Skansi,Kitchener Panthers`;
 
   function makeRosterBatter2025(name) {
     name = canonicalName(name);
-    var pbp = findByName(DATA.pbpBatters, 'batter', name);
+    // 2025: summary.json IS the pbp source — it has Swing_pct, Whiff_pct, FP_Swing_pct, etc.
     var sum = findByName(DATA.summary, 'batter', name);
     var pitch = getPitchPlayerForRoster(name);
     var ibl = getIblSeasonByName(name, function(s){ return s.pos !== 'P' && ((s.AB || 0) > 0 || (s.PA || 0) > 0); });
-    var hasBatterData = !!(pbp || sum || pitch || ibl);
+    var hasBatterData = !!(sum || pitch || ibl);
     if (!hasBatterData && hasPitcherData2025(name)) return null;
-    return { name: name, summary: sum || Object.assign({ batter: name }, ibl || {}), pbp: pbp, pitch: pitch };
+    // summary IS pbp for 2025; expose it as both .summary and .pbp so PDF code can read either
+    return { name: name, summary: sum || Object.assign({ batter: name }, ibl || {}), pbp: sum || null, pitch: pitch };
   }
 
   function makeRosterPitcher2025(name) {
     name = canonicalName(name);
     var k = normRosterName(name);
-    var pbpEntry = findByName(DATA.pbpPitchers, 'pitcher', name);
-    var sc = [];
+    // 2025: pitchers.json (datadiamond) IS the pbp pitcher source
+    var pd = findByName(DATA.pitchers, 'pitcher', name) || {};
+    var sc = pd.scatter || [];
+    // Also collect scatter from pitches.json for this pitcher (batter-perspective x/y)
     DATA.pitches.forEach(function(bp) {
       if (!bp.scatter) return;
       bp.scatter.forEach(function(s) {
         if (normRosterName(s.pitcher) === k) sc.push(s);
       });
     });
-    var pd = findByName(DATA.pitchers, 'pitcher', name) || {};
+    // pbp_pitchers.json for card display and PDF stats
+    var pbpEntry2025 = findByName(DATA.pbpPitchers, 'pitcher', name) || null;
     var iblP = getIblSeasonByName(name, function(s){ return s.pos === 'P' || (s.IP || 0) > 0; });
-    if (!pbpEntry && !sc.length && !pd.pitcher && !iblP) return null;
+    if (!sc.length && !pd.pitcher && !pbpEntry2025 && !iblP) return null;
     return {
-      name: name, scatter: sc, pbp: pbpEntry || null,
-      fps_pct: (pbpEntry && pbpEntry.FP_STR_pct) || pd.FP_STR_pct,
+      name: name, scatter: sc, pbp: pbpEntry2025,
+      fps_pct: pd.FPS_pct,
       avg_ttp: pd.avg_time_to_plate,
-      era: pd.ERA != null ? pd.ERA : (iblP && iblP.ERA),
-      whip: pitcherWhipFromData(name, pd, sc),
-      baa: pd.BA_against
+      // ERA from IBL History; WHIP/BAA from pbp_pitchers first, then datadiamond
+      era: (iblP && iblP.ERA != null) ? iblP.ERA : (pbpEntry2025 && pbpEntry2025.ERA != null ? pbpEntry2025.ERA : null),
+      whip: pbpEntry2025 && pbpEntry2025.WHIP != null ? pbpEntry2025.WHIP : pitcherWhipFromData(name, pd, sc),
+      baa: pbpEntry2025 && pbpEntry2025.BA_against != null ? pbpEntry2025.BA_against : (pd.BAA != null ? pd.BAA : null)
     };
   }
 
@@ -963,7 +968,7 @@ Zane Skansi,Kitchener Panthers`;
   function getTeamBatterReports2026(teamId) {
     var seen = new Set();
     var players = [];
-    var base = DATA.pbpBatters.length
+    var base = DATA.pbpBatters && DATA.pbpBatters.length
       ? DATA.pbpBatters.filter(function(p) { return p.AB >= 5; })
       : DATA.summary.filter(function(p) { return p.AB > 0; });
 
@@ -1008,7 +1013,7 @@ Zane Skansi,Kitchener Panthers`;
     }
 
     if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
-      DATA.pbpPitchers.filter(function(p) { return p.BF >= 5; }).forEach(function(p) {
+      DATA.pbpPitchers.filter(function(p) { return (p.BF || 0) >= 5; }).forEach(function(p) {
         var t = resolveTeam(p.pitcher_team);
         if (t && t.id === teamId) addName(p.pitcher);
       });
@@ -1025,7 +1030,7 @@ Zane Skansi,Kitchener Panthers`;
 
     return names.map(function(name) {
       var k = normRosterName(name);
-      var pbpEntry = (DATA.pbpPitchers || []).find(function(p) { return p.BF >= 5 && normRosterName(p.pitcher) === k; }) || null;
+      var pbpEntry = (DATA.pbpPitchers || []).find(function(p) { return (p.BF||0) >= 5 && normRosterName(p.pitcher) === k; }) || null;
       var sc = [];
       DATA.pitches.forEach(function(bp) {
         if (!bp.scatter) return;
@@ -1039,11 +1044,11 @@ Zane Skansi,Kitchener Panthers`;
       var pd = findByName(DATA.pitchers, 'pitcher', name) || {};
       return {
         name: name, scatter: sc, pbp: pbpEntry,
-        fps_pct: (pbpEntry && pbpEntry.FP_STR_pct) || pd.FP_STR_pct,
+        fps_pct: (pbpEntry && pbpEntry.FP_STR_pct) || pd.FPS_pct,
         avg_ttp: pd.avg_time_to_plate,
-        era: pd.ERA,
-        whip: pitcherWhipFromData(name, pd, sc),
-        baa: pd.BA_against
+        era: pbpEntry ? pbpEntry.ERA : pd.ERA,
+        whip: pbpEntry ? pbpEntry.WHIP : pitcherWhipFromData(name, pd, sc),
+        baa: pbpEntry ? pbpEntry.BA_against : (pd.BAA != null ? pd.BAA : pd.BA_against)
       };
     }).sort(function(a, b) { return a.name.localeCompare(b.name); });
   }
@@ -1052,7 +1057,9 @@ Zane Skansi,Kitchener Panthers`;
     var players = [];
     if (role === 'batter') {
       var seenBatters = new Set();
-      var rawBatters = DATA.pbpBatters.length ? DATA.pbpBatters : DATA.summary;
+      // For 2025 only use pbp_batters.json (season-locked). Never fall back to DATA.summary
+      // here as it swaps with season selection and would pull in 2026 players.
+      var rawBatters = (DATA.pbpBatters && DATA.pbpBatters.length) ? DATA.pbpBatters : (selSeason !== '2025' ? DATA.summary : []);
       rawBatters.forEach(function(p) {
         var t = resolveTeam(p.batter_team || p.team);
         var bkey = normRosterName(p.batter);
@@ -1078,28 +1085,32 @@ Zane Skansi,Kitchener Panthers`;
         }
       });
 
-      DATA.summary.forEach(function(p) {
-        var bkey = normRosterName(p.batter);
-        if (!p.batter || seenBatters.has(bkey)) return;
-        var t = resolveTeam(p.batter_team);
-        if (t && t.id === teamId) {
-          seenBatters.add(bkey);
-          var cname = canonicalName(p.batter);
-          players.push({ name: cname, summary: p, pitch: getPitchPlayerForRoster(cname) });
-        }
-      });
+      // 2025: skip DATA.summary and DATA.pitches loops — those swap with season and
+      // would bleed in 2026 players. pbp_batters + iblHistory are the 2025-only sources.
+      if (selSeason !== '2025') {
+        DATA.summary.forEach(function(p) {
+          var bkey = normRosterName(p.batter);
+          if (!p.batter || seenBatters.has(bkey)) return;
+          var t = resolveTeam(p.batter_team);
+          if (t && t.id === teamId) {
+            seenBatters.add(bkey);
+            var cname = canonicalName(p.batter);
+            players.push({ name: cname, summary: p, pitch: getPitchPlayerForRoster(cname) });
+          }
+        });
 
-      DATA.pitches.forEach(function(bp) {
-        var bkey = normRosterName(bp.batter);
-        if (!bp.batter || seenBatters.has(bkey)) return;
-        var t = resolveTeam(pitchBatterTeam(bp));
-        if (t && t.id === teamId) {
-          seenBatters.add(bkey);
-          var cname = canonicalName(bp.batter);
-          var sum = findByName(DATA.summary, 'batter', cname) || { batter: cname };
-          players.push({ name: cname, summary: sum, pitch: getPitchPlayerForRoster(cname) });
-        }
-      });
+        DATA.pitches.forEach(function(bp) {
+          var bkey = normRosterName(bp.batter);
+          if (!bp.batter || seenBatters.has(bkey)) return;
+          var t = resolveTeam(pitchBatterTeam(bp));
+          if (t && t.id === teamId) {
+            seenBatters.add(bkey);
+            var cname = canonicalName(bp.batter);
+            var sum = findByName(DATA.summary, 'batter', cname) || { batter: cname };
+            players.push({ name: cname, summary: sum, pitch: getPitchPlayerForRoster(cname) });
+          }
+        });
+      }
     } else {
       var pitcherCanon = {};
       function addPitcher(raw) {
@@ -1110,7 +1121,7 @@ Zane Skansi,Kitchener Panthers`;
       }
 
       if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
-        DATA.pbpPitchers.forEach(function(p) {
+        DATA.pbpPitchers.filter(function(p){ return (p.BF||0) >= 5; }).forEach(function(p) {
           var t = resolveTeam(p.pitcher_team);
           if (t && t.id === teamId) addPitcher(p.pitcher);
         });
@@ -1162,7 +1173,7 @@ Zane Skansi,Kitchener Panthers`;
   function renderPlayerList() {
     var section = document.getElementById('player-list-section');
     if (typeof swapSeasonData === 'function') swapSeasonData('year:' + selSeason);
-    if (!DATA.summary.length && !DATA.pitches.length && !DATA.pbpBatters.length) {
+    if (!DATA.summary.length && !DATA.pitches.length && !DATA.pbpBatters.length && !DATA.pbpPitchers.length) {
       section.innerHTML = '<div class="scout-empty"><div class="scout-empty-title">LOADING DATA</div></div>';
       setTimeout(renderPlayerList, 300); return;
     }
@@ -1639,18 +1650,16 @@ Zane Skansi,Kitchener Panthers`;
     y+=4;
 
     // ── Key Scouting Points ───────────────────────────────────────────────
-    var _pbpEarly=selSeason==='2026'?null:(DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null);
+    // 2025: summary.json has Swing_pct, Whiff_pct, FP_Swing_pct directly (same as 2026 path)
     var _avgEarly=(iblB&&iblB.AVG!=null?iblB.AVG:(s.AVG!=null?parseFloat(s.AVG):0))||0;
     var _opsEarly=(iblB&&iblB.OPS!=null?iblB.OPS:(s.OPS!=null?parseFloat(s.OPS):0))||0;
-    var _bbEarly=selSeason==='2026'
-      ? (s.BB_pct!=null?s.BB_pct:((s.BB||0)/(s.PA||1)*100))
-      : (_pbpEarly&&_pbpEarly.BB_pct!=null?_pbpEarly.BB_pct:((s.BB||0)/(s.PA||1)*100));
-    var _kEarly=selSeason==='2026'
-      ? (s.K_pct!=null?s.K_pct:((s.K||0)/(s.AB||1)*100))
-      : (_pbpEarly&&_pbpEarly.K_pct!=null?_pbpEarly.K_pct:((s.K||0)/(s.AB||1)*100));
-    var _swEarly=selSeason==='2026'?(s.Swing_pct!=null?s.Swing_pct:null):(_pbpEarly&&_pbpEarly.SWING_pct!=null?_pbpEarly.SWING_pct:null);
-    var _whEarly=selSeason==='2026'?(s.Whiff_pct!=null?s.Whiff_pct:null):(_pbpEarly&&_pbpEarly.WHIFF_pct!=null?_pbpEarly.WHIFF_pct:null);
-    var _fpEarly=selSeason==='2026'?(s.FP_Swing_pct!=null?s.FP_Swing_pct:null):(_pbpEarly&&_pbpEarly.FP_SWING_pct!=null?_pbpEarly.FP_SWING_pct:null);
+    // BB%/K% — always from summary (pbp)
+    var _bbEarly=s.BB_pct!=null?s.BB_pct:((s.BB||0)/(s.PA||1)*100);
+    var _kEarly=s.K_pct!=null?s.K_pct:((s.K||0)/(s.PA||1)*100);
+    // Swing/Whiff/FP — summary.json fields work for both seasons
+    var _swEarly=s.Swing_pct!=null?s.Swing_pct:null;
+    var _whEarly=s.Whiff_pct!=null?s.Whiff_pct:null;
+    var _fpEarly=s.FP_Swing_pct!=null?s.FP_Swing_pct:null;
 
     var batterPoints=[];
 
@@ -1707,32 +1716,22 @@ Zane Skansi,Kitchener Panthers`;
 
     // ── Scout Summary ──────────────────────────────────────────────────────
     y=drawSec(d,'Scout Summary',y);
+    // 2025 & 2026: pbp_batters.json provides SWING_pct, WHIFF_pct, FP_SWING_pct etc.
     var pbp=selSeason==='2026'?null:(DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null);
     var pa=(s.PA)||1, bb=(s.BB)||0, k=(s.K)||0;
 
-    // 2026: read directly from summary2026. 2025: pbpBatters then scatter fallback.
+    // Both seasons: read directly from pbp (pbp_batters) or summary fallback.
     var fpSwingPct=selSeason==='2026'
       ? (s.FP_Swing_pct!=null?s.FP_Swing_pct:null)
-      : (pbp&&pbp.FP_SWING_pct!=null?pbp.FP_SWING_pct:(function(){
-          var fpP=sc.filter(function(s2,i){if(i===0)return true;var prev=sc[i-1];return(s2.batter!==prev.batter||s2.inning!==prev.inning||s2.half_inning!==prev.half_inning);});
-          var fpN=fpP.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-          return fpP.length>=5?fpN/fpP.length*100:null;
-        })());
+      : (pbp&&pbp.FP_SWING_pct!=null?pbp.FP_SWING_pct:null);
 
     var swingPct=selSeason==='2026'
       ? (s.Swing_pct!=null?s.Swing_pct:null)
-      : (pbp&&pbp.SWING_pct!=null?pbp.SWING_pct:(function(){
-          var swN=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-          return sc.length>=5?swN/sc.length*100:null;
-        })());
+      : (pbp&&pbp.SWING_pct!=null?pbp.SWING_pct:null);
 
     var whiffPct=selSeason==='2026'
       ? (s.Whiff_pct!=null?s.Whiff_pct:null)
-      : (pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct:(function(){
-          var swN2=sc.filter(function(s2){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging','Dropped Third Strike Swinging'].includes(s2.outcome);}).length;
-          var wN=sc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
-          return swN2>=5?wN/swN2*100:null;
-        })());
+      : (pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct:null);
 
     var chasePct=selSeason==='2026'
       ? (s.chase_pitches!=null&&s.pitches_seen>0?s.chase_pitches/s.pitches_seen*100:null)
@@ -1796,7 +1795,7 @@ Zane Skansi,Kitchener Panthers`;
     var bbPct2=selSeason==='2026'
       ? (s.BB_pct!=null?s.BB_pct/100:(pa>0?bb/pa:0))
       : (pbp&&pbp.BB_pct!=null?pbp.BB_pct/100:(pa>0?bb/pa:0));
-    var ssPct=pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct/100:(sc.length>=5?ssN/sc.length:null);
+    var ssPct=pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct/100:(sc.length>=5?ssN/sc.length:0);
 
     var discStats=[
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
@@ -1860,7 +1859,7 @@ Zane Skansi,Kitchener Panthers`;
 
     // Batted Ball Profile
     // 2026: raw counts from summary2026
-    // 2025: pbpBatters GB_pct/FB_pct/LO_pct/PO_pct
+    // BIP profile: 2025 uses pbp_batters.json GB_pct/FB_pct/LO_pct/PO_pct; 2026 computes from summary counts
     var hasBip,bipGb,bipFb,bipLo,bipPo;
     if(selSeason==='2026'){
       var gb26=(s.Groundout||0)+(s.DP||0)+(s.TP||0);
@@ -1874,6 +1873,7 @@ Zane Skansi,Kitchener Panthers`;
       bipLo=hasBip?lo26/bip26tot*100:0;
       bipPo=hasBip?pu26/bip26tot*100:0;
     } else {
+      // 2025: pbp_batters.json has pre-computed BIP %s
       hasBip=pbp&&pbp.GB_pct!=null&&pbp.FB_pct!=null;
       bipGb=hasBip?pbp.GB_pct:0;
       bipFb=hasBip?pbp.FB_pct:0;
@@ -1993,8 +1993,8 @@ Zane Skansi,Kitchener Panthers`;
 
     // Key stat boxes
     // 2026: DATA.pitchers = pitchers2026.json (K_pct, BB_pct, STR_pct, FPS_pct, BAA, GB_pct etc). No pbp.
-    // 2025: pbpPitchers first, then iblHistory (unchanged).
-    var pbpP2=selSeason==='2026'?null:(DATA.pbpPitchers?DATA.pbpPitchers.find(function(p){return normName(p.pitcher)===normName(player.name);}):null);
+    // ERA/IP from IBL History. K%/BB%/STR%/FPS%/WHIP/BAA from pbp_pitchers.json for 2025.
+    var pbpP2=(DATA.pbpPitchers||[]).find(function(p){return normName(p.pitcher)===normName(player.name);})||null;
     var _iblAllP=getIblRowsByName(player.name);
     var iblP2=selSeason==='2026'?null:(_iblAllP.filter(function(s){return s.IP>0;})[0]||null);
     // ERA always from iblHistory
@@ -2004,10 +2004,10 @@ Zane Skansi,Kitchener Panthers`;
     var pd26=selSeason==='2026'?(DATA.pitchers.find(function(p){return normName(p.pitcher)===normName(player.name);})||{}):null;
     var whipVal=selSeason==='2026'
       ? (pd26&&pd26.IP>0?f2((bbs+sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length)/(pd26.IP)):'—')
-      : (pbpP2&&pbpP2.WHIP!=null?f2(pbpP2.WHIP):(iblP2&&iblP2.WHIP!=null?f1(iblP2.WHIP):(player.whip!=null?f1(player.whip):'—')));
+      : (pbpP2&&pbpP2.WHIP!=null?f2(pbpP2.WHIP):(player.whip!=null?f1(player.whip):(iblP2&&iblP2.WHIP!=null?f1(iblP2.WHIP):'—')));
     var baaVal=selSeason==='2026'
       ? (pd26&&pd26.BAA!=null?f3(pd26.BAA):'—')
-      : (pbpP2&&pbpP2.BA_against!=null?f3(pbpP2.BA_against):(player.baa!=null?f3(player.baa):'—'));
+      : (pbpP2&&pbpP2.BA_against!=null?f3(pbpP2.BA_against):(player.baa!=null?f3(player.baa):(pd26&&pd26.BAA!=null?f3(pd26.BAA):'—')));
     var kPctVal=selSeason==='2026'
       ? (pd26&&pd26.K_pct!=null?f1(pd26.K_pct)+'%':f1(xp(ks,tot))+'%')
       : (pbpP2&&pbpP2.K_pct!=null?f1(pbpP2.K_pct)+'%':f1(xp(ks,tot))+'%');
@@ -2344,9 +2344,9 @@ Zane Skansi,Kitchener Panthers`;
 
     var seenP = new Set();
     var oppPitchers = [];
-    // Primary: pbpPitchers BF>=5
+    // Primary: pbp_pitchers.json BF>=5; ERA from IBL History
     if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
-      DATA.pbpPitchers.filter(function(p){ return p.BF >= 5; }).forEach(function(p) {
+      DATA.pbpPitchers.filter(function(p){ return (p.BF||0) >= 5; }).forEach(function(p) {
         var pt = resolveTeam(p.pitcher_team);
         var pkey = normRosterName(p.pitcher);
         if (pt && pt.id === teamId && !seenP.has(pkey)) {
@@ -2360,8 +2360,8 @@ Zane Skansi,Kitchener Panthers`;
             if (hit) hand = hit.pitcher_side;
           });
           oppPitchers.push({ name:pname, hand:hand,
-            era: ibl.length&&ibl[0].ERA!=null?ibl[0].ERA:null,
-            whip: p.WHIP!=null?p.WHIP:(ibl.length&&ibl[0].WHIP!=null?ibl[0].WHIP:null),
+            era: ibl.length&&ibl[0].ERA!=null?ibl[0].ERA:(p.ERA!=null?p.ERA:null),
+            whip: p.WHIP!=null?p.WHIP:null,
             str: p.STR_pct!=null?p.STR_pct:null, kpct: p.K_pct!=null?p.K_pct:null });
         }
       });
