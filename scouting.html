@@ -930,7 +930,8 @@ Zane Skansi,Kitchener Panthers`;
     var k = normRosterName(name);
     // 2025: pitchers.json (datadiamond) IS the pbp pitcher source
     var pd = findByName(DATA.pitchers, 'pitcher', name) || {};
-    var sc = pd.scatter || [];
+    // pd.scatter can be {} (empty object) when R serialises an empty data frame — always coerce to array
+    var sc = Array.isArray(pd.scatter) ? pd.scatter.slice() : [];
     // Also collect scatter from pitches.json for this pitcher (batter-perspective x/y)
     DATA.pitches.forEach(function(bp) {
       if (!bp.scatter) return;
@@ -1664,18 +1665,18 @@ Zane Skansi,Kitchener Panthers`;
     var batterPoints=[];
 
     // AVG/OPS production
-    if(_avgEarly>=0.300) batterPoints.push({dot:'#f87171',text:'High avg hitter ('+f3(_avgEarly)+' AVG, '+f3(_opsEarly)+' OPS) — above-avg contact threat. Limit mistakes in the zone.'});
-    else if(_avgEarly>=0.250) batterPoints.push({dot:'#FFB81C',text:'Solid hitter ('+f3(_avgEarly)+' AVG, '+f3(_opsEarly)+' OPS) — can hurt you. Mix locations and keep him off-balance.'});
+    if(_avgEarly>=0.300) batterPoints.push({dot:'#f87171',text:'Solid hitter ('+f3(_avgEarly)+' AVG, '+f3(_opsEarly)+' OPS) — one of the better contact averages in the league. Limit mistakes in the zone.'});
+    else if(_avgEarly>=0.250) batterPoints.push({dot:'#FFB81C',text:'Decent hitter ('+f3(_avgEarly)+' AVG, '+f3(_opsEarly)+' OPS) — above-average contact, can hurt you. Mix locations and keep him off-balance.'});
     else batterPoints.push({dot:'#34d399',text:'Struggling offensively ('+f3(_avgEarly)+' AVG, '+f3(_opsEarly)+' OPS) — attack the zone with confidence.'});
 
     // Plate discipline — BB%
-    if(_bbEarly>=15) batterPoints.push({dot:'#f87171',text:'Extremely patient ('+f1(_bbEarly)+'% BB) — will not chase. Stay in the zone and execute; do not nibble.'});
+    if(_bbEarly>=15) batterPoints.push({dot:'#f87171',text:'Outstanding plate discipline ('+f1(_bbEarly)+'% BB) — draws walks at an elite rate. Stay in the zone; do not nibble.'});
     else if(_bbEarly>=10) batterPoints.push({dot:'#FFB81C',text:'Patient hitter ('+f1(_bbEarly)+'% BB) — works counts well. Mix your approach; do not fall behind early.'});
-    else batterPoints.push({dot:'#34d399',text:'Aggressive hitter ('+f1(_bbEarly)+'% BB) — low walk rate; use edges and off-speed away.'});
+    else batterPoints.push({dot:'#34d399',text:'Aggressive hitter ('+f1(_bbEarly)+'% BB) — almost never walks, pitchers can exploit this. Use edges and off-speed away.'});
 
     // K rate
-    if(_kEarly>=25) batterPoints.push({dot:'#34d399',text:'High K rate ('+f1(_kEarly)+'%) — power stuff works. Trust your put-away pitch with two strikes.'});
-    else if(_kEarly<=10) batterPoints.push({dot:'#f87171',text:'Very hard to strikeout ('+f1(_kEarly)+'% K) — keep the ball down; he puts the bat on everything.'});
+    if(_kEarly>=25) batterPoints.push({dot:'#34d399',text:'High K rate ('+f1(_kEarly)+'%) — a real vulnerability. Power stuff and put-away pitches work here.'});
+    else if(_kEarly<=15) batterPoints.push({dot:'#f87171',text:'Very hard to strikeout ('+f1(_kEarly)+'% K) — makes consistent contact. Keep the ball down, avoid mistakes.'});
 
     // Swing%
     if(_swEarly!=null){
@@ -1691,8 +1692,8 @@ Zane Skansi,Kitchener Panthers`;
 
     // FP swing
     if(_fpEarly!=null){
-      if(_fpEarly>=50) batterPoints.push({dot:'#f87171',text:'Attacks first pitches ('+f1(_fpEarly)+'% 1st-pitch swing) — be ready to compete on pitch one.'});
-      else if(_fpEarly<=20) batterPoints.push({dot:'#34d399',text:'Takes first pitches ('+f1(_fpEarly)+'% 1st-pitch swing) — get an early free strike every at-bat.'});
+      if(_fpEarly>=50) batterPoints.push({dot:'#f87171',text:'Attacks first pitches ('+f1(_fpEarly)+'%) — pitchers can get ahead cheap. Be ready on pitch one.'});
+      else if(_fpEarly<=20) batterPoints.push({dot:'#34d399',text:'Takes first pitches ('+f1(_fpEarly)+'%) — very patient early. Get a free strike on pitch one every at-bat.'});
     }
 
     batterPoints=batterPoints.slice(0,5);
@@ -1748,10 +1749,10 @@ Zane Skansi,Kitchener Panthers`;
     hl.push(hCard(fpSwingPct!=null?(fpSwingPct>=55?'AGGRESSIVE':'PASSIVE'):'FP SWING %',
       fpSwingPct!=null?f1(fpSwingPct)+'%':'—',fpSwC,
       fpSwingPct!=null?(fpSwingPct>=55?'Attacks first pitch — throw strikes.':fpSwingPct>=40?'Sometimes swings early.':'Takes pitches — work ahead.'):'No data.','1st Pitch Swing %'));
-    var swC=swingPct!=null?(swingPct>=52?'#f87171':swingPct>=42?'#FFB81C':'#34d399'):'#666';
-    hl.push(hCard(swingPct!=null?(swingPct>=52?'FREE SWINGER':swingPct>=42?'MODERATE':'PASSIVE'):'SWING %',
+    var swC=swingPct!=null?(swingPct>=52?'#34d399':swingPct>=42?'#FFB81C':'#f87171'):'#666';
+    hl.push(hCard(swingPct!=null?(swingPct>=52?'FREE SWINGER':swingPct>=42?'MODERATE':'SELECTIVE'):'SWING %',
       swingPct!=null?f1(swingPct)+'%':'—',swC,
-      swingPct!=null?(swingPct>=52?'Swings often — use off-speed away.':swingPct>=42?'Mix pitches in and out.':'Be careful — very selective.'):'No data.','Overall Swing %'));
+      swingPct!=null?(swingPct>=52?'Swings often — use off-speed away.':swingPct>=42?'Mix pitches in and out.':'Very selective — waits for his pitch, work the zone.'):'No data.','Overall Swing %'));
     var whC=whiffPct!=null?(whiffPct>=30?'#34d399':whiffPct>=20?'#FFB81C':'#f87171'):'#666';
     hl.push(hCard(whiffPct!=null?(whiffPct>=30?'HIGH WHIFF':whiffPct>=20?'MODERATE':'LOW WHIFF'):'WHIFF %',
       whiffPct!=null?f1(whiffPct)+'%':'—',whC,
@@ -1802,11 +1803,11 @@ Zane Skansi,Kitchener Panthers`;
        color:pspa!=null?(pspa>=4.0?'#34d399':pspa>=3.5?'#FFB81C':'#f87171'):'#555',
        note:pspa!=null?(pspa>=4.0?'Works counts deeply':pspa>=3.5?'Average pitch count':'First-pitch aggressive'):''},
       {label:'K%',sub:'Strikeout rate',val:f1(kPct2*100)+'%',
-       color:kPct2>=0.28?'#34d399':kPct2>=0.18?'#FFB81C':'#f87171',
-       note:kPct2>=0.28?'Strikeout prone':kPct2>=0.18?'Average K rate':'Hard to strikeout'},
+       color:kPct2>=0.25?'#34d399':kPct2>=0.15?'#FFB81C':'#f87171',
+       note:kPct2>=0.25?'Strikeout prone — a vulnerability':kPct2>=0.15?'Average K rate — standard approach':'Hard to strikeout — makes consistent contact'},
       {label:'BB%',sub:'Walk rate',val:f1(bbPct2*100)+'%',
        color:bbPct2>=0.14?'#f87171':bbPct2>=0.08?'#FFB81C':'#34d399',
-       note:bbPct2>=0.14?'Very patient hitter':bbPct2>=0.08?'Moderate patience':'Aggressive — will chase'},
+       note:bbPct2>=0.14?'Outstanding discipline — draws walks at an elite rate':bbPct2>=0.08?'Patient — works counts and earns walks':'Aggressive — rarely walks, pitchers can exploit'},
     ];
     var nDisc=discStats.length, dW2=(CPW-(nDisc-1)*4)/nDisc, dH2=28;
     discStats.forEach(function(stat,i){
