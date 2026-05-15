@@ -1268,14 +1268,15 @@ Zane Skansi,Kitchener Panthers`;
     }
 
     if (action === 'pitchers-pdf') {
-      genOppPitchersPDF(oppName, actionBtn, restore, selected);
+      genOppPitchersPDF(oppName, actionBtn, restore, selected, year);
     } else if (action === 'batters-pdf') {
-      genOppBattersPDF(oppName, actionBtn, restore, selected);
+      genOppBattersPDF(oppName, actionBtn, restore, selected, year);
     }
   }
 
   // ── OPP BATTERS PDF — compact two-column table, guaranteed one page ──────
-  function genOppBattersPDF(oppName, btn, restore, selectedNames) {
+  function genOppBattersPDF(oppName, btn, restore, selectedNames, year) {
+    year = year || ((typeof _activeSeason !== 'undefined') ? _activeSeason.replace('year:','') : '2026');
     restore = restore || function(){};
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.summary) {
       alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
@@ -1346,7 +1347,7 @@ Zane Skansi,Kitchener Panthers`;
         var pitchObj = DATA.pitches.find(function(p){ return p.batter&&p.batter.toLowerCase()===s.batter.toLowerCase(); });
         var sc = pitchObj&&pitchObj.scatter ? pitchObj.scatter : [];
         var pbp = DATA.pbpBatters.find(function(p){ return p.batter===s.batter; })||null;
-        var iblYear=(typeof _activeSeason!=='undefined')?_activeSeason.replace('year:',''):'2026';
+        var iblYear=String(year);
         var iblAllS=DATA.iblHistory[s.batter]||[];
         var iblS=iblAllS.filter(function(r){return r.AB>0&&(r.season||'').indexOf(iblYear)!==-1;})[0]
                  ||iblAllS.filter(function(r){return r.AB>0;})[0]||null;
@@ -1411,7 +1412,8 @@ Zane Skansi,Kitchener Panthers`;
   }
 
   // ── OPP PITCHERS PDF — compact two-column table, guaranteed one page ─────
-  function genOppPitchersPDF(oppName, btn, restore, selectedNames) {
+  function genOppPitchersPDF(oppName, btn, restore, selectedNames, year) {
+    year = year || ((typeof _activeSeason !== 'undefined') ? _activeSeason.replace('year:','') : '2026');
     restore = restore || function(){};
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.pitches) {
       alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
@@ -1502,7 +1504,7 @@ Zane Skansi,Kitchener Panthers`;
         var sc=p.sc;
         var pd=DATA.pitchers.find(function(x){return x.pitcher===p.name;})||{};
         var pbpP=DATA.pbpPitchers.find(function(x){return x.pitcher===p.name;})||null;
-        var iblYear=(typeof _activeSeason!=='undefined')?_activeSeason.replace('year:',''):'2026';
+        var iblYear=String(year);
         var iblAll=DATA.iblHistory[p.name]||[];
         var iblP=iblAll.filter(function(r){return r.IP>0&&(r.season||'').indexOf(iblYear)!==-1;})[0]
                  ||iblAll.filter(function(r){return r.IP>0;})[0]||null;
