@@ -3710,26 +3710,34 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No data available</h3></div>';
       }
       var lg26 = (function() {
-        var o = { avg:[],obp:[],slg:[],ops:[],hr:[],iso:[],babip:[],
-                  swing:[],whiff:[],contact:[],k:[],bb:[],pspa:[],fpSwing:[],
-                  gb:[],fb:[],lo:[],po:[] };
+        var o = { avg:[],obp:[],slg:[],ops:[],woba:[],hr:[],iso:[],babip:[],
+                  swing:[],whiff:[],contact:[],k:[],bb:[],bbk:[],pspa:[],fpSwing:[],
+                  pull:[],oppo:[],str:[],zone:[],gb:[],fb:[],lo:[],po:[] };
         DATA.summary.forEach(function(p) {
           if (!p.AB||p.AB<5) return;
           if (p.AVG !=null) o.avg.push(p.AVG);
           if (p.OBP !=null) o.obp.push(p.OBP);
           if (p.SLG !=null) o.slg.push(p.SLG);
           if (p.OPS !=null) o.ops.push(p.OPS);
+          if (p.wOBA!=null) o.woba.push(p.wOBA);
           if (p.HR  !=null) o.hr.push(p.HR);
-          if (p.SLG!=null&&p.AVG!=null) o.iso.push(p.SLG-p.AVG);
+          if (p.ISO != null) o.iso.push(p.ISO);
+          else if (p.SLG!=null&&p.AVG!=null) o.iso.push(p.SLG-p.AVG);
           var bNum=(p.H||0)-(p.HR||0),bDen=(p.AB||0)-(p.K||0)-(p.HR||0)+(p.SF||0);
-          if (bDen>=5) o.babip.push(bNum/bDen);
+          if (p.BABIP != null) o.babip.push(p.BABIP);
+          else if (bDen>=5) o.babip.push(bNum/bDen);
           if (p.SWING_pct   !=null) o.swing.push(p.SWING_pct);
           if (p.WHIFF_pct   !=null) o.whiff.push(p.WHIFF_pct);
           if (p.CONTACT_pct !=null) o.contact.push(p.CONTACT_pct);
           if (p.K_pct       !=null) o.k.push(p.K_pct);
           if (p.BB_pct      !=null) o.bb.push(p.BB_pct);
+          if (p.K > 0) o.bbk.push((p.BB||0)/p.K);
           if (p.PS_PA       !=null) o.pspa.push(p.PS_PA);
           if (p.FP_SWING_pct!=null) o.fpSwing.push(p.FP_SWING_pct);
+          if (p.Pull_pct    !=null) o.pull.push(p.Pull_pct);
+          if (p.Oppo_pct    !=null) o.oppo.push(p.Oppo_pct);
+          if (p.Str_pct     !=null) o.str.push(p.Str_pct);
+          if (p.zone_pct    !=null) o.zone.push(p.zone_pct);
           if (p.GB_pct !=null) o.gb.push(p.GB_pct);
           if (p.FB_pct !=null) o.fb.push(p.FB_pct);
           if (p.LO_pct !=null) o.lo.push(p.LO_pct);
@@ -3737,9 +3745,10 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         });
         return o;
       })();
-      var p26iso   = (sum.SLG!=null&&sum.AVG!=null)?sum.SLG-sum.AVG:null;
+      var p26iso   = sum.ISO!=null ? sum.ISO : ((sum.SLG!=null&&sum.AVG!=null)?sum.SLG-sum.AVG:null);
       var p26bNum  = (sum.H||0)-(sum.HR||0), p26bDen=(sum.AB||0)-(sum.K||0)-(sum.HR||0)+(sum.SF||0);
-      var p26babip = p26bDen>=5?p26bNum/p26bDen:null;
+      var p26babip = sum.BABIP!=null ? sum.BABIP : (p26bDen>=5?p26bNum/p26bDen:null);
+      var p26BBK   = (sum.K||0) > 0 ? (sum.BB||0)/(sum.K||0) : null;
       var IN_PLAY  = ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
       var lg26iz=(function(){
         var izSw=[],izCon=[],ch=[];
@@ -3764,6 +3773,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         {lbl:'OBP',        val:sum.OBP!=null?fmt3(sum.OBP):null,                        pct:_lpRank(sum.OBP,lg26.obp),                                     good:true},
         {lbl:'SLG',        val:sum.SLG!=null?fmt3(sum.SLG):null,                        pct:_lpRank(sum.SLG,lg26.slg),                                     good:true},
         {lbl:'OPS',        val:sum.OPS!=null?fmt3(sum.OPS):null,                        pct:_lpRank(sum.OPS,lg26.ops),                                     good:true},
+        {lbl:'wOBA',       val:sum.wOBA!=null?fmt3(sum.wOBA):null,                      pct:_lpRank(sum.wOBA,lg26.woba),                                  good:true},
         {lbl:'HR',         val:sum.HR!=null?fmtN(sum.HR):null,                          pct:_lpRank(sum.HR,lg26.hr),                                       good:true},
         {lbl:'RBI',        val:_myRBI!=null?fmtN(_myRBI):null,                          pct:_lpRank(_myRBI,_lgRbi),                                        good:true},
         {lbl:'ISO',        val:p26iso!=null?fmt3(p26iso):null,                          pct:_lpRank(p26iso,lg26.iso),                                      good:true},
@@ -3773,8 +3783,14 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         {lbl:'CONTACT%',   val:sum.CONTACT_pct!=null?fmt1(sum.CONTACT_pct)+'%':null,    pct:_lpRank(sum.CONTACT_pct,lg26.contact),                         good:true},
         {lbl:'K%',         val:sum.K_pct!=null?fmt1(sum.K_pct)+'%':null,                pct:sum.K_pct!=null?1-_lpRank(sum.K_pct,lg26.k):null,               good:true},
         {lbl:'BB%',        val:sum.BB_pct!=null?fmt1(sum.BB_pct)+'%':null,              pct:_lpRank(sum.BB_pct,lg26.bb),                                   good:true},
+        {lbl:'BB/K',       val:p26BBK!=null?fmt2(p26BBK):null,                          pct:_lpRank(p26BBK,lg26.bbk),                                     good:true},
         {lbl:'PS/PA',      val:sum.PS_PA!=null?fmt2(sum.PS_PA):null,                    pct:_lpRank(sum.PS_PA,lg26.pspa),                                  good:true},
         {lbl:'FP SWING%',  val:sum.FP_SWING_pct!=null?fmt1(sum.FP_SWING_pct)+'%':null,  pct:sum.FP_SWING_pct!=null?1-_lpRank(sum.FP_SWING_pct,lg26.fpSwing):null,good:true},
+        {lbl:'2K BA',      val:my2KBA!=null?fmt3(my2KBA):null,                           pct:_lpRank(my2KBA,leagueDisc.twoKba),                             good:true},
+        {lbl:'BA RISP',    val:myBARISP!=null?fmt3(myBARISP):null,                       pct:_lpRank(myBARISP,leagueDisc.baRisp),                           good:true},
+        {lbl:'PULL%',      val:sum.Pull_pct!=null?fmt1(sum.Pull_pct)+'%':null,           pct:_lpRank(sum.Pull_pct,lg26.pull),                               good:true},
+        {lbl:'OPPO%',      val:sum.Oppo_pct!=null?fmt1(sum.Oppo_pct)+'%':null,           pct:_lpRank(sum.Oppo_pct,lg26.oppo),                               good:true},
+        {lbl:'ZONE%',      val:sum.zone_pct!=null?fmt1(sum.zone_pct)+'%':null,           pct:_lpRank(sum.zone_pct,lg26.zone),                               good:true},
         {lbl:'GB%',        val:sum.GB_pct!=null?fmt1(sum.GB_pct)+'%':null,              pct:sum.GB_pct!=null?1-_lpRank(sum.GB_pct,lg26.gb):null,            good:true},
         {lbl:'FB%',        val:sum.FB_pct!=null?fmt1(sum.FB_pct)+'%':null,              pct:_lpRank(sum.FB_pct,lg26.fb),                                   good:true},
         {lbl:'LO%',        val:sum.LO_pct!=null?fmt1(sum.LO_pct)+'%':null,              pct:_lpRank(sum.LO_pct,lg26.lo),                                   good:true},
@@ -5354,15 +5370,13 @@ function buildHittingTable(players) {
       if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
       return '—';
     })());
-    var hr = p.HR != null ? p.HR : getSeasonHR(p.batter);
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + p.batter + '" data-type="batter">' + p.batter + '</a></td>' +
       '<td>' + teamDisplay + '</td>' +
-      '<td>' + (hr != null ? fmtN(hr) : '&mdash;') + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-    '<th style="text-align:left">Player</th><th>Team</th><th>HR</th>' +
+    '<th style="text-align:left">Player</th><th>Team</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
