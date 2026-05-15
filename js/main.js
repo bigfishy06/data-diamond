@@ -470,6 +470,38 @@ function playerHasSeasonData(name, type, year) {
     pitches25.some(function(bp) { return normPlayerName(bp.batter) === k && bp.scatter && bp.scatter.length; });
 }
 
+// ── Data normalization ───────────────────────────────────────────────────────
+function normalizeDataDiamondBatterRow(p) {
+  if (!p) return;
+  if (p.SWING_pct == null && p.Swing_pct != null) p.SWING_pct = p.Swing_pct;
+  if (p.WHIFF_pct == null && p.Whiff_pct != null) p.WHIFF_pct = p.Whiff_pct;
+  if (p.CONTACT_pct == null && p.WHIFF_pct != null) p.CONTACT_pct = 100 - p.WHIFF_pct;
+  if (p.FP_SWING_pct == null && p.FP_Swing_pct != null) p.FP_SWING_pct = p.FP_Swing_pct;
+  if (p.PS_PA == null && p.pitches_seen != null && p.PA > 0) p.PS_PA = p.pitches_seen / p.PA;
+  if (p.ISO == null && p.SLG != null && p.AVG != null) p.ISO = p.SLG - p.AVG;
+
+  var bip = (p.Groundout || 0) + (p.DP || 0) + (p.TP || 0) + (p.Flyout || 0) +
+    (p.SF || 0) + (p.SF_DP || 0) + (p.Lineout || 0) + (p.Popout || 0);
+  if (bip > 0) {
+    if (p.GB_pct == null) p.GB_pct = ((p.Groundout || 0) + (p.DP || 0) + (p.TP || 0)) / bip * 100;
+    if (p.FB_pct == null) p.FB_pct = ((p.Flyout || 0) + (p.SF || 0) + (p.SF_DP || 0)) / bip * 100;
+    if (p.LO_pct == null) p.LO_pct = (p.Lineout || 0) / bip * 100;
+    if (p.PO_pct == null) p.PO_pct = (p.Popout || 0) / bip * 100;
+  }
+}
+
+function normalizeDataDiamondPitcherRow(p) {
+  if (!p) return;
+  if (p.SWING_pct == null && p.Swing_pct != null) p.SWING_pct = p.Swing_pct;
+  if (p.WHIFF_pct == null && p.Whiff_pct != null) p.WHIFF_pct = p.Whiff_pct;
+  if (p.CONTACT_pct == null && p.WHIFF_pct != null) p.CONTACT_pct = 100 - p.WHIFF_pct;
+  if (p.FP_STR_pct == null && p.FPS_pct != null) p.FP_STR_pct = p.FPS_pct;
+  if (p.PUTAWAY_pct == null && p.Putaway_pct != null) p.PUTAWAY_pct = p.Putaway_pct;
+  if (p.BA_against == null && p.BAA != null) p.BA_against = p.BAA;
+  if (p.LO_pct == null && p.LD_pct != null) p.LO_pct = p.LD_pct;
+  if (p.pitches == null && p.total_pitches != null) p.pitches = p.total_pitches;
+}
+
 // ── Data store — all years kept separately, never merged ─────────────────────
 let DATA = {
   summary: [], pitches: [], pitchers: [], iblHistory: {},
@@ -633,20 +665,10 @@ async function loadAll() {
     DATA.pitches2026   = pit26Res.ok     ? await pit26Res.json()     : [];
     DATA.pitchers2026  = pitcher26Res.ok ? await pitcher26Res.json() : [];
 
-    DATA.summary2026.forEach(function(p) {
-      if (p.SWING_pct == null && p.Swing_pct != null) p.SWING_pct = p.Swing_pct;
-      if (p.WHIFF_pct == null && p.Whiff_pct != null) p.WHIFF_pct = p.Whiff_pct;
-      if (p.FP_SWING_pct == null && p.FP_Swing_pct != null) p.FP_SWING_pct = p.FP_Swing_pct;
-      if (p.PS_PA == null && p.pitches_seen != null && p.PA > 0) p.PS_PA = p.pitches_seen / p.PA;
-    });
-    DATA.pitchers2026.forEach(function(p) {
-      if (p.SWING_pct == null && p.Swing_pct != null) p.SWING_pct = p.Swing_pct;
-      if (p.WHIFF_pct == null && p.Whiff_pct != null) p.WHIFF_pct = p.Whiff_pct;
-      if (p.FP_STR_pct == null && p.FPS_pct != null) p.FP_STR_pct = p.FPS_pct;
-      if (p.PUTAWAY_pct == null && p.Putaway_pct != null) p.PUTAWAY_pct = p.Putaway_pct;
-      if (p.BA_against == null && p.BAA != null) p.BA_against = p.BAA;
-      if (p.pitches == null && p.total_pitches != null) p.pitches = p.total_pitches;
-    });
+    DATA.summary.forEach(normalizeDataDiamondBatterRow);
+    DATA.pitchers.forEach(normalizeDataDiamondPitcherRow);
+    DATA.summary2026.forEach(normalizeDataDiamondBatterRow);
+    DATA.pitchers2026.forEach(normalizeDataDiamondPitcherRow);
 
     // Store 2025 originals so swapSeasonData can restore them
     DATA._summary25     = DATA.summary;
@@ -776,6 +798,22 @@ function getSeasonOPS(name) {
 function getPitcherDataRow(name) {
   return DATA.pitchers.find(function(p) { return p.pitcher === name; }) || null;
 }
+function getPitcherScatterHits(name, row) {
+  var k = normPlayerName(name);
+  var h = 0;
+  if (row && row.scatter && row.scatter.length) {
+    row.scatter.forEach(function(s) {
+      if (['Single','Double','Triple','Home Run'].includes(s.outcome)) h++;
+    });
+    return h;
+  }
+  DATA.pitches.forEach(function(bp) {
+    (bp.scatter || []).forEach(function(s) {
+      if (normPlayerName(s.pitcher) === k && ['Single','Double','Triple','Home Run'].includes(s.outcome)) h++;
+    });
+  });
+  return h;
+}
 function getPitcherWhipFromData(name) {
   var pd = getPitcherDataRow(name);
   if (pd && pd.WHIP != null && !isNaN(pd.WHIP)) return pd.WHIP;
@@ -783,13 +821,7 @@ function getPitcherWhipFromData(name) {
   if (!(ip > 0)) return null;
   var bb = pd && pd.BB != null ? Number(pd.BB) : 0;
   var h = pd && pd.H != null ? Number(pd.H) : 0;
-  if (!h) {
-    DATA.pitches.forEach(function(bp) {
-      (bp.scatter || []).forEach(function(s) {
-        if (s.pitcher === name && ['Single','Double','Triple','Home Run'].includes(s.outcome)) h++;
-      });
-    });
-  }
+  if (!h) h = getPitcherScatterHits(name, pd);
   return (bb + h) / ip;
 }
 function getPitchPlayer(name) {
@@ -3332,6 +3364,8 @@ function buildPbpPitcherLeague() {
       o.whip.push(p.WHIP);
     } else if (p.IP > 0 && p.BB != null && p.H != null) {
       o.whip.push((Number(p.BB) + Number(p.H)) / parseFloat(p.IP));
+    } else if (p.IP > 0 && p.BB != null) {
+      o.whip.push((Number(p.BB) + getPitcherScatterHits(p.pitcher, p)) / parseFloat(p.IP));
     }
     if (p.BA_against != null) o.baAgst.push(p.BA_against);
     if (p.BABIP      != null) o.babip.push(p.BABIP);
