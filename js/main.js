@@ -3714,7 +3714,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
                   swing:[],whiff:[],contact:[],k:[],bb:[],bbk:[],pspa:[],fpSwing:[],
                   pull:[],oppo:[],str:[],zone:[],gb:[],fb:[],lo:[],po:[] };
         DATA.summary.forEach(function(p) {
-          if (!p.AB||p.AB<5) return;
+          if (!((p.PA || 0) > 0 || (p.AB || 0) > 0)) return;
           if (p.AVG !=null) o.avg.push(p.AVG);
           if (p.OBP !=null) o.obp.push(p.OBP);
           if (p.SLG !=null) o.slg.push(p.SLG);
