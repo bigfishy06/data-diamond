@@ -4407,22 +4407,18 @@ function renderZone(name, type, pitch, container, seasonFilter) {
 
   var RESULT_FILTERS = [
     { lbl: 'All',        val: 'all'       },
-    { lbl: 'Hits',       val: 'hit'       },
-    { lbl: 'Outs',       val: 'out'       },
+    { lbl: 'Whiffs',     val: 'whiff'     },
     { lbl: 'Strikeouts', val: 'strikeout' },
-    { lbl: 'Walks',      val: 'walk'      },
-    { lbl: 'Balls',      val: 'ball'      },
-    { lbl: 'Strikes',    val: 'strike'    }
+    { lbl: 'Hits',       val: 'hit'       },
+    { lbl: 'XBH',        val: 'xbh'       }
   ];
   function resultMatch(s, filter) {
     if (filter === 'all') return true;
     var o = s.outcome || '';
-    if (filter === 'hit')       return ['Single','Double','Triple','Home Run'].includes(o);
-    if (filter === 'strikeout') return o === 'Strikeout Swinging' || o === 'Strikeout Looking';
-    if (filter === 'ball')      return o === 'Ball';
-    if (filter === 'walk')      return o === 'Walk' || o === 'Intentional Walk' || o === 'Hit By Pitch';
-    if (filter === 'strike')    return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(o);
-    if (filter === 'out')       return ['Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Caught Stealing','Sacrifice Fly','Sacrifice Bunt'].includes(o);
+    if (filter === 'whiff')      return o === 'Swinging Strike';
+    if (filter === 'hit')        return ['Single','Double','Triple','Home Run'].includes(o);
+    if (filter === 'xbh')        return ['Double','Triple','Home Run'].includes(o);
+    if (filter === 'strikeout')  return o === 'Strikeout Swinging' || o === 'Strikeout Looking';
     return true;
   }
 
