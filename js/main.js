@@ -4390,12 +4390,12 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     'Sinker':       '#22d3ee'
   };
   var FALLBACK_COLORS = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee'];
-  var typeSet = [];
+  var typeCounts = {};
   points.forEach(function(s) {
     var t = s.pitch_type || s.type || 'Unknown';
-    if (!typeSet.includes(t)) typeSet.push(t);
+    typeCounts[t] = (typeCounts[t] || 0) + 1;
   });
-  typeSet.sort();
+  var typeSet = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
   var typeColorMap = {};
   typeSet.forEach(function(t, i) {
     typeColorMap[t] = PITCH_COLORS[t] || FALLBACK_COLORS[i % FALLBACK_COLORS.length];
@@ -5243,12 +5243,12 @@ function renderSplits(name, type, pitch, seasonFilter) {
     { key: 'pre2k',   label: 'Pre-2K',           test: function(c) { return ["'0-0","'1-0","'2-0","'3-0","'1-1","'2-1","'3-1",'0-0','1-0','2-0','3-0','1-1','2-1','3-1'].includes(c); } }
   ];
 
-  var typeSet = [];
+  var typeCounts = {};
   points.forEach(function(s) {
     var t = s.pitch_type || s.type || 'Unknown';
-    if (!typeSet.includes(t)) typeSet.push(t);
+    typeCounts[t] = (typeCounts[t] || 0) + 1;
   });
-  typeSet.sort();
+  var typeSet = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
 
   var splitsHTML =
     '<div style="margin-bottom:16px;display:flex;align-items:center;gap:10px">' +
@@ -5279,12 +5279,12 @@ function buildSplitsTables(points) {
     { key: 'pre2k',  label: 'Pre-2K',        test: function(c) { c=c.replace(/^'/,''); return ['0-0','1-0','2-0','3-0','1-1','2-1','3-1'].includes(c); } }
   ];
 
-  var typeSet = [];
+  var typeCounts = {};
   points.forEach(function(s) {
     var t = s.pitch_type || s.type || 'Unknown';
-    if (!typeSet.includes(t)) typeSet.push(t);
+    typeCounts[t] = (typeCounts[t] || 0) + 1;
   });
-  typeSet.sort();
+  var typeSet = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
 
   var countTableHTML =
     '<div class="stat-card" style="margin-bottom:20px">' +
@@ -5323,11 +5323,13 @@ function buildSplitsTables(points) {
     if (['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome)) typeMap[t].strike++;
   });
 
+  var sortedTypeEntries = Object.entries(typeMap).sort(function(a, b) { return b[1].total - a[1].total; });
+
   var pitchMixHTML =
     '<div class="stat-card" style="margin-bottom:20px">' +
     '<div class="stat-card-header"><span class="stat-card-title">Pitch Mix</span></div>' +
     '<div class="pitch-mix-grid">' +
-    Object.entries(typeMap).map(function(e) {
+    sortedTypeEntries.map(function(e) {
       return '<div class="pitch-mix-item">' +
         '<div class="pitch-mix-pct">' + fmt1(e[1].total/total*100) + '%</div>' +
         '<div class="pitch-mix-type">' + e[0] + '</div>' +
@@ -5339,7 +5341,7 @@ function buildSplitsTables(points) {
     '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
     '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>K</th><th>HIT</th><th>STR%</th><th>BALL%</th>' +
     '</tr></thead><tbody>' +
-    Object.entries(typeMap).map(function(e) {
+    sortedTypeEntries.map(function(e) {
       var d = e[1];
       return '<tr>' +
         '<td style="text-align:left;color:var(--text)">' + e[0] + '</td>' +
