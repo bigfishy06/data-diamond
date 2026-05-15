@@ -1025,7 +1025,7 @@ function initGlobalSearch() {
     }).join('');
     dropdown.querySelectorAll('.search-result-item').forEach(function(el) {
       el.addEventListener('click', function() {
-        navigate('players.html?player=' + encodeURIComponent(el.dataset.name) + '&type=' + el.dataset.type);
+        navigate('players.html?player=' + encodeURIComponent(el.dataset.name) + '&type=' + el.dataset.type + '&season=' + _activeSeason.replace('year:', ''));
       });
     });
   });
@@ -1141,7 +1141,7 @@ function renderHittingLeaderboards(container) {
       }).join('');
     card.querySelectorAll('.leader-row').forEach(function(row) {
       row.addEventListener('click', function() {
-        navigate('players.html?player=' + encodeURIComponent(row.dataset.name) + '&type=batter');
+        navigate('players.html?player=' + encodeURIComponent(row.dataset.name) + '&type=batter&season=' + _activeSeason.replace('year:', ''));
       });
     });
     grid.appendChild(card);
@@ -1226,7 +1226,7 @@ function renderPitchingLeaderboards(container) {
       }).join('');
     card.querySelectorAll('.leader-row').forEach(function(row) {
       row.addEventListener('click', function() {
-        navigate('players.html?player=' + encodeURIComponent(row.dataset.name) + '&type=pitcher');
+        navigate('players.html?player=' + encodeURIComponent(row.dataset.name) + '&type=pitcher&season=' + _activeSeason.replace('year:', ''));
       });
     });
     grid.appendChild(card);
@@ -1257,20 +1257,6 @@ function getTeamBatters(teamId) {
       seen.add(p.batter);
       var sum = DATA.summary.find(function(s){ return s.batter === p.batter; }) || p;
       result.push({ batter: p.batter, pbp: p, summary: sum });
-    }
-  });
-  // Supplement: iblHistory 2025 batters not yet included
-  Object.keys(DATA.iblHistory).forEach(function(name) {
-    if (seen.has(name)) return;
-    var s2025 = (DATA.iblHistory[name]||[]).find(function(s){
-      return (s.season||'').indexOf('2025') !== -1 && (s.AB||0) > 0;
-    });
-    if (!s2025) return;
-    var t = resolveTeam(s2025.team);
-    if (t && t.id === teamId) {
-      seen.add(name);
-      var sum = DATA.summary.find(function(s){ return s.batter === name; }) || Object.assign({batter:name}, s2025);
-      result.push({ batter: name, pbp: null, summary: sum, ibl: s2025 });
     }
   });
   // Supplement: DATA.pitches top-level batter field (same as getAllBatters)
@@ -1992,7 +1978,8 @@ function buildTeamPitcherTable(pitchers) {
   const rows = pitchers.map(function(pd) {
     const team = resolveTeam(pd.pitcher_team);
     var teamDisplay = team ? team.abbreviation : (function() {
-      var iblS = (DATA.iblHistory[pd.pitcher] || []).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
+      var yr = _activeSeason.replace('year:', '');
+      var iblS = (DATA.iblHistory[pd.pitcher] || []).find(function(s){ return (s.season||'').indexOf(yr)!==-1; });
       if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
       return '—';
     })();
@@ -2072,6 +2059,16 @@ function renderPlayerList(content) {
     seasonBtns.forEach(function(b) { b.classList.toggle('active', b.dataset.season === _activeSeason); });
     listContent.innerHTML = '';
 
+    function applyRosterSearch(q, sourceInput) {
+      q = (q || '').toLowerCase();
+      listContent.querySelectorAll('.roster-search').forEach(function(input) {
+        if (input !== sourceInput) input.value = q;
+      });
+      listContent.querySelectorAll('tbody tr').forEach(function(row) {
+        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+
     if (type === 'batters') {
       function renderBatterCard(title, players, searchId) {
         const card = document.createElement('div');
@@ -2086,10 +2083,7 @@ function renderPlayerList(content) {
         initTableSort(card.querySelector('table'));
         initPlayerLinks(card, 'batter');
         document.getElementById(searchId).addEventListener('input', function(e) {
-          const q = e.target.value.toLowerCase();
-          card.querySelectorAll('tbody tr').forEach(function(row) {
-            row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
-          });
+          applyRosterSearch(e.target.value, e.target);
         });
       }
 
@@ -2125,10 +2119,7 @@ function renderPlayerList(content) {
         listContent.appendChild(card);
         initPlayerLinks(card, 'pitcher');
         document.getElementById(searchId).addEventListener('input', function(e) {
-          const q = e.target.value.toLowerCase();
-          card.querySelectorAll('tbody tr').forEach(function(row) {
-            row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
-          });
+          applyRosterSearch(e.target.value, e.target);
         });
       }
 
@@ -2155,8 +2146,11 @@ function renderPlayerList(content) {
 function renderPlayerDetail(name, type, content) {
   var requestedSeasonYear = _activeSeason.replace('year:', '');
   if (!playerHasSeasonData(name, type, requestedSeasonYear)) {
-    var availableSeason = ['2026', '2025'].find(function(yr) { return playerHasSeasonData(name, type, yr); });
-    if (availableSeason) swapSeasonData('year:' + availableSeason);
+    content.innerHTML =
+      '<div class="container" style="padding-top:80px;padding-bottom:80px">' +
+      '<div class="empty-state"><div class="empty-state-icon">&#128202;</div>' +
+      '<h3>No ' + requestedSeasonYear + ' data available</h3></div></div>';
+    return;
   }
   const sum   = getSummaryPlayer(name);
   const pitch = getPitchPlayer(name);
@@ -4121,7 +4115,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No data available</h3></div>';
     }
 
-    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', (tot || 0) + ' batters faced', allBars, 80, seasonSelectHTML || null, null);
+    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', (tot || 0) + ' batters faced', allBars, 80, null, null);
 
     // Wire season dropdown — updates pitch count subtitle and re-renders bars
     setTimeout(function() {
@@ -5355,17 +5349,20 @@ function buildHittingTable(players) {
     var teamDisplay = (_activeSeason === 'year:2025' && isOnActiveRoster2025(p.batter))
       ? displayTeamForPlayer(p.batter, p.batter_team || p.team)
       : (team ? team.abbreviation : (function() {
-      var iblS = (DATA.iblHistory[p.batter] || []).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
+      var yr = _activeSeason.replace('year:', '');
+      var iblS = (DATA.iblHistory[p.batter] || []).find(function(s){ return (s.season||'').indexOf(yr)!==-1; });
       if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
       return '—';
     })());
+    var hr = p.HR != null ? p.HR : getSeasonHR(p.batter);
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + p.batter + '" data-type="batter">' + p.batter + '</a></td>' +
       '<td>' + teamDisplay + '</td>' +
+      '<td>' + (hr != null ? fmtN(hr) : '&mdash;') + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-    '<th style="text-align:left">Player</th><th>Team</th>' +
+    '<th style="text-align:left">Player</th><th>Team</th><th>HR</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
@@ -5396,7 +5393,8 @@ function buildPitcherListTable(names) {
     var teamDisplay = (_activeSeason === 'year:2025' && isOnActiveRoster2025(name))
       ? displayTeamForPlayer(name, pd.pitcher_team || pd.team)
       : (team ? team.abbreviation : (function() {
-      var iblS = (DATA.iblHistory[name] || []).find(function(s){ return (s.season||'').indexOf('2025')!==-1; });
+      var yr = _activeSeason.replace('year:', '');
+      var iblS = (DATA.iblHistory[name] || []).find(function(s){ return (s.season||'').indexOf(yr)!==-1; });
       if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
       return '—';
     })());
