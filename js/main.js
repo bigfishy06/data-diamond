@@ -3342,7 +3342,7 @@ function buildPbpBatterLeague() {
 
 function buildPbpPitcherLeague() {
   var o = { era:[], whip:[], baAgst:[], babip:[], kpct:[], bbpct:[], kbb:[], str:[], swing:[],
-            whiff:[], contact:[], fpStr:[], putaway:[], ea:[], gb:[], fb:[], lo:[], po:[] };
+            whiff:[], contact:[], fpStr:[], putaway:[], ea:[], early:[], ahead:[], gb:[], fb:[], lo:[], po:[] };
   // ERA league array from iblHistory (same source as getSeasonERA) — season-filtered
   var _pbpPitLgYr = _activeSeason.replace('year:', '');
   Object.keys(DATA.iblHistory).forEach(function(name) {
@@ -3373,6 +3373,8 @@ function buildPbpPitcherLeague() {
     if (p.FP_STR_pct != null) o.fpStr.push(p.FP_STR_pct);
     if (p.PUTAWAY_pct!= null) o.putaway.push(p.PUTAWAY_pct);
     if (p.EA_pct     != null) o.ea.push(p.EA_pct);
+    if (p.Early_pct  != null) o.early.push(p.Early_pct);
+    if (p.Ahead_pct  != null) o.ahead.push(p.Ahead_pct);
     if (p.GB_pct     != null) o.gb.push(p.GB_pct);
     if (p.FB_pct     != null) o.fb.push(p.FB_pct);
     if (p.LO_pct     != null) o.lo.push(p.LO_pct);
@@ -3989,6 +3991,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
           { lbl: 'BA AGNST', val: baAgst!=null   ? fmt3(baAgst)           :'—', pct: baAgst!=null   ? 1-lp(baAgst,      lgP.baAgst)  : 0, good: true },
           { lbl: 'BABIP',    val: babip!=null    ? fmt3(babip)            :'—', pct: babip!=null    ? 1-lp(babip,       lgP.babip)   : 0, good: true },
           // Rate stats
+          { lbl: 'FPS%',     val: fpStrikePct!=null ? fmt1(fpStrikePct*100)+'%':'—', pct: fpStrikePct!=null ? lp(fpStrikePct, lgP.fpStrike) : 0, good: true },
           { lbl: 'SWING%',   val: tot>0          ? fmt1(swings/tot*100)+'%':'—', pct: tot>0         ? lp(swings/tot,    lgP.swing)   : 0, good: true },
           { lbl: 'WHIFF%',   val: swings>0       ? fmt1(swStr/swings*100)+'%':'—', pct: swings>0    ? lp(swStr/swings,  lgP.whiff)   : 0, good: true },
           { lbl: 'CONTACT%', val: swings>0       ? fmt1((swings-swStr)/swings*100)+'%':'—', pct: swings>0 ? 1-lp((swings-swStr)/swings, lgP.contact) : 0, good: true },
@@ -4042,6 +4045,9 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         {lbl:'WHIP',     val:dpWhip26!=null?fmt2(dpWhip26):null,                     pct:dpWhip26!=null?1-lpP(dpWhip26,lgPpbp.whip):null,       good:true},
         {lbl:'BA AGNST', val:dp.BA_against!=null?fmt3(dp.BA_against):null,           pct:dp.BA_against!=null?1-lpP(dp.BA_against,lgPpbp.baAgst):null,good:true},
         {lbl:'BABIP',    val:dp.BABIP!=null?fmt3(dp.BABIP):null,                     pct:dp.BABIP!=null?1-lpP(dp.BABIP,lgPpbp.babip):null,      good:true},
+        {lbl:'FPS%',     val:dp.FP_STR_pct!=null?fmt1(dp.FP_STR_pct)+'%':null,       pct:lpP(dp.FP_STR_pct,lgPpbp.fpStr),                       good:true},
+        {lbl:'EARLY%',   val:dp.Early_pct!=null?fmt1(dp.Early_pct)+'%':null,         pct:lpP(dp.Early_pct,lgPpbp.early),                        good:true},
+        {lbl:'AHEAD%',   val:dp.Ahead_pct!=null?fmt1(dp.Ahead_pct)+'%':null,         pct:lpP(dp.Ahead_pct,lgPpbp.ahead),                        good:true},
         {lbl:'E+A%',     val:dp.EA_pct!=null?fmt1(dp.EA_pct)+'%':null,               pct:lpP(dp.EA_pct,lgPpbp.ea),                              good:true},
         {lbl:'K/BB',     val:dp.K_BB!=null?fmt2(dp.K_BB):null,                       pct:lpP(dp.K_BB,lgPpbp.kbb),                               good:true},
         {lbl:'SWING%',   val:dp.SWING_pct!=null?fmt1(dp.SWING_pct)+'%':null,         pct:lpP(dp.SWING_pct,lgPpbp.swing),                        good:true},
@@ -4062,6 +4068,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       if (pbpPitData) {
         var dp25 = pbpPitData;
         var dpWhip25 = getSeasonWHIP(name);
+        if (dpWhip25 == null && dp25.WHIP != null) dpWhip25 = dp25.WHIP;
         var dpIp25   = getSeasonIP(name);
         var ipLg25   = Object.values(DATA.iblHistory).map(function(ss){
           var r=(ss||[]).filter(function(s){return s.IP>0;});return r.length?r[0].IP:null;
@@ -4072,6 +4079,9 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
           {lbl:'WHIP',     val:dpWhip25!=null?fmt2(dpWhip25):null,                    pct:dpWhip25!=null?1-lpP(dpWhip25,lgPpbp.whip):null,                 good:true},
           {lbl:'BA AGNST', val:dp25.BA_against!=null?fmt3(dp25.BA_against):null,      pct:dp25.BA_against!=null?1-lpP(dp25.BA_against,lgPpbp.baAgst):null, good:true},
           {lbl:'BABIP',    val:dp25.BABIP!=null?fmt3(dp25.BABIP):null,                pct:dp25.BABIP!=null?1-lpP(dp25.BABIP,lgPpbp.babip):null,            good:true},
+          {lbl:'FPS%',     val:dp25.FP_STR_pct!=null?fmt1(dp25.FP_STR_pct)+'%':null,  pct:lpP(dp25.FP_STR_pct,lgPpbp.fpStr),                              good:true},
+          {lbl:'EARLY%',   val:dp25.Early_pct!=null?fmt1(dp25.Early_pct)+'%':null,    pct:lpP(dp25.Early_pct,lgPpbp.early),                               good:true},
+          {lbl:'AHEAD%',   val:dp25.Ahead_pct!=null?fmt1(dp25.Ahead_pct)+'%':null,    pct:lpP(dp25.Ahead_pct,lgPpbp.ahead),                               good:true},
           {lbl:'E+A%',     val:dp25.EA_pct!=null?fmt1(dp25.EA_pct)+'%':null,          pct:lpP(dp25.EA_pct,lgPpbp.ea),                                     good:true},
           {lbl:'K/BB',     val:dp25.K_BB!=null?fmt2(dp25.K_BB):null,                  pct:lpP(dp25.K_BB,lgPpbp.kbb),                                      good:true},
           {lbl:'SWING%',   val:dp25.SWING_pct!=null?fmt1(dp25.SWING_pct)+'%':null,    pct:lpP(dp25.SWING_pct,lgPpbp.swing),                               good:true},
