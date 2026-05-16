@@ -121,67 +121,6 @@
     "chase_pitches": 0
   },
   {
-    "batter": "Andrew Groening",
-    "batter_team": "Chatham-Kent Barnstormers",
-    "PA": 1,
-    "AB": 1,
-    "H": 0,
-    "1B": 0,
-    "2B": 0,
-    "3B": 0,
-    "HR": 0,
-    "BB": 0,
-    "IBB": 0,
-    "HBP": 0,
-    "K": 0,
-    "K_L": 0,
-    "K_S": 0,
-    "DTS": 0,
-    "DTS_L": 0,
-    "DTS_S": 0,
-    "Groundout": 1,
-    "DP": 0,
-    "TP": 0,
-    "Popout": 0,
-    "Flyout": 0,
-    "Lineout": 0,
-    "SF": 0,
-    "SF_DP": 0,
-    "SacB": 0,
-    "SacB_DP": 0,
-    "CI": 0,
-    "BI": 0,
-    "Error": 0,
-    "Pickoff": 0,
-    "CS": 0,
-    "Truncated": 0,
-    "Additional_Out": 0,
-    "pitches_seen": 3,
-    "AVG": 0,
-    "SLG": 0,
-    "OBP": 0,
-    "OPS": 0,
-    "K_pct": 0,
-    "BB_pct": 0,
-    "ISO": 0,
-    "BABIP": 0,
-    "wOBA": 0,
-    "Swing_pct": 100,
-    "Whiff_pct": 66.7,
-    "FP_Swing_pct": 100,
-    "Pull_pct": 0,
-    "Str_pct": 100,
-    "Oppo_pct": 0,
-    "pitch_mix": {
-      "Curveball": 33.3,
-      "Cutter": 66.7
-    },
-    "zone_pct": 100,
-    "swinging_k": 0,
-    "called_k": 0,
-    "chase_pitches": 0
-  },
-  {
     "batter": "Andrew Savage",
     "batter_team": "Brantford Red Sox",
     "PA": 1,
@@ -238,6 +177,67 @@
       "Offspeed": 16.7
     },
     "zone_pct": 33.3,
+    "swinging_k": 0,
+    "called_k": 0,
+    "chase_pitches": 0
+  },
+  {
+    "batter": "Andy Groening",
+    "batter_team": "Chatham-Kent Barnstormers",
+    "PA": 1,
+    "AB": 1,
+    "H": 0,
+    "1B": 0,
+    "2B": 0,
+    "3B": 0,
+    "HR": 0,
+    "BB": 0,
+    "IBB": 0,
+    "HBP": 0,
+    "K": 0,
+    "K_L": 0,
+    "K_S": 0,
+    "DTS": 0,
+    "DTS_L": 0,
+    "DTS_S": 0,
+    "Groundout": 1,
+    "DP": 0,
+    "TP": 0,
+    "Popout": 0,
+    "Flyout": 0,
+    "Lineout": 0,
+    "SF": 0,
+    "SF_DP": 0,
+    "SacB": 0,
+    "SacB_DP": 0,
+    "CI": 0,
+    "BI": 0,
+    "Error": 0,
+    "Pickoff": 0,
+    "CS": 0,
+    "Truncated": 0,
+    "Additional_Out": 0,
+    "pitches_seen": 3,
+    "AVG": 0,
+    "SLG": 0,
+    "OBP": 0,
+    "OPS": 0,
+    "K_pct": 0,
+    "BB_pct": 0,
+    "ISO": 0,
+    "BABIP": 0,
+    "wOBA": 0,
+    "Swing_pct": 100,
+    "Whiff_pct": 66.7,
+    "FP_Swing_pct": 100,
+    "Pull_pct": 0,
+    "Str_pct": 100,
+    "Oppo_pct": 0,
+    "pitch_mix": {
+      "Curveball": 33.3,
+      "Cutter": 66.7
+    },
+    "zone_pct": 100,
     "swinging_k": 0,
     "called_k": 0,
     "chase_pitches": 0
@@ -359,7 +359,7 @@
       "Fastball": 33.3,
       "Offspeed": 66.7
     },
-    "zone_pct": 100,
+    "zone_pct": 33.3,
     "swinging_k": 0,
     "called_k": 0,
     "chase_pitches": 0
@@ -421,10 +421,10 @@
       "Fastball": 72,
       "Slider": 12
     },
-    "zone_pct": 100,
+    "zone_pct": 60.9,
     "swinging_k": 0,
     "called_k": 1,
-    "chase_pitches": 0
+    "chase_pitches": 3
   },
   {
     "batter": "Brandon Hernandez",
@@ -1213,7 +1213,7 @@
       "Fastball": 55.6,
       "Offspeed": 44.4
     },
-    "zone_pct": 94.4,
+    "zone_pct": 72.2,
     "swinging_k": 1,
     "called_k": 0,
     "chase_pitches": 0
@@ -1336,7 +1336,7 @@
       "Fastball": 61.1,
       "Offspeed": 38.9
     },
-    "zone_pct": 100,
+    "zone_pct": 38.9,
     "swinging_k": 0,
     "called_k": 2,
     "chase_pitches": 0
@@ -1641,7 +1641,7 @@
       "Fastball": 61.5,
       "Offspeed": 38.5
     },
-    "zone_pct": 100,
+    "zone_pct": 53.8,
     "swinging_k": 0,
     "called_k": 0,
     "chase_pitches": 0
@@ -1763,10 +1763,10 @@
       "Fastball": 80,
       "Slider": 20
     },
-    "zone_pct": 100,
+    "zone_pct": 60,
     "swinging_k": 0,
     "called_k": 0,
-    "chase_pitches": 0
+    "chase_pitches": 1
   },
   {
     "batter": "J.D Williams",
@@ -1824,7 +1824,7 @@
       "Fastball": 66.7,
       "Offspeed": 33.3
     },
-    "zone_pct": 100,
+    "zone_pct": 73.3,
     "swinging_k": 2,
     "called_k": 0,
     "chase_pitches": 0
@@ -1946,7 +1946,7 @@
       "Fastball": 66.7,
       "Offspeed": 33.3
     },
-    "zone_pct": 100,
+    "zone_pct": 50,
     "swinging_k": 1,
     "called_k": 0,
     "chase_pitches": 0
@@ -2312,7 +2312,7 @@
       "Fastball": 88.9,
       "Slider": 11.1
     },
-    "zone_pct": 100,
+    "zone_pct": 55.6,
     "swinging_k": 0,
     "called_k": 0,
     "chase_pitches": 0
@@ -2434,7 +2434,7 @@
       "Curveball": 10.5,
       "Fastball": 89.5
     },
-    "zone_pct": 100,
+    "zone_pct": 47.4,
     "swinging_k": 1,
     "called_k": 0,
     "chase_pitches": 0
@@ -2678,10 +2678,10 @@
       "Curveball": 50,
       "Fastball": 50
     },
-    "zone_pct": 100,
+    "zone_pct": 33.3,
     "swinging_k": 0,
     "called_k": 0,
-    "chase_pitches": 0
+    "chase_pitches": 1
   },
   {
     "batter": "Liam Wilson",
@@ -2739,10 +2739,10 @@
       "Fastball": 69.6,
       "Offspeed": 30.4
     },
-    "zone_pct": 95.7,
+    "zone_pct": 56.5,
     "swinging_k": 0,
     "called_k": 0,
-    "chase_pitches": 1
+    "chase_pitches": 3
   },
   {
     "batter": "Luca Boscarino",
@@ -3043,7 +3043,7 @@
       "Fastball": 62.5,
       "Offspeed": 37.5
     },
-    "zone_pct": 100,
+    "zone_pct": 62.5,
     "swinging_k": 0,
     "called_k": 0,
     "chase_pitches": 0
@@ -3348,7 +3348,7 @@
       "Fastball": 54.5,
       "Offspeed": 45.5
     },
-    "zone_pct": 100,
+    "zone_pct": 72.7,
     "swinging_k": 0,
     "called_k": 1,
     "chase_pitches": 0
@@ -3472,7 +3472,7 @@
       "Slider": 9.5,
       "Splitter": 9.5
     },
-    "zone_pct": 100,
+    "zone_pct": 45,
     "swinging_k": 0,
     "called_k": 0,
     "chase_pitches": 0
@@ -3717,10 +3717,10 @@
       "Fastball": 66.7,
       "Slider": 23.8
     },
-    "zone_pct": 95,
+    "zone_pct": 45,
     "swinging_k": 0,
     "called_k": 0,
-    "chase_pitches": 0
+    "chase_pitches": 1
   },
   {
     "batter": "Petey Kiefer",
@@ -3901,7 +3901,7 @@
       "Cutter": 25,
       "Fastball": 50
     },
-    "zone_pct": 100,
+    "zone_pct": 75,
     "swinging_k": 0,
     "called_k": 1,
     "chase_pitches": 0
@@ -4023,7 +4023,7 @@
       "Fastball": 75,
       "Offspeed": 25
     },
-    "zone_pct": 100,
+    "zone_pct": 72.7,
     "swinging_k": 1,
     "called_k": 0,
     "chase_pitches": 0
@@ -4207,10 +4207,10 @@
       "Fastball": 66.7,
       "Slider": 20
     },
-    "zone_pct": 100,
+    "zone_pct": 80,
     "swinging_k": 1,
     "called_k": 0,
-    "chase_pitches": 0
+    "chase_pitches": 1
   },
   {
     "batter": "Spenser Ross",
@@ -4333,10 +4333,10 @@
       "Slider": 9.1,
       "Splitter": 4.5
     },
-    "zone_pct": 100,
+    "zone_pct": 54.5,
     "swinging_k": 0,
     "called_k": 1,
-    "chase_pitches": 0
+    "chase_pitches": 1
   },
   {
     "batter": "Tim Holyk",
@@ -4946,10 +4946,10 @@
       "Fastball": 62.5,
       "Slider": 6.2
     },
-    "zone_pct": 100,
+    "zone_pct": 80,
     "swinging_k": 0,
     "called_k": 0,
-    "chase_pitches": 0
+    "chase_pitches": 1
   },
   {
     "batter": "Zane Skansi",
