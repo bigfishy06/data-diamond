@@ -324,3 +324,933 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 9,2,0,0,'0-0,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Yosuke Fujie,Kyle Poapst,L,R,Fastball,Swinging Strike,,,1,0.658196721,0.292637433
 9,2,0,1,'0-1,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Yosuke Fujie,Kyle Poapst,L,R,Offspeed,Swinging Strike,,,1,0.266686183,0.426061519
 9,2,0,2,'0-2,2026-05-10,Kitchener Panthers,Toronto Maple Leafs,,Yosuke Fujie,Kyle Poapst,L,R,Offspeed,Strikeout Swinging,,,1,-0.005196136,0.154909344
+1,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,Frank Garces,R,L,Fastball,Ball,,,0,-0.139694926,1.008226908
+1,0,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,Frank Garces,R,L,Fastball,Ball,,,0,-1.271513737,0.182633584
+1,0,2,0,'2-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,Frank Garces,R,L,Fastball,Foul,,,0,-0.228465029,0.173850677
+1,0,2,1,'2-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,Frank Garces,R,L,Fastball,Popout,Pop Up,Opposite Field,0,0.526080846,0.560298615
+1,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Frank Garces,R,L,Offspeed,Called Strike,,,0,-0.783278172,0.2001994
+1,1,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Frank Garces,R,L,Fastball,Ball,,,0,1.347204297,0.252896846
+1,1,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Frank Garces,R,L,Offspeed,Swinging Strike,,,0,-0.849855749,-0.133551093
+1,1,1,2,'1-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Frank Garces,R,L,Fastball,Double,Line Drive,Pull,0,-0.539160389,0.23533103
+1,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Ball,,,10,-1.648786674,0.832568754
+1,1,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Ball,,,10,1.502551977,0.815002939
+1,1,2,0,'2-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Offspeed,Ball,,,10,1.657899657,0.3143772
+1,1,3,0,'3-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Called Strike,,,10,0.637043474,0.463686631
+1,1,3,1,'3-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Offspeed,Foul,,,10,0.19319296,-0.432169955
+1,1,3,2,'3-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Flyout,Fly Ball,Opposite Field,10,-0.073117349,0.059672876
+1,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Fastball,Ball,,,10,0.903353783,0.867700385
+1,2,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Fastball,Ball,,,10,-1.182743634,1.350760309
+1,2,2,0,'2-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Offspeed,Called Strike,,,10,0.592658423,0.173850677
+1,2,2,1,'2-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Offspeed,Called Strike,,,10,0.96993136,0.112370323
+1,2,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Offspeed,Ball,,,10,-0.383812709,1.201450878
+1,2,3,2,'3-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Offspeed,Strikeout Swinging,,,10,0.415118217,-0.045722016
+1,0,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Nick Veselinovic,R,L,Fastball,Ball,,,0,0.104422857,0.630561877
+1,0,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Nick Veselinovic,R,L,Fastball,Foul,,,0,0.03784528,0.683259323
+1,0,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Nick Veselinovic,R,L,Offspeed,Foul,,,0,0.060037806,0.349508831
+1,0,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Nick Veselinovic,R,L,Offspeed,Strikeout Swinging,,,0,-0.339427657,0.033324153
+1,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Nick Veselinovic,L,L,Fastball,Foul,,,0,-0.339427657,0.586647339
+1,1,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Nick Veselinovic,L,L,Offspeed,Called Strike,,,0,0.770198629,0.516384077
+1,1,0,2,'0-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Nick Veselinovic,L,L,Fastball,Ball,,,0,0.437310743,1.104838893
+1,1,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Nick Veselinovic,L,L,Offspeed,Ball,,,0,0.526080846,-0.432169955
+1,1,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Nick Veselinovic,L,L,Fastball,Foul,,,0,-1.005203429,0.718390954
+1,1,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Nick Veselinovic,L,L,Offspeed,Strikeout Swinging,,,0,0.703621051,-0.256511801
+1,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Nick Veselinovic,L,L,Fastball,Ball,,,0,1.369396823,0.331943015
+1,2,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Nick Veselinovic,L,L,Offspeed,Foul,,,0,0.19319296,0.252896846
+1,2,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Nick Veselinovic,L,L,Fastball,Flyout,Fly Ball,Opposite Field,0,0.237578011,0.288028477
+2,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Frank Garces,R,L,Changeup,Ball,,,0,-1.160551109,-0.080853647
+2,0,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Frank Garces,R,L,Offspeed,Ball,,,0,0.126615383,-0.476084494
+2,0,2,0,'2-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Frank Garces,R,L,Fastball,Ball,,,0,1.28062672,0.744739677
+2,0,3,0,'3-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Frank Garces,R,L,Offspeed,Called Strike,,,0,-0.228465029,0.305594292
+2,0,3,1,'3-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Frank Garces,R,L,Fastball,Called Strike,,,0,0.614850949,0.129936138
+2,0,3,2,'3-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Frank Garces,R,L,Offspeed,Flyout,Fly Ball,Pull,0,0.81458368,0.086021599
+2,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yordan Manduley,Frank Garces,R,L,Fastball,Called Strike,,,0,0.015652754,0.00697543
+2,1,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yordan Manduley,Frank Garces,R,L,Offspeed,Single,Pop Up,Opposite Field,0,0.171000434,0.12115323
+2,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.56,Cooper Tomkinson,Frank Garces,L,L,Fastball,Called Strike,,,100,0.03784528,0.23533103
+2,1,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.18,Cooper Tomkinson,Frank Garces,L,L,Offspeed,Called Strike,,,100,0.592658423,0.068455784
+2,1,0,2,'0-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.43,Cooper Tomkinson,Frank Garces,L,L,Fastball,Ball,,,100,1.347204297,0.577864431
+2,1,1,2,'1-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.51,Cooper Tomkinson,Frank Garces,L,L,Offspeed,Ball,,,100,0.415118217,-0.282860524
+2,1,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.54,Cooper Tomkinson,Frank Garces,L,L,Fastball,Hit By Pitch,,,100,-1.093973531,0.806220031
+2,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Mike Cecchetto,Frank Garces,R,L,Fastball,Ball,,,110,0.015652754,-0.353123786
+2,1,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Mike Cecchetto,Frank Garces,R,L,Fastball,Double Play,Ground Ball,Straightaway,110,0.392925691,0.648127693
+2,0,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Nick Veselinovic,L,L,Fastball,Foul,,,0,0.104422857,1.122404708
+2,0,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Nick Veselinovic,L,L,Fastball,Flyout,Fly Ball,Straightaway,0,-0.250657554,0.586647339
+2,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Nick Veselinovic,R,L,Offspeed,Called Strike,,,0,-0.028732297,0.472469538
+2,1,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Nick Veselinovic,R,L,Fastball,Swinging Strike,,,0,-0.172983714,0.727173862
+2,1,0,2,'0-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Nick Veselinovic,R,L,Fastball,Ball,,,0,-1.160551109,0.894049108
+2,1,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Nick Veselinovic,R,L,Fastball,Strikeout Swinging,,,0,0.126615383,0.96431237
+2,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Nick Veselinovic,L,L,Fastball,Called Strike,,,0,0.34854064,-0.019373293
+2,2,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Nick Veselinovic,L,L,Offspeed,Swinging Strike,,,0,-0.605737966,0.727173862
+2,2,0,2,'0-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Nick Veselinovic,L,L,Fastball,Ball,,,0,1.036508937,1.087273078
+2,2,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Nick Veselinovic,L,L,Offspeed,Ball,,,0,0.060037806,1.060924355
+2,2,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Nick Veselinovic,L,L,Offspeed,Foul,,,0,-0.960818377,0.569081523
+2,2,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Nick Veselinovic,L,L,Fastball,Foul,,,0,-0.627930492,0.937963647
+2,2,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Nick Veselinovic,L,L,Fastball,Home Run,Line Drive,Opposite Field,0,-0.228465029,0.507601169
+2,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,Nick Veselinovic,L,L,Fastball,Groundout,Ground Ball,Pull,0,-0.27285008,-0.036939108
+3,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Matt Brandt,Frank Garces,L,L,Fastball,Ball,,,0,1.080893988,-0.177465632
+3,0,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Matt Brandt,Frank Garces,L,L,Offspeed,Swinging Strike,,,0,0.770198629,-0.265294709
+3,0,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Matt Brandt,Frank Garces,L,L,Fastball,Called Strike,,,0,1.214049143,-0.045722016
+3,0,1,2,'1-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Matt Brandt,Frank Garces,L,L,Offspeed,Ball,,,0,1.058701463,-0.52878194
+3,0,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Matt Brandt,Frank Garces,L,L,Fastball,Strikeout Looking,,,0,1.214049143,0.050889969
+3,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,Frank Garces,R,L,Offspeed,Groundout,Ground Ball,Pull,0,0.126615383,-0.010590385
+3,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Frank Garces,R,L,Fastball,Called Strike,,,0,,
+3,2,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Frank Garces,R,L,Offspeed,Double,Line Drive,Opposite Field,0,0.481695794,-0.080853647
+3,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,,Called Strike,,,10,-0.250657554,-0.195031447
+3,2,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Offspeed,Ball,,,10,0.060037806,-0.467301586
+3,2,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Ball,,,10,0.836776206,-0.010590385
+3,2,2,1,'2-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Offspeed,Called Strike,,,10,-0.805470697,-0.036939108
+3,2,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Foul,,,10,0.614850949,0.481252446
+3,2,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Foul,,,10,0.215385486,0.033324153
+3,2,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Foul,,,10,0.082230331,0.393423369
+3,2,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Ball,,,10,1.28062672,0.841351662
+3,2,3,2,'3-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Walk,,,10,0.881161257,0.261679754
+3,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Fastball,Swinging Strike,,,110,0.259770537,0.384640461
+3,2,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Offspeed,Ball,,,110,-0.050924823,-0.098419462
+3,2,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Offspeed,Called Strike,,,110,0.992123886,0.059672876
+3,2,1,2,'1-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Fastball,Foul,,,110,-0.450390286,0.612996062
+3,2,1,2,'1-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Offspeed,Ball,,,110,0.215385486,-0.22138017
+3,2,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Fastball,Ball,,,110,1.28062672,0.929180739
+3,2,3,2,'3-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Offspeed,Strikeout Looking,,,110,-0.095309874,0.261679754
+3,0,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Wandy Ciprian,Matt Rivas,R,R,Fastball,Lineout,Line Drive,Opposite Field,0,-0.42819776,0.244113938
+3,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Adam Odd,Matt Rivas,L,R,Fastball,Ball,,,0,-0.050924823,-0.493650309
+3,1,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Adam Odd,Matt Rivas,L,R,Fastball,Home Run,Line Drive,Pull,0,-0.672315543,0.533949892
+3,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Matt Rivas,R,R,Offspeed,Foul,,,0,-0.095309874,-0.212597262
+3,1,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Matt Rivas,R,R,Offspeed,Ball,,,0,-0.694508069,-0.238945986
+3,1,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Matt Rivas,R,R,Offspeed,Single,Ground Ball,Pull,0,0.03784528,-0.10720237
+3,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.34,Brandon Hernandez,Matt Rivas,L,R,Fastball,Ball,,,100,-0.516967863,0.727173862
+3,1,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.53,Brandon Hernandez,Matt Rivas,L,R,Offspeed,Ball,,,100,-0.494775337,-0.458518678
+3,1,2,0,'2-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Matt Rivas,L,R,Fastball,Foul,,,10,0.015652754,0.683259323
+3,1,2,1,'2-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Matt Rivas,L,R,Offspeed,Foul,,,10,-0.650123017,0.648127693
+3,1,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Matt Rivas,L,R,Offspeed,Ball,,,10,-1.160551109,0.042107061
+3,1,3,2,'3-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Matt Rivas,L,R,Fastball,Foul,,,10,-0.339427657,-0.124768185
+3,1,3,2,'3-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Matt Rivas,L,R,Offspeed,Walk,,,10,-0.42819776,-0.326775063
+3,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Matt Rivas,L,R,Fastball,Additional Out,Line Drive,Pull,110,-0.450390286,0.349508831
+3,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Matt Rivas,L,R,Fastball,Single,Line Drive,Pull,101,-0.783278172,0.6569106
+3,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.67,Francisco Hernandez,Matt Rivas,R,R,Offspeed,Ball,,,100,-0.239561292,-0.458518678
+3,2,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.46,Francisco Hernandez,Matt Rivas,R,R,Fastball,Called Strike,,,100,-0.417101497,0.674476416
+3,2,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.54,Francisco Hernandez,Matt Rivas,R,R,Offspeed,Foul,,,100,0.725813577,0.384640461
+3,2,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.56,Francisco Hernandez,Matt Rivas,R,R,Offspeed,Ball,,,100,-0.184079977,-0.379472509
+3,2,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.64,Francisco Hernandez,Matt Rivas,R,R,Offspeed,Popout,Pop Up,Opposite Field,100,-0.58354544,0.024541246
+4,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Frank Garces,R,L,Offspeed,Ball,,,0,-1.093973531,0.560298615
+4,0,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Frank Garces,R,L,Fastball,Ball,,,0,-0.250657554,-0.159899816
+4,0,2,0,'2-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Frank Garces,R,L,Fastball,Home Run,Fly Ball,Pull,0,0.592658423,0.015758338
+4,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yordan Manduley,Frank Garces,R,L,Fastball,Called Strike,,,0,0.215385486,0.015758338
+4,0,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yordan Manduley,Frank Garces,R,L,Fastball,Ball,,,0,0.770198629,-0.124768185
+4,0,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yordan Manduley,Frank Garces,R,L,Offspeed,Popout,Pop Up,Straightaway,0,0.148807909,0.226548123
+4,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Frank Garces,L,L,Fastball,Called Strike,,,0,0.126615383,0.454903723
+4,1,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Frank Garces,L,L,Fastball,Called Strike,,,0,0.792391154,0.138719046
+4,1,0,2,'0-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Frank Garces,L,L,Fastball,Ball,,,0,-0.095309874,0.929180739
+4,1,1,2,'1-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Frank Garces,L,L,Offspeed,Ball,,,0,1.014316411,-0.238945986
+4,1,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Frank Garces,L,L,Fastball,Strikeout Looking,,,0,0.992123886,0.516384077
+4,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Mike Cecchetto,Frank Garces,R,L,Offspeed,Ball,,,0,-0.627930492,-0.44973577
+4,2,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Mike Cecchetto,Frank Garces,R,L,Fastball,Foul,,,0,0.015652754,0.498818262
+4,2,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Mike Cecchetto,Frank Garces,R,L,Fastball,Ball,,,0,-0.328331394,1.087273078
+4,2,2,1,'2-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Mike Cecchetto,Frank Garces,R,L,Offspeed,Ball,,,0,0.34854064,-0.467301586
+4,2,3,1,'3-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Mike Cecchetto,Frank Garces,R,L,Fastball,Swinging Strike,,,0,0.992123886,0.815002939
+4,2,3,2,'3-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Mike Cecchetto,Frank Garces,R,L,Offspeed,Strikeout Looking,,,0,-0.028732297,0.068455784
+4,0,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Matt Rivas,L,R,Fastball,Ball,,,0,-0.361620183,-0.072070739
+4,0,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Matt Rivas,L,R,Fastball,Ball,,,0,-0.672315543,-0.291643432
+4,0,2,0,'2-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Matt Rivas,L,R,Fastball,Ball,,,0,-1.093973531,0.024541246
+4,0,3,0,'3-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Matt Rivas,L,R,Fastball,Walk,,,0,-0.095309874,-0.10720237
+4,0,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.68,Edgar Figueroa,Matt Rivas,L,R,Offspeed,Ball,,,100,-0.849855749,0.463686631
+4,0,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.76,Edgar Figueroa,Matt Rivas,L,R,Fastball,Called Strike,,,100,0.81458368,0.815002939
+4,0,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.51,Edgar Figueroa,Matt Rivas,L,R,Fastball,Called Strike,,,100,0.748006103,0.463686631
+4,0,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.56,Edgar Figueroa,Matt Rivas,L,R,Offspeed,Ball,,,100,-0.028732297,-0.195031447
+4,0,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.64,Edgar Figueroa,Matt Rivas,L,R,Fastball,Ball,,,100,1.069797726,1.289279955
+4,0,3,2,'3-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.51,Edgar Figueroa,Matt Rivas,L,R,Offspeed,Walk,,,100,-1.005203429,-0.238945986
+4,0,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Wandy Ciprian,Matt Rivas,R,R,Fastball,Ball,,,110,-1.293706263,-0.230163078
+4,0,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Wandy Ciprian,Matt Rivas,R,R,Fastball,Ball,,,110,-0.184079977,-0.274077616
+4,0,2,0,'2-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Wandy Ciprian,Matt Rivas,R,R,Fastball,Flyout,Fly Ball,Straightaway,110,0.104422857,0.762305493
+4,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Adam Odd,Matt Rivas,L,R,Fastball,Called Strike,,,110,0.681428526,0.226548123
+4,1,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Adam Odd,Matt Rivas,L,R,Fastball,Ball,,,110,-0.783278172,-0.001807478
+4,1,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Adam Odd,Matt Rivas,L,R,Offspeed,Called Strike,,,110,0.060037806,0.208982307
+4,1,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Adam Odd,Matt Rivas,L,R,Fastball,Groundout,Ground Ball,Straightaway,110,0.50388832,0.472469538
+4,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Matt Rivas,R,R,Fastball,Swinging Strike,,,11,-0.206272503,0.621778969
+4,2,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Matt Rivas,R,R,Offspeed,Ball,,,11,-1.071781006,0.173850677
+4,2,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Matt Rivas,R,R,Offspeed,Swinging Strike,,,11,-0.406005234,0.402206277
+4,2,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Matt Rivas,R,R,Fastball,Ball,,,11,-0.983010903,0.068455784
+4,2,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Matt Rivas,R,R,Offspeed,Foul,,,11,-0.916433326,0.208982307
+4,2,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Canice Ejoh,Matt Rivas,R,R,Fastball,Groundout,Ground Ball,Straightaway,11,-0.383812709,0.050889969
+5,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Matt Brandt,Frank Garces,L,L,Offspeed,Swinging Strike,,,0,0.326348114,-0.054504924
+5,0,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Matt Brandt,Frank Garces,L,L,Fastball,Called Strike,,,0,0.770198629,0.630561877
+5,0,0,2,'0-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Matt Brandt,Frank Garces,L,L,Fastball,Strikeout Looking,,,0,1.169664091,0.042107061
+5,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,Frank Garces,R,L,Curveball,Called Strike,,,0,-0.228465029,0.00697543
+5,1,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,Frank Garces,R,L,Offspeed,Ball,,,0,0.659236,-0.458518678
+5,1,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,Frank Garces,R,L,Offspeed,Ball,,,0,1.391589348,-0.300426339
+5,1,2,1,'2-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,Frank Garces,R,L,Fastball,Called Strike,,,0,0.992123886,0.050889969
+5,1,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,Frank Garces,R,L,Fastball,Single,Ground Ball,Opposite Field,0,0.681428526,0.331943015
+5,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Frank Garces,R,L,Offspeed,Swinging Strike,,,10,-0.916433326,-0.054504924
+5,1,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Frank Garces,R,L,Offspeed,Ball,,,10,0.526080846,-0.317992155
+5,1,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Frank Garces,R,L,Fastball,Ball,,,10,0.858968731,0.727173862
+5,1,2,1,'2-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Frank Garces,R,L,Fastball,Popout,Pop Up,Opposite Field,10,0.703621051,0.586647339
+5,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Ball,,,10,-1.51563152,-0.177465632
+5,2,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Offspeed,Ball,,,10,-0.42819776,-0.186248539
+5,2,2,0,'2-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Called Strike,,,10,0.947738834,0.129936138
+5,2,2,1,'2-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Fastball,Ball,,,10,-1.271513737,0.999444001
+5,2,3,1,'3-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yasiel Puig,Frank Garces,R,L,Offspeed,Walk,,,110,1.347204297,0.024541246
+5,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Fastball,Called Strike,,,110,0.881161257,0.138719046
+5,2,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kyle Poapst,Frank Garces,L,L,Offspeed,Groundout,Ground Ball,Pull,110,-0.139694926,-0.089636555
+5,0,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Matt Rivas,L,R,Fastball,Ball,,,0,1.569129554,0.217765215
+5,0,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Matt Rivas,L,R,Offspeed,Groundout,Ground Ball,Opposite Field,0,0.237578011,0.384640461
+5,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Matt Rivas,L,R,Offspeed,Foul,,,0,-0.184079977,-0.028156201
+5,1,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Matt Rivas,L,R,Fastball,Ball,,,0,-0.650123017,-0.317992155
+5,1,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Matt Rivas,L,R,Offspeed,Swinging Strike,,,0,-0.050924823,-0.300426339
+5,1,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Matt Rivas,L,R,Offspeed,Foul,,,0,-0.006539772,-0.177465632
+5,1,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Matt Rivas,L,R,Offspeed,Ball,,,0,-1.160551109,-0.353123786
+5,1,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Matt Rivas,L,R,Fastball,Groundout,Ground Ball,Pull,0,-0.184079977,0.410989185
+5,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Matt Rivas,L,R,Offspeed,Ball,,,0,-1.160551109,-0.344340878
+5,2,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Matt Rivas,L,R,Offspeed,Foul,,,0,0.326348114,1.008226908
+5,2,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Matt Rivas,L,R,Offspeed,Foul,,,0,-0.339427657,0.226548123
+5,2,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Matt Rivas,L,R,Fastball,Foul,,,0,-0.361620183,-0.124768185
+5,2,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Matt Rivas,L,R,Fastball,Ball,,,0,0.459503269,1.166319247
+5,2,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Matt Rivas,L,R,Offspeed,Strikeout Swinging,,,0,-0.8942408,-0.168682724
+6,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Breidy Encarnacion,R,R,Fastball,Called Strike,,,0,-0.206272503,0.033324153
+6,0,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Breidy Encarnacion,R,R,Fastball,Ball,,,0,0.370733166,1.183885062
+6,0,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Breidy Encarnacion,R,R,Fastball,Swinging Strike,,,0,0.392925691,0.929180739
+6,0,1,2,'1-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Breidy Encarnacion,R,R,Fastball,Ball,,,0,0.659236,1.227799601
+6,0,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Breidy Encarnacion,R,R,Fastball,Strikeout Looking,,,0,-0.1175024,-0.036939108
+6,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yordan Manduley,Breidy Encarnacion,R,R,Offspeed,Called Strike,,,0,-0.849855749,0.481252446
+6,1,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yordan Manduley,Breidy Encarnacion,R,R,Fastball,Called Strike,,,0,-1.093973531,0.410989185
+6,1,0,2,'0-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yordan Manduley,Breidy Encarnacion,R,R,Fastball,Ball,,,0,-1.493438994,0.481252446
+6,1,1,2,'1-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Yordan Manduley,Breidy Encarnacion,R,R,Offspeed,Lineout,Line Drive,Opposite Field,0,-0.095309874,0.094804507
+6,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Breidy Encarnacion,L,R,Fastball,Foul,,,0,-0.228465029,0.165067769
+6,2,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Breidy Encarnacion,L,R,Offspeed,Ball,,,0,1.369396823,1.052141447
+6,2,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Breidy Encarnacion,L,R,Fastball,Foul,,,0,0.770198629,0.876483293
+6,2,1,2,'1-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Breidy Encarnacion,L,R,Fastball,Strikeout Swinging,,,0,0.748006103,1.043358539
+6,0,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Matt Rivas,R,R,Fastball,Called Strike,,,0,-0.916433326,0.024541246
+6,0,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Matt Rivas,R,R,Fastball,Ball,,,0,-0.805470697,-0.41460414
+6,0,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Matt Rivas,R,R,Fastball,Ball,,,0,-0.206272503,-0.423387047
+6,0,2,1,'2-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Matt Rivas,R,R,Offspeed,Foul,,,0,-0.650123017,-0.124768185
+6,0,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Matt Rivas,R,R,Offspeed,Ball,,,0,-1.182743634,-0.124768185
+6,0,3,2,'3-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Matt Rivas,R,R,Fastball,Groundout,Ground Ball,Pull,0,-0.184079977,0.516384077
+6,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Matt Rivas,L,R,Offspeed,Called Strike,,,0,-0.050924823,0.393423369
+6,1,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Matt Rivas,L,R,Fastball,Foul,,,0,-0.805470697,0.507601169
+6,1,0,2,'0-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,Matt Rivas,L,R,Offspeed,Groundout,Ground Ball,Pull,0,0.104422857,-0.045722016
+6,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,Matt Rivas,L,R,Fastball,Called Strike,,,0,-0.1175024,0.288028477
+6,2,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,Matt Rivas,L,R,Offspeed,Ball,,,0,-0.938625852,-0.317992155
+6,2,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,Matt Rivas,L,R,Fastball,Swinging Strike,,,0,0.548273371,0.683259323
+6,2,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,Matt Rivas,L,R,Fastball,Single,Line Drive,Opposite Field,0,-0.361620183,0.182633584
+6,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.29,Wandy Ciprian,Matt Rivas,R,R,Fastball,Foul,,,100,1.036508937,0.00697543
+6,2,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.44,Wandy Ciprian,Matt Rivas,R,R,Offspeed,Ball,,,100,-1.693171726,-0.203814355
+6,2,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Wandy Ciprian,Matt Rivas,R,R,,Triple,Line Drive,Opposite Field,1,,
+6,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Adam Odd,Frankie Gulko,L,R,Fastball,Single,Line Drive,Opposite Field,1,0.748006103,0.481252446
+6,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.71,Canice Ejoh,Frankie Gulko,R,R,Fastball,Swinging Strike,,,100,-0.006539772,0.217765215
+6,2,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.59,Canice Ejoh,Frankie Gulko,R,R,Fastball,Foul,,,100,-0.561352914,0.059672876
+6,2,0,2,'0-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.59,Canice Ejoh,Frankie Gulko,R,R,Offspeed,Strikeout Swinging,,,100,-1.293706263,-0.361906693
+7,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Mike Cecchetto,,R,R,Fastball,Single,Line Drive,Opposite Field,0,0.703621051,0.621778969
+7,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.59,Matt Brandt,,L,R,Fastball,Foul,,,100,-0.295042606,0.5427328
+7,0,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.51,Matt Brandt,,L,R,Fastball,Double Play,,,0,-0.494775337,0.454903723
+7,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,,R,R,Offspeed,Ball,Ground Ball,Opposite Field,100,-1.005203429,0.323160108
+7,2,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,,R,R,Fastball,Ball,,,0,-1.027395954,0.270462661
+7,2,2,0,'2-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,,R,R,Fastball,Called Strike,,,0,-0.938625852,0.577864431
+7,2,2,1,'2-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,,R,R,Offspeed,Called Strike,,,0,-0.827663223,-0.028156201
+7,2,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,,R,R,Fastball,Ball,,,0,-1.038492217,0.507601169
+7,2,3,2,'3-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Spenser Ross,,R,R,Offspeed,Strikeout Looking,,,0,0.836776206,0.305594292
+7,0,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Frankie Gulko,L,R,Offspeed,Called Strike,,,0,0.992123886,-0.001807478
+7,0,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Frankie Gulko,L,R,Offspeed,Ball,,,0,1.4359744,-0.159899816
+7,0,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Brandon Hernandez,Frankie Gulko,L,R,Offspeed,Lineout,Line Drive,Pull,0,-0.295042606,-0.195031447
+7,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Frankie Gulko,L,R,Fastball,Ball,,,0,1.169664091,1.052141447
+7,1,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Frankie Gulko,L,R,Fastball,Called Strike,,,0,0.947738834,0.156284861
+7,1,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Frankie Gulko,L,R,Offspeed,Ball,,,0,-0.605737966,-0.440952863
+7,1,2,1,'2-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Frankie Gulko,L,R,Fastball,Ball,,,0,1.413781874,1.183885062
+7,1,3,1,'3-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Frankie Gulko,L,R,Fastball,Called Strike,,,0,-0.716700594,0.173850677
+7,1,3,2,'3-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Frankie Gulko,L,R,Fastball,Foul,,,0,-1.093973531,0.147501953
+7,1,3,2,'3-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Noel McGarry-Doyle,Frankie Gulko,L,R,Offspeed,Walk,,,0,-0.028732297,-0.423387047
+7,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,1.36,Ryan Rijo,Frankie Gulko,L,R,Fastball,Called Strike,,,100,0.060037806,0.533949892
+7,1,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Frankie Gulko,L,R,Offspeed,Foul,,,10,0.126615383,0.288028477
+7,1,0,2,'0-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Ryan Rijo,Frankie Gulko,L,R,Offspeed,Strikeout Swinging,,,10,-0.450390286,-0.370689601
+7,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Frankie Gulko,R,R,Fastball,Swinging Strike,,,10,0.903353783,0.094804507
+7,2,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Frankie Gulko,R,R,Fastball,Called Strike,,,10,-0.916433326,0.129936138
+7,2,0,2,'0-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Frankie Gulko,R,R,Offspeed,Ball,,,10,-1.449053943,-0.397038324
+7,2,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Frankie Gulko,R,R,Fastball,Foul,,,1,0.237578011,1.052141447
+7,2,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Frankie Gulko,R,R,Fastball,Ball,,,1,1.28062672,0.85013457
+7,2,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Francisco Hernandez,Frankie Gulko,R,R,Fastball,Groundout,Ground Ball,Pull,1,0.415118217,0.533949892
+8,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Oscar Moreta,R,R,Fastball,Called Strike,,,0,0.159904171,0.349508831
+8,0,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Oscar Moreta,R,R,Offspeed,Ball,,,0,-0.317235132,-0.10720237
+8,0,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Oscar Moreta,R,R,Offspeed,Ball,,,0,-0.472582812,-0.238945986
+8,0,2,1,'2-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Oscar Moreta,R,R,Fastball,Ball,,,0,-1.404668891,0.2001994
+8,0,3,1,'3-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Marcus Knecht,Oscar Moreta,R,R,Fastball,Walk,,,0,0.060037806,0.955529462
+8,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.54,Yasiel Puig,Oscar Moreta,R,R,Fastball,Ball,,,100,-1.36028384,-0.151116909
+8,0,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.61,Yasiel Puig,Oscar Moreta,R,R,Fastball,Ball,,,100,1.480359451,0.911614924
+8,0,2,0,'2-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.59,Yasiel Puig,Oscar Moreta,R,R,Fastball,Ball,,,100,-1.449053943,0.103587415
+8,0,3,0,'3-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.66,Yasiel Puig,Oscar Moreta,R,R,Offspeed,Called Strike,,,100,-0.050924823,0.077238692
+8,0,3,1,'3-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.39,Yasiel Puig,Oscar Moreta,R,R,Fastball,Foul,,,100,0.548273371,0.288028477
+8,0,3,2,'3-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.43,Yasiel Puig,Oscar Moreta,R,R,Fastball,Strikeout Swinging,,,100,0.060037806,0.648127693
+8,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,1.61,Kyle Poapst,Oscar Moreta,L,R,Fastball,Groundout,Ground Ball,Pull,100,-0.406005234,0.331943015
+8,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Oscar Moreta,R,R,Offspeed,Called Strike,,,10,-0.206272503,0.077238692
+8,2,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Dennis Dei Baning,Oscar Moreta,R,R,Offspeed,Groundout,Ground Ball,Straightaway,10,0.304155589,0.2001994
+8,0,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Nolan Machibroda,,L,R,Offspeed,Groundout,Ground Ball,Straightaway,0,0.060037806,0.428555
+8,1,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,,L,R,Fastball,Swinging Strike,,,0,0.126615383,0.841351662
+8,1,0,1,'0-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,,L,R,Fastball,Ball,,,0,1.613514606,0.806220031
+8,1,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,,L,R,Fastball,Swinging Strike,,,0,0.659236,0.428555
+8,1,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,,L,R,Offspeed,Ball,,,0,1.546937028,0.446120815
+8,1,2,2,'2-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,,L,R,Offspeed,Ball,,,0,-0.694508069,-0.291643432
+8,1,3,2,'3-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Edgar Figueroa,,L,R,Fastball,Strikeout Looking,,,0,0.637043474,-0.072070739
+8,2,0,0,'0-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Wandy Ciprian,,R,R,Fastball,Ball,,,0,-0.983010903,1.087273078
+8,2,1,0,'1-0,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Wandy Ciprian,,R,R,Offspeed,Foul,,,0,-0.516967863,-0.142334001
+8,2,1,1,'1-1,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Wandy Ciprian,,R,R,Offspeed,Foul,,,0,0.437310743,-0.063287831
+8,2,1,2,'1-2,"May 14th, 2026",Barrie Baycats,Toronto Maple Leafs,,Wandy Ciprian,,R,R,,Strikeout Swinging,,,0,-0.561352914,0.217765215
+9,0,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Jacob Bonzon,Braedan Pakkala,R,L,Fastball,Called Strike,,,0,0.126615383,0.094804507
+9,0,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Jacob Bonzon,Braedan Pakkala,R,L,Offspeed,Ball,,,0,0.703621051,-0.476084494
+9,0,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Jacob Bonzon,Braedan Pakkala,R,L,Fastball,Foul,,,0,0.060037806,0.630561877
+9,0,1,2,'1-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Jacob Bonzon,Braedan Pakkala,R,L,Offspeed,Strikeout Swinging,,,0,0.281963063,0.261679754
+9,1,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Braedan Pakkala,L,L,Offspeed,Ball,,,0,0.925546309,-0.405821232
+9,1,1,0,'1-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Braedan Pakkala,L,L,Fastball,Called Strike,,,0,0.881161257,0.296811384
+9,1,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Braedan Pakkala,L,L,Offspeed,Ball,,,0,1.680092183,-0.036939108
+9,1,2,1,'2-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Braedan Pakkala,L,L,Fastball,Called Strike,,,0,-0.050924823,0.068455784
+9,1,2,2,'2-2,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Cooper Tomkinson,Braedan Pakkala,L,L,Offspeed,Strikeout Swinging,,,0,0.792391154,-0.098419462
+9,2,0,0,'0-0,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kirk Gibson,Braedan Pakkala,R,L,Offspeed,Called Strike,,,0,0.992123886,0.560298615
+9,2,0,1,'0-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kirk Gibson,Braedan Pakkala,R,L,Offspeed,Ball,,,0,1.080893988,-0.388255417
+9,2,1,1,'1-1,"May 14th, 2026",Toronto Maple Leafs,Barrie Baycats,,Kirk Gibson,Braedan Pakkala,R,L,Fastball,Groundout,Ground Ball,Pull,,0.304155589,0.156284861
+1,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Yuri Yokoyama,L,L,Fastball,Foul,,,0,-0.505459602,0.723037711
+1,0,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Yuri Yokoyama,L,L,Fastball,Ball,,,0,0.788700234,0.718733708
+1,0,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Yuri Yokoyama,L,L,Offspeed,Groundout,Ground Ball,Pull,0,-0.005196136,0.189341366
+1,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Marcus Castillo,Yuri Yokoyama,R,L,Fastball,Ball,,,0,0.669072014,0.124781324
+1,1,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Marcus Castillo,Yuri Yokoyama,R,L,Offspeed,Foul,,,0,-0.026946721,0.482013555
+1,1,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Marcus Castillo,Yuri Yokoyama,R,L,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.581586651,0.482013555
+1,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Jake Sanford,Yuri Yokoyama,L,L,Fastball,Called Strike,,,0,0.005679157,0.886589816
+1,2,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Jake Sanford,Yuri Yokoyama,L,L,Fastball,Ball,,,0,0.103556792,0.882285814
+1,2,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Jake Sanford,Yuri Yokoyama,L,L,Fastball,Foul,,,0,0.049180328,0.464797544
+1,2,1,2,'1-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Jake Sanford,Yuri Yokoyama,L,L,Fastball,Foul,,,0,0.01655445,0.817725772
+1,2,1,2,'1-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Jake Sanford,Yuri Yokoyama,L,L,Offspeed,Strikeout Swinging,,,0,0.571194379,0.146301338
+1,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Fastball,Ball,,,0,-0.559836066,0.8607658
+1,0,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Fastball,Error,,,0,-0.016071429,0.645565661
+1,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.61,Austin Gurney,Elvis Liriano,L,L,Fastball,Ball,,,100,0.484192038,0.469101547
+1,0,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.37,Austin Gurney,Elvis Liriano,L,L,Fastball,Swinging Strike,,,100,0.832201405,0.318461449
+1,0,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.41,Austin Gurney,Elvis Liriano,L,L,Fastball,Swinging Strike,,,100,0.636446136,0.658477669
+1,0,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.41,Austin Gurney,Elvis Liriano,L,L,Slider,Ball,,,100,0.756074356,0.13338933
+1,0,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.38,Austin Gurney,Elvis Liriano,L,L,Fastball,Foul,,,100,0.647321429,0.137693333
+1,0,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.58,Austin Gurney,Elvis Liriano,L,L,Slider,Ball,,,100,0.647321429,0.262509413
+1,0,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.6,Austin Gurney,Elvis Liriano,L,L,Fastball,Foul,,,100,-0.005196136,0.912413833
+1,0,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.42,Austin Gurney,Elvis Liriano,L,L,Fastball,Foul,,,100,0.038305035,0.778989747
+1,0,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.56,Austin Gurney,Elvis Liriano,L,L,Fastball,Foul,,,100,-0.385831382,0.688605689
+1,0,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.68,Austin Gurney,Elvis Liriano,L,L,Slider,Strikeout Looking,,,100,0.473316745,0.494925563
+1,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Elvis Liriano,R,L,Fastball,Ball,,,10,-0.809967799,0.426061519
+1,1,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Elvis Liriano,R,L,Fastball,Swinging Strike,,,10,-0.037822014,0.464797544
+1,1,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Elvis Liriano,R,L,Fastball,Swinging Strike,,,10,-0.385831382,0.774685744
+1,1,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Elvis Liriano,R,L,Fastball,Strikeout Swinging,,,10,-0.581586651,0.684301686
+1,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Elvis Liriano,L,L,Slider,Flyout,Fly Ball,Pull,1,-0.026946721,0.537965591
+2,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Yuri Yokoyama,R,L,Offspeed,Ball,,,0,0.832201405,0.619741644
+2,0,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Yuri Yokoyama,R,L,Fastball,Foul,,,0,-0.190076112,0.5508776
+2,0,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Yuri Yokoyama,R,L,Offspeed,Ball,,,0,0.005679157,0.107565313
+2,0,2,1,'2-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Yuri Yokoyama,R,L,Offspeed,Ball,,,0,0.484192038,0.13338933
+2,0,3,1,'3-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Yuri Yokoyama,R,L,Fastball,Called Strike,,,0,-0.113949063,0.865069803
+2,0,3,2,'3-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Yuri Yokoyama,R,L,Fastball,Groundout,Ground Ball,Straightaway,0,-0.614212529,0.529357586
+2,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Yuri Yokoyama,R,L,Fastball,Foul,,,0,-0.646838408,0.593917627
+2,1,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Yuri Yokoyama,R,L,Fastball,Single,Line Drive,Opposite Field,0,-0.516334895,0.400237502
+2,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.31,J.D Williams,Yuri Yokoyama,R,L,Fastball,Called Strike,,,100,0.484192038,0.469101547
+2,1,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.3,J.D Williams,Yuri Yokoyama,R,L,Offspeed,Foul,,,100,-0.603337237,0.645565661
+2,1,0,2,'0-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.27,J.D Williams,Yuri Yokoyama,R,L,Offspeed,Strikeout Swinging,,,100,-0.505459602,0.791901755
+2,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.23,Matthew Ward,Yuri Yokoyama,R,L,Fastball,Ball,,,100,-0.592461944,0.7058217
+2,2,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.33,Matthew Ward,Yuri Yokoyama,R,L,Offspeed,Ball,,,100,-0.17920082,0.13338933
+2,2,2,0,'2-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.23,Matthew Ward,Yuri Yokoyama,R,L,Fastball,Swinging Strike,,,100,-0.472833724,0.667085675
+2,2,2,1,'2-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.21,Matthew Ward,Yuri Yokoyama,R,L,Offspeed,Flyout,Pop Up,Straightaway,100,-0.190076112,0.718733708
+2,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Elvis Liriano,R,L,Fastball,Ball,,,0,0.712573185,0.624045647
+2,0,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Elvis Liriano,R,L,Fastball,Foul,,,0,-0.461958431,0.602525633
+2,0,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Elvis Liriano,R,L,Slider,Called Strike,,,0,-0.0595726,0.490621561
+2,0,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Elvis Liriano,R,L,Splitter,Ball,,,0,-0.788217213,0.490621561
+2,0,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Elvis Liriano,R,L,Slider,Ball,,,0,-0.092198478,0.086045299
+2,0,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Elvis Liriano,R,L,Fastball,Ball,,,0,-0.472833724,0.921021839
+2,0,4,2,'4-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Elvis Liriano,R,L,Fastball,Walk,,,0,-0.146574942,0.176429358
+2,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.37,Yushin Ohta,Elvis Liriano,L,L,Fastball,Ball,,,100,0.701697892,0.723037711
+2,0,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.33,Yushin Ohta,Elvis Liriano,L,L,Fastball,Ball,,,100,0.647321429,0.697213694
+2,0,2,0,'2-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.35,Yushin Ohta,Elvis Liriano,L,L,Fastball,Flyout,Fly Ball,Pull,100,-0.016071429,0.555181602
+2,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.36,Julien Monks,Elvis Liriano,R,L,Fastball,Single,Line Drive,Straightaway,100,-0.124824356,0.529357586
+2,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Elvis Liriano,L,L,Slider,Foul,,,110,-0.037822014,0.494925563
+2,1,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Elvis Liriano,L,L,Slider,Ball,,,110,0.397189696,0.141997335
+2,1,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Elvis Liriano,L,L,Fastball,Ball,,,110,0.538568501,0.400237502
+2,1,2,1,'2-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Elvis Liriano,L,L,Fastball,Ball,,,110,0.799575527,0.240989399
+2,1,3,1,'3-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Elvis Liriano,L,L,Fastball,Called Strike,,,110,0.669072014,0.606829636
+2,1,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Elvis Liriano,L,L,Fastball,Walk,,,110,0.788700234,0.275421422
+2,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Elvis Liriano,L,L,Fastball,Called Strike,,,111,0.049180328,0.5508776
+2,1,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Elvis Liriano,L,L,Slider,Called Strike,,,111,0.440690867,0.748861727
+2,1,0,2,'0-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Elvis Liriano,L,L,Slider,Strikeout Swinging,,,111,0.505942623,0.477709552
+2,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Curveball,Ball,,,111,-0.570711358,0.563789608
+2,2,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Fastball,Foul,,,111,-0.429332553,0.766077739
+2,2,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Slider,Ball,,,111,0.788700234,0.78329375
+2,2,2,1,'2-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Splitter,Called Strike,,,111,-0.646838408,0.67569368
+2,2,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Slider,Strikeout Looking,,,111,-0.679464286,0.292637433
+3,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Yuri Yokoyama,R,L,Fastball,Ball,,,0,0.190559134,0.903805828
+3,0,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Yuri Yokoyama,R,L,Fastball,Ball,,,0,-0.516334895,0.90810983
+3,0,2,0,'2-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Yuri Yokoyama,R,L,Fastball,Ball,,,0,-0.820843091,0.804813764
+3,0,3,0,'3-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Yuri Yokoyama,R,L,Fastball,Walk,,,0,-0.016071429,0.873677808
+3,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.21,Ryan Dos Santos,Yuri Yokoyama,L,L,Offspeed,Ball,,,100,0.679947307,0.13338933
+3,0,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.23,Ryan Dos Santos,Yuri Yokoyama,L,L,Fastball,Ball,,,100,-0.037822014,0.13338933
+3,0,2,0,'2-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.26,Ryan Dos Santos,Yuri Yokoyama,L,L,Fastball,Called Strike,,,100,0.560319087,0.469101547
+3,0,2,1,'2-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.23,Ryan Dos Santos,Yuri Yokoyama,L,L,Offspeed,Ball,,,100,0.701697892,0.279725424
+3,0,3,1,'3-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.25,Ryan Dos Santos,Yuri Yokoyama,L,L,Fastball,Called Strike,,,100,0.679947307,0.236685397
+3,0,3,2,'3-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.26,Ryan Dos Santos,Yuri Yokoyama,L,L,Fastball,Flyout,,,100,0.049180328,0.503533569
+3,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.23,Deivis Nadal,Yuri Yokoyama,L,L,Fastball,Foul,,,100,0.038305035,0.697213694
+3,1,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.24,Deivis Nadal,Yuri Yokoyama,L,L,Offspeed,Called Strike,,,100,0.712573185,0.585309622
+3,1,0,2,'0-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.23,Deivis Nadal,Yuri Yokoyama,L,L,Offspeed,Strikeout Swinging,,,100,-0.005196136,0.482013555
+3,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.26,Marcus Castillo,Yuri Yokoyama,R,L,Offspeed,Single,Line Drive,Opposite Field,100,-0.679464286,0.568093611
+3,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.22,Jake Sanford,Yuri Yokoyama,L,L,Offspeed,Groundout,Ground Ball,Pull,101,0.005679157,0.395933499
+3,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Austin Gurney,Elvis Liriano,L,L,Fastball,Flyout,Fly Ball,Straightaway,0,0.005679157,0.658477669
+3,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Elvis Liriano,R,L,Fastball,Ball,,,0,0.005679157,0.865069803
+3,1,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Elvis Liriano,R,L,Fastball,Swinging Strike,,,0,-0.353205504,0.503533569
+3,1,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Elvis Liriano,R,L,Fastball,Ball,,,0,-0.037822014,0.13338933
+3,1,2,1,'2-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Elvis Liriano,R,L,Fastball,Home Run,Line Drive,Opposite Field,0,-0.396706675,0.585309622
+3,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Elvis Liriano,L,L,Fastball,Called Strike,,,0,0.353688525,0.671389677
+3,1,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Elvis Liriano,L,L,Fastball,Called Strike,,,0,0.353688525,0.576701616
+3,1,0,2,'0-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Elvis Liriano,L,L,Slider,Ball,,,0,0.81045082,0.189341366
+3,1,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Elvis Liriano,L,L,Slider,Dropped Third Strike Swinging,,,0,0.658196721,0.137693333
+3,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.42,Mitsuki Fukuda,Elvis Liriano,R,L,Splitter,Ball,,,100,0.408064988,0.137693333
+3,1,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.6,Mitsuki Fukuda,Elvis Liriano,R,L,Fastball,Called Strike,,,100,0.234060304,0.400237502
+3,1,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.63,Mitsuki Fukuda,Elvis Liriano,R,L,Curveball,Ball,,,100,0.179683841,0.129085327
+3,1,2,1,'2-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.41,Mitsuki Fukuda,Elvis Liriano,R,L,Fastball,Single,Line Drive,,100,-0.374956089,0.555181602
+3,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Yushin Ohta,Elvis Liriano,L,L,Slider,Ball,,,101,0.571194379,0.5508776
+3,1,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Yushin Ohta,Elvis Liriano,L,L,Fastball,Home Run,Fly Ball,Pull,101,-0.037822014,0.512141575
+3,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Julien Monks,Elvis Liriano,R,L,Fastball,Called Strike,,,0,-0.603337237,0.391629497
+3,1,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Julien Monks,Elvis Liriano,R,L,Slider,Ball,,,0,-0.037822014,0.068829288
+3,1,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Julien Monks,Elvis Liriano,R,L,Fastball,Error,,,0,-0.016071429,0.744557725
+3,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.37,Owen Constantineau,Elvis Liriano,L,L,Fastball,Ball,,,100,1.038831967,0.477709552
+3,1,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.43,Owen Constantineau,Elvis Liriano,L,L,Fastball,Ball,,,100,0.788700234,0.555181602
+3,1,2,0,'2-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.61,Owen Constantineau,Elvis Liriano,L,L,Fastball,Called Strike,,,100,0.777824942,0.404541505
+3,1,2,1,'2-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.36,Owen Constantineau,Elvis Liriano,L,L,Fastball,Swinging Strike,,,100,0.266686183,0.525053583
+3,1,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Elvis Liriano,L,L,Slider,Ball,,,10,0.571194379,0.146301338
+3,1,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Elvis Liriano,L,L,Slider,Foul,,,10,0.832201405,0.727341714
+3,1,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Elvis Liriano,L,L,Fastball,Foul,,,10,0.01655445,0.464797544
+3,1,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Elvis Liriano,L,L,Slider,Walk,,,10,0.418940281,0.111869316
+3,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Elvis Liriano,L,L,Fastball,Ball,,,110,0.712573185,0.413149511
+3,1,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Elvis Liriano,L,L,Fastball,Swinging Strike,,,110,-0.037822014,0.886589816
+3,1,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Elvis Liriano,L,L,Fastball,Swinging Strike,,,110,-0.614212529,0.456189538
+3,1,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Elvis Liriano,L,L,Fastball,Foul,,,110,0.005679157,0.662781672
+3,1,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Elvis Liriano,L,L,Slider,Ball,,,110,0.701697892,0.236685397
+3,1,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Elvis Liriano,L,L,Fastball,Lineout,Line Drive,Opposite Field,110,0.397189696,0.5508776
+3,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Fastball,Ball,,,110,0.821326112,0.546573597
+3,2,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Curveball,Ball,,,110,-0.820843091,0.167821352
+3,2,2,0,'2-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Fastball,Ball,,,110,0.832201405,0.464797544
+3,2,3,0,'3-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Elvis Liriano,R,L,Fastball,Walk,,,110,0.81045082,0.624045647
+3,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Austin Gurney,Jacob Kush,L,R,Changeup,Ball,,,111,-0.635963115,0.146301338
+3,2,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Austin Gurney,Jacob Kush,L,R,Fastball,Called Strike,,,111,-0.53808548,0.370109483
+3,2,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Austin Gurney,Jacob Kush,L,R,Fastball,Foul,,,111,0.049180328,0.469101547
+3,2,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Austin Gurney,Jacob Kush,L,R,Changeup,Ball,,,111,0.179683841,0.413149511
+3,2,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Austin Gurney,Jacob Kush,L,R,Fastball,Ball,,,111,0.81045082,0.206557377
+3,2,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Austin Gurney,Jacob Kush,L,R,Fastball,Walk,,,111,-0.255327869,0.137693333
+3,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Jacob Kush,R,R,Fastball,Ball,,,111,-0.820843091,0.137693333
+3,2,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Jacob Kush,R,R,Fastball,Ball,,,111,-0.081323185,0.150605341
+3,2,2,0,'2-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Jacob Kush,R,R,Fastball,Ball,,,111,0.516817916,0.120477321
+3,2,3,0,'3-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Jacob Kush,R,R,Fastball,Walk,,,111,-0.385831382,0.13338933
+3,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Jacob Kush,L,R,Fastball,Ball,,,111,0.788700234,0.791901755
+3,2,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Jacob Kush,L,R,Fastball,Foul,,,111,-0.016071429,0.886589816
+3,2,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Jacob Kush,L,R,Fastball,Foul,,,111,0.451566159,0.800509761
+3,2,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Jacob Kush,L,R,Fastball,Single,Line Drive,Opposite Field,111,0.636446136,0.124781324
+3,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Jacob Kush,R,R,Fastball,Ball,,,110,-0.809967799,0.499229566
+3,2,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Jacob Kush,R,R,Fastball,Called Strike,,,110,-0.385831382,0.154909344
+3,2,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Jacob Kush,R,R,Fastball,Flyout,Fly Ball,Pull,110,0.821326112,0.723037711
+4,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Yuri Yokoyama,R,L,Fastball,Groundout,Ground Ball,Pull,0,-0.29882904,0.67569368
+4,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Yuri Yokoyama,R,L,Offspeed,Ball,,,0,-0.461958431,0.93823785
+4,1,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Yuri Yokoyama,R,L,Offspeed,Ball,,,0,-0.799092506,0.374413486
+4,1,2,0,'2-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Yuri Yokoyama,R,L,Fastball,Ball,,,0,-0.799092506,0.568093611
+4,1,3,0,'3-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Yuri Yokoyama,R,L,Fastball,Called Strike,,,0,-0.081323185,0.469101547
+4,1,3,1,'3-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Yuri Yokoyama,R,L,Fastball,Walk,,,0,-0.0595726,0.086045299
+4,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.22,J.D Williams,Yuri Yokoyama,R,L,Fastball,Called Strike,,,100,0.01655445,0.697213694
+4,1,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.21,J.D Williams,Yuri Yokoyama,R,L,Offspeed,Ball,,,100,-0.037822014,0.529357586
+4,1,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.28,J.D Williams,Yuri Yokoyama,R,L,Fastball,Lineout,Line Drive,Opposite Field,100,-0.016071429,0.477709552
+4,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.22,Matthew Ward,Yuri Yokoyama,R,L,Fastball,Ball,,,100,0.01655445,0.877981811
+4,2,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.19,Matthew Ward,Yuri Yokoyama,R,L,Offspeed,Called Strike,,,100,-0.625087822,0.568093611
+4,2,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.16,Matthew Ward,Yuri Yokoyama,R,L,Fastball,Hit By Pitch,,,100,0.951829625,0.740253722
+4,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Yuri Yokoyama,R,L,Fastball,Called Strike,,,110,-0.005196136,0.559485605
+4,2,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Yuri Yokoyama,R,L,Offspeed,Ball,,,110,-0.97309719,0.486317558
+4,2,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Yuri Yokoyama,R,L,Offspeed,Ball,,,110,-0.516334895,0.120477321
+4,2,2,1,'2-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Yuri Yokoyama,R,L,Fastball,Ball,,,110,-0.646838408,0.882285814
+4,2,3,1,'3-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Yuri Yokoyama,R,L,Fastball,Walk,,,110,-0.864344262,0.624045647
+4,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ryan Dos Santos,Yuri Yokoyama,L,L,Fastball,Lineout,Line Drive,Pull,111,0.005679157,0.533661588
+4,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Yushin Ohta,Jacob Kush,L,R,Fastball,Flyout,Fly Ball,Pull,0,-0.005196136,0.533661588
+4,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Julien Monks,Jacob Kush,R,R,Fastball,Called Strike,,,0,-0.809967799,0.469101547
+4,1,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Julien Monks,Jacob Kush,R,R,Fastball,Called Strike,,,0,-0.766466628,0.542269594
+4,1,0,2,'0-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Julien Monks,Jacob Kush,R,R,Fastball,Lineout,Line Drive,Opposite Field,0,-0.026946721,0.770381741
+4,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Jacob Kush,L,R,Changeup,Ball,,,0,0.821326112,0.395933499
+4,2,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Jacob Kush,L,R,Fastball,Called Strike,,,0,0.701697892,0.486317558
+4,2,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Jacob Kush,L,R,Fastball,Ball,,,0,-0.081323185,0.13338933
+4,2,2,1,'2-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Jacob Kush,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.61469555,0.572397613
+5,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Aden Ryan,L,R,Offspeed,Called Strike,,,0,0.081806206,0.537965591
+5,0,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Aden Ryan,L,R,Fastball,Swinging Strike,,,0,0.060055621,0.464797544
+5,0,0,2,'0-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Aden Ryan,L,R,Fastball,Ball,,,0,-0.864344262,0.391629497
+5,0,1,2,'1-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Aden Ryan,L,R,Offspeed,Ball,,,0,-0.570711358,0.559485605
+5,0,2,2,'2-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Aden Ryan,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.799092506,0.464797544
+5,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Marcus Castillo,Aden Ryan,R,R,Offspeed,Ball,,,0,-0.962221897,0.185037363
+5,1,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Marcus Castillo,Aden Ryan,R,R,Fastball,Foul,,,0,0.005679157,0.516445577
+5,1,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Marcus Castillo,Aden Ryan,R,R,Fastball,Ball,,,0,-0.820843091,0.770381741
+5,1,2,1,'2-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Marcus Castillo,Aden Ryan,R,R,Fastball,Single,,,0,-0.005196136,0.499229566
+5,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.21,Andy Leader,Aden Ryan,R,R,Offspeed,Ball,,,100,-0.614212529,0.503533569
+5,1,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.23,Andy Leader,Aden Ryan,R,R,Fastball,Ball,,,100,0.266686183,0.723037711
+5,1,2,0,'2-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.19,Andy Leader,Aden Ryan,R,R,Fastball,Popout,Pop Up,Straightaway,100,-0.342330211,0.413149511
+5,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.23,Liam Wilson,Aden Ryan,R,R,Fastball,Swinging Strike,,,100,-0.820843091,0.344285466
+5,2,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.2,Liam Wilson,Aden Ryan,R,R,Fastball,Ball,,,100,-0.081323185,0.44327753
+5,2,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.24,Liam Wilson,Aden Ryan,R,R,Offspeed,Called Strike,,,100,-0.820843091,0.516445577
+5,2,1,2,'1-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.22,Liam Wilson,Aden Ryan,R,R,Fastball,Ball,,,100,-0.799092506,0.189341366
+5,2,2,2,'2-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.18,Liam Wilson,Aden Ryan,R,R,Fastball,Foul,,,100,-0.809967799,0.602525633
+5,2,2,2,'2-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.16,Liam Wilson,Aden Ryan,R,R,Fastball,Foul,,,100,-0.29882904,0.748861727
+5,2,2,2,'2-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.17,Liam Wilson,Aden Ryan,R,R,Offspeed,Foul,,,100,-1.070974824,0.413149511
+5,2,2,2,'2-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Aden Ryan,R,R,Fastball,Popout,Pop Up,Straightaway,10,0.005679157,0.339981463
+5,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Jacob Kush,L,R,Fastball,Ball,,,0,0.745199063,0.882285814
+5,0,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Jacob Kush,L,R,Fastball,Foul,,,0,-0.016071429,0.559485605
+5,0,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Jacob Kush,L,R,Fastball,Foul,,,0,0.505942623,0.757469733
+5,0,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Jacob Kush,L,R,Changeup,Ball,,,0,0.81045082,0.5508776
+5,0,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Jacob Kush,L,R,Changeup,Groundout,Ground Ball,Pull,0,0.027429742,0.482013555
+5,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Jacob Kush,R,R,Fastball,Called Strike,,,0,0.592944965,0.499229566
+5,1,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Jacob Kush,R,R,Fastball,Foul,,,0,0.070930913,0.718733708
+5,1,0,2,'0-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Jacob Kush,R,R,Curveball,Ball,,,0,-0.809967799,0.154909344
+5,1,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Jacob Kush,R,R,Curveball,Foul,,,0,-0.809967799,0.464797544
+5,1,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Jacob Kush,R,R,Fastball,Ball,,,0,-0.766466628,0.7058217
+5,1,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Jacob Kush,R,R,Changeup,Flyout,Fly Ball,Straightaway,0,-0.494584309,0.430365522
+5,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Austin Gurney,Jacob Kush,L,R,Fastball,Groundout,Ground Ball,Opposite Field,0,-0.124824356,0.176429358
+6,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Aden Ryan,R,R,Fastball,Swinging Strike,,,0,-0.048697307,0.563789608
+6,0,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Aden Ryan,R,R,Fastball,Ball,,,0,0.61469555,0.895197822
+6,0,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Aden Ryan,R,R,Offspeed,Ball,,,0,-0.820843091,0.262509413
+6,0,2,1,'2-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Aden Ryan,R,R,Fastball,Foul,,,0,0.049180328,0.533661588
+6,0,2,2,'2-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Aden Ryan,R,R,Offspeed,Foul,,,0,0.005679157,0.679997683
+6,0,2,2,'2-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Garrett Takamatsu,Aden Ryan,R,R,Offspeed,Single,Line Drive,Pull,0,-0.494584309,0.7058217
+6,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.44,J.D Williams,Aden Ryan,R,R,Fastball,Ball,,,100,-0.016071429,0.916717836
+6,0,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.37,J.D Williams,Aden Ryan,R,R,Fastball,Foul,,,100,0.223185012,0.499229566
+6,0,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.24,J.D Williams,Aden Ryan,R,R,Offspeed,Called Strike,,,100,-0.788217213,0.464797544
+6,0,1,2,'1-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.27,J.D Williams,Aden Ryan,R,R,Offspeed,Groundout,Ground Ball,Pull,100,-0.559836066,0.555181602
+6,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Matthew Ward,Aden Ryan,R,R,Fastball,Foul,,,10,0.049180328,0.430365522
+6,1,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Matthew Ward,Aden Ryan,R,R,Fastball,Foul,,,10,0.049180328,0.516445577
+6,1,0,2,'0-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Matthew Ward,Aden Ryan,R,R,Offspeed,Ball,,,10,-0.646838408,0.636957655
+6,1,1,2,'1-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Matthew Ward,Aden Ryan,R,R,Offspeed,Strikeout Looking,,,10,-0.092198478,0.447581533
+6,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Aden Ryan,R,R,Fastball,Swinging Strike,,,10,-0.603337237,0.434669524
+6,2,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Aden Ryan,R,R,Offspeed,Ball,,,10,0.484192038,0.098957308
+6,2,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Aden Ryan,R,R,Offspeed,Ball,,,10,-0.831718384,0.28833343
+6,2,2,1,'2-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Aden Ryan,R,R,Fastball,Called Strike,,,10,0.277561475,0.75316573
+6,2,2,2,'2-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Aden Ryan,R,R,Offspeed,Strikeout Looking,,,10,0.005679157,0.490621561
+6,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Jacob Kush,R,R,Fastball,Swinging Strike,,,0,-0.614212529,0.791901755
+6,0,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Kian Johnston,Jacob Kush,R,R,Fastball,Home Run,Fly Ball,Opposite Field,0,-0.559836066,0.494925563
+6,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Jacob Kush,L,R,Fastball,Called Strike,,,0,-0.548960773,0.581005619
+6,0,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Jacob Kush,L,R,Fastball,Single,Ground Ball,Pull,0,-0.353205504,0.417453513
+6,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.22,Mitsuki Fukuda,Jacob Kush,R,R,Fastball,Foul,,,100,0.049180328,0.512141575
+6,0,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.33,Mitsuki Fukuda,Jacob Kush,R,R,Curveball,Foul,,,100,-0.081323185,0.542269594
+6,0,0,2,'0-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.26,Mitsuki Fukuda,Jacob Kush,R,R,Curveball,Ball,,,100,-0.070447892,0.59822163
+6,0,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Jacob Kush,R,R,Fastball,Single,Line Drive,Opposite Field,10,-0.146574942,0.129085327
+6,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.38,Yushin Ohta,Jacob Kush,L,R,Changeup,Ball,,,100,-0.081323185,0.559485605
+6,0,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Yushin Ohta,Jacob Kush,L,R,Fastball,Swinging Strike,,,100,,
+6,0,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.24,Yushin Ohta,Jacob Kush,L,R,Fastball,Swinging Strike,,,100,0.788700234,0.490621561
+6,0,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.27,Yushin Ohta,Jacob Kush,L,R,Changeup,Ball,,,100,-0.070447892,0.727341714
+6,0,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.26,Yushin Ohta,Jacob Kush,L,R,Fastball,Ball,,,100,-0.092198478,0.141997335
+6,0,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.25,Yushin Ohta,Jacob Kush,L,R,Fastball,Home Run,Fly Ball,Pull,100,-0.124824356,0.641261658
+6,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Julien Monks,Jacob Kush,R,R,Fastball,Ball,,,0,-0.831718384,0.451885536
+6,0,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Julien Monks,Jacob Kush,R,R,Fastball,Double,,,0,-0.516334895,0.757469733
+6,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Jacob Kush,L,R,Changeup,Foul,,,10,,
+6,0,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Owen Constantineau,Jacob Kush,L,R,Fastball,Double,,,10,-0.048697307,0.507837572
+6,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Spencer Morin,Jacob Kush,L,R,Fastball,Single,Ground Ball,Opposite Field,10,0.212309719,0.486317558
+6,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Jacob Kush,R,R,Curveball,Ball,,,101,-0.026946721,0.129085327
+6,0,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Jacob Kush,R,R,Curveball,Foul,,,101,0.005679157,0.636957655
+6,0,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Jacob Kush,R,R,Fastball,Ball,,,101,0.571194379,0.482013555
+6,0,2,1,'2-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Jacob Kush,R,R,Fastball,Sacrifice Fly,Fly Ball,Straightaway,101,-0.048697307,0.516445577
+6,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.28,Austin Gurney,Jacob Kush,R,R,Fastball,Ball,,,100,,
+6,1,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.26,Austin Gurney,Jacob Kush,R,R,Fastball,Foul,,,100,0.647321429,0.671389677
+6,1,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.29,Austin Gurney,Jacob Kush,R,R,Fastball,Foul,,,100,0.560319087,0.714429705
+6,1,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.26,Austin Gurney,Jacob Kush,R,R,Changeup,Ball,,,100,-0.451083138,0.10326131
+6,1,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.31,Austin Gurney,Jacob Kush,R,R,Fastball,Foul,,,100,0.070930913,0.490621561
+6,1,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.27,Austin Gurney,Jacob Kush,R,R,Changeup,Groundout,Ground Ball,Straightaway,100,0.266686183,0.473405549
+6,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.34,Kian Johnston,Jacob Kush,R,R,Curveball,Ball,,,100,-0.570711358,0.124781324
+6,2,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.31,Kian Johnston,Jacob Kush,R,R,Curveball,Ball,,,100,0.01655445,0.740253722
+6,2,2,0,'2-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.29,Kian Johnston,Jacob Kush,R,R,Fastball,Swinging Strike,,,100,-0.037822014,0.482013555
+6,2,2,1,'2-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.3,Kian Johnston,Jacob Kush,R,R,Fastball,Ball,,,100,-0.005196136,0.895197822
+6,2,3,1,'3-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.26,Kian Johnston,Jacob Kush,R,R,Fastball,Walk,,,100,-0.864344262,0.662781672
+6,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Jacob Kush,L,R,Fastball,Groundout,Ground Ball,Pull,110,-0.005196136,0.236685397
+7,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ryan Dos Santos,Mizuki Akatsuka,L,L,Fastball,Called Strike,,,0,0.625570843,0.546573597
+7,0,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ryan Dos Santos,Mizuki Akatsuka,L,L,Fastball,Called Strike,,,0,,
+7,0,0,2,'0-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ryan Dos Santos,Mizuki Akatsuka,L,L,Fastball,Strikeout Swinging,,,0,-0.037822014,0.516445577
+7,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Mizuki Akatsuka,L,L,Fastball,Called Strike,,,0,0.331937939,0.568093611
+7,1,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Mizuki Akatsuka,L,L,Fastball,Ball,,,0,0.821326112,0.512141575
+7,1,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Mizuki Akatsuka,L,L,Offspeed,Swinging Strike,,,0,0.364563817,0.516445577
+7,1,1,2,'1-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Mizuki Akatsuka,L,L,Fastball,Foul,,,0,0.353688525,0.464797544
+7,1,1,2,'1-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Deivis Nadal,Mizuki Akatsuka,L,L,Offspeed,Double,Fly Ball,Opposite Field,0,-0.527210187,0.525053583
+7,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ashton Patterson,Mizuki Akatsuka,L,L,Fastball,Ball,,,10,0.734323771,0.658477669
+7,1,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ashton Patterson,Mizuki Akatsuka,L,L,Offspeed,Ball,,,10,0.61469555,0.141997335
+7,1,2,0,'2-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ashton Patterson,Mizuki Akatsuka,L,L,Offspeed,Ball,,,10,0.843076698,0.193645369
+7,1,3,0,'3-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ashton Patterson,Mizuki Akatsuka,L,L,Offspeed,Called Strike,,,10,0.701697892,0.7058217
+7,1,3,1,'3-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ashton Patterson,Mizuki Akatsuka,L,L,Fastball,Ball,,,10,0.821326112,0.740253722
+7,1,4,1,'4-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Andy Leader,Mizuki Akatsuka,R,R,Fastball,Called Strike,,,110,-0.342330211,0.507837572
+7,1,4,2,'4-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Andy Leader,Mizuki Akatsuka,R,R,Offspeed,Called Strike,,,110,-0.037822014,0.477709552
+7,1,4,2,'4-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Andy Leader,Mizuki Akatsuka,R,R,Fastball,Ball,,,110,-0.005196136,0.75316573
+7,1,5,2,'5-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Andy Leader,Mizuki Akatsuka,R,R,Offspeed,Foul,,,110,-0.005196136,0.357197474
+7,1,5,2,'5-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Andy Leader,Mizuki Akatsuka,R,R,Fastball,Strikeout Swinging,,,110,0.484192038,0.555181602
+7,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Mizuki Akatsuka,R,R,Offspeed,Foul,,,110,-0.168325527,0.223773388
+7,2,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Mizuki Akatsuka,R,R,Fastball,Ball,,,110,-0.842593677,0.400237502
+7,2,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Mizuki Akatsuka,R,R,Fastball,Foul,,,110,-0.081323185,0.494925563
+7,2,1,2,'1-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Mizuki Akatsuka,R,R,Fastball,Ball,,,110,-0.451083138,0.516445577
+7,2,2,2,'2-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Mizuki Akatsuka,R,R,Fastball,Single,Pop Up,Pull,110,-0.570711358,0.615437641
+7,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Kyle Kush,Mizuki Akatsuka,L,L,Fastball,Ball,,,100,0.505942623,0.434669524
+7,2,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Kyle Kush,Mizuki Akatsuka,L,L,Offspeed,Foul,,,11,0.049180328,0.516445577
+7,2,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Kyle Kush,Mizuki Akatsuka,L,L,Fastball,Ball,,,11,-0.53808548,0.701517697
+7,2,2,1,'2-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Kyle Kush,Mizuki Akatsuka,L,L,Offspeed,Ball,,,11,-0.646838408,0.774685744
+7,2,3,1,'3-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Kyle Kush,Mizuki Akatsuka,L,L,Fastball,Swinging Strike,,,11,0.070930913,0.568093611
+7,2,3,2,'3-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Kyle Kush,Mizuki Akatsuka,L,L,Offspeed,Groundout,Ground Ball,Straightaway,11,-0.429332553,0.516445577
+7,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Andrew Case,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,,
+7,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Yushin Ohta,Andrew Case,L,R,Fastball,Foul,,,0,0.049180328,0.516445577
+7,1,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Yushin Ohta,Andrew Case,L,R,Cutter,Ball,,,0,-0.592461944,0.137693333
+7,1,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Yushin Ohta,Andrew Case,L,R,Cutter,Foul,,,0,-0.266203162,0.5508776
+7,1,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Yushin Ohta,Andrew Case,L,R,Curveball,Error,,,0,-0.168325527,0.378717488
+7,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.35,Robert Mackie,Andrew Case,R,R,Fastball,Ball,,,100,-0.451083138,0.141997335
+7,1,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.41,Robert Mackie,Andrew Case,R,R,Fastball,Swinging Strike,,,100,-0.016071429,0.494925563
+7,1,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.33,Robert Mackie,Andrew Case,R,R,Cutter,Foul,,,100,0.005679157,0.559485605
+7,1,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.36,Robert Mackie,Andrew Case,R,R,Curveball,Strikeout Looking,,,100,-0.625087822,0.464797544
+7,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,1.43,Owen Constantineau,Andrew Case,L,R,Fastball,Double,Fly Ball,Opposite Field,100,-0.037822014,0.482013555
+7,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Andy Groening,Andrew Case,R,R,Cutter,Swinging Strike,,,11,-0.037822014,0.516445577
+7,2,0,1,'0-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Andy Groening,Andrew Case,R,R,Cutter,Swinging Strike,,,11,-0.016071429,0.469101547
+7,2,0,2,'0-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Andy Groening,Andrew Case,R,R,Curveball,Groundout,Ground Ball,Straightaway,11,-0.113949063,0.778989747
+8,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,J.D Williams,Mizuki Akatsuka,R,R,Fastball,Swinging Strike,,,0,0.027429742,0.723037711
+8,0,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,J.D Williams,Mizuki Akatsuka,R,R,Fastball,Ball,,,0,-0.788217213,0.533661588
+8,0,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,J.D Williams,Mizuki Akatsuka,R,R,Fastball,Ball,,,0,0.766949649,0.636957655
+8,0,2,1,'2-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,J.D Williams,Mizuki Akatsuka,R,R,Fastball,Swinging Strike,,,0,0.005679157,0.563789608
+8,0,2,2,'2-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,J.D Williams,Mizuki Akatsuka,R,R,Fastball,Strikeout Swinging,,,0,-0.026946721,0.499229566
+8,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Luca Boscarino,Mizuki Akatsuka,R,R,Fastball,Ball,,,0,-0.016071429,0.21086138
+8,1,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Luca Boscarino,Mizuki Akatsuka,R,R,Fastball,Flyout,Fly Ball,Pull,0,-0.037822014,0.59822163
+8,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Mizuki Akatsuka,R,R,Fastball,Foul,,,0,0.081806206,0.482013555
+8,2,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Mizuki Akatsuka,R,R,Offspeed,Ball,,,0,-0.77734192,0.585309622
+8,2,1,1,'1-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Mizuki Akatsuka,R,R,Fastball,Foul,,,0,0.027429742,0.649869663
+8,2,1,2,'1-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Drew Donaldson,Mizuki Akatsuka,R,R,Offspeed,Strikeout Looking,,,0,-0.026946721,0.36580548
+8,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Thomas Green,Ryan Dos Santos,R,R,Fastball,Home Run,Fly Ball,Straightaway,0,-0.005196136,0.568093611
+8,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Austin Gurney,Ryan Dos Santos,L,R,Fastball,Home Run,Fly Ball,Pull,0,,
+8,0,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Lee Kucera,Ryan Dos Santos,R,R,Curveball,Ball,,,0,-0.77734192,0.589613625
+8,0,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Lee Kucera,Ryan Dos Santos,R,R,Fastball,Foul,,,0,-0.037822014,0.503533569
+8,0,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Lee Kucera,Ryan Dos Santos,R,R,Curveball,Swinging Strike,,,0,-0.85346897,0.464797544
+8,0,1,2,'1-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Lee Kucera,Ryan Dos Santos,R,R,Curveball,Ball,,,0,-0.429332553,0.060221283
+8,0,2,2,'2-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Lee Kucera,Ryan Dos Santos,R,R,Fastball,Ball,,,0,-0.799092506,0.413149511
+8,0,3,2,'3-2,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Lee Kucera,Ryan Dos Santos,R,R,Fastball,Flyout,Fly Ball,Pull,0,-0.016071429,0.744557725
+8,1,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Ryan Dos Santos,L,R,,Ball,,,0,,
+8,1,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Ryan Dos Santos,L,R,Fastball,Called Strike,,,0,0.049180328,0.516445577
+8,1,1,1,'1-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Ryan Dos Santos,L,R,Fastball,Ball,,,0,0.821326112,0.413149511
+8,1,2,1,'2-1,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Greyson Barrett,Ryan Dos Santos,L,R,Fastball,Groundout,Ground Ball,Pull,0,-0.364080796,0.430365522
+8,2,0,0,'0-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Ryan Dos Santos,R,R,Fastball,Ball,,,0,0.766949649,0.137693333
+8,2,1,0,'1-0,2026-05-15,Chatham-Kent Barnstormers,Guelph Royals,,Mitsuki Fukuda,Ryan Dos Santos,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.701214871,0.314157447
+9,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ryan Dos Santos,Garret Day,L,R,Offspeed,Ball,,,0,0.93007904,0.28833343
+9,0,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ryan Dos Santos,Garret Day,L,R,Fastball,Single,,,0,0.027429742,0.585309622
+9,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.33,Deivis Nadal,Garret Day,L,R,Offspeed,Ball,,,100,1.136709602,0.615437641
+9,0,1,0,'1-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,1.35,Deivis Nadal,Garret Day,L,R,Fastball,Single,Line Drive,Pull,100,0.049180328,0.44327753
+9,0,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Ashton Patterson,Garret Day,L,R,Offspeed,Groundout,Ground Ball,Straightaway,110,-0.037822014,0.537965591
+9,1,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Andy Leader,Garret Day,R,R,Offspeed,Foul,,,101,0.027429742,0.503533569
+9,1,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Andy Leader,Garret Day,R,R,Offspeed,Groundout,Ground Ball,Straightaway,101,0.038305035,0.555181602
+9,2,0,0,'0-0,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Garret Day,R,R,Fastball,Swinging Strike,,,10,-0.211826698,0.555181602
+9,2,0,1,'0-1,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Garret Day,R,R,Fastball,Foul,,,10,-0.070447892,0.469101547
+9,2,0,2,'0-2,2026-05-15,Guelph Royals,Chatham-Kent Barnstormers,,Liam Wilson,Garret Day,R,R,Offspeed,Lineout,Line Drive,Opposite Field,10,-0.603337237,0.469101547
+1,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Colby Klepper,L,R,Fastball,Called Strike,,,0,-0.615721912,0.143820027
+1,0,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Colby Klepper,L,R,Fastball,Foul,,,0,-0.509484621,0.354042227
+1,0,0,2,'0-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Colby Klepper,L,R,Fastball,Foul,,,0,-0.639330198,0.372728645
+1,0,0,2,'0-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Colby Klepper,L,R,Offspeed,Flyout,Fly Ball,Pull,0,-1.253145653,0.050387938
+1,1,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Colby Klepper,L,R,Fastball,Ball,,,0,1.190312023,0.919306364
+1,1,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Colby Klepper,L,R,Fastball,Swinging Strike,,,0,-0.721959202,0.550249613
+1,1,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Colby Klepper,L,R,Fastball,Foul,,,0,-1.20592908,0.269953347
+1,1,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Colby Klepper,L,R,Offspeed,Ball,,,0,-1.501032664,-0.215893515
+1,1,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Colby Klepper,L,R,Fastball,Ball,,,0,1.650673615,0.83054588
+1,1,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Colby Klepper,L,R,Offspeed,Groundout,Ground Ball,Opposite Field,0,-0.816392349,-0.047715755
+1,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Colby Klepper,L,R,Fastball,Flyout,Fly Ball,Straightaway,0,-0.533092908,0.171849654
+1,0,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Fastball,Called Strike,,,0,0.127939121,0.311997787
+1,0,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.04912303,0.15783484
+1,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Ben Abram,R,R,Fastball,Called Strike,,,0,0.446650991,0.129805214
+1,1,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Ben Abram,R,R,Fastball,Swinging Strike,,,0,0.210568124,-0.145819449
+1,1,0,2,'0-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Ben Abram,R,R,Fastball,Strikeout Looking,,,0,0.245980554,0.227908907
+1,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Tim Holyk,Ben Abram,R,R,Fastball,Called Strike,,,0,-0.462268048,0.143820027
+1,2,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Tim Holyk,Ben Abram,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.588300712,0.255938534
+2,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Colby Klepper,R,R,Fastball,Foul,,,0,-0.780979919,0.386743458
+2,0,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Colby Klepper,R,R,Offspeed,Called Strike,,,0,0.942425013,0.185864467
+2,0,0,2,'0-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Colby Klepper,R,R,Offspeed,Ball,,,0,1.379178317,-0.117789822
+2,0,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Colby Klepper,R,R,Fastball,Foul,,,0,-0.533092908,0.36805704
+2,0,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Colby Klepper,R,R,Offspeed,Foul,,,0,0.05711426,0.582950844
+2,0,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Colby Klepper,R,R,Offspeed,Ball,,,0,-1.489228521,-0.313997208
+2,0,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Colby Klepper,R,R,Offspeed,Ball,,,0,1.308353457,0.078417565
+2,0,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Colby Klepper,R,R,Fastball,Strikeout Swinging,,,0,0.729950432,0.610980471
+2,1,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Colby Klepper,R,R,Fastball,Ball,,,0,-0.792784062,-0.276624373
+2,1,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Colby Klepper,R,R,Fastball,Ball,,,0,-1.394795374,0.213894094
+2,1,2,0,'2-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Colby Klepper,R,R,Offspeed,Called Strike,,,0,-0.11994789,0.03170152
+2,1,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Colby Klepper,R,R,Fastball,Lineout,Line Drive,Pull,0,-0.0137106,0.120462005
+2,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Colby Klepper,L,R,Offspeed,Ball,,,0,-1.288558083,-0.276624373
+2,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Colby Klepper,L,R,Fastball,Ball,,,0,-1.524640951,0.045716334
+2,2,2,0,'2-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Colby Klepper,L,R,Fastball,Single,Ground Ball,Pull,0,-0.863608922,0.45214592
+2,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,,Colby Klepper,,,,Truncated Out,,,100,,
+2,0,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Ben Abram,L,R,Fastball,Called Strike,,,0,0.635517285,0.288639765
+2,0,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Ben Abram,L,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.588300712,0.5362348
+2,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Christian Ortega,Ben Abram,R,R,Offspeed,Called Strike,,,0,-0.745567489,-0.089760195
+2,1,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Christian Ortega,Ben Abram,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.320618327,-0.075745382
+2,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Cassidy Watt,Ben Abram,R,R,Fastball,Called Strike,,,0,-0.816392349,0.07374596
+2,2,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Cassidy Watt,Ben Abram,R,R,Fastball,Ball,,,0,-1.430207804,0.078417565
+2,2,1,1,'1-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Cassidy Watt,Ben Abram,R,R,Offspeed,Ball,,,0,-0.780979919,-0.215893515
+2,2,2,1,'2-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Cassidy Watt,Ben Abram,R,R,Fastball,Lineout,Line Drive,Pull,0,-0.686546772,0.297982974
+3,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Colby Klepper,R,R,Fastball,Foul,,,0,-0.391443188,0.24192372
+3,0,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Colby Klepper,R,R,Offspeed,Flyout,Fly Ball,Straightaway,0,0.210568124,0.984708826
+3,1,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Colby Klepper,L,R,Fastball,Ball,,,0,-1.784332105,-0.285967582
+3,1,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Colby Klepper,L,R,Fastball,Called Strike,,,0,-0.828196492,0.059731147
+3,1,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Colby Klepper,L,R,Offspeed,Ball,,,0,1.272941027,0.634338493
+3,1,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Colby Klepper,L,R,Fastball,Single,Ground Ball,Straightaway,0,-1.111495933,0.003671894
+3,1,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,1.45,Gianfranco Morello,Colby Klepper,L,R,Fastball,Called Strike,,,100,-0.757371632,0.311997787
+3,1,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,1.46,Gianfranco Morello,Colby Klepper,L,R,Fastball,Flyout,Fly Ball,Opposite Field,100,0.127939121,0.36805704
+3,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,1.48,Daika Abe,Colby Klepper,L,R,Fastball,Foul,,,100,0.387630275,0.653024911
+3,2,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,1.53,Daika Abe,Colby Klepper,L,R,Offspeed,Ball,,,100,-1.501032664,-0.328012022
+3,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Colby Klepper,L,R,Fastball,Groundout,Ground Ball,Pull,10,-0.851804779,0.190536071
+3,0,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Ben Abram,R,R,Fastball,Ball,,,0,1.225724453,0.942664386
+3,0,1,0,'1-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Ben Abram,R,R,Fastball,Called Strike,,,0,-0.780979919,0.143820027
+3,0,1,1,'1-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Ben Abram,R,R,Fastball,Foul,,,0,0.458455135,0.19987928
+3,0,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Ben Abram,R,R,Offspeed,Ball,,,0,-1.17051665,-0.243923142
+3,0,2,2,'2-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Ben Abram,R,R,Fastball,Foul,,,0,0.305001271,0.129805214
+3,0,2,2,'2-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Ben Abram,R,R,Fastball,Strikeout Looking,,,0,-0.710155059,0.129805214
+3,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Bateman,Ben Abram,R,R,Fastball,Called Strike,,,0,-0.922629639,0.3260126
+3,1,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Bateman,Ben Abram,R,R,Offspeed,Popout,Pop Up,Straightaway,0,0.352217844,0.344699018
+3,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Ball,,,0,1.296549314,0.653024911
+3,2,1,0,'1-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Called Strike,,,0,0.482063422,0.340027414
+3,2,1,1,'1-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Ball,,,0,-0.887217209,-0.299982395
+3,2,2,1,'2-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Called Strike,,,0,0.812579436,0.092432378
+3,2,2,2,'2-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Ball,,,0,1.060466446,-0.108446613
+3,2,3,2,'3-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Strikeout Looking,,,0,-0.639330198,0.28396816
+4,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Noah Law,L,R,Fastball,Called Strike,,,0,-0.568505338,-0.075745382
+4,0,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Noah Law,L,R,Fastball,Single,Ground Ball,Straightaway,0,-0.863608922,0.624995284
+4,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,1.27,Justin Gideon,Noah Law,L,R,Fastball,Ball,,,0,1.202116167,0.106447191
+4,0,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,1.32,Justin Gideon,Noah Law,L,R,Fastball,Foul,,,100,0.635517285,0.213894094
+4,0,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,1.33,Justin Gideon,Noah Law,L,R,Fastball,Ball,,,100,0.883404296,0.78850144
+4,0,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Noah Law,L,R,Fastball,Double,Line Drive,Pull,10,-0.639330198,0.358713831
+4,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Noah Law,R,R,Offspeed,Ball,,,10,-0.214381037,-0.356041648
+4,0,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Noah Law,R,R,Offspeed,Ball,,,1,-0.533092908,-0.122461426
+4,0,2,0,'2-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Noah Law,R,R,Fastball,Called Strike,,,1,-1.076083503,0.185864467
+4,0,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Noah Law,R,R,Offspeed,Foul,,,1,0.05711426,-0.257937955
+4,0,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Noah Law,R,R,Offspeed,Foul,,,1,-0.474072191,0.606308867
+4,0,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Noah Law,R,R,Fastball,Popout,Pop Up,Straightaway,1,-0.438659761,0.57827924
+4,1,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Noah Law,R,R,Fastball,Ball,,,1,-0.639330198,0.905291551
+4,1,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Noah Law,R,R,Fastball,Ball,,,1,-0.851804779,0.695069351
+4,1,2,0,'2-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Noah Law,R,R,Offspeed,Called Strike,,,1,-1.17051665,0.148491631
+4,1,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Noah Law,R,R,Fastball,Foul,,,1,-0.497680478,0.634338493
+4,1,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Noah Law,R,R,Fastball,Ball,,,1,0.482063422,-0.206550306
+4,1,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Noah Law,R,R,Fastball,Sacrifice Fly,Fly Ball,Straightaway,1,0.458455135,0.078417565
+4,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Noah Law,L,R,Fastball,Foul,,,0,-0.615721912,0.466160733
+4,2,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Noah Law,L,R,Offspeed,Ball,,,0,-1.028866929,-0.271952768
+4,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Noah Law,L,R,Fastball,Ball,,,0,-1.24134151,-0.122461426
+4,2,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Noah Law,L,R,Fastball,Foul,,,0,-0.899021352,0.059731147
+4,2,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Noah Law,L,R,Fastball,Ball,,,0,0.836187722,0.059731147
+4,2,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Noah Law,L,R,Fastball,Single,Ground Ball,Opposite Field,0,0.635517285,0.456817525
+4,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,1.46,Ethan Mann,Noah Law,R,R,Offspeed,Ball,,,100,-0.403247331,-0.229908328
+4,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,1.48,Ethan Mann,Noah Law,R,R,Fastball,Foul,,,100,-0.686546772,0.45214592
+4,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,1.46,Ethan Mann,Noah Law,R,R,Fastball,Ball,,,100,-0.780979919,-0.103775009
+4,2,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,1.64,Ethan Mann,Noah Law,R,R,Offspeed,Foul,,,100,-0.816392349,0.372728645
+4,2,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Noah Law,R,R,Fastball,Ball,,,10,-1.13510422,-0.201878702
+4,2,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Noah Law,R,R,Fastball,Single,Line Drive,Pull,10,0.127939121,0.07374596
+4,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Noah Law,L,R,Fastball,Ball,,,100,-0.214381037,-0.234579933
+4,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Noah Law,L,R,Fastball,Called Strike,,,100,-0.11994789,0.101775587
+4,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Noah Law,L,R,Fastball,Called Strike,,,100,0.352217844,0.19987928
+4,2,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Noah Law,L,R,Fastball,Ball,,,100,-1.040671073,-0.271952768
+4,2,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Noah Law,L,R,Fastball,Ball,,,10,-1.288558083,-0.290639186
+4,2,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Noah Law,L,R,Fastball,Foul,,,10,-0.285205897,0.36805704
+4,2,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Noah Law,L,R,Fastball,Strikeout Swinging,,,10,1.119487163,0.765143418
+4,0,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Offspeed,Foul,,,0,0.127939121,0.382071853
+4,0,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Offspeed,Called Strike,,,0,-0.11994789,0.213894094
+4,0,0,2,'0-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Fastball,Ball,,,0,0.127939121,1.054782893
+4,0,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Fastball,Ball,,,0,-0.851804779,-0.131804635
+4,0,2,2,'2-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Offspeed,Strikeout Swinging,,,0,-1.005258643,-0.201878702
+4,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Ben Abram,R,R,Fastball,Single,Ground Ball,Pull,0,0.387630275,0.28396816
+4,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,1.65,Tim Holyk,Ben Abram,R,R,Offspeed,Ball,,,100,-1.323970513,0.316669391
+4,1,1,0,'1-0,2026-05-15,Brantford Red Sox,Welland Jackfish,1.62,Tim Holyk,Ben Abram,R,R,Fastball,Ball,,,100,0.765362862,0.746457
+4,1,2,0,'2-0,2026-05-15,Brantford Red Sox,Welland Jackfish,1.57,Tim Holyk,Ben Abram,R,R,Fastball,Called Strike,,,100,-0.474072191,0.297982974
+4,1,2,1,'2-1,2026-05-15,Brantford Red Sox,Welland Jackfish,1.6,Tim Holyk,Ben Abram,R,R,Fastball,Called Strike,,,100,-0.544897051,0.148491631
+4,1,2,2,'2-2,2026-05-15,Brantford Red Sox,Welland Jackfish,1.61,Tim Holyk,Ben Abram,R,R,Fastball,Ball,,,100,-1.105593861,0.496526162
+4,1,3,2,'3-2,2026-05-15,Brantford Red Sox,Welland Jackfish,1.72,Tim Holyk,Ben Abram,R,R,Fastball,Strikeout Swinging,,,100,-0.745567489,0.382071853
+4,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,1.65,Nick Iannatone,Ben Abram,L,R,Fastball,Foul,,,100,1.343765887,0.807187858
+4,2,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,1.68,Nick Iannatone,Ben Abram,L,R,Fastball,Ball,,,100,-0.686546772,0.106447191
+4,2,1,1,'1-1,2026-05-15,Brantford Red Sox,Welland Jackfish,1.66,Nick Iannatone,Ben Abram,L,R,Fastball,Foul,,,100,-0.226185181,0.466160733
+4,2,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Ben Abram,L,R,Fastball,Truncated Out,,,100,,
+5,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Kade Kozak,L,L,Fastball,Ball,,,0,1.308353457,0.582950844
+5,0,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Kade Kozak,L,L,Offspeed,Swinging Strike,,,0,-1.17051665,-0.108446613
+5,0,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Kade Kozak,L,L,Offspeed,Ball,,,0,-0.261597611,1.20894584
+5,0,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Kade Kozak,L,L,Fastball,Called Strike,,,0,0.529279995,-0.019686129
+5,0,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Kade Kozak,L,L,Offspeed,Foul,,,0,-0.780979919,0.3260126
+5,0,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Kade Kozak,L,L,Fastball,Popout,Pop Up,Opposite Field,0,-0.721959202,0.508205173
+5,1,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Kade Kozak,L,L,Offspeed,Called Strike,,,0,-0.580309481,0.45214592
+5,1,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Kade Kozak,L,L,Offspeed,Groundout,Ground Ball,Pull,0,-0.391443188,-0.089760195
+5,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Kade Kozak,L,L,Fastball,Ball,,,0,1.296549314,0.424116293
+5,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Kade Kozak,L,L,Fastball,Called Strike,,,0,-0.757371632,0.414773085
+5,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Kade Kozak,L,L,Offspeed,Foul,,,0,-0.710155059,0.508205173
+5,2,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Kade Kozak,L,L,Offspeed,Foul,,,0,-0.568505338,0.470832338
+5,2,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Kade Kozak,L,L,Offspeed,Ball,,,0,1.343765887,-0.080416986
+5,2,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Kade Kozak,L,L,Offspeed,Ball,,,0,-1.217733223,-0.257937955
+5,2,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Kade Kozak,L,L,Offspeed,Strikeout Looking,,,0,-0.356030758,0.255938534
+5,0,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Ben Abram,L,R,Fastball,Swinging Strike,,,0,0.635517285,0.751128604
+5,0,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Ben Abram,L,R,Fastball,Error,Ground Ball,Opposite Field,0,0.588300712,0.232580511
+5,0,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Cassidy Watt,Ben Abram,R,R,Fastball,Sacrifice Bunt,Ground Ball,Straightaway,100,0.847991866,0.5362348
+5,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Ben Abram,R,R,Fastball,Flyout,Fly Ball,Straightaway,10,0.907012583,0.5362348
+5,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Bateman,Ben Abram,R,R,Offspeed,Ball,,,10,-1.524640951,-0.215893515
+5,2,1,0,'1-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Bateman,Ben Abram,R,R,Fastball,Single,Line Drive,Straightaway,10,-0.332422471,0.15783484
+5,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Ball,,,101,1.414590747,0.624995284
+5,2,1,0,'1-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Ball,,,101,-1.3475788,0.008343498
+5,2,2,0,'2-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Called Strike,,,101,-0.863608922,0.129805214
+5,2,2,1,'2-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Foul,,,101,-0.615721912,0.185864467
+5,2,2,2,'2-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Ben Abram,L,R,Fastball,Flyout,Fly Ball,Straightaway,101,-0.603917768,0.255938534
+6,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Kade Kozak,L,L,Fastball,Called Strike,,,0,-0.710155059,0.358713831
+6,0,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Kade Kozak,L,L,Offspeed,Ball,,,0,1.414590747,-0.159834262
+6,0,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Kade Kozak,L,L,Fastball,Ball,,,0,0.493867565,1.054782893
+6,0,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Kade Kozak,L,L,Offspeed,Ball,,,0,1.308353457,0.62032368
+6,0,3,1,'3-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Kade Kozak,L,L,Fastball,Walk,,,0,0.245980554,-0.150491053
+6,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Kade Kozak,R,L,Fastball,Hit By Pitch,,,100,1.450003177,0.984708826
+6,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Kade Kozak,R,L,Fastball,Called Strike,,,110,-0.651134342,0.498861965
+6,0,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Kade Kozak,R,L,Offspeed,Ball,,,110,-1.359382944,-0.047715755
+6,0,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Kade Kozak,R,L,Offspeed,Ball,,,110,-0.851804779,-0.290639186
+6,0,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Kade Kozak,R,L,Fastball,Called Strike,,,110,-0.710155059,0.106447191
+6,0,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Kade Kozak,R,L,Offspeed,Ball,,,110,-1.20592908,-0.290639186
+6,0,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Kade Kozak,R,L,Offspeed,Strikeout Looking,,,11,0.564692425,0.793173044
+6,1,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Kade Kozak,L,L,Fastball,Ball,,,11,-0.072731317,-0.047715755
+6,1,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Kade Kozak,L,L,Fastball,Groundout,Ground Ball,Straightaway,11,-0.332422471,0.227908907
+6,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Kade Kozak,R,L,Offspeed,Ball,,,1,-1.20592908,0.101775587
+6,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Kade Kozak,R,L,Offspeed,Swinging Strike,,,1,-1.064279359,0.022358311
+6,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Kade Kozak,R,L,Offspeed,Ball,,,1,-0.934433782,-0.276624373
+6,2,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Kade Kozak,R,L,Fastball,Ball,,,1,1.402786604,0.947335991
+6,2,3,1,'3-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Kade Kozak,R,L,Offspeed,Walk,,,1,-0.214381037,-0.17852068
+6,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Kade Kozak,L,L,Offspeed,Ball,,,101,1.544436324,-0.061730569
+6,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Kade Kozak,L,L,Offspeed,Ball,,,11,0.836187722,0.933321178
+6,2,2,0,'2-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Kade Kozak,L,L,Offspeed,Ball,,,11,0.352217844,-0.248594746
+6,2,3,0,'3-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Kade Kozak,L,L,Offspeed,Called Strike,,,11,0.694538002,0.526891591
+6,2,3,1,'3-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Kade Kozak,L,L,Offspeed,Foul,,,11,-0.367834901,0.470832338
+6,2,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Kade Kozak,L,L,Offspeed,Popout,Pop Up,Straightaway,11,-0.08453546,-0.131804635
+6,0,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Offspeed,Ball,,,0,-1.24134151,-0.187863888
+6,0,1,0,'1-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Fastball,Ball,,,0,1.414590747,0.358713831
+6,0,2,0,'2-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Fastball,Foul,,,0,1.509023894,0.648353307
+6,0,2,1,'2-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Ben Abram,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.387630275,0.470832338
+6,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Ben Abram,R,R,Offspeed,Called Strike,,,0,-0.792784062,0.078417565
+6,1,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Ben Abram,R,R,Offspeed,Ball,,,0,-1.217733223,-0.229908328
+6,1,1,1,'1-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Ben Abram,R,R,Offspeed,Foul,,,0,-0.674742628,0.311997787
+6,1,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Ben Abram,R,R,Fastball,Lineout,Line Drive,Opposite Field,0,0.139743264,0.526891591
+6,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Tim Holyk,Ben Abram,R,R,Fastball,Foul,,,0,1.343765887,0.942664386
+6,2,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Tim Holyk,Ben Abram,R,R,Offspeed,Swinging Strike,,,0,-0.651134342,0.442802711
+6,2,0,2,'0-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Tim Holyk,Ben Abram,R,R,Fastball,Single,Ground Ball,Pull,0,-0.509484621,0.1157904
+6,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Ben Abram,L,R,Fastball,Called Strike,,,100,-0.710155059,0.424116293
+6,2,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Ben Abram,L,R,Fastball,Ball,,,100,-1.028866929,-0.215893515
+6,2,1,1,'1-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Ben Abram,L,R,Fastball,Error,Ground Ball,Straightaway,100,-0.851804779,0.129805214
+6,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Ben Abram,L,R,Fastball,Called Strike,,,110,-0.474072191,0.344699018
+6,2,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Ben Abram,L,R,Fastball,Swinging Strike,,,110,0.245980554,0.171849654
+6,2,0,2,'0-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Ben Abram,L,R,Fastball,Popout,Pop Up,Straightaway,110,0.210568124,0.213894094
+7,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Anthony Porcellato,L,R,Fastball,Ball,,,0,-0.178968607,1.152886586
+7,0,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Anthony Porcellato,L,R,Offspeed,Called Strike,,,0,-0.08453546,0.57827924
+7,0,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Anthony Porcellato,L,R,Fastball,Ball,,,0,1.119487163,0.718427373
+7,0,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Anthony Porcellato,L,R,Offspeed,Called Strike,,,0,-0.710155059,0.232580511
+7,0,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Anthony Porcellato,L,R,Fastball,Ball,,,0,-0.509484621,-0.13647624
+7,0,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Anthony Porcellato,L,R,Fastball,Walk,,,0,0.139743264,1.1669014
+7,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Anthony Porcellato,L,R,Fastball,Ball,,,100,1.261136884,0.970694013
+7,0,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Anthony Porcellato,L,R,Offspeed,Ball,,,100,0.529279995,1.12485696
+7,0,2,0,'2-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Anthony Porcellato,L,R,Fastball,Ball,,,100,0.564692425,1.110842146
+7,0,3,0,'3-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Anthony Porcellato,L,R,Fastball,Walk,,,100,-0.639330198,0.863247111
+7,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Anthony Porcellato,L,R,Offspeed,Called Strike,,,110,-1.076083503,-0.033700942
+7,0,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Anthony Porcellato,L,R,Offspeed,Ball,,,110,-0.899021352,-0.17852068
+7,0,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Anthony Porcellato,L,R,Fastball,Ball,,,110,0.623713142,1.073469311
+7,0,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Anthony Porcellato,L,R,Offspeed,Ball,,,110,-0.356030758,0.970694013
+7,0,3,1,'3-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Anthony Porcellato,L,R,Fastball,Walk,,,110,1.261136884,1.29303472
+7,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Anthony Porcellato,L,R,Fastball,Ball,,,111,-0.438659761,-0.201878702
+7,0,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Anthony Porcellato,L,R,Fastball,Ball,,,111,-1.359382944,-0.313997208
+7,0,2,0,'2-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Anthony Porcellato,L,R,Fastball,Ball,,,11,-1.028866929,1.307049533
+7,0,3,0,'3-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Anthony Porcellato,L,R,Fastball,Walk,,,11,-1.560053381,0.414773085
+7,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Anthony Porcellato,R,R,Offspeed,Called Strike,,,111,-1.076083503,0.316669391
+7,0,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Anthony Porcellato,R,R,Offspeed,Ball,,,111,-1.17051665,-0.285967582
+7,0,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Anthony Porcellato,R,R,Fastball,Ball,,,111,-0.332422471,1.12485696
+7,0,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Anthony Porcellato,R,R,Offspeed,Foul,,,111,-0.816392349,0.737113791
+7,0,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Anthony Porcellato,R,R,Offspeed,Foul,,,111,-1.005258643,0.269953347
+7,0,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Anthony Porcellato,R,R,Fastball,Ball,,,111,0.918816726,1.447197666
+7,0,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Anthony Porcellato,R,R,Offspeed,Foul,,,111,-1.20592908,0.512876778
+7,0,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Anthony Porcellato,R,R,Offspeed,Foul,,,111,-0.11994789,0.414773085
+7,0,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Anthony Porcellato,R,R,Offspeed,Single,Ground Ball,Straightaway,111,-0.828196492,0.176521258
+7,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Anthony Porcellato,R,R,Offspeed,Groundout,Ground Ball,Pull,111,-0.639330198,0.185864467
+7,1,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Anthony Porcellato,L,R,Fastball,Called Strike,,,11,-0.603917768,0.176521258
+7,1,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Anthony Porcellato,L,R,Offspeed,Ball,,,11,-1.359382944,-0.206550306
+7,1,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Anthony Porcellato,L,R,Offspeed,Foul,,,11,-1.217733223,0.3260126
+7,1,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Anthony Porcellato,L,R,Offspeed,Strikeout Swinging,,,11,-0.04912303,-0.047715755
+7,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Anthony Porcellato,R,R,Offspeed,Ball,,,11,-1.394795374,0.802516253
+7,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Anthony Porcellato,R,R,Fastball,Called Strike,,,11,-1.13510422,0.386743458
+7,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Anthony Porcellato,R,R,Fastball,Ball,,,11,-1.38299123,0.07374596
+7,2,2,1,'2-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Anthony Porcellato,R,R,Fastball,Ball,,,11,-0.037318887,1.110842146
+7,2,3,1,'3-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ethan Mann,Anthony Porcellato,R,R,Offspeed,Walk,,,11,-0.710155059,-0.201878702
+7,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Anthony Porcellato,L,R,Fastball,Ball,,,111,0.210568124,1.110842146
+7,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Anthony Porcellato,L,R,Offspeed,Called Strike,,,111,0.198763981,0.148491631
+7,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,James Smibert,Anthony Porcellato,L,R,Fastball,Single,Fly Ball,Pull,111,-0.792784062,0.036373125
+7,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Anthony Porcellato,L,R,Fastball,Foul,,,101,-0.639330198,0.372728645
+7,2,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Anthony Porcellato,L,R,Fastball,Ball,,,101,-0.0137106,0.036373125
+7,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Gianfranco Morello,Anthony Porcellato,L,R,Offspeed,Single,Ground Ball,Opposite Field,101,-0.757371632,0.634338493
+7,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Anthony Porcellato,L,R,Offspeed,Ball,,,110,-0.438659761,-0.005671315
+7,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Anthony Porcellato,L,R,Fastball,Ball,,,110,1.095878876,1.138871773
+7,2,2,0,'2-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Anthony Porcellato,L,R,Offspeed,Ball,,,110,-0.674742628,-0.234579933
+7,2,3,0,'3-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Anthony Porcellato,L,R,Fastball,Called Strike,,,110,0.564692425,0.540906404
+7,2,3,1,'3-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Anthony Porcellato,L,R,Fastball,Swinging Strike,,,110,-1.028866929,0.498861965
+7,2,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Anthony Porcellato,L,R,Fastball,Walk,,,110,-1.394795374,0.760471813
+7,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Anthony Porcellato,L,R,Fastball,Ball,,,111,1.509023894,1.087484124
+7,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Jonah Weisner,Anthony Porcellato,L,R,Fastball,Double,Fly Ball,Pull,111,-0.721959202,0.582950844
+7,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Greg Rapp,L,L,Fastball,Swinging Strike,,,11,0.05711426,0.639010098
+7,2,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Greg Rapp,L,L,Offspeed,Ball,,,11,0.02170183,-0.215893515
+7,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Greg Rapp,L,L,Fastball,Called Strike,,,11,0.659125572,0.554921218
+7,2,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Greg Rapp,L,L,Fastball,Ball,,,11,-1.253145653,0.41010148
+7,2,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Greg Rapp,L,L,Fastball,Ball,,,11,-1.607269954,1.059454497
+7,2,3,2,'3-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Justin Gideon,Greg Rapp,L,L,Fastball,Walk,,,11,1.119487163,-0.117789822
+7,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Greg Rapp,R,L,Fastball,Swinging Strike,,,111,-0.757371632,0.78850144
+7,2,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Greg Rapp,R,L,Fastball,Called Strike,,,111,-0.721959202,0.498861965
+7,2,0,2,'0-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Robert Mullen,Greg Rapp,R,L,Fastball,Strikeout Looking,,,111,-0.828196492,0.624995284
+7,0,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Cassidy Watt,Ben Abram,R,R,Fastball,Called Strike,,,0,-0.863608922,0.45214592
+7,0,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Cassidy Watt,Ben Abram,R,R,Fastball,Swinging Strike,,,0,-0.757371632,0.143820027
+7,0,0,2,'0-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Cassidy Watt,Ben Abram,R,R,Fastball,Ball,,,0,-1.09969179,-0.038372546
+7,0,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Cassidy Watt,Ben Abram,R,R,Offspeed,Groundout,Ground Ball,Pull,0,-0.969846213,-0.0944318
+7,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Ben Abram,R,R,Fastball,Called Strike,,,0,-0.887217209,0.15783484
+7,1,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Ben Abram,R,R,Offspeed,Groundout,Ground Ball,Straightaway,0,0.210568124,-0.024357733
+7,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Bateman,Ben Abram,R,R,Offspeed,Swinging Strike,,,0,-0.674742628,0.07374596
+7,2,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Bateman,Ben Abram,R,R,Fastball,Called Strike,,,0,-0.757371632,0.092432378
+7,2,0,2,'0-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Bateman,Ben Abram,R,R,Offspeed,Groundout,Ground Ball,Pull,0,0.564692425,0.092432378
+8,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Greg Rapp,R,L,Fastball,Ball,,,0,0.033505974,-0.384071275
+8,0,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Greg Rapp,R,L,Offspeed,Ball,,,0,0.458455135,0.746457
+8,0,2,0,'2-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Bryce Arnold,Greg Rapp,R,L,Fastball,Double,Fly Ball,Straightaway,0,-0.544897051,0.218565698
+8,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Greg Rapp,L,L,Fastball,Foul,,,10,-0.792784062,0.340027414
+8,0,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Greg Rapp,L,L,Offspeed,Called Strike,,,10,-0.710155059,0.526891591
+8,0,0,2,'0-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Greg Rapp,L,L,Offspeed,Ball,,,10,1.190312023,0.297982974
+8,0,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brendan Luther,Greg Rapp,L,L,Fastball,Groundout,Ground Ball,Pull,10,-0.780979919,0.512876778
+8,1,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ryan Potrecz,Greg Rapp,L,L,Fastball,Called Strike,,,1,0.517475852,0.190536071
+8,1,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ryan Potrecz,Greg Rapp,L,L,Offspeed,Ball,,,1,1.154899593,-0.061730569
+8,1,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ryan Potrecz,Greg Rapp,L,L,Fastball,Foul,,,1,-1.13510422,0.5362348
+8,1,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ryan Potrecz,Greg Rapp,L,L,Offspeed,Foul,,,1,-0.721959202,0.087760774
+8,1,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ryan Potrecz,Greg Rapp,L,L,Fastball,Foul,,,1,0.482063422,0.269953347
+8,1,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Ryan Potrecz,Greg Rapp,L,L,Fastball,Strikeout Looking,,,1,-0.214381037,0.092432378
+8,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brandon Hupe,Greg Rapp,R,L,Fastball,Ball,,,1,-0.757371632,-0.243923142
+8,2,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brandon Hupe,Greg Rapp,R,L,Offspeed,Called Strike,,,1,-0.745567489,0.185864467
+8,2,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brandon Hupe,Greg Rapp,R,L,Fastball,Swinging Strike,,,1,-0.544897051,-0.164505866
+8,2,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Brandon Hupe,Greg Rapp,R,L,Offspeed,Strikeout Swinging,,,1,-1.20592908,-0.173849075
+8,0,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Owen Ozanich,L,R,Fastball,Foul,,,0,-0.721959202,0.45214592
+8,0,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Owen Ozanich,L,R,Fastball,Ball,,,0,0.411238561,0.737113791
+8,0,1,1,'1-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Owen Ozanich,L,R,Fastball,Foul,,,0,-0.792784062,0.732442187
+8,0,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Owen Ozanich,L,R,Fastball,Ball,,,0,-0.934433782,-0.173849075
+8,0,2,2,'2-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Owen Ozanich,L,R,Fastball,Ball,,,0,0.588300712,1.115513751
+8,0,3,2,'3-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Ethan Paulos,Owen Ozanich,L,R,Offspeed,Strikeout Looking,,,0,-1.288558083,0.1157904
+8,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Brody Black,Owen Ozanich,R,R,,Flyout,Fly Ball,Opposite Field,0,,
+8,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Owen Ozanich,R,R,Fastball,Ball,,,0,-0.934433782,0.582950844
+8,2,1,0,'1-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Owen Ozanich,R,R,Fastball,Foul,,,0,-0.497680478,0.171849654
+8,2,1,1,'1-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Owen Ozanich,R,R,Offspeed,Called Strike,,,0,-0.356030758,0.639010098
+8,2,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Owen Ozanich,R,R,Offspeed,Foul,,,0,-0.332422471,0.676382933
+8,2,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Jakob Cantor,Owen Ozanich,R,R,Fastball,Single,Line Drive,Opposite Field,0,-0.828196492,0.648353307
+8,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Tim Holyk,Owen Ozanich,R,R,Offspeed,Flyout,Fly Ball,Straightaway,100,-0.863608922,0.428787898
+9,0,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Tyson Gomm,Jorge De La Cruz,L,R,Fastball,Called Strike,,,0,1.261136884,0.480175547
+9,0,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Tyson Gomm,Jorge De La Cruz,L,R,Fastball,Called Strike,,,0,0.883404296,0.596965658
+9,0,0,2,'0-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Tyson Gomm,Jorge De La Cruz,L,R,Offspeed,Ball,,,0,-0.792784062,-0.285967582
+9,0,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Tyson Gomm,Jorge De La Cruz,L,R,Fastball,Strikeout Swinging,,,0,-0.403247331,-0.145819449
+9,1,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Jorge De La Cruz,L,R,Fastball,Ball,,,0,-1.040671073,-0.243923142
+9,1,1,0,'1-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Jorge De La Cruz,L,R,Fastball,Called Strike,,,0,-0.474072191,0.681054538
+9,1,1,1,'1-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Jorge De La Cruz,L,R,Fastball,Called Strike,,,0,0.316805414,0.681054538
+9,1,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Daika Abe,Jorge De La Cruz,L,R,Fastball,Strikeout Swinging,,,0,-0.851804779,0.396086667
+9,2,0,0,'0-0,2026-05-15,Welland Jackfish,Brantford Red Sox,,Carson Johnson,Jorge De La Cruz,R,R,Offspeed,Swinging Strike,,,0,-1.24134151,-0.05238736
+9,2,0,1,'0-1,2026-05-15,Welland Jackfish,Brantford Red Sox,,Carson Johnson,Jorge De La Cruz,R,R,Offspeed,Called Strike,,,0,-1.31216637,-0.066402173
+9,2,0,2,'0-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Carson Johnson,Jorge De La Cruz,R,R,Offspeed,Ball,,,0,0.234176411,0.737113791
+9,2,1,2,'1-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Carson Johnson,Jorge De La Cruz,R,R,Offspeed,Ball,,,0,-1.642682384,-0.304654
+9,2,2,2,'2-2,2026-05-15,Welland Jackfish,Brantford Red Sox,,Carson Johnson,Jorge De La Cruz,R,R,Offspeed,Strikeout Swinging,,,0,-1.217733223,-0.145819449
+9,0,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Jack Seward,L,R,Fastball,Called Strike,,,0,-0.828196492,0.45214592
+9,0,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Jack Seward,L,R,Fastball,Swinging Strike,,,0,-0.367834901,0.905291551
+9,0,0,2,'0-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Jack Seward,L,R,Fastball,Foul,,,0,-0.792784062,0.522219987
+9,0,0,2,'0-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Jack Seward,L,R,Fastball,Ball,,,0,-0.603917768,-0.271952768
+9,0,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Jack Seward,L,R,Fastball,Foul,,,0,-0.391443188,0.358713831
+9,0,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Jack Seward,L,R,Offspeed,Ball,,,0,1.296549314,0.947335991
+9,0,2,2,'2-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Nick Iannatone,Jack Seward,L,R,Fastball,Lineout,Line Drive,Pull,0,-0.474072191,0.49419036
+9,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Jack Seward,L,R,Fastball,Called Strike,,,0,0.387630275,0.695069351
+9,1,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Jack Seward,L,R,Fastball,Swinging Strike,,,0,0.446650991,0.246595325
+9,1,0,2,'0-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Jack Seward,L,R,Fastball,Ball,,,0,0.600104855,1.08281252
+9,1,1,2,'1-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Jack Seward,L,R,Fastball,Ball,,,0,-1.064279359,-0.089760195
+9,1,2,2,'2-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Jack Seward,L,R,Fastball,Ball,,,0,1.296549314,0.821202671
+9,1,3,2,'3-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,AJ Karosas,Jack Seward,L,R,Fastball,Single,Ground Ball,Pull,0,-0.19077275,0.484847151
+9,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,1.48,Andrew Savage,Jack Seward,R,R,Fastball,Ball,,,100,0.493867565,0.9566792
+9,1,1,0,'1-0,2026-05-15,Brantford Red Sox,Welland Jackfish,1.51,Andrew Savage,Jack Seward,R,R,Fastball,Ball,,,100,1.272941027,0.9566792
+9,1,2,0,'2-0,2026-05-15,Brantford Red Sox,Welland Jackfish,1.53,Andrew Savage,Jack Seward,R,R,Offspeed,Ball,,,100,-1.288558083,-0.215893515
+9,1,3,0,'3-0,2026-05-15,Brantford Red Sox,Welland Jackfish,1.5,Andrew Savage,Jack Seward,R,R,Fastball,Called Strike,,,100,,
+9,1,3,1,'3-1,2026-05-15,Brantford Red Sox,Welland Jackfish,1.48,Andrew Savage,Jack Seward,R,R,Fastball,Swinging Strike,,,100,,
+9,1,3,2,'3-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Andrew Savage,Jack Seward,R,R,Fastball,Single,Ground Ball,Opposite Field,100,,
+9,1,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Jack Seward,R,R,Fastball,Ball,,,100,,
+9,1,1,0,'1-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Jack Seward,R,R,Fastball,Ball,,,100,,
+9,1,2,0,'2-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Jack Seward,R,R,Fastball,Called Strike,,,100,,
+9,1,2,1,'2-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Jack Seward,R,R,Fastball,Ball,,,100,,
+9,1,3,1,'3-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Lefevbre,Jack Seward,R,R,Fastball,Popout,Pop Up,Opposite Field,100,,
+9,2,0,0,'0-0,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Bateman,Jack Seward,R,R,Fastball,Called Strike,,,100,,
+9,2,0,1,'0-1,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Bateman,Jack Seward,R,R,Fastball,Swinging Strike,,,100,,
+9,2,0,2,'0-2,2026-05-15,Brantford Red Sox,Welland Jackfish,,Lucas Bateman,Jack Seward,R,R,Fastball,Strikeout Looking,,,100,,
