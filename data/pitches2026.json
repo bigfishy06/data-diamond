@@ -428,8 +428,8 @@
     "pitches_seen": 3,
     "scatter": [
       {
-        "x": -0.053,
-        "y": 0.5061,
+        "x": 0.0797,
+        "y": 0.4624,
         "pitch_type": "Cutter",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -447,8 +447,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0225,
-        "y": 0.4349,
+        "x": 0.1212,
+        "y": 0.3503,
         "pitch_type": "Cutter",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -466,8 +466,8 @@
         "in_zone": true
       },
       {
-        "x": -0.1595,
-        "y": 0.9014,
+        "x": -0.0653,
+        "y": 1.0843,
         "pitch_type": "Curveball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -482,7 +482,7 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       }
     ]
   },
@@ -492,8 +492,8 @@
     "pitches_seen": 10,
     "scatter": [
       {
-        "x": -0.8599,
-        "y": 0.4867,
+        "x": -1.0183,
+        "y": 0.4318,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -509,11 +509,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.3734,
-        "y": 0.8171,
+        "x": 0.6598,
+        "y": 0.9517,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -532,8 +532,8 @@
         "in_zone": true
       },
       {
-        "x": -0.4793,
-        "y": 0.3506,
+        "x": -0.5003,
+        "y": 0.2177,
         "pitch_type": "Fastball",
         "outcome": "Popout",
         "result": "popout",
@@ -552,8 +552,8 @@
         "in_zone": true
       },
       {
-        "x": -0.4793,
-        "y": 0.4932,
+        "x": -0.5003,
+        "y": 0.442,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -571,8 +571,8 @@
         "in_zone": true
       },
       {
-        "x": -0.053,
-        "y": 0.4478,
+        "x": 0.0797,
+        "y": 0.3707,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -590,8 +590,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0073,
-        "y": 0.8625,
+        "x": 0.1419,
+        "y": 1.0231,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -606,11 +606,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0073,
-        "y": 0.2664,
+        "x": 0.1419,
+        "y": 0.0852,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -628,8 +628,8 @@
         "in_zone": true
       },
       {
-        "x": 0.6779,
-        "y": 0.5644,
+        "x": 1.0741,
+        "y": 0.5542,
         "pitch_type": "Fastball",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -644,11 +644,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0384,
-        "y": 0.4867,
+        "x": 0.204,
+        "y": 0.4318,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -666,8 +666,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0536,
-        "y": 0.5644,
+        "x": 0.2247,
+        "y": 0.5542,
         "pitch_type": "Offspeed",
         "outcome": "Groundout",
         "result": "groundout",
@@ -692,8 +692,8 @@
     "pitches_seen": 6,
     "scatter": [
       {
-        "x": 1.0281,
-        "y": 0.7199,
+        "x": 1.5506,
+        "y": 0.7988,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -711,8 +711,8 @@
         "in_zone": false
       },
       {
-        "x": 0.8606,
-        "y": -0.0575,
+        "x": 1.3227,
+        "y": -0.4245,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -730,8 +730,8 @@
         "in_zone": false
       },
       {
-        "x": 1.1803,
-        "y": 0.0202,
+        "x": 1.7578,
+        "y": -0.3022,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -749,8 +749,8 @@
         "in_zone": false
       },
       {
-        "x": 0.9824,
-        "y": 0.7912,
+        "x": 1.4885,
+        "y": 0.911,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -765,11 +765,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.1499,
-        "y": 0.843,
+        "x": 1.7164,
+        "y": 0.9925,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -787,8 +787,8 @@
         "in_zone": false
       },
       {
-        "x": -0.053,
-        "y": 0.5385,
+        "x": 0.0797,
+        "y": 0.5134,
         "pitch_type": "Offspeed",
         "outcome": "Groundout",
         "result": "groundout",
@@ -813,8 +813,8 @@
     "pitches_seen": 23,
     "scatter": [
       {
-        "x": 0.6779,
-        "y": 0.4349,
+        "x": 1.0741,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -830,11 +830,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.1651,
-        "y": 0.2081,
+        "x": 1.7371,
+        "y": -0.0065,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -853,8 +853,8 @@
         "in_zone": false
       },
       {
-        "x": 0.891,
-        "y": 0.7199,
+        "x": 1.3642,
+        "y": 0.7988,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -870,11 +870,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.0585,
-        "y": -0.0705,
+        "x": 1.5921,
+        "y": -0.4449,
         "pitch_type": "Slider",
         "outcome": "Ball",
         "result": "ball",
@@ -893,8 +893,8 @@
         "in_zone": false
       },
       {
-        "x": 0.9062,
-        "y": -0.064,
+        "x": 1.3849,
+        "y": -0.4347,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -913,8 +913,8 @@
         "in_zone": false
       },
       {
-        "x": 0.9062,
-        "y": 0.1239,
+        "x": 1.3849,
+        "y": -0.1391,
         "pitch_type": "Slider",
         "outcome": "Ball",
         "result": "ball",
@@ -930,11 +930,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0073,
-        "y": 1.1022,
+        "x": 0.1419,
+        "y": 1.4003,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -953,8 +953,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0536,
-        "y": 0.9014,
+        "x": 0.2247,
+        "y": 1.0843,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -970,11 +970,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.5402,
-        "y": 0.7653,
+        "x": -0.5832,
+        "y": 0.8702,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -993,8 +993,8 @@
         "in_zone": true
       },
       {
-        "x": 0.6626,
-        "y": 0.4737,
+        "x": 1.0534,
+        "y": 0.4114,
         "pitch_type": "Slider",
         "outcome": "Strikeout Looking",
         "result": "strikeout",
@@ -1010,11 +1010,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.008,
-        "y": 0.7199,
+        "x": 0.1626,
+        "y": 0.7988,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -1032,8 +1032,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8903,
-        "y": -0.051,
+        "x": -1.0597,
+        "y": -0.4143,
         "pitch_type": "Changeup",
         "outcome": "Ball",
         "result": "ball",
@@ -1051,8 +1051,8 @@
         "in_zone": false
       },
       {
-        "x": -0.7533,
-        "y": 0.2859,
+        "x": -0.8733,
+        "y": 0.1158,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -1070,8 +1070,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0689,
-        "y": 0.4349,
+        "x": 0.2455,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -1089,8 +1089,8 @@
         "in_zone": true
       },
       {
-        "x": 0.2516,
-        "y": 0.3506,
+        "x": 0.4941,
+        "y": 0.2177,
         "pitch_type": "Changeup",
         "outcome": "Ball",
         "result": "ball",
@@ -1108,8 +1108,8 @@
         "in_zone": true
       },
       {
-        "x": 1.1346,
-        "y": 0.0397,
+        "x": 1.6956,
+        "y": -0.2716,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -1127,8 +1127,8 @@
         "in_zone": false
       },
       {
-        "x": -0.3575,
-        "y": -0.064,
+        "x": -0.3346,
+        "y": -0.4347,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -1146,8 +1146,8 @@
         "in_zone": false
       },
       {
-        "x": -0.1748,
-        "y": -0.0057,
+        "x": -0.086,
+        "y": -0.343,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -1165,8 +1165,8 @@
         "in_zone": false
       },
       {
-        "x": 0.9062,
-        "y": 0.7394,
+        "x": 1.3849,
+        "y": 0.8294,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -1182,11 +1182,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7844,
-        "y": 0.8042,
+        "x": 1.2192,
+        "y": 0.9313,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -1202,11 +1202,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.6315,
-        "y": -0.1158,
+        "x": -0.7075,
+        "y": -0.5163,
         "pitch_type": "Changeup",
         "outcome": "Ball",
         "result": "ball",
@@ -1225,8 +1225,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0993,
-        "y": 0.4673,
+        "x": 0.2869,
+        "y": 0.4012,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -1245,8 +1245,8 @@
         "in_zone": true
       },
       {
-        "x": 0.3734,
-        "y": 0.4413,
+        "x": 0.6598,
+        "y": 0.3605,
         "pitch_type": "Changeup",
         "outcome": "Groundout",
         "result": "groundout",
@@ -3271,8 +3271,8 @@
     "pitches_seen": 6,
     "scatter": [
       {
-        "x": 0.0492,
-        "y": 0.5939,
+        "x": 0.2455,
+        "y": 0.6459,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -3290,8 +3290,8 @@
         "in_zone": true
       },
       {
-        "x": 1.0171,
-        "y": 0.7747,
+        "x": 2.0893,
+        "y": 1.0741,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -3309,8 +3309,8 @@
         "in_zone": false
       },
       {
-        "x": 0.6256,
-        "y": 0.4863,
+        "x": 1.3435,
+        "y": 0.391,
         "pitch_type": "Offspeed",
         "outcome": "Groundout",
         "result": "groundout",
@@ -3325,11 +3325,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0927,
-        "y": 0.9598,
+        "x": 0.3283,
+        "y": 1.5124,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -3344,11 +3344,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.8322,
-        "y": 0.7704,
+        "x": 1.7371,
+        "y": 1.0639,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -3363,11 +3363,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0378,
-        "y": 0.4691,
+        "x": 0.0797,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Popout",
         "result": "popout",
@@ -4256,8 +4256,8 @@
     "pitches_seen": 18,
     "scatter": [
       {
-        "x": -0.7076,
-        "y": 0.8171,
+        "x": -0.8111,
+        "y": 0.9517,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -4275,8 +4275,8 @@
         "in_zone": true
       },
       {
-        "x": 1.1042,
-        "y": 0.8106,
+        "x": 1.6542,
+        "y": 0.9415,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -4294,8 +4294,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0073,
-        "y": 0.0137,
+        "x": 0.1419,
+        "y": -0.3124,
         "pitch_type": "Offspeed",
         "outcome": "Groundout",
         "result": "groundout",
@@ -4310,11 +4310,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0536,
-        "y": 0.7783,
+        "x": 0.2247,
+        "y": 0.8906,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -4333,8 +4333,8 @@
         "in_zone": true
       },
       {
-        "x": 0.9976,
-        "y": 0.6098,
+        "x": 1.5092,
+        "y": 0.6255,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -4350,11 +4350,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0073,
-        "y": 0.4543,
+        "x": 0.1419,
+        "y": 0.3809,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -4373,8 +4373,8 @@
         "in_zone": true
       },
       {
-        "x": 0.1145,
-        "y": 0.5385,
+        "x": 0.3076,
+        "y": 0.5134,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -4392,8 +4392,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0841,
-        "y": 0.4284,
+        "x": 0.2662,
+        "y": 0.3401,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -4411,8 +4411,8 @@
         "in_zone": true
       },
       {
-        "x": -1.2101,
-        "y": 0.3183,
+        "x": -1.4948,
+        "y": 0.1668,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -4430,8 +4430,8 @@
         "in_zone": false
       },
       {
-        "x": -0.799,
-        "y": 0.5709,
+        "x": -0.9354,
+        "y": 0.5644,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -4449,8 +4449,8 @@
         "in_zone": true
       },
       {
-        "x": -1.1187,
-        "y": 0.4284,
+        "x": -1.3705,
+        "y": 0.3401,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -4468,8 +4468,8 @@
         "in_zone": false
       },
       {
-        "x": 0.4647,
-        "y": 0.5839,
+        "x": 0.7841,
+        "y": 0.5847,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -4487,8 +4487,8 @@
         "in_zone": true
       },
       {
-        "x": 1.1499,
-        "y": 0.4997,
+        "x": 1.7164,
+        "y": 0.4522,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -4506,8 +4506,8 @@
         "in_zone": false
       },
       {
-        "x": 0.5104,
-        "y": 0.5061,
+        "x": 0.8463,
+        "y": 0.4624,
         "pitch_type": "Offspeed",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -4525,8 +4525,8 @@
         "in_zone": true
       },
       {
-        "x": 0.4952,
-        "y": 0.4284,
+        "x": 0.8255,
+        "y": 0.3401,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -4544,8 +4544,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7381,
-        "y": 0.5191,
+        "x": -0.8525,
+        "y": 0.4828,
         "pitch_type": "Offspeed",
         "outcome": "Double",
         "result": "hit",
@@ -4563,8 +4563,8 @@
         "in_zone": true
       },
       {
-        "x": 1.5914,
-        "y": 0.6552,
+        "x": 2.3172,
+        "y": 0.6969,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -4583,8 +4583,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0689,
-        "y": 0.396,
+        "x": 0.2455,
+        "y": 0.2891,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -4610,8 +4610,8 @@
     "pitches_seen": 31,
     "scatter": [
       {
-        "x": 0.2884,
-        "y": 0.1205,
+        "x": 0.7012,
+        "y": -0.4755,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -4626,11 +4626,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.1688,
-        "y": 0.1248,
+        "x": 0.4733,
+        "y": -0.4653,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -4645,11 +4645,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.8535,
-        "y": 0.4691,
+        "x": -1.474,
+        "y": 0.3503,
         "pitch_type": "Offspeed",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -4664,11 +4664,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0052,
-        "y": 0.3099,
+        "x": 0.1419,
+        "y": -0.0269,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -4683,11 +4683,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0052,
-        "y": 0.5078,
+        "x": 0.1419,
+        "y": 0.442,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -4705,8 +4705,8 @@
         "in_zone": true
       },
       {
-        "x": -1.0819,
-        "y": 0.637,
+        "x": -1.9091,
+        "y": 0.7479,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -4724,8 +4724,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0274,
-        "y": 0.2711,
+        "x": 0.204,
+        "y": -0.1187,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -4740,11 +4740,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.2884,
-        "y": 0.6327,
+        "x": 0.7012,
+        "y": 0.7377,
         "pitch_type": "Fastball",
         "outcome": "Popout",
         "result": "popout",
@@ -4762,8 +4762,8 @@
         "in_zone": true
       },
       {
-        "x": -1.0819,
-        "y": 0.6111,
+        "x": -1.9091,
+        "y": 0.6867,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -4781,8 +4781,8 @@
         "in_zone": false
       },
       {
-        "x": 0.2232,
-        "y": 0.4691,
+        "x": 0.5769,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -4800,8 +4800,8 @@
         "in_zone": true
       },
       {
-        "x": -0.5598,
-        "y": 0.624,
+        "x": -0.9147,
+        "y": 0.7173,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -4819,8 +4819,8 @@
         "in_zone": true
       },
       {
-        "x": 0.4516,
-        "y": 0.043,
+        "x": 1.012,
+        "y": -0.659,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -4835,11 +4835,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.3972,
-        "y": 0.1162,
+        "x": 0.9084,
+        "y": -0.4857,
         "pitch_type": "Offspeed",
         "outcome": "Walk",
         "result": "walk",
@@ -4854,11 +4854,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0057,
-        "y": 0.1979,
+        "x": 0.1626,
+        "y": -0.292,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -4874,11 +4874,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0378,
-        "y": 0.3615,
+        "x": 0.0797,
+        "y": 0.0954,
         "pitch_type": "Fastball",
         "outcome": "Home Run",
         "result": "hit",
@@ -5208,8 +5208,8 @@
     "pitches_seen": 18,
     "scatter": [
       {
-        "x": 0.2668,
-        "y": 1.0892,
+        "x": 0.5148,
+        "y": 1.3799,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -5227,8 +5227,8 @@
         "in_zone": false
       },
       {
-        "x": -0.7229,
-        "y": 1.0957,
+        "x": -0.8318,
+        "y": 1.3901,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -5246,8 +5246,8 @@
         "in_zone": false
       },
       {
-        "x": -1.1492,
-        "y": 0.9402,
+        "x": -1.4119,
+        "y": 1.1454,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -5265,8 +5265,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0225,
-        "y": 1.0439,
+        "x": 0.1212,
+        "y": 1.3085,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -5284,8 +5284,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0073,
-        "y": 0.5709,
+        "x": 0.1419,
+        "y": 0.5644,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -5303,8 +5303,8 @@
         "in_zone": true
       },
       {
-        "x": -1.3623,
-        "y": 0.4608,
+        "x": -1.7019,
+        "y": 0.391,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -5322,8 +5322,8 @@
         "in_zone": false
       },
       {
-        "x": -0.7229,
-        "y": -0.0899,
+        "x": -0.8318,
+        "y": -0.4755,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -5341,8 +5341,8 @@
         "in_zone": false
       },
       {
-        "x": -0.9056,
-        "y": 1.0568,
+        "x": -1.0804,
+        "y": 1.3289,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -5360,8 +5360,8 @@
         "in_zone": false
       },
       {
-        "x": -1.2101,
-        "y": 0.6681,
+        "x": -1.4948,
+        "y": 0.7173,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -5379,8 +5379,8 @@
         "in_zone": false
       },
       {
-        "x": -0.8447,
-        "y": 0.383,
+        "x": -0.9976,
+        "y": 0.2687,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -5398,8 +5398,8 @@
         "in_zone": true
       },
       {
-        "x": 0.6779,
-        "y": -0.1223,
+        "x": 1.0741,
+        "y": -0.5265,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -5417,8 +5417,8 @@
         "in_zone": false
       },
       {
-        "x": -1.1644,
-        "y": 0.1628,
+        "x": -1.4326,
+        "y": -0.0779,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -5436,8 +5436,8 @@
         "in_zone": false
       },
       {
-        "x": 0.3886,
-        "y": 0.8625,
+        "x": 0.6805,
+        "y": 1.0231,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -5452,11 +5452,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.008,
-        "y": 0.4673,
+        "x": 0.1626,
+        "y": 0.4012,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Looking",
         "result": "strikeout",
@@ -5474,8 +5474,8 @@
         "in_zone": true
       },
       {
-        "x": 0.1145,
-        "y": 0.4543,
+        "x": 0.3076,
+        "y": 0.3809,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -5493,8 +5493,8 @@
         "in_zone": true
       },
       {
-        "x": -1.0883,
-        "y": 0.6098,
+        "x": -1.329,
+        "y": 0.6255,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -5512,8 +5512,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0384,
-        "y": 0.707,
+        "x": 0.204,
+        "y": 0.7784,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -5531,8 +5531,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0377,
-        "y": 0.2794,
+        "x": 0.1004,
+        "y": 0.1056,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Looking",
         "result": "strikeout",
@@ -6987,8 +6987,8 @@
     "pitches_seen": 13,
     "scatter": [
       {
-        "x": -0.9056,
-        "y": 0.6228,
+        "x": -1.0804,
+        "y": 0.6459,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -7003,11 +7003,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.7229,
-        "y": 0.3312,
+        "x": -0.8318,
+        "y": 0.1872,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -7025,8 +7025,8 @@
         "in_zone": true
       },
       {
-        "x": -0.6467,
-        "y": 1.1411,
+        "x": -0.7282,
+        "y": 1.4615,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -7044,8 +7044,8 @@
         "in_zone": false
       },
       {
-        "x": -1.1187,
-        "y": 0.2923,
+        "x": -1.3705,
+        "y": 0.126,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -7063,8 +7063,8 @@
         "in_zone": false
       },
       {
-        "x": -1.1187,
-        "y": 0.5839,
+        "x": -1.3705,
+        "y": 0.5847,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -7082,8 +7082,8 @@
         "in_zone": false
       },
       {
-        "x": -0.1139,
-        "y": 0.4349,
+        "x": -0.0031,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -7101,8 +7101,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0834,
-        "y": -0.1418,
+        "x": 0.0383,
+        "y": -0.557,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -7120,8 +7120,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0682,
-        "y": 0.5774,
+        "x": 0.059,
+        "y": 0.5745,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -7139,8 +7139,8 @@
         "in_zone": true
       },
       {
-        "x": 0.8606,
-        "y": 1.0763,
+        "x": 1.3227,
+        "y": 1.3595,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -7158,8 +7158,8 @@
         "in_zone": false
       },
       {
-        "x": -1.1492,
-        "y": 0.1239,
+        "x": -1.4119,
+        "y": -0.1391,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -7177,8 +7177,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0689,
-        "y": 0.5321,
+        "x": 0.2455,
+        "y": 0.5032,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -7196,8 +7196,8 @@
         "in_zone": true
       },
       {
-        "x": 0.008,
-        "y": 0.7523,
+        "x": 0.1626,
+        "y": 0.8498,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -7215,8 +7215,8 @@
         "in_zone": true
       },
       {
-        "x": -0.6924,
-        "y": 0.7912,
+        "x": -0.7904,
+        "y": 0.911,
         "pitch_type": "Offspeed",
         "outcome": "Single",
         "result": "hit",
@@ -7573,8 +7573,8 @@
     "pitches_seen": 15,
     "scatter": [
       {
-        "x": -0.0377,
-        "y": 0.5385,
+        "x": 0.1004,
+        "y": 0.5134,
         "pitch_type": "Slider",
         "outcome": "Flyout",
         "result": "flyout",
@@ -7592,8 +7592,8 @@
         "in_zone": true
       },
       {
-        "x": 0.4952,
-        "y": 0.7394,
+        "x": 0.8255,
+        "y": 0.8294,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -7611,8 +7611,8 @@
         "in_zone": true
       },
       {
-        "x": 0.4952,
-        "y": 0.5968,
+        "x": 0.8255,
+        "y": 0.6051,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -7630,8 +7630,8 @@
         "in_zone": true
       },
       {
-        "x": 1.1346,
-        "y": 0.0137,
+        "x": 1.6956,
+        "y": -0.3124,
         "pitch_type": "Slider",
         "outcome": "Ball",
         "result": "ball",
@@ -7649,8 +7649,8 @@
         "in_zone": false
       },
       {
-        "x": 0.9215,
-        "y": -0.064,
+        "x": 1.4056,
+        "y": -0.4347,
         "pitch_type": "Slider",
         "outcome": "Dropped Third Strike Swinging",
         "result": "dropped_third_strike",
@@ -7668,8 +7668,8 @@
         "in_zone": false
       },
       {
-        "x": 1.1042,
-        "y": 0.9208,
+        "x": 1.6542,
+        "y": 1.1148,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -7687,8 +7687,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0225,
-        "y": 1.0633,
+        "x": 0.1212,
+        "y": 1.3391,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -7706,8 +7706,8 @@
         "in_zone": false
       },
       {
-        "x": 0.6322,
-        "y": 0.9337,
+        "x": 1.012,
+        "y": 1.1352,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -7722,11 +7722,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.891,
-        "y": -0.0834,
+        "x": 1.3642,
+        "y": -0.4653,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -7744,8 +7744,8 @@
         "in_zone": false
       },
       {
-        "x": -0.7685,
-        "y": 0.6033,
+        "x": -0.894,
+        "y": 0.6153,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -7763,8 +7763,8 @@
         "in_zone": true
       },
       {
-        "x": -0.4945,
-        "y": 0.3571,
+        "x": -0.5211,
+        "y": 0.2279,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -7782,8 +7782,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0073,
-        "y": 0.085,
+        "x": 0.1419,
+        "y": -0.2002,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -7798,11 +7798,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0689,
-        "y": 0.5061,
+        "x": 0.2455,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -7820,8 +7820,8 @@
         "in_zone": true
       },
       {
-        "x": 1.1499,
-        "y": 0.3506,
+        "x": 1.7164,
+        "y": 0.2177,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -7839,8 +7839,8 @@
         "in_zone": false
       },
       {
-        "x": -0.5097,
-        "y": 0.3766,
+        "x": -0.5418,
+        "y": 0.2585,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -7865,8 +7865,8 @@
     "pitches_seen": 15,
     "scatter": [
       {
-        "x": 0.6779,
-        "y": 0.4349,
+        "x": 1.0741,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -7882,11 +7882,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.8447,
-        "y": 0.7005,
+        "x": -0.9976,
+        "y": 0.7682,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -7905,8 +7905,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7076,
-        "y": 0.9208,
+        "x": -0.8111,
+        "y": 1.1148,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -7922,11 +7922,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0232,
-        "y": 0.7783,
+        "x": 0.1833,
+        "y": 0.8906,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -7945,8 +7945,8 @@
         "in_zone": true
       },
       {
-        "x": -0.053,
-        "y": 0.5256,
+        "x": 0.0797,
+        "y": 0.493,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -7965,8 +7965,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0225,
-        "y": 0.4478,
+        "x": 0.1212,
+        "y": 0.3707,
         "pitch_type": "Fastball",
         "outcome": "Lineout",
         "result": "lineout",
@@ -7985,8 +7985,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0225,
-        "y": 1.1087,
+        "x": 0.1212,
+        "y": 1.4105,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -8005,8 +8005,8 @@
         "in_zone": false
       },
       {
-        "x": 0.3125,
-        "y": 0.4802,
+        "x": 0.5769,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -8025,8 +8025,8 @@
         "in_zone": true
       },
       {
-        "x": -1.1035,
-        "y": 0.4284,
+        "x": -1.3497,
+        "y": 0.3401,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -8045,8 +8045,8 @@
         "in_zone": false
       },
       {
-        "x": -0.7838,
-        "y": 0.5644,
+        "x": -0.9147,
+        "y": 0.5542,
         "pitch_type": "Offspeed",
         "outcome": "Groundout",
         "result": "groundout",
@@ -8065,8 +8065,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0384,
-        "y": 0.8171,
+        "x": 0.204,
+        "y": 0.9517,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -8084,8 +8084,8 @@
         "in_zone": true
       },
       {
-        "x": -1.1035,
-        "y": 0.5321,
+        "x": -1.3497,
+        "y": 0.5032,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -8103,8 +8103,8 @@
         "in_zone": false
       },
       {
-        "x": 1.0737,
-        "y": 0.6875,
+        "x": 1.6128,
+        "y": 0.7479,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -8122,8 +8122,8 @@
         "in_zone": false
       },
       {
-        "x": 0.008,
-        "y": 0.5774,
+        "x": 0.1626,
+        "y": 0.5745,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -8141,8 +8141,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0377,
-        "y": 0.4802,
+        "x": 0.1004,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -8250,8 +8250,8 @@
     "pitches_seen": 6,
     "scatter": [
       {
-        "x": 0.008,
-        "y": 1.0633,
+        "x": 0.1626,
+        "y": 1.3391,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -8269,8 +8269,8 @@
         "in_zone": false
       },
       {
-        "x": 0.145,
-        "y": 1.0568,
+        "x": 0.349,
+        "y": 1.3289,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -8288,8 +8288,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0689,
-        "y": 0.4284,
+        "x": 0.2455,
+        "y": 0.3401,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -8307,8 +8307,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0232,
-        "y": 0.9597,
+        "x": 0.1833,
+        "y": 1.176,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -8323,11 +8323,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7997,
-        "y": -0.051,
+        "x": 1.2399,
+        "y": -0.4143,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -8345,8 +8345,8 @@
         "in_zone": false
       },
       {
-        "x": 0.008,
-        "y": 0.3247,
+        "x": 0.1626,
+        "y": 0.177,
         "pitch_type": "Offspeed",
         "outcome": "Groundout",
         "result": "groundout",
@@ -9013,8 +9013,8 @@
     "pitches_seen": 8,
     "scatter": [
       {
-        "x": 0.0601,
-        "y": 0.4605,
+        "x": 0.2662,
+        "y": 0.3299,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -9032,8 +9032,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0166,
-        "y": 0.4131,
+        "x": 0.1833,
+        "y": 0.2177,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -9051,8 +9051,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0378,
-        "y": 0.4562,
+        "x": 0.0797,
+        "y": 0.3197,
         "pitch_type": "Offspeed",
         "outcome": "Lineout",
         "result": "lineout",
@@ -9070,8 +9070,8 @@
         "in_zone": true
       },
       {
-        "x": -0.5598,
-        "y": 0.3228,
+        "x": -0.9147,
+        "y": 0.0037,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -9089,8 +9089,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0057,
-        "y": 0.8952,
+        "x": 0.1626,
+        "y": 1.3595,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -9105,11 +9105,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0166,
-        "y": 0.7833,
+        "x": 0.1833,
+        "y": 1.0945,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -9124,11 +9124,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.3097,
-        "y": 0.3744,
+        "x": -0.4382,
+        "y": 0.126,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -9146,8 +9146,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7773,
-        "y": 0.4476,
+        "x": -1.329,
+        "y": 0.2993,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -9162,7 +9162,7 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       }
     ]
   },
@@ -9597,8 +9597,8 @@
     "pitches_seen": 6,
     "scatter": [
       {
-        "x": 0.0492,
-        "y": 0.7489,
+        "x": 0.2455,
+        "y": 1.0129,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -9614,11 +9614,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.5603,
-        "y": 0.8952,
+        "x": 1.2192,
+        "y": 1.3595,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -9634,11 +9634,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7452,
-        "y": 0.637,
+        "x": 1.5713,
+        "y": 0.7479,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -9654,11 +9654,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7234,
-        "y": 0.5681,
+        "x": 1.5299,
+        "y": 0.5847,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -9674,11 +9674,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.5494,
-        "y": 0.5939,
+        "x": 1.1984,
+        "y": 0.6459,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -9694,11 +9694,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.1362,
-        "y": 0.9382,
+        "x": 0.4112,
+        "y": 1.4615,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -9714,7 +9714,7 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       }
     ]
   },
@@ -9724,8 +9724,8 @@
     "pitches_seen": 9,
     "scatter": [
       {
-        "x": -0.1748,
-        "y": 0.5256,
+        "x": -0.086,
+        "y": 0.493,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -9744,8 +9744,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8447,
-        "y": 0.3183,
+        "x": -0.9976,
+        "y": 0.1668,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -9763,8 +9763,8 @@
         "in_zone": true
       },
       {
-        "x": -0.053,
-        "y": -0.1677,
+        "x": 0.0797,
+        "y": -0.5978,
         "pitch_type": "Slider",
         "outcome": "Ball",
         "result": "ball",
@@ -9782,8 +9782,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0225,
-        "y": 0.8495,
+        "x": 0.1212,
+        "y": 1.0027,
         "pitch_type": "Fastball",
         "outcome": "Error",
         "result": "error",
@@ -9798,11 +9798,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -1.134,
-        "y": 0.4349,
+        "x": -1.3912,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -9820,8 +9820,8 @@
         "in_zone": false
       },
       {
-        "x": -1.0731,
-        "y": 0.545,
+        "x": -1.3083,
+        "y": 0.5236,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -9839,8 +9839,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0377,
-        "y": 0.8884,
+        "x": 0.1004,
+        "y": 1.0639,
         "pitch_type": "Fastball",
         "outcome": "Lineout",
         "result": "lineout",
@@ -9855,11 +9855,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -1.1644,
-        "y": 0.409,
+        "x": -1.4326,
+        "y": 0.3095,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -9877,8 +9877,8 @@
         "in_zone": false
       },
       {
-        "x": -0.7229,
-        "y": 0.869,
+        "x": -0.8318,
+        "y": 1.0333,
         "pitch_type": "Fastball",
         "outcome": "Double",
         "result": "hit",
@@ -9893,7 +9893,7 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       }
     ]
   },
@@ -10293,8 +10293,8 @@
     "pitches_seen": 19,
     "scatter": [
       {
-        "x": -1.134,
-        "y": 0.3701,
+        "x": -1.3912,
+        "y": 0.2483,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10312,8 +10312,8 @@
         "in_zone": false
       },
       {
-        "x": -0.053,
-        "y": 0.4284,
+        "x": 0.0797,
+        "y": 0.3401,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -10331,8 +10331,8 @@
         "in_zone": true
       },
       {
-        "x": -0.5402,
-        "y": 0.8949,
+        "x": -0.5832,
+        "y": 1.0741,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -10347,11 +10347,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.8142,
-        "y": 0.7588,
+        "x": -0.9561,
+        "y": 0.86,
         "pitch_type": "Fastball",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -10369,8 +10369,8 @@
         "in_zone": true
       },
       {
-        "x": 0.008,
-        "y": 1.0309,
+        "x": 0.1626,
+        "y": 1.2882,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10388,8 +10388,8 @@
         "in_zone": false
       },
       {
-        "x": -0.4945,
-        "y": 0.4867,
+        "x": -0.5211,
+        "y": 0.4318,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -10407,8 +10407,8 @@
         "in_zone": true
       },
       {
-        "x": -0.053,
-        "y": -0.0705,
+        "x": 0.0797,
+        "y": -0.4449,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10426,8 +10426,8 @@
         "in_zone": false
       },
       {
-        "x": -0.5554,
-        "y": 0.6098,
+        "x": -0.6039,
+        "y": 0.6255,
         "pitch_type": "Fastball",
         "outcome": "Home Run",
         "result": "hit",
@@ -10445,8 +10445,8 @@
         "in_zone": true
       },
       {
-        "x": -1.1492,
-        "y": -0.064,
+        "x": -1.4119,
+        "y": -0.4347,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10464,8 +10464,8 @@
         "in_zone": false
       },
       {
-        "x": -0.1139,
-        "y": -0.0446,
+        "x": -0.0031,
+        "y": -0.4041,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10483,8 +10483,8 @@
         "in_zone": false
       },
       {
-        "x": 0.7235,
-        "y": -0.0899,
+        "x": 1.1363,
+        "y": -0.4755,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10502,8 +10502,8 @@
         "in_zone": false
       },
       {
-        "x": -0.5402,
-        "y": -0.0705,
+        "x": -0.5832,
+        "y": -0.4449,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -10521,8 +10521,8 @@
         "in_zone": false
       },
       {
-        "x": -0.8599,
-        "y": 0.9208,
+        "x": -1.0183,
+        "y": 1.1148,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -10537,11 +10537,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.7838,
-        "y": 0.4737,
+        "x": -0.9147,
+        "y": 0.4114,
         "pitch_type": "Fastball",
         "outcome": "Home Run",
         "result": "hit",
@@ -10559,8 +10559,8 @@
         "in_zone": true
       },
       {
-        "x": -0.799,
-        "y": -0.0834,
+        "x": -0.9354,
+        "y": -0.4653,
         "pitch_type": "Curveball",
         "outcome": "Ball",
         "result": "ball",
@@ -10579,8 +10579,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0232,
-        "y": 0.843,
+        "x": 0.1833,
+        "y": 0.9925,
         "pitch_type": "Curveball",
         "outcome": "Ball",
         "result": "ball",
@@ -10599,8 +10599,8 @@
         "in_zone": true
       },
       {
-        "x": -0.053,
-        "y": 0.4543,
+        "x": 0.0797,
+        "y": 0.3809,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -10619,8 +10619,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0073,
-        "y": 1.0763,
+        "x": 0.1419,
+        "y": 1.3595,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10639,8 +10639,8 @@
         "in_zone": false
       },
       {
-        "x": -1.2101,
-        "y": 0.7264,
+        "x": -1.4948,
+        "y": 0.809,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -10666,8 +10666,8 @@
     "pitches_seen": 5,
     "scatter": [
       {
-        "x": 0.4842,
-        "y": 0.5337,
+        "x": 1.0741,
+        "y": 0.5032,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -10682,11 +10682,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.4402,
-        "y": 0.5681,
+        "x": -0.6868,
+        "y": 0.5847,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -10767,8 +10767,8 @@
     "pitches_seen": 6,
     "scatter": [
       {
-        "x": 0.7083,
-        "y": 0.383,
+        "x": 1.1156,
+        "y": 0.2687,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10783,11 +10783,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0689,
-        "y": 0.5061,
+        "x": 0.2455,
+        "y": 0.4624,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -10805,8 +10805,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7533,
-        "y": 0.7847,
+        "x": -0.8733,
+        "y": 0.9008,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10824,8 +10824,8 @@
         "in_zone": true
       },
       {
-        "x": -0.9056,
-        "y": 0.8949,
+        "x": -1.0804,
+        "y": 1.0741,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -10840,11 +10840,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0993,
-        "y": 0.5839,
+        "x": 0.2869,
+        "y": 0.5847,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -10862,8 +10862,8 @@
         "in_zone": true
       },
       {
-        "x": -0.6011,
-        "y": 0.5061,
+        "x": -0.6661,
+        "y": 0.4624,
         "pitch_type": "Offspeed",
         "outcome": "Groundout",
         "result": "groundout",
@@ -10888,8 +10888,8 @@
     "pitches_seen": 29,
     "scatter": [
       {
-        "x": 0.8648,
-        "y": 0.8091,
+        "x": 1.7992,
+        "y": 1.1556,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10904,11 +10904,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.854,
-        "y": 0.482,
+        "x": 1.7785,
+        "y": 0.3809,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -10923,11 +10923,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0709,
-        "y": 0.1248,
+        "x": 0.2869,
+        "y": -0.4653,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -10942,11 +10942,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.8866,
-        "y": 0.1893,
+        "x": 1.8407,
+        "y": -0.3124,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -10961,11 +10961,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0378,
-        "y": 0.4562,
+        "x": 0.0797,
+        "y": 0.3197,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -10983,8 +10983,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0813,
-        "y": 0.5337,
+        "x": -0.0031,
+        "y": 0.5032,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -11002,8 +11002,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0492,
-        "y": 0.7747,
+        "x": 0.2455,
+        "y": 1.0741,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -11019,11 +11019,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0052,
-        "y": 0.3916,
+        "x": 0.1419,
+        "y": 0.1668,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -11042,8 +11042,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0161,
-        "y": 0.4906,
+        "x": 0.1212,
+        "y": 0.4012,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -11061,8 +11061,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0927,
-        "y": 0.4863,
+        "x": 0.3283,
+        "y": 0.391,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -11080,8 +11080,8 @@
         "in_zone": true
       },
       {
-        "x": 0.7887,
-        "y": 0.2582,
+        "x": 1.6542,
+        "y": -0.1493,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -11096,11 +11096,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.2232,
-        "y": 0.4648,
+        "x": 0.5769,
+        "y": 0.3401,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -11118,8 +11118,8 @@
         "in_zone": true
       },
       {
-        "x": 0.2667,
-        "y": 0.5294,
+        "x": 0.6598,
+        "y": 0.493,
         "pitch_type": "Fastball",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -11449,8 +11449,8 @@
     "pitches_seen": 6,
     "scatter": [
       {
-        "x": -1.0883,
-        "y": 0.6163,
+        "x": -1.329,
+        "y": 0.6357,
         "pitch_type": "Curveball",
         "outcome": "Ball",
         "result": "ball",
@@ -11468,8 +11468,8 @@
         "in_zone": false
       },
       {
-        "x": -0.053,
-        "y": 0.4867,
+        "x": 0.0797,
+        "y": 0.4318,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -11487,8 +11487,8 @@
         "in_zone": true
       },
       {
-        "x": -1.1949,
-        "y": 0.4284,
+        "x": -1.474,
+        "y": 0.3401,
         "pitch_type": "Curveball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -11506,8 +11506,8 @@
         "in_zone": false
       },
       {
-        "x": -0.6011,
-        "y": -0.1806,
+        "x": -0.6661,
+        "y": -0.6182,
         "pitch_type": "Curveball",
         "outcome": "Ball",
         "result": "ball",
@@ -11525,8 +11525,8 @@
         "in_zone": false
       },
       {
-        "x": -1.1187,
-        "y": 0.3506,
+        "x": -1.3705,
+        "y": 0.2177,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -11544,8 +11544,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0225,
-        "y": 0.8495,
+        "x": 0.1212,
+        "y": 1.0027,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -11560,7 +11560,7 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       }
     ]
   },
@@ -11570,8 +11570,8 @@
     "pitches_seen": 23,
     "scatter": [
       {
-        "x": 1.1651,
-        "y": 0.6616,
+        "x": 1.7371,
+        "y": 0.7071,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -11589,8 +11589,8 @@
         "in_zone": false
       },
       {
-        "x": -0.2661,
-        "y": 0.558,
+        "x": -0.2103,
+        "y": 0.544,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -11608,8 +11608,8 @@
         "in_zone": true
       },
       {
-        "x": 0.008,
-        "y": -0.1094,
+        "x": 0.1626,
+        "y": -0.5061,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -11627,8 +11627,8 @@
         "in_zone": false
       },
       {
-        "x": 0.6779,
-        "y": -0.0705,
+        "x": 1.0741,
+        "y": -0.4449,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -11646,8 +11646,8 @@
         "in_zone": false
       },
       {
-        "x": -0.1595,
-        "y": 1.0309,
+        "x": -0.0653,
+        "y": 1.2882,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -11665,8 +11665,8 @@
         "in_zone": false
       },
       {
-        "x": -0.8599,
-        "y": 0.5256,
+        "x": -1.0183,
+        "y": 0.493,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -11681,11 +11681,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.4184,
-        "y": 0.7459,
+        "x": -0.4175,
+        "y": 0.8396,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -11703,8 +11703,8 @@
         "in_zone": true
       },
       {
-        "x": -1.1492,
-        "y": 0.247,
+        "x": -1.4119,
+        "y": 0.0546,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -11723,8 +11723,8 @@
         "in_zone": false
       },
       {
-        "x": -0.1139,
-        "y": 0.396,
+        "x": -0.0031,
+        "y": 0.2891,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -11743,8 +11743,8 @@
         "in_zone": true
       },
       {
-        "x": -1.1492,
-        "y": 0.5061,
+        "x": -1.4119,
+        "y": 0.4624,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -11763,8 +11763,8 @@
         "in_zone": false
       },
       {
-        "x": -1.1187,
-        "y": 0.0137,
+        "x": -1.3705,
+        "y": -0.3124,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -11783,8 +11783,8 @@
         "in_zone": false
       },
       {
-        "x": -1.134,
-        "y": 0.6357,
+        "x": -1.3912,
+        "y": 0.6663,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -11803,8 +11803,8 @@
         "in_zone": false
       },
       {
-        "x": -0.4184,
-        "y": 0.856,
+        "x": -0.4175,
+        "y": 1.0129,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -11820,11 +11820,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -1.4994,
-        "y": 0.3506,
+        "x": -1.8884,
+        "y": 0.2177,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -11843,8 +11843,8 @@
         "in_zone": false
       },
       {
-        "x": 0.008,
-        "y": 0.2405,
+        "x": 0.1626,
+        "y": 0.0444,
         "pitch_type": "Fastball",
         "outcome": "Popout",
         "result": "popout",
@@ -11862,8 +11862,8 @@
         "in_zone": true
       },
       {
-        "x": -0.2357,
-        "y": 0.0656,
+        "x": -0.1689,
+        "y": -0.2308,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -11878,11 +11878,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -1.1796,
-        "y": 0.3312,
+        "x": -1.4533,
+        "y": 0.1872,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -11900,8 +11900,8 @@
         "in_zone": false
       },
       {
-        "x": -0.1139,
-        "y": 0.4737,
+        "x": -0.0031,
+        "y": 0.4114,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -11919,8 +11919,8 @@
         "in_zone": true
       },
       {
-        "x": -0.6315,
-        "y": 0.5061,
+        "x": -0.7075,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -11938,8 +11938,8 @@
         "in_zone": true
       },
       {
-        "x": -0.799,
-        "y": 0.6552,
+        "x": -0.9354,
+        "y": 0.6969,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -11957,8 +11957,8 @@
         "in_zone": true
       },
       {
-        "x": -0.2966,
-        "y": 0.5644,
+        "x": -0.2517,
+        "y": 0.5542,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -11976,8 +11976,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0986,
-        "y": 0.4349,
+        "x": 0.0176,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -11995,8 +11995,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8447,
-        "y": 0.4349,
+        "x": -0.9976,
+        "y": 0.3503,
         "pitch_type": "Offspeed",
         "outcome": "Lineout",
         "result": "lineout",
@@ -12021,8 +12021,8 @@
     "pitches_seen": 2,
     "scatter": [
       {
-        "x": -0.0225,
-        "y": 0.0461,
+        "x": 0.1212,
+        "y": -0.2614,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -12037,11 +12037,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.053,
-        "y": 0.6292,
+        "x": 0.0797,
+        "y": 0.6561,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -12384,8 +12384,8 @@
     "pitches_seen": 7,
     "scatter": [
       {
-        "x": -0.7773,
-        "y": 0.3701,
+        "x": -1.329,
+        "y": 0.1158,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -12400,11 +12400,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0166,
-        "y": 0.5078,
+        "x": 0.1833,
+        "y": 0.442,
         "pitch_type": "Fastball",
         "outcome": "Double Play",
         "result": "groundout",
@@ -12422,8 +12422,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0378,
-        "y": 0.482,
+        "x": 0.0797,
+        "y": 0.3809,
         "pitch_type": "Offspeed",
         "outcome": "Flyout",
         "result": "flyout",
@@ -12441,8 +12441,8 @@
         "in_zone": true
       },
       {
-        "x": -0.1031,
-        "y": 0.4045,
+        "x": -0.0446,
+        "y": 0.1974,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -12460,8 +12460,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0596,
-        "y": 0.3099,
+        "x": 0.0383,
+        "y": -0.0269,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -12476,11 +12476,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0383,
-        "y": 0.3486,
+        "x": 0.2247,
+        "y": 0.0648,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -12498,8 +12498,8 @@
         "in_zone": true
       },
       {
-        "x": 0.2014,
-        "y": 0.3744,
+        "x": 0.5355,
+        "y": 0.126,
         "pitch_type": "Fastball",
         "outcome": "Double",
         "result": "hit",
@@ -12524,8 +12524,8 @@
     "pitches_seen": 8,
     "scatter": [
       {
-        "x": 0.9367,
-        "y": -0.0834,
+        "x": 1.4263,
+        "y": -0.4653,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -12543,8 +12543,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0377,
-        "y": 0.4543,
+        "x": 0.1004,
+        "y": 0.3809,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -12562,8 +12562,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8142,
-        "y": 0.4543,
+        "x": -0.9561,
+        "y": 0.3809,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -12581,8 +12581,8 @@
         "in_zone": true
       },
       {
-        "x": -0.9512,
-        "y": 0.5839,
+        "x": -1.1426,
+        "y": 0.5847,
         "pitch_type": "Offspeed",
         "outcome": "Single",
         "result": "hit",
@@ -12598,11 +12598,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -1.3471,
-        "y": 0.0073,
+        "x": -1.6812,
+        "y": -0.3226,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -12620,8 +12620,8 @@
         "in_zone": false
       },
       {
-        "x": 0.008,
-        "y": 0.5061,
+        "x": 0.1626,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -12639,8 +12639,8 @@
         "in_zone": true
       },
       {
-        "x": -1.1492,
-        "y": 0.8884,
+        "x": -1.4119,
+        "y": 1.0639,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -12658,8 +12658,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0073,
-        "y": 0.4802,
+        "x": 0.1419,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -12684,8 +12684,8 @@
     "pitches_seen": 38,
     "scatter": [
       {
-        "x": 0.3102,
-        "y": 0.2926,
+        "x": 0.7427,
+        "y": -0.0677,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -12700,11 +12700,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.8975,
-        "y": 0.4992,
+        "x": 1.8614,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -12719,11 +12719,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.5055,
-        "y": 0.3012,
+        "x": -0.8111,
+        "y": -0.0473,
         "pitch_type": "Offspeed",
         "outcome": "Single",
         "result": "hit",
@@ -12738,11 +12738,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.3102,
-        "y": 0.5724,
+        "x": 0.7427,
+        "y": 0.5949,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -12760,8 +12760,8 @@
         "in_zone": true
       },
       {
-        "x": -0.3206,
-        "y": 0.1162,
+        "x": -0.4589,
+        "y": -0.4857,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -12776,11 +12776,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.9953,
-        "y": 0.4906,
+        "x": 2.0478,
+        "y": 0.4012,
         "pitch_type": "Offspeed",
         "outcome": "Hit By Pitch",
         "result": "hbp",
@@ -12795,11 +12795,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.1248,
-        "y": -0.0129,
+        "x": -0.086,
+        "y": -0.7915,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -12817,8 +12817,8 @@
         "in_zone": false
       },
       {
-        "x": -0.3532,
-        "y": 0.5337,
+        "x": -0.5211,
+        "y": 0.5032,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -12836,8 +12836,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0166,
-        "y": 0.4304,
+        "x": 0.1833,
+        "y": 0.2585,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -12855,8 +12855,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7882,
-        "y": 0.4734,
+        "x": -1.3497,
+        "y": 0.3605,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -12871,11 +12871,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.81,
-        "y": 0.4175,
+        "x": -1.3912,
+        "y": 0.2279,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -12890,11 +12890,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.9187,
-        "y": 0.3615,
+        "x": -1.5983,
+        "y": 0.0954,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -12909,11 +12909,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.4402,
-        "y": 0.2754,
+        "x": -0.6868,
+        "y": -0.1085,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -12928,11 +12928,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7452,
-        "y": 0.2582,
+        "x": 1.5713,
+        "y": -0.1493,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -12947,11 +12947,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.1575,
-        "y": 0.2453,
+        "x": -0.1482,
+        "y": -0.1798,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -12966,11 +12966,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.4837,
-        "y": 0.4131,
+        "x": -0.7697,
+        "y": 0.2177,
         "pitch_type": "Offspeed",
         "outcome": "Double Play",
         "result": "groundout",
@@ -12988,8 +12988,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8208,
-        "y": 0.4304,
+        "x": -1.4119,
+        "y": 0.2585,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -13004,11 +13004,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.5277,
-        "y": 0.1377,
+        "x": 1.157,
+        "y": -0.4347,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -13023,11 +13023,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0057,
-        "y": 0.5423,
+        "x": 0.1626,
+        "y": 0.5236,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13045,8 +13045,8 @@
         "in_zone": true
       },
       {
-        "x": -0.6903,
-        "y": 0.4992,
+        "x": -1.1633,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -13061,11 +13061,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.6147,
-        "y": 0.4218,
+        "x": 1.3227,
+        "y": 0.2381,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13080,11 +13080,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.1144,
-        "y": 0.4777,
+        "x": 0.3698,
+        "y": 0.3707,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -13102,8 +13102,8 @@
         "in_zone": true
       },
       {
-        "x": -0.1683,
-        "y": 0.6068,
+        "x": -0.1689,
+        "y": 0.6765,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -13121,8 +13121,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0057,
-        "y": 0.3271,
+        "x": 0.1626,
+        "y": 0.0139,
         "pitch_type": "Fastball",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -13413,8 +13413,8 @@
     "pitches_seen": 25,
     "scatter": [
       {
-        "x": 0.6582,
-        "y": 0.8823,
+        "x": 1.4056,
+        "y": 1.3289,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -13430,11 +13430,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0378,
-        "y": 0.142,
+        "x": 0.0797,
+        "y": -0.4245,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -13450,11 +13450,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.5277,
-        "y": 0.6111,
+        "x": 1.157,
+        "y": 0.6867,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13470,11 +13470,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.4081,
-        "y": 0.5982,
+        "x": 0.9291,
+        "y": 0.6561,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13493,8 +13493,8 @@
         "in_zone": true
       },
       {
-        "x": 0.8213,
-        "y": 0.8909,
+        "x": 1.7164,
+        "y": 1.3493,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -13510,11 +13510,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.723,
-        "y": 0.6714,
+        "x": -1.2254,
+        "y": 0.8294,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -13530,11 +13530,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0601,
-        "y": 0.3099,
+        "x": 0.2662,
+        "y": -0.0269,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13549,11 +13549,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.6473,
-        "y": 0.3099,
+        "x": 1.3849,
+        "y": -0.0269,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -13568,11 +13568,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.8213,
-        "y": 0.1119,
+        "x": 1.7164,
+        "y": -0.4959,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -13587,11 +13587,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7778,
-        "y": 0.7919,
+        "x": 1.6335,
+        "y": 1.1148,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -13606,11 +13606,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.5381,
-        "y": 0.3529,
+        "x": -0.8733,
+        "y": 0.075,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13628,8 +13628,8 @@
         "in_zone": true
       },
       {
-        "x": 0.2014,
-        "y": 0.6025,
+        "x": 0.5355,
+        "y": 0.6663,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13647,8 +13647,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0922,
-        "y": 0.5207,
+        "x": -0.0239,
+        "y": 0.4726,
         "pitch_type": "Fastball",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -13666,8 +13666,8 @@
         "in_zone": true
       },
       {
-        "x": 0.1036,
-        "y": 0.9124,
+        "x": 0.349,
+        "y": 1.4003,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -13682,11 +13682,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0492,
-        "y": 0.5509,
+        "x": 0.2455,
+        "y": 0.544,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13704,8 +13704,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0383,
-        "y": 0.5078,
+        "x": 0.2247,
+        "y": 0.442,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -13723,8 +13723,8 @@
         "in_zone": true
       },
       {
-        "x": -0.6251,
-        "y": 0.0731,
+        "x": -1.039,
+        "y": -0.5876,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -13739,11 +13739,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.1139,
-        "y": 0.4218,
+        "x": -0.0653,
+        "y": 0.2381,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -13761,8 +13761,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8643,
-        "y": 0.1592,
+        "x": -1.4948,
+        "y": -0.3837,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -13777,11 +13777,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0161,
-        "y": 0.8737,
+        "x": 0.1212,
+        "y": 1.3085,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -13796,11 +13796,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.3858,
-        "y": 0.1291,
+        "x": -0.5832,
+        "y": -0.4551,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -13815,11 +13815,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.5712,
-        "y": 0.7575,
+        "x": 1.2399,
+        "y": 1.0333,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -13834,11 +13834,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0166,
-        "y": 0.2883,
+        "x": 0.1833,
+        "y": -0.0779,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13853,11 +13853,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.0171,
-        "y": 0.1076,
+        "x": 2.0893,
+        "y": -0.5061,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -13875,8 +13875,8 @@
         "in_zone": false
       },
       {
-        "x": 0.7017,
-        "y": 0.8866,
+        "x": 1.4885,
+        "y": 1.3391,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -13891,7 +13891,7 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       }
     ]
   },
@@ -13901,8 +13901,8 @@
     "pitches_seen": 28,
     "scatter": [
       {
-        "x": 0.1906,
-        "y": 0.4131,
+        "x": 0.5148,
+        "y": 0.2177,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13921,8 +13921,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0274,
-        "y": 0.4691,
+        "x": 0.204,
+        "y": 0.3503,
         "pitch_type": "Offspeed",
         "outcome": "Single",
         "result": "hit",
@@ -13941,8 +13941,8 @@
         "in_zone": true
       },
       {
-        "x": 0.5712,
-        "y": 0.4304,
+        "x": 1.2399,
+        "y": 0.2585,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -13958,11 +13958,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.4293,
-        "y": 0.4605,
+        "x": -0.6661,
+        "y": 0.3299,
         "pitch_type": "Offspeed",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -13981,8 +13981,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0057,
-        "y": 0.7058,
+        "x": 0.1626,
+        "y": 0.911,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -14001,8 +14001,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8643,
-        "y": 0.3443,
+        "x": -1.4948,
+        "y": 0.0546,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14018,11 +14018,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0596,
-        "y": 0.8952,
+        "x": 0.0383,
+        "y": 1.3595,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -14038,11 +14038,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.7338,
-        "y": 0.4088,
+        "x": -1.2462,
+        "y": 0.2075,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -14058,11 +14058,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0492,
-        "y": 0.3959,
+        "x": 0.2455,
+        "y": 0.177,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -14081,8 +14081,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0161,
-        "y": 0.4476,
+        "x": 0.1212,
+        "y": 0.2993,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -14101,8 +14101,8 @@
         "in_zone": true
       },
       {
-        "x": 0.1797,
-        "y": 0.4691,
+        "x": 0.4941,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -14120,8 +14120,8 @@
         "in_zone": true
       },
       {
-        "x": 0.1036,
-        "y": 0.1463,
+        "x": 0.349,
+        "y": -0.4143,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -14136,11 +14136,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.5603,
-        "y": 0.4476,
+        "x": 1.2192,
+        "y": 0.2993,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -14155,11 +14155,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -1.0166,
-        "y": 0.4734,
+        "x": -1.7848,
+        "y": 0.3605,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14177,8 +14177,8 @@
         "in_zone": false
       },
       {
-        "x": 0.1144,
-        "y": 0.3744,
+        "x": 0.3698,
+        "y": 0.126,
         "pitch_type": "Offspeed",
         "outcome": "Groundout",
         "result": "groundout",
@@ -14196,8 +14196,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0166,
-        "y": 0.5423,
+        "x": 0.1833,
+        "y": 0.5236,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -14215,8 +14215,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0378,
-        "y": 0.5423,
+        "x": 0.0797,
+        "y": 0.5236,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -14234,8 +14234,8 @@
         "in_zone": true
       },
       {
-        "x": 0.2123,
-        "y": 0.5724,
+        "x": 0.5562,
+        "y": 0.5949,
         "pitch_type": "Offspeed",
         "outcome": "Flyout",
         "result": "flyout",
@@ -14452,8 +14452,8 @@
     "pitches_seen": 22,
     "scatter": [
       {
-        "x": 0.0057,
-        "y": 0.1205,
+        "x": 0.1626,
+        "y": -0.4755,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14468,11 +14468,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0161,
-        "y": 0.2238,
+        "x": 0.1212,
+        "y": -0.2308,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -14487,11 +14487,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.2341,
-        "y": 0.4605,
+        "x": 0.5976,
+        "y": 0.3299,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -14509,8 +14509,8 @@
         "in_zone": true
       },
       {
-        "x": 0.4951,
-        "y": 0.6585,
+        "x": 1.0949,
+        "y": 0.7988,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -14525,11 +14525,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.3972,
-        "y": 0.5078,
+        "x": 0.9084,
+        "y": 0.442,
         "pitch_type": "Fastball",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -14547,8 +14547,8 @@
         "in_zone": true
       },
       {
-        "x": 0.4407,
-        "y": 0.4992,
+        "x": 0.9913,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -14566,8 +14566,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8208,
-        "y": 0.4304,
+        "x": -1.4119,
+        "y": 0.2585,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -14582,11 +14582,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.3423,
-        "y": 0.2324,
+        "x": -0.5003,
+        "y": -0.2104,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -14601,11 +14601,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.6033,
-        "y": 0.3959,
+        "x": -0.9976,
+        "y": 0.177,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -14623,8 +14623,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8208,
-        "y": 0.1635,
+        "x": -1.4119,
+        "y": -0.3735,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -14639,11 +14639,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.6691,
-        "y": 0.4648,
+        "x": 1.4263,
+        "y": 0.3401,
         "pitch_type": "Fastball",
         "outcome": "Sacrifice Fly",
         "result": "flyout",
@@ -14658,11 +14658,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0601,
-        "y": 0.5164,
+        "x": 0.2662,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -14680,8 +14680,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7773,
-        "y": 0.581,
+        "x": -1.329,
+        "y": 0.6153,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14696,11 +14696,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.6033,
-        "y": 0.099,
+        "x": -0.9976,
+        "y": -0.5265,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -14715,11 +14715,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.1367,
-        "y": -0.0086,
+        "x": 2.3172,
+        "y": -0.7813,
         "pitch_type": "Offspeed",
         "outcome": "Hit By Pitch",
         "result": "hbp",
@@ -14737,8 +14737,8 @@
         "in_zone": false
       },
       {
-        "x": -0.1792,
-        "y": 0.241,
+        "x": -0.1896,
+        "y": -0.19,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14753,11 +14753,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.7773,
-        "y": 0.1033,
+        "x": -1.329,
+        "y": -0.5163,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14772,11 +14772,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0161,
-        "y": 0.3787,
+        "x": 0.1212,
+        "y": 0.1362,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -14794,8 +14794,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8208,
-        "y": 0.4906,
+        "x": -1.4119,
+        "y": 0.4012,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14810,11 +14810,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.7773,
-        "y": 0.6111,
+        "x": -1.329,
+        "y": 0.6867,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14829,11 +14829,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.2776,
-        "y": 0.1377,
+        "x": 0.6805,
+        "y": -0.4347,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14848,11 +14848,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0487,
-        "y": 0.4562,
+        "x": 0.059,
+        "y": 0.3197,
         "pitch_type": "Offspeed",
         "outcome": "Groundout",
         "result": "groundout",
@@ -14877,8 +14877,8 @@
     "pitches_seen": 11,
     "scatter": [
       {
-        "x": -0.8294,
-        "y": 0.7912,
+        "x": -0.9768,
+        "y": 0.911,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14897,8 +14897,8 @@
         "in_zone": true
       },
       {
-        "x": -0.2509,
-        "y": -0.0705,
+        "x": -0.1896,
+        "y": -0.4449,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -14917,8 +14917,8 @@
         "in_zone": false
       },
       {
-        "x": -0.662,
-        "y": 0.7329,
+        "x": -0.749,
+        "y": 0.8192,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -14937,8 +14937,8 @@
         "in_zone": true
       },
       {
-        "x": -0.2661,
-        "y": 0.8106,
+        "x": -0.2103,
+        "y": 0.9415,
         "pitch_type": "Offspeed",
         "outcome": "Flyout",
         "result": "flyout",
@@ -14957,8 +14957,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0232,
-        "y": 1.0504,
+        "x": 0.1833,
+        "y": 1.3187,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -14977,8 +14977,8 @@
         "in_zone": false
       },
       {
-        "x": -0.8751,
-        "y": 0.5839,
+        "x": -1.039,
+        "y": 0.5847,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -14994,11 +14994,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.3326,
-        "y": 0.843,
+        "x": 1.965,
+        "y": 0.9925,
         "pitch_type": "Fastball",
         "outcome": "Hit By Pitch",
         "result": "hbp",
@@ -15017,8 +15017,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0689,
-        "y": 0.3766,
+        "x": 0.2455,
+        "y": 0.2585,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -15036,8 +15036,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0689,
-        "y": 0.5061,
+        "x": 0.2455,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -15055,8 +15055,8 @@
         "in_zone": true
       },
       {
-        "x": -0.9056,
-        "y": 0.6875,
+        "x": -1.0804,
+        "y": 0.7479,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -15071,11 +15071,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.1291,
-        "y": 0.4025,
+        "x": -0.0239,
+        "y": 0.2993,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Looking",
         "result": "strikeout",
@@ -15100,8 +15100,8 @@
     "pitches_seen": 25,
     "scatter": [
       {
-        "x": 0.4407,
-        "y": 0.4949,
+        "x": 0.9913,
+        "y": 0.4114,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -15119,8 +15119,8 @@
         "in_zone": true
       },
       {
-        "x": 0.7669,
-        "y": 0.2238,
+        "x": 1.6128,
+        "y": -0.2308,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -15135,11 +15135,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.6142,
-        "y": 0.5509,
+        "x": -1.0183,
+        "y": 0.544,
         "pitch_type": "Offspeed",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -15154,11 +15154,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.7773,
-        "y": 0.6327,
+        "x": -1.329,
+        "y": 0.7377,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -15173,11 +15173,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.6686,
-        "y": 0.4002,
+        "x": -1.1219,
+        "y": 0.1872,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -15192,11 +15192,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0813,
-        "y": 0.4002,
+        "x": -0.0031,
+        "y": 0.1872,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -15214,8 +15214,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0378,
-        "y": 0.3787,
+        "x": 0.0797,
+        "y": 0.1362,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -15234,8 +15234,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8208,
-        "y": 0.7187,
+        "x": -1.4119,
+        "y": 0.9415,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -15251,11 +15251,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0818,
-        "y": 0.4175,
+        "x": 0.3076,
+        "y": 0.2279,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -15274,8 +15274,8 @@
         "in_zone": true
       },
       {
-        "x": -0.1792,
-        "y": 0.4088,
+        "x": -0.1896,
+        "y": 0.2075,
         "pitch_type": "Offspeed",
         "outcome": "Double Play",
         "result": "groundout",
@@ -15294,8 +15294,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8426,
-        "y": 0.878,
+        "x": -1.4533,
+        "y": 1.3187,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -15310,11 +15310,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0269,
-        "y": 0.1549,
+        "x": 0.1004,
+        "y": -0.3939,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -15329,11 +15329,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.6468,
-        "y": 0.5164,
+        "x": -1.0804,
+        "y": 0.4624,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -15348,11 +15348,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0161,
-        "y": 0.9081,
+        "x": 0.1212,
+        "y": 1.3901,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -15367,11 +15367,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.1248,
-        "y": 0.1248,
+        "x": -0.086,
+        "y": -0.4653,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -15386,11 +15386,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.6033,
-        "y": 0.7015,
+        "x": -0.9976,
+        "y": 0.9008,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -15586,8 +15586,8 @@
     "pitches_seen": 20,
     "scatter": [
       {
-        "x": 0.9976,
-        "y": 0.6681,
+        "x": 1.5092,
+        "y": 0.7173,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -15602,11 +15602,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.6467,
-        "y": 0.6357,
+        "x": -0.7282,
+        "y": 0.6663,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -15624,8 +15624,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0834,
-        "y": 0.4673,
+        "x": 0.0383,
+        "y": 0.4012,
         "pitch_type": "Slider",
         "outcome": "Called Strike",
         "result": "strike",
@@ -15643,8 +15643,8 @@
         "in_zone": true
       },
       {
-        "x": -1.1035,
-        "y": 0.4673,
+        "x": -1.3497,
+        "y": 0.4012,
         "pitch_type": "Splitter",
         "outcome": "Ball",
         "result": "ball",
@@ -15662,8 +15662,8 @@
         "in_zone": false
       },
       {
-        "x": -0.1291,
-        "y": -0.1418,
+        "x": -0.0239,
+        "y": -0.557,
         "pitch_type": "Slider",
         "outcome": "Ball",
         "result": "ball",
@@ -15681,8 +15681,8 @@
         "in_zone": false
       },
       {
-        "x": -0.662,
-        "y": 1.1152,
+        "x": -0.749,
+        "y": 1.4207,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -15700,8 +15700,8 @@
         "in_zone": false
       },
       {
-        "x": -0.2052,
-        "y": -0.0057,
+        "x": -0.1274,
+        "y": -0.343,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -15719,8 +15719,8 @@
         "in_zone": false
       },
       {
-        "x": 0.5713,
-        "y": -0.064,
+        "x": 0.9291,
+        "y": -0.4347,
         "pitch_type": "Splitter",
         "outcome": "Ball",
         "result": "ball",
@@ -15739,8 +15739,8 @@
         "in_zone": false
       },
       {
-        "x": 0.3277,
-        "y": 0.3312,
+        "x": 0.5976,
+        "y": 0.1872,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -15759,8 +15759,8 @@
         "in_zone": true
       },
       {
-        "x": 0.2516,
-        "y": -0.077,
+        "x": 0.4941,
+        "y": -0.4551,
         "pitch_type": "Curveball",
         "outcome": "Ball",
         "result": "ball",
@@ -15779,8 +15779,8 @@
         "in_zone": false
       },
       {
-        "x": -0.5249,
-        "y": 0.5644,
+        "x": -0.5625,
+        "y": 0.5542,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -15799,8 +15799,8 @@
         "in_zone": true
       },
       {
-        "x": -1.134,
-        "y": 0.4802,
+        "x": -1.3912,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -15818,8 +15818,8 @@
         "in_zone": false
       },
       {
-        "x": -0.5402,
-        "y": -0.0381,
+        "x": -0.5832,
+        "y": -0.3939,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -15837,8 +15837,8 @@
         "in_zone": false
       },
       {
-        "x": 1.1499,
-        "y": 0.8171,
+        "x": 1.7164,
+        "y": 0.9517,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -15856,8 +15856,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0689,
-        "y": 0.4997,
+        "x": 0.2455,
+        "y": 0.4522,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -15876,8 +15876,8 @@
         "in_zone": true
       },
       {
-        "x": -0.1139,
-        "y": 0.545,
+        "x": -0.0031,
+        "y": 0.5236,
         "pitch_type": "Curveball",
         "outcome": "Foul",
         "result": "strike",
@@ -15896,8 +15896,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0986,
-        "y": 0.6292,
+        "x": 0.0176,
+        "y": 0.6561,
         "pitch_type": "Curveball",
         "outcome": "Ball",
         "result": "ball",
@@ -15916,8 +15916,8 @@
         "in_zone": true
       },
       {
-        "x": -0.2052,
-        "y": -0.077,
+        "x": -0.1274,
+        "y": -0.4551,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -15935,8 +15935,8 @@
         "in_zone": false
       },
       {
-        "x": 1.0737,
-        "y": -0.064,
+        "x": 1.6128,
+        "y": -0.4347,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -15954,8 +15954,8 @@
         "in_zone": false
       },
       {
-        "x": -0.9817,
-        "y": 0.2016,
+        "x": -1.184,
+        "y": -0.0167,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -15970,7 +15970,7 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       }
     ]
   },
@@ -16897,8 +16897,8 @@
     "pitches_seen": 20,
     "scatter": [
       {
-        "x": -0.053,
-        "y": 0.4737,
+        "x": 0.0797,
+        "y": 0.4114,
         "pitch_type": "Slider",
         "outcome": "Foul",
         "result": "strike",
@@ -16916,8 +16916,8 @@
         "in_zone": true
       },
       {
-        "x": 0.5561,
-        "y": -0.0575,
+        "x": 0.9084,
+        "y": -0.4245,
         "pitch_type": "Slider",
         "outcome": "Ball",
         "result": "ball",
@@ -16935,8 +16935,8 @@
         "in_zone": false
       },
       {
-        "x": 0.754,
-        "y": 0.3312,
+        "x": 1.1777,
+        "y": 0.1872,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -16951,11 +16951,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.1194,
-        "y": 0.0915,
+        "x": 1.6749,
+        "y": -0.19,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -16973,8 +16973,8 @@
         "in_zone": false
       },
       {
-        "x": 0.9367,
-        "y": 0.6422,
+        "x": 1.4263,
+        "y": 0.6765,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -16989,11 +16989,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.1042,
-        "y": 0.1433,
+        "x": 1.6542,
+        "y": -0.1085,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -17011,8 +17011,8 @@
         "in_zone": false
       },
       {
-        "x": 1.4544,
-        "y": 0.4478,
+        "x": 2.1307,
+        "y": 0.3707,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -17031,8 +17031,8 @@
         "in_zone": false
       },
       {
-        "x": 1.1042,
-        "y": 0.5644,
+        "x": 1.6542,
+        "y": 0.5542,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -17051,8 +17051,8 @@
         "in_zone": false
       },
       {
-        "x": 1.089,
-        "y": 0.3377,
+        "x": 1.6335,
+        "y": 0.1974,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -17071,8 +17071,8 @@
         "in_zone": false
       },
       {
-        "x": 0.3734,
-        "y": 0.5191,
+        "x": 0.6598,
+        "y": 0.4828,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -17091,8 +17091,8 @@
         "in_zone": true
       },
       {
-        "x": 0.7997,
-        "y": -0.051,
+        "x": 1.2399,
+        "y": -0.4143,
         "pitch_type": "Slider",
         "outcome": "Ball",
         "result": "ball",
@@ -17110,8 +17110,8 @@
         "in_zone": false
       },
       {
-        "x": 1.1651,
-        "y": 0.8236,
+        "x": 1.7371,
+        "y": 0.9619,
         "pitch_type": "Slider",
         "outcome": "Foul",
         "result": "strike",
@@ -17129,8 +17129,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0232,
-        "y": 0.4284,
+        "x": 0.1833,
+        "y": 0.3401,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -17148,8 +17148,8 @@
         "in_zone": true
       },
       {
-        "x": 0.5865,
-        "y": -0.1029,
+        "x": 0.9498,
+        "y": -0.4959,
         "pitch_type": "Slider",
         "outcome": "Walk",
         "result": "walk",
@@ -17167,8 +17167,8 @@
         "in_zone": false
       },
       {
-        "x": 1.1499,
-        "y": 0.3247,
+        "x": 1.7164,
+        "y": 0.177,
         "pitch_type": "Changeup",
         "outcome": "Ball",
         "result": "ball",
@@ -17186,8 +17186,8 @@
         "in_zone": false
       },
       {
-        "x": 0.9824,
-        "y": 0.4608,
+        "x": 1.4885,
+        "y": 0.391,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -17202,11 +17202,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.1139,
-        "y": -0.0705,
+        "x": -0.0031,
+        "y": -0.4449,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -17224,8 +17224,8 @@
         "in_zone": false
       },
       {
-        "x": 0.8606,
-        "y": 0.5904,
+        "x": 1.3227,
+        "y": 0.5949,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -17240,11 +17240,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0682,
-        "y": 0.4932,
+        "x": 0.059,
+        "y": 0.442,
         "pitch_type": "Fastball",
         "outcome": "Double",
         "result": "hit",
@@ -17262,8 +17262,8 @@
         "in_zone": true
       },
       {
-        "x": -0.053,
-        "y": 0.4543,
+        "x": 0.0797,
+        "y": 0.3809,
         "pitch_type": "Fastball",
         "outcome": "Double",
         "result": "hit",
@@ -17289,8 +17289,8 @@
     "pitches_seen": 18,
     "scatter": [
       {
-        "x": 0.6147,
-        "y": 0.5595,
+        "x": 1.3227,
+        "y": 0.5644,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -17306,11 +17306,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.9627,
-        "y": 0.7575,
+        "x": 1.9857,
+        "y": 1.0333,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -17326,11 +17326,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.6147,
-        "y": 0.4863,
+        "x": 1.3227,
+        "y": 0.391,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -17346,11 +17346,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.6799,
-        "y": 0.5035,
+        "x": 1.447,
+        "y": 0.4318,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -17366,11 +17366,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7778,
-        "y": 0.4476,
+        "x": 1.6335,
+        "y": 0.2993,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -17386,11 +17386,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.1036,
-        "y": 0.4863,
+        "x": 0.349,
+        "y": 0.391,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -17408,8 +17408,8 @@
         "in_zone": true
       },
       {
-        "x": 0.6582,
-        "y": 0.6456,
+        "x": 1.4056,
+        "y": 0.7682,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -17424,11 +17424,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.9301,
-        "y": 0.8091,
+        "x": 1.9235,
+        "y": 1.1556,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -17443,11 +17443,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.3102,
-        "y": 0.3959,
+        "x": 0.7427,
+        "y": 0.177,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -17465,8 +17465,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0704,
-        "y": 0.4648,
+        "x": 0.0176,
+        "y": 0.3401,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -17484,8 +17484,8 @@
         "in_zone": true
       },
       {
-        "x": 0.4842,
-        "y": 0.482,
+        "x": 1.0741,
+        "y": 0.3809,
         "pitch_type": "Offspeed",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -17500,11 +17500,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.1471,
-        "y": 0.5337,
+        "x": 0.4319,
+        "y": 0.5032,
         "pitch_type": "Offspeed",
         "outcome": "Groundout",
         "result": "groundout",
@@ -17522,8 +17522,8 @@
         "in_zone": true
       },
       {
-        "x": 0.4951,
-        "y": 0.5337,
+        "x": 1.0949,
+        "y": 0.5032,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -17538,11 +17538,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -1.0383,
-        "y": 0.7359,
+        "x": -1.8262,
+        "y": 0.9823,
         "pitch_type": "Fastball",
         "outcome": "Hit By Pitch",
         "result": "hbp",
@@ -17560,8 +17560,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0274,
-        "y": 0.6671,
+        "x": 0.204,
+        "y": 0.8192,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -17579,8 +17579,8 @@
         "in_zone": true
       },
       {
-        "x": 0.1797,
-        "y": 0.5251,
+        "x": 0.4941,
+        "y": 0.4828,
         "pitch_type": "Offspeed",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -17598,8 +17598,8 @@
         "in_zone": true
       },
       {
-        "x": 0.2014,
-        "y": 0.5853,
+        "x": 0.5355,
+        "y": 0.6255,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -17617,8 +17617,8 @@
         "in_zone": true
       },
       {
-        "x": -0.2118,
-        "y": 0.1377,
+        "x": -0.2517,
+        "y": -0.4347,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -17633,7 +17633,7 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       }
     ]
   },
@@ -17643,8 +17643,8 @@
     "pitches_seen": 19,
     "scatter": [
       {
-        "x": -0.5598,
-        "y": 0.4476,
+        "x": -0.9147,
+        "y": 0.2993,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -17662,8 +17662,8 @@
         "in_zone": true
       },
       {
-        "x": 0.1797,
-        "y": 0.5982,
+        "x": 0.4941,
+        "y": 0.6561,
         "pitch_type": "Offspeed",
         "outcome": "Popout",
         "result": "popout",
@@ -17681,8 +17681,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0813,
-        "y": 0.7919,
+        "x": -0.0031,
+        "y": 1.1148,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -17697,11 +17697,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.3423,
-        "y": 0.3271,
+        "x": -0.5003,
+        "y": 0.0139,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -17719,8 +17719,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0161,
-        "y": 0.4648,
+        "x": 0.1212,
+        "y": 0.3401,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -17738,8 +17738,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7773,
-        "y": 0.2668,
+        "x": -1.329,
+        "y": -0.1289,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -17754,11 +17754,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.4511,
-        "y": 0.8909,
+        "x": -0.7075,
+        "y": 1.3493,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -17773,11 +17773,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.7012,
-        "y": 0.3916,
+        "x": -1.184,
+        "y": 0.1668,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -17792,11 +17792,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0269,
-        "y": 0.4045,
+        "x": 0.1004,
+        "y": 0.1974,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -17814,8 +17814,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8643,
-        "y": 0.1893,
+        "x": -1.4948,
+        "y": -0.3124,
         "pitch_type": "Offspeed",
         "outcome": "Walk",
         "result": "walk",
@@ -17830,11 +17830,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.1031,
-        "y": 0.5035,
+        "x": -0.0446,
+        "y": 0.4318,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -17852,8 +17852,8 @@
         "in_zone": true
       },
       {
-        "x": -0.6468,
-        "y": 0.5294,
+        "x": -1.0804,
+        "y": 0.493,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -17868,11 +17868,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.1248,
-        "y": 0.2754,
+        "x": -0.086,
+        "y": -0.1085,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -17887,11 +17887,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.462,
-        "y": 0.1377,
+        "x": -0.7282,
+        "y": -0.4347,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -17907,11 +17907,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.2988,
-        "y": 0.1549,
+        "x": -0.4175,
+        "y": -0.3939,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -17927,11 +17927,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.4624,
-        "y": 0.6628,
+        "x": 1.0327,
+        "y": 0.809,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -17947,11 +17947,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0052,
-        "y": 0.6197,
+        "x": 0.1419,
+        "y": 0.7071,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -17970,8 +17970,8 @@
         "in_zone": true
       },
       {
-        "x": -0.4728,
-        "y": 0.7532,
+        "x": -0.749,
+        "y": 1.0231,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -17987,11 +17987,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.2128,
-        "y": 0.6327,
+        "x": 2.4622,
+        "y": 0.7377,
         "pitch_type": "Offspeed",
         "outcome": "Hit By Pitch",
         "result": "hbp",
@@ -18017,8 +18017,8 @@
     "pitches_seen": 4,
     "scatter": [
       {
-        "x": -0.6315,
-        "y": -0.0575,
+        "x": -0.7075,
+        "y": -0.4245,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -18037,8 +18037,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0225,
-        "y": 0.4737,
+        "x": 0.1212,
+        "y": 0.4114,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -18057,8 +18057,8 @@
         "in_zone": true
       },
       {
-        "x": 0.008,
-        "y": 0.5709,
+        "x": 0.1626,
+        "y": 0.5644,
         "pitch_type": "Cutter",
         "outcome": "Foul",
         "result": "strike",
@@ -18077,8 +18077,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8751,
-        "y": 0.4284,
+        "x": -1.039,
+        "y": 0.3401,
         "pitch_type": "Curveball",
         "outcome": "Strikeout Looking",
         "result": "strikeout",
@@ -18094,7 +18094,7 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       }
     ]
   },
@@ -18624,8 +18624,8 @@
     "pitches_seen": 11,
     "scatter": [
       {
-        "x": 0.9519,
-        "y": -0.0705,
+        "x": 1.447,
+        "y": -0.4449,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -18644,8 +18644,8 @@
         "in_zone": false
       },
       {
-        "x": -0.053,
-        "y": -0.0705,
+        "x": 0.0797,
+        "y": -0.4449,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -18664,8 +18664,8 @@
         "in_zone": false
       },
       {
-        "x": 0.7844,
-        "y": 0.4349,
+        "x": 1.2192,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -18681,11 +18681,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.9824,
-        "y": 0.1498,
+        "x": 1.4885,
+        "y": -0.0983,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -18701,11 +18701,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.9519,
-        "y": 0.085,
+        "x": 1.447,
+        "y": -0.2002,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -18721,11 +18721,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0689,
-        "y": 0.4867,
+        "x": 0.2455,
+        "y": 0.4318,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -18744,8 +18744,8 @@
         "in_zone": true
       },
       {
-        "x": 0.008,
-        "y": 0.5321,
+        "x": 0.1626,
+        "y": 0.5032,
         "pitch_type": "Fastball",
         "outcome": "Lineout",
         "result": "lineout",
@@ -18763,8 +18763,8 @@
         "in_zone": true
       },
       {
-        "x": 0.8758,
-        "y": 0.5515,
+        "x": 1.3435,
+        "y": 0.5338,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -18779,11 +18779,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.053,
-        "y": 0.5061,
+        "x": 0.0797,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -18801,8 +18801,8 @@
         "in_zone": true
       },
       {
-        "x": 1.3021,
-        "y": 0.1628,
+        "x": 1.9235,
+        "y": -0.0779,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -18820,8 +18820,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0384,
-        "y": 0.6098,
+        "x": 0.204,
+        "y": 0.6255,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -19203,8 +19203,8 @@
     "pitches_seen": 15,
     "scatter": [
       {
-        "x": 0.0689,
-        "y": 0.558,
+        "x": 0.2455,
+        "y": 0.544,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -19222,8 +19222,8 @@
         "in_zone": true
       },
       {
-        "x": 0.617,
-        "y": 0.856,
+        "x": 0.9913,
+        "y": 1.0129,
         "pitch_type": "Slider",
         "outcome": "Called Strike",
         "result": "strike",
@@ -19238,11 +19238,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7083,
-        "y": 0.4478,
+        "x": 1.1156,
+        "y": 0.3707,
         "pitch_type": "Slider",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -19257,11 +19257,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.9976,
-        "y": 0.3506,
+        "x": 1.5092,
+        "y": 0.2177,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -19276,11 +19276,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.053,
-        "y": 1.0633,
+        "x": 0.0797,
+        "y": 1.3391,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -19298,8 +19298,8 @@
         "in_zone": false
       },
       {
-        "x": -0.8599,
-        "y": 0.4154,
+        "x": -1.0183,
+        "y": 0.3197,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -19314,11 +19314,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.008,
-        "y": 0.7264,
+        "x": 0.1626,
+        "y": 0.809,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -19336,8 +19336,8 @@
         "in_zone": true
       },
       {
-        "x": 0.9824,
-        "y": 0.085,
+        "x": 1.4885,
+        "y": -0.2002,
         "pitch_type": "Slider",
         "outcome": "Ball",
         "result": "ball",
@@ -19352,11 +19352,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.5561,
-        "y": 0.558,
+        "x": 0.9084,
+        "y": 0.544,
         "pitch_type": "Fastball",
         "outcome": "Lineout",
         "result": "lineout",
@@ -19374,8 +19374,8 @@
         "in_zone": true
       },
       {
-        "x": 1.0433,
-        "y": 1.0568,
+        "x": 1.5713,
+        "y": 1.3289,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -19393,8 +19393,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0225,
-        "y": 0.5709,
+        "x": 0.1212,
+        "y": 0.5644,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -19412,8 +19412,8 @@
         "in_zone": true
       },
       {
-        "x": 0.7083,
-        "y": 0.869,
+        "x": 1.1156,
+        "y": 1.0333,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -19428,11 +19428,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.1346,
-        "y": 0.558,
+        "x": 1.6956,
+        "y": 0.544,
         "pitch_type": "Changeup",
         "outcome": "Ball",
         "result": "ball",
@@ -19450,8 +19450,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0384,
-        "y": 0.4543,
+        "x": 0.204,
+        "y": 0.3809,
         "pitch_type": "Changeup",
         "outcome": "Groundout",
         "result": "groundout",
@@ -19469,8 +19469,8 @@
         "in_zone": true
       },
       {
-        "x": 0.2972,
-        "y": 0.4608,
+        "x": 0.5562,
+        "y": 0.391,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -19495,8 +19495,8 @@
     "pitches_seen": 26,
     "scatter": [
       {
-        "x": 0.1253,
-        "y": 0.581,
+        "x": 0.3905,
+        "y": 0.6153,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -19514,8 +19514,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7882,
-        "y": 0.6542,
+        "x": -1.3497,
+        "y": 0.7886,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -19530,11 +19530,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7452,
-        "y": 0.5552,
+        "x": 1.5713,
+        "y": 0.5542,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -19549,11 +19549,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.5925,
-        "y": 0.4949,
+        "x": -0.9768,
+        "y": 0.4114,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -19571,8 +19571,8 @@
         "in_zone": true
       },
       {
-        "x": -0.4837,
-        "y": 0.3787,
+        "x": -0.7697,
+        "y": 0.1362,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -19590,8 +19590,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0269,
-        "y": 0.723,
+        "x": 0.1004,
+        "y": 0.9517,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -19609,8 +19609,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0166,
-        "y": 0.4605,
+        "x": 0.1833,
+        "y": 0.3299,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -19628,8 +19628,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0492,
-        "y": 0.482,
+        "x": 0.2455,
+        "y": 0.3809,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -19647,8 +19647,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7338,
-        "y": 0.6929,
+        "x": -1.2462,
+        "y": 0.8804,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -19663,11 +19663,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0269,
-        "y": 0.5896,
+        "x": 0.1004,
+        "y": 0.6357,
         "pitch_type": "Fastball",
         "outcome": "Lineout",
         "result": "lineout",
@@ -19996,8 +19996,8 @@
     "pitches_seen": 22,
     "scatter": [
       {
-        "x": -0.7838,
-        "y": 1.0245,
+        "x": -0.9147,
+        "y": 1.278,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -20015,8 +20015,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0225,
-        "y": 0.7005,
+        "x": 0.1212,
+        "y": 0.7682,
         "pitch_type": "Fastball",
         "outcome": "Error",
         "result": "error",
@@ -20034,8 +20034,8 @@
         "in_zone": true
       },
       {
-        "x": -0.799,
-        "y": 0.5774,
+        "x": -0.9354,
+        "y": 0.5745,
         "pitch_type": "Curveball",
         "outcome": "Ball",
         "result": "ball",
@@ -20053,8 +20053,8 @@
         "in_zone": true
       },
       {
-        "x": -0.6011,
-        "y": 0.8819,
+        "x": -0.6661,
+        "y": 1.0537,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -20069,11 +20069,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.1042,
-        "y": 0.9078,
+        "x": 1.6542,
+        "y": 1.0945,
         "pitch_type": "Slider",
         "outcome": "Ball",
         "result": "ball",
@@ -20091,8 +20091,8 @@
         "in_zone": false
       },
       {
-        "x": -0.9056,
-        "y": 0.7459,
+        "x": -1.0804,
+        "y": 0.8396,
         "pitch_type": "Splitter",
         "outcome": "Called Strike",
         "result": "strike",
@@ -20107,11 +20107,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.9512,
-        "y": 0.1692,
+        "x": -1.1426,
+        "y": -0.0677,
         "pitch_type": "Slider",
         "outcome": "Strikeout Looking",
         "result": "strikeout",
@@ -20126,11 +20126,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.1499,
-        "y": 0.5515,
+        "x": 1.7164,
+        "y": 0.5338,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -20148,8 +20148,8 @@
         "in_zone": false
       },
       {
-        "x": -1.1492,
-        "y": -0.0187,
+        "x": -1.4119,
+        "y": -0.3633,
         "pitch_type": "Curveball",
         "outcome": "Ball",
         "result": "ball",
@@ -20167,8 +20167,8 @@
         "in_zone": false
       },
       {
-        "x": 1.1651,
-        "y": 0.4284,
+        "x": 1.7371,
+        "y": 0.3401,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -20186,8 +20186,8 @@
         "in_zone": false
       },
       {
-        "x": 1.1346,
-        "y": 0.6681,
+        "x": 1.6956,
+        "y": 0.7173,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -20205,8 +20205,8 @@
         "in_zone": false
       },
       {
-        "x": 0.8301,
-        "y": 0.4802,
+        "x": 1.2813,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -20221,11 +20221,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0993,
-        "y": 0.8106,
+        "x": 0.2869,
+        "y": 0.9415,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -20243,8 +20243,8 @@
         "in_zone": true
       },
       {
-        "x": -1.134,
-        "y": -0.0381,
+        "x": -1.3912,
+        "y": -0.3939,
         "pitch_type": "Curveball",
         "outcome": "Ball",
         "result": "ball",
@@ -20262,8 +20262,8 @@
         "in_zone": false
       },
       {
-        "x": -1.134,
-        "y": 0.4284,
+        "x": -1.3912,
+        "y": 0.3401,
         "pitch_type": "Curveball",
         "outcome": "Foul",
         "result": "strike",
@@ -20281,8 +20281,8 @@
         "in_zone": false
       },
       {
-        "x": -1.0731,
-        "y": 0.7912,
+        "x": -1.3083,
+        "y": 0.911,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -20300,8 +20300,8 @@
         "in_zone": false
       },
       {
-        "x": -0.6924,
-        "y": 0.3766,
+        "x": -0.7904,
+        "y": 0.2585,
         "pitch_type": "Changeup",
         "outcome": "Flyout",
         "result": "flyout",
@@ -20319,8 +20319,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0377,
-        "y": -0.077,
+        "x": 0.1004,
+        "y": -0.4551,
         "pitch_type": "Curveball",
         "outcome": "Ball",
         "result": "ball",
@@ -20338,8 +20338,8 @@
         "in_zone": false
       },
       {
-        "x": 0.008,
-        "y": 0.6875,
+        "x": 0.1626,
+        "y": 0.7479,
         "pitch_type": "Curveball",
         "outcome": "Foul",
         "result": "strike",
@@ -20357,8 +20357,8 @@
         "in_zone": true
       },
       {
-        "x": 0.7997,
-        "y": 0.4543,
+        "x": 1.2399,
+        "y": 0.3809,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -20373,11 +20373,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0682,
-        "y": 0.5061,
+        "x": 0.059,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Sacrifice Fly",
         "result": "flyout",
@@ -20395,8 +20395,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0073,
-        "y": 0.5839,
+        "x": 0.1419,
+        "y": 0.5847,
         "pitch_type": "Fastball",
         "outcome": "Home Run",
         "result": "hit",
@@ -20662,8 +20662,8 @@
     "pitches_seen": 8,
     "scatter": [
       {
-        "x": -0.7991,
-        "y": 0.7403,
+        "x": -1.3705,
+        "y": 0.9925,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -20678,11 +20678,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.4842,
-        "y": 0.4002,
+        "x": 1.0741,
+        "y": 0.1872,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -20697,11 +20697,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.5816,
-        "y": 0.4131,
+        "x": -0.9561,
+        "y": 0.2177,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -20719,8 +20719,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0166,
-        "y": 0.3959,
+        "x": 0.1833,
+        "y": 0.177,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Looking",
         "result": "strikeout",
@@ -20738,8 +20738,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0704,
-        "y": 0.4433,
+        "x": 0.0176,
+        "y": 0.2891,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -20757,8 +20757,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0601,
-        "y": 0.4131,
+        "x": 0.2662,
+        "y": 0.2177,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -20776,8 +20776,8 @@
         "in_zone": true
       },
       {
-        "x": -0.2336,
-        "y": 0.4131,
+        "x": -0.2932,
+        "y": 0.2177,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -20795,8 +20795,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0487,
-        "y": 0.5164,
+        "x": 0.059,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Home Run",
         "result": "hit",
@@ -21103,8 +21103,8 @@
     "pitches_seen": 46,
     "scatter": [
       {
-        "x": -0.0052,
-        "y": 0.9253,
+        "x": 0.1419,
+        "y": 1.4309,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -21120,11 +21120,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0057,
-        "y": 0.5939,
+        "x": 0.1626,
+        "y": 0.6459,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -21143,8 +21143,8 @@
         "in_zone": true
       },
       {
-        "x": 0.7561,
-        "y": 0.5982,
+        "x": 1.5921,
+        "y": 0.6561,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -21160,11 +21160,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7669,
-        "y": 0.4992,
+        "x": 1.6128,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -21180,11 +21180,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.8648,
-        "y": 0.5681,
+        "x": 1.7992,
+        "y": 0.5847,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -21200,11 +21200,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.2884,
-        "y": 0.8952,
+        "x": 0.7012,
+        "y": 1.3595,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -21219,11 +21219,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.5929,
-        "y": 0.7661,
+        "x": 1.2813,
+        "y": 1.0537,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -21238,11 +21238,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.6468,
-        "y": 0.538,
+        "x": -1.0804,
+        "y": 0.5134,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -21257,11 +21257,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.5707,
-        "y": 0.4562,
+        "x": -0.9354,
+        "y": 0.3197,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -21279,8 +21279,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0818,
-        "y": 0.4347,
+        "x": 0.3076,
+        "y": 0.2687,
         "pitch_type": "Offspeed",
         "outcome": "Home Run",
         "result": "hit",
@@ -21298,8 +21298,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0057,
-        "y": 0.5164,
+        "x": 0.1626,
+        "y": 0.4624,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -21317,8 +21317,8 @@
         "in_zone": true
       },
       {
-        "x": -1.0819,
-        "y": 0.4992,
+        "x": -1.9091,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -21336,8 +21336,8 @@
         "in_zone": false
       },
       {
-        "x": -1.0601,
-        "y": 0.3916,
+        "x": -1.8677,
+        "y": 0.1668,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -21355,8 +21355,8 @@
         "in_zone": false
       },
       {
-        "x": 0.0057,
-        "y": 0.581,
+        "x": 0.1626,
+        "y": 0.6153,
         "pitch_type": "Fastball",
         "outcome": "Home Run",
         "result": "hit",
@@ -21374,8 +21374,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7882,
-        "y": 0.0301,
+        "x": -1.3497,
+        "y": -0.6896,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -21390,11 +21390,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0813,
-        "y": 0.4734,
+        "x": -0.0031,
+        "y": 0.3605,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -21412,8 +21412,8 @@
         "in_zone": true
       },
       {
-        "x": -0.7773,
-        "y": 0.2926,
+        "x": -1.329,
+        "y": -0.0677,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -21428,11 +21428,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0378,
-        "y": 0.1033,
+        "x": 0.0797,
+        "y": -0.5163,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -21447,11 +21447,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.5598,
-        "y": 0.4777,
+        "x": -0.9147,
+        "y": 0.3707,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -21469,8 +21469,8 @@
         "in_zone": true
       },
       {
-        "x": -0.9078,
-        "y": 0.099,
+        "x": -1.5776,
+        "y": -0.5265,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -21485,7 +21485,7 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
         "x": -1.6488,
@@ -21995,8 +21995,8 @@
     "pitches_seen": 21,
     "scatter": [
       {
-        "x": 0.0383,
-        "y": 0.4605,
+        "x": 0.2247,
+        "y": 0.3299,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -22014,8 +22014,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0709,
-        "y": 0.5337,
+        "x": 0.2869,
+        "y": 0.5032,
         "pitch_type": "Offspeed",
         "outcome": "Popout",
         "result": "popout",
@@ -22033,8 +22033,8 @@
         "in_zone": true
       },
       {
-        "x": -0.9513,
-        "y": 0.0516,
+        "x": -1.6605,
+        "y": -0.6386,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -22050,11 +22050,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.6908,
-        "y": 0.4734,
+        "x": 1.4678,
+        "y": 0.3605,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -22070,11 +22070,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7669,
-        "y": 0.1205,
+        "x": 1.6128,
+        "y": -0.4755,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -22090,11 +22090,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.549,
-        "y": 0.6972,
+        "x": -0.894,
+        "y": 0.8906,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -22113,8 +22113,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0378,
-        "y": 0.7704,
+        "x": 0.0797,
+        "y": 1.0639,
         "pitch_type": "Fastball",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -22130,11 +22130,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.2662,
-        "y": 0.5164,
+        "x": -0.3553,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -22152,8 +22152,8 @@
         "in_zone": true
       },
       {
-        "x": 0.1688,
-        "y": 0.4131,
+        "x": 0.4733,
+        "y": 0.2177,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -22171,8 +22171,8 @@
         "in_zone": true
       },
       {
-        "x": -0.6033,
-        "y": 0.4131,
+        "x": -0.9976,
+        "y": 0.2177,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -22190,8 +22190,8 @@
         "in_zone": true
       },
       {
-        "x": -0.462,
-        "y": 0.5035,
+        "x": -0.7282,
+        "y": 0.4318,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -22209,8 +22209,8 @@
         "in_zone": true
       },
       {
-        "x": 0.5059,
-        "y": 0.6327,
+        "x": 1.1156,
+        "y": 0.7377,
         "pitch_type": "Offspeed",
         "outcome": "Double",
         "result": "hit",
@@ -22225,7 +22225,7 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
         "x": 0.0157,
@@ -22406,8 +22406,8 @@
     "pitches_seen": 17,
     "scatter": [
       {
-        "x": 0.5059,
-        "y": 0.4949,
+        "x": 1.1156,
+        "y": 0.4114,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -22423,11 +22423,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.9736,
-        "y": 0.4777,
+        "x": 2.0064,
+        "y": 0.3707,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -22443,11 +22443,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7669,
-        "y": 0.5638,
+        "x": 1.6128,
+        "y": 0.5745,
         "pitch_type": "Fastball",
         "outcome": "Error",
         "result": "error",
@@ -22463,11 +22463,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.6147,
-        "y": 0.1119,
+        "x": 1.3227,
+        "y": -0.4959,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -22482,11 +22482,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7561,
-        "y": 0.6154,
+        "x": 1.5921,
+        "y": 0.6969,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -22501,11 +22501,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.8105,
-        "y": 0.2238,
+        "x": 1.6956,
+        "y": -0.2308,
         "pitch_type": "Offspeed",
         "outcome": "Double",
         "result": "hit",
@@ -22520,11 +22520,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.6033,
-        "y": 0.4347,
+        "x": -0.9976,
+        "y": 0.2687,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -22542,8 +22542,8 @@
         "in_zone": true
       },
       {
-        "x": 0.5386,
-        "y": 0.7446,
+        "x": 1.1777,
+        "y": 1.0027,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -22558,11 +22558,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.8317,
-        "y": 0.3615,
+        "x": -1.4326,
+        "y": 0.0954,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -22577,11 +22577,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0057,
-        "y": 0.4476,
+        "x": 0.1626,
+        "y": 0.2993,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -22599,8 +22599,8 @@
         "in_zone": true
       },
       {
-        "x": 0.8322,
-        "y": 0.9468,
+        "x": 1.7371,
+        "y": 1.4818,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -22615,11 +22615,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.1139,
-        "y": 0.4691,
+        "x": -0.0653,
+        "y": 0.3503,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -22637,8 +22637,8 @@
         "in_zone": true
       },
       {
-        "x": -0.3858,
-        "y": 0.3012,
+        "x": -0.5832,
+        "y": -0.0473,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -22653,11 +22653,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0166,
-        "y": 0.9296,
+        "x": 0.1833,
+        "y": 1.4411,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -22672,11 +22672,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.6582,
-        "y": 0.2926,
+        "x": 1.4056,
+        "y": -0.0677,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -22691,11 +22691,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.2667,
-        "y": 0.4261,
+        "x": 0.6598,
+        "y": 0.2483,
         "pitch_type": "Offspeed",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -22713,8 +22713,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0052,
-        "y": 0.1549,
+        "x": 0.1419,
+        "y": -0.3939,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -22729,7 +22729,7 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       }
     ]
   },
@@ -22739,8 +22739,8 @@
     "pitches_seen": 18,
     "scatter": [
       {
-        "x": -0.0596,
-        "y": 0.723,
+        "x": 0.0383,
+        "y": 0.9517,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -22758,8 +22758,8 @@
         "in_zone": true
       },
       {
-        "x": 0.4189,
-        "y": 0.7876,
+        "x": 0.9498,
+        "y": 1.1047,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -22774,11 +22774,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.7996,
-        "y": 0.4131,
+        "x": 1.6749,
+        "y": 0.2177,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -22793,11 +22793,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.8105,
-        "y": 0.637,
+        "x": 1.6956,
+        "y": 0.7479,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -22812,11 +22812,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.6364,
-        "y": 0.723,
+        "x": 1.3642,
+        "y": 0.9517,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -22831,11 +22831,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0487,
-        "y": 0.5164,
+        "x": 0.059,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -22853,8 +22853,8 @@
         "in_zone": true
       },
       {
-        "x": -0.2553,
-        "y": 0.3744,
+        "x": -0.3346,
+        "y": 0.126,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -22872,8 +22872,8 @@
         "in_zone": true
       },
       {
-        "x": 0.7887,
-        "y": 0.3314,
+        "x": 1.6542,
+        "y": 0.024,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -22888,11 +22888,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.8105,
-        "y": 0.2625,
+        "x": 1.6956,
+        "y": -0.1391,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -22907,11 +22907,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0927,
-        "y": 0.3271,
+        "x": 0.3283,
+        "y": 0.0139,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -22929,8 +22929,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0709,
-        "y": -0.0129,
+        "x": 0.2869,
+        "y": -0.7915,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -22948,8 +22948,8 @@
         "in_zone": false
       },
       {
-        "x": 0.7887,
-        "y": 0.1979,
+        "x": 1.6542,
+        "y": -0.292,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -22964,11 +22964,11 @@
         "batter_side": "L",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.9078,
-        "y": 0.3228,
+        "x": -1.5776,
+        "y": 0.0037,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -22983,11 +22983,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.6582,
-        "y": 0.3099,
+        "x": 1.4056,
+        "y": -0.0269,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -23002,11 +23002,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.2232,
-        "y": 0.4045,
+        "x": 0.5769,
+        "y": 0.1974,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -23024,8 +23024,8 @@
         "in_zone": true
       },
       {
-        "x": -0.2118,
-        "y": 0.3615,
+        "x": -0.2517,
+        "y": 0.0954,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -23043,8 +23043,8 @@
         "in_zone": true
       },
       {
-        "x": 0.1144,
-        "y": 0.3959,
+        "x": 0.3698,
+        "y": 0.177,
         "pitch_type": "Fastball",
         "outcome": "Single",
         "result": "hit",
@@ -23062,8 +23062,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0927,
-        "y": 0.482,
+        "x": 0.3283,
+        "y": 0.3809,
         "pitch_type": "Fastball",
         "outcome": "Double",
         "result": "hit",
@@ -23088,8 +23088,8 @@
     "pitches_seen": 20,
     "scatter": [
       {
-        "x": -0.6251,
-        "y": 0.6456,
+        "x": -1.039,
+        "y": 0.7682,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -23104,11 +23104,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -1.1471,
-        "y": 0.4992,
+        "x": -2.0334,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -23126,8 +23126,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0596,
-        "y": 0.8823,
+        "x": 0.0383,
+        "y": 1.3289,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -23142,11 +23142,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.1476,
-        "y": 0.5509,
+        "x": 2.3379,
+        "y": 0.544,
         "pitch_type": "Fastball",
         "outcome": "Hit By Pitch",
         "result": "hbp",
@@ -23164,8 +23164,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0596,
-        "y": 0.4734,
+        "x": 0.0383,
+        "y": 0.3605,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -23184,8 +23184,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0383,
-        "y": 0.4433,
+        "x": 0.2247,
+        "y": 0.2891,
         "pitch_type": "Offspeed",
         "outcome": "Strikeout Swinging",
         "result": "strikeout",
@@ -23204,8 +23204,8 @@
         "in_zone": true
       },
       {
-        "x": -1.6256,
-        "y": 0.7446,
+        "x": -2.9449,
+        "y": 1.0027,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -23224,8 +23224,8 @@
         "in_zone": false
       },
       {
-        "x": -1.0383,
-        "y": 0.68,
+        "x": -1.8262,
+        "y": 0.8498,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -23243,8 +23243,8 @@
         "in_zone": false
       },
       {
-        "x": -1.0275,
-        "y": 0.7919,
+        "x": -1.8055,
+        "y": 1.1148,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -23262,8 +23262,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0596,
-        "y": 0.5121,
+        "x": 0.0383,
+        "y": 0.4522,
         "pitch_type": "Offspeed",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -23281,8 +23281,8 @@
         "in_zone": true
       },
       {
-        "x": 0.5168,
-        "y": 0.6413,
+        "x": 1.1363,
+        "y": 0.758,
         "pitch_type": "Fastball",
         "outcome": "Groundout",
         "result": "groundout",
@@ -23297,11 +23297,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.9513,
-        "y": 0.3873,
+        "x": -1.6605,
+        "y": 0.1566,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -23316,11 +23316,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0492,
-        "y": 0.7962,
+        "x": 0.2455,
+        "y": 1.125,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -23335,11 +23335,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 1.2128,
-        "y": 0.5207,
+        "x": 2.4622,
+        "y": 0.4726,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -23357,8 +23357,8 @@
         "in_zone": false
       },
       {
-        "x": -0.6468,
-        "y": 0.8651,
+        "x": -1.0804,
+        "y": 1.2882,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -23373,11 +23373,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.2449,
-        "y": 0.5509,
+        "x": 0.6184,
+        "y": 0.544,
         "pitch_type": "Fastball",
         "outcome": "Lineout",
         "result": "lineout",
@@ -23395,8 +23395,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0274,
-        "y": 0.581,
+        "x": 0.204,
+        "y": 0.6153,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -23414,8 +23414,8 @@
         "in_zone": true
       },
       {
-        "x": 0.2667,
-        "y": 0.3099,
+        "x": 0.6598,
+        "y": -0.0269,
         "pitch_type": "Offspeed",
         "outcome": "Called Strike",
         "result": "strike",
@@ -23430,11 +23430,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.0927,
-        "y": 0.4949,
+        "x": 0.3283,
+        "y": 0.4114,
         "pitch_type": "Offspeed",
         "outcome": "Foul",
         "result": "strike",
@@ -23452,8 +23452,8 @@
         "in_zone": true
       },
       {
-        "x": 0.2341,
-        "y": 0.538,
+        "x": 0.5976,
+        "y": 0.5134,
         "pitch_type": "Fastball",
         "outcome": "Double Play",
         "result": "groundout",
@@ -23478,8 +23478,8 @@
     "pitches_seen": 15,
     "scatter": [
       {
-        "x": 0.9824,
-        "y": 0.8171,
+        "x": 1.4885,
+        "y": 0.9517,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -23495,11 +23495,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": 0.9062,
-        "y": 0.7783,
+        "x": 1.3849,
+        "y": 0.8906,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -23515,11 +23515,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0225,
-        "y": 0.5644,
+        "x": 0.1212,
+        "y": 0.5542,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -23538,8 +23538,8 @@
         "in_zone": true
       },
       {
-        "x": 0.7997,
-        "y": 0.558,
+        "x": 1.2399,
+        "y": 0.544,
         "pitch_type": "Slider",
         "outcome": "Ball",
         "result": "ball",
@@ -23554,11 +23554,11 @@
         "batter_side": "L",
         "pitcher_side": "L",
         "date": "2026-05-15",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.053,
-        "y": 0.4997,
+        "x": 0.0797,
+        "y": 0.4522,
         "pitch_type": "Fastball",
         "outcome": "Home Run",
         "result": "hit",
@@ -23576,8 +23576,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0073,
-        "y": 0.5321,
+        "x": 0.1419,
+        "y": 0.5032,
         "pitch_type": "Fastball",
         "outcome": "Flyout",
         "result": "flyout",
@@ -23595,8 +23595,8 @@
         "in_zone": true
       },
       {
-        "x": -0.1139,
-        "y": 0.5709,
+        "x": -0.0031,
+        "y": 0.5644,
         "pitch_type": "Changeup",
         "outcome": "Ball",
         "result": "ball",
@@ -23615,8 +23615,8 @@
         "in_zone": true
       },
       {
-        "x": 1.1042,
-        "y": 0.4673,
+        "x": 1.6542,
+        "y": 0.4012,
         "pitch_type": "Fastball",
         "outcome": "Swinging Strike",
         "result": "strike",
@@ -23635,8 +23635,8 @@
         "in_zone": false
       },
       {
-        "x": -0.0986,
-        "y": 0.8236,
+        "x": 0.0176,
+        "y": 0.9619,
         "pitch_type": "Changeup",
         "outcome": "Ball",
         "result": "ball",
@@ -23655,8 +23655,8 @@
         "in_zone": true
       },
       {
-        "x": -0.1291,
-        "y": -0.0575,
+        "x": -0.0239,
+        "y": -0.4245,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -23675,8 +23675,8 @@
         "in_zone": false
       },
       {
-        "x": -0.1748,
-        "y": 0.694,
+        "x": -0.086,
+        "y": 0.758,
         "pitch_type": "Fastball",
         "outcome": "Home Run",
         "result": "hit",
@@ -23695,8 +23695,8 @@
         "in_zone": true
       },
       {
-        "x": 0.0689,
-        "y": 0.5061,
+        "x": 0.2455,
+        "y": 0.4624,
         "pitch_type": "Fastball",
         "outcome": "Foul",
         "result": "strike",
@@ -23714,8 +23714,8 @@
         "in_zone": true
       },
       {
-        "x": -0.8294,
-        "y": -0.064,
+        "x": -0.9768,
+        "y": -0.4347,
         "pitch_type": "Cutter",
         "outcome": "Ball",
         "result": "ball",
@@ -23733,8 +23733,8 @@
         "in_zone": false
       },
       {
-        "x": -0.3727,
-        "y": 0.558,
+        "x": -0.3553,
+        "y": 0.544,
         "pitch_type": "Cutter",
         "outcome": "Foul",
         "result": "strike",
@@ -23752,8 +23752,8 @@
         "in_zone": true
       },
       {
-        "x": -0.2357,
-        "y": 0.2988,
+        "x": -0.1689,
+        "y": 0.1362,
         "pitch_type": "Curveball",
         "outcome": "Error",
         "result": "error",
@@ -23778,8 +23778,8 @@
     "pitches_seen": 9,
     "scatter": [
       {
-        "x": 0.3319,
-        "y": 0.1162,
+        "x": 0.7841,
+        "y": -0.4857,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -23794,11 +23794,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.81,
-        "y": 0.6456,
+        "x": -1.3912,
+        "y": 0.7682,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -23813,11 +23813,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.81,
-        "y": 0.4992,
+        "x": -1.3912,
+        "y": 0.4216,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -23832,11 +23832,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.7773,
-        "y": 0.4131,
+        "x": -1.329,
+        "y": 0.2177,
         "pitch_type": "Fastball",
         "outcome": "Walk",
         "result": "walk",
@@ -23851,11 +23851,11 @@
         "batter_side": "R",
         "pitcher_side": "L",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.2662,
-        "y": 0.7446,
+        "x": -0.3553,
+        "y": 1.0027,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -23870,11 +23870,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.7338,
-        "y": 0.4002,
+        "x": -1.2462,
+        "y": 0.1872,
         "pitch_type": "Fastball",
         "outcome": "Ball",
         "result": "ball",
@@ -23889,11 +23889,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.8208,
-        "y": 0.6671,
+        "x": -1.4119,
+        "y": 0.8192,
         "pitch_type": "Offspeed",
         "outcome": "Ball",
         "result": "ball",
@@ -23908,11 +23908,11 @@
         "batter_side": "R",
         "pitcher_side": "R",
         "date": "2026-05-10",
-        "in_zone": true
+        "in_zone": false
       },
       {
-        "x": -0.0269,
-        "y": 0.5121,
+        "x": 0.1004,
+        "y": 0.4522,
         "pitch_type": "Fastball",
         "outcome": "Called Strike",
         "result": "strike",
@@ -23930,8 +23930,8 @@
         "in_zone": true
       },
       {
-        "x": -0.0052,
-        "y": 0.581,
+        "x": 0.1419,
+        "y": 0.6153,
         "pitch_type": "Offspeed",
         "outcome": "Lineout",
         "result": "lineout",
