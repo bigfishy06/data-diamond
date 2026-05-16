@@ -1171,6 +1171,45 @@ Zane Skansi,Kitchener Panthers`;
   function fN(v){ if(v==null||isNaN(v)) return '—'; return String(Math.round(v)); }
   function xp(n,d){ return d>0?n/d*100:0; }
 
+  // Derive handedness from scatter using same logic as main.js deriveHand()
+  function scoutDeriveHand(scatter, field) {
+    var counts = {}, total = 0;
+    (scatter || []).forEach(function(s) {
+      var v = s[field];
+      if (v) { counts[v] = (counts[v] || 0) + 1; total++; }
+    });
+    if (total === 0) return null;
+    var sides = Object.keys(counts);
+    if (sides.length === 1) return sides[0];
+    var dominant = sides.reduce(function(a, b) { return counts[a] >= counts[b] ? a : b; });
+    if (counts[dominant] / total >= 0.5) return dominant;
+    return 'S';
+  }
+
+  // Get batter handedness: scatter batter_side -> IBL history
+  function getBatterHand(playerName) {
+    var pitchObj = getPitchPlayer(playerName) || getPitchPlayerForRoster(playerName);
+    var scatter = pitchObj ? pitchObj.scatter : [];
+    var fromScatter = scoutDeriveHand(scatter, 'batter_side');
+    if (fromScatter) return fromScatter;
+    var iblRows = getIblRowsByName(playerName);
+    for (var i = 0; i < iblRows.length; i++) {
+      if (iblRows[i].bats) return iblRows[i].bats;
+    }
+    return null;
+  }
+
+  // Get pitcher handedness: scatter pitcher_side -> IBL history
+  function getPitcherHand(playerName, scatter) {
+    var fromScatter = scoutDeriveHand(scatter || [], 'pitcher_side');
+    if (fromScatter) return fromScatter;
+    var iblRows = getIblRowsByName(playerName);
+    for (var i = 0; i < iblRows.length; i++) {
+      if (iblRows[i].throws) return iblRows[i].throws;
+    }
+    return null;
+  }
+
   function renderPlayerList() {
     var section = document.getElementById('player-list-section');
     if (typeof swapSeasonData === 'function') swapSeasonData('year:' + selSeason);
@@ -1239,9 +1278,17 @@ Zane Skansi,Kitchener Panthers`;
           '<span><span class="prc-stat-val">'+dispSTR+'</span> STR%</span>';
       }
 
+      var handLabel = '';
+      if (selType==='batter') {
+        var bHand = getBatterHand(p.name);
+        if (bHand) handLabel = ' <span style="font-family:\'DM Mono\',monospace;font-size:10px;color:rgba(255,184,28,0.7);letter-spacing:0.5px">('+bHand+')</span>';
+      } else {
+        var pHand = getPitcherHand(p.name, p.scatter);
+        if (pHand) handLabel = ' <span style="font-family:\'DM Mono\',monospace;font-size:10px;color:rgba(255,184,28,0.7);letter-spacing:0.5px">('+pHand+')</span>';
+      }
       card.innerHTML =
         '<div style="flex:1;min-width:0">' +
-          '<div class="prc-name">'+p.name+'</div>' +
+          '<div class="prc-name">'+p.name+handLabel+'</div>' +
           '<div class="prc-stats">'+statsHTML+'</div>' +
         '</div>' +
         '<div class="prc-dl-btn">' +
@@ -1316,16 +1363,21 @@ Zane Skansi,Kitchener Panthers`;
     d.addImage(can.toDataURL('image/png'),'PNG',lx-size/2,ly-size/2,size,size);
   }
 
-  function drawHdr(d,name,role,team){
+  function drawHdr(d,name,role,team,hand){
     var tc=hx(team.color==='#888888'?'#666666':team.color);
     sf(d,CO.navy2);d.roundedRect(ML,MT,CPW,26,3,3,'F');
     d.setFillColor(tc[0],tc[1],tc[2]);d.roundedRect(ML,MT,4,26,2,2,'F');
     // Team abbr
     d.setFont('helvetica','bold');d.setFontSize(20);d.setTextColor(tc[0],tc[1],tc[2]);
     d.text(team.abbr,ML+10,MT+17);
-    // Player name & role
+    // Player name & handedness & role
     d.setFont('helvetica','bold');d.setFontSize(15);st(d,CO.white);
     d.text(name.toUpperCase(),ML+38,MT+12);
+    if(hand){
+      var nameW=d.getTextWidth(name.toUpperCase());
+      d.setFont('helvetica','normal');d.setFontSize(9);st(d,CO.gold);
+      d.text('('+hand+')',ML+38+nameW+2,MT+12);
+    }
     d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
     d.text(role+'  •  '+team.name+'  •  CBL '+selSeason,ML+38,MT+21);
     // Logo — top right, matching website style (diamond left, text right, right-aligned in header)
@@ -1634,7 +1686,8 @@ Zane Skansi,Kitchener Panthers`;
     var _pitchObj=player.pitch||getPitchPlayer(player.name);
     var sc=(_pitchObj&&_pitchObj.scatter)?_pitchObj.scatter.filter(function(p){return p.x!=null&&p.y!=null;}):[]; 
     var allSc=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
-    drawBg(d);drawHdr(d,player.name,'BATTER',team);
+    var _batterHand = getBatterHand(player.name);
+    drawBg(d);drawHdr(d,player.name,'BATTER',team,_batterHand);
     var y=MT+32;
 
     // ── Key stats boxes ──────────────────────────────────────────────────
@@ -1803,6 +1856,22 @@ Zane Skansi,Kitchener Panthers`;
       : (pbp&&pbp.BB_pct!=null?pbp.BB_pct/100:(pa>0?bb/pa:0));
     var ssPct=pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct/100:(sc.length>=5?ssN/sc.length:0);
 
+    // BB/K: 2026 from summary BB_K field; 2025 from IBL History BB_K
+    var _bbkVal=null;
+    if(selSeason==='2026'){
+      _bbkVal=s.BB_K!=null?s.BB_K:((bb>0&&k>0)?bb/k:null);
+    } else {
+      var _iblBBKrow=getIblRowsByName(player.name).find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.BB_K!=null;});
+      if(_iblBBKrow){_bbkVal=_iblBBKrow.BB_K;}
+      else if(k>0){_bbkVal=bb/k;}
+    }
+    // SB: from summary or IBL History
+    var _sbVal=s.SB!=null?s.SB:null;
+    if(_sbVal==null){
+      var _iblSBrow=getIblRowsByName(player.name).find(function(r){return (r.season||'').indexOf(selSeason)!==-1&&r.SB!=null;});
+      if(_iblSBrow)_sbVal=_iblSBrow.SB;
+    }
+
     var discStats=[
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
        color:pspa!=null?(pspa>=4.0?'#34d399':pspa>=3.5?'#FFB81C':'#f87171'):'#555',
@@ -1813,6 +1882,12 @@ Zane Skansi,Kitchener Panthers`;
       {label:'BB%',sub:'Walk rate',val:f1(bbPct2*100)+'%',
        color:bbPct2>=0.14?'#f87171':bbPct2>=0.08?'#FFB81C':'#34d399',
        note:bbPct2>=0.14?'Outstanding discipline — draws walks at an elite rate':bbPct2>=0.08?'Patient — works counts and earns walks':'Aggressive — rarely walks, pitchers can exploit'},
+      {label:'BB/K',sub:'Walk-to-strikeout ratio',val:_bbkVal!=null?f2(_bbkVal):'—',
+       color:_bbkVal!=null?(_bbkVal>=0.40?'#f87171':_bbkVal>=0.25?'#FFB81C':'#34d399'):'#555',
+       note:_bbkVal!=null?(_bbkVal>=0.40?'Elite discipline — draws walks freely':_bbkVal>=0.25?'Solid BB/K — patient approach':'Free swinger — rarely draws walks'):''},
+      {label:'SB',sub:'Stolen bases',val:_sbVal!=null?fN(_sbVal):'—',
+       color:'#60a5fa',
+       note:_sbVal!=null?(_sbVal>=10?'Elite baserunner — a real threat on the bases':_sbVal>=5?'Active on the bases — keep an eye on him':'Low stolen base total'):'No SB data'},
     ];
     var nDisc=discStats.length, dW2=(CPW-(nDisc-1)*4)/nDisc, dH2=28;
     discStats.forEach(function(stat,i){
@@ -1994,7 +2069,8 @@ Zane Skansi,Kitchener Panthers`;
     var fpsPct = fp.length>=5 ? fpStr/fp.length*100 : (player.fps_pct!=null?player.fps_pct:null);
     var ttp = player.avg_ttp != null ? player.avg_ttp : null;
 
-    drawBg(d);drawHdr(d,player.name,'PITCHER',team);
+    var _pitcherHand = getPitcherHand(player.name, sc);
+    drawBg(d);drawHdr(d,player.name,'PITCHER',team,_pitcherHand);
     var y=MT+32;
 
     // Key stat boxes
@@ -2023,7 +2099,19 @@ Zane Skansi,Kitchener Panthers`;
     var fpsVal=selSeason==='2026'
       ? (pd26&&pd26.FPS_pct!=null?f1(pd26.FPS_pct)+'%':(fpsPct!=null?f1(fpsPct)+'%':'—'))
       : (pbpP2&&pbpP2.FP_STR_pct!=null?f1(pbpP2.FP_STR_pct)+'%':(fpsPct!=null?f1(fpsPct)+'%':'—'));
-    y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['BAA',baaVal],['K%',kPctVal],['STR%',strVal],['FPS%',fpsVal]],y);
+    // BB/K for pitcher: 2026 from scatter BB/K, 2025 from IBL History
+    var _pitBBKVal=null;
+    if(selSeason==='2026'){
+      if(pd26&&pd26.BB_pct!=null&&pd26.K_pct!=null&&pd26.K_pct>0){_pitBBKVal=(pd26.BB_pct/pd26.K_pct);}
+      else if(ks>0){_pitBBKVal=bbs/ks;}
+    } else {
+      var _iblPBBKrow=(_iblAllP||[]).find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.BB!=null&&r.K!=null&&r.K>0;});
+      if(_iblPBBKrow){_pitBBKVal=_iblPBBKrow.BB/_iblPBBKrow.K;}
+      else if(pbpP2&&pbpP2.BB_pct!=null&&pbpP2.K_pct!=null&&pbpP2.K_pct>0){_pitBBKVal=pbpP2.BB_pct/pbpP2.K_pct;}
+      else if(ks>0){_pitBBKVal=bbs/ks;}
+    }
+    var pitBBKDisp=_pitBBKVal!=null?f2(_pitBBKVal):'—';
+    y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['FPS%',fpsVal],['STRIKE%',strVal],['K%',kPctVal],['BB/K',pitBBKDisp]],y);
     y+=4;
 
     y=drawSec(d,'Scouting Summary — What Batters Should Know',y);
