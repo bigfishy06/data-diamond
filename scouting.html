@@ -1281,10 +1281,10 @@ Zane Skansi,Kitchener Panthers`;
       var handLabel = '';
       if (selType==='batter') {
         var bHand = getBatterHand(p.name);
-        if (bHand) handLabel = ' <span style="font-family:\'DM Mono\',monospace;font-size:10px;color:rgba(255,184,28,0.7);letter-spacing:0.5px">('+bHand+')</span>';
+        if (bHand) handLabel = ' <span style="font-family:\'DM Mono\',monospace;font-size:9px;color:rgba(255,184,28,0.6);letter-spacing:0.8px;font-weight:500">Bats: '+bHand+'</span>';
       } else {
         var pHand = getPitcherHand(p.name, p.scatter);
-        if (pHand) handLabel = ' <span style="font-family:\'DM Mono\',monospace;font-size:10px;color:rgba(255,184,28,0.7);letter-spacing:0.5px">('+pHand+')</span>';
+        if (pHand) handLabel = ' <span style="font-family:\'DM Mono\',monospace;font-size:9px;color:rgba(255,184,28,0.6);letter-spacing:0.8px;font-weight:500">Throws: '+pHand+'</span>';
       }
       card.innerHTML =
         '<div style="flex:1;min-width:0">' +
@@ -1375,8 +1375,9 @@ Zane Skansi,Kitchener Panthers`;
     d.text(name.toUpperCase(),ML+38,MT+12);
     if(hand){
       var nameW=d.getTextWidth(name.toUpperCase());
-      d.setFont('helvetica','normal');d.setFontSize(9);st(d,CO.gold);
-      d.text('('+hand+')',ML+38+nameW+2,MT+12);
+      var handPrefix=role==='PITCHER'?'Throws ':'Bats ';
+      d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.gold);
+      d.text(handPrefix+hand,ML+38+nameW+3,MT+12);
     }
     d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
     d.text(role+'  •  '+team.name+'  •  CBL '+selSeason,ML+38,MT+21);
@@ -1712,9 +1713,14 @@ Zane Skansi,Kitchener Panthers`;
     // 2025: summary.json has Swing_pct, Whiff_pct, FP_Swing_pct directly (same as 2026 path)
     var _avgEarly=(iblB&&iblB.AVG!=null?iblB.AVG:(s.AVG!=null?parseFloat(s.AVG):0))||0;
     var _opsEarly=(iblB&&iblB.OPS!=null?iblB.OPS:(s.OPS!=null?parseFloat(s.OPS):0))||0;
-    // BB%/K% — always from summary (pbp)
-    var _bbEarly=s.BB_pct!=null?s.BB_pct:((s.BB||0)/(s.PA||1)*100);
-    var _kEarly=s.K_pct!=null?s.K_pct:((s.K||0)/(s.PA||1)*100);
+    // BB%/K% — for 2025 use pbp_batters (correct season-locked data); for 2026 use summary
+    var _pbpForPoints=selSeason==='2025'?(DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null):null;
+    var _bbEarly=selSeason==='2025'
+      ? (_pbpForPoints&&_pbpForPoints.BB_pct!=null?_pbpForPoints.BB_pct:(iblB&&iblB.BB!=null&&iblB.PA>0?iblB.BB/iblB.PA*100:((s.BB||0)/(s.PA||1)*100)))
+      : (s.BB_pct!=null?s.BB_pct:((s.BB||0)/(s.PA||1)*100));
+    var _kEarly=selSeason==='2025'
+      ? (_pbpForPoints&&_pbpForPoints.K_pct!=null?_pbpForPoints.K_pct:(iblB&&iblB.K!=null&&iblB.PA>0?iblB.K/iblB.PA*100:((s.K||0)/(s.PA||1)*100)))
+      : (s.K_pct!=null?s.K_pct:((s.K||0)/(s.PA||1)*100));
     // Swing/Whiff/FP — summary.json fields work for both seasons
     var _swEarly=s.Swing_pct!=null?s.Swing_pct:null;
     var _whEarly=s.Whiff_pct!=null?s.Whiff_pct:null;
@@ -1795,9 +1801,17 @@ Zane Skansi,Kitchener Panthers`;
     var chasePct=selSeason==='2026'
       ? (s.chase_pitches!=null&&s.pitches_seen>0?s.chase_pitches/s.pitches_seen*100:null)
       : (function(){
-          var allSc3=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
-          var ooz=allSc3.filter(function(s2){return s2.in_zone===false;});
+          // Try both pitch lookups for 2025 to maximise scatter coverage
+          var _pitchObj3=_pitchObj||(function(){ var po=getPitchPlayerForRoster(player.name); return po&&po.scatter&&po.scatter.length?po:null; })();
+          var allSc3=_pitchObj3&&_pitchObj3.scatter?_pitchObj3.scatter:[];
+          // in_zone can be boolean false OR the string 'false'
+          var ooz=allSc3.filter(function(s2){return s2.in_zone===false||s2.in_zone==='false';});
           var csw=ooz.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Foul';}).length;
+          // Also check pbp_batters chase field if scatter has no in_zone data
+          if(ooz.length<5){
+            var _pbp25c=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null;
+            if(_pbp25c&&_pbp25c.CHASE_pct!=null) return _pbp25c.CHASE_pct;
+          }
           return ooz.length>=5?csw/ooz.length*100:null;
         })();
 
@@ -1856,14 +1870,20 @@ Zane Skansi,Kitchener Panthers`;
       : (pbp&&pbp.BB_pct!=null?pbp.BB_pct/100:(pa>0?bb/pa:0));
     var ssPct=pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct/100:(sc.length>=5?ssN/sc.length:0);
 
-    // BB/K: 2026 from summary BB_K field; 2025 from IBL History BB_K
+    // BB/K: 2026 from summary BB_K field; 2025 from IBL History or pbp_batters
     var _bbkVal=null;
     if(selSeason==='2026'){
       _bbkVal=s.BB_K!=null?s.BB_K:((bb>0&&k>0)?bb/k:null);
     } else {
       var _iblBBKrow=getIblRowsByName(player.name).find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.BB_K!=null;});
       if(_iblBBKrow){_bbkVal=_iblBBKrow.BB_K;}
-      else if(k>0){_bbkVal=bb/k;}
+      else {
+        // Use pbp_batters BB and K counts for 2025 (season-locked, not the swapped summary)
+        var _pbp25bbk=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null;
+        var _bb25=_pbp25bbk&&_pbp25bbk.BB!=null?_pbp25bbk.BB:(iblB&&iblB.BB!=null?iblB.BB:bb);
+        var _k25=_pbp25bbk&&_pbp25bbk.K!=null?_pbp25bbk.K:(iblB&&iblB.K!=null?iblB.K:k);
+        if(_k25>0){_bbkVal=_bb25/_k25;}
+      }
     }
     // SB: from summary or IBL History
     var _sbVal=s.SB!=null?s.SB:null;
@@ -1970,11 +1990,12 @@ Zane Skansi,Kitchener Panthers`;
       var colW=bothCharts?(CPW-8)/2:CPW;
       var leftX=ML, rightX=ML+colW+8;
 
-      // Available height: footer sits at PH-8, leave 4mm padding
+      // If not enough room for charts, start a new page
+      if(PH-8-y-4 < 60){d.addPage();drawBg(d);y=MT+8;}
       var remainH=PH-8-y-4;
       var chartMaxW=bothCharts?colW:CPW/2;
-      var chartW=Math.min(chartMaxW, Math.floor(remainH - 5 - 14 - 19));
-      if(chartW<20) chartW=20;
+      // Minimum useful chart size: 40mm. If remainH still too small, use minimum.
+      var chartW=Math.min(chartMaxW, Math.max(40, Math.floor(remainH - 5 - 14 - 19)));
       var chartH=chartW;
 
       // ── LEFT / CENTRE: Spray Direction ────────────────────────────────────
