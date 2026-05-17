@@ -217,12 +217,19 @@ zone_stats <- pitches %>%
         max(sum(!is.na(pitch_x) & !is.na(pitch_y)), 1) * 100, 1),
     swinging_k    = sum(is_k_swinging),
     called_k      = sum(is_k_looking),
+    ooz_pitches   = sum(
+      !is.na(pitch_x) & !is.na(pitch_y) &
+        (abs(pitch_x) > 1 | pitch_y < 0 | pitch_y > 1),
+      na.rm = TRUE),
     chase_pitches = sum(
       !is.na(pitch_x) & !is.na(pitch_y) &
         (abs(pitch_x) > 1 | pitch_y < 0 | pitch_y > 1) &
         outcome %in% c("Swinging Strike", "Foul"),
       na.rm = TRUE),
     .groups = "drop"
+  ) %>%
+  mutate(
+    Chase_pct = ifelse(ooz_pitches > 0, round(chase_pitches / ooz_pitches * 100, 1), NA)
   )
 
 # ── Join & export ──────────────────────────────────────────────────────────────
@@ -235,5 +242,5 @@ write_json(final,
            auto_unbox = TRUE, pretty = TRUE, na = "null")
 
 cat("Done! summary.json written with", nrow(final), "players\n")
-cat("New batter columns: ISO, BABIP, wOBA, Swing_pct, Whiff_pct, FP_Swing_pct, Pull_pct, Str_pct, Oppo_pct\n")
+cat("New batter columns: ISO, BABIP, wOBA, Swing_pct, Whiff_pct, FP_Swing_pct, Pull_pct, Str_pct, Oppo_pct, Chase_pct\n")
 cat("Columns:", paste(names(final), collapse = ", "), "\n")

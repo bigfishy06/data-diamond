@@ -1376,8 +1376,8 @@ Zane Skansi,Kitchener Panthers`;
     if(hand){
       var nameW=d.getTextWidth(name.toUpperCase());
       var handPrefix=role==='PITCHER'?'Throws ':'Bats ';
-      d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.gold);
-      d.text(handPrefix+hand,ML+38+nameW+3,MT+12);
+      d.setFont('helvetica','bold');d.setFontSize(7.5);st(d,CO.gold);
+      d.text(handPrefix+hand,ML+40+nameW,MT+12.5);
     }
     d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
     d.text(role+'  •  '+team.name+'  •  CBL '+selSeason,ML+38,MT+21);
@@ -1740,6 +1740,7 @@ Zane Skansi,Kitchener Panthers`;
 
     // K rate
     if(_kEarly>=25) batterPoints.push({dot:'#34d399',text:'High K rate ('+f1(_kEarly)+'%) — a real vulnerability. Power stuff and put-away pitches work here.'});
+    else if(_kEarly>=18) batterPoints.push({dot:'#FFB81C',text:'Average K rate ('+f1(_kEarly)+'%) — can be struck out but not easily. Mix in put-away pitches when ahead.'});
     else if(_kEarly<=15) batterPoints.push({dot:'#f87171',text:'Very hard to strikeout ('+f1(_kEarly)+'% K) — makes consistent contact. Keep the ball down, avoid mistakes.'});
 
     // Swing%
@@ -1798,22 +1799,18 @@ Zane Skansi,Kitchener Panthers`;
       ? (s.Whiff_pct!=null?s.Whiff_pct:null)
       : (pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct:null);
 
-    var chasePct=selSeason==='2026'
-      ? (s.chase_pitches!=null&&s.pitches_seen>0?s.chase_pitches/s.pitches_seen*100:null)
-      : (function(){
-          // Try both pitch lookups for 2025 to maximise scatter coverage
-          var _pitchObj3=_pitchObj||(function(){ var po=getPitchPlayerForRoster(player.name); return po&&po.scatter&&po.scatter.length?po:null; })();
-          var allSc3=_pitchObj3&&_pitchObj3.scatter?_pitchObj3.scatter:[];
-          // in_zone can be boolean false OR the string 'false'
-          var ooz=allSc3.filter(function(s2){return s2.in_zone===false||s2.in_zone==='false';});
-          var csw=ooz.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Foul';}).length;
-          // Also check pbp_batters chase field if scatter has no in_zone data
-          if(ooz.length<5){
-            var _pbp25c=DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null;
-            if(_pbp25c&&_pbp25c.CHASE_pct!=null) return _pbp25c.CHASE_pct;
-          }
-          return ooz.length>=5?csw/ooz.length*100:null;
-        })();
+    // Chase % — from summary Chase_pct (computed in R from x/y coordinates).
+    // 2026: s = summary2026 row; 2025: summary row (both now include Chase_pct).
+    // Fall back to scatter in_zone if Chase_pct not yet in the JSON (pre-rerun data).
+    var chasePct=(function(){
+      if(s.Chase_pct!=null) return s.Chase_pct;
+      // Scatter fallback for older JSON without Chase_pct
+      var _pitchObj3=_pitchObj||(function(){ var po=getPitchPlayerForRoster(player.name); return po&&po.scatter&&po.scatter.length?po:null; })();
+      var allSc3=_pitchObj3&&_pitchObj3.scatter?_pitchObj3.scatter:[];
+      var ooz=allSc3.filter(function(s2){return s2.in_zone===false||s2.in_zone==='false';});
+      var csw=ooz.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Foul';}).length;
+      return ooz.length>=5?csw/ooz.length*100:null;
+    })();
 
     function hCard(label,value,color,note,sub){return{label:label,value:value,color:color,note:note,sub:sub||''};}
     var hl=[];
@@ -1931,7 +1928,7 @@ Zane Skansi,Kitchener Panthers`;
     y+=dH2+5;
 
     // ── Two donuts: Spray Direction (left) + Batted Ball Profile (right) ──
-    var _pitchObj2=player.pitch||getPitchPlayer(player.name);
+    var _pitchObj2=player.pitch||getPitchPlayer(player.name)||(function(){ var po=getPitchPlayerForRoster(player.name); return po&&po.scatter&&po.scatter.length?po:null; })();
     var allSc2=_pitchObj2&&_pitchObj2.scatter?_pitchObj2.scatter:[];
 
     // Spray direction
