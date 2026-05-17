@@ -2245,7 +2245,7 @@ function renderPlayerDetail(name, type, content) {
     '<button class="tab-btn" data-tab="season">Season Stats</button>' +
     '<button class="tab-btn" data-tab="zone">Strike Zone</button>' +
     '<button class="tab-btn" data-tab="splits">Splits</button>' +
-    (type === 'pitcher' ? '<button class="tab-btn" data-tab="usage">Pitch Usage</button>' : '') +
+    (type === 'pitcher' ? '<button class="tab-btn" data-tab="usage">Game Log</button>' : '') +
     '<button class="tab-btn" data-tab="notes">Notes</button>' +
     '</div></div></div>' +
 
@@ -2366,7 +2366,7 @@ function renderPlayerDetail(name, type, content) {
     }
     tabContent.appendChild(panel);
     if (t === 'zone')     renderZone(name, type, currentPitchData, panel, activeSeasonFilter);
-    if (t === 'usage')    panel.innerHTML = renderPitchUsage(name, currentPitchData);
+    if (t === 'usage')    panel.innerHTML = renderGameLog(name, currentPitchData);
     if (t === 'notes')    renderNotes(name, panel);
     setTimeout(function() {
       panel.querySelectorAll('.sbr-fill').forEach(function(el) {
@@ -4194,39 +4194,58 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
 
 
 // -- PITCH USAGE TAB ----------------------------------------
-function renderPitchUsage(name, pitch) {
-  // Pitch Usage is 2026 only — always pull from pitches2026
-  var sc2026 = [];
-  var _usageNameKey = normPlayerName(name);
-  DATA.pitches2026.forEach(function(bp) {
+function renderGameLog(name, pitch) {
+  // Collect pitcher's pitches — prefer pitches2026 for current season, fall back to pitches
+  var _nameKey = normPlayerName(name);
+  var sc = [];
+  var srcData = (_activeSeason === 'year:2026') ? DATA.pitches2026 : DATA.pitches;
+  srcData.forEach(function(bp) {
     if (!bp.scatter) return;
-    bp.scatter.forEach(function(s) { if (normPlayerName(s.pitcher) === _usageNameKey) sc2026.push(s); });
+    bp.scatter.forEach(function(s) { if (normPlayerName(s.pitcher) === _nameKey) sc.push(s); });
   });
-  var sc = sc2026.length ? sc2026 : ((pitch && pitch.scatter) ? pitch.scatter.filter(function(s){
-    // fallback: filter passed scatter to 2026 dates only
-    var d = (s.date || '').slice(0,4); return d === '2026';
-  }) : []);
+  // fallback
+  if (!sc.length && pitch && pitch.scatter) sc = pitch.scatter;
+
   if (!sc.length) {
-    return '<div class="empty-state"><div class="empty-state-icon">&#128203;</div><h3>No pitch data available</h3></div>';
+    return '<div class="empty-state"><div class="empty-state-icon">&#128203;</div><h3>No game data available</h3></div>';
   }
+
+  // Group by date
   var gameMap = {};
   sc.forEach(function(s) {
     var dt = (s.date || '').slice(0, 10); if (!dt) return;
     if (!gameMap[dt]) gameMap[dt] = []; gameMap[dt].push(s);
   });
   var gameDates = Object.keys(gameMap).sort();
-  var today    = new Date(); today.setHours(0,0,0,0);
+
+  // Availability badge (keep existing logic)
+  var today = new Date(); today.setHours(0,0,0,0);
   var lastDate = gameDates.length ? new Date(gameDates[gameDates.length-1] + 'T12:00:00') : null;
   var daysRest = lastDate ? Math.floor((today - lastDate) / 86400000) : 99;
-  var lastCount= lastDate ? gameMap[gameDates[gameDates.length-1]].length : 0;
+  var lastCount = lastDate ? gameMap[gameDates[gameDates.length-1]].length : 0;
   var avail, availBg, availText;
-  if      (daysRest <= 1)                    { avail='UNAVAILABLE'; availBg='rgba(220,50,50,0.15)'; availText='#DC3232'; }
-  else if (daysRest === 2 && lastCount >= 20){ avail='QUESTIONABLE'; availBg='rgba(255,140,0,0.15)'; availText='#FF8C00'; }
-  else                                       { avail='AVAILABLE';    availBg='rgba(50,200,100,0.15)'; availText='#32C864'; }
+  if      (daysRest <= 1)                     { avail='UNAVAILABLE'; availBg='rgba(220,50,50,0.15)';    availText='#DC3232'; }
+  else if (daysRest === 2 && lastCount >= 20)  { avail='QUESTIONABLE'; availBg='rgba(255,140,0,0.15)'; availText='#FF8C00'; }
+  else                                         { avail='AVAILABLE';    availBg='rgba(50,200,100,0.15)'; availText='#32C864'; }
   var restNote = daysRest===99 ? 'No recent appearances' :
                  daysRest===0  ? 'Pitched today' :
-                 daysRest===1  ? 'Pitched yesterday - '+lastCount+' pitches' :
-                 daysRest+' days rest - last outing: '+lastCount+' pitches';
+                 daysRest===1  ? 'Pitched yesterday — '+lastCount+' pitches' :
+                 daysRest+' days rest — last outing: '+lastCount+' pitches';
+
+  var PITCH_COLORS = {
+    'Fastball':'#f87171','Breaking Ball':'#60a5fa','Offspeed':'#a78bfa',
+    'Changeup':'#34d399','Curveball':'#fb923c','Slider':'#facc15',
+    'Cutter':'#f472b6','Sinker':'#22d3ee'
+  };
+  var FALLBACK_COLORS = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee'];
+
+  // Build season-level type color map
+  var allTypeCounts = {};
+  sc.forEach(function(s) { var t=s.pitch_type||'Unknown'; allTypeCounts[t]=(allTypeCounts[t]||0)+1; });
+  var allTypeSet = Object.keys(allTypeCounts).sort(function(a,b){return allTypeCounts[b]-allTypeCounts[a];});
+  var typeColorMap = {};
+  allTypeSet.forEach(function(t,i){ typeColorMap[t]=PITCH_COLORS[t]||FALLBACK_COLORS[i%FALLBACK_COLORS.length]; });
+
   var html =
     '<div class="stat-card" style="margin-bottom:16px">' +
       '<div style="padding:20px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">' +
@@ -4240,44 +4259,234 @@ function renderPitchUsage(name, pitch) {
         '</div>' +
       '</div>' +
     '</div>' +
-    '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Season Log</span>' +
-    '<span class="stat-card-subtitle">'+gameDates.length+' outing'+(gameDates.length!==1?'s':'')+'</span></div>' +
-    '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-    '<th style="text-align:left">Date</th><th style="text-align:left">Opp</th>' +
-    '<th>Pitches</th><th>K</th><th>BB</th><th>STR%</th><th>WHIFF%</th><th>Rest</th><th>Status</th>' +
-    '</tr></thead><tbody>';
-  gameDates.forEach(function(dt, idx) {
-    var gsc=gameMap[dt], gTot=gsc.length;
-    var gK   =gsc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
-    var gBB  =gsc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
-    var gStr =gsc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
-    var gSwS =gsc.filter(function(s){return s.outcome==='Swinging Strike';}).length;
-    var gFo  =gsc.filter(function(s){return s.outcome==='Foul';}).length;
-    var gIP  =gsc.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
-    var gSw  =gSwS+gFo+gIP;
-    var oppLabel='--';
-    if(gsc[0]&&gsc[0].batter_team){ var bt=resolveTeam(gsc[0].batter_team); oppLabel=bt?bt.abbreviation:gsc[0].batter_team.slice(0,3).toUpperCase(); }
-    var restDays=null, restStr='--';
-    if(idx>0){ var prev=new Date(gameDates[idx-1]+'T12:00:00'),curr=new Date(dt+'T12:00:00'); restDays=Math.floor((curr-prev)/86400000); restStr=restDays+'d'; }
-    var rowStatus,rowColor;
-    if(restDays===null)                      {rowStatus='DEBUT';      rowColor='rgba(255,255,255,0.3)';}
-    else if(restDays<=1)                     {rowStatus='B2B';        rowColor='#DC3232';}
-    else if(restDays===2&&gTot>=20)          {rowStatus='SHORT REST'; rowColor='#FF8C00';}
-    else                                     {rowStatus='NORMAL';     rowColor='#32C864';}
-    var dObj=new Date(dt+'T12:00:00');
-    var dateLabel=dObj.toLocaleDateString('en-CA',{month:'short',day:'numeric'}).toUpperCase();
-    html+=
-      '<tr>'+
-      '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:11px">'+dateLabel+'</td>'+
-      '<td><span style="font-family:var(--font-mono);font-size:11px;font-weight:600">'+oppLabel+'</span></td>'+
-      '<td>'+gTot+'</td><td>'+gK+'</td><td>'+gBB+'</td>'+
-      '<td>'+(gTot>0?fmt1(gStr/gTot*100)+'%':'--')+'</td>'+
-      '<td>'+(gSw>0?fmt1(gSwS/gSw*100)+'%':'--')+'</td>'+
-      '<td style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5)">'+restStr+'</td>'+
-      '<td><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:'+rowColor+'">'+rowStatus+'</span></td>'+
-      '</tr>';
-  });
-  html+='</tbody></table></div></div>';
+
+    '<div class="stat-card">' +
+      '<div class="stat-card-header"><span class="stat-card-title">Game Log</span>' +
+      '<span class="stat-card-subtitle">'+gameDates.length+' outing'+(gameDates.length!==1?'s':'')+'</span></div>' +
+      '<div class="table-wrap"><table class="stat-table" id="gl-table"><thead><tr>' +
+      '<th style="text-align:left;width:24px"></th>' +
+      '<th style="text-align:left">Date</th><th style="text-align:left">Opp</th>' +
+      '<th>P</th><th>K</th><th>BB</th><th>STR%</th><th>WHIFF%</th><th>FPS%</th><th>Rest</th><th>Status</th>' +
+      '</tr></thead><tbody id="gl-tbody"></tbody></table></div>' +
+    '</div>';
+
+  // Render rows after DOM is ready
+  setTimeout(function() {
+    var tbody = document.getElementById('gl-tbody');
+    if (!tbody) return;
+
+    // Most recent game expanded by default
+    var expandedDate = gameDates.length ? gameDates[gameDates.length - 1] : null;
+
+    function buildRows() {
+      tbody.innerHTML = '';
+      gameDates.slice().reverse().forEach(function(dt, revIdx) {
+        var gsc = gameMap[dt], gTot = gsc.length;
+        var gK   = gsc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
+        var gBB  = gsc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+        var gStr = gsc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+        var gSwS = gsc.filter(function(s){return s.outcome==='Swinging Strike';}).length;
+        var gFo  = gsc.filter(function(s){return s.outcome==='Foul';}).length;
+        var gIP  = gsc.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
+        var gSw  = gSwS + gFo + gIP;
+        var gFP  = gsc.filter(function(s){return (s.count||'').replace(/^'/,'')==='0-0';}).length;
+        var gFPS = gsc.filter(function(s){
+          return (s.count||'').replace(/^'/,'')==='0-0' &&
+            ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);
+        }).length;
+        var oppLabel = '--';
+        if (gsc[0] && gsc[0].batter_team) { var bt=resolveTeam(gsc[0].batter_team); oppLabel=bt?bt.abbreviation:gsc[0].batter_team.slice(0,3).toUpperCase(); }
+
+        var idx = gameDates.indexOf(dt);
+        var restDays = null, restStr = '--', rowStatus, rowColor;
+        if (idx > 0) { var prev=new Date(gameDates[idx-1]+'T12:00:00'),curr=new Date(dt+'T12:00:00'); restDays=Math.floor((curr-prev)/86400000); restStr=restDays+'d'; }
+        if      (restDays===null)              { rowStatus='DEBUT';      rowColor='rgba(255,255,255,0.3)'; }
+        else if (restDays<=1)                  { rowStatus='B2B';        rowColor='#DC3232'; }
+        else if (restDays===2 && gTot>=20)     { rowStatus='SHORT REST'; rowColor='#FF8C00'; }
+        else                                   { rowStatus='NORMAL';     rowColor='#32C864'; }
+
+        var dObj = new Date(dt+'T12:00:00');
+        var dateLabel = dObj.toLocaleDateString('en-CA',{month:'short',day:'numeric'}).toUpperCase();
+        var isOpen = dt === expandedDate;
+
+        var summaryRow = document.createElement('tr');
+        summaryRow.style.cssText = 'cursor:pointer;' + (isOpen ? 'background:rgba(255,184,28,0.06);' : '');
+        summaryRow.dataset.date = dt;
+        summaryRow.innerHTML =
+          '<td style="padding-left:12px;color:rgba(255,184,28,0.7);font-size:14px">' + (isOpen ? '▾' : '▸') + '</td>' +
+          '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:11px">' + dateLabel + '</td>' +
+          '<td><span style="font-family:var(--font-mono);font-size:11px;font-weight:600">' + oppLabel + '</span></td>' +
+          '<td>' + gTot + '</td><td>' + gK + '</td><td>' + gBB + '</td>' +
+          '<td>' + (gTot>0 ? fmt1(gStr/gTot*100)+'%' : '--') + '</td>' +
+          '<td>' + (gSw>0  ? fmt1(gSwS/gSw*100)+'%'  : '--') + '</td>' +
+          '<td>' + (gFP>0  ? fmt1(gFPS/gFP*100)+'%'  : '--') + '</td>' +
+          '<td style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5)">' + restStr + '</td>' +
+          '<td><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:'+rowColor+'">'+rowStatus+'</span></td>';
+        tbody.appendChild(summaryRow);
+
+        // Detail row
+        var detailRow = document.createElement('tr');
+        detailRow.id = 'gl-detail-' + dt.replace(/-/g,'');
+        detailRow.style.display = isOpen ? '' : 'none';
+        var detailCell = document.createElement('td');
+        detailCell.colSpan = 11;
+        detailCell.style.cssText = 'padding:0;background:rgba(10,14,30,0.6);border-top:none';
+        detailCell.innerHTML = buildGameDetail(dt, gsc, typeColorMap);
+        detailRow.appendChild(detailCell);
+        tbody.appendChild(detailRow);
+
+        summaryRow.addEventListener('click', function() {
+          var wasOpen = expandedDate === dt;
+          expandedDate = wasOpen ? null : dt;
+          buildRows();
+          if (!wasOpen) {
+            // Draw canvas after DOM update
+            setTimeout(function() { drawGameCanvas(dt, gsc, typeColorMap); }, 30);
+          }
+        });
+
+        if (isOpen) {
+          setTimeout(function() { drawGameCanvas(dt, gsc, typeColorMap); }, 60);
+        }
+      });
+    }
+
+    function buildGameDetail(dt, gsc, tcMap) {
+      var gTot = gsc.length;
+      var typeCounts = {};
+      gsc.forEach(function(s){ var t=s.pitch_type||'Unknown'; typeCounts[t]=(typeCounts[t]||0)+1; });
+      var typeSet = Object.keys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a];});
+      var legendHTML = typeSet.map(function(t){
+        var c = tcMap[t]||'#888';
+        return '<span style="display:inline-flex;align-items:center;gap:5px;margin-right:12px;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.7)">' +
+          '<span style="width:10px;height:10px;border-radius:50%;background:'+c+';flex-shrink:0"></span>'+t+
+          ' <span style="color:rgba(255,255,255,0.35)">'+fmt1(typeCounts[t]/gTot*100)+'%</span></span>';
+      }).join('');
+
+      var canvasId = 'gl-canvas-' + dt.replace(/-/g,'');
+      return '<div style="display:flex;gap:24px;padding:20px 24px;flex-wrap:wrap;align-items:flex-start">' +
+        // Pitch plot
+        '<div style="flex-shrink:0">' +
+          '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Pitch Plot</div>' +
+          '<canvas id="'+canvasId+'" width="480" height="660" style="width:220px;height:302px;display:block"></canvas>' +
+          '<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px 0">'+legendHTML+'</div>' +
+        '</div>' +
+        // Per-pitch type breakdown table
+        '<div style="flex:1;min-width:200px">' +
+          '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">By Pitch Type</div>' +
+          '<table class="stat-table" style="margin-bottom:20px"><thead><tr>' +
+          '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>STR%</th><th>WHIFF%</th>' +
+          '</tr></thead><tbody>' +
+          typeSet.map(function(t){
+            var pts = gsc.filter(function(s){return (s.pitch_type||'Unknown')===t;});
+            var n = pts.length;
+            var str = pts.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+            var swS = pts.filter(function(s){return s.outcome==='Swinging Strike';}).length;
+            var fo  = pts.filter(function(s){return s.outcome==='Foul';}).length;
+            var ip  = pts.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
+            var sw  = swS+fo+ip;
+            var dot = tcMap[t]||'#888';
+            return '<tr>' +
+              '<td style="text-align:left"><span style="display:inline-flex;align-items:center;gap:6px">' +
+                '<span style="width:8px;height:8px;border-radius:50%;background:'+dot+';flex-shrink:0"></span>' +
+                '<span style="color:var(--text)">'+t+'</span></span></td>' +
+              '<td>'+n+'</td>' +
+              '<td class="highlight-val">'+fmt1(n/gTot*100)+'%</td>' +
+              '<td>'+(n>0?fmt1(str/n*100)+'%':'--')+'</td>' +
+              '<td>'+(sw>0?fmt1(swS/sw*100)+'%':'--')+'</td>' +
+              '</tr>';
+          }).join('') +
+          '</tbody></table>' +
+          // PA-level outcomes
+          '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Outcomes</div>' +
+          buildOutcomeList(gsc) +
+        '</div>' +
+      '</div>';
+    }
+
+    function buildOutcomeList(gsc) {
+      var counts = {};
+      gsc.forEach(function(s){ var o=s.outcome||'Unknown'; counts[o]=(counts[o]||0)+1; });
+      var entries = Object.entries(counts).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
+      return '<div style="display:flex;flex-wrap:wrap;gap:6px">' +
+        entries.map(function(e){
+          return '<div style="display:flex;align-items:center;gap:6px;padding:4px 10px;background:rgba(255,255,255,0.05);border-radius:4px">' +
+            '<span style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.7)">'+e[0]+'</span>' +
+            '<span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:#FFB81C">'+e[1]+'</span>' +
+            '</div>';
+        }).join('') +
+      '</div>';
+    }
+
+    function drawGameCanvas(dt, gsc, tcMap) {
+      var canvasId = 'gl-canvas-' + dt.replace(/-/g,'');
+      var canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      var pts = gsc.filter(function(s){ return s.x!=null && s.y!=null; });
+      if (!pts.length) { canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height); return; }
+
+      var DPR = window.devicePixelRatio || 1;
+      var CSS_W = 220, CSS_H = 302;
+      canvas.width  = CSS_W * DPR;
+      canvas.height = CSS_H * DPR;
+      canvas.style.width  = CSS_W + 'px';
+      canvas.style.height = CSS_H + 'px';
+      var ctx = canvas.getContext('2d');
+      ctx.scale(DPR, DPR);
+
+      // Same coordinate system as renderZone
+      var BOUNDS = { xMin:-2.5, xMax:2.5, yMin:-0.8, yMax:2.2 };
+      function toX(y) { return (y - BOUNDS.xMin) / (BOUNDS.xMax - BOUNDS.xMin) * CSS_W; }
+      function toY(x) { return (1 - (x - BOUNDS.yMin) / (BOUNDS.yMax - BOUNDS.yMin)) * CSS_H; }
+
+      // Background
+      ctx.fillStyle = 'rgba(10,14,30,0.0)';
+      ctx.fillRect(0, 0, CSS_W, CSS_H);
+
+      // Strike zone box (data: x=0..1 vert, y=-1..1 horiz)
+      var zx1=toX(-1), zx2=toX(1), zy1=toY(1), zy2=toY(0);
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(zx1, zy1, zx2-zx1, zy2-zy1);
+      // Zone grid (3x3)
+      var cw=(zx2-zx1)/3, ch=(zy2-zy1)/3;
+      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+      ctx.lineWidth = 0.5;
+      for (var i=1;i<3;i++){
+        ctx.beginPath(); ctx.moveTo(zx1+cw*i,zy1); ctx.lineTo(zx1+cw*i,zy2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(zx1,zy1+ch*i); ctx.lineTo(zx2,zy1+ch*i); ctx.stroke();
+      }
+
+      // Dots
+      pts.forEach(function(s) {
+        var t = s.pitch_type || 'Unknown';
+        var color = tcMap[t] || '#888';
+        var cx = toX(s.y), cy = toY(s.x);
+        ctx.beginPath();
+        ctx.arc(cx, cy, 5, 0, Math.PI*2);
+        ctx.fillStyle = color + 'cc';
+        ctx.fill();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        // Outcome marker
+        if (s.outcome==='Swinging Strike'||s.outcome==='Strikeout Swinging') {
+          ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.moveTo(cx-3,cy-3); ctx.lineTo(cx+3,cy+3); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(cx+3,cy-3); ctx.lineTo(cx-3,cy+3); ctx.stroke();
+        } else if (s.outcome==='Walk'||s.outcome==='Intentional Walk') {
+          ctx.strokeStyle = '#34d399'; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI*2); ctx.stroke();
+        } else if (['Single','Double','Triple','Home Run'].includes(s.outcome)) {
+          ctx.fillStyle = '#FFB81C';
+          ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, Math.PI*2); ctx.fill();
+        }
+      });
+    }
+
+    buildRows();
+  }, 0);
+
   return html;
 }
 
