@@ -2242,10 +2242,10 @@ function renderPlayerDetail(name, type, content) {
     '<div class="tabs-bar" style="margin-top:0"><div class="container"><div class="tabs">' +
     '<button class="tab-btn active" data-tab="overview">Overview</button>' +
     '<button class="tab-btn" data-tab="percentile">Percentile Stats</button>' +
-    '<button class="tab-btn" data-tab="season">Season Stats</button>' +
     '<button class="tab-btn" data-tab="zone">Strike Zone</button>' +
     '<button class="tab-btn" data-tab="splits">Splits</button>' +
     (type === 'pitcher' ? '<button class="tab-btn" data-tab="usage">Game Log</button>' : '') +
+    '<button class="tab-btn" data-tab="season">Season Stats</button>' +
     '<button class="tab-btn" data-tab="notes">Notes</button>' +
     '</div></div></div>' +
 
@@ -4195,7 +4195,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
 
 // -- PITCH USAGE TAB ----------------------------------------
 function renderGameLog(name, pitch) {
-  // Collect pitcher's pitches — prefer pitches2026 for current season, fall back to pitches
+  // Collect pitcher's pitches — both seasons
   var _nameKey = normPlayerName(name);
   var sc = [];
   var srcData = (_activeSeason === 'year:2026') ? DATA.pitches2026 : DATA.pitches;
@@ -4203,7 +4203,6 @@ function renderGameLog(name, pitch) {
     if (!bp.scatter) return;
     bp.scatter.forEach(function(s) { if (normPlayerName(s.pitcher) === _nameKey) sc.push(s); });
   });
-  // fallback
   if (!sc.length && pitch && pitch.scatter) sc = pitch.scatter;
 
   if (!sc.length) {
@@ -4218,20 +4217,6 @@ function renderGameLog(name, pitch) {
   });
   var gameDates = Object.keys(gameMap).sort();
 
-  // Availability badge (keep existing logic)
-  var today = new Date(); today.setHours(0,0,0,0);
-  var lastDate = gameDates.length ? new Date(gameDates[gameDates.length-1] + 'T12:00:00') : null;
-  var daysRest = lastDate ? Math.floor((today - lastDate) / 86400000) : 99;
-  var lastCount = lastDate ? gameMap[gameDates[gameDates.length-1]].length : 0;
-  var avail, availBg, availText;
-  if      (daysRest <= 1)                     { avail='UNAVAILABLE'; availBg='rgba(220,50,50,0.15)';    availText='#DC3232'; }
-  else if (daysRest === 2 && lastCount >= 20)  { avail='QUESTIONABLE'; availBg='rgba(255,140,0,0.15)'; availText='#FF8C00'; }
-  else                                         { avail='AVAILABLE';    availBg='rgba(50,200,100,0.15)'; availText='#32C864'; }
-  var restNote = daysRest===99 ? 'No recent appearances' :
-                 daysRest===0  ? 'Pitched today' :
-                 daysRest===1  ? 'Pitched yesterday — '+lastCount+' pitches' :
-                 daysRest+' days rest — last outing: '+lastCount+' pitches';
-
   var PITCH_COLORS = {
     'Fastball':'#f87171','Breaking Ball':'#60a5fa','Offspeed':'#a78bfa',
     'Changeup':'#34d399','Curveball':'#fb923c','Slider':'#facc15',
@@ -4239,7 +4224,7 @@ function renderGameLog(name, pitch) {
   };
   var FALLBACK_COLORS = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee'];
 
-  // Build season-level type color map
+  // Season-level pitch type color map
   var allTypeCounts = {};
   sc.forEach(function(s) { var t=s.pitch_type||'Unknown'; allTypeCounts[t]=(allTypeCounts[t]||0)+1; });
   var allTypeSet = Object.keys(allTypeCounts).sort(function(a,b){return allTypeCounts[b]-allTypeCounts[a];});
@@ -4247,26 +4232,13 @@ function renderGameLog(name, pitch) {
   allTypeSet.forEach(function(t,i){ typeColorMap[t]=PITCH_COLORS[t]||FALLBACK_COLORS[i%FALLBACK_COLORS.length]; });
 
   var html =
-    '<div class="stat-card" style="margin-bottom:16px">' +
-      '<div style="padding:20px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">' +
-        '<div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 28px;background:'+availBg+';border:1px solid '+availText+';border-radius:6px;flex-shrink:0">' +
-          '<div style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:'+availText+'">'+avail+'</div>' +
-          '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;margin-top:2px">CURRENT STATUS</div>' +
-        '</div>' +
-        '<div>' +
-          '<div style="font-family:var(--font-mono);font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:6px">'+restNote+'</div>' +
-          '<div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.35)">'+gameDates.length+' appearance'+(gameDates.length!==1?'s':'')+' this season</div>' +
-        '</div>' +
-      '</div>' +
-    '</div>' +
-
     '<div class="stat-card">' +
       '<div class="stat-card-header"><span class="stat-card-title">Game Log</span>' +
       '<span class="stat-card-subtitle">'+gameDates.length+' outing'+(gameDates.length!==1?'s':'')+'</span></div>' +
       '<div class="table-wrap"><table class="stat-table" id="gl-table"><thead><tr>' +
       '<th style="text-align:left;width:24px"></th>' +
       '<th style="text-align:left">Date</th><th style="text-align:left">Opp</th>' +
-      '<th>P</th><th>K</th><th>BB</th><th>STR%</th><th>WHIFF%</th><th>FPS%</th><th>Rest</th><th>Status</th>' +
+      '<th>P</th><th>FPS%</th><th>STR%</th><th>WHIFF%</th><th>Rest</th>' +
       '</tr></thead><tbody id="gl-tbody"></tbody></table></div>' +
     '</div>';
 
@@ -4280,10 +4252,9 @@ function renderGameLog(name, pitch) {
 
     function buildRows() {
       tbody.innerHTML = '';
+      var today = new Date(); today.setHours(0,0,0,0);
       gameDates.slice().reverse().forEach(function(dt, revIdx) {
         var gsc = gameMap[dt], gTot = gsc.length;
-        var gK   = gsc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
-        var gBB  = gsc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
         var gStr = gsc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
         var gSwS = gsc.filter(function(s){return s.outcome==='Swinging Strike';}).length;
         var gFo  = gsc.filter(function(s){return s.outcome==='Foul';}).length;
@@ -4294,16 +4265,22 @@ function renderGameLog(name, pitch) {
           return (s.count||'').replace(/^'/,'')==='0-0' &&
             ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);
         }).length;
-        var oppLabel = '--';
-        if (gsc[0] && gsc[0].batter_team) { var bt=resolveTeam(gsc[0].batter_team); oppLabel=bt?bt.abbreviation:gsc[0].batter_team.slice(0,3).toUpperCase(); }
 
-        var idx = gameDates.indexOf(dt);
-        var restDays = null, restStr = '--', rowStatus, rowColor;
-        if (idx > 0) { var prev=new Date(gameDates[idx-1]+'T12:00:00'),curr=new Date(dt+'T12:00:00'); restDays=Math.floor((curr-prev)/86400000); restStr=restDays+'d'; }
-        if      (restDays===null)              { rowStatus='DEBUT';      rowColor='rgba(255,255,255,0.3)'; }
-        else if (restDays<=1)                  { rowStatus='B2B';        rowColor='#DC3232'; }
-        else if (restDays===2 && gTot>=20)     { rowStatus='SHORT REST'; rowColor='#FF8C00'; }
-        else                                   { rowStatus='NORMAL';     rowColor='#32C864'; }
+        // Opponent: try batter_team on any pitch in this game, resolve to abbreviation
+        var oppLabel = '--';
+        for (var pi=0; pi<gsc.length; pi++) {
+          var bt = gsc[pi].batter_team;
+          if (bt && bt.trim()) {
+            var resolved = resolveTeam(bt);
+            oppLabel = resolved ? resolved.abbreviation : bt.trim().slice(0,3).toUpperCase();
+            break;
+          }
+        }
+
+        // Rest = days since game date to TODAY (not prior game)
+        var gameDate = new Date(dt + 'T12:00:00');
+        var restDays = Math.floor((today - gameDate) / 86400000);
+        var restStr = restDays === 0 ? 'Today' : restDays === 1 ? '1d' : restDays + 'd';
 
         var dObj = new Date(dt+'T12:00:00');
         var dateLabel = dObj.toLocaleDateString('en-CA',{month:'short',day:'numeric'}).toUpperCase();
@@ -4316,12 +4293,11 @@ function renderGameLog(name, pitch) {
           '<td style="padding-left:12px;color:rgba(255,184,28,0.7);font-size:14px">' + (isOpen ? '▾' : '▸') + '</td>' +
           '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:11px">' + dateLabel + '</td>' +
           '<td><span style="font-family:var(--font-mono);font-size:11px;font-weight:600">' + oppLabel + '</span></td>' +
-          '<td>' + gTot + '</td><td>' + gK + '</td><td>' + gBB + '</td>' +
+          '<td>' + gTot + '</td>' +
+          '<td>' + (gFP>0  ? fmt1(gFPS/gFP*100)+'%'  : '--') + '</td>' +
           '<td>' + (gTot>0 ? fmt1(gStr/gTot*100)+'%' : '--') + '</td>' +
           '<td>' + (gSw>0  ? fmt1(gSwS/gSw*100)+'%'  : '--') + '</td>' +
-          '<td>' + (gFP>0  ? fmt1(gFPS/gFP*100)+'%'  : '--') + '</td>' +
-          '<td style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5)">' + restStr + '</td>' +
-          '<td><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:'+rowColor+'">'+rowStatus+'</span></td>';
+          '<td style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5)">' + restStr + '</td>';
         tbody.appendChild(summaryRow);
 
         // Detail row
@@ -4434,34 +4410,51 @@ function renderGameLog(name, pitch) {
       var ctx = canvas.getContext('2d');
       ctx.scale(DPR, DPR);
 
-      // Same coordinate system as renderZone
-      var BOUNDS = { xMin:-2.5, xMax:2.5, yMin:-0.8, yMax:2.2 };
-      function toX(y) { return (y - BOUNDS.xMin) / (BOUNDS.xMax - BOUNDS.xMin) * CSS_W; }
-      function toY(x) { return (1 - (x - BOUNDS.yMin) / (BOUNDS.yMax - BOUNDS.yMin)) * CSS_H; }
+      // Exact same coordinate system as renderZone:
+      // data s.x = horizontal axis (maps to canvas X), range -2.5..2.5
+      // data s.y = vertical axis   (maps to canvas Y), range -0.8..2.2
+      // Zone: x=-1..1 (horiz), y=0..1 (vert)
+      var PAD_L=28, PAD_R=8, PAD_T=8, PAD_B=28;
+      var PW = CSS_W - PAD_L - PAD_R;
+      var PH = CSS_H - PAD_T - PAD_B;
+      var X_MIN=-2.5, X_MAX=2.5, Y_MIN=-0.8, Y_MAX=2.2;
+      function toCx(x) { return PAD_L + ((x - X_MIN) / (X_MAX - X_MIN)) * PW; }
+      function toCy(y) { return PAD_T + PH - ((y - Y_MIN) / (Y_MAX - Y_MIN)) * PH; }
 
-      // Background
-      ctx.fillStyle = 'rgba(10,14,30,0.0)';
-      ctx.fillRect(0, 0, CSS_W, CSS_H);
+      // Zone box corners
+      var zx1=toCx(-1), zx2=toCx(1), zy1=toCy(1), zy2=toCy(0);
 
-      // Strike zone box (data: x=0..1 vert, y=-1..1 horiz)
-      var zx1=toX(-1), zx2=toX(1), zy1=toY(1), zy2=toY(0);
-      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-      ctx.lineWidth = 1.5;
+      // "FROM A PITCHER'S POV" label — matches Strike Zone tab exactly
+      ctx.save();
+      ctx.font = 'bold 9px monospace';
+      ctx.fillStyle = 'rgba(255,184,28,0.75)';
+      ctx.textAlign = 'center';
+      ctx.fillText("FROM A PITCHER'S POV", (zx1+zx2)/2, zy1 - 6);
+      ctx.restore();
+
+      // Zone fill — gold tint like Strike Zone tab
+      ctx.fillStyle = 'rgba(255,184,28,0.03)';
+      ctx.fillRect(zx1, zy1, zx2-zx1, zy2-zy1);
+
+      // Zone border — gold like Strike Zone tab
+      ctx.strokeStyle = 'rgba(255,184,28,0.85)';
+      ctx.lineWidth = 2;
       ctx.strokeRect(zx1, zy1, zx2-zx1, zy2-zy1);
-      // Zone grid (3x3)
+
+      // Zone grid (3x3) — gold dividers
       var cw=(zx2-zx1)/3, ch=(zy2-zy1)/3;
-      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-      ctx.lineWidth = 0.5;
+      ctx.strokeStyle = 'rgba(255,184,28,0.25)';
+      ctx.lineWidth = 0.8;
       for (var i=1;i<3;i++){
-        ctx.beginPath(); ctx.moveTo(zx1+cw*i,zy1); ctx.lineTo(zx1+cw*i,zy2); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(zx1,zy1+ch*i); ctx.lineTo(zx2,zy1+ch*i); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(zx1+cw*i, zy1); ctx.lineTo(zx1+cw*i, zy2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(zx1, zy1+ch*i); ctx.lineTo(zx2, zy1+ch*i); ctx.stroke();
       }
 
-      // Dots
+      // Dots — s.x → canvas X, s.y → canvas Y (matches renderZone toCanvasX/toCanvasY)
       pts.forEach(function(s) {
         var t = s.pitch_type || 'Unknown';
         var color = tcMap[t] || '#888';
-        var cx = toX(s.y), cy = toY(s.x);
+        var cx = toCx(s.x), cy = toCy(s.y);
         ctx.beginPath();
         ctx.arc(cx, cy, 5, 0, Math.PI*2);
         ctx.fillStyle = color + 'cc';
@@ -4469,9 +4462,9 @@ function renderGameLog(name, pitch) {
         ctx.strokeStyle = color;
         ctx.lineWidth = 1;
         ctx.stroke();
-        // Outcome marker
+        // Outcome markers
         if (s.outcome==='Swinging Strike'||s.outcome==='Strikeout Swinging') {
-          ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5;
+          ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 1.5;
           ctx.beginPath(); ctx.moveTo(cx-3,cy-3); ctx.lineTo(cx+3,cy+3); ctx.stroke();
           ctx.beginPath(); ctx.moveTo(cx+3,cy-3); ctx.lineTo(cx-3,cy+3); ctx.stroke();
         } else if (s.outcome==='Walk'||s.outcome==='Intentional Walk') {
