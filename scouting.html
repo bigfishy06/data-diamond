@@ -1722,9 +1722,12 @@ Zane Skansi,Kitchener Panthers`;
       ? (_pbpForPoints&&_pbpForPoints.K_pct!=null?_pbpForPoints.K_pct:(iblB&&iblB.K!=null&&iblB.PA>0?iblB.K/iblB.PA*100:((s.K||0)/(s.PA||1)*100)))
       : (s.K_pct!=null?s.K_pct:((s.K||0)/(s.PA||1)*100));
     // Swing/Whiff/FP — summary.json fields work for both seasons
-    var _swEarly=s.Swing_pct!=null?s.Swing_pct:null;
-    var _whEarly=s.Whiff_pct!=null?s.Whiff_pct:null;
-    var _fpEarly=s.FP_Swing_pct!=null?s.FP_Swing_pct:null;
+    // Key scouting point swing/whiff/fp stats: use pbp_batters for 2025 (authoritative),
+    // fall back to summary; for 2026 pbp is null so use summary directly.
+    var _pbpEarly=selSeason==='2025'?(DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null):null;
+    var _swEarly=_pbpEarly&&_pbpEarly.SWING_pct!=null?_pbpEarly.SWING_pct:(s.Swing_pct!=null?s.Swing_pct:null);
+    var _whEarly=_pbpEarly&&_pbpEarly.WHIFF_pct!=null?_pbpEarly.WHIFF_pct:(s.Whiff_pct!=null?s.Whiff_pct:null);
+    var _fpEarly=_pbpEarly&&_pbpEarly.FP_SWING_pct!=null?_pbpEarly.FP_SWING_pct:(s.FP_Swing_pct!=null?s.FP_Swing_pct:(s.FP_SWING_pct!=null?s.FP_SWING_pct:null));
 
     var batterPoints=[];
 
@@ -1786,18 +1789,17 @@ Zane Skansi,Kitchener Panthers`;
     var pbp=selSeason==='2026'?null:(DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null);
     var pa=(s.PA)||1, bb=(s.BB)||0, k=(s.K)||0;
 
-    // Both seasons: read directly from pbp (pbp_batters) or summary fallback.
-    var fpSwingPct=selSeason==='2026'
-      ? (s.FP_Swing_pct!=null?s.FP_Swing_pct:null)
-      : (pbp&&pbp.FP_SWING_pct!=null?pbp.FP_SWING_pct:null);
+    // Scout Summary cards: pbp_batters for 2025 (authoritative), summary for 2026.
+    var fpSwingPct=pbp&&pbp.FP_SWING_pct!=null?pbp.FP_SWING_pct:(s.FP_Swing_pct!=null?s.FP_Swing_pct:(s.FP_SWING_pct!=null?s.FP_SWING_pct:null));
+    var swingPct=pbp&&pbp.SWING_pct!=null?pbp.SWING_pct:(s.Swing_pct!=null?s.Swing_pct:null);
+    var whiffPct=pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct:(s.Whiff_pct!=null?s.Whiff_pct:null);
 
-    var swingPct=selSeason==='2026'
-      ? (s.Swing_pct!=null?s.Swing_pct:null)
-      : (pbp&&pbp.SWING_pct!=null?pbp.SWING_pct:null);
-
-    var whiffPct=selSeason==='2026'
-      ? (s.Whiff_pct!=null?s.Whiff_pct:null)
-      : (pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct:null);
+    // SB: from summary or IBL History — defined early so Scout Summary SB card can use it
+    var _sbVal=s.SB!=null?s.SB:null;
+    if(_sbVal==null){
+      var _iblSBrow=getIblRowsByName(player.name).find(function(r){return (r.season||'').indexOf(selSeason)!==-1&&r.SB!=null;});
+      if(_iblSBrow)_sbVal=_iblSBrow.SB;
+    }
 
     // Chase % — from summary Chase_pct (computed in R from x/y coordinates).
     // 2026: s = summary2026 row; 2025: summary row (both now include Chase_pct).
@@ -1830,8 +1832,11 @@ Zane Skansi,Kitchener Panthers`;
     hl.push(hCard('CHASE %',
       chasePct!=null?f1(chasePct)+'%':'—',chC,
       chasePct!=null?(chasePct>=35?'Use waste pitches — he bites.':chasePct>=22?'Occasional chase — mix.':'Does not chase — stay in zone.'):'No data.','Chase % (out of zone)'));
+    hl.push(hCard('SB',
+      _sbVal!=null?fN(_sbVal):'—','#60a5fa',
+      _sbVal!=null?(_sbVal>=10?'Elite baserunner — threat on bases.':_sbVal>=5?'Active on bases — keep an eye on him.':'Low stolen base total.'):'No data.','Stolen bases'));
 
-    var cardW2=(CPW-3*4)/4,cardH2=28;
+    var cardW2=(CPW-4*4)/5,cardH2=28;
     hl.forEach(function(h,i){
       var hx=ML+i*(cardW2+4);
       var hex=h.color.slice(1);if(hex.length===3){hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];}
@@ -1882,13 +1887,6 @@ Zane Skansi,Kitchener Panthers`;
         if(_k25>0){_bbkVal=_bb25/_k25;}
       }
     }
-    // SB: from summary or IBL History
-    var _sbVal=s.SB!=null?s.SB:null;
-    if(_sbVal==null){
-      var _iblSBrow=getIblRowsByName(player.name).find(function(r){return (r.season||'').indexOf(selSeason)!==-1&&r.SB!=null;});
-      if(_iblSBrow)_sbVal=_iblSBrow.SB;
-    }
-
     var discStats=[
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
        color:pspa!=null?(pspa>=4.0?'#34d399':pspa>=3.5?'#FFB81C':'#f87171'):'#555',
@@ -1902,9 +1900,6 @@ Zane Skansi,Kitchener Panthers`;
       {label:'BB/K',sub:'Walk-to-strikeout ratio',val:_bbkVal!=null?f2(_bbkVal):'—',
        color:_bbkVal!=null?(_bbkVal>=0.40?'#34d399':_bbkVal>=0.20?'#FFB81C':'#f87171'):'#555',
        note:_bbkVal!=null?(_bbkVal>=0.40?'Elite discipline — draws walks freely':_bbkVal>=0.20?'Solid BB/K — patient hitter':'Strikeout-heavy — struggles to draw walks'):''},
-      {label:'SB',sub:'Stolen bases',val:_sbVal!=null?fN(_sbVal):'—',
-       color:'#60a5fa',
-       note:_sbVal!=null?(_sbVal>=10?'Elite baserunner — a real threat on the bases':_sbVal>=5?'Active on the bases — keep an eye on him':'Low stolen base total'):'No SB data'},
     ];
     var nDisc=discStats.length, dW2=(CPW-(nDisc-1)*4)/nDisc, dH2=28;
     discStats.forEach(function(stat,i){
