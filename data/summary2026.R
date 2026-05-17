@@ -226,7 +226,15 @@ zone_stats <- pitches %>%
     chase_pitches = sum(
       !is.na(pitch_x) & !is.na(pitch_y) &
         (abs(pitch_x) > 1 | pitch_y < 0 | pitch_y > 1) &
-        outcome %in% c("Swinging Strike", "Foul"),
+        outcome %in% c(
+        "Swinging Strike", "Foul",
+        "Strikeout Swinging", "Dropped Third Strike Swinging",
+        "Single", "Double", "Triple", "Home Run",
+        "Groundout", "Flyout", "Popout", "Lineout",
+        "Double Play", "Triple Play", "Error",
+        "Sacrifice Fly", "Sac Fly Double Play",
+        "Sacrifice Bunt", "Sac Bunt Double Play"
+      ),
       na.rm = TRUE),
     .groups = "drop"
   ) %>%

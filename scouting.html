@@ -1900,8 +1900,8 @@ Zane Skansi,Kitchener Panthers`;
        color:bbPct2>=0.14?'#f87171':bbPct2>=0.08?'#FFB81C':'#34d399',
        note:bbPct2>=0.14?'Outstanding discipline — draws walks at an elite rate':bbPct2>=0.08?'Patient — works counts and earns walks':'Aggressive — rarely walks, pitchers can exploit'},
       {label:'BB/K',sub:'Walk-to-strikeout ratio',val:_bbkVal!=null?f2(_bbkVal):'—',
-       color:_bbkVal!=null?(_bbkVal>=0.40?'#f87171':_bbkVal>=0.25?'#FFB81C':'#34d399'):'#555',
-       note:_bbkVal!=null?(_bbkVal>=0.40?'Elite discipline — draws walks freely':_bbkVal>=0.25?'Solid BB/K — patient approach':'Free swinger — rarely draws walks'):''},
+       color:_bbkVal!=null?(_bbkVal>=0.40?'#34d399':_bbkVal>=0.20?'#FFB81C':'#f87171'):'#555',
+       note:_bbkVal!=null?(_bbkVal>=0.40?'Elite discipline — draws walks freely':_bbkVal>=0.20?'Solid BB/K — patient hitter':'Strikeout-heavy — struggles to draw walks'):''},
       {label:'SB',sub:'Stolen bases',val:_sbVal!=null?fN(_sbVal):'—',
        color:'#60a5fa',
        note:_sbVal!=null?(_sbVal>=10?'Elite baserunner — a real threat on the bases':_sbVal>=5?'Active on the bases — keep an eye on him':'Low stolen base total'):'No SB data'},
@@ -1931,22 +1931,20 @@ Zane Skansi,Kitchener Panthers`;
     var _pitchObj2=player.pitch||getPitchPlayer(player.name)||(function(){ var po=getPitchPlayerForRoster(player.name); return po&&po.scatter&&po.scatter.length?po:null; })();
     var allSc2=_pitchObj2&&_pitchObj2.scatter?_pitchObj2.scatter:[];
 
-    // Spray direction
-    // 2026: Pull_pct/Str_pct/Oppo_pct from summary2026 (pre-computed in R)
-    // 2025: scatter spray field
+    // Spray direction — both seasons: Pull_pct/Str_pct/Oppo_pct from summary JSON (computed in R).
+    // Both summary.R and summary2026.R compute these from spray_chart field.
+    // Reconstruct counts from pcts using batted ball total for proportional display.
     var pullC2,strC3,oppC2,spTot2;
-    if(selSeason==='2026'){
-      var hasSprayPcts=s.Pull_pct!=null||s.Str_pct!=null||s.Oppo_pct!=null;
-      // Reconstruct counts from pcts using batted ball total for proportional display.
-      // If bip26tot2 is 0 (e.g. early-season, only popouts), use a synthetic total of 100
-      // so the donut still renders from the pre-computed pct fields.
-      var bip26tot2=(s.Groundout||0)+(s.DP||0)+(s.TP||0)+(s.Flyout||0)+(s.SF||0)+(s.SF_DP||0)+(s.Lineout||0)+(s.Popout||0);
-      var spBase=bip26tot2>0?bip26tot2:100;
-      pullC2=hasSprayPcts?Math.round((s.Pull_pct||0)/100*spBase):0;
-      strC3 =hasSprayPcts?Math.round((s.Str_pct ||0)/100*spBase):0;
-      oppC2 =hasSprayPcts?Math.round((s.Oppo_pct||0)/100*spBase):0;
+    var hasSprayPcts=s.Pull_pct!=null||s.Str_pct!=null||s.Oppo_pct!=null;
+    if(hasSprayPcts){
+      var bipTotSp=(s.Groundout||0)+(s.DP||0)+(s.TP||0)+(s.Flyout||0)+(s.SF||0)+(s.SF_DP||0)+(s.Lineout||0)+(s.Popout||0);
+      var spBase=bipTotSp>0?bipTotSp:100;
+      pullC2=Math.round((s.Pull_pct||0)/100*spBase);
+      strC3 =Math.round((s.Str_pct ||0)/100*spBase);
+      oppC2 =Math.round((s.Oppo_pct||0)/100*spBase);
       spTot2=pullC2+strC3+oppC2;
     } else {
+      // Fallback: compute from scatter spray field (older JSON or missing summary spray pcts)
       var batted4=allSc2.filter(function(s2){return['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s2.outcome);});
       var spBatted=batted4.filter(function(s2){return s2.spray;});
       pullC2=spBatted.filter(function(s2){return s2.spray==='Pull';}).length;
@@ -1979,7 +1977,7 @@ Zane Skansi,Kitchener Panthers`;
       bipPo=hasBip?(pbp.PO_pct||0):0;
     }
 
-    var hasSpray=selSeason==='2026'?((s.Pull_pct!=null||s.Str_pct!=null||s.Oppo_pct!=null)&&spTot2>=1):spTot2>=3;
+    var hasSpray=spTot2>=(hasSprayPcts?1:3);
     if(hasSpray||hasBip){
       // Each chart occupies half the content width
       // Layout: side-by-side if both present, centred single if only one
