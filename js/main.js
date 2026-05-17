@@ -2341,28 +2341,46 @@ function renderPlayerDetail(name, type, content) {
     if (t === 'percentile') panel.innerHTML = renderPercentileStats(name, type, currentSum, currentPitchData, activeSeasonFilter);
     if (t === 'season')   panel.innerHTML = renderSeasonStats(name, type, currentSum, currentPitchData);
     if (t === 'splits') {
-      panel.innerHTML = renderSplits(name, type, currentPitchData, activeSeasonFilter);
-      var allPoints = [];
-      if (type === 'batter' && currentPitchData && currentPitchData.scatter) {
-        allPoints = currentPitchData.scatter;
-      } else if (type === 'pitcher') {
+      if (type === 'batter') {
+        // Two-column layout: splits on left, game log on right
+        panel.innerHTML =
+          '<div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">' +
+            '<div id="splits-left" style="flex:1;min-width:280px">' + renderSplits(name, type, currentPitchData, activeSeasonFilter) + '</div>' +
+            '<div id="splits-right" style="flex:1;min-width:320px">' + renderBatterGameLog(name, currentPitchData) + '</div>' +
+          '</div>';
+        var allPoints = currentPitchData && currentPitchData.scatter ? currentPitchData.scatter : [];
+        panel.querySelectorAll('.splits-hand-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            panel.querySelectorAll('.splits-hand-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var hand = btn.dataset.hand;
+            var filtered = hand === 'all' ? allPoints : allPoints.filter(function(s) {
+              return (s.pitcher_side || '') === hand;
+            });
+            panel.querySelector('#splits-tables').innerHTML = buildSplitsTables(filtered);
+          });
+        });
+        // Init batter game log after DOM ready
+        setTimeout(function() { initBatterGameLog(name, currentPitchData); }, 0);
+      } else {
+        panel.innerHTML = renderSplits(name, type, currentPitchData, activeSeasonFilter);
+        var allPoints = [];
         DATA.pitches.forEach(function(bp) {
           if (!bp.scatter) return;
           bp.scatter.forEach(function(s) { if (s.pitcher === name) allPoints.push(s); });
         });
-      }
-      panel.querySelectorAll('.splits-hand-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          panel.querySelectorAll('.splits-hand-btn').forEach(function(b) { b.classList.remove('active'); });
-          btn.classList.add('active');
-          var hand = btn.dataset.hand;
-          var filtered = hand === 'all' ? allPoints : allPoints.filter(function(s) {
-            var field = type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '');
-            return field === hand;
+        panel.querySelectorAll('.splits-hand-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            panel.querySelectorAll('.splits-hand-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var hand = btn.dataset.hand;
+            var filtered = hand === 'all' ? allPoints : allPoints.filter(function(s) {
+              return (s.batter_side || s.side || '') === hand;
+            });
+            panel.querySelector('#splits-tables').innerHTML = buildSplitsTables(filtered);
           });
-          panel.querySelector('#splits-tables').innerHTML = buildSplitsTables(filtered);
         });
-      });
+      }
     }
     tabContent.appendChild(panel);
     if (t === 'zone')     renderZone(name, type, currentPitchData, panel, activeSeasonFilter);
@@ -4332,20 +4350,30 @@ function renderGameLog(name, pitch) {
       var typeCounts = {};
       gsc.forEach(function(s){ var t=s.pitch_type||'Unknown'; typeCounts[t]=(typeCounts[t]||0)+1; });
       var typeSet = Object.keys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a];});
-      var legendHTML = typeSet.map(function(t){
-        var c = tcMap[t]||'#888';
-        return '<span style="display:inline-flex;align-items:center;gap:5px;margin-right:12px;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.7)">' +
-          '<span style="width:10px;height:10px;border-radius:50%;background:'+c+';flex-shrink:0"></span>'+t+
-          ' <span style="color:rgba(255,255,255,0.35)">'+fmt1(typeCounts[t]/gTot*100)+'%</span></span>';
-      }).join('');
+
+      // Pitch type filter buttons
+      var filterBtns = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">' +
+        '<button class="gl-pt-btn active" data-type="all" data-dt="'+dt+'" style="'+glBtnStyle(true)+'">All</button>' +
+        typeSet.map(function(t){
+          var c = tcMap[t]||'#888';
+          return '<button class="gl-pt-btn" data-type="'+t+'" data-dt="'+dt+'" style="'+glBtnStyle(false)+';border-color:'+c+'">' +
+            '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+c+';margin-right:5px"></span>' +
+            t+' <span style="opacity:0.5">'+fmt1(typeCounts[t]/gTot*100)+'%</span></button>';
+        }).join('') +
+      '</div>';
 
       var canvasId = 'gl-canvas-' + dt.replace(/-/g,'');
+      var viewToggle =
+        '<div style="display:flex;gap:6px;margin-bottom:10px">' +
+          '<button class="gl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Scatter</button>' +
+          '<button class="gl-view-btn zone-filter-btn" data-view="heatmap" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Heat Map</button>' +
+        '</div>';
       return '<div style="display:flex;gap:24px;padding:20px 24px;flex-wrap:wrap;align-items:flex-start">' +
-        // Pitch plot
+        // Pitch plot + filter
         '<div style="flex-shrink:0">' +
-          '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Pitch Plot</div>' +
-          '<canvas id="'+canvasId+'" width="480" height="660" style="width:220px;height:302px;display:block"></canvas>' +
-          '<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px 0">'+legendHTML+'</div>' +
+          filterBtns +
+          viewToggle +
+          '<canvas id="'+canvasId+'" width="600" height="826" style="width:300px;height:413px;display:block"></canvas>' +
         '</div>' +
         // Per-pitch type breakdown table
         '<div style="flex:1;min-width:200px">' +
@@ -4394,94 +4422,454 @@ function renderGameLog(name, pitch) {
       '</div>';
     }
 
+    // Per-game view state: scatter or heatmap
+    var glViewMode = {};   // keyed by dt
+
     function drawGameCanvas(dt, gsc, tcMap) {
       var canvasId = 'gl-canvas-' + dt.replace(/-/g,'');
       var canvas = document.getElementById(canvasId);
       if (!canvas) return;
-      var pts = gsc.filter(function(s){ return s.x!=null && s.y!=null; });
-      if (!pts.length) { canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height); return; }
+      var allPts = gsc.filter(function(s){ return s.x!=null && s.y!=null; });
+      if (!allPts.length) return;
 
+      var mode = glViewMode[dt] || 'scatter';
+
+      // Canvas sizing — match Strike Zone section exactly
       var DPR = window.devicePixelRatio || 1;
-      var CSS_W = 220, CSS_H = 302;
+      var CSS_W = 300, CSS_H = 413;
       canvas.width  = CSS_W * DPR;
       canvas.height = CSS_H * DPR;
       canvas.style.width  = CSS_W + 'px';
       canvas.style.height = CSS_H + 'px';
       var ctx = canvas.getContext('2d');
       ctx.scale(DPR, DPR);
+      ctx.clearRect(0, 0, CSS_W, CSS_H);
 
-      // Exact same coordinate system as renderZone:
-      // data s.x = horizontal axis (maps to canvas X), range -2.5..2.5
-      // data s.y = vertical axis   (maps to canvas Y), range -0.8..2.2
-      // Zone: x=-1..1 (horiz), y=0..1 (vert)
-      var PAD_L=28, PAD_R=8, PAD_T=8, PAD_B=28;
-      var PW = CSS_W - PAD_L - PAD_R;
-      var PH = CSS_H - PAD_T - PAD_B;
-      var X_MIN=-2.5, X_MAX=2.5, Y_MIN=-0.8, Y_MAX=2.2;
-      function toCx(x) { return PAD_L + ((x - X_MIN) / (X_MAX - X_MIN)) * PW; }
-      function toCy(y) { return PAD_T + PH - ((y - Y_MIN) / (Y_MAX - Y_MIN)) * PH; }
+      var W = CSS_W, H = CSS_H;
+      var PAD_L=32, PAD_R=20, PAD_T=12, PAD_B=32;
+      var PW = W-PAD_L-PAD_R, PH = H-PAD_T-PAD_B;
 
-      // Zone box corners
-      var zx1=toCx(-1), zx2=toCx(1), zy1=toCy(1), zy2=toCy(0);
+      // Bounds: scatter uses wide view, heatmap uses clean zoomed view (same as Strike Zone)
+      var SCATTER_B = {xMin:-2.5,xMax:2.5,yMin:-0.8,yMax:2.2};
+      var CLEAN_B   = {xMin:-1.85,xMax:1.85,yMin:-0.85,yMax:1.85};
+      var B = mode==='heatmap' ? CLEAN_B : SCATTER_B;
+      var X_MIN=B.xMin, X_MAX=B.xMax, Y_MIN=B.yMin, Y_MAX=B.yMax;
 
-      // "FROM A PITCHER'S POV" label — matches Strike Zone tab exactly
+      function toCx(x){ return PAD_L+((x-X_MIN)/(X_MAX-X_MIN))*PW; }
+      function toCy(y){ return PAD_T+PH-((y-Y_MIN)/(Y_MAX-Y_MIN))*PH; }
+
+      var zx1=toCx(-1),zx2=toCx(1),zy1=toCy(1),zy2=toCy(0);
+
+      // POV label
       ctx.save();
-      ctx.font = 'bold 9px monospace';
-      ctx.fillStyle = 'rgba(255,184,28,0.75)';
-      ctx.textAlign = 'center';
-      ctx.fillText("FROM A PITCHER'S POV", (zx1+zx2)/2, zy1 - 6);
+      ctx.font='bold 9px DM Mono,monospace';
+      ctx.fillStyle='rgba(255,184,28,0.75)';
+      ctx.textAlign='center';
+      ctx.fillText("FROM A PITCHER'S POV",(zx1+zx2)/2,zy1-6);
       ctx.restore();
 
-      // Zone fill — gold tint like Strike Zone tab
-      ctx.fillStyle = 'rgba(255,184,28,0.03)';
-      ctx.fillRect(zx1, zy1, zx2-zx1, zy2-zy1);
-
-      // Zone border — gold like Strike Zone tab
-      ctx.strokeStyle = 'rgba(255,184,28,0.85)';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(zx1, zy1, zx2-zx1, zy2-zy1);
-
-      // Zone grid (3x3) — gold dividers
-      var cw=(zx2-zx1)/3, ch=(zy2-zy1)/3;
-      ctx.strokeStyle = 'rgba(255,184,28,0.25)';
-      ctx.lineWidth = 0.8;
-      for (var i=1;i<3;i++){
-        ctx.beginPath(); ctx.moveTo(zx1+cw*i, zy1); ctx.lineTo(zx1+cw*i, zy2); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(zx1, zy1+ch*i); ctx.lineTo(zx2, zy1+ch*i); ctx.stroke();
+      if (mode==='heatmap') {
+        // KDE heatmap — identical to Strike Zone section
+        drawKdeHeatmap(ctx, allPts, W, H, PAD_L, PAD_R, PAD_T, PAD_B, X_MIN, X_MAX, Y_MIN, Y_MAX);
+      } else {
+        // Scatter dots coloured by pitch type
+        allPts.forEach(function(s) {
+          var t=s.pitch_type||'Unknown', color=tcMap[t]||'#888';
+          var cx=toCx(s.x), cy=toCy(s.y);
+          ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2);
+          ctx.fillStyle=color+'cc'; ctx.fill();
+          ctx.strokeStyle=color; ctx.lineWidth=1; ctx.stroke();
+          if (s.outcome==='Swinging Strike'||s.outcome==='Strikeout Swinging'){
+            ctx.strokeStyle='rgba(255,255,255,0.9)'; ctx.lineWidth=1.5;
+            ctx.beginPath(); ctx.moveTo(cx-3,cy-3); ctx.lineTo(cx+3,cy+3); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx+3,cy-3); ctx.lineTo(cx-3,cy+3); ctx.stroke();
+          } else if (s.outcome==='Walk'||s.outcome==='Intentional Walk'){
+            ctx.strokeStyle='#34d399'; ctx.lineWidth=2;
+            ctx.beginPath(); ctx.arc(cx,cy,7,0,Math.PI*2); ctx.stroke();
+          } else if (['Single','Double','Triple','Home Run'].includes(s.outcome)){
+            ctx.fillStyle='#FFB81C';
+            ctx.beginPath(); ctx.arc(cx,cy,3.5,0,Math.PI*2); ctx.fill();
+          }
+        });
       }
 
-      // Dots — s.x → canvas X, s.y → canvas Y (matches renderZone toCanvasX/toCanvasY)
-      pts.forEach(function(s) {
-        var t = s.pitch_type || 'Unknown';
-        var color = tcMap[t] || '#888';
-        var cx = toCx(s.x), cy = toCy(s.y);
-        ctx.beginPath();
-        ctx.arc(cx, cy, 5, 0, Math.PI*2);
-        ctx.fillStyle = color + 'cc';
-        ctx.fill();
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        // Outcome markers
-        if (s.outcome==='Swinging Strike'||s.outcome==='Strikeout Swinging') {
-          ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 1.5;
-          ctx.beginPath(); ctx.moveTo(cx-3,cy-3); ctx.lineTo(cx+3,cy+3); ctx.stroke();
-          ctx.beginPath(); ctx.moveTo(cx+3,cy-3); ctx.lineTo(cx-3,cy+3); ctx.stroke();
-        } else if (s.outcome==='Walk'||s.outcome==='Intentional Walk') {
-          ctx.strokeStyle = '#34d399'; ctx.lineWidth = 2;
-          ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI*2); ctx.stroke();
-        } else if (['Single','Double','Triple','Home Run'].includes(s.outcome)) {
-          ctx.fillStyle = '#FFB81C';
-          ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, Math.PI*2); ctx.fill();
-        }
-      });
+      // Zone fill + border + grid — always drawn on top
+      ctx.fillStyle='rgba(255,184,28,0.03)';
+      ctx.fillRect(zx1,zy1,zx2-zx1,zy2-zy1);
+      ctx.strokeStyle='rgba(255,184,28,0.85)'; ctx.lineWidth=2;
+      ctx.strokeRect(zx1,zy1,zx2-zx1,zy2-zy1);
+      var cw=(zx2-zx1)/3, ch=(zy2-zy1)/3;
+      ctx.strokeStyle='rgba(255,184,28,0.25)'; ctx.lineWidth=0.8;
+      for(var i=1;i<3;i++){
+        ctx.beginPath();ctx.moveTo(zx1+cw*i,zy1);ctx.lineTo(zx1+cw*i,zy2);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(zx1,zy1+ch*i);ctx.lineTo(zx2,zy1+ch*i);ctx.stroke();
+      }
     }
+
+    function glBtnStyle(active) {
+      return 'font-family:var(--font-mono);font-size:10px;padding:4px 10px;border-radius:4px;cursor:pointer;' +
+             'border:1px solid rgba(255,255,255,0.2);background:' + (active ? 'rgba(255,184,28,0.15)' : 'rgba(255,255,255,0.05)') +
+             ';color:' + (active ? '#FFB81C' : 'rgba(255,255,255,0.6)') + ';transition:all 0.15s';
+    }
+
+    // Wire pitch type filter + scatter/heatmap toggle — delegated
+    document.addEventListener('click', function glFilter(e) {
+      // Pitch type filter
+      var ptBtn = e.target.closest('.gl-pt-btn');
+      if (ptBtn) {
+        var dt2 = ptBtn.dataset.dt, type2 = ptBtn.dataset.type;
+        var gsc2 = gameMap[dt2]; if (!gsc2) return;
+        document.querySelectorAll('.gl-pt-btn[data-dt="'+dt2+'"]').forEach(function(b) {
+          b.style.background='rgba(255,255,255,0.05)'; b.style.color='rgba(255,255,255,0.6)'; b.classList.remove('active');
+        });
+        ptBtn.style.background='rgba(255,184,28,0.15)'; ptBtn.style.color='#FFB81C'; ptBtn.classList.add('active');
+        var filtered = type2==='all' ? gsc2 : gsc2.filter(function(s){ return (s.pitch_type||'Unknown')===type2; });
+        drawGameCanvas(dt2, filtered, typeColorMap);
+        return;
+      }
+      // Scatter / Heat Map toggle
+      var vBtn = e.target.closest('.gl-view-btn');
+      if (vBtn) {
+        var dt3 = vBtn.dataset.dt, view3 = vBtn.dataset.view;
+        var gsc3 = gameMap[dt3]; if (!gsc3) return;
+        document.querySelectorAll('.gl-view-btn[data-dt="'+dt3+'"]').forEach(function(b){ b.classList.remove('active'); });
+        vBtn.classList.add('active');
+        glViewMode[dt3] = view3;
+        // Get currently active pitch type filter
+        var activePT = document.querySelector('.gl-pt-btn.active[data-dt="'+dt3+'"]');
+        var ptType = activePT ? activePT.dataset.type : 'all';
+        var filtered3 = ptType==='all' ? gsc3 : gsc3.filter(function(s){ return (s.pitch_type||'Unknown')===ptType; });
+        drawGameCanvas(dt3, filtered3, typeColorMap);
+        return;
+      }
+    });
 
     buildRows();
   }, 0);
 
   return html;
 }
+
+
+function renderBatterGameLog(name, pitch) {
+  var sc = pitch && pitch.scatter ? pitch.scatter : [];
+  if (!sc.length) return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Game Log</span></div><div style="padding:20px;color:rgba(255,255,255,0.4);font-family:var(--font-mono);font-size:12px">No pitch data available.</div></div>';
+
+  // Group by date
+  var gameMap = {};
+  sc.forEach(function(s) {
+    var dt = (s.date || '').slice(0, 10); if (!dt) return;
+    if (!gameMap[dt]) gameMap[dt] = []; gameMap[dt].push(s);
+  });
+  var gameDates = Object.keys(gameMap).sort();
+
+  return '<div class="stat-card">' +
+    '<div class="stat-card-header"><span class="stat-card-title">Game Log</span>' +
+    '<span class="stat-card-subtitle">'+gameDates.length+' game'+(gameDates.length!==1?'s':'')+'</span></div>' +
+    '<div class="table-wrap"><table class="stat-table" id="bgl-table"><thead><tr>' +
+    '<th style="text-align:left;width:24px"></th>' +
+    '<th style="text-align:left">Date</th><th style="text-align:left">Opp</th>' +
+    '<th>P</th><th>PA</th><th>AVG</th><th>WHIFF%</th><th>Chase%</th>' +
+    '</tr></thead><tbody id="bgl-tbody"></tbody></table></div>' +
+  '</div>';
+}
+
+function initBatterGameLog(name, pitch) {
+  var tbody = document.getElementById('bgl-tbody');
+  if (!tbody) return;
+  var sc = pitch && pitch.scatter ? pitch.scatter : [];
+  if (!sc.length) return;
+
+  var gameMap = {};
+  sc.forEach(function(s) {
+    var dt = (s.date || '').slice(0, 10); if (!dt) return;
+    if (!gameMap[dt]) gameMap[dt] = []; gameMap[dt].push(s);
+  });
+  var gameDates = Object.keys(gameMap).sort();
+
+  // Heatmap modes
+  var HM_MODES = [
+    { id:'pitches', label:'Pitches',  color:'#60a5fa', fn: function(s){ return true; } },
+    { id:'whiffs',  label:'Whiffs',   color:'#f87171', fn: function(s){ return s.outcome==='Swinging Strike'; } },
+    { id:'contact', label:'Contact',  color:'#34d399', fn: function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sacrifice Bunt','Truncated Out'].includes(s.outcome); } },
+    { id:'hits',    label:'Hits',     color:'#FFB81C', fn: function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); } }
+  ];
+
+  var CONTACT_OUTCOMES = ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sacrifice Bunt','Truncated Out'];
+  var HIT_OUTCOMES     = ['Single','Double','Triple','Home Run'];
+  var SWING_OUTCOMES   = ['Swinging Strike','Foul','Strikeout Swinging'].concat(CONTACT_OUTCOMES);
+  var OOZ              = function(s){ return s.in_zone===false||s.in_zone==='false'; };
+
+  var expandedDate = gameDates.length ? gameDates[gameDates.length-1] : null;
+  var activeMode = 'pitches';
+
+  function buildBglRows() {
+    tbody.innerHTML = '';
+    var today = new Date(); today.setHours(0,0,0,0);
+    gameDates.slice().reverse().forEach(function(dt) {
+      var gsc = gameMap[dt], gTot = gsc.length;
+      // PA = pitches that start a new count (0-0) roughly = PAs faced, or count unique at-bats
+      var paSet = {}; gsc.forEach(function(s){ var ab=s.at_bat_id||s.ab_id||(s.batter+'_'+dt+'_'+(s.count||'')); paSet[ab]=1; });
+      var paCount = Object.keys(paSet).length || gsc.filter(function(s){ return (s.count||'').replace(/^'/,'')===('0-0'); }).length;
+      // Hits and AB for AVG
+      var hits = gsc.filter(function(s){ return HIT_OUTCOMES.includes(s.outcome); }).length;
+      var ab   = gsc.filter(function(s){ return CONTACT_OUTCOMES.concat(['Strikeout Swinging','Strikeout Looking']).includes(s.outcome); }).length;
+      var avgStr = ab>0 ? (hits/ab).toFixed(3).replace('0.','.') : '--';
+      // Whiff%
+      var swings = gsc.filter(function(s){ return SWING_OUTCOMES.includes(s.outcome); }).length;
+      var swStr  = gsc.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
+      var whiffStr = swings>0 ? fmt1(swStr/swings*100)+'%' : '--';
+      // Chase%
+      var ooz = gsc.filter(OOZ);
+      var chaseSwings = ooz.filter(function(s){ return SWING_OUTCOMES.includes(s.outcome); }).length;
+      var chaseStr = ooz.length>=3 ? fmt1(chaseSwings/ooz.length*100)+'%' : '--';
+      // Opponent
+      var oppLabel = '--';
+      for (var pi=0; pi<gsc.length; pi++) {
+        var bt = gsc[pi].pitcher_team || gsc[pi].team;
+        if (bt && bt.trim()) { var res=resolveTeam(bt); oppLabel=res?res.abbreviation:bt.trim().slice(0,3).toUpperCase(); break; }
+      }
+      var gameDate = new Date(dt+'T12:00:00');
+      var restDays = Math.floor((today-gameDate)/86400000);
+      var dateLabel = gameDate.toLocaleDateString('en-CA',{month:'short',day:'numeric'}).toUpperCase();
+      var isOpen = dt===expandedDate;
+
+      var summaryRow = document.createElement('tr');
+      summaryRow.style.cssText = 'cursor:pointer;'+(isOpen?'background:rgba(255,184,28,0.06);':'');
+      summaryRow.innerHTML =
+        '<td style="padding-left:12px;color:rgba(255,184,28,0.7);font-size:14px">'+(isOpen?'▾':'▸')+'</td>'+
+        '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:11px">'+dateLabel+'</td>'+
+        '<td><span style="font-family:var(--font-mono);font-size:11px;font-weight:600">'+oppLabel+'</span></td>'+
+        '<td>'+gTot+'</td><td>'+paCount+'</td><td class="highlight-val">'+avgStr+'</td>'+
+        '<td>'+whiffStr+'</td><td>'+chaseStr+'</td>';
+      tbody.appendChild(summaryRow);
+
+      // Detail row with heatmaps
+      var detailRow = document.createElement('tr');
+      detailRow.id = 'bgl-detail-'+dt.replace(/-/g,'');
+      detailRow.style.display = isOpen ? '' : 'none';
+      var detailCell = document.createElement('td');
+      detailCell.colSpan = 8;
+      detailCell.style.cssText = 'padding:0;background:rgba(10,14,30,0.6);border-top:none';
+      detailCell.innerHTML = buildBatterDetail(dt, gsc);
+      detailRow.appendChild(detailCell);
+      tbody.appendChild(detailRow);
+
+      summaryRow.addEventListener('click', function() {
+        var wasOpen = expandedDate === dt;
+        expandedDate = wasOpen ? null : dt;
+        buildBglRows();
+        if (!wasOpen) setTimeout(function(){ drawAllHeatmaps(dt, gsc); }, 30);
+      });
+      if (isOpen) setTimeout(function(){ drawAllHeatmaps(dt, gsc); }, 60);
+    });
+  }
+
+  var bglViewMode = {};  // 'scatter' or 'heatmap' per date
+
+  function hexToRgb(hex) {
+    var r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
+    return r+','+g+','+b;
+  }
+
+  function buildBatterDetail(dt, gsc) {
+    var modeBtns = HM_MODES.map(function(m, i){
+      var active = i===0;
+      return '<button class="bgl-mode-btn '+(active?'active':'')+'" data-mode="'+m.id+'" data-dt="'+dt+'" '+
+        'style="font-family:var(--font-mono);font-size:10px;padding:5px 12px;border-radius:4px;cursor:pointer;'+
+        'border:1px solid '+(active?m.color:'rgba(255,255,255,0.2)')+';'+
+        'background:'+(active?'rgba('+hexToRgb(m.color)+',0.15)':'rgba(255,255,255,0.05)')+';'+
+        'color:'+(active?m.color:'rgba(255,255,255,0.55)')+'">'+m.label+'</button>';
+    }).join('');
+
+    // Scatter / Heat Map view toggle — same style as Strike Zone
+    var viewToggle =
+      '<div style="display:flex;gap:6px;margin-left:12px">' +
+        '<button class="bgl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Scatter</button>' +
+        '<button class="bgl-view-btn zone-filter-btn" data-view="heatmap" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Heat Map</button>' +
+      '</div>';
+
+    return '<div style="padding:16px 20px">' +
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">' +
+        modeBtns + viewToggle +
+      '</div>' +
+      '<div style="display:flex;gap:20px;flex-wrap:wrap">' +
+        HM_MODES.map(function(m){
+          return '<div style="text-align:center">' +
+            '<div style="font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1px;margin-bottom:6px">'+m.label.toUpperCase()+'</div>' +
+            '<canvas id="bgl-hm-'+dt.replace(/-/g,'')+'-'+m.id+'" width="600" height="826" style="width:220px;height:302px;display:block;border-radius:4px"></canvas>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+    '</div>';
+  }
+
+  function drawAllHeatmaps(dt, gsc) {
+    var view = bglViewMode[dt] || 'scatter';
+    HM_MODES.forEach(function(m){ drawBatterCanvas(dt, gsc, m, view); });
+    // Wire mode buttons
+    document.querySelectorAll('.bgl-mode-btn[data-dt="'+dt+'"]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.bgl-mode-btn[data-dt="'+dt+'"]').forEach(function(b){
+          b.style.background='rgba(255,255,255,0.05)'; b.style.color='rgba(255,255,255,0.55)';
+          b.style.borderColor='rgba(255,255,255,0.2)'; b.classList.remove('active');
+        });
+        var m = HM_MODES.find(function(x){ return x.id===btn.dataset.mode; });
+        if (m) {
+          btn.style.background='rgba('+hexToRgb(m.color)+',0.15)';
+          btn.style.color=m.color; btn.style.borderColor=m.color; btn.classList.add('active');
+        }
+        // Redraw all canvases — active mode gets highlighted, but all stay visible
+        var view = bglViewMode[dt] || 'scatter';
+        HM_MODES.forEach(function(mm){ drawBatterCanvas(dt, gsc, mm, view); });
+      });
+    });
+    // Wire view toggle
+    document.querySelectorAll('.bgl-view-btn[data-dt="'+dt+'"]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.bgl-view-btn[data-dt="'+dt+'"]').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        bglViewMode[dt] = btn.dataset.view;
+        var view = btn.dataset.view;
+        HM_MODES.forEach(function(m){ drawBatterCanvas(dt, gsc, m, view); });
+      });
+    });
+  }
+
+  function drawBatterCanvas(dt, gsc, mode, view) {
+    var canvasId = 'bgl-hm-'+dt.replace(/-/g,'')+'-'+mode.id;
+    var canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+
+    var DPR = window.devicePixelRatio || 1;
+    // Match Strike Zone canvas size exactly
+    var CSS_W = 220, CSS_H = 302;
+    canvas.width  = CSS_W * DPR;
+    canvas.height = CSS_H * DPR;
+    canvas.style.width  = CSS_W+'px';
+    canvas.style.height = CSS_H+'px';
+    var ctx = canvas.getContext('2d');
+    ctx.scale(DPR, DPR);
+    ctx.clearRect(0, 0, CSS_W, CSS_H);
+
+    var W = CSS_W, H = CSS_H;
+    var PAD_L=28, PAD_R=20, PAD_T=12, PAD_B=24;
+    var PW=W-PAD_L-PAD_R, PH=H-PAD_T-PAD_B;
+
+    // Same bounds switching as Strike Zone section
+    var SCATTER_B = {xMin:-2.5,xMax:2.5,yMin:-0.8,yMax:2.2};
+    var CLEAN_B   = {xMin:-1.85,xMax:1.85,yMin:-0.85,yMax:1.85};
+    var B = view==='heatmap' ? CLEAN_B : SCATTER_B;
+    var X_MIN=B.xMin, X_MAX=B.xMax, Y_MIN=B.yMin, Y_MAX=B.yMax;
+
+    function toCx(x){ return PAD_L+((x-X_MIN)/(X_MAX-X_MIN))*PW; }
+    function toCy(y){ return PAD_T+PH-((y-Y_MIN)/(Y_MAX-Y_MIN))*PH; }
+
+    var zx1=toCx(-1),zx2=toCx(1),zy1=toCy(1),zy2=toCy(0);
+
+    // Filter pitches for this mode
+    var pts = gsc.filter(function(s){ return s.x!=null&&s.y!=null&&mode.fn(s); });
+
+    // POV label
+    ctx.save();
+    ctx.font='bold 7px DM Mono,monospace';
+    ctx.fillStyle='rgba(255,184,28,0.65)';
+    ctx.textAlign='center'; ctx.textBaseline='top';
+    ctx.fillText("PITCHER'S POV",(zx1+zx2)/2,2);
+    ctx.restore();
+
+    if (view==='heatmap') {
+      // Full KDE heatmap — identical to Strike Zone section
+      if (pts.length) drawKdeHeatmap(ctx, pts, W, H, PAD_L, PAD_R, PAD_T, PAD_B, X_MIN, X_MAX, Y_MIN, Y_MAX);
+    } else {
+      // Scatter — colour dots by mode colour
+      var rgb = hexToRgb(mode.color);
+      pts.forEach(function(s){
+        var cx=toCx(s.x), cy=toCy(s.y);
+        ctx.beginPath(); ctx.arc(cx,cy,4,0,Math.PI*2);
+        ctx.fillStyle='rgba('+rgb+',0.7)'; ctx.fill();
+        ctx.strokeStyle='rgba('+rgb+',0.9)'; ctx.lineWidth=0.8; ctx.stroke();
+      });
+    }
+
+    // Zone border + grid — always on top, gold like Strike Zone
+    ctx.fillStyle='rgba(255,184,28,0.03)';
+    ctx.fillRect(zx1,zy1,zx2-zx1,zy2-zy1);
+    ctx.strokeStyle='rgba(255,184,28,0.85)'; ctx.lineWidth=1.5;
+    ctx.strokeRect(zx1,zy1,zx2-zx1,zy2-zy1);
+    var cw=(zx2-zx1)/3, ch=(zy2-zy1)/3;
+    ctx.strokeStyle='rgba(255,184,28,0.25)'; ctx.lineWidth=0.6;
+    for(var i=1;i<3;i++){
+      ctx.beginPath();ctx.moveTo(zx1+cw*i,zy1);ctx.lineTo(zx1+cw*i,zy2);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(zx1,zy1+ch*i);ctx.lineTo(zx2,zy1+ch*i);ctx.stroke();
+    }
+  }
+
+  buildBglRows();
+}
+
+
+
+  // Shared KDE heatmap renderer — identical colour ramp and sigma to Strike Zone section
+  function drawKdeHeatmap(ctx, pts, W, H, PAD_L, PAD_R, PAD_T, PAD_B, X_MIN, X_MAX, Y_MIN, Y_MAX) {
+    var PW = W - PAD_L - PAD_R, PH = H - PAD_T - PAD_B;
+    var GW = 200, GH = 200;
+    var density = new Float32Array(GW * GH);
+    var SIGMA = Math.max(6, Math.min(14, 120 / Math.sqrt(pts.length + 1)));
+    pts.forEach(function(s) {
+      var gx = ((s.x - X_MIN) / (X_MAX - X_MIN)) * GW;
+      var gy = GH - ((s.y - Y_MIN) / (Y_MAX - Y_MIN)) * GH;
+      var radius = Math.ceil(SIGMA * 3);
+      for (var dy = -radius; dy <= radius; dy++) {
+        for (var dx = -radius; dx <= radius; dx++) {
+          var px = Math.round(gx + dx), py = Math.round(gy + dy);
+          if (px<0||px>=GW||py<0||py>=GH) continue;
+          density[py*GW+px] += Math.exp(-(dx*dx+dy*dy)/(2*SIGMA*SIGMA));
+        }
+      }
+    });
+    var vals = [];
+    for (var i=0;i<density.length;i++){ if(density[i]>0) vals.push(density[i]); }
+    if (!vals.length) return;
+    vals.sort(function(a,b){return a-b;});
+    var maxD = vals[Math.floor(vals.length*0.97)] || vals[vals.length-1];
+    if (!maxD) return;
+    var offscreen = document.createElement('canvas');
+    offscreen.width=GW; offscreen.height=GH;
+    var octx=offscreen.getContext('2d');
+    var imgData=octx.createImageData(GW,GH);
+    for (var py=0;py<GH;py++) {
+      for (var px=0;px<GW;px++) {
+        var val=Math.min(density[py*GW+px]/maxD,1.0);
+        if(val<0.01) continue;
+        var r,g,b,a,t;
+        if      (val<0.2){t=val/0.2;             r=Math.round(8  +t*(30 -8));  g=Math.round(16 +t*(100-16)); b=Math.round(48 +t*(200-48));}
+        else if (val<0.4){t=(val-0.2)/0.2;        r=Math.round(30 +t*(0  -30)); g=Math.round(100+t*(200-100));b=Math.round(200+t*(200-200));}
+        else if (val<0.6){t=(val-0.4)/0.2;        r=Math.round(0  +t*(80 -0));  g=Math.round(200+t*(220-200));b=Math.round(200+t*(50 -200));}
+        else if (val<0.8){t=(val-0.6)/0.2;        r=Math.round(80 +t*(240-80)); g=Math.round(220+t*(210-220));b=Math.round(50 +t*(0  -50));}
+        else             {t=(val-0.8)/0.2;         r=Math.round(240+t*(220-240));g=Math.round(210+t*(20 -210));b=0;}
+        a=Math.round(Math.pow(val,0.5)*230);
+        var idx=(py*GW+px)*4;
+        imgData.data[idx]=r; imgData.data[idx+1]=g; imgData.data[idx+2]=b; imgData.data[idx+3]=a;
+      }
+    }
+    octx.putImageData(imgData,0,0);
+    ctx.save();
+    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+    ctx.drawImage(offscreen, PAD_L, PAD_T, PW, PH);
+    ctx.restore();
+    // Colour scale legend
+    var scaleX=PAD_L+PW+4, scaleH=PH*0.6, scaleY=PAD_T+PH*0.2;
+    var grad=ctx.createLinearGradient(0,scaleY,0,scaleY+scaleH);
+    grad.addColorStop(0,'rgb(220,20,0)'); grad.addColorStop(0.25,'rgb(240,210,0)');
+    grad.addColorStop(0.5,'rgb(80,220,50)'); grad.addColorStop(0.75,'rgb(0,200,200)');
+    grad.addColorStop(1,'rgb(8,16,48)');
+    ctx.fillStyle=grad; ctx.fillRect(scaleX,scaleY,7,scaleH);
+    ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=0.5;
+    ctx.strokeRect(scaleX,scaleY,7,scaleH);
+    ctx.fillStyle='rgba(255,255,255,0.45)'; ctx.font='8px DM Mono,monospace'; ctx.textAlign='left';
+    ctx.fillText('HI',scaleX+10,scaleY+8); ctx.fillText('LO',scaleX+10,scaleY+scaleH);
+  }
 
 function renderSeasonStats(name, type, sum, pitch) {
   var allSeasons = DATA.iblHistory[name] || [];
