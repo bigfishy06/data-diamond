@@ -1142,10 +1142,12 @@ Zane Skansi,Kitchener Panthers`;
 
     // Gather player names for this opponent — active players only
     var playerNames = [];
+    var pitchesData = (DATA.pitches && Array.isArray(DATA.pitches)) ? DATA.pitches : [];
+    var summaryData = (DATA.summary && Array.isArray(DATA.summary)) ? DATA.summary : [];
 
     if (action === 'pitchers-pdf') {
       var seenK = new Set();
-      DATA.pitches.forEach(function(bp) {
+      pitchesData.forEach(function(bp) {
         if (!bp.scatter) return;
         bp.scatter.forEach(function(s) {
           if (!s.pitcher || !s.pitcher_team) return;
@@ -1160,12 +1162,12 @@ Zane Skansi,Kitchener Panthers`;
     } else {
       // batters-pdf
       var seenB = {};
-      DATA.summary.forEach(function(p) {
+      summaryData.forEach(function(p) {
         var t = resolveTeam(p.batter_team);
         if (!t || t.name !== oppName) return;
         if (!seenB[p.batter] || (p.AB||0) > (seenB[p.batter].AB||0)) seenB[p.batter] = p;
       });
-      DATA.pitches.forEach(function(bp) {
+      pitchesData.forEach(function(bp) {
         if (!bp.batter || seenB[bp.batter]) return;
         var t = resolveTeam(bp.team);
         if (t && t.name === oppName) seenB[bp.batter] = { batter: bp.batter, AB: 0 };
@@ -1353,7 +1355,8 @@ Zane Skansi,Kitchener Panthers`;
         });
 
         // PBP: FP SW%, BATS handedness — same for both years
-        var pbp = DATA.pbpBatters.find(function(p){ return p.batter===s.batter; })||null;
+        var _pbpB = (DATA.pbpBatters && Array.isArray(DATA.pbpBatters)) ? DATA.pbpBatters : [];
+        var pbp = _pbpB.find(function(p){ return p.batter===s.batter; })||null;
 
         // IBL History: AVG, OBP, SLG, OPS for 2025
         var iblYear = String(year);
@@ -1526,8 +1529,10 @@ Zane Skansi,Kitchener Panthers`;
 
       pitchers.forEach(function(p,idx){
         var sc=p.sc;
-        var pd=DATA.pitchers.find(function(x){return x.pitcher===p.name;})||{};
-        var pbpP=DATA.pbpPitchers.find(function(x){return x.pitcher===p.name;})||null;
+        var _pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
+        var _pbpPArr = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
+        var pd=_pitchersArr.find(function(x){return x.pitcher===p.name;})||{};
+        var pbpP=_pbpPArr.find(function(x){return x.pitcher===p.name;})||null;
         var iblYear=String(year);
         var iblAll=DATA.iblHistory[p.name]||[];
         var iblP=iblAll.filter(function(r){return r.IP>0&&(r.season||'').indexOf(iblYear)!==-1;})[0]
