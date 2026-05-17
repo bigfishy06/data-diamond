@@ -2244,7 +2244,7 @@ function renderPlayerDetail(name, type, content) {
     '<button class="tab-btn" data-tab="percentile">Percentile Stats</button>' +
     '<button class="tab-btn" data-tab="zone">Strike Zone</button>' +
     '<button class="tab-btn" data-tab="splits">Splits</button>' +
-    (type === 'pitcher' ? '<button class="tab-btn" data-tab="usage">Game Log</button>' : '') +
+    '<button class="tab-btn" data-tab="usage">Game Log</button>' +
     '<button class="tab-btn" data-tab="season">Season Stats</button>' +
     '<button class="tab-btn" data-tab="notes">Notes</button>' +
     '</div></div></div>' +
@@ -2341,50 +2341,39 @@ function renderPlayerDetail(name, type, content) {
     if (t === 'percentile') panel.innerHTML = renderPercentileStats(name, type, currentSum, currentPitchData, activeSeasonFilter);
     if (t === 'season')   panel.innerHTML = renderSeasonStats(name, type, currentSum, currentPitchData);
     if (t === 'splits') {
-      if (type === 'batter') {
-        // Two-column layout: splits on left, game log on right
-        panel.innerHTML =
-          '<div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">' +
-            '<div id="splits-left" style="flex:1;min-width:280px">' + renderSplits(name, type, currentPitchData, activeSeasonFilter) + '</div>' +
-            '<div id="splits-right" style="flex:1;min-width:320px">' + renderBatterGameLog(name, currentPitchData) + '</div>' +
-          '</div>';
-        var allPoints = currentPitchData && currentPitchData.scatter ? currentPitchData.scatter : [];
-        panel.querySelectorAll('.splits-hand-btn').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            panel.querySelectorAll('.splits-hand-btn').forEach(function(b) { b.classList.remove('active'); });
-            btn.classList.add('active');
-            var hand = btn.dataset.hand;
-            var filtered = hand === 'all' ? allPoints : allPoints.filter(function(s) {
-              return (s.pitcher_side || '') === hand;
-            });
-            panel.querySelector('#splits-tables').innerHTML = buildSplitsTables(filtered);
-          });
-        });
-        // Init batter game log after DOM ready
-        setTimeout(function() { initBatterGameLog(name, currentPitchData); }, 0);
-      } else {
-        panel.innerHTML = renderSplits(name, type, currentPitchData, activeSeasonFilter);
-        var allPoints = [];
+      panel.innerHTML = renderSplits(name, type, currentPitchData, activeSeasonFilter);
+      var allPoints = [];
+      if (type === 'batter' && currentPitchData && currentPitchData.scatter) {
+        allPoints = currentPitchData.scatter;
+      } else if (type === 'pitcher') {
         DATA.pitches.forEach(function(bp) {
           if (!bp.scatter) return;
           bp.scatter.forEach(function(s) { if (s.pitcher === name) allPoints.push(s); });
         });
-        panel.querySelectorAll('.splits-hand-btn').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            panel.querySelectorAll('.splits-hand-btn').forEach(function(b) { b.classList.remove('active'); });
-            btn.classList.add('active');
-            var hand = btn.dataset.hand;
-            var filtered = hand === 'all' ? allPoints : allPoints.filter(function(s) {
-              return (s.batter_side || s.side || '') === hand;
-            });
-            panel.querySelector('#splits-tables').innerHTML = buildSplitsTables(filtered);
-          });
-        });
       }
+      panel.querySelectorAll('.splits-hand-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          panel.querySelectorAll('.splits-hand-btn').forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          var hand = btn.dataset.hand;
+          var filtered = hand === 'all' ? allPoints : allPoints.filter(function(s) {
+            var field = type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '');
+            return field === hand;
+          });
+          panel.querySelector('#splits-tables').innerHTML = buildSplitsTables(filtered);
+        });
+      });
     }
     tabContent.appendChild(panel);
     if (t === 'zone')     renderZone(name, type, currentPitchData, panel, activeSeasonFilter);
-    if (t === 'usage')    panel.innerHTML = renderGameLog(name, currentPitchData);
+    if (t === 'usage') {
+      if (type === 'pitcher') {
+        panel.innerHTML = renderGameLog(name, currentPitchData);
+      } else {
+        panel.innerHTML = renderBatterGameLog(name, currentPitchData);
+        setTimeout(function() { initBatterGameLog(name, currentPitchData); }, 0);
+      }
+    }
     if (t === 'notes')    renderNotes(name, panel);
     setTimeout(function() {
       panel.querySelectorAll('.sbr-fill').forEach(function(el) {
