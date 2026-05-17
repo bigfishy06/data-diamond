@@ -1176,9 +1176,9 @@ Zane Skansi,Kitchener Panthers`;
     // Restore data after gathering names — actual PDF gen will swap again
     if (typeof swapSeasonData === 'function') swapSeasonData(prevSeason);
 
-    // Filter to active players only
+    // Filter to active players only (batters only — pitchers use pitcher_team on scatter entries)
     playerNames = playerNames.filter(function(n) {
-      return (year == 2025) ? gpIsActive2025(n) : true;
+      return (year == 2025 && action === 'batters-pdf') ? gpIsActive2025(n) : true;
     });
 
     if (!playerNames.length) {
@@ -1281,7 +1281,7 @@ Zane Skansi,Kitchener Panthers`;
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.summary) {
       alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
     }
-    btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…';
+    if (btn) { btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…'; }
     ensureJsPDF(function() {
       var oppT = resolveTeam(oppName);
       var team = oppT ? { abbr: oppT.abbreviation, name: oppT.name, color: oppT.primaryColor }
@@ -1303,7 +1303,7 @@ Zane Skansi,Kitchener Panthers`;
       }
 
       if (!batters.length) {
-        btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF';
+        if (btn) { btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF'; }
         alert('No batter data found for ' + oppName + '. Make sure data has been loaded for this team.');
         restore(); return;
       }
@@ -1406,7 +1406,7 @@ Zane Skansi,Kitchener Panthers`;
       sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
 
       d.save(team.abbr+'_Opposing_Batters.pdf');
-      btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF';
+      if (btn) { btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF'; }
       restore();
     });
   }
@@ -1418,7 +1418,7 @@ Zane Skansi,Kitchener Panthers`;
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.pitches) {
       alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
     }
-    btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…';
+    if (btn) { btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…'; }
     ensureJsPDF(function() {
       function f2(v){if(v==null||isNaN(v))return'—';return parseFloat(v).toFixed(2);}
       var oppT = resolveTeam(oppName);
@@ -1458,7 +1458,7 @@ Zane Skansi,Kitchener Panthers`;
       }
 
       if (!pitchers.length) {
-        btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF';
+        if (btn) { btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF'; }
         alert('No pitcher data found for ' + oppName + '. Make sure data has been loaded for this team.');
         restore(); return;
       }
@@ -1609,7 +1609,7 @@ Zane Skansi,Kitchener Panthers`;
       sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
 
       d.save(team.abbr+'_Opposing_Pitchers.pdf');
-      btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF';
+      if (btn) { btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF'; }
       restore();
     });
   }
