@@ -1354,9 +1354,10 @@ Zane Skansi,Kitchener Panthers`;
           bp.scatter.forEach(function(p) { if (p.batter && p.batter.toLowerCase() === nameLower) sc.push(p); });
         });
 
-        // PBP: FP SW%, BATS handedness — same for both years
+        // PBP: FP SW%, BATS handedness — 2025 only (pbpBatters is empty for 2026)
         var _pbpB = (DATA.pbpBatters && Array.isArray(DATA.pbpBatters)) ? DATA.pbpBatters : [];
-        var pbp = _pbpB.find(function(p){ return p.batter===s.batter; })||null;
+        var _batterKey = (s.batter||'').trim();
+        var pbp = _pbpB.find(function(p){ return (p.batter||'').trim()===_batterKey; })||null;
 
         // IBL History: AVG, OBP, SLG, OPS for 2025
         var iblYear = String(year);
@@ -1389,12 +1390,27 @@ Zane Skansi,Kitchener Panthers`;
         var bats = pbp&&pbp.bats ? pbp.bats
                  : batSc.length ? (rC/batSc.length>=0.8?'R':lC/batSc.length>=0.8?'L':'S') : '?';
 
-        // GB%, FB%, LD%, spray, shift: always from scatter (x/y data)
+        // GB%, FB%, LD%: 2025 = pbp_batters (most accurate), 2026 = summary2026 (normalized)
+        // Spray/shift always from scatter x/y data
         var batted=sc.filter(function(p){return['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(p.outcome);});
         var bipTot=batted.length;
-        var gb=bipTot?f1(batted.filter(function(p){return p.outcome==='Groundout'||p.outcome==='Double Play';}).length/bipTot*100)+'%':'—';
-        var fb=bipTot?f1(batted.filter(function(p){return p.outcome==='Flyout'||p.outcome==='Home Run';}).length/bipTot*100)+'%':'—';
-        var lo=bipTot?f1(batted.filter(function(p){return p.outcome==='Lineout'||p.outcome==='Single'||p.outcome==='Double'||p.outcome==='Triple';}).length/bipTot*100)+'%':'—';
+        // For 2025, prefer pbp_batters GB/FB/LD% (calculated from full season)
+        // For 2026, prefer summary2026 normalized values, fallback to scatter
+        var gb=(function(){
+          if(year==2025 && pbp&&pbp.GB_pct!=null) return f1(pbp.GB_pct)+'%';
+          if(year==2026 && s.GB_pct!=null) return f1(s.GB_pct)+'%';
+          return bipTot?f1(batted.filter(function(p){return p.outcome==='Groundout'||p.outcome==='Double Play';}).length/bipTot*100)+'%':'—';
+        })();
+        var fb=(function(){
+          if(year==2025 && pbp&&pbp.FB_pct!=null) return f1(pbp.FB_pct)+'%';
+          if(year==2026 && s.FB_pct!=null) return f1(s.FB_pct)+'%';
+          return bipTot?f1(batted.filter(function(p){return p.outcome==='Flyout'||p.outcome==='Home Run';}).length/bipTot*100)+'%':'—';
+        })();
+        var lo=(function(){
+          if(year==2025 && pbp&&pbp.LO_pct!=null) return f1(pbp.LO_pct)+'%';
+          if(year==2026 && s.LO_pct!=null) return f1(s.LO_pct)+'%';
+          return bipTot?f1(batted.filter(function(p){return p.outcome==='Lineout'||p.outcome==='Single'||p.outcome==='Double'||p.outcome==='Triple';}).length/bipTot*100)+'%':'—';
+        })();
         var spBatted=batted.filter(function(p){return p.spray;});
         var spTot=spBatted.length;
         var pullPct=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Pull';}).length/spTot*100)+'%':'—';
@@ -1568,27 +1584,44 @@ Zane Skansi,Kitchener Panthers`;
           avail='AVAIL'; availC=[52,211,153];
         }
 
-        // ERA: always IBL History (both years)
+        // ERA: always IBL History (both years) — pbp ERA is unreliable (often 0)
         var eraVal = iblP&&iblP.ERA!=null ? f2(iblP.ERA) : '—';
 
-        // WHIP, STR%, FPS%, K%: PBP primary (both years), scatter fallback
         var tot=sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
         var ks=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
         var str=sc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
 
+        // WHIP, STR%, FPS%, K%, TTP:
+        // 2025: pbp_pitchers primary → scatter fallback
+        // 2026: pitchers2026 (pd) primary → scatter fallback (no pbp for 2026)
         var whipVal=(function(){
-          if(pbpP&&pbpP.WHIP!=null) return f2(pbpP.WHIP);
+          if(year==2025 && pbpP&&pbpP.WHIP!=null) return f2(pbpP.WHIP);
+          if(year==2026 && pd.IP>0){
+            // Calculate from scatter: (BB + H) / IP
+            var scBbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+            var scH=sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
+            return f2((scBbs+scH)/pd.IP);
+          }
           // scatter fallback
           var scBbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
           var scH=sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
           var scO=sc.filter(function(s){return['Groundout','Flyout','Popout','Lineout','Strikeout Swinging','Strikeout Looking','Double Play'].includes(s.outcome);}).length;
           return scO>0 ? f2((scBbs+scH)/(scO/3)) : '—';
         })();
-        var strVal = pbpP&&pbpP.STR_pct!=null ? f1(pbpP.STR_pct)+'%' : (tot>0 ? f1(xp(str,tot))+'%' : '—');
-        var kVal   = pbpP&&pbpP.K_pct!=null   ? f1(pbpP.K_pct)+'%'   : (tot>0 ? f1(xp(ks,tot))+'%'  : '—');
-        var fpsVal = (function(){
-          if(pbpP&&pbpP.FP_STR_pct!=null) return f1(pbpP.FP_STR_pct)+'%';
-          // scatter fallback: first pitch of each PA
+        var strVal=(function(){
+          if(year==2025 && pbpP&&pbpP.STR_pct!=null) return f1(pbpP.STR_pct)+'%';
+          if(pd.STR_pct!=null) return f1(pd.STR_pct)+'%';
+          return tot>0 ? f1(xp(str,tot))+'%' : '—';
+        })();
+        var kVal=(function(){
+          if(year==2025 && pbpP&&pbpP.K_pct!=null) return f1(pbpP.K_pct)+'%';
+          if(pd.K_pct!=null) return f1(pd.K_pct)+'%';
+          return tot>0 ? f1(xp(ks,tot))+'%' : '—';
+        })();
+        var fpsVal=(function(){
+          if(year==2025 && pbpP&&pbpP.FP_STR_pct!=null) return f1(pbpP.FP_STR_pct)+'%';
+          if(pd.FPS_pct!=null) return f1(pd.FPS_pct)+'%';
+          if(pd.FP_STR_pct!=null) return f1(pd.FP_STR_pct)+'%';
           var seenPA={}, paFirst=[];
           sc.forEach(function(s){ var k2=(s.batter||'')+'|'+(s.inning||''); if(!seenPA[k2]){seenPA[k2]=true;paFirst.push(s);} });
           var fpStr=paFirst.filter(function(s){
@@ -1599,7 +1632,7 @@ Zane Skansi,Kitchener Panthers`;
           return paFirst.length>=5 ? f1(fpStr/paFirst.length*100)+'%' : '—';
         })();
 
-        // TTP: always from DATA.pitchers (scatter-derived, both years)
+        // TTP: pd.avg_time_to_plate exists in both pitchers.json and pitchers2026.json
         var ttpVal = pd.avg_time_to_plate!=null ? pd.avg_time_to_plate.toFixed(2)+'s' : '—';
 
         // Arsenal: always from scatter x/y data (both years)
