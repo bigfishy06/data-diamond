@@ -326,11 +326,11 @@ pitcher_json <- pitcher_stats %>%
 
 # ── Write JSON ─────────────────────────────────────────────────────────────────
 write_json(pitches_json,
-           "C:/Users/chris/OneDrive/Documents/pitches2026.json",
+           "C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/pitches2026.json",
            auto_unbox = TRUE, pretty = TRUE)
 
 write_json(pitcher_json,
-           "C:/Users/chris/OneDrive/Documents/pitchers2026.json",
+           "C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/pitchers2026.json",
            auto_unbox = TRUE, pretty = TRUE, na = "null")
 
 cat("Done!\n")
