@@ -4368,7 +4368,7 @@ function renderGameLog(name, pitch) {
         '<div style="flex-shrink:0">' +
           filterBtns +
           viewToggle +
-          '<canvas id="'+canvasId+'" width="600" height="826" style="width:360px;height:495px;display:block"></canvas>' +
+          '<canvas id="'+canvasId+'" width="480" height="660" style="width:300px;height:413px;display:block"></canvas>' +
         '</div>' +
         // Per-pitch type breakdown table
         '<div style="flex:1;min-width:200px">' +
@@ -4435,7 +4435,7 @@ function renderGameLog(name, pitch) {
 
       // Canvas sizing — match Strike Zone section exactly
       var DPR = window.devicePixelRatio || 1;
-      var CSS_W = 360, CSS_H = 495;
+      var CSS_W = 300, CSS_H = 413;
       canvas.width  = CSS_W * DPR;
       canvas.height = CSS_H * DPR;
       canvas.style.width  = CSS_W + 'px';
@@ -4445,14 +4445,11 @@ function renderGameLog(name, pitch) {
       ctx.clearRect(0, 0, CSS_W, CSS_H);
 
       var W = CSS_W, H = CSS_H;
-      var PAD_L=32, PAD_R=20, PAD_T=12, PAD_B=32;
+      var PAD_L=32, PAD_R=12, PAD_T=12, PAD_B=32;
       var PW = W-PAD_L-PAD_R, PH = H-PAD_T-PAD_B;
 
-      // Bounds: scatter uses wide view, heatmap uses clean zoomed view (same as Strike Zone)
-      var SCATTER_B = {xMin:-2.5,xMax:2.5,yMin:-0.8,yMax:2.2};
-      var CLEAN_B   = {xMin:-1.85,xMax:1.85,yMin:-0.85,yMax:1.85};
-      var B = mode==='heatmap' ? CLEAN_B : SCATTER_B;
-      var X_MIN=B.xMin, X_MAX=B.xMax, Y_MIN=B.yMin, Y_MAX=B.yMax;
+      // Fixed bounds — same for both scatter and heatmap so zone never jumps
+      var X_MIN=-2.5, X_MAX=2.5, Y_MIN=-0.8, Y_MAX=2.2;
 
       function toCx(x){ return PAD_L+((x-X_MIN)/(X_MAX-X_MIN))*PW; }
       function toCy(y){ return PAD_T+PH-((y-Y_MIN)/(Y_MAX-Y_MIN))*PH; }
@@ -4752,7 +4749,7 @@ function initBatterGameLog(name, pitch) {
         '<div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap">' +
           modeBtns + viewToggle +
         '</div>' +
-        '<canvas id="'+canvasId+'" width="600" height="826" style="width:360px;height:495px;display:block;border-radius:4px"></canvas>' +
+        '<canvas id="'+canvasId+'" width="480" height="660" style="width:300px;height:413px;display:block;border-radius:4px"></canvas>' +
       '</div>' +
       // Right: stats
       '<div style="flex:1;min-width:200px">' +
@@ -4814,7 +4811,7 @@ function initBatterGameLog(name, pitch) {
     if (!canvas) return;
 
     var DPR = window.devicePixelRatio || 1;
-    var CSS_W = 360, CSS_H = 495;
+    var CSS_W = 300, CSS_H = 413;
     canvas.width  = CSS_W * DPR;
     canvas.height = CSS_H * DPR;
     canvas.style.width  = CSS_W+'px';
@@ -4824,14 +4821,11 @@ function initBatterGameLog(name, pitch) {
     ctx.clearRect(0, 0, CSS_W, CSS_H);
 
     var W = CSS_W, H = CSS_H;
-    var PAD_L=32, PAD_R=20, PAD_T=16, PAD_B=32;
+    var PAD_L=32, PAD_R=12, PAD_T=12, PAD_B=32;
     var PW=W-PAD_L-PAD_R, PH=H-PAD_T-PAD_B;
 
-    // Same bounds switching as Strike Zone section
-    var SCATTER_B = {xMin:-2.5,xMax:2.5,yMin:-0.8,yMax:2.2};
-    var CLEAN_B   = {xMin:-1.85,xMax:1.85,yMin:-0.85,yMax:1.85};
-    var B = view==='heatmap' ? CLEAN_B : SCATTER_B;
-    var X_MIN=B.xMin, X_MAX=B.xMax, Y_MIN=B.yMin, Y_MAX=B.yMax;
+    // Fixed bounds — same for both scatter and heatmap so zone never jumps
+    var X_MIN=-2.5, X_MAX=2.5, Y_MIN=-0.8, Y_MAX=2.2;
 
     function toCx(x){ return PAD_L+((x-X_MIN)/(X_MAX-X_MIN))*PW; }
     function toCy(y){ return PAD_T+PH-((y-Y_MIN)/(Y_MAX-Y_MIN))*PH; }
