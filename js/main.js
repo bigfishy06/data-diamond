@@ -4349,6 +4349,13 @@ function renderGameLog(name, pitch) {
             '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+c+';margin-right:5px"></span>' +
             t+' <span style="opacity:0.5">'+fmt1(typeCounts[t]/gTot*100)+'%</span></button>';
         }).join('') +
+      '</div>' +
+      // Batter handedness filter
+      '<div style="display:flex;gap:6px;margin-bottom:12px">' +
+        '<span style="font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:0.08em;align-self:center">BATTER</span>' +
+        '<button class="gl-hand-btn active" data-hand="all" data-dt="'+dt+'" style="'+glBtnStyle(true)+'">All</button>' +
+        '<button class="gl-hand-btn" data-hand="R" data-dt="'+dt+'" style="'+glBtnStyle(false)+'">RHB</button>' +
+        '<button class="gl-hand-btn" data-hand="L" data-dt="'+dt+'" style="'+glBtnStyle(false)+'">LHB</button>' +
       '</div>';
 
       var canvasId = 'gl-canvas-' + dt.replace(/-/g,'');
@@ -4461,24 +4468,13 @@ function renderGameLog(name, pitch) {
         // KDE heatmap — identical to Strike Zone section
         drawKdeHeatmap(ctx, allPts, W, H, PAD_L, PAD_R, PAD_T, PAD_B, X_MIN, X_MAX, Y_MIN, Y_MAX);
       } else {
-        // Scatter dots coloured by pitch type
+        // Scatter dots — solid color by pitch type, no symbols
         allPts.forEach(function(s) {
           var t=s.pitch_type||'Unknown', color=tcMap[t]||'#888';
           var cx=toCx(s.x), cy=toCy(s.y);
           ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2);
           ctx.fillStyle=color+'cc'; ctx.fill();
           ctx.strokeStyle=color; ctx.lineWidth=1; ctx.stroke();
-          if (s.outcome==='Swinging Strike'||s.outcome==='Strikeout Swinging'){
-            ctx.strokeStyle='rgba(255,255,255,0.9)'; ctx.lineWidth=1.5;
-            ctx.beginPath(); ctx.moveTo(cx-3,cy-3); ctx.lineTo(cx+3,cy+3); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(cx+3,cy-3); ctx.lineTo(cx-3,cy+3); ctx.stroke();
-          } else if (s.outcome==='Walk'||s.outcome==='Intentional Walk'){
-            ctx.strokeStyle='#34d399'; ctx.lineWidth=2;
-            ctx.beginPath(); ctx.arc(cx,cy,7,0,Math.PI*2); ctx.stroke();
-          } else if (['Single','Double','Triple','Home Run'].includes(s.outcome)){
-            ctx.fillStyle='#FFB81C';
-            ctx.beginPath(); ctx.arc(cx,cy,3.5,0,Math.PI*2); ctx.fill();
-          }
         });
       }
 
@@ -4512,8 +4508,29 @@ function renderGameLog(name, pitch) {
           b.style.background='rgba(255,255,255,0.05)'; b.style.color='rgba(255,255,255,0.6)'; b.classList.remove('active');
         });
         ptBtn.style.background='rgba(255,184,28,0.15)'; ptBtn.style.color='#FFB81C'; ptBtn.classList.add('active');
-        var filtered = type2==='all' ? gsc2 : gsc2.filter(function(s){ return (s.pitch_type||'Unknown')===type2; });
+        var activeHand2 = document.querySelector('.gl-hand-btn.active[data-dt="'+dt2+'"]');
+        var handF2 = activeHand2 ? activeHand2.dataset.hand : 'all';
+        var filtered = gsc2;
+        if (handF2 !== 'all') filtered = filtered.filter(function(s){ return s.batter_side === handF2; });
+        if (type2 !== 'all') filtered = filtered.filter(function(s){ return (s.pitch_type||'Unknown')===type2; });
         drawGameCanvas(dt2, filtered, typeColorMap);
+        return;
+      }
+      // Batter hand filter
+      var hBtn = e.target.closest('.gl-hand-btn');
+      if (hBtn) {
+        var dt4 = hBtn.dataset.dt, hand4 = hBtn.dataset.hand;
+        var gsc4 = gameMap[dt4]; if (!gsc4) return;
+        document.querySelectorAll('.gl-hand-btn[data-dt="'+dt4+'"]').forEach(function(b){
+          b.style.background='rgba(255,255,255,0.05)'; b.style.color='rgba(255,255,255,0.6)'; b.classList.remove('active');
+        });
+        hBtn.style.background='rgba(255,184,28,0.15)'; hBtn.style.color='#FFB81C'; hBtn.classList.add('active');
+        var activePT4 = document.querySelector('.gl-pt-btn.active[data-dt="'+dt4+'"]');
+        var ptType4 = activePT4 ? activePT4.dataset.type : 'all';
+        var filtered4 = gsc4;
+        if (hand4 !== 'all') filtered4 = filtered4.filter(function(s){ return s.batter_side === hand4; });
+        if (ptType4 !== 'all') filtered4 = filtered4.filter(function(s){ return (s.pitch_type||'Unknown')===ptType4; });
+        drawGameCanvas(dt4, filtered4, typeColorMap);
         return;
       }
       // Scatter / Heat Map toggle
@@ -4524,10 +4541,14 @@ function renderGameLog(name, pitch) {
         document.querySelectorAll('.gl-view-btn[data-dt="'+dt3+'"]').forEach(function(b){ b.classList.remove('active'); });
         vBtn.classList.add('active');
         glViewMode[dt3] = view3;
-        // Get currently active pitch type filter
+        // Get currently active pitch type + hand filters
         var activePT = document.querySelector('.gl-pt-btn.active[data-dt="'+dt3+'"]');
         var ptType = activePT ? activePT.dataset.type : 'all';
-        var filtered3 = ptType==='all' ? gsc3 : gsc3.filter(function(s){ return (s.pitch_type||'Unknown')===ptType; });
+        var activeH = document.querySelector('.gl-hand-btn.active[data-dt="'+dt3+'"]');
+        var handF = activeH ? activeH.dataset.hand : 'all';
+        var filtered3 = gsc3;
+        if (handF !== 'all') filtered3 = filtered3.filter(function(s){ return s.batter_side === handF; });
+        if (ptType !== 'all') filtered3 = filtered3.filter(function(s){ return (s.pitch_type||'Unknown')===ptType; });
         drawGameCanvas(dt3, filtered3, typeColorMap);
         return;
       }
@@ -4671,31 +4692,30 @@ function initBatterGameLog(name, pitch) {
         'color:'+(active?m.color:'rgba(255,255,255,0.55)')+'">'+m.label+'</button>';
     }).join('');
 
-    // Scatter / Heat Map view toggle — same style as Strike Zone
+    // Scatter / Heat Map view toggle
     var viewToggle =
       '<div style="display:flex;gap:6px;margin-left:12px">' +
         '<button class="bgl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Scatter</button>' +
         '<button class="bgl-view-btn zone-filter-btn" data-view="heatmap" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Heat Map</button>' +
       '</div>';
 
+    // Single canvas ID
+    var canvasId = 'bgl-hm-'+dt.replace(/-/g,'');
+
     return '<div style="padding:16px 20px">' +
       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">' +
         modeBtns + viewToggle +
       '</div>' +
-      '<div style="display:flex;gap:20px;flex-wrap:wrap">' +
-        HM_MODES.map(function(m){
-          return '<div style="text-align:center">' +
-            '<div style="font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1px;margin-bottom:6px">'+m.label.toUpperCase()+'</div>' +
-            '<canvas id="bgl-hm-'+dt.replace(/-/g,'')+'-'+m.id+'" width="600" height="826" style="width:220px;height:302px;display:block;border-radius:4px"></canvas>' +
-          '</div>';
-        }).join('') +
-      '</div>' +
+      '<canvas id="'+canvasId+'" width="600" height="826" style="width:220px;height:302px;display:block;border-radius:4px"></canvas>' +
     '</div>';
   }
 
   function drawAllHeatmaps(dt, gsc) {
     var view = bglViewMode[dt] || 'scatter';
-    HM_MODES.forEach(function(m){ drawBatterCanvas(dt, gsc, m, view); });
+    // Draw single canvas with active mode
+    var activeModId = (document.querySelector('.bgl-mode-btn.active[data-dt="'+dt+'"]')||{dataset:{mode:'pitches'}}).dataset.mode;
+    var activeM = HM_MODES.find(function(x){ return x.id===activeModId; }) || HM_MODES[0];
+    drawBatterCanvas(dt, gsc, activeM, view);
     // Wire mode buttons
     document.querySelectorAll('.bgl-mode-btn[data-dt="'+dt+'"]').forEach(function(btn) {
       btn.addEventListener('click', function() {
@@ -4708,9 +4728,8 @@ function initBatterGameLog(name, pitch) {
           btn.style.background='rgba('+hexToRgb(m.color)+',0.15)';
           btn.style.color=m.color; btn.style.borderColor=m.color; btn.classList.add('active');
         }
-        // Redraw all canvases — active mode gets highlighted, but all stay visible
-        var view = bglViewMode[dt] || 'scatter';
-        HM_MODES.forEach(function(mm){ drawBatterCanvas(dt, gsc, mm, view); });
+        var v = bglViewMode[dt] || 'scatter';
+        if (m) drawBatterCanvas(dt, gsc, m, v);
       });
     });
     // Wire view toggle
@@ -4719,14 +4738,15 @@ function initBatterGameLog(name, pitch) {
         document.querySelectorAll('.bgl-view-btn[data-dt="'+dt+'"]').forEach(function(b){ b.classList.remove('active'); });
         btn.classList.add('active');
         bglViewMode[dt] = btn.dataset.view;
-        var view = btn.dataset.view;
-        HM_MODES.forEach(function(m){ drawBatterCanvas(dt, gsc, m, view); });
+        var v = btn.dataset.view;
+        var aM2 = HM_MODES.find(function(x){ return x.id===(document.querySelector('.bgl-mode-btn.active[data-dt="'+dt+'"]')||{dataset:{mode:'pitches'}}).dataset.mode; }) || HM_MODES[0];
+        drawBatterCanvas(dt, gsc, aM2, v);
       });
     });
   }
 
   function drawBatterCanvas(dt, gsc, mode, view) {
-    var canvasId = 'bgl-hm-'+dt.replace(/-/g,'')+'-'+mode.id;
+    var canvasId = 'bgl-hm-'+dt.replace(/-/g,'');
     var canvas = document.getElementById(canvasId);
     if (!canvas) return;
 
