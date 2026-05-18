@@ -4369,7 +4369,7 @@ function renderGameLog(name, pitch) {
         '<div style="flex-shrink:0">' +
           filterBtns +
           viewToggle +
-          '<canvas id="'+canvasId+'" width="600" height="826" style="width:300px;height:413px;display:block"></canvas>' +
+          '<canvas id="'+canvasId+'" width="600" height="826" style="width:420px;height:578px;display:block"></canvas>' +
         '</div>' +
         // Per-pitch type breakdown table
         '<div style="flex:1;min-width:200px">' +
@@ -4432,7 +4432,7 @@ function renderGameLog(name, pitch) {
 
       // Canvas sizing — match Strike Zone section exactly
       var DPR = window.devicePixelRatio || 1;
-      var CSS_W = 300, CSS_H = 413;
+      var CSS_W = 420, CSS_H = 578;
       canvas.width  = CSS_W * DPR;
       canvas.height = CSS_H * DPR;
       canvas.style.width  = CSS_W + 'px';
@@ -4682,31 +4682,85 @@ function initBatterGameLog(name, pitch) {
     return r+','+g+','+b;
   }
 
+  function bglBtnStyle(active, color) {
+    return 'font-family:var(--font-mono);font-size:10px;padding:4px 10px;border-radius:4px;cursor:pointer;' +
+      'border:1px solid ' + (active ? (color||'rgba(255,184,28,0.8)') : 'rgba(255,255,255,0.2)') + ';' +
+      'background:' + (active ? ('rgba('+hexToRgb(color||'#FFB81C')+',0.15)') : 'rgba(255,255,255,0.05)') + ';' +
+      'color:' + (active ? (color||'#FFB81C') : 'rgba(255,255,255,0.6)') + ';transition:all 0.15s';
+  }
+
   function buildBatterDetail(dt, gsc) {
+    var gTot = gsc.length;
+    // Outcome breakdown
+    var outcomeCounts = {};
+    gsc.forEach(function(s){ var o=s.outcome||'Unknown'; outcomeCounts[o]=(outcomeCounts[o]||0)+1; });
+    var outcomeEntries = Object.entries(outcomeCounts).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
+
+    // Pitch type breakdown
+    var typeCounts2 = {};
+    gsc.forEach(function(s){ var t=s.pitch_type||'Unknown'; typeCounts2[t]=(typeCounts2[t]||0)+1; });
+    var typeSet2 = Object.keys(typeCounts2).sort(function(a,b){return typeCounts2[b]-typeCounts2[a];});
+    var BATTER_PITCH_COLORS = {'Fastball':'#f87171','Breaking Ball':'#60a5fa','Offspeed':'#a78bfa','Changeup':'#34d399','Curveball':'#fb923c','Slider':'#facc15','Cutter':'#f472b6','Sinker':'#22d3ee'};
+    var FB_COLORS2 = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee'];
+    var typeColorMap2 = {};
+    typeSet2.forEach(function(t,i){ typeColorMap2[t]=BATTER_PITCH_COLORS[t]||FB_COLORS2[i%FB_COLORS2.length]; });
+
     var modeBtns = HM_MODES.map(function(m, i){
       var active = i===0;
       return '<button class="bgl-mode-btn '+(active?'active':'')+'" data-mode="'+m.id+'" data-dt="'+dt+'" '+
-        'style="font-family:var(--font-mono);font-size:10px;padding:5px 12px;border-radius:4px;cursor:pointer;'+
-        'border:1px solid '+(active?m.color:'rgba(255,255,255,0.2)')+';'+
-        'background:'+(active?'rgba('+hexToRgb(m.color)+',0.15)':'rgba(255,255,255,0.05)')+';'+
-        'color:'+(active?m.color:'rgba(255,255,255,0.55)')+'">'+m.label+'</button>';
+        'style="'+bglBtnStyle(active, m.color)+'">'+m.label+'</button>';
     }).join('');
 
-    // Scatter / Heat Map view toggle
     var viewToggle =
-      '<div style="display:flex;gap:6px;margin-left:12px">' +
+      '<div style="display:flex;gap:6px;margin-left:auto">' +
         '<button class="bgl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Scatter</button>' +
         '<button class="bgl-view-btn zone-filter-btn" data-view="heatmap" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Heat Map</button>' +
       '</div>';
 
-    // Single canvas ID
     var canvasId = 'bgl-hm-'+dt.replace(/-/g,'');
 
-    return '<div style="padding:16px 20px">' +
-      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">' +
-        modeBtns + viewToggle +
+    var pitchTypeRows = typeSet2.map(function(t){
+      var pts2 = gsc.filter(function(s){return (s.pitch_type||'Unknown')===t;});
+      var n = pts2.length;
+      var swS = pts2.filter(function(s){return s.outcome==='Swinging Strike';}).length;
+      var fo  = pts2.filter(function(s){return s.outcome==='Foul';}).length;
+      var ip  = pts2.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Error','Sacrifice Fly'].includes(s.outcome);}).length;
+      var sw  = swS+fo+ip;
+      var dot = typeColorMap2[t]||'#888';
+      return '<tr>' +
+        '<td style="text-align:left"><span style="display:inline-flex;align-items:center;gap:6px">' +
+          '<span style="width:8px;height:8px;border-radius:50%;background:'+dot+';flex-shrink:0"></span>' +
+          '<span>'+t+'</span></span></td>' +
+        '<td>'+n+'</td>' +
+        '<td class="highlight-val">'+fmt1(n/gTot*100)+'%</td>' +
+        '<td>'+(sw>0?fmt1(swS/sw*100)+'%':'--')+'</td>' +
+        '</tr>';
+    }).join('');
+
+    return '<div style="display:flex;gap:24px;padding:20px 24px;flex-wrap:wrap;align-items:flex-start">' +
+      // Left: controls + canvas
+      '<div style="flex-shrink:0">' +
+        '<div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap">' +
+          modeBtns + viewToggle +
+        '</div>' +
+        '<canvas id="'+canvasId+'" width="600" height="826" style="width:300px;height:413px;display:block;border-radius:4px"></canvas>' +
       '</div>' +
-      '<canvas id="'+canvasId+'" width="600" height="826" style="width:220px;height:302px;display:block;border-radius:4px"></canvas>' +
+      // Right: stats
+      '<div style="flex:1;min-width:200px">' +
+        '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">By Pitch Type</div>' +
+        '<table class="stat-table" style="margin-bottom:20px"><thead><tr>' +
+          '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>WHIFF%</th>' +
+        '</tr></thead><tbody>' + pitchTypeRows + '</tbody></table>' +
+        '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Outcomes</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:6px">' +
+          outcomeEntries.map(function(e){
+            return '<div style="display:flex;align-items:center;gap:6px;padding:4px 10px;background:rgba(255,255,255,0.05);border-radius:4px">' +
+              '<span style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.7)">'+e[0]+'</span>' +
+              '<span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:#FFB81C">'+e[1]+'</span>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
     '</div>';
   }
 
@@ -4751,8 +4805,7 @@ function initBatterGameLog(name, pitch) {
     if (!canvas) return;
 
     var DPR = window.devicePixelRatio || 1;
-    // Match Strike Zone canvas size exactly
-    var CSS_W = 220, CSS_H = 302;
+    var CSS_W = 300, CSS_H = 413;
     canvas.width  = CSS_W * DPR;
     canvas.height = CSS_H * DPR;
     canvas.style.width  = CSS_W+'px';
@@ -4762,7 +4815,7 @@ function initBatterGameLog(name, pitch) {
     ctx.clearRect(0, 0, CSS_W, CSS_H);
 
     var W = CSS_W, H = CSS_H;
-    var PAD_L=28, PAD_R=20, PAD_T=12, PAD_B=24;
+    var PAD_L=32, PAD_R=20, PAD_T=16, PAD_B=32;
     var PW=W-PAD_L-PAD_R, PH=H-PAD_T-PAD_B;
 
     // Same bounds switching as Strike Zone section
