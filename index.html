@@ -875,7 +875,6 @@ Andy Groening,Chatham-Kent Barnstormers
 Andy Leader,Guelph Royals
 Angel Guerrero,Hamilton Cardinals
 Anthony Porcellato,Brantford Red Sox
-Matteo Porcellato,Welland Jackfish
 Ashton Patterson,Guelph Royals
 Axel Rosario,Brantford Red Sox
 Bawin Colon,Kitchener Panthers
@@ -884,8 +883,9 @@ Ben Hewitt,Kitchener Panthers
 Ben Scartz,Brantford Red Sox
 Benjamin Sitarenios,Toronto Maple Leafs
 Benjamin Sterritt,Toronto Maple Leafs
+Bo Buckley,Chatham-Kent Barnstormers
 Brad Grieveson,Barrie Baycats
-Braeden Pakkala,Barrie Baycats
+Braedan Pakkala,Barrie Baycats
 Brandon Deans,Guelph Royals
 Brandon Hernandez,Barrie Baycats
 Brandon Hupe,Welland Jackfish
@@ -914,6 +914,7 @@ Cesilio Pimentel,London Majors
 Charlie Towers,Kitchener Panthers
 Chris Boatto,Hamilton Cardinals
 Chris Lazar,Guelph Royals
+Christian Ortega,Brantford Red Sox
 Clayton Keyes,Barrie Baycats
 Cleveland Brownlee,London Majors
 Colbey Klepper,Brantford Red Sox
@@ -922,6 +923,7 @@ Connor Cory,Hamilton Cardinals
 Connor Irvine,Brantford Red Sox
 Cooper Tomkinson,Toronto Maple Leafs
 Cory Lawson,Kitchener Panthers
+Daiki Abe,Welland Jackfish
 Dakota Parsons,Chatham-Kent Barnstormers
 Damon Topolie,Guelph Royals
 Danny Garcia,Hamilton Cardinals
@@ -934,12 +936,12 @@ Dennis Dei Baning,Toronto Maple Leafs
 Drew Donaldson,Guelph Royals
 Drew Howard,Toronto Maple Leafs
 Dustin Davidson,London Majors
+Dylan Kints,Chatham-Kent Barnstormers
 Edgar Figueroa,Barrie Baycats
 Edgar Garcia,Guelph Royals
 Eduardo De Oleo,London Majors
 Elian Serrata,Kitchener Panthers
 Elvin Liriano,Guelph Royals
-Erasmo Pinales,London Majors
 Eric Pettipiece,Chatham-Kent Barnstormers
 Ethan Mann,Welland Jackfish
 Ethan Paulos,Brantford Red Sox
@@ -960,22 +962,22 @@ Graham Tebbit,Brantford Red Sox
 Greg Marco,Welland Jackfish
 Greg Rapp,Brantford Red Sox
 Greyson Barrett,Chatham-Kent Barnstormers
+Haldon Craig,Brantford Red Sox
 Hayden Jaco,Barrie Baycats
 Hector Yan,Hamilton Cardinals
 J.D. Williams,Guelph Royals
+Jack Seward,Welland Jackfish
 Jacob Bonzon,Toronto Maple Leafs
 Jacob Gajic,Hamilton Cardinals
 Jacob Kush,Guelph Royals
 Jacob Liberta,Kitchener Panthers
 Jaden Babiuk,London Majors
 Jaden Brown,Hamilton Cardinals
-Jake Sanford,Guelph Royals
 Jakob Cantor,Brantford Red Sox
 James Smibert,Welland Jackfish
 Jamie Cabral,Kitchener Panthers
 Jarrett Burney,London Majors
 Jeremie Veilleux,Hamilton Cardinals
-Jhon Javier,Toronto Maple Leafs
 Jonah Weisner,Welland Jackfish
 Jordis Ramos,Brantford Red Sox
 Jorge De La Cruz,Brantford Red Sox
@@ -991,13 +993,15 @@ Kade Kozak,Brantford Red Sox
 Kevin Escorcia,Guelph Royals
 Kian Johnston,Chatham-Kent Barnstormers
 Kirk Gibson,Toronto Maple Leafs
+Konsta Kurikka,Chatham-Kent Barnstormers
 Kristyan Puyol-Genossar,Barrie Baycats
 Kyle Kush,Guelph Royals
 Kyle Maves,London Majors
 Kyle Poapst,Toronto Maple Leafs
-Leandro Mejia,Brantford Red Sox
+Kyle Thomas,Guelph Royals
 Lee Kucera,Chatham-Kent Barnstormers
 Liam Wilson,Guelph Royals
+Logan Grant,Welland Jackfish
 Logan Warkentin,Hamilton Cardinals
 Luca Boscarino,Guelph Royals
 Lucas Bateman,Brantford Red Sox
@@ -1017,6 +1021,7 @@ Matthew Fabian,Toronto Maple Leafs
 Matthew Ward,Guelph Royals
 Miguel Hiraldo,Guelph Royals
 Mike Cecchetto,Toronto Maple Leafs
+Mike Ribis,Toronto Maple Leafs
 Mitsuki Fukuda,Chatham-Kent Barnstormers
 Mizuki Akatsuka,Chatham-Kent Barnstormers
 Moises Brito,Chatham-Kent Barnstormers
@@ -1042,6 +1047,7 @@ Robert Mullen,Welland Jackfish
 Roberto Caro,London Majors
 Ryan Capuano,Toronto Maple Leafs
 Ryan Dos Santos,Guelph Royals
+Ryan Potrecz,Welland Jackfish
 Ryan Rijo,Barrie Baycats
 Ryder Hancock,London Majors
 Samuel Quintana,Kitchener Panthers
@@ -1049,9 +1055,9 @@ Samuele Bruno,Kitchener Panthers
 Saul Vasquez,Barrie Baycats
 Scott Gillespie,Welland Jackfish
 Skylar Janisse,London Majors
-Starling Joseph,London Majors
 Spencer Morin,Chatham-Kent Barnstormers
 Spenser Ross,Toronto Maple Leafs
+Starling Joseph,London Majors
 Steven Hospital,Hamilton Cardinals
 Tanner Rempel,Hamilton Cardinals
 Teodoro Ortega,Welland Jackfish
@@ -1250,6 +1256,12 @@ Zane Skansi,Kitchener Panthers`;
 
     html +=
         '</div>' +
+        '<div style="padding:6px 10px;border-top:1px solid rgba(255,184,28,0.1);display:flex;gap:6px;justify-content:flex-end">' +
+          '<button onclick="document.getElementById(\'' + selectId + '\').querySelectorAll(\'input[type=checkbox]\').forEach(function(c){c.checked=true;})" ' +
+            'style="background:none;border:1px solid rgba(255,255,255,0.12);border-radius:3px;color:rgba(255,255,255,0.4);font-family:\'DM Mono\',monospace;font-size:9px;padding:3px 8px;cursor:pointer">ALL</button>' +
+          '<button onclick="document.getElementById(\'' + selectId + '\').querySelectorAll(\'input[type=checkbox]\').forEach(function(c){c.checked=false;})" ' +
+            'style="background:none;border:1px solid rgba(255,255,255,0.12);border-radius:3px;color:rgba(255,255,255,0.4);font-family:\'DM Mono\',monospace;font-size:9px;padding:3px 8px;cursor:pointer">NONE</button>' +
+        '</div>' +
         '<div style="padding:8px 10px;border-top:1px solid rgba(255,184,28,0.15)">' +
           '<button onclick="gpRunWithSelected(\'' + oppName + '\',\'' + action + '\',' + year + ',\'' + selectId + '\',this)" ' +
             'style="width:100%;padding:8px;background:rgba(255,184,28,0.14);border:1px solid rgba(255,184,28,0.35);border-radius:3px;color:#FFB81C;font-family:\'Bebas Neue\',sans-serif;font-size:13px;letter-spacing:0.1em;cursor:pointer;transition:background 0.15s" ' +
@@ -1357,8 +1369,8 @@ Zane Skansi,Kitchener Panthers`;
       var availH = pageBottom - y;
       var rowH = Math.min(14, Math.max(8, availH / (n + 1)));
 
-      var hdrs = ['PLAYER','BATS','AVG','OPS','FP SW%','GB%','FB%','LD%','PULL','STRAIGHT','OPPO','SHIFT'];
-      var cWs  = [CPW*0.18,CPW*0.06,CPW*0.08,CPW*0.08,CPW*0.08,CPW*0.07,CPW*0.07,CPW*0.07,CPW*0.08,CPW*0.09,CPW*0.08,CPW*0.08];
+      var hdrs = ['PLAYER','BATS','AVG','OPS','K/BB','SB','PULL','STRAIGHT','OPPO'];
+      var cWs  = [CPW*0.24,CPW*0.07,CPW*0.09,CPW*0.09,CPW*0.09,CPW*0.07,CPW*0.12,CPW*0.12,CPW*0.11];
       var hdrH = rowH * 0.65;
 
       // Header row
@@ -1449,7 +1461,28 @@ Zane Skansi,Kitchener Panthers`;
         var shift=spTot>=3?(pullV>=55?'PULL':oppV>=40?'OPPO':strV2>=50?'STRAIGHT':'NONE'):'—';
         var shiftC=shift==='PULL'?[248,113,113]:shift==='OPPO'?[96,165,250]:shift==='STRAIGHT'?[255,184,28]:CO.light;
 
-        var vals=[s.batter,bats,avg,ops,fpSwing,gb,fb,lo,pullPct,strPct2,oppPct2,shift];
+        // K/BB: PBP primary, IBL fallback
+        var kbbVal=(function(){
+          var kv=null,bbv=null;
+          if(year==2025){
+            kv=pbp&&pbp.K_pct!=null?pbp.K_pct:null;
+            bbv=pbp&&pbp.BB_pct!=null?pbp.BB_pct:null;
+            if(kv==null&&iblS){kv=iblS.K!=null&&iblS.PA>0?iblS.K/iblS.PA*100:null;}
+            if(bbv==null&&iblS){bbv=iblS.BB!=null&&iblS.PA>0?iblS.BB/iblS.PA*100:null;}
+          } else {
+            kv=s.K_pct!=null?s.K_pct:null;
+            bbv=s.BB_pct!=null?s.BB_pct:null;
+          }
+          if(kv!=null&&bbv!=null&&bbv>0) return f2(kv/bbv);
+          if(kv!=null&&bbv===0) return '∞';
+          return '—';
+        })();
+        // SB: IBL History for both years
+        var sbVal=(function(){
+          if(iblS&&iblS.SB!=null) return String(Math.round(iblS.SB));
+          return '—';
+        })();
+        var vals=[s.batter,bats,avg,ops,kbbVal,sbVal,pullPct,strPct2,oppPct2];
 
         sf(d,idx%2===0?[14,21,40]:[11,17,32]); d.rect(ML,y,CPW,rowH,'F');
         sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
@@ -1457,11 +1490,11 @@ Zane Skansi,Kitchener Panthers`;
         var fs = rowH >= 11 ? 8 : 7;
         cx=ML;
         vals.forEach(function(v,i){
-          var isSh=i===11, isNm=i===0;
-          d.setFont('helvetica',isSh||isNm?'bold':'normal'); d.setFontSize(fs);
-          st(d,isSh?shiftC:isNm?CO.white:CO.light);
+          var isNm=i===0;
+          d.setFont('helvetica',isNm?'bold':'normal'); d.setFontSize(fs);
+          st(d,isNm?CO.white:CO.light);
           var txt=String(v);
-          if(isNm&&txt.length>20) txt=txt.slice(0,19)+'.';
+          if(isNm&&txt.length>22) txt=txt.slice(0,21)+'.';
           d.text(txt, isNm?cx+3:cx+cWs[i]/2, y+rowH*0.62, {align:isNm?'left':'center'});
           if(i<vals.length-1){ sd(d,[25,40,65]);d.setLineWidth(0.08);d.line(cx+cWs[i],y,cx+cWs[i],y+rowH); }
           cx+=cWs[i];
@@ -1586,8 +1619,8 @@ Zane Skansi,Kitchener Panthers`;
       var availH2 = pageBottom2 - y;
       var rowH = Math.min(16, Math.max(9, availH2 / (n2 + 1)));
 
-      var hdrs=['PITCHER','HAND','ERA','WHIP','FPS%','STR%','K%','TTP','AVAIL','ARSENAL'];
-      var cWs =[CPW*0.17,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.07,CPW*0.08,CPW*0.06,CPW*0.08,CPW*0.08,CPW*0.26];
+      var hdrs=['PITCHER','HAND','ERA','WHIP','K/BB','FPS%','STRIKE%','TTP','REST','ARSENAL'];
+      var cWs =[CPW*0.17,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.07,CPW*0.07,CPW*0.08,CPW*0.07,CPW*0.07,CPW*0.27];
       var hdrH2 = rowH * 0.65;
 
       // Header row
@@ -1705,7 +1738,19 @@ Zane Skansi,Kitchener Panthers`;
         var nameDisp=p.name; if(nameDisp.length>18)nameDisp=nameDisp.slice(0,17)+'.';
         var handVal='?'; var scH2=p.sc.filter(function(s){return s.pitcher_side;});
         if(scH2.length){ var rH=scH2.filter(function(s){return s.pitcher_side==='R';}).length; handVal=rH/scH2.length>=0.8?'R':'L'; }
-        var vals=[nameDisp,handVal,eraVal,whipVal,fpsVal,strVal,kVal,ttpVal,avail,arsenal];
+        // K/BB ratio
+        var kbbPVal=(function(){
+          var kp=null,bbp=null;
+          if(year==2025&&pbpP){kp=pbpP.K_pct!=null?pbpP.K_pct:null;bbp=pbpP.BB_pct!=null?pbpP.BB_pct:null;}
+          if(kp==null&&pd.K_pct!=null) kp=pd.K_pct;
+          if(bbp==null&&pd.BB_pct!=null) bbp=pd.BB_pct;
+          if(kp!=null&&bbp!=null&&bbp>0) return f2(kp/bbp);
+          if(kp!=null&&bbp===0) return '∞';
+          return '—';
+        })();
+        // REST: days since last outing
+        var restVal = daysRest===99?'—':daysRest===0?'TODAY':daysRest+'d';
+        var vals=[nameDisp,handVal,eraVal,whipVal,kbbPVal,fpsVal,strVal,ttpVal,restVal,arsenal];
 
         sf(d,idx%2===0?[14,21,40]:[11,17,32]); d.rect(ML,y,CPW,rowH,'F');
         sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
@@ -1713,9 +1758,10 @@ Zane Skansi,Kitchener Panthers`;
         var fs2 = rowH >= 12 ? 8 : 7;
         cx=ML;
         vals.forEach(function(v,i){
-          var isNm=i===0, isAv=i===8;
-          d.setFont('helvetica',isNm||isAv?'bold':'normal'); d.setFontSize(fs2);
-          st(d,isAv?availC:isNm?CO.white:CO.light);
+          var isNm=i===0, isRest=i===8;
+          var restC=daysRest<=1?[248,113,113]:daysRest<=2?[255,184,28]:[52,211,153];
+          d.setFont('helvetica',isNm||isRest?'bold':'normal'); d.setFontSize(fs2);
+          st(d,isRest?restC:isNm?CO.white:CO.light);
           d.text(String(v), isNm?cx+3:cx+cWs[i]/2, y+rowH*0.62, {align:isNm?'left':'center'});
           if(i<vals.length-1){ sd(d,[25,40,65]);d.setLineWidth(0.08);d.line(cx+cWs[i],y,cx+cWs[i],y+rowH); }
           cx+=cWs[i];
