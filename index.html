@@ -1154,53 +1154,46 @@ Zane Skansi,Kitchener Panthers`;
 
     if (action === 'pitchers-pdf') {
       var seenK = new Set();
-      // Primary source: active roster CSV — always correct team assignment
-      var oppTeamObj = resolveTeam(oppName);
+      // Build set of names that exist in pitcher data (any team) — used to filter roster
+      var pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
+      var pbpPitchersArr = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
+      var knownPitchers = new Set();
+      pitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(p.pitcher.toLowerCase().trim()); });
+      pbpPitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(p.pitcher.toLowerCase().trim()); });
+      pitchesData.forEach(function(bp){
+        if(!bp.scatter) return;
+        bp.scatter.forEach(function(s){ if(s.pitcher) knownPitchers.add(s.pitcher.toLowerCase().trim()); });
+      });
+
+      // Roster is the only authority for team assignment
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
         var k = row.player.toLowerCase().trim();
-        if (!seenK.has(k)) { seenK.add(k); playerNames.push(row.player); }
-      });
-      // Supplement: any pitcher found in data that isn't on the roster
-      // (covers data-only players not yet on official roster)
-      var pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
-      pitchersArr.forEach(function(p) {
-        if (!p.pitcher || !p.pitcher_team) return;
-        var pt = resolveTeam(p.pitcher_team);
-        if (pt && pt.name === oppName) {
-          var k = p.pitcher.toLowerCase().trim();
-          if (!seenK.has(k)) { seenK.add(k); playerNames.push(p.pitcher); }
-        }
-      });
-      var pbpPitchersArr = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
-      pbpPitchersArr.forEach(function(p) {
-        if (!p.pitcher || !p.pitcher_team) return;
-        var pt = resolveTeam(p.pitcher_team);
-        if (pt && pt.name === oppName) {
-          var k = p.pitcher.toLowerCase().trim();
-          if (!seenK.has(k)) { seenK.add(k); playerNames.push(p.pitcher); }
-        }
+        if (knownPitchers.has(k) && !seenK.has(k)) { seenK.add(k); playerNames.push(row.player); }
       });
       playerNames.sort(function(a,b){ return a.localeCompare(b); });
     } else {
-      // batters-pdf — primary source: active roster CSV for correct team assignment
+      // batters-pdf — build set of names with batter data first
+      var knownBatters = new Set();
+      summaryData.forEach(function(p){ if(p.batter) knownBatters.add(p.batter.trim().toLowerCase()); });
+      pitchesData.forEach(function(bp){ if(bp.batter) knownBatters.add(bp.batter.trim().toLowerCase()); });
+      var pbpBattersArr = (DATA.pbpBatters && Array.isArray(DATA.pbpBatters)) ? DATA.pbpBatters : [];
+      pbpBattersArr.forEach(function(p){ if(p.batter) knownBatters.add(p.batter.trim().toLowerCase()); });
+
       var seenB = {};
+      // Primary: roster players on this team who have batter data
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
-        if (!seenB[row.player]) seenB[row.player] = { batter: row.player, AB: 0 };
+        if (knownBatters.has(row.player.trim().toLowerCase()) && !seenB[row.player])
+          seenB[row.player] = { batter: row.player, AB: 0 };
       });
-      // Supplement with data-found batters not on roster, ordered by AB
+      // Supplement with AB-ordered data batters on this team
       summaryData.forEach(function(p) {
         var t = resolveTeam(p.batter_team);
         if (!t || t.name !== oppName) return;
         if (!seenB[p.batter] || (p.AB||0) > (seenB[p.batter].AB||0)) seenB[p.batter] = p;
-      });
-      pitchesData.forEach(function(bp) {
-        if (!bp.batter || seenB[bp.batter]) return;
-        var t = resolveTeam(bp.team);
-        if (t && t.name === oppName) seenB[bp.batter] = { batter: bp.batter, AB: 0 };
       });
       playerNames = Object.keys(seenB).sort(function(a,b){ return (seenB[b].AB||0)-(seenB[a].AB||0); });
     }
@@ -1208,9 +1201,10 @@ Zane Skansi,Kitchener Panthers`;
     // Restore data after gathering names — actual PDF gen will swap again
     if (typeof swapSeasonData === 'function') swapSeasonData(prevSeason);
 
-    // Split players into active (checked by default) and inactive (unchecked) — matches scouting.html logic
+    // Split players into active (checked by default) and inactive (unchecked)
+    // Active = on the current roster CSV regardless of year
     function isActive(name) {
-      return (year === 2025 || year === '2025') ? gpIsActive2025(name) : true;
+      return gpIsActive2025(name);
     }
     var activePlayers   = playerNames.filter(function(n){ return  isActive(n); });
     var inactivePlayers = playerNames.filter(function(n){ return !isActive(n); });
