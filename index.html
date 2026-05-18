@@ -1147,6 +1147,7 @@ Zane Skansi,Kitchener Panthers`;
 
     if (action === 'pitchers-pdf') {
       var seenK = new Set();
+      // Source 1: scatter entries in pitches data (batter-indexed, pitcher_team in each pitch)
       pitchesData.forEach(function(bp) {
         if (!bp.scatter) return;
         bp.scatter.forEach(function(s) {
@@ -1157,6 +1158,26 @@ Zane Skansi,Kitchener Panthers`;
             if (!seenK.has(k)) { seenK.add(k); playerNames.push(s.pitcher); }
           }
         });
+      });
+      // Source 2: DATA.pitchers (pitchers.json / pitchers2026.json) — pitcher_team indexed directly
+      var pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
+      pitchersArr.forEach(function(p) {
+        if (!p.pitcher || !p.pitcher_team) return;
+        var pt = resolveTeam(p.pitcher_team);
+        if (pt && pt.name === oppName) {
+          var k = p.pitcher.toLowerCase().trim();
+          if (!seenK.has(k)) { seenK.add(k); playerNames.push(p.pitcher); }
+        }
+      });
+      // Source 3: DATA.pbpPitchers (pbp_pitchers.json) — pitcher_team indexed directly
+      var pbpPitchersArr = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
+      pbpPitchersArr.forEach(function(p) {
+        if (!p.pitcher || !p.pitcher_team) return;
+        var pt = resolveTeam(p.pitcher_team);
+        if (pt && pt.name === oppName) {
+          var k = p.pitcher.toLowerCase().trim();
+          if (!seenK.has(k)) { seenK.add(k); playerNames.push(p.pitcher); }
+        }
       });
       playerNames.sort(function(a,b){ return a.localeCompare(b); });
     } else {
@@ -1471,7 +1492,26 @@ Zane Skansi,Kitchener Panthers`;
 
       var seenKeys = new Set();
       var pitchers = [];
-      DATA.pitches.forEach(function(bp) {
+      var _pitchesArr2 = (DATA.pitches && Array.isArray(DATA.pitches)) ? DATA.pitches : [];
+      var _pitchersArr2 = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
+      var _pbpPArr2 = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
+
+      // Helper: gather all scatter for a pitcher name from pitches array
+      function gatherScatter(pitcherKey) {
+        var sc = [];
+        _pitchesArr2.forEach(function(bp2){
+          if(!bp2.scatter)return;
+          bp2.scatter.forEach(function(s2){
+            if(!s2.pitcher||s2.pitcher.toLowerCase().trim()!==pitcherKey)return;
+            var pt2=resolveTeam(s2.pitcher_team);
+            if(pt2&&pt2.name===oppName)sc.push(s2);
+          });
+        });
+        return sc;
+      }
+
+      // Source 1: scatter in pitches data
+      _pitchesArr2.forEach(function(bp) {
         if (!bp.scatter) return;
         bp.scatter.forEach(function(s) {
           if (!s.pitcher||!s.pitcher_team) return;
@@ -1480,18 +1520,32 @@ Zane Skansi,Kitchener Panthers`;
           var key=s.pitcher.toLowerCase().trim();
           if (seenKeys.has(key)) return;
           seenKeys.add(key);
-          var sc=[];
-          DATA.pitches.forEach(function(bp2){
-            if(!bp2.scatter)return;
-            bp2.scatter.forEach(function(s2){
-              if(!s2.pitcher||s2.pitcher.toLowerCase().trim()!==key)return;
-              var pt2=resolveTeam(s2.pitcher_team);
-              if(pt2&&pt2.name===oppName)sc.push(s2);
-            });
-          });
-          pitchers.push({name:s.pitcher,sc:sc});
+          pitchers.push({name:s.pitcher, sc:gatherScatter(key)});
         });
       });
+      // Source 2: DATA.pitchers (pitchers.json / pitchers2026.json)
+      _pitchersArr2.forEach(function(p) {
+        if (!p.pitcher||!p.pitcher_team) return;
+        var pt = resolveTeam(p.pitcher_team);
+        if (!pt||pt.name!==oppName) return;
+        var key=p.pitcher.toLowerCase().trim();
+        if (seenKeys.has(key)) return;
+        seenKeys.add(key);
+        // Use embedded scatter if available (pitchers2026), else gather from pitches
+        var sc = (p.scatter && p.scatter.length) ? p.scatter : gatherScatter(key);
+        pitchers.push({name:p.pitcher, sc:sc});
+      });
+      // Source 3: pbp_pitchers
+      _pbpPArr2.forEach(function(p) {
+        if (!p.pitcher||!p.pitcher_team) return;
+        var pt = resolveTeam(p.pitcher_team);
+        if (!pt||pt.name!==oppName) return;
+        var key=p.pitcher.toLowerCase().trim();
+        if (seenKeys.has(key)) return;
+        seenKeys.add(key);
+        pitchers.push({name:p.pitcher, sc:gatherScatter(key)});
+      });
+
       pitchers.sort(function(a,b){return a.name.localeCompare(b.name);});
       // Filter to selected players if provided
       if (selectedNames && selectedNames.length) {
