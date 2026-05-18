@@ -1221,7 +1221,7 @@ Zane Skansi,Kitchener Panthers`;
 
     function renderRow(name, checked) {
       return '<label style="display:flex;align-items:center;gap:8px;padding:5px 10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04)" ' +
-        'onmouseover="this.style.background=\'rgba(255,184,28,0.06)\'" onmouseout="this.style.background=\'\'>' +
+        'onmouseover="this.style.background=\'rgba(255,184,28,0.06)\'" onmouseout="this.style.background=\'\'">' +
         '<input type="checkbox" value="' + name.replace(/"/g,'&quot;') + '"' + (checked ? ' checked' : '') +
           ' style="accent-color:#FFB81C;width:13px;height:13px;cursor:pointer;flex-shrink:0">' +
         '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:' + (checked ? '#fff' : 'rgba(255,255,255,0.45)') + '">' + name + '</span>' +
