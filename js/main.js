@@ -4360,13 +4360,15 @@ function renderGameLog(name, pitch) {
 
       var canvasId = 'gl-canvas-' + dt.replace(/-/g,'');
       var viewToggle =
-        '<div style="display:flex;gap:6px;margin-bottom:10px">' +
+        '<div style="display:flex;gap:6px;margin-bottom:12px">' +
           '<button class="gl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Scatter</button>' +
           '<button class="gl-view-btn zone-filter-btn" data-view="heatmap" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Heat Map</button>' +
         '</div>';
-      return '<div style="display:flex;gap:24px;padding:16px 24px;flex-wrap:wrap;align-items:flex-start">' +
+      return '<div style="padding:16px 24px">' +
+        // Filter buttons full-width on top
+        filterBtns +
+        '<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">' +
         '<div style="flex-shrink:0">' +
-          filterBtns +
           viewToggle +
           '<canvas id="'+canvasId+'" width="480" height="660" style="width:300px;height:413px;display:block"></canvas>' +
         '</div>' +
@@ -4404,6 +4406,7 @@ function renderGameLog(name, pitch) {
           '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Outcomes</div>' +
           buildOutcomeList(gsc) +
         '</div>' +
+      '</div>' +
       '</div>';
     }
 
@@ -4712,10 +4715,8 @@ function initBatterGameLog(name, pitch) {
     }).join('');
 
     var viewToggle =
-      '<div style="display:flex;gap:6px;margin-left:auto">' +
-        '<button class="bgl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Scatter</button>' +
-        '<button class="bgl-view-btn zone-filter-btn" data-view="heatmap" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Heat Map</button>' +
-      '</div>';
+      '<button class="bgl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px;margin-right:6px">Scatter</button>' +
+      '<button class="bgl-view-btn zone-filter-btn" data-view="heatmap" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Heat Map</button>';
 
     var canvasId = 'bgl-hm-'+dt.replace(/-/g,'');
 
@@ -4743,12 +4744,15 @@ function initBatterGameLog(name, pitch) {
         '</tr>';
     }).join('');
 
-    return '<div style="display:flex;gap:24px;padding:20px 24px;flex-wrap:wrap;align-items:flex-start">' +
-      // Left: controls + canvas
+    return '<div style="padding:20px 24px">' +
+      // Mode filter buttons full-width on top
+      '<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap">' +
+        modeBtns +
+      '</div>' +
+      '<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">' +
+      // Left: scatter/heatmap toggle + canvas
       '<div style="flex-shrink:0">' +
-        '<div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap">' +
-          modeBtns + viewToggle +
-        '</div>' +
+        '<div style="margin-bottom:10px">' + viewToggle + '</div>' +
         '<canvas id="'+canvasId+'" width="480" height="660" style="width:300px;height:413px;display:block;border-radius:4px"></canvas>' +
       '</div>' +
       // Right: stats
@@ -4766,6 +4770,7 @@ function initBatterGameLog(name, pitch) {
             '</div>';
           }).join('') +
         '</div>' +
+      '</div>' +
       '</div>' +
     '</div>';
   }
