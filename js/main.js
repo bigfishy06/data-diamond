@@ -4364,18 +4364,17 @@ function renderGameLog(name, pitch) {
           '<button class="gl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Scatter</button>' +
           '<button class="gl-view-btn zone-filter-btn" data-view="heatmap" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Heat Map</button>' +
         '</div>';
-      return '<div style="display:flex;gap:24px;padding:20px 24px;flex-wrap:wrap;align-items:flex-start">' +
-        // Pitch plot + filter
+      return '<div style="display:flex;gap:24px;padding:16px 24px;flex-wrap:wrap;align-items:flex-start">' +
         '<div style="flex-shrink:0">' +
           filterBtns +
           viewToggle +
-          '<canvas id="'+canvasId+'" width="600" height="826" style="width:300px;height:413px;display:block"></canvas>' +
+          '<canvas id="'+canvasId+'" width="600" height="826" style="width:360px;height:495px;display:block"></canvas>' +
         '</div>' +
         // Per-pitch type breakdown table
         '<div style="flex:1;min-width:200px">' +
           '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">By Pitch Type</div>' +
           '<table class="stat-table" style="margin-bottom:20px"><thead><tr>' +
-          '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>STR%</th><th>WHIFF%</th>' +
+          '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>STR%</th><th>WHIFF%</th><th>Chase%</th>' +
           '</tr></thead><tbody>' +
           typeSet.map(function(t){
             var pts = gsc.filter(function(s){return (s.pitch_type||'Unknown')===t;});
@@ -4385,6 +4384,9 @@ function renderGameLog(name, pitch) {
             var fo  = pts.filter(function(s){return s.outcome==='Foul';}).length;
             var ip  = pts.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
             var sw  = swS+fo+ip;
+            var oozP = pts.filter(function(s){return s.in_zone===false||s.in_zone==='false';});
+            var chaseSwP = oozP.filter(function(s){return['Swinging Strike','Foul','Strikeout Swinging','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Error','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
+            var chaseP = oozP.length>=2 ? fmt1(chaseSwP/oozP.length*100)+'%' : '--';
             var dot = tcMap[t]||'#888';
             return '<tr>' +
               '<td style="text-align:left"><span style="display:inline-flex;align-items:center;gap:6px">' +
@@ -4394,6 +4396,7 @@ function renderGameLog(name, pitch) {
               '<td class="highlight-val">'+fmt1(n/gTot*100)+'%</td>' +
               '<td>'+(n>0?fmt1(str/n*100)+'%':'--')+'</td>' +
               '<td>'+(sw>0?fmt1(swS/sw*100)+'%':'--')+'</td>' +
+              '<td>'+chaseP+'</td>' +
               '</tr>';
           }).join('') +
           '</tbody></table>' +
@@ -4432,7 +4435,7 @@ function renderGameLog(name, pitch) {
 
       // Canvas sizing — match Strike Zone section exactly
       var DPR = window.devicePixelRatio || 1;
-      var CSS_W = 300, CSS_H = 413;
+      var CSS_W = 360, CSS_H = 495;
       canvas.width  = CSS_W * DPR;
       canvas.height = CSS_H * DPR;
       canvas.style.width  = CSS_W + 'px';
@@ -4749,7 +4752,7 @@ function initBatterGameLog(name, pitch) {
         '<div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap">' +
           modeBtns + viewToggle +
         '</div>' +
-        '<canvas id="'+canvasId+'" width="600" height="826" style="width:300px;height:413px;display:block;border-radius:4px"></canvas>' +
+        '<canvas id="'+canvasId+'" width="600" height="826" style="width:360px;height:495px;display:block;border-radius:4px"></canvas>' +
       '</div>' +
       // Right: stats
       '<div style="flex:1;min-width:200px">' +
@@ -4811,7 +4814,7 @@ function initBatterGameLog(name, pitch) {
     if (!canvas) return;
 
     var DPR = window.devicePixelRatio || 1;
-    var CSS_W = 300, CSS_H = 413;
+    var CSS_W = 360, CSS_H = 495;
     canvas.width  = CSS_W * DPR;
     canvas.height = CSS_H * DPR;
     canvas.style.width  = CSS_W+'px';
