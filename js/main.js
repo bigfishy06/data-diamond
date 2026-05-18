@@ -4714,6 +4714,16 @@ function initBatterGameLog(name, pitch) {
         'style="'+bglBtnStyle(active, m.color)+'">'+m.label+'</button>';
     }).join('');
 
+    // Pitch type filter buttons — same style as pitcher game log
+    var ptFilterBtns =
+      '<button class="bgl-pt-btn active" data-type="all" data-dt="'+dt+'" style="'+bglBtnStyle(true,'#FFB81C')+'">All</button>' +
+      typeSet2.map(function(t){
+        var c = typeColorMap2[t]||'#888';
+        return '<button class="bgl-pt-btn" data-type="'+t+'" data-dt="'+dt+'" style="'+bglBtnStyle(false,c)+';border-color:'+c+'">' +
+          '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+c+';margin-right:5px"></span>' +
+          t+'</button>';
+      }).join('');
+
     var viewToggle =
       '<button class="bgl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px;margin-right:6px">Scatter</button>' +
       '<button class="bgl-view-btn zone-filter-btn" data-view="heatmap" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Heat Map</button>';
@@ -4746,8 +4756,12 @@ function initBatterGameLog(name, pitch) {
 
     return '<div style="padding:20px 24px">' +
       // Mode filter buttons full-width on top
-      '<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap">' +
+      '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap">' +
         modeBtns +
+      '</div>' +
+      // Pitch type filter buttons
+      '<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap">' +
+        ptFilterBtns +
       '</div>' +
       '<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">' +
       // Left: scatter/heatmap toggle + canvas
@@ -4781,6 +4795,25 @@ function initBatterGameLog(name, pitch) {
     var activeModId = (document.querySelector('.bgl-mode-btn.active[data-dt="'+dt+'"]')||{dataset:{mode:'pitches'}}).dataset.mode;
     var activeM = HM_MODES.find(function(x){ return x.id===activeModId; }) || HM_MODES[0];
     drawBatterCanvas(dt, gsc, activeM, view);
+    // Helper: get current filtered gsc (pitch type filter)
+    function getBglFiltered() {
+      var activePT = document.querySelector('.bgl-pt-btn.active[data-dt="'+dt+'"]');
+      var ptType = activePT ? activePT.dataset.type : 'all';
+      return ptType === 'all' ? gsc : gsc.filter(function(s){ return (s.pitch_type||'Unknown') === ptType; });
+    }
+    // Wire pitch type filter buttons
+    document.querySelectorAll('.bgl-pt-btn[data-dt="'+dt+'"]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.bgl-pt-btn[data-dt="'+dt+'"]').forEach(function(b){
+          b.classList.remove('active');
+          b.style.background='rgba(255,255,255,0.05)'; b.style.color='rgba(255,255,255,0.6)';
+        });
+        btn.classList.add('active');
+        btn.style.background='rgba(255,184,28,0.15)'; btn.style.color='#FFB81C';
+        var m = HM_MODES.find(function(x){ return x.id===(document.querySelector('.bgl-mode-btn.active[data-dt="'+dt+'"]')||{dataset:{mode:'pitches'}}).dataset.mode; }) || HM_MODES[0];
+        drawBatterCanvas(dt, getBglFiltered(), m, bglViewMode[dt]||'scatter');
+      });
+    });
     // Wire mode buttons
     document.querySelectorAll('.bgl-mode-btn[data-dt="'+dt+'"]').forEach(function(btn) {
       btn.addEventListener('click', function() {
@@ -4794,7 +4827,7 @@ function initBatterGameLog(name, pitch) {
           btn.style.color=m.color; btn.style.borderColor=m.color; btn.classList.add('active');
         }
         var v = bglViewMode[dt] || 'scatter';
-        if (m) drawBatterCanvas(dt, gsc, m, v);
+        if (m) drawBatterCanvas(dt, getBglFiltered(), m, v);
       });
     });
     // Wire view toggle
@@ -4805,7 +4838,7 @@ function initBatterGameLog(name, pitch) {
         bglViewMode[dt] = btn.dataset.view;
         var v = btn.dataset.view;
         var aM2 = HM_MODES.find(function(x){ return x.id===(document.querySelector('.bgl-mode-btn.active[data-dt="'+dt+'"]')||{dataset:{mode:'pitches'}}).dataset.mode; }) || HM_MODES[0];
-        drawBatterCanvas(dt, gsc, aM2, v);
+        drawBatterCanvas(dt, getBglFiltered(), aM2, v);
       });
     });
   }
