@@ -1025,7 +1025,7 @@ Nick Iannantone,Brantford Red Sox
 Nick Veselinovic,Toronto Maple Leafs
 Noah Hull,Barrie Baycats
 Noah Law,Brantford Red Sox
-Noel McGarry Doyle,Barrie Baycats
+Noel McGarry-Doyle,Barrie Baycats
 Nolan Machibroda,Barrie Baycats
 Oscar Moreta,Barrie Baycats
 Owen Boon,Hamilton Cardinals
@@ -1049,6 +1049,7 @@ Samuele Bruno,Kitchener Panthers
 Saul Vasquez,Barrie Baycats
 Scott Gillespie,Welland Jackfish
 Skylar Janisse,London Majors
+Starling Joseph,London Majors
 Spencer Morin,Chatham-Kent Barnstormers
 Spenser Ross,Toronto Maple Leafs
 Steven Hospital,Hamilton Cardinals
@@ -1199,10 +1200,12 @@ Zane Skansi,Kitchener Panthers`;
     // Restore data after gathering names — actual PDF gen will swap again
     if (typeof swapSeasonData === 'function') swapSeasonData(prevSeason);
 
-    // Filter to active players only (batters only — pitchers use pitcher_team on scatter entries)
-    playerNames = playerNames.filter(function(n) {
-      return (year == 2025 && action === 'batters-pdf') ? gpIsActive2025(n) : true;
-    });
+    // Split players into active (checked by default) and inactive (unchecked) — matches scouting.html logic
+    function isActive(name) {
+      return (year === 2025 || year === '2025') ? gpIsActive2025(name) : true;
+    }
+    var activePlayers   = playerNames.filter(function(n){ return  isActive(n); });
+    var inactivePlayers = playerNames.filter(function(n){ return !isActive(n); });
 
     if (!playerNames.length) {
       picker.classList.remove('open'); picker.innerHTML = '';
@@ -1210,21 +1213,17 @@ Zane Skansi,Kitchener Panthers`;
       return;
     }
 
-    // Active = on 2025 roster; for 2026 all players are active
-    function isActive(name) {
-      return (year === 2025 || year === '2025') ? gpIsActive2025(name) : true;
-    }
-
-    var activePlayers   = playerNames.filter(function(n){ return  isActive(n); });
-
     function renderRow(name, checked) {
-      var cbId = 'gpchk_' + selectId + '_' + name.replace(/\W+/g,'_');
       return '<label style="display:flex;align-items:center;gap:8px;padding:5px 10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04)" ' +
-        'onmouseover="this.style.background=\'rgba(255,184,28,0.06)\'" onmouseout="this.style.background=\'\'">' +
+        'onmouseover="this.style.background=\'rgba(255,184,28,0.06)\'" onmouseout="this.style.background=\'\'>' +
         '<input type="checkbox" value="' + name.replace(/"/g,'&quot;') + '"' + (checked ? ' checked' : '') +
           ' style="accent-color:#FFB81C;width:13px;height:13px;cursor:pointer;flex-shrink:0">' +
-        '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:' + (checked ? '#fff' : 'rgba(255,255,255,0.4)') + '">' + name + '</span>' +
+        '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:' + (checked ? '#fff' : 'rgba(255,255,255,0.45)') + '">' + name + '</span>' +
         '</label>';
+    }
+
+    function renderDivider(label) {
+      return '<div style="padding:4px 10px 2px;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;color:rgba(255,184,28,0.5);background:rgba(255,184,28,0.04);border-bottom:1px solid rgba(255,184,28,0.1)">' + label + '</div>';
     }
 
     // Build the player-select UI inside the year-picker container
@@ -1238,9 +1237,16 @@ Zane Skansi,Kitchener Panthers`;
           '<button onclick="this.closest(\'.gp-year-picker\').classList.remove(\'open\');this.closest(\'.gp-year-picker\').style.cssText=\'\';this.closest(\'.gp-year-picker\').innerHTML=\'\'" ' +
             'style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:14px;line-height:1;padding:0">×</button>' +
         '</div>' +
-        '<div id="' + selectId + '" style="max-height:160px;overflow-y:auto;padding:4px 0">';
+        '<div id="' + selectId + '" style="max-height:220px;overflow-y:auto;padding:4px 0">';
 
-    activePlayers.forEach(function(name) { html += renderRow(name, true); });
+    if (activePlayers.length) {
+      if (inactivePlayers.length) html += renderDivider('ACTIVE ROSTER');
+      activePlayers.forEach(function(name) { html += renderRow(name, true); });
+    }
+    if (inactivePlayers.length) {
+      html += renderDivider('INACTIVE');
+      inactivePlayers.forEach(function(name) { html += renderRow(name, false); });
+    }
 
     html +=
         '</div>' +
