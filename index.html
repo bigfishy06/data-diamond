@@ -1165,12 +1165,29 @@ Zane Skansi,Kitchener Panthers`;
         bp.scatter.forEach(function(s){ if(s.pitcher) knownPitchers.add(s.pitcher.toLowerCase().trim()); });
       });
 
-      // Roster is the only authority for team assignment
+      // Roster = active players on this team with pitcher data
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
         var k = row.player.toLowerCase().trim();
         if (knownPitchers.has(k) && !seenK.has(k)) { seenK.add(k); playerNames.push(row.player); }
+      });
+      // Inactive: pitchers in data whose 2025 team matches opponent but aren't on current roster
+      pitchersArr.forEach(function(p) {
+        if (!p.pitcher || !p.pitcher_team) return;
+        var pt = resolveTeam(p.pitcher_team);
+        if (pt && pt.name === oppName) {
+          var k = p.pitcher.toLowerCase().trim();
+          if (!seenK.has(k)) { seenK.add(k); playerNames.push(p.pitcher); }
+        }
+      });
+      pbpPitchersArr.forEach(function(p) {
+        if (!p.pitcher || !p.pitcher_team) return;
+        var pt = resolveTeam(p.pitcher_team);
+        if (pt && pt.name === oppName) {
+          var k = p.pitcher.toLowerCase().trim();
+          if (!seenK.has(k)) { seenK.add(k); playerNames.push(p.pitcher); }
+        }
       });
       playerNames.sort(function(a,b){ return a.localeCompare(b); });
     } else {
@@ -1182,18 +1199,24 @@ Zane Skansi,Kitchener Panthers`;
       pbpBattersArr.forEach(function(p){ if(p.batter) knownBatters.add(p.batter.trim().toLowerCase()); });
 
       var seenB = {};
-      // Primary: roster players on this team who have batter data
+      // Active: roster players on this team who have batter data
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
         if (knownBatters.has(row.player.trim().toLowerCase()) && !seenB[row.player])
           seenB[row.player] = { batter: row.player, AB: 0 };
       });
-      // Supplement with AB-ordered data batters on this team
+      // Enrich AB counts from summary data — only for players already confirmed on this team via roster
       summaryData.forEach(function(p) {
+        if (!seenB[p.batter]) return; // must already be roster-confirmed
+        if ((p.AB||0) > (seenB[p.batter].AB||0)) seenB[p.batter] = p;
+      });
+      // Inactive: batters in pbp whose 2025 team matches and aren't on current roster
+      pbpBattersArr.forEach(function(p) {
+        if (!p.batter || !p.batter_team) return;
         var t = resolveTeam(p.batter_team);
-        if (!t || t.name !== oppName) return;
-        if (!seenB[p.batter] || (p.AB||0) > (seenB[p.batter].AB||0)) seenB[p.batter] = p;
+        if (t && t.name === oppName && !seenB[p.batter])
+          seenB[p.batter] = { batter: p.batter, AB: 0 };
       });
       playerNames = Object.keys(seenB).sort(function(a,b){ return (seenB[b].AB||0)-(seenB[a].AB||0); });
     }
