@@ -902,10 +902,14 @@ function getAllPitchers() {
 
 // ── TICKER ────────────────────────────────────────
 function makeRosterBatterRecord2025(name, teamName) {
-  var pbp = findByPlayerName(DATA.pbpBatters, 'batter', name);
-  var sum = findByPlayerName(DATA.summary, 'batter', name);
-  var ibl = getIblSeasonForPlayer(name, '2025', function(s) { return s.pos !== 'P' && ((s.AB || 0) > 0 || (s.PA || 0) > 0); });
-  var pitch = DATA.pitches.find(function(bp) { return normPlayerName(bp.batter) === normPlayerName(name) && bp.scatter && bp.scatter.length; });
+  // Use year-fixed 2025 stores — DATA.pbpBatters/summary/pitches swap with season selection
+  var pbpBatters25 = DATA._pbpBatters25 || [];
+  var summary25    = DATA._summary25    || [];
+  var pitches25    = DATA._pitches25    || [];
+  var pbp   = findByPlayerName(pbpBatters25, 'batter', name);
+  var sum   = findByPlayerName(summary25,    'batter', name);
+  var ibl   = getIblSeasonForPlayer(name, '2025', function(s) { return s.pos !== 'P' && ((s.AB || 0) > 0 || (s.PA || 0) > 0); });
+  var pitch = pitches25.find(function(bp) { return normPlayerName(bp.batter) === normPlayerName(name) && bp.scatter && bp.scatter.length; });
   var hasBatterData = !!(pbp || sum || ibl || pitch);
   if (!hasBatterData && playerHasSeasonData(name, 'pitcher', '2025')) return null;
   return Object.assign({}, ibl || {}, sum || {}, pbp || {}, { batter: name, batter_team: teamName });
@@ -934,6 +938,10 @@ function getActivePitcherNames2025(teamId) {
 }
 
 function getInferredBatterRecords2025(teamId) {
+  // Use year-fixed 2025 stores — DATA.pbpBatters/summary/pitches swap with season selection
+  var pbpBatters25 = DATA._pbpBatters25 || [];
+  var summary25    = DATA._summary25    || [];
+  var pitches25    = DATA._pitches25    || [];
   var seen = {};
   var players = [];
   function add(row, rawTeam) {
@@ -946,12 +954,12 @@ function getInferredBatterRecords2025(teamId) {
     seen[key] = true;
     players.push(Object.assign({}, row, { batter: name, batter_team: rawTeam || row.batter_team || row.team }));
   }
-  (DATA.pbpBatters.length ? DATA.pbpBatters : DATA.summary).forEach(function(p) { add(p, p.batter_team || p.team); });
+  (pbpBatters25.length ? pbpBatters25 : summary25).forEach(function(p) { add(p, p.batter_team || p.team); });
   Object.keys(DATA.iblHistory).forEach(function(name) {
     var s2025 = getIblSeasonForPlayer(name, '2025', function(s) { return s.pos !== 'P' && ((s.AB || 0) > 0 || (s.PA || 0) > 0); });
     if (s2025) add(Object.assign({ batter: name }, s2025), s2025.team);
   });
-  DATA.pitches.forEach(function(bp) {
+  pitches25.forEach(function(bp) {
     if (!bp.batter) return;
     var hit = (bp.scatter || []).find(function(s) { return s.batter_team; });
     add({ batter: bp.batter }, bp.batter_team || bp.team || (hit && hit.batter_team));
@@ -960,6 +968,9 @@ function getInferredBatterRecords2025(teamId) {
 }
 
 function getInferredPitcherNames2025(teamId) {
+  // Use year-fixed 2025 stores — DATA.pbpPitchers/pitches swap with season selection
+  var pbpPitchers25 = DATA._pbpPitchers25 || [];
+  var pitches25     = DATA._pitches25     || [];
   var seen = {};
   function add(raw, rawTeam) {
     var name = canonicalPlayerName(raw);
@@ -968,8 +979,8 @@ function getInferredPitcherNames2025(teamId) {
     if (teamId && !(team && team.id === teamId)) return;
     seen[normPlayerName(name)] = name;
   }
-  DATA.pbpPitchers.forEach(function(p) { add(p.pitcher, p.pitcher_team); });
-  DATA.pitches.forEach(function(bp) {
+  pbpPitchers25.forEach(function(p) { add(p.pitcher, p.pitcher_team); });
+  pitches25.forEach(function(bp) {
     (bp.scatter || []).forEach(function(s) { add(s.pitcher, s.pitcher_team); });
   });
   Object.keys(DATA.iblHistory).forEach(function(name) {
