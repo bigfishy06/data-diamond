@@ -1255,14 +1255,28 @@ Zane Skansi,Kitchener Panthers`;
     function isActive(name) {
       return gpIsActive2025(name);
     }
-    var activePlayers   = playerNames.filter(function(n){ return  isActive(n); });
-    var inactivePlayers = playerNames.filter(function(n){ return !isActive(n); });
+    if (!playerNames.length) {
+      // No data in scatter/pitchers/summary — fall back to all roster players for this team
+      // PNG will render with '—' for any missing stats
+      var _seenFb = new Set();
+      GP_ROSTER_2025.forEach(function(row) {
+        var rowTeam = resolveTeam(row.team);
+        if (!rowTeam || rowTeam.name !== oppName) return;
+        var k = row.player.toLowerCase().trim();
+        if (!_seenFb.has(k)) { _seenFb.add(k); playerNames.push(row.player); }
+      });
+      playerNames.sort(function(a,b){ return a.localeCompare(b); });
+    }
 
     if (!playerNames.length) {
       picker.classList.remove('open'); picker.innerHTML = '';
-      alert('No ' + (action === 'pitchers-pdf' ? 'pitcher' : 'batter') + ' data found for ' + oppName + ' in ' + year + '.');
+      alert('No roster or stat data found for ' + oppName + '. Make sure the roster CSV covers this team.');
       return;
     }
+
+    // Compute active/inactive AFTER fallback so they reflect final playerNames
+    var activePlayers   = playerNames.filter(function(n){ return  isActive(n); });
+    var inactivePlayers = playerNames.filter(function(n){ return !isActive(n); });
 
     function renderRow(name, checked) {
       return '<label style="display:flex;align-items:center;gap:8px;padding:5px 10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04)" ' +
