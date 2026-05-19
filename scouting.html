@@ -1888,19 +1888,23 @@ Zane Skansi,Kitchener Panthers`;
         if(_k25>0){_bbkVal=_bb25/_k25;}
       }
     }
+    // Raw K and BB counts for batter
+    var _batKCount = selSeason==='2025'
+      ? (iblB&&iblB.K!=null ? iblB.K : (s.K!=null ? s.K : null))
+      : (s.K!=null ? s.K : null);
+    var _batBBCount = selSeason==='2025'
+      ? (iblB&&iblB.BB!=null ? iblB.BB : (s.BB!=null ? s.BB : null))
+      : (s.BB!=null ? s.BB : null);
     var discStats=[
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
        color:pspa!=null?(pspa>=4.0?'#34d399':pspa>=3.5?'#FFB81C':'#f87171'):'#555',
        note:pspa!=null?(pspa>=4.0?'Works counts deeply':pspa>=3.5?'Average pitch count':'First-pitch aggressive'):''},
-      {label:'K%',sub:'Strikeout rate',val:f1(kPct2*100)+'%',
-       color:kPct2>=0.25?'#34d399':kPct2>=0.15?'#FFB81C':'#f87171',
-       note:kPct2>=0.25?'Strikeout prone — a vulnerability':kPct2>=0.15?'Average K rate — standard approach':'Hard to strikeout — makes consistent contact'},
-      {label:'BB%',sub:'Walk rate',val:f1(bbPct2*100)+'%',
-       color:bbPct2>=0.14?'#f87171':bbPct2>=0.08?'#FFB81C':'#34d399',
-       note:bbPct2>=0.14?'Outstanding discipline — draws walks at an elite rate':bbPct2>=0.08?'Patient — works counts and earns walks':'Aggressive — rarely walks, pitchers can exploit'},
-      {label:'BB/K',sub:'Walk-to-strikeout ratio',val:_bbkVal!=null?f2(_bbkVal):'—',
-       color:_bbkVal!=null?(_bbkVal>=0.40?'#34d399':_bbkVal>=0.20?'#FFB81C':'#f87171'):'#555',
-       note:_bbkVal!=null?(_bbkVal>=0.40?'Elite discipline — draws walks freely':_bbkVal>=0.20?'Solid BB/K — patient hitter':'Strikeout-heavy — struggles to draw walks'):''},
+      {label:'K',sub:'Strikeouts',val:_batKCount!=null?String(Math.round(_batKCount)):'—',
+       color:_batKCount!=null?(_batKCount>=30?'#34d399':_batKCount>=15?'#FFB81C':'#f87171'):'#555',
+       note:''},
+      {label:'BB',sub:'Walks',val:_batBBCount!=null?String(Math.round(_batBBCount)):'—',
+       color:_batBBCount!=null?(_batBBCount>=15?'#34d399':_batBBCount>=7?'#FFB81C':'#f87171'):'#555',
+       note:''},
     ];
     var nDisc=discStats.length, dW2=(CPW-(nDisc-1)*4)/nDisc, dH2=28;
     discStats.forEach(function(stat,i){
@@ -2123,7 +2127,16 @@ Zane Skansi,Kitchener Panthers`;
       else if(ks>0){_pitBBKVal=bbs/ks;}
     }
     var pitBBKDisp=_pitBBKVal!=null?f2(_pitBBKVal):'—';
-    y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['FPS%',fpsVal],['STRIKE%',strVal],['K%',kPctVal],['BB/K',pitBBKDisp]],y);
+    // Raw K and BB counts for pitcher
+    var _pitKCount = selSeason==='2025'
+      ? ((_iblAllP||[]).find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.K!=null;})|| {}).K
+      : ks;
+    var _pitBBCount = selSeason==='2025'
+      ? ((_iblAllP||[]).find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.BB!=null;})|| {}).BB
+      : bbs;
+    var _pitKDisp  = _pitKCount!=null  ? String(Math.round(_pitKCount))  : (ks>0?String(ks):'—');
+    var _pitBBDisp = _pitBBCount!=null ? String(Math.round(_pitBBCount)) : (bbs>0?String(bbs):'—');
+    y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['FPS%',fpsVal],['STRIKE%',strVal],['K',_pitKDisp],['BB',_pitBBDisp]],y);
     y+=4;
 
     y=drawSec(d,'Scouting Summary — What Batters Should Know',y);
