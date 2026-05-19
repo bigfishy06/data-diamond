@@ -1112,6 +1112,21 @@ Zane Skansi,Kitchener Panthers`;
       picker.classList.remove('open'); picker.innerHTML = ''; return;
     }
 
+    // Pitch availability: skip year picker entirely, always 2026
+    if (action === 'pitch-avail') {
+      picker.classList.remove('open'); picker.innerHTML = '';
+      var prevSeason0 = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
+      if (typeof swapSeasonData === 'function') swapSeasonData('year:2026');
+      function restorePA0() { if (typeof swapSeasonData === 'function') swapSeasonData(prevSeason0); }
+      var btnPA0 = null;
+      var cardPA0 = picker.closest ? picker.closest('.gp-card') : null;
+      if (cardPA0) cardPA0.querySelectorAll('.gp-btn').forEach(function(b) {
+        if ((b.querySelector('.gp-btn-label')||{}).textContent.includes('PITCH AVAIL')) btnPA0 = b;
+      });
+      openPitchAvailSheet(oppName, 2026, btnPA0, restorePA0);
+      return;
+    }
+
     picker.dataset.action = action;
     picker.innerHTML =
       '<span class="gp-year-label">SELECT SEASON</span>' +
@@ -2240,7 +2255,7 @@ Zane Skansi,Kitchener Panthers`;
     });
     // Also pull scatter from pitchers array (2025 has embedded scatter)
     pitchersArr.forEach(function(p){
-      if (!p.scatter || !p.pitcher) return;
+      if (!p.scatter || !Array.isArray(p.scatter) || !p.pitcher) return;
       var kk = p.pitcher.toLowerCase().trim();
       if (!pitcherScatter[kk]) pitcherScatter[kk] = [];
       p.scatter.forEach(function(s){ pitcherScatter[kk].push(s); });
