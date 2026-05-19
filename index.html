@@ -2175,34 +2175,122 @@ Zane Skansi,Kitchener Panthers`;
     picker.classList.add('open');
   }
 
+  // ── PITCH AVAILABILITY SHEET ─────────────────────────────────────────────────
   function openPitchAvailSheet(oppName, year, btn, restore) {
     restore = restore || function(){};
     if (typeof DATA === 'undefined') { alert('Data is still loading.'); restore(); return; }
-    if (btn) { if(btn.querySelector) { var lbl=btn.querySelector('.gp-btn-label'); if(lbl) lbl.textContent='Generating…'; } btn.disabled=true; }
 
     var GUE_NAME = 'Guelph Royals';
-    var today = new Date(); today.setHours(0,0,0,0);
+    var pitchersArr  = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
+    var pitchesData  = (DATA.pitches  && Array.isArray(DATA.pitches))  ? DATA.pitches  : [];
+    var iblH         = DATA.iblHistory || {};
+    var yr           = String(year);
+
+    // Collect scatter per pitcher
+    var pitcherScatter = {};
+    pitchesData.forEach(function(bp){
+      if (!bp.scatter) return;
+      bp.scatter.forEach(function(s){
+        var pn=s.pitcher; if(!pn) return;
+        var kk=pn.toLowerCase().trim();
+        if(!pitcherScatter[kk]) pitcherScatter[kk]=[];
+        pitcherScatter[kk].push(s);
+      });
+    });
+    pitchersArr.forEach(function(p){
+      if (!p.scatter || !Array.isArray(p.scatter) || !p.pitcher) return;
+      var kk=p.pitcher.toLowerCase().trim();
+      if(!pitcherScatter[kk]) pitcherScatter[kk]=[];
+      p.scatter.forEach(function(s){ pitcherScatter[kk].push(s); });
+    });
+
+    // All Guelph pitchers from roster
+    var knownPitchers = new Set(Object.keys(pitcherScatter));
+    pitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(p.pitcher.toLowerCase().trim()); });
+    var seenK = new Set();
+    var allPitcherNames = [];
+    GP_ROSTER_2025.forEach(function(row){
+      var rt = resolveTeam(row.team);
+      if (!rt || rt.name !== GUE_NAME) return;
+      var k = row.player.toLowerCase().trim();
+      if (!seenK.has(k)) { seenK.add(k); allPitcherNames.push(row.player); }
+    });
+    allPitcherNames.sort();
+
+    // Show pitcher picker
+    var card = btn ? btn.closest('.gp-card') : null;
+    var picker = card ? card.querySelector('.gp-year-picker') : null;
+    if (!picker) { genPitchAvailPDF(allPitcherNames, btn, restore, yr); return; }
+
+    var selectId = 'pa-sel-' + Date.now();
+    var rowsHtml = allPitcherNames.map(function(name){
+      var hasData = knownPitchers.has(name.toLowerCase().trim());
+      return '<label style="display:flex;align-items:center;gap:8px;padding:5px 10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04)" ' +
+        'onmouseover="this.style.background=\'rgba(255,184,28,0.06)\'" onmouseout="this.style.background=\'\'">' +
+        '<input type="checkbox" value="'+name.replace(/"/g,'&quot;')+'"'+(hasData?' checked':'')+
+        ' style="accent-color:#FFB81C;width:13px;height:13px;cursor:pointer;flex-shrink:0">' +
+        '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:'+(hasData?'#fff':'rgba(255,255,255,0.45)')+'">'+name+'</span>'+
+        '</label>';
+    }).join('');
+
+    picker.style.cssText = 'display:block;border:1px solid rgba(255,184,28,0.2);border-radius:3px;overflow:hidden;margin-top:-6px;background:rgba(13,20,32,0.95)';
+    picker.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:rgba(255,184,28,0.08);border-bottom:1px solid rgba(255,184,28,0.15)">' +
+        '<span style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.45)">PITCHERS — '+yr+'</span>' +
+        '<button onclick="this.closest(\'.gp-year-picker\').classList.remove(\'open\');this.closest(\'.gp-year-picker\').style.cssText=\'\';this.closest(\'.gp-year-picker\').innerHTML=\'\'" '+
+          'style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:14px;line-height:1;padding:0">×</button>' +
+      '</div>' +
+      '<div id="'+selectId+'" style="max-height:220px;overflow-y:auto;padding:4px 0">'+rowsHtml+'</div>' +
+      '<div style="padding:8px 10px;border-top:1px solid rgba(255,184,28,0.15)">' +
+        '<button onclick="paRunWithSelected(\''+selectId+'\',\''+yr+'\')" '+
+          'style="width:100%;padding:8px;background:rgba(255,184,28,0.14);border:1px solid rgba(255,184,28,0.35);border-radius:3px;color:#FFB81C;font-family:\'Bebas Neue\',sans-serif;font-size:13px;letter-spacing:0.1em;cursor:pointer" '+
+          'onmouseover="this.style.background=\'rgba(255,184,28,0.26)\'" onmouseout="this.style.background=\'rgba(255,184,28,0.14)\'">GENERATE PDF</button>' +
+      '</div>';
+    picker.classList.add('open');
+    if (btn) btn.disabled = false;
+    restore();
+  }
+
+  function paRunWithSelected(selectId, yr) {
+    var sel = document.getElementById(selectId);
+    if (!sel) return;
+    var checked = Array.from(sel.querySelectorAll('input[type=checkbox]:checked')).map(function(c){ return c.value; });
+    if (!checked.length) { alert('Select at least one pitcher.'); return; }
+    var picker = sel.closest ? sel.closest('.gp-year-picker') : null;
+    if (picker) { picker.classList.remove('open'); picker.style.cssText=''; picker.innerHTML=''; }
+    genPitchAvailPDF(checked, null, null, yr);
+  }
+
+  function genPitchAvailPDF(selectedNames, btn, restore, yr) {
+    restore = restore || function(){};
+    yr = yr || '2026';
+    if (btn) { if(btn.querySelector){var lbl=btn.querySelector('.gp-btn-label');if(lbl)lbl.textContent='Generating…';} btn.disabled=true; }
+
+    var pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
+    var pitchesData = (DATA.pitches  && Array.isArray(DATA.pitches))  ? DATA.pitches  : [];
+    var iblH        = DATA.iblHistory || {};
 
     function daysSince(dateStr) {
       if (!dateStr) return 99;
-      var d = new Date(dateStr + 'T00:00:00'); return Math.floor((today - d) / 86400000);
+      var today = new Date(); today.setHours(0,0,0,0);
+      return Math.floor((today - new Date(dateStr+'T00:00:00')) / 86400000);
     }
     function pitchesInDays(sc, n) {
-      var cutoff = new Date(today); cutoff.setDate(cutoff.getDate() - n);
+      var today = new Date(); today.setHours(0,0,0,0);
+      var cutoff = new Date(today); cutoff.setDate(cutoff.getDate()-n);
       var cs = cutoff.toISOString().slice(0,10);
       return sc.filter(function(s){ return s.date && s.date >= cs; }).length;
     }
-    function deriveHand(sc, side) {
-      var counts = {}; sc.forEach(function(s){ var v=s[side]; if(v){counts[v]=(counts[v]||0)+1;} });
-      var tot = Object.values(counts).reduce(function(a,b){return a+b;},0);
-      if(!tot) return '?';
-      var dom = Object.keys(counts).reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
+    function paHand(sc, side) {
+      var counts={}, tot=0;
+      sc.forEach(function(s){ var v=s[side]; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
+      if(!tot) return null;
+      var dom=Object.keys(counts).reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
       return counts[dom]/tot>=0.5?dom:'S';
     }
-    function splitStats(sc, side) {
-      var tot=sc.length, ks=0, bbs=0, hits=0, bf=0, str=0, sw=0, swStr=0;
+    function splitStats(sc) {
+      var bf=sc.length, ks=0, bbs=0, hits=0, str=0, sw=0, swStr=0;
       sc.forEach(function(s){
-        bf++;
         if(['Strikeout Swinging','Strikeout Looking'].includes(s.outcome)) ks++;
         if(s.outcome==='Walk'||s.outcome==='Intentional Walk') bbs++;
         if(['Single','Double','Triple','Home Run'].includes(s.outcome)) hits++;
@@ -2210,233 +2298,180 @@ Zane Skansi,Kitchener Panthers`;
         if(['Swinging Strike','Foul','Strikeout Swinging'].includes(s.outcome)) sw++;
         if(s.outcome==='Swinging Strike') swStr++;
       });
-      function f1(v){return tot?Math.round(v/tot*100)+'%':'--';}
-      function f2(v,n){return n?Math.round(v/n*100)+'%':'--';}
-      return {
-        bf: bf, k: ks, bb: bbs, hits: hits,
-        baa: bf>2?(hits/bf).toFixed(3).replace('0.','.') : '--',
-        kPct: bf>2?Math.round(ks/bf*100)+'%':'--',
-        bbPct: bf>2?Math.round(bbs/bf*100)+'%':'--',
-        strPct: tot>2?Math.round(str/tot*100)+'%':'--',
-        whiffPct: sw>2?Math.round(swStr/sw*100)+'%':'--'
-      };
+      var f1=function(n,d){return d>2?Math.round(n/d*100)+'%':'—';};
+      return { bf:bf, k:ks, bb:bbs,
+        baa:bf>2?(hits/bf).toFixed(3).replace('0.','.'):'—',
+        kPct:f1(ks,bf), bbPct:f1(bbs,bf), strPct:f1(str,bf), whiffPct:f1(swStr,sw) };
     }
 
-    // Gather Guelph pitchers from roster + pitchers data
-    var pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
-    var pbpPitchersArr = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
-
-    var knownPitchers = new Set();
-    pitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(p.pitcher.toLowerCase().trim()); });
-    pbpPitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(p.pitcher.toLowerCase().trim()); });
-    var pitchesData = (DATA.pitches && Array.isArray(DATA.pitches)) ? DATA.pitches : [];
-    pitchesData.forEach(function(bp){ if(!bp.scatter)return; bp.scatter.forEach(function(s){ if(s.pitcher) knownPitchers.add(s.pitcher.toLowerCase().trim()); }); });
-
-    var seenK = new Set();
-    var pitcherNames = [];
-    GP_ROSTER_2025.forEach(function(row){
-      var rt = resolveTeam(row.team);
-      if (!rt || rt.name !== GUE_NAME) return;
-      var k = row.player.toLowerCase().trim();
-      if (knownPitchers.has(k) && !seenK.has(k)) { seenK.add(k); pitcherNames.push(row.player); }
-    });
-    pitcherNames.sort();
-
-    // Build scatter per pitcher from pitches data
     var pitcherScatter = {};
     pitchesData.forEach(function(bp){
       if (!bp.scatter) return;
       bp.scatter.forEach(function(s){
-        var pn = s.pitcher; if (!pn) return;
-        var kk = pn.toLowerCase().trim();
-        if (!pitcherScatter[kk]) pitcherScatter[kk] = [];
+        var pn=s.pitcher; if(!pn) return;
+        var kk=pn.toLowerCase().trim();
+        if(!pitcherScatter[kk]) pitcherScatter[kk]=[];
         pitcherScatter[kk].push(s);
       });
     });
-    // Also pull scatter from pitchers array (2025 has embedded scatter)
     pitchersArr.forEach(function(p){
-      if (!p.scatter || !Array.isArray(p.scatter) || !p.pitcher) return;
-      var kk = p.pitcher.toLowerCase().trim();
-      if (!pitcherScatter[kk]) pitcherScatter[kk] = [];
+      if (!p.scatter||!Array.isArray(p.scatter)||!p.pitcher) return;
+      var kk=p.pitcher.toLowerCase().trim();
+      if(!pitcherScatter[kk]) pitcherScatter[kk]=[];
       p.scatter.forEach(function(s){ pitcherScatter[kk].push(s); });
     });
 
-    // IBL History for ERA
-    var iblH = (DATA.iblHistory) ? DATA.iblHistory : {};
-
-    var gold = '#FFB81C';
-    var yr = String(year);
-
-    var pitcherRows = pitcherNames.map(function(name){
-      var kk = name.toLowerCase().trim();
-      var sc = pitcherScatter[kk] || [];
-      var pd = pitchersArr.find(function(p){ return p.pitcher && p.pitcher.toLowerCase().trim()===kk; }) || {};
-
-      // Hand
-      var hand = deriveHand(sc, 'pitcher_side');
-
-      // Last appearance + pitch counts
-      var dates = sc.map(function(s){return s.date;}).filter(Boolean).sort().reverse();
-      var lastDate = dates[0] || null;
-      var lastDisplay = lastDate ? lastDate.slice(5).replace('-','/') : '—';
-      var days = daysSince(lastDate);
-      var restDisplay = days===99?'—':days===0?'Today':days+'d ago';
-      var p3  = pitchesInDays(sc, 3);
-      var p7  = pitchesInDays(sc, 7);
-      var p14 = pitchesInDays(sc, 14);
-
-      // ERA from ibl_history
-      var iblRows = iblH[name] || [];
-      var iblRow = iblRows.filter(function(r){return (r.season||'').indexOf(yr)!==-1&&(r.IP||0)>0;})[0]
-                || iblRows.filter(function(r){return (r.IP||0)>0;})[0] || null;
-      var era = iblRow&&iblRow.ERA!=null ? parseFloat(iblRow.ERA).toFixed(2) : (pd.ERA!=null?pd.ERA:'—');
-
-      // Splits vs LHH and RHH
-      var lhhSc = sc.filter(function(s){return s.batter_side==='L';});
-      var rhhSc = sc.filter(function(s){return s.batter_side==='R';});
-      var lhh = splitStats(lhhSc, 'L');
-      var rhh = splitStats(rhhSc, 'R');
-
-      // Availability color
-      var availColor = days<=1?'#f87171':days<=3?'#FFB81C':'#34d399';
-      var availText  = days<=1?'HIGH REST NEEDED':days<=3?'MONITOR':'AVAILABLE';
-
-      return {name:name, hand:hand, lastDisplay:lastDisplay, restDisplay:restDisplay,
-              days:days, availColor:availColor, availText:availText,
-              p3:p3, p7:p7, p14:p14, era:era, lhh:lhh, rhh:rhh};
+    var pitcherRows = selectedNames.map(function(name){
+      var kk=name.toLowerCase().trim();
+      var sc=pitcherScatter[kk]||[];
+      var pd=pitchersArr.find(function(p){return p.pitcher&&p.pitcher.toLowerCase().trim()===kk;})||{};
+      var hand=paHand(sc,'pitcher_side');
+      if(!hand){ var iR=(iblH[name]||[]).find(function(r){return r.throws;}); hand=iR?iR.throws:'?'; }
+      var dates=sc.map(function(s){return s.date;}).filter(Boolean).sort().reverse();
+      var lastDate=dates[0]||null, days=daysSince(lastDate);
+      var iblRows=iblH[name]||[];
+      var iblRow=iblRows.filter(function(r){return (r.season||'').indexOf(yr)!==-1&&(r.IP||0)>0;})[0]
+               ||iblRows.filter(function(r){return (r.IP||0)>0;})[0]||null;
+      var era=iblRow&&iblRow.ERA!=null?parseFloat(iblRow.ERA).toFixed(2):(pd.ERA!=null?String(pd.ERA):'—');
+      var ip=iblRow&&iblRow.IP!=null?String(iblRow.IP):(pd.IP!=null?String(pd.IP):'—');
+      return {
+        name:name, hand:hand, era:era, ip:ip,
+        lastDisplay:lastDate?lastDate.slice(5).replace('-','/'):'—',
+        restDisplay:days===99?'—':days===0?'Today':days+'d ago',
+        days:days, p3:pitchesInDays(sc,3), p7:pitchesInDays(sc,7), p14:pitchesInDays(sc,14),
+        lhh:splitStats(sc.filter(function(s){return s.batter_side==='L';})),
+        rhh:splitStats(sc.filter(function(s){return s.batter_side==='R';})),
+        availRgb:days<=1?[220,38,38]:days<=3?[234,179,8]:[22,163,74],
+        availText:days<=1?'HIGH REST':days<=3?'MONITOR':'AVAILABLE'
+      };
     });
 
-    // ── Build HTML ─────────────────────────────────────────────────────────────
-    function splitCell(label, val) {
-      return '<td style="padding:3px 6px;text-align:center;font-size:8px;color:rgba(255,255,255,0.75)">'+val+'</td>';
-    }
-    function splitHdr(label) {
-      return '<th style="padding:2px 6px;text-align:center;font-size:7px;letter-spacing:0.8px;color:'+gold+';font-weight:500">'+label+'</th>';
-    }
+    ensureJsPDF(function(){
+      var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4', orientation:'landscape' });
+      var PW=297, PH=210, ML=12, MR=12, MT=16, MB=10;
+      var CW=PW-ML-MR;
 
-    var tableHtml = '';
-    pitcherRows.forEach(function(r, i){
-      var bg = i%2===0?'rgba(255,255,255,0.02)':'transparent';
-      // Main row
-      tableHtml +=
-        '<tr style="background:'+bg+';border-top:1px solid rgba(255,184,28,0.15)">' +
-          '<td style="padding:5px 8px;font-size:10px;font-weight:600;color:#fff;white-space:nowrap">'+r.name+'</td>' +
-          '<td style="padding:5px 6px;text-align:center;font-size:9px;color:rgba(255,255,255,0.7)">'+r.hand+'</td>' +
-          '<td style="padding:5px 6px;text-align:center;font-size:9px;color:rgba(255,255,255,0.7)">'+r.era+'</td>' +
-          '<td style="padding:5px 6px;text-align:center;font-size:9px;color:rgba(255,255,255,0.7)">'+r.lastDisplay+'</td>' +
-          '<td style="padding:5px 6px;text-align:center;font-size:9px;color:rgba(255,255,255,0.7)">'+r.restDisplay+'</td>' +
-          '<td style="padding:5px 6px;text-align:center;font-size:9px;color:'+(r.p3>0?'#f87171':'rgba(255,255,255,0.5)')+'">'+r.p3+'</td>' +
-          '<td style="padding:5px 6px;text-align:center;font-size:9px;color:'+(r.p7>20?'#FFB81C':r.p7>0?'rgba(255,255,255,0.7)':'rgba(255,255,255,0.4)')+'">'+r.p7+'</td>' +
-          '<td style="padding:5px 6px;text-align:center;font-size:9px;color:rgba(255,255,255,0.7)">'+r.p14+'</td>' +
-          '<td style="padding:5px 10px;text-align:center"><span style="font-size:7px;font-weight:600;letter-spacing:1px;color:'+r.availColor+';padding:2px 6px;border:1px solid '+r.availColor+';border-radius:2px">'+r.availText+'</span></td>' +
-        '</tr>' +
-        // Splits sub-row
-        '<tr style="background:'+bg+';border-bottom:1px solid rgba(255,184,28,0.1)">' +
-          '<td colspan="2" style="padding:0 8px 5px 20px">' +
-            '<span style="font-size:7px;letter-spacing:1px;color:rgba(255,184,28,0.5)">VS</span>' +
-          '</td>' +
-          '<td colspan="7" style="padding:0 8px 5px 0">' +
-            '<table style="width:100%;border-collapse:collapse">' +
-              '<tr>' +
-                '<th style="text-align:left;font-size:7px;letter-spacing:0.8px;color:rgba(255,255,255,0.3);padding:0 8px 1px 0;width:40px"></th>' +
-                splitHdr('BF') + splitHdr('K%') + splitHdr('BB%') + splitHdr('BAA') + splitHdr('STR%') + splitHdr('WHIFF%') +
-              '</tr>' +
-              '<tr>' +
-                '<td style="font-size:7px;letter-spacing:1px;color:#60a5fa;font-weight:600;padding:1px 8px 1px 0">LHH</td>' +
-                splitCell('bf',r.lhh.bf) + splitCell('k',r.lhh.kPct) + splitCell('bb',r.lhh.bbPct) +
-                splitCell('baa',r.lhh.baa) + splitCell('str',r.lhh.strPct) + splitCell('wh',r.lhh.whiffPct) +
-              '</tr>' +
-              '<tr>' +
-                '<td style="font-size:7px;letter-spacing:1px;color:#f87171;font-weight:600;padding:1px 8px 1px 0">RHH</td>' +
-                splitCell('bf',r.rhh.bf) + splitCell('k',r.rhh.kPct) + splitCell('bb',r.rhh.bbPct) +
-                splitCell('baa',r.rhh.baa) + splitCell('str',r.rhh.strPct) + splitCell('wh',r.rhh.whiffPct) +
-              '</tr>' +
-            '</table>' +
-          '</td>' +
-        '</tr>';
-    });
+      function sf(c,rgb){c.setFillColor(rgb[0],rgb[1],rgb[2]);}
+      function sd(c,rgb){c.setDrawColor(rgb[0],rgb[1],rgb[2]);}
+      function st(c,rgb){c.setTextColor(rgb[0],rgb[1],rgb[2]);}
 
-    var wrap = document.createElement('div');
-    wrap.style.cssText = 'position:fixed;left:-9999px;top:0;width:860px;background:#0d1420;border:1.5px solid rgba(255,184,28,0.45);border-radius:6px;padding:14px 18px;font-family:"DM Mono",monospace;box-shadow:0 4px 24px rgba(0,0,0,0.6);';
-    wrap.innerHTML =
-      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,184,28,0.3)">' +
-        '<div>' +
-          '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:16px;letter-spacing:3px;color:'+gold+'">GUELPH ROYALS — PITCH AVAILABILITY</div>' +
-          '<div style="font-size:8px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-top:2px">'+yr+' SEASON  ·  DATA DIAMOND — CBL</div>' +
-        '</div>' +
-        '<svg viewBox="0 0 40 40" fill="none" style="width:28px;height:28px"><polygon points="20,2 38,20 20,38 2,20" stroke="'+gold+'" stroke-width="2.5" fill="none"/><circle cx="20" cy="20" r="3" fill="'+gold+'"/></svg>' +
-      '</div>' +
-      '<table style="width:100%;border-collapse:collapse">' +
-        '<thead><tr>' +
-          '<th style="text-align:left;padding:4px 8px;font-size:8px;letter-spacing:1.2px;color:'+gold+';border-bottom:1px solid rgba(255,184,28,0.4)">PITCHER</th>' +
-          '<th style="text-align:center;padding:4px 6px;font-size:8px;letter-spacing:1px;color:'+gold+';border-bottom:1px solid rgba(255,184,28,0.4)">H</th>' +
-          '<th style="text-align:center;padding:4px 6px;font-size:8px;letter-spacing:1px;color:'+gold+';border-bottom:1px solid rgba(255,184,28,0.4)">ERA</th>' +
-          '<th style="text-align:center;padding:4px 6px;font-size:8px;letter-spacing:1px;color:'+gold+';border-bottom:1px solid rgba(255,184,28,0.4)">LAST APP</th>' +
-          '<th style="text-align:center;padding:4px 6px;font-size:8px;letter-spacing:1px;color:'+gold+';border-bottom:1px solid rgba(255,184,28,0.4)">REST</th>' +
-          '<th style="text-align:center;padding:4px 6px;font-size:8px;letter-spacing:1px;color:'+gold+';border-bottom:1px solid rgba(255,184,28,0.4)">P/3D</th>' +
-          '<th style="text-align:center;padding:4px 6px;font-size:8px;letter-spacing:1px;color:'+gold+';border-bottom:1px solid rgba(255,184,28,0.4)">P/7D</th>' +
-          '<th style="text-align:center;padding:4px 6px;font-size:8px;letter-spacing:1px;color:'+gold+';border-bottom:1px solid rgba(255,184,28,0.4)">P/14D</th>' +
-          '<th style="text-align:center;padding:4px 10px;font-size:8px;letter-spacing:1px;color:'+gold+';border-bottom:1px solid rgba(255,184,28,0.4)">STATUS</th>' +
-        '</tr></thead>' +
-        '<tbody>'+tableHtml+'</tbody>' +
-      '</table>';
+      var CO={bg:[10,16,30],navy:[14,21,40],navy2:[18,27,52],navy3:[25,38,68],
+              gold:[255,184,28],white:[255,255,255],light:[180,190,210],dim:[80,100,130],
+              green:[22,163,74],amber:[234,179,8],red:[220,38,38],blue:[96,165,250]};
 
-    document.body.appendChild(wrap);
+      // Page background
+      sf(d,CO.bg); d.rect(0,0,PW,PH,'F');
 
-    function doCapture() {
-      html2canvas(wrap, { backgroundColor:'#0d1420', scale:3, useCORS:true }).then(function(canvas) {
-        document.body.removeChild(wrap);
-        var a = document.createElement('a');
-        a.download = 'pitch-availability-guelph-'+yr+'.png';
-        a.href = canvas.toDataURL('image/png');
-        a.click();
-        if (btn) { btn.disabled=false; var lbl2=btn.querySelector?btn.querySelector('.gp-btn-label'):null; if(lbl2) lbl2.textContent='PITCH AVAIL'; }
-        restore();
+      // Header
+      sf(d,CO.navy); d.rect(0,0,PW,MT-1,'F');
+      sf(d,CO.gold); d.rect(0,MT-1.5,PW,1.5,'F');
+      d.setFont('helvetica','bold'); d.setFontSize(13); st(d,CO.gold);
+      d.text('GUELPH ROYALS — PITCH AVAILABILITY', ML, MT-4);
+      d.setFont('helvetica','normal'); d.setFontSize(7); st(d,CO.dim);
+      d.text(yr+'  ·  '+new Date().toLocaleDateString('en-CA')+'  ·  DATA DIAMOND CBL', PW-MR, MT-4, {align:'right'});
+
+      // Layout: left = availability, right = splits
+      var AVAIL_W = CW*0.44;
+      var SPLIT_W = CW - AVAIL_W - 8;
+      var spX = ML + AVAIL_W + 8;
+      var y = MT + 3;
+
+      // Shared row height
+      var rowH = Math.min(8.5, (PH - MT - MB - 8) / Math.max(pitcherRows.length, 1));
+
+      // ── Availability header ───────────────────────────────────────────────
+      var aHdrs=['PITCHER','H','ERA','IP','LAST APP','REST','P/3D','P/7D','P/14D','STATUS'];
+      var aCWs=[AVAIL_W*0.25,AVAIL_W*0.06,AVAIL_W*0.09,AVAIL_W*0.08,
+                AVAIL_W*0.10,AVAIL_W*0.10,AVAIL_W*0.08,AVAIL_W*0.08,AVAIL_W*0.08,AVAIL_W*0.18];
+      var hH=6;
+      sf(d,CO.navy2); d.rect(ML,y,AVAIL_W,hH,'F');
+      sf(d,CO.gold);  d.rect(ML,y,AVAIL_W,0.9,'F');
+      var cx=ML;
+      aHdrs.forEach(function(h,i){
+        d.setFont('helvetica','bold'); d.setFontSize(6); st(d,CO.gold);
+        d.text(h,i===0?cx+1.5:cx+aCWs[i]/2,y+4,{align:i===0?'left':'center'});
+        if(i<aHdrs.length-1){sd(d,CO.navy3);d.setLineWidth(0.12);d.line(cx+aCWs[i],y,cx+aCWs[i],y+hH);}
+        cx+=aCWs[i];
       });
-    }
 
-    if (window.html2canvas) {
-      doCapture();
-    } else {
-      var s = document.createElement('script');
-      s.src = 'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js';
-      s.onload = doCapture;
-      document.head.appendChild(s);
-    }
+      // ── Splits header ─────────────────────────────────────────────────────
+      var sHdrs=['PITCHER','','BF','K%','BB%','BAA','STR%','WHF%'];
+      var sCWs=[SPLIT_W*0.22,SPLIT_W*0.08,SPLIT_W*0.08,
+                SPLIT_W*0.12,SPLIT_W*0.12,SPLIT_W*0.12,SPLIT_W*0.13,SPLIT_W*0.13];
+      sf(d,CO.navy2); d.rect(spX,y,SPLIT_W,hH,'F');
+      sf(d,CO.gold);  d.rect(spX,y,SPLIT_W,0.9,'F');
+      var scx2=spX;
+      sHdrs.forEach(function(h,i){
+        d.setFont('helvetica','bold'); d.setFontSize(6); st(d,CO.gold);
+        d.text(h,i===0?scx2+1.5:scx2+sCWs[i]/2,y+4,{align:i===0?'left':'center'});
+        if(i<sHdrs.length-1){sd(d,CO.navy3);d.setLineWidth(0.12);d.line(scx2+sCWs[i],y,scx2+sCWs[i],y+hH);}
+        scx2+=sCWs[i];
+      });
+      y+=hH;
+
+      // ── Data rows ─────────────────────────────────────────────────────────
+      pitcherRows.forEach(function(r,idx){
+        var ry=y+idx*rowH;
+        if(ry+rowH>PH-MB) return;
+        var bg=idx%2===0?CO.navy:CO.bg;
+        sf(d,bg); d.rect(ML,ry,AVAIL_W,rowH,'F');
+        sf(d,bg); d.rect(spX,ry,SPLIT_W,rowH,'F');
+
+        // Availability cells
+        var aVals=[r.name,r.hand,r.era,r.ip,r.lastDisplay,r.restDisplay,
+                   String(r.p3),String(r.p7),String(r.p14),r.availText];
+        var ax2=ML;
+        aVals.forEach(function(v,i){
+          var nm=i===0,st2=i===9;
+          var p3red=i===6&&r.p3>0, p7amb=i===7&&r.p7>20;
+          d.setFont('helvetica',nm||st2?'bold':'normal');
+          d.setFontSize(nm?7:6.5);
+          var clr=st2?r.availRgb:p3red?CO.red:p7amb?CO.amber:nm?CO.white:CO.light;
+          st(d,clr);
+          d.text(String(v),nm?ax2+1.5:ax2+aCWs[i]/2,ry+rowH/2+1,{align:nm?'left':'center'});
+          if(i<aVals.length-1){sd(d,CO.navy3);d.setLineWidth(0.1);d.line(ax2+aCWs[i],ry,ax2+aCWs[i],ry+rowH);}
+          ax2+=aCWs[i];
+        });
+
+        // Splits — LHH / RHH stacked
+        var hH2=rowH/2;
+        [[r.lhh,'LHH',CO.blue],[r.rhh,'RHH',CO.red]].forEach(function(item,si){
+          var sp=item[0],lbl=item[1],lclr=item[2];
+          var subY=ry+si*hH2;
+          var sx3=spX;
+          var sVals=[r.name,lbl,String(sp.bf),sp.kPct,sp.bbPct,sp.baa,sp.strPct,sp.whiffPct];
+          sVals.forEach(function(v,i){
+            var nm=i===0,isLbl=i===1;
+            d.setFont('helvetica',nm||isLbl?'bold':'normal');
+            d.setFontSize(isLbl?6:6);
+            var clr=isLbl?lclr:nm?CO.white:CO.light;
+            st(d,clr);
+            if(nm){
+              if(si===0) d.text(v,sx3+1.5,subY+hH2/2+1,{align:'left'});
+            } else {
+              d.text(v,sx3+sCWs[i]/2,subY+hH2/2+1,{align:'center'});
+            }
+            if(i<sVals.length-1){sd(d,CO.navy3);d.setLineWidth(0.1);d.line(sx3+sCWs[i],ry,sx3+sCWs[i],ry+rowH);}
+            sx3+=sCWs[i];
+          });
+          if(si===0){sd(d,[30,45,75]);d.setLineWidth(0.07);d.line(spX,ry+hH2,spX+SPLIT_W,ry+hH2);}
+        });
+
+        // Row border
+        sd(d,CO.navy3); d.setLineWidth(0.1);
+        d.line(ML,ry+rowH,ML+AVAIL_W,ry+rowH);
+        d.line(spX,ry+rowH,spX+SPLIT_W,ry+rowH);
+      });
+
+      // Footer
+      sf(d,CO.gold); d.rect(0,PH-2.5,PW,2.5,'F');
+      d.setFont('helvetica','normal'); d.setFontSize(5.5); st(d,[10,16,30]);
+      d.text('GUELPH ROYALS  ·  PITCH AVAILABILITY  ·  DATA DIAMOND CBL', PW/2, PH-0.8, {align:'center'});
+
+      d.save('Guelph_Pitch_Availability_'+yr+'.pdf');
+      if(btn){btn.disabled=false;var l2=btn.querySelector?btn.querySelector('.gp-btn-label'):null;if(l2)l2.textContent='PITCH AVAIL';}
+      restore();
+    });
   }
 
-    document.addEventListener('DOMContentLoaded', function() {
-    // Wait for DATA to load before building grid
-    var attempts = 0;
-    function tryBuild() {
-      if ((typeof DATA !== 'undefined' && DATA.summary && DATA.summary.length) || attempts > 20) {
-        buildGamePrepGrid();
-      } else {
-        attempts++;
-        setTimeout(tryBuild, 300);
-      }
-    }
-    tryBuild();
-  });
-  </script>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="logo">
-          <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none">
-            <svg class="logo-diamond" viewBox="0 0 40 40" fill="none" style="width:24px;height:24px">
-              <polygon points="20,2 38,20 20,38 2,20" stroke="#FFB81C" stroke-width="2.5" fill="none"/>
-              <circle cx="20" cy="20" r="3" fill="#FFB81C"/>
-            </svg>
-            <span class="logo-text" style="font-size:16px">Data<em>Diamond</em></span>
-          </a>
-        </div>
-        <p class="footer-note">Not affiliated with CBL</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
-</body>
-</html>
