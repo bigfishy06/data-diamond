@@ -1128,20 +1128,22 @@ Zane Skansi,Kitchener Panthers`;
     }
     var picker = yearBtn.closest('.gp-year-picker');
 
-    // For fielder sheet, skip player selection and run directly
+    // For pitch availability, skip year picker entirely — always use 2026
     if (action === 'pitch-avail') {
       picker.classList.remove('open'); picker.innerHTML = '';
-      var prevSeason = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
-      if (typeof swapSeasonData === 'function') swapSeasonData('year:' + year);
-      function restoreFs() { if (typeof swapSeasonData === 'function') swapSeasonData(prevSeason); }
-      var card0 = picker.closest('.gp-card');
-      var actionBtn0 = null;
-      if (card0) { card0.querySelectorAll('.gp-btn').forEach(function(b) {
-        if ((b.querySelector('.gp-btn-label')||{}).textContent.includes('PITCH AVAIL')) actionBtn0 = b;
+      var prevSA = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
+      if (typeof swapSeasonData === 'function') swapSeasonData('year:2026');
+      function restorePA() { if (typeof swapSeasonData === 'function') swapSeasonData(prevSA); }
+      var cardPA = picker.closest('.gp-card');
+      var btnPA = null;
+      if (cardPA) { cardPA.querySelectorAll('.gp-btn').forEach(function(b) {
+        if ((b.querySelector('.gp-btn-label')||{}).textContent.includes('PITCH AVAIL')) btnPA = b;
       }); }
-      openPitchAvailSheet(oppName, year, actionBtn0, restoreFs);
+      openPitchAvailSheet(oppName, 2026, btnPA, restorePA);
       return;
     }
+    // For fielder sheet, skip player selection and run directly
+
 
     // Swap data to chosen year so we can read the player list
     var prevSeason = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
@@ -1468,15 +1470,20 @@ Zane Skansi,Kitchener Panthers`;
           return fps.length>=5 ? f1(sw/fps.length*100)+'%' : '—';
         })();
 
-        // BATS: deriveHand from scatter (matches main.js logic), fallback iblHistory.bats
+        // BATS: deriveHand from scatter, fallback iblHistory.bats across any season
         var bats = (function(){
           var counts={}, tot=0;
           sc.forEach(function(p){ var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-          if(tot===0) return iblS&&iblS.bats ? iblS.bats : '?';
-          var sides=Object.keys(counts);
-          if(sides.length===1) return sides[0];
-          var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-          return counts[dom]/tot>=0.5 ? dom : 'S';
+          if(tot>0){
+            var sides=Object.keys(counts);
+            if(sides.length===1) return sides[0];
+            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
+            return counts[dom]/tot>=0.5 ? dom : 'S';
+          }
+          // Fallback: iblHistory.bats across any season
+          var iblAllS2 = DATA.iblHistory[s.batter]||[];
+          var batsRow = iblAllS2.find(function(r){return r.bats;});
+          return batsRow ? batsRow.bats : '?';
         })();
 
         // GB%, FB%, LD%: 2025 = pbp_batters (most accurate), 2026 = summary2026 (normalized)
@@ -1783,25 +1790,44 @@ Zane Skansi,Kitchener Panthers`;
 
         // HAND: scatter -> iblHistory.throws -> '?'
         var nameDisp=p.name; if(nameDisp.length>18)nameDisp=nameDisp.slice(0,17)+'.';
-        // HAND: deriveHand from scatter (matches main.js logic), fallback iblHistory.throws
+        // HAND: deriveHand from scatter, fallback iblHistory.throws (any season)
         var handVal = (function(){
           var counts={}, tot=0;
           p.sc.forEach(function(s){ var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-          if(tot===0) return iblP&&iblP.throws ? iblP.throws
-                             : (iblAll.length&&iblAll[0].throws ? iblAll[0].throws : '?');
-          var sides=Object.keys(counts);
-          if(sides.length===1) return sides[0];
-          var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-          return counts[dom]/tot>=0.5 ? dom : 'S';
+          if(tot>0){
+            var sides=Object.keys(counts);
+            if(sides.length===1) return sides[0];
+            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
+            return counts[dom]/tot>=0.5 ? dom : 'S';
+          }
+          // Fallback: iblHistory.throws across any season
+          var throwsRow=(iblAll||[]).find(function(r){return r.throws;});
+          return throwsRow ? throwsRow.throws : '?';
         })();
-        // K and BB raw counts
+        // K and BB raw counts — iblHistory > pitchers.json (pd) > scatter count
         var kPitVal=(function(){
-          if(year==2025){var r=(iblAll||[]).find(function(x){return (x.season||'').indexOf('2025')!==-1&&x.K!=null;}); return r?String(Math.round(r.K)):(iblP&&iblP.K!=null?String(Math.round(iblP.K)):'—');}
-          return pd.K!=null?String(Math.round(pd.K)):(sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length||'—');
+          if(year==2025){
+            var r=(iblAll||[]).find(function(x){return (x.season||'').indexOf('2025')!==-1&&x.K!=null;});
+            if(r) return String(Math.round(r.K));
+            if(pd.K!=null) return String(Math.round(pd.K));
+            var cnt=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
+            return cnt>0?String(cnt):'—';
+          }
+          if(pd.K!=null) return String(Math.round(pd.K));
+          var cnt2=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
+          return cnt2>0?String(cnt2):'—';
         })();
         var bbPitVal=(function(){
-          if(year==2025){var r=(iblAll||[]).find(function(x){return (x.season||'').indexOf('2025')!==-1&&x.BB!=null;}); return r?String(Math.round(r.BB)):(iblP&&iblP.BB!=null?String(Math.round(iblP.BB)):'—');}
-          return pd.BB!=null?String(Math.round(pd.BB)):(sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length||'—');
+          if(year==2025){
+            var r=(iblAll||[]).find(function(x){return (x.season||'').indexOf('2025')!==-1&&x.BB!=null;});
+            if(r) return String(Math.round(r.BB));
+            if(pd.BB!=null) return String(Math.round(pd.BB));
+            var cnt=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+            return cnt>0?String(cnt):'—';
+          }
+          if(pd.BB!=null) return String(Math.round(pd.BB));
+          var cnt2=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+          return cnt2>0?String(cnt2):'—';
         })();
         // REST: days since last outing
         var restVal = daysRest===99?'—':daysRest===0?'TODAY':daysRest+'d';
