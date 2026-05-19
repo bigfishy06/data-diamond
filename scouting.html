@@ -970,21 +970,19 @@ Zane Skansi,Kitchener Panthers`;
   function getTeamBatterReports2026(teamId) {
     var seen = new Set();
     var players = [];
-    var base = DATA.pbpBatters && DATA.pbpBatters.length
-      ? DATA.pbpBatters.filter(function(p) { return p.AB >= 5; })
-      : DATA.summary.filter(function(p) { return p.AB > 0; });
 
-    base.forEach(function(p) {
+    // 2026: use DATA.summary (swapped to summary2026) as primary — never pbpBatters (2025-only)
+    DATA.summary.filter(function(p) { return (p.AB||0) > 0; }).forEach(function(p) {
       var t = resolveTeam(p.batter_team || p.team);
       var bkey = normRosterName(p.batter);
       if (t && t.id === teamId && !seen.has(bkey)) {
         seen.add(bkey);
         var cname = canonicalName(p.batter);
-        var sum = findByName(DATA.summary, 'batter', cname) || p;
-        players.push({ name: cname, summary: sum, pbp: p, pitch: getPitchPlayer(cname) });
+        players.push({ name: cname, summary: p, pbp: null, pitch: getPitchPlayer(cname) });
       }
     });
 
+    // Supplement from pitches2026 scatter (batter-indexed)
     DATA.pitches.forEach(function(bp) {
       var bkey = normRosterName(bp.batter);
       if (!bp.batter || seen.has(bkey)) return;
@@ -1014,13 +1012,15 @@ Zane Skansi,Kitchener Panthers`;
       }
     }
 
-    if (DATA.pbpPitchers && DATA.pbpPitchers.length) {
-      DATA.pbpPitchers.filter(function(p) { return (p.BF || 0) >= 5; }).forEach(function(p) {
+    // 2026: use DATA.pitchers (swapped to pitchers2026) as primary — never pbpPitchers (2025-only)
+    if (DATA.pitchers && DATA.pitchers.length) {
+      DATA.pitchers.filter(function(p) { return (p.BF || 0) >= 1; }).forEach(function(p) {
         var t = resolveTeam(p.pitcher_team);
         if (t && t.id === teamId) addName(p.pitcher);
       });
     }
 
+    // Supplement from pitches2026 scatter
     DATA.pitches.forEach(function(bp) {
       if (!bp.scatter) return;
       bp.scatter.forEach(function(s) {
@@ -1889,11 +1889,12 @@ Zane Skansi,Kitchener Panthers`;
       }
     }
     // Raw K and BB counts for batter
+    // 2025: IBL History only; 2026: summary2026 (s.K / s.BB)
     var _batKCount = selSeason==='2025'
-      ? (iblB&&iblB.K!=null ? iblB.K : (s.K!=null ? s.K : null))
+      ? (iblB&&iblB.K!=null ? iblB.K : null)
       : (s.K!=null ? s.K : null);
     var _batBBCount = selSeason==='2025'
-      ? (iblB&&iblB.BB!=null ? iblB.BB : (s.BB!=null ? s.BB : null))
+      ? (iblB&&iblB.BB!=null ? iblB.BB : null)
       : (s.BB!=null ? s.BB : null);
     var discStats=[
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
@@ -2128,14 +2129,15 @@ Zane Skansi,Kitchener Panthers`;
     }
     var pitBBKDisp=_pitBBKVal!=null?f2(_pitBBKVal):'—';
     // Raw K and BB counts for pitcher
+    // 2025: IBL History only; 2026: scatter-derived ks/bbs counts
     var _pitKCount = selSeason==='2025'
       ? ((_iblAllP||[]).find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.K!=null;})|| {}).K
       : ks;
     var _pitBBCount = selSeason==='2025'
       ? ((_iblAllP||[]).find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.BB!=null;})|| {}).BB
       : bbs;
-    var _pitKDisp  = _pitKCount!=null  ? String(Math.round(_pitKCount))  : (ks>0?String(ks):'—');
-    var _pitBBDisp = _pitBBCount!=null ? String(Math.round(_pitBBCount)) : (bbs>0?String(bbs):'—');
+    var _pitKDisp  = selSeason==='2025' ? (_pitKCount!=null ? String(Math.round(_pitKCount)) : '—') : (ks>0?String(ks):'—');
+    var _pitBBDisp = selSeason==='2025' ? (_pitBBCount!=null ? String(Math.round(_pitBBCount)) : '—') : (bbs>0?String(bbs):'—');
     y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['FPS%',fpsVal],['STRIKE%',strVal],['K',_pitKDisp],['BB',_pitBBDisp]],y);
     y+=4;
 
