@@ -479,10 +479,10 @@
         </div>
         <div class="gp-btns">
           <button class="gp-btn" onclick="showYearPicker('${opp}',this,'pitchers-pdf')">
-            <span class="gp-btn-label">OPP PITCHERS PDF</span>
+            <span class="gp-btn-label">OPP PITCHERS PNG</span>
           </button>
           <button class="gp-btn" onclick="showYearPicker('${opp}',this,'batters-pdf')">
-            <span class="gp-btn-label">OPP BATTERS PDF</span>
+            <span class="gp-btn-label">OPP BATTERS PNG</span>
           </button>
           <button class="gp-btn" onclick="showYearPicker('${opp}',this,'pitch-avail')">
             <span class="gp-btn-label">PITCH AVAIL</span>
@@ -1305,7 +1305,7 @@ Zane Skansi,Kitchener Panthers`;
           '<button onclick="gpRunWithSelected(\'' + oppName + '\',\'' + action + '\',' + year + ',\'' + selectId + '\',this)" ' +
             'style="width:100%;padding:8px;background:rgba(255,184,28,0.14);border:1px solid rgba(255,184,28,0.35);border-radius:3px;color:#FFB81C;font-family:\'Bebas Neue\',sans-serif;font-size:13px;letter-spacing:0.1em;cursor:pointer;transition:background 0.15s" ' +
             'onmouseover="this.style.background=\'rgba(255,184,28,0.26)\'" onmouseout="this.style.background=\'rgba(255,184,28,0.14)\'">' +
-            'GENERATE PDF' +
+            'GENERATE PNG' +
           '</button>' +
         '</div>' +
       '</div>';
@@ -1348,21 +1348,21 @@ Zane Skansi,Kitchener Panthers`;
     }
 
     if (action === 'pitchers-pdf') {
-      genOppPitchersPDF(oppName, actionBtn, restore, selected, year);
+      genOppPitchersPNG(oppName, actionBtn, restore, selected, year);
     } else if (action === 'batters-pdf') {
-      genOppBattersPDF(oppName, actionBtn, restore, selected, year);
+      genOppBattersPNG(oppName, actionBtn, restore, selected, year);
     }
   }
 
-  // ── OPP BATTERS PDF — compact two-column table, guaranteed one page ──────
-  function genOppBattersPDF(oppName, btn, restore, selectedNames, year) {
+  // ── OPP BATTERS PNG — beautiful canvas-based single-image report ──────
+  function genOppBattersPNG(oppName, btn, restore, selectedNames, year) {
     year = year || ((typeof _activeSeason !== 'undefined') ? _activeSeason.replace('year:','') : '2026');
     restore = restore || function(){};
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.summary) {
       alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
     }
     if (btn) { btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…'; }
-    ensureJsPDF(function() {
+    (function() {
       var oppT = resolveTeam(oppName);
       var team = oppT ? { abbr: oppT.abbreviation, name: oppT.name, color: oppT.primaryColor }
                       : { abbr: oppName.slice(0,3).toUpperCase(), name: oppName, color: '#888888' };
@@ -1384,7 +1384,6 @@ Zane Skansi,Kitchener Panthers`;
         var k = row.player.trim().toLowerCase();
         if (!_seenBat.has(k)) { _seenBat.add(k); batterNames.push(row.player); }
       });
-      // Also include any summary batters on this team not on roster (inactive)
       var _rosterAll = new Set();
       GP_ROSTER_2025.forEach(function(row){ _rosterAll.add(row.player.trim().toLowerCase()); });
       _sum.forEach(function(p) {
@@ -1394,209 +1393,309 @@ Zane Skansi,Kitchener Panthers`;
         if (!_seenBat.has(k) && !_rosterAll.has(k)) { _seenBat.add(k); batterNames.push(p.batter); }
       });
 
-      // Filter to selected if provided
       if (selectedNames && selectedNames.length) {
         var selSet = {};
         selectedNames.forEach(function(n){ selSet[n.toLowerCase().trim()] = true; });
         batterNames = batterNames.filter(function(n){ return selSet[n.toLowerCase().trim()]; });
       }
 
-      // Build batter objects from summary lookup, sorted by AB desc
       var batters = batterNames.map(function(name) {
         return summaryByName[name] || summaryByName[name.trim()] || { batter: name, AB: 0 };
       }).sort(function(a,b){ return (b.AB||0)-(a.AB||0); });
 
       if (!batters.length) {
-        if (btn) { btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF'; }
-        alert('No batter data found for ' + oppName + '. Make sure data has been loaded for this team.');
+        if (btn) { btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PNG'; }
+        alert('No batter data found for ' + oppName + '.');
         restore(); return;
       }
 
-      var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4' });
-      var tc = hx(team.color === '#888888' ? '#666666' : team.color);
-
-      drawBg(d);
-      sf(d,CO.navy2); d.roundedRect(ML,MT,CPW,16,2,2,'F');
-      d.setFillColor(tc[0],tc[1],tc[2]); d.roundedRect(ML,MT,3,16,1,1,'F');
-      d.setFont('helvetica','bold'); d.setFontSize(9); d.setTextColor(tc[0],tc[1],tc[2]);
-      d.text(team.abbr, ML+8, MT+10);
-      d.setFont('helvetica','bold'); d.setFontSize(10); st(d,CO.white);
-      d.text((team.name+' — OPPOSING BATTERS').toUpperCase(), ML+24, MT+10);
-      d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
-      sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
-
-      var y = MT+20;
-      var pageBottom = PH - 10;
-      var n = batters.length || 1;
-      var availH = pageBottom - y;
-      var rowH = Math.min(14, Math.max(8, availH / (n + 1)));
-
-      var hdrs = ['PLAYER','BATS','AVG','OPS','K','BB','SB','PULL','STRAIGHT','OPPO'];
-      var cWs  = [CPW*0.22,CPW*0.07,CPW*0.08,CPW*0.08,CPW*0.06,CPW*0.06,CPW*0.06,CPW*0.12,CPW*0.12,CPW*0.13];
-      var hdrH = rowH * 0.65;
-
-      // Header row
-      sf(d,CO.navy3); d.rect(ML,y,CPW,hdrH,'F');
-      var cx=ML;
-      hdrs.forEach(function(h,i){
-        d.setFont('helvetica','bold'); d.setFontSize(6.5); st(d,CO.gold);
-        d.text(h, i===0?cx+3:cx+cWs[i]/2, y+hdrH*0.68, {align:i===0?'left':'center'});
-        if(i<hdrs.length-1){ sd(d,[30,50,80]);d.setLineWidth(0.1);d.line(cx+cWs[i],y,cx+cWs[i],y+hdrH); }
-        cx+=cWs[i];
-      });
-      y+=hdrH;
-
-      batters.forEach(function(s, idx) {
-        // Scatter (x/y): always from Data Diamond pitch data
+      // ── Build batter data rows ──────────────────────────────────────────
+      var rows = batters.map(function(s) {
         var sc = [];
         var nameLower = s.batter.toLowerCase();
         DATA.pitches.forEach(function(bp) {
           if (!bp.scatter) return;
           bp.scatter.forEach(function(p) { if (p.batter && p.batter.toLowerCase() === nameLower) sc.push(p); });
         });
-
-        // PBP: FP SW%, BATS handedness — 2025 only (pbpBatters is empty for 2026)
         var _pbpB = (DATA.pbpBatters && Array.isArray(DATA.pbpBatters)) ? DATA.pbpBatters : [];
-        var _batterKey = (s.batter||'').trim();
-        var pbp = _pbpB.find(function(p){ return (p.batter||'').trim()===_batterKey; })||null;
-
-        // IBL History: AVG, OBP, SLG, OPS for 2025
-        var iblYear = String(year);
+        var pbp = _pbpB.find(function(p){ return (p.batter||'').trim()===(s.batter||'').trim(); })||null;
         var iblAllS = DATA.iblHistory[s.batter]||[];
-        var iblS = iblAllS.filter(function(r){ return r.AB>0&&(r.season||'').indexOf(iblYear)!==-1; })[0]
-                  ||iblAllS.filter(function(r){ return r.AB>0; })[0]||null;
-
-        // AVG, OPS: 2025 = IBL History only; 2026 = DATA.summary (datadiamond2026)
-        var avg, ops;
-        if (year == 2025) {
-          avg = iblS&&iblS.AVG!=null ? f3(iblS.AVG) : '—';
-          ops = iblS&&iblS.OPS!=null ? f3(iblS.OPS) : '—';
-        } else {
-          avg = f3(s.AVG);
-          ops = pbp&&pbp.OPS!=null ? f3(pbp.OPS) : f3(s.OPS);
-        }
-
-        // FP SW%: PBP primary, scatter fallback (both years)
-        var fpSwing = pbp&&pbp.FP_SWING_pct!=null ? f1(pbp.FP_SWING_pct)+'%' : (function(){
-          var seenPA={}, fps=[];
-          sc.forEach(function(p){ var k=(p.batter||'')+'|'+(p.inning||''); if(!seenPA[k]){seenPA[k]=true;fps.push(p);} });
-          var sw=fps.filter(function(p){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Strikeout Swinging'].includes(p.outcome);}).length;
-          return fps.length>=5 ? f1(sw/fps.length*100)+'%' : '—';
-        })();
-
-        // BATS: deriveHand from scatter, fallback iblHistory.bats across any season
-        var bats = (function(){
-          var counts={}, tot=0;
-          sc.forEach(function(p){ var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-          if(tot>0){
-            var sides=Object.keys(counts);
-            if(sides.length===1) return sides[0];
-            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-            return counts[dom]/tot>=0.5 ? dom : 'S';
-          }
-          // Fallback: iblHistory.bats across any season
-          var iblAllS2 = DATA.iblHistory[s.batter]||[];
-          var batsRow = iblAllS2.find(function(r){return r.bats;});
-          return batsRow ? batsRow.bats : '?';
-        })();
-
-        // GB%, FB%, LD%: 2025 = pbp_batters (most accurate), 2026 = summary2026 (normalized)
-        // Spray/shift always from scatter x/y data
+        var iblS = iblAllS.filter(function(r){ return r.AB>0&&(r.season||'').indexOf(String(year))!==-1; })[0]||iblAllS.filter(function(r){ return r.AB>0; })[0]||null;
+        var avg = year==2025 ? (iblS&&iblS.AVG!=null?f3(iblS.AVG):'—') : f3(s.AVG);
+        var ops = year==2025 ? (iblS&&iblS.OPS!=null?f3(iblS.OPS):'—') : (pbp&&pbp.OPS!=null?f3(pbp.OPS):f3(s.OPS));
+        var counts={}, tot2=0;
+        sc.forEach(function(p){ var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot2++;} });
+        var bats='?';
+        if(tot2>0){ var sides2=Object.keys(counts); if(sides2.length===1){bats=sides2[0];}else{var dom2=sides2.reduce(function(a,b){return counts[a]>=counts[b]?a:b;}); bats=counts[dom2]/tot2>=0.5?dom2:'S';} }
+        else { var br2=iblAllS.find(function(r){return r.bats;}); if(br2)bats=br2.bats; }
         var batted=sc.filter(function(p){return['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(p.outcome);});
         var bipTot=batted.length;
-        // For 2025, prefer pbp_batters GB/FB/LD% (calculated from full season)
-        // For 2026, prefer summary2026 normalized values, fallback to scatter
-        var gb=(function(){
-          if(year==2025 && pbp&&pbp.GB_pct!=null) return f1(pbp.GB_pct)+'%';
-          if(year==2026 && s.GB_pct!=null) return f1(s.GB_pct)+'%';
-          return bipTot?f1(batted.filter(function(p){return p.outcome==='Groundout'||p.outcome==='Double Play';}).length/bipTot*100)+'%':'—';
-        })();
-        var fb=(function(){
-          if(year==2025 && pbp&&pbp.FB_pct!=null) return f1(pbp.FB_pct)+'%';
-          if(year==2026 && s.FB_pct!=null) return f1(s.FB_pct)+'%';
-          return bipTot?f1(batted.filter(function(p){return p.outcome==='Flyout'||p.outcome==='Home Run';}).length/bipTot*100)+'%':'—';
-        })();
-        var lo=(function(){
-          if(year==2025 && pbp&&pbp.LO_pct!=null) return f1(pbp.LO_pct)+'%';
-          if(year==2026 && s.LO_pct!=null) return f1(s.LO_pct)+'%';
-          return bipTot?f1(batted.filter(function(p){return p.outcome==='Lineout'||p.outcome==='Single'||p.outcome==='Double'||p.outcome==='Triple';}).length/bipTot*100)+'%':'—';
-        })();
-        // PULL/STRAIGHT/OPPO: summary primary (Pull_pct/Str_pct/Oppo_pct), scatter fallback
-        var pullPct, strPct2, oppPct2;
-        var sumS = summaryByName[s.batter] || summaryByName[(s.batter||'').trim()];
-        if (sumS && sumS.Pull_pct!=null) {
-          pullPct = f1(sumS.Pull_pct)+'%';
-          strPct2 = f1(sumS.Str_pct||0)+'%';
-          oppPct2 = f1(sumS.Oppo_pct||0)+'%';
+        var sumS = summaryByName[s.batter];
+        var pullPct=sumS&&sumS.Pull_pct!=null?f1(sumS.Pull_pct)+'%':(bipTot>=3?f1(batted.filter(function(p){return p.spray==='Pull';}).length/bipTot*100)+'%':'—');
+        var oppPct2=sumS&&sumS.Oppo_pct!=null?f1(sumS.Oppo_pct)+'%':(bipTot>=3?f1(batted.filter(function(p){return p.spray==='Opposite Field';}).length/bipTot*100)+'%':'—');
+        var kVal=year==2025?(iblS&&iblS.K!=null?String(Math.round(iblS.K)):'—'):(s.K!=null?String(Math.round(s.K)):'—');
+        var bbVal=year==2025?(iblS&&iblS.BB!=null?String(Math.round(iblS.BB)):'—'):(s.BB!=null?String(Math.round(s.BB)):'—');
+        var sbVal=iblS&&iblS.SB!=null?String(Math.round(iblS.SB)):'—';
+        return { name:s.batter, bats:bats, avg:avg, ops:ops, k:kVal, bb:bbVal, sb:sbVal, pull:pullPct, oppo:oppPct2 };
+      });
+
+      // ── Canvas PNG rendering ────────────────────────────────────────────
+      var DPR = 2;
+      var COLS = Math.min(rows.length, rows.length <= 4 ? rows.length : rows.length <= 8 ? Math.ceil(rows.length/2) : Math.ceil(rows.length/3));
+      var CARD_W = 340, CARD_H = 190, PAD = 28, GAP = 16;
+      var NCOLS = Math.min(COLS, 4);
+      var NROWS = Math.ceil(rows.length / NCOLS);
+      var HDR_H = 80, FOOT_H = 36;
+      var CW = (CARD_W * NCOLS) + (GAP * (NCOLS - 1));
+      var W = CW + PAD * 2;
+      var H = HDR_H + NROWS * CARD_H + (NROWS - 1) * GAP + PAD * 2 + FOOT_H;
+      var cvs = document.createElement('canvas');
+      cvs.width = W * DPR; cvs.height = H * DPR;
+      var ctx = cvs.getContext('2d');
+      ctx.scale(DPR, DPR);
+
+      // Helpers
+      var TC = team.color === '#888888' ? '#666666' : team.color;
+      function hex2rgb(h){ h=h.replace('#',''); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
+      var tc3 = hex2rgb(TC);
+
+      // Background
+      ctx.fillStyle = '#080d1a';
+      ctx.fillRect(0, 0, W, H);
+
+      // Top accent bar
+      ctx.fillStyle = TC;
+      ctx.fillRect(0, 0, W, 3);
+
+      // Header area
+      ctx.fillStyle = 'rgba(20,30,55,0.95)';
+      ctx.fillRect(0, 3, W, HDR_H - 3);
+
+      // Team colour left stripe in header
+      ctx.fillStyle = TC;
+      ctx.fillRect(0, 3, 5, HDR_H - 3);
+
+      // Header text — Team abbr
+      ctx.font = 'bold 32px "Bebas Neue", sans-serif';
+      ctx.fillStyle = TC;
+      ctx.textAlign = 'left';
+      ctx.fillText(team.abbr, PAD + 12, 52);
+
+      // Separator
+      ctx.fillStyle = 'rgba(255,255,255,0.12)';
+      ctx.fillRect(PAD + 60, 22, 1.5, 36);
+
+      // Header title
+      ctx.font = 'bold 22px "Bebas Neue", "Arial Narrow", sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'left';
+      ctx.fillText(team.name.toUpperCase() + ' — OPPOSING BATTERS', PAD + 74, 45);
+
+      // Year badge
+      ctx.font = 'bold 13px "DM Mono", monospace';
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.fillText(String(year), PAD + 74, 64);
+
+      // Data Diamond branding top-right
+      ctx.font = 'bold 14px "Bebas Neue", sans-serif';
+      ctx.fillStyle = '#FFB81C';
+      ctx.textAlign = 'right';
+      ctx.fillText('DATA', W - PAD, 36);
+      ctx.fillStyle = 'rgba(255,255,255,0.55)';
+      ctx.fillText('DIAMOND', W - PAD, 54);
+
+      // Date
+      ctx.font = '10px "DM Mono", monospace';
+      ctx.fillStyle = 'rgba(255,255,255,0.2)';
+      ctx.fillText(new Date().toLocaleDateString('en-CA'), W - PAD, 68);
+
+      // Gold divider line under header
+      ctx.fillStyle = '#FFB81C';
+      ctx.fillRect(0, HDR_H, W, 1.5);
+
+      // ── Draw each player card ──────────────────────────────────────────
+      var HDRS = ['PLAYER','BATS','AVG','OPS','K','BB','SB','PULL','OPPO'];
+      var HCWS = [0.28, 0.07, 0.09, 0.09, 0.07, 0.07, 0.07, 0.13, 0.13];
+      var TABLE_H = 108, TABLE_TOP = 62;
+      var ROW_H = 17, HDR_ROW_H = 20;
+
+      rows.forEach(function(row, idx) {
+        var col = idx % NCOLS, r = Math.floor(idx / NCOLS);
+        var cx2 = PAD + col * (CARD_W + GAP);
+        var cy2 = HDR_H + PAD + r * (CARD_H + GAP);
+
+        // Card bg
+        ctx.fillStyle = 'rgba(14,21,40,0.95)';
+        roundRect(ctx, cx2, cy2, CARD_W, CARD_H, 6, '#rgba(14,21,40,0.95)');
+        ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+        ctx.lineWidth = 1;
+        roundRectStroke(ctx, cx2, cy2, CARD_W, CARD_H, 6);
+
+        // Left colour bar
+        ctx.fillStyle = TC;
+        ctx.beginPath();
+        ctx.moveTo(cx2, cy2 + 6);
+        ctx.lineTo(cx2, cy2 + CARD_H - 6);
+        ctx.quadraticCurveTo(cx2, cy2 + CARD_H, cx2 + 6, cy2 + CARD_H);
+        ctx.lineTo(cx2 + 4, cy2 + CARD_H);
+        ctx.lineTo(cx2 + 4, cy2);
+        ctx.lineTo(cx2 + 6, cy2);
+        ctx.quadraticCurveTo(cx2, cy2, cx2, cy2 + 6);
+        ctx.fill();
+        ctx.fillStyle = TC;
+        ctx.fillRect(cx2, cy2 + 4, 4, CARD_H - 8);
+
+        // Player name
+        var nameStr = row.name.length > 22 ? row.name.slice(0,21) + '.' : row.name;
+        ctx.font = 'bold 15px "Inter", "Helvetica Neue", sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'left';
+        ctx.fillText(nameStr, cx2 + 14, cy2 + 24);
+
+        // Bats badge
+        ctx.fillStyle = 'rgba(255,184,28,0.15)';
+        roundRect(ctx, cx2 + CARD_W - 42, cy2 + 11, 30, 18, 3);
+        ctx.font = 'bold 11px "DM Mono", monospace';
+        ctx.fillStyle = '#FFB81C';
+        ctx.textAlign = 'center';
+        ctx.fillText('BATS ' + row.bats, cx2 + CARD_W - 27, cy2 + 23);
+
+        // Key stats row  (AVG / OPS)
+        var statBoxes = [
+          {lbl:'AVG', val:row.avg, hilight: parseFloat(row.avg) >= 0.300 },
+          {lbl:'OPS', val:row.ops, hilight: parseFloat(row.ops) >= 0.800 },
+          {lbl:'K',   val:row.k,   hilight: false },
+          {lbl:'BB',  val:row.bb,  hilight: false },
+          {lbl:'SB',  val:row.sb,  hilight: false },
+        ];
+        var SBW = (CARD_W - 18) / statBoxes.length;
+        statBoxes.forEach(function(sb2, si) {
+          var sx = cx2 + 10 + si * SBW;
+          var sy = cy2 + 36;
+          ctx.fillStyle = sb2.hilight ? 'rgba(255,184,28,0.12)' : 'rgba(28,42,69,0.8)';
+          roundRect(ctx, sx, sy, SBW - 6, 42, 4);
+          ctx.font = 'bold 16px "Inter", monospace';
+          ctx.fillStyle = sb2.hilight ? '#FFB81C' : '#e0e8f0';
+          ctx.textAlign = 'center';
+          ctx.fillText(String(sb2.val), sx + (SBW - 6)/2, sy + 24);
+          ctx.font = '9px "DM Mono", monospace';
+          ctx.fillStyle = 'rgba(255,255,255,0.35)';
+          ctx.fillText(sb2.lbl, sx + (SBW - 6)/2, sy + 36);
+        });
+
+        // Pull / Oppo spray row
+        var pullNum = parseFloat(row.pull);
+        var oppoNum = parseFloat(row.oppo);
+        var straightNum = isNaN(pullNum) || isNaN(oppoNum) ? 0 : Math.max(0, 100 - pullNum - oppoNum);
+        var barY = cy2 + 92;
+        var barW = CARD_W - 22;
+        ctx.font = '9px "DM Mono", monospace';
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.textAlign = 'left';
+        ctx.fillText('SPRAY', cx2 + 12, barY - 4);
+
+        if (!isNaN(pullNum)) {
+          var pW = barW * pullNum / 100;
+          var sW = barW * straightNum / 100;
+          var oW = barW * oppoNum / 100;
+          ctx.fillStyle = 'rgba(248,113,113,0.85)'; roundRectFill(ctx, cx2 + 11, barY, pW, 14, 2);
+          ctx.fillStyle = 'rgba(255,184,28,0.75)';  roundRectFill(ctx, cx2 + 11 + pW, barY, sW, 14, 0);
+          ctx.fillStyle = 'rgba(96,165,250,0.85)';  roundRectFill(ctx, cx2 + 11 + pW + sW, barY, oW, 14, 2);
+
+          ctx.font = 'bold 9px "DM Mono", monospace';
+          if(pW > 20) { ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.fillText(row.pull, cx2 + 11 + pW/2, barY + 10); }
+          if(oW > 20) { ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.fillText(row.oppo, cx2 + 11 + pW + sW + oW/2, barY + 10); }
+
+          // Legend
+          ctx.font = '8px "DM Mono", monospace';
+          ctx.fillStyle = '#f87171'; ctx.textAlign = 'left'; ctx.fillText('PULL', cx2 + 11, barY + 26);
+          ctx.fillStyle = '#FFB81C'; ctx.fillText('STR', cx2 + 60, barY + 26);
+          ctx.fillStyle = '#60a5fa'; ctx.fillText('OPPO', cx2 + 106, barY + 26);
         } else {
-          var spBatted=batted.filter(function(p){return p.spray;});
-          var spTot=spBatted.length;
-          pullPct=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Pull';}).length/spTot*100)+'%':'—';
-          strPct2=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Straightaway';}).length/spTot*100)+'%':'—';
-          oppPct2=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Opposite Field';}).length/spTot*100)+'%':'—';
+          ctx.fillStyle = 'rgba(255,255,255,0.12)';
+          roundRectFill(ctx, cx2 + 11, barY, barW, 14, 2);
+          ctx.font = '9px "DM Mono", monospace';
+          ctx.fillStyle = 'rgba(255,255,255,0.2)';
+          ctx.textAlign = 'center';
+          ctx.fillText('No spray data', cx2 + 11 + barW/2, barY + 10);
         }
 
-        // K and BB raw counts
-        var kVal2=(function(){
-          if(year==2025) return iblS&&iblS.K!=null?String(Math.round(iblS.K)):(pbp&&pbp.K!=null?String(Math.round(pbp.K)):'—');
-          return s.K!=null?String(Math.round(s.K)):'—';
-        })();
-        var bbVal2=(function(){
-          if(year==2025) return iblS&&iblS.BB!=null?String(Math.round(iblS.BB)):(pbp&&pbp.BB!=null?String(Math.round(pbp.BB)):'—');
-          return s.BB!=null?String(Math.round(s.BB)):'—';
-        })();
-        // SB: IBL History for both years
-        var sbVal=(function(){
-          if(iblS&&iblS.SB!=null) return String(Math.round(iblS.SB));
-          return '—';
-        })();
-        var vals=[s.batter,bats,avg,ops,kVal2,bbVal2,sbVal,pullPct,strPct2,oppPct2];
-
-        sf(d,idx%2===0?[14,21,40]:[11,17,32]); d.rect(ML,y,CPW,rowH,'F');
-        sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
-
-        var fs = rowH >= 11 ? 8 : 7;
-        cx=ML;
-        vals.forEach(function(v,i){
-          var isNm=i===0;
-          d.setFont('helvetica',isNm?'bold':'normal'); d.setFontSize(fs);
-          st(d,isNm?CO.white:CO.light);
-          var txt=String(v);
-          if(isNm&&txt.length>22) txt=txt.slice(0,21)+'.';
-          d.text(txt, isNm?cx+3:cx+cWs[i]/2, y+rowH*0.62, {align:isNm?'left':'center'});
-          if(i<vals.length-1){ sd(d,[25,40,65]);d.setLineWidth(0.08);d.line(cx+cWs[i],y,cx+cWs[i],y+rowH); }
-          cx+=cWs[i];
-        });
-        y+=rowH;
+        // Bottom gold accent line
+        ctx.fillStyle = TC;
+        ctx.globalAlpha = 0.4;
+        ctx.fillRect(cx2 + 10, cy2 + CARD_H - 6, CARD_W - 20, 1);
+        ctx.globalAlpha = 1;
       });
 
       // Footer
-      d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond  —  CBL Scouting Report', ML, PH-5);
-      d.text(team.name+' Opposing Batters', ML+CPW, PH-5, {align:'right'});
-      sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
+      var fy = H - FOOT_H + 16;
+      ctx.fillStyle = 'rgba(20,30,55,0.8)';
+      ctx.fillRect(0, H - FOOT_H, W, FOOT_H);
+      ctx.fillStyle = '#FFB81C';
+      ctx.fillRect(0, H - FOOT_H, W, 1);
+      ctx.font = '11px "DM Mono", monospace';
+      ctx.fillStyle = 'rgba(255,255,255,0.25)';
+      ctx.textAlign = 'left';
+      ctx.fillText('Data Diamond  ·  CBL Scouting Report  ·  ' + team.name + ' Opposing Batters  ·  ' + String(year), PAD, fy);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#FFB81C';
+      ctx.fillText('datadiamond.ca', W - PAD, fy);
 
-      d.save(team.abbr+'_Opposing_Batters.pdf');
-      if (btn) { btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF'; }
-      restore();
-    });
+      // Helper functions
+      function roundRect(c, x, y, w, h, r) {
+        c.beginPath();
+        c.moveTo(x+r,y); c.lineTo(x+w-r,y); c.quadraticCurveTo(x+w,y,x+w,y+r);
+        c.lineTo(x+w,y+h-r); c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+        c.lineTo(x+r,y+h); c.quadraticCurveTo(x,y+h,x,y+h-r);
+        c.lineTo(x,y+r); c.quadraticCurveTo(x,y,x+r,y);
+        c.closePath(); c.fill();
+      }
+      function roundRectFill(c, x, y, w, h, r) {
+        if(w<=0) return;
+        c.beginPath();
+        c.moveTo(x+Math.min(r,w/2),y); c.lineTo(x+w-Math.min(r,w/2),y); c.quadraticCurveTo(x+w,y,x+w,y+Math.min(r,h/2));
+        c.lineTo(x+w,y+h-Math.min(r,h/2)); c.quadraticCurveTo(x+w,y+h,x+w-Math.min(r,w/2),y+h);
+        c.lineTo(x+Math.min(r,w/2),y+h); c.quadraticCurveTo(x,y+h,x,y+h-Math.min(r,h/2));
+        c.lineTo(x,y+Math.min(r,h/2)); c.quadraticCurveTo(x,y,x+Math.min(r,w/2),y);
+        c.closePath(); c.fill();
+      }
+      function roundRectStroke(c, x, y, w, h, r) {
+        c.beginPath();
+        c.moveTo(x+r,y); c.lineTo(x+w-r,y); c.quadraticCurveTo(x+w,y,x+w,y+r);
+        c.lineTo(x+w,y+h-r); c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+        c.lineTo(x+r,y+h); c.quadraticCurveTo(x,y+h,x,y+h-r);
+        c.lineTo(x,y+r); c.quadraticCurveTo(x,y,x+r,y);
+        c.closePath(); c.stroke();
+      }
+
+      // Download
+      cvs.toBlob(function(blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url; a.download = team.abbr + '_Opposing_Batters_' + year + '.png';
+        document.body.appendChild(a); a.click();
+        setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+        if (btn) { btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PNG'; }
+        restore();
+      }, 'image/png');
+    })();
   }
 
-  // ── OPP PITCHERS PDF — compact two-column table, guaranteed one page ─────
-  function genOppPitchersPDF(oppName, btn, restore, selectedNames, year) {
+  // ── OPP PITCHERS PNG — beautiful canvas-based single-image report ─────
+  function genOppPitchersPNG(oppName, btn, restore, selectedNames, year) {
     year = year || ((typeof _activeSeason !== 'undefined') ? _activeSeason.replace('year:','') : '2026');
     restore = restore || function(){};
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.pitches) {
       alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
     }
     if (btn) { btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…'; }
-    ensureJsPDF(function() {
-      function f2(v){if(v==null||isNaN(v))return'—';return parseFloat(v).toFixed(2);}
+    (function() {
+      function f2loc(v){if(v==null||isNaN(v))return'—';return parseFloat(v).toFixed(2);}
       var oppT = resolveTeam(oppName);
       var team = oppT ? { abbr: oppT.abbreviation, name: oppT.name, color: oppT.primaryColor }
                       : { abbr: oppName.slice(0,3).toUpperCase(), name: oppName, color: '#888888' };
-      var tc = hx(team.color === '#888888' ? '#666666' : team.color);
+      var TC = team.color === '#888888' ? '#666666' : team.color;
+      function hex2rgb(h){ h=h.replace('#',''); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
 
       var seenKeys = new Set();
       var pitchers = [];
@@ -1604,7 +1703,6 @@ Zane Skansi,Kitchener Panthers`;
       var _pitchersArr2 = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
       var _pbpPArr2 = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
 
-      // Helper: gather all scatter for a pitcher name from pitches array
       function gatherScatter(pitcherKey) {
         var sc = [];
         _pitchesArr2.forEach(function(bp2){
@@ -1618,7 +1716,6 @@ Zane Skansi,Kitchener Panthers`;
         return sc;
       }
 
-      // Source 1: scatter in pitches data
       _pitchesArr2.forEach(function(bp) {
         if (!bp.scatter) return;
         bp.scatter.forEach(function(s) {
@@ -1631,7 +1728,6 @@ Zane Skansi,Kitchener Panthers`;
           pitchers.push({name:s.pitcher, sc:gatherScatter(key)});
         });
       });
-      // Source 2: DATA.pitchers (pitchers.json / pitchers2026.json)
       _pitchersArr2.forEach(function(p) {
         if (!p.pitcher||!p.pitcher_team) return;
         var pt = resolveTeam(p.pitcher_team);
@@ -1639,11 +1735,9 @@ Zane Skansi,Kitchener Panthers`;
         var key=p.pitcher.toLowerCase().trim();
         if (seenKeys.has(key)) return;
         seenKeys.add(key);
-        // Use embedded scatter if available (pitchers2026), else gather from pitches
         var sc = (p.scatter && p.scatter.length) ? p.scatter : gatherScatter(key);
         pitchers.push({name:p.pitcher, sc:sc});
       });
-      // Source 3: pbp_pitchers
       _pbpPArr2.forEach(function(p) {
         if (!p.pitcher||!p.pitcher_team) return;
         var pt = resolveTeam(p.pitcher_team);
@@ -1655,7 +1749,6 @@ Zane Skansi,Kitchener Panthers`;
       });
 
       pitchers.sort(function(a,b){return a.name.localeCompare(b.name);});
-      // Filter to selected players if provided
       if (selectedNames && selectedNames.length) {
         var selSet2 = {};
         selectedNames.forEach(function(n){ selSet2[n.toLowerCase().trim()] = true; });
@@ -1663,218 +1756,231 @@ Zane Skansi,Kitchener Panthers`;
       }
 
       if (!pitchers.length) {
-        if (btn) { btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF'; }
-        alert('No pitcher data found for ' + oppName + '. Make sure data has been loaded for this team.');
+        if (btn) { btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PNG'; }
+        alert('No pitcher data found for ' + oppName + '.');
         restore(); return;
       }
 
-      var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4' });
-
-      drawBg(d);
-      sf(d,CO.navy2); d.roundedRect(ML,MT,CPW,16,2,2,'F');
-      d.setFillColor(tc[0],tc[1],tc[2]); d.roundedRect(ML,MT,3,16,1,1,'F');
-      d.setFont('helvetica','bold'); d.setFontSize(9); d.setTextColor(tc[0],tc[1],tc[2]);
-      d.text(team.abbr, ML+8, MT+10);
-      d.setFont('helvetica','bold'); d.setFontSize(10); st(d,CO.white);
-      d.text((team.name+' — OPPOSING PITCHERS').toUpperCase(), ML+24, MT+10);
-      d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
-      sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
-
-      var y = MT+20;
-      var today2=new Date(); today2.setHours(0,0,0,0);
-      var pageBottom2 = PH - 10;
-      var n2 = pitchers.length || 1;
-      var availH2 = pageBottom2 - y;
-      var rowH = Math.min(16, Math.max(9, availH2 / (n2 + 1)));
-
-      var hdrs=['PITCHER','HAND','ERA','WHIP','K','BB','FPS%','STRIKE%','TTP','REST','ARSENAL'];
-      var cWs =[CPW*0.17,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.05,CPW*0.05,CPW*0.07,CPW*0.08,CPW*0.07,CPW*0.07,CPW*0.24];
-      var hdrH2 = rowH * 0.65;
-
-      // Header row
-      sf(d,CO.navy3); d.rect(ML,y,CPW,hdrH2,'F');
-      var cx=ML;
-      hdrs.forEach(function(h,i){
-        d.setFont('helvetica','bold'); d.setFontSize(6.5); st(d,CO.gold);
-        d.text(h, i===0?cx+3:cx+cWs[i]/2, y+hdrH2*0.68, {align:i===0?'left':'center'});
-        if(i<hdrs.length-1){ sd(d,[30,50,80]);d.setLineWidth(0.1);d.line(cx+cWs[i],y,cx+cWs[i],y+hdrH2); }
-        cx+=cWs[i];
-      });
-      y+=hdrH2;
-
-      var col=0;
-
-      pitchers.forEach(function(p,idx){
-        var sc=p.sc;
-        var _pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
-        var _pbpPArr = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
-        var pd=_pitchersArr.find(function(x){return x.pitcher===p.name;})||{};
-        var pbpP=_pbpPArr.find(function(x){return x.pitcher===p.name;})||null;
-        var iblYear=String(year);
-        var iblAll=DATA.iblHistory[p.name]||[];
-        var iblP=iblAll.filter(function(r){return r.IP>0&&(r.season||'').indexOf(iblYear)!==-1;})[0]
-                 ||iblAll.filter(function(r){return r.IP>0;})[0]||null;
-
-        var daysRest=pd.last_game_date?Math.floor((today2-new Date(pd.last_game_date+'T00:00:00'))/86400000):99;
-        var lastCount=pd.last_pitch_count||0;
-        var recentGames=pd.recent_games||[]; // array of {date, pitches} for multi-day check
-        // Check 3 consecutive days pitched
-        var consec3=false;
-        if(recentGames.length>=3){
-          var sorted=recentGames.slice().sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-          var d0=Math.floor((today2-new Date(sorted[0].date+'T00:00:00'))/86400000);
-          var d1=Math.floor((today2-new Date(sorted[1].date+'T00:00:00'))/86400000);
-          var d2=Math.floor((today2-new Date(sorted[2].date+'T00:00:00'))/86400000);
-          if(d0<=1&&d1<=2&&d2<=3&&d1===d0+1&&d2===d1+1) consec3=true;
-        }
-        // 100+ pitches in last 1-3 days
-        var highPitchRecent=false;
-        if(recentGames.length>0){
-          recentGames.forEach(function(g){
-            var dr=Math.floor((today2-new Date(g.date+'T00:00:00'))/86400000);
-            if(dr>=1&&dr<=3&&(g.pitches||0)>=100) highPitchRecent=true;
-          });
-        } else if(daysRest>=1&&daysRest<=3&&lastCount>=100) highPitchRecent=true;
-
-        var avail,availC;
-        if(consec3||highPitchRecent){
-          avail='UNAVAIL'; availC=[248,113,113];
-        } else if(daysRest===1||daysRest===2){
-          avail='QUEST'; availC=[255,184,28];
-        } else {
-          avail='AVAIL'; availC=[52,211,153];
-        }
-
-        // ERA: always IBL History (both years) — pbp ERA is unreliable (often 0)
-        var eraVal = iblP&&iblP.ERA!=null ? f2(iblP.ERA) : '—';
-
-        var tot=sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
-        var ks=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
-        var str=sc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
-
-        // WHIP, STR%, FPS%, K%, TTP:
-        // 2025: pbp_pitchers primary → scatter fallback
-        // 2026: pitchers2026 (pd) primary → scatter fallback (no pbp for 2026)
+      // ── Build pitcher stat rows ──────────────────────────────────────────
+      var today2 = new Date(); today2.setHours(0,0,0,0);
+      var rows = pitchers.map(function(p) {
+        var sc = p.sc;
+        var pd = _pitchersArr2.find(function(x){return x.pitcher===p.name;})||{};
+        var pbpP = _pbpPArr2.find(function(x){return x.pitcher===p.name;})||null;
+        var iblAll = DATA.iblHistory[p.name]||[];
+        var iblP = iblAll.filter(function(r){return r.IP>0&&(r.season||'').indexOf(String(year))!==-1;})[0]
+                  ||iblAll.filter(function(r){return r.IP>0;})[0]||null;
+        var daysRest = pd.last_game_date ? Math.floor((today2-new Date(pd.last_game_date+'T00:00:00'))/86400000) : 99;
+        var eraVal = iblP&&iblP.ERA!=null ? f2loc(iblP.ERA) : '—';
+        var tot = sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
+        var ks = sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
+        var str = sc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
         var whipVal=(function(){
-          if(year==2025 && pbpP&&pbpP.WHIP!=null) return f2(pbpP.WHIP);
-          if(year==2026 && pd.IP>0){
-            // Calculate from scatter: (BB + H) / IP
-            var scBbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
-            var scH=sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
-            return f2((scBbs+scH)/pd.IP);
-          }
-          // scatter fallback
-          var scBbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
-          var scH=sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
-          var scO=sc.filter(function(s){return['Groundout','Flyout','Popout','Lineout','Strikeout Swinging','Strikeout Looking','Double Play'].includes(s.outcome);}).length;
-          return scO>0 ? f2((scBbs+scH)/(scO/3)) : '—';
+          if(year==2025 && pbpP&&pbpP.WHIP!=null) return f2loc(pbpP.WHIP);
+          var bbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+          var hs=sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
+          var outs=sc.filter(function(s){return['Groundout','Flyout','Popout','Lineout','Strikeout Swinging','Strikeout Looking','Double Play'].includes(s.outcome);}).length;
+          return outs>0 ? f2loc((bbs+hs)/(outs/3)) : '—';
         })();
-        var strVal=(function(){
-          if(year==2025 && pbpP&&pbpP.STR_pct!=null) return f1(pbpP.STR_pct)+'%';
-          if(pd.STR_pct!=null) return f1(pd.STR_pct)+'%';
-          return tot>0 ? f1(xp(str,tot))+'%' : '—';
-        })();
-        var kVal=(function(){
-          if(year==2025 && pbpP&&pbpP.K_pct!=null) return f1(pbpP.K_pct)+'%';
-          if(pd.K_pct!=null) return f1(pd.K_pct)+'%';
-          return tot>0 ? f1(xp(ks,tot))+'%' : '—';
-        })();
-        var fpsVal=(function(){
-          if(year==2025 && pbpP&&pbpP.FP_STR_pct!=null) return f1(pbpP.FP_STR_pct)+'%';
-          if(pd.FPS_pct!=null) return f1(pd.FPS_pct)+'%';
-          if(pd.FP_STR_pct!=null) return f1(pd.FP_STR_pct)+'%';
-          var seenPA={}, paFirst=[];
-          sc.forEach(function(s){ var k2=(s.batter||'')+'|'+(s.inning||''); if(!seenPA[k2]){seenPA[k2]=true;paFirst.push(s);} });
-          var fpStr=paFirst.filter(function(s){
-            return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking',
-                   'Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout',
-                   'Double Play','Error','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);
-          }).length;
-          return paFirst.length>=5 ? f1(fpStr/paFirst.length*100)+'%' : '—';
-        })();
-
-        // TTP: pd.avg_time_to_plate exists in both pitchers.json and pitchers2026.json
+        var strPct = (year==2025&&pbpP&&pbpP.STR_pct!=null) ? f1(pbpP.STR_pct)+'%' : (pd.STR_pct!=null?f1(pd.STR_pct)+'%' : (tot>0?f1(str/tot*100)+'%':'—'));
+        var kPct = (year==2025&&pbpP&&pbpP.K_pct!=null) ? f1(pbpP.K_pct)+'%' : (pd.K_pct!=null?f1(pd.K_pct)+'%' : (tot>0?f1(ks/tot*100)+'%':'—'));
         var ttpVal = pd.avg_time_to_plate!=null ? pd.avg_time_to_plate.toFixed(2)+'s' : '—';
-
-        // Arsenal: always from scatter x/y data (both years)
+        var restVal = daysRest===99?'—':daysRest===0?'TODAY':daysRest+'d';
         var tc2={};
         sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
         var arsenal=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];}).slice(0,3)
-          .map(function(e){return e[0].slice(0,4)+' '+f1(xp(e[1],tot))+'%';}).join('  ')||'—';
-
-        // HAND: scatter -> iblHistory.throws -> '?'
-        var nameDisp=p.name; if(nameDisp.length>18)nameDisp=nameDisp.slice(0,17)+'.';
-        // HAND: deriveHand from scatter, fallback iblHistory.throws (any season)
-        var handVal = (function(){
-          var counts={}, tot=0;
-          p.sc.forEach(function(s){ var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-          if(tot>0){
-            var sides=Object.keys(counts);
-            if(sides.length===1) return sides[0];
-            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-            return counts[dom]/tot>=0.5 ? dom : 'S';
-          }
-          // Fallback: iblHistory.throws across any season
-          var throwsRow=(iblAll||[]).find(function(r){return r.throws;});
-          return throwsRow ? throwsRow.throws : '?';
+          .map(function(e){return e[0].slice(0,4);}).join(' · ')||'—';
+        var handVal=(function(){
+          var counts={},tot3=0;
+          p.sc.forEach(function(s){var v=s.pitcher_side;if(v){counts[v]=(counts[v]||0)+1;tot3++;}});
+          if(tot3>0){var sides=Object.keys(counts);if(sides.length===1)return sides[0];var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});return counts[dom]/tot3>=0.5?dom:'S';}
+          var r2=(iblAll||[]).find(function(r3){return r3.throws;}); return r2?r2.throws:'?';
         })();
-        // K and BB raw counts — iblHistory > pitchers.json (pd) > scatter count
-        var kPitVal=(function(){
-          if(year==2025){
-            var r=(iblAll||[]).find(function(x){return (x.season||'').indexOf('2025')!==-1&&x.K!=null;});
-            if(r) return String(Math.round(r.K));
-            if(pd.K!=null) return String(Math.round(pd.K));
-            var cnt=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
-            return cnt>0?String(cnt):'—';
-          }
-          if(pd.K!=null) return String(Math.round(pd.K));
-          var cnt2=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
-          return cnt2>0?String(cnt2):'—';
-        })();
-        var bbPitVal=(function(){
-          if(year==2025){
-            var r=(iblAll||[]).find(function(x){return (x.season||'').indexOf('2025')!==-1&&x.BB!=null;});
-            if(r) return String(Math.round(r.BB));
-            if(pd.BB!=null) return String(Math.round(pd.BB));
-            var cnt=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
-            return cnt>0?String(cnt):'—';
-          }
-          if(pd.BB!=null) return String(Math.round(pd.BB));
-          var cnt2=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
-          return cnt2>0?String(cnt2):'—';
-        })();
-        // REST: days since last outing
-        var restVal = daysRest===99?'—':daysRest===0?'TODAY':daysRest+'d';
-        var vals=[nameDisp,handVal,eraVal,whipVal,kPitVal,bbPitVal,fpsVal,strVal,ttpVal,restVal,arsenal];
+        var availColor = daysRest<=1?'#f87171':daysRest<=3?'#FFB81C':'#34d399';
+        var availLabel = daysRest<=1?'UNAVAIL':daysRest<=3?'QUEST':'AVAIL';
+        return { name:p.name, hand:handVal, era:eraVal, whip:whipVal, kPct:kPct, strPct:strPct, ttp:ttpVal, rest:restVal, arsenal:arsenal, availColor:availColor, availLabel:availLabel, daysRest:daysRest };
+      });
 
-        sf(d,idx%2===0?[14,21,40]:[11,17,32]); d.rect(ML,y,CPW,rowH,'F');
-        sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
+      // ── Canvas PNG rendering ─────────────────────────────────────────────
+      var DPR = 2;
+      var NCOLS = Math.min(rows.length, rows.length<=3?rows.length:rows.length<=6?Math.ceil(rows.length/2):Math.ceil(rows.length/3));
+      NCOLS = Math.max(1, Math.min(NCOLS, 4));
+      var NROWS = Math.ceil(rows.length / NCOLS);
+      var CARD_W = 340, CARD_H = 210, PAD = 28, GAP = 16;
+      var HDR_H = 80, FOOT_H = 36;
+      var W = PAD*2 + NCOLS*CARD_W + (NCOLS-1)*GAP;
+      var H = HDR_H + NROWS*CARD_H + (NROWS-1)*GAP + PAD*2 + FOOT_H;
+      var cvs = document.createElement('canvas');
+      cvs.width = W*DPR; cvs.height = H*DPR;
+      var ctx = cvs.getContext('2d');
+      ctx.scale(DPR, DPR);
 
-        var fs2 = rowH >= 12 ? 8 : 7;
-        cx=ML;
-        vals.forEach(function(v,i){
-          var isNm=i===0, isRest=i===8;
-          var restC=daysRest<=1?[248,113,113]:daysRest<=2?[255,184,28]:[52,211,153];
-          d.setFont('helvetica',isNm||isRest?'bold':'normal'); d.setFontSize(fs2);
-          st(d,isRest?restC:isNm?CO.white:CO.light);
-          d.text(String(v), isNm?cx+3:cx+cWs[i]/2, y+rowH*0.62, {align:isNm?'left':'center'});
-          if(i<vals.length-1){ sd(d,[25,40,65]);d.setLineWidth(0.08);d.line(cx+cWs[i],y,cx+cWs[i],y+rowH); }
-          cx+=cWs[i];
+      function roundRectFill(c,x,y,w,h,r){
+        if(w<=0||h<=0)return;r=Math.min(r,w/2,h/2);
+        c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);
+        c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+        c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);
+        c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();c.fill();
+      }
+      function roundRectStroke(c,x,y,w,h,r){
+        if(w<=0||h<=0)return;r=Math.min(r,w/2,h/2);
+        c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);
+        c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+        c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);
+        c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();c.stroke();
+      }
+
+      // Background
+      ctx.fillStyle = '#080d1a'; ctx.fillRect(0,0,W,H);
+      // Top accent bar
+      ctx.fillStyle = TC; ctx.fillRect(0,0,W,3);
+      // Header band
+      ctx.fillStyle = 'rgba(20,30,55,0.95)'; ctx.fillRect(0,3,W,HDR_H-3);
+      ctx.fillStyle = TC; ctx.fillRect(0,3,5,HDR_H-3);
+      // Team abbr
+      ctx.font = 'bold 32px "Bebas Neue",sans-serif'; ctx.fillStyle=TC; ctx.textAlign='left';
+      ctx.fillText(team.abbr, PAD+12, 52);
+      // Separator
+      ctx.fillStyle='rgba(255,255,255,0.12)'; ctx.fillRect(PAD+60,22,1.5,36);
+      // Title
+      ctx.font = 'bold 22px "Bebas Neue","Arial Narrow",sans-serif'; ctx.fillStyle='#ffffff';
+      ctx.fillText(team.name.toUpperCase()+' — OPPOSING PITCHERS', PAD+74, 45);
+      ctx.font = 'bold 13px "DM Mono",monospace'; ctx.fillStyle='rgba(255,255,255,0.3)';
+      ctx.fillText(String(year), PAD+74, 64);
+      // Branding
+      ctx.font='bold 14px "Bebas Neue",sans-serif'; ctx.fillStyle='#FFB81C'; ctx.textAlign='right';
+      ctx.fillText('DATA', W-PAD, 36);
+      ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.fillText('DIAMOND', W-PAD, 54);
+      ctx.font='10px "DM Mono",monospace'; ctx.fillStyle='rgba(255,255,255,0.2)';
+      ctx.fillText(new Date().toLocaleDateString('en-CA'), W-PAD, 68);
+      // Divider
+      ctx.fillStyle='#FFB81C'; ctx.fillRect(0,HDR_H,W,1.5);
+
+      // Pitch type colour palette
+      var PT_COLORS = {'Fastball':'#f87171','Sinker':'#fb923c','Cutter':'#fbbf24','Slider':'#a78bfa','Curveball':'#60a5fa','Changeup':'#34d399','Splitter':'#2dd4bf','Other':'#94a3b8'};
+      function pitchColor(t){ return PT_COLORS[t]||'#94a3b8'; }
+
+      // ── Draw each pitcher card ────────────────────────────────────────────
+      rows.forEach(function(row, idx) {
+        var col = idx % NCOLS, r = Math.floor(idx/NCOLS);
+        var cx2 = PAD + col*(CARD_W+GAP);
+        var cy2 = HDR_H + PAD + r*(CARD_H+GAP);
+
+        // Card bg + border
+        ctx.fillStyle = 'rgba(14,21,40,0.98)';
+        roundRectFill(ctx, cx2, cy2, CARD_W, CARD_H, 7);
+        ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+        roundRectStroke(ctx, cx2, cy2, CARD_W, CARD_H, 7);
+
+        // Availability left bar colour
+        ctx.fillStyle = row.availColor;
+        roundRectFill(ctx, cx2, cy2+6, 4, CARD_H-12, 2);
+
+        // Name
+        var nameStr = row.name.length>22 ? row.name.slice(0,21)+'.' : row.name;
+        ctx.font = 'bold 15px "Inter","Helvetica Neue",sans-serif';
+        ctx.fillStyle = '#ffffff'; ctx.textAlign='left';
+        ctx.fillText(nameStr, cx2+14, cy2+24);
+
+        // Hand badge
+        ctx.fillStyle = 'rgba(255,184,28,0.15)';
+        roundRectFill(ctx, cx2+CARD_W-48, cy2+10, 36, 18, 3);
+        ctx.font='bold 10px "DM Mono",monospace'; ctx.fillStyle='#FFB81C'; ctx.textAlign='center';
+        ctx.fillText(row.hand==='R'?'RHP':row.hand==='L'?'LHP':'?HP', cx2+CARD_W-30, cy2+22);
+
+        // Availability badge
+        ctx.fillStyle = row.availColor+'22';
+        roundRectFill(ctx, cx2+14, cy2+32, 90, 18, 3);
+        ctx.strokeStyle = row.availColor+'66'; ctx.lineWidth=1;
+        roundRectStroke(ctx, cx2+14, cy2+32, 90, 18, 3);
+        ctx.font='bold 10px "DM Mono",monospace'; ctx.fillStyle=row.availColor; ctx.textAlign='center';
+        ctx.fillText(row.availLabel + (row.rest!=='—'?' · '+row.rest:''), cx2+59, cy2+44);
+
+        // Key stat boxes
+        var statBoxes = [
+          {lbl:'ERA',   val:row.era},
+          {lbl:'WHIP',  val:row.whip},
+          {lbl:'K%',    val:row.kPct},
+          {lbl:'STR%',  val:row.strPct},
+          {lbl:'TTP',   val:row.ttp},
+        ];
+        var SBW = (CARD_W - 18) / statBoxes.length;
+        statBoxes.forEach(function(sb2, si) {
+          var sx = cx2+10+si*SBW, sy=cy2+58;
+          var hilight = (sb2.lbl==='ERA'&&parseFloat(sb2.val)<3) || (sb2.lbl==='K%'&&parseFloat(sb2.val)>25);
+          ctx.fillStyle = hilight ? 'rgba(255,184,28,0.10)' : 'rgba(28,42,69,0.8)';
+          roundRectFill(ctx, sx, sy, SBW-6, 42, 4);
+          ctx.font='bold 16px "Inter",monospace'; ctx.fillStyle=hilight?'#FFB81C':'#e0e8f0';
+          ctx.textAlign='center'; ctx.fillText(String(sb2.val), sx+(SBW-6)/2, sy+24);
+          ctx.font='9px "DM Mono",monospace'; ctx.fillStyle='rgba(255,255,255,0.35)';
+          ctx.fillText(sb2.lbl, sx+(SBW-6)/2, sy+36);
         });
-        y+=rowH;
+
+        // Arsenal bar section
+        var arY = cy2+112;
+        ctx.font='9px "DM Mono",monospace'; ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.textAlign='left';
+        ctx.fillText('ARSENAL', cx2+12, arY-4);
+
+        // Parse arsenal from pitchers data for this pitcher
+        var pd2 = _pitchersArr2.find(function(x){return x.pitcher===row.name;})||{};
+        var sc2 = pitchers.find(function(x){return x.name===row.name;});
+        var sc2arr = sc2 ? sc2.sc : [];
+        var ptCounts = {};
+        sc2arr.forEach(function(s){ var t=s.pitch_type||s.type||'Other'; ptCounts[t]=(ptCounts[t]||0)+1; });
+        var ptTotal = sc2arr.length;
+        var ptEntries = Object.entries(ptCounts).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+
+        if(ptEntries.length && ptTotal>0) {
+          var barX = cx2+12, barBW = CARD_W-24, barH2 = 14;
+          var xOff = 0;
+          ptEntries.forEach(function(e) {
+            var segW = barBW * e[1]/ptTotal;
+            ctx.fillStyle = pitchColor(e[0]);
+            roundRectFill(ctx, barX+xOff, arY, Math.max(segW,1), barH2, xOff===0?2:0);
+            xOff+=segW;
+          });
+          // Legend
+          var legX = cx2+12, legY = arY+barH2+14;
+          ptEntries.forEach(function(e,i) {
+            var lw = Math.round(e[1]/ptTotal*100);
+            ctx.fillStyle = pitchColor(e[0]);
+            ctx.fillRect(legX, legY-8, 8, 8);
+            ctx.font='9px "DM Mono",monospace'; ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.textAlign='left';
+            ctx.fillText(e[0].slice(0,4)+' '+lw+'%', legX+10, legY);
+            legX += 70;
+            if(legX > cx2+CARD_W-70) { legX=cx2+12; legY+=14; }
+          });
+        } else {
+          ctx.fillStyle='rgba(255,255,255,0.15)'; roundRectFill(ctx,cx2+12,arY,CARD_W-24,14,2);
+          ctx.font='9px "DM Mono",monospace'; ctx.fillStyle='rgba(255,255,255,0.2)'; ctx.textAlign='center';
+          ctx.fillText(row.arsenal, cx2+CARD_W/2, arY+10);
+        }
+
+        // Bottom divider
+        ctx.fillStyle = TC; ctx.globalAlpha=0.35;
+        ctx.fillRect(cx2+10, cy2+CARD_H-6, CARD_W-20, 1);
+        ctx.globalAlpha=1;
       });
 
       // Footer
-      d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond  —  CBL Scouting Report', ML, PH-5);
-      d.text(team.name+' Opposing Pitchers', ML+CPW, PH-5, {align:'right'});
-      sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
+      var fy = H-FOOT_H+16;
+      ctx.fillStyle='rgba(20,30,55,0.8)'; ctx.fillRect(0,H-FOOT_H,W,FOOT_H);
+      ctx.fillStyle='#FFB81C'; ctx.fillRect(0,H-FOOT_H,W,1);
+      ctx.font='11px "DM Mono",monospace'; ctx.fillStyle='rgba(255,255,255,0.25)'; ctx.textAlign='left';
+      ctx.fillText('Data Diamond  ·  CBL Scouting Report  ·  '+team.name+' Opposing Pitchers  ·  '+String(year), PAD, fy);
+      ctx.textAlign='right'; ctx.fillStyle='#FFB81C';
+      ctx.fillText('datadiamond.ca', W-PAD, fy);
 
-      d.save(team.abbr+'_Opposing_Pitchers.pdf');
-      if (btn) { btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF'; }
-      restore();
-    });
+      // Download
+      cvs.toBlob(function(blob) {
+        var url=URL.createObjectURL(blob);
+        var a=document.createElement('a'); a.href=url; a.download=team.abbr+'_Opposing_Pitchers_'+year+'.png';
+        document.body.appendChild(a); a.click();
+        setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); },500);
+        if(btn){btn.disabled=false;btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PNG';}
+        restore();
+      },'image/png');
+    })();
   }
 
 
