@@ -2475,3 +2475,41 @@ Zane Skansi,Kitchener Panthers`;
   }
 
 
+
+  // ── TEAM LOOKUP FALLBACK ─────────────────────────────────────────────────
+  // Used by buildGamePrepGrid and PDF generators when js/teams.js is not loaded.
+  if (typeof resolveTeam === 'undefined') {
+    var _CBL_TEAMS = [
+      { id:'guelph',    name:'Guelph Royals',            abbreviation:'GUE', primaryColor:'#003DA5' },
+      { id:'barrie',    name:'Barrie Baycats',            abbreviation:'BAR', primaryColor:'#E31837' },
+      { id:'brantford', name:'Brantford Red Sox',         abbreviation:'BRF', primaryColor:'#C8102E' },
+      { id:'chatham',   name:'Chatham-Kent Barnstormers', abbreviation:'CKB', primaryColor:'#00703C' },
+      { id:'hamilton',  name:'Hamilton Cardinals',        abbreviation:'HAM', primaryColor:'#C8102E' },
+      { id:'kitchener', name:'Kitchener Panthers',        abbreviation:'KIT', primaryColor:'#FF6B00' },
+      { id:'london',    name:'London Majors',             abbreviation:'LON', primaryColor:'#002D62' },
+      { id:'toronto',   name:'Toronto Maple Leafs',       abbreviation:'TOR', primaryColor:'#00205B' },
+      { id:'welland',   name:'Welland Jackfish',          abbreviation:'WEL', primaryColor:'#006341' },
+    ];
+    window.resolveTeam = function(nameOrId) {
+      if (!nameOrId) return null;
+      var q = nameOrId.toLowerCase().trim();
+      return _CBL_TEAMS.find(function(t) {
+        return t.name.toLowerCase() === q || t.id === q || t.abbreviation.toLowerCase() === q;
+      }) || null;
+    };
+  }
+
+  // ── DATA STUB FALLBACK ───────────────────────────────────────────────────
+  // Prevents errors in PDF generators when DATA is not loaded from external file.
+  if (typeof DATA === 'undefined') {
+    window.DATA = { pitches:[], summary:[], pitchers:[], pbpBatters:[], pbpPitchers:[], iblHistory:{} };
+  }
+
+  // ── INIT ─────────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    buildGamePrepGrid();
+  });
+
+  </script>
+</body>
+</html>

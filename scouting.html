@@ -1101,7 +1101,7 @@ Zane Skansi,Kitchener Panthers`;
       var seenBatters = new Set();
       // For 2025 only use pbp_batters.json (season-locked). Never fall back to DATA.summary
       // here as it swaps with season selection and would pull in 2026 players.
-      var rawBatters = (DATA.pbpBatters && DATA.pbpBatters.length) ? DATA.pbpBatters : (selSeason !== '2025' ? DATA.summary : []);
+      var rawBatters = (DATA.pbpBatters && DATA.pbpBatters.length) ? DATA.pbpBatters : [];
       rawBatters.forEach(function(p) {
         var t = resolveTeam(p.batter_team || p.team);
         var bkey = normRosterName(p.batter);
@@ -1109,7 +1109,8 @@ Zane Skansi,Kitchener Panthers`;
           seenBatters.add(bkey);
           var cname = canonicalName(p.batter);
           var ibl = getIblSeasonByName(cname, function(s){ return s.pos !== 'P' && ((s.AB || 0) > 0 || (s.PA || 0) > 0); });
-          var sum = mergeIblKBB(Object.assign({}, findByName(DATA.summary, 'batter', cname) || p), ibl);
+          // Use pbp entry (2025-locked) as summary base — never pull from DATA.summary which may be swapped to 2026
+          var sum = mergeIblKBB(Object.assign({}, p), ibl);
           players.push({ name: cname, season: '2025', summary: sum, pbp: p, ibl: ibl, pitch: getPitchPlayerForRoster(cname) });
         }
       });
@@ -1123,37 +1124,14 @@ Zane Skansi,Kitchener Panthers`;
         if (t && t.id === teamId) {
           seenBatters.add(nkey);
           var cname = canonicalName(name);
-          var sum = mergeIblKBB(Object.assign({ batter: cname }, findByName(DATA.summary, 'batter', cname) || {}, s2025), s2025);
+          // Use only iblHistory (2025-locked) — never merge DATA.summary which may be swapped to 2026
+          var sum = mergeIblKBB(Object.assign({ batter: cname }, s2025), s2025);
           players.push({ name: cname, season: '2025', summary: sum, ibl: s2025, pitch: getPitchPlayerForRoster(cname) });
         }
       });
 
-      // 2025: skip DATA.summary and DATA.pitches loops — those swap with season and
-      // would bleed in 2026 players. pbp_batters + iblHistory are the 2025-only sources.
-      if (selSeason !== '2025') {
-        DATA.summary.forEach(function(p) {
-          var bkey = normRosterName(p.batter);
-          if (!p.batter || seenBatters.has(bkey)) return;
-          var t = resolveTeam(p.batter_team);
-          if (t && t.id === teamId) {
-            seenBatters.add(bkey);
-            var cname = canonicalName(p.batter);
-            players.push({ name: cname, season: '2025', summary: p, pitch: getPitchPlayerForRoster(cname) });
-          }
-        });
-
-        DATA.pitches.forEach(function(bp) {
-          var bkey = normRosterName(bp.batter);
-          if (!bp.batter || seenBatters.has(bkey)) return;
-          var t = resolveTeam(pitchBatterTeam(bp));
-          if (t && t.id === teamId) {
-            seenBatters.add(bkey);
-            var cname = canonicalName(bp.batter);
-            var sum = findByName(DATA.summary, 'batter', cname) || { batter: cname };
-            players.push({ name: cname, season: '2025', summary: sum, pitch: getPitchPlayerForRoster(cname) });
-          }
-        });
-      }
+      // 2025: never use DATA.summary or DATA.pitches here — those swap with season and
+      // would bleed in 2026 players. pbp_batters + iblHistory are the only 2025-locked sources.
     } else {
       var pitcherCanon = {};
       function addPitcher(raw) {
