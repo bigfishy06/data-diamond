@@ -1109,7 +1109,7 @@ Zane Skansi,Kitchener Panthers`;
           seenBatters.add(bkey);
           var cname = canonicalName(p.batter);
           var ibl = getIblSeasonByName(cname, function(s){ return s.pos !== 'P' && ((s.AB || 0) > 0 || (s.PA || 0) > 0); });
-          // Use pbp entry (2025-locked) as summary base — never pull from DATA.summary which may be swapped to 2026
+          // Use pbp entry as summary base — never pull from DATA.summary which may be swapped to 2026
           var sum = mergeIblKBB(Object.assign({}, p), ibl);
           players.push({ name: cname, season: '2025', summary: sum, pbp: p, ibl: ibl, pitch: getPitchPlayerForRoster(cname) });
         }
@@ -1129,9 +1129,7 @@ Zane Skansi,Kitchener Panthers`;
           players.push({ name: cname, season: '2025', summary: sum, ibl: s2025, pitch: getPitchPlayerForRoster(cname) });
         }
       });
-
-      // 2025: never use DATA.summary or DATA.pitches here — those swap with season and
-      // would bleed in 2026 players. pbp_batters + iblHistory are the only 2025-locked sources.
+      // DATA.summary and DATA.pitches are season-swapped — never use them here for 2025.
     } else {
       var pitcherCanon = {};
       function addPitcher(raw) {
