@@ -820,7 +820,7 @@
   (function() {
     if (window.jspdf) return;
     var sc = document.createElement('script');
-    sc.src = 'https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js';
+    sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
     sc.onerror = function() {
       // Mark as failed so ensureJsPDF can surface the error instead of hanging
       window.__jspdfFailed = true;
@@ -831,7 +831,7 @@
   function ensureJsPDF(cb) {
     if (window.jspdf) { cb(); return; }
     if (window.__jspdfFailed) {
-      alert('PDF library could not be loaded. Please disable tracking prevention for this site in your browser settings, then reload.');
+      alert('PDF library could not be loaded. Please check your internet connection and reload the page.');
       return;
     }
     // Poll until loaded (up to 8 seconds)
@@ -840,7 +840,7 @@
       if (window.jspdf) { clearInterval(interval); cb(); return; }
       if (window.__jspdfFailed || ++attempts > 80) {
         clearInterval(interval);
-        alert('PDF library could not be loaded. Please disable tracking prevention for this site in your browser settings, then reload.');
+        alert('PDF library could not be loaded. Please check your internet connection and reload the page.');
       }
     }, 100);
   }
@@ -1358,7 +1358,7 @@ Zane Skansi,Kitchener Panthers`;
   function genOppBattersPNG(oppName, btn, restore, selectedNames, year) {
     year = year || ((typeof _activeSeason !== 'undefined') ? _activeSeason.replace('year:','') : '2026');
     restore = restore || function(){};
-    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.summary) {
+    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined') {
       alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
     }
     if (btn) { btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…'; }
@@ -1397,6 +1397,10 @@ Zane Skansi,Kitchener Panthers`;
         var selSet = {};
         selectedNames.forEach(function(n){ selSet[n.toLowerCase().trim()] = true; });
         batterNames = batterNames.filter(function(n){ return selSet[n.toLowerCase().trim()]; });
+        // If roster filter knocked everything out, fall back to selectedNames directly
+        if (!batterNames.length) {
+          batterNames = selectedNames.slice();
+        }
       }
 
       var batters = batterNames.map(function(name) {
@@ -1405,7 +1409,7 @@ Zane Skansi,Kitchener Panthers`;
 
       if (!batters.length) {
         if (btn) { btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PNG'; }
-        alert('No batter data found for ' + oppName + '.');
+        alert('No batter data found for ' + oppName + '. Make sure the correct year is selected and data is loaded.');
         restore(); return;
       }
 
@@ -1685,7 +1689,7 @@ Zane Skansi,Kitchener Panthers`;
   function genOppPitchersPNG(oppName, btn, restore, selectedNames, year) {
     year = year || ((typeof _activeSeason !== 'undefined') ? _activeSeason.replace('year:','') : '2026');
     restore = restore || function(){};
-    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.pitches) {
+    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined') {
       alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
     }
     if (btn) { btn.disabled = true; btn.querySelector('.gp-btn-label').textContent = 'Generating…'; }
@@ -1753,11 +1757,15 @@ Zane Skansi,Kitchener Panthers`;
         var selSet2 = {};
         selectedNames.forEach(function(n){ selSet2[n.toLowerCase().trim()] = true; });
         pitchers = pitchers.filter(function(p){ return selSet2[p.name.toLowerCase().trim()]; });
+        // If data sources had nothing, build stub entries from selectedNames
+        if (!pitchers.length) {
+          pitchers = selectedNames.map(function(n){ return { name: n, sc: [] }; });
+        }
       }
 
       if (!pitchers.length) {
         if (btn) { btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PNG'; }
-        alert('No pitcher data found for ' + oppName + '.');
+        alert('No pitcher data found for ' + oppName + '. Make sure the correct year is selected and data is loaded.');
         restore(); return;
       }
 
