@@ -2031,6 +2031,13 @@ Zane Skansi,Kitchener Panthers`;
         picker.classList.add('open'); return;
       }
 
+      // Header — matches Opposing Pitching / Batting format
+      var hdr = document.createElement('div');
+      hdr.className = 'gp-picker-header';
+      hdr.innerHTML = '<span>PITCH AVAILABILITY</span>' +
+        '<button class="gp-picker-close" onclick="var pk=this.closest(\'.gp-picker\');pk.classList.remove(\'open\');pk.innerHTML=\'\'">×</button>';
+      picker.appendChild(hdr);
+
       var pitcherList = [];
       seen.forEach(function(name) {
         var sc = [];
@@ -2113,65 +2120,53 @@ Zane Skansi,Kitchener Panthers`;
           return c.toDataURL('image/png');
         }
 
-        var row = document.createElement('div');
-        row.style.cssText = 'padding:16px;border-bottom:1px solid rgba(255,255,255,0.06);';
+        // Compact row — same format as Opposing Pitching / Batting panels
+        var iblAll2    = DATA.iblHistory[p.name] || [];
+        var iblP2      = iblAll2.filter(function(r){ return (r.IP||0)>0; })[0] || null;
+        var eraDisp    = iblP2&&iblP2.ERA!=null ? parseFloat(iblP2.ERA).toFixed(2) : '—';
+        var ipDisp     = iblP2&&iblP2.IP!=null  ? String(iblP2.IP) : '—';
+        var tot2       = sc.filter(function(s){ return s.outcome&&s.outcome!==''; }).length;
+        var ks2        = sc.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
+        var str2       = sc.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
+        var kPctDisp   = tot2>2 ? Math.round(ks2/tot2*100)+'%' : '—';
+        var strPitDisp = tot2>2 ? Math.round(str2/tot2*100)+'%' : '—';
+        var ttpDisp    = ttp!=null ? ttp.toFixed(2)+'s' : '—';
+        var restDisp   = daysRest===99?'—':daysRest===0?'Today':daysRest===1?'Yest.':daysRest+'d';
 
-        // Name + availability
-        var nameRow = document.createElement('div');
-        nameRow.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px';
-        nameRow.innerHTML =
-          '<div style="font-family:var(--font-display);font-size:15px;letter-spacing:0.05em;color:#fff">' + p.name + '</div>' +
-          '<div style="display:flex;align-items:center;gap:12px">' +
-            '<div style="padding:4px 10px;background:'+availBg+';border:1px solid '+availColor+';border-radius:4px;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.1em;color:'+availColor+'">'+avail+'</div>' +
-            '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.35)">'+restNote+'</div>' +
-          '</div>';
-        row.appendChild(nameRow);
-
-        // Time to plate
-        var ttpRow = document.createElement('div');
-        ttpRow.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:12px';
-        ttpRow.innerHTML =
-          '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.3)">TIME TO PLATE</div>' +
-          '<div style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:'+ttpColor+'">' + (ttp != null ? ttp.toFixed(2)+'s' : '—') + '</div>' +
-          '<div style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.1em;color:'+ttpColor+'">'+ttpLabel+'</div>';
-        row.appendChild(ttpRow);
-
-        // Heat maps
-        var heatRow = document.createElement('div');
-        heatRow.style.cssText = 'display:flex;gap:16px;flex-wrap:wrap';
-
-        function makeHeatCell(pts, label) {
-          var wrap = document.createElement('div');
-          wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:4px';
-          var lbl = document.createElement('div');
-          lbl.style.cssText = 'font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;color:rgba(255,255,255,0.35)';
-          lbl.textContent = label;
-          wrap.appendChild(lbl);
-          if (pts.length >= 3) {
-            var img = document.createElement('img');
-            img.src = buildMiniHeat(pts);
-            img.style.cssText = 'width:120px;height:138px;border-radius:4px;border:1px solid rgba(255,255,255,0.08)';
-            wrap.appendChild(img);
-            var cnt = document.createElement('div');
-            cnt.style.cssText = 'font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.25)';
-            cnt.textContent = pts.length + ' pitches';
-            wrap.appendChild(cnt);
-          } else {
-            var na = document.createElement('div');
-            na.style.cssText = 'width:120px;height:138px;border-radius:4px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.2)';
-            na.textContent = 'No data';
-            wrap.appendChild(na);
+        // Derive hand from scatter, fallback iblHistory.throws
+        var handVal2 = (function(){
+          var counts={},t=0;
+          sc.forEach(function(s){ var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;t++;} });
+          if(t>0){
+            var sides=Object.keys(counts);
+            if(sides.length===1) return sides[0];
+            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
+            return counts[dom]/t>=0.5?dom:'S';
           }
-          return wrap;
-        }
+          var tr=(iblAll2||[]).find(function(r){return r.throws;}); return tr?tr.throws:'';
+        })();
 
-        heatRow.appendChild(makeHeatCell(scR, 'vs RHH'));
-        heatRow.appendChild(makeHeatCell(scL, 'vs LHH'));
-        row.appendChild(heatRow);
+        var row = document.createElement('div');
+        row.className = 'gp-picker-row';
+        row.innerHTML =
+          '<div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px">' +
+            '<span class="gp-picker-name">' + p.name + '</span>' +
+            (handVal2 ? '<span style="font-family:\'DM Mono\',monospace;font-size:9px;color:rgba(255,184,28,0.55)">' + handVal2 + '</span>' : '') +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:center;flex-shrink:0;flex-wrap:wrap">' +
+            '<span style="padding:2px 7px;background:'+availBg+';border:1px solid '+availColor+';border-radius:3px;font-family:\'DM Mono\',monospace;font-size:9px;font-weight:700;letter-spacing:0.07em;color:'+availColor+'">' + avail + '</span>' +
+            '<span class="gp-picker-stat">ERA ' + eraDisp + '</span>' +
+            '<span class="gp-picker-stat">IP ' + ipDisp + '</span>' +
+            '<span class="gp-picker-stat">K% ' + kPctDisp + '</span>' +
+            '<span class="gp-picker-stat">STR% ' + strPitDisp + '</span>' +
+            '<span class="gp-picker-stat" style="color:' + (ttpColor||'rgba(255,255,255,0.3)') + '">TTP ' + ttpDisp + '</span>' +
+            '<span class="gp-picker-stat">REST ' + restDisp + '</span>' +
+          '</div>';
         picker.appendChild(row);
       });
     }
 
+    picker.style.flexDirection = 'column';
     picker.classList.add('open');
   }
 
