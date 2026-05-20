@@ -1404,8 +1404,8 @@ Zane Skansi,Kitchener Panthers`;
       var rowH = 9;
       var hdrH = 7;
 
-      var hdrs = ['PLAYER','BATS','AVG','OPS','K/BB','SB','PULL','STRAIGHT','OPPO'];
-      var cWs  = [CPW*0.24,CPW*0.07,CPW*0.09,CPW*0.09,CPW*0.09,CPW*0.07,CPW*0.12,CPW*0.12,CPW*0.11];
+      var hdrs = ['PLAYER','BATS','AVG','OPS','K%','BB%','SB','PULL','STRAIGHT','OPPO'];
+      var cWs  = [CPW*0.24,CPW*0.07,CPW*0.09,CPW*0.09,CPW*0.045,CPW*0.045,CPW*0.07,CPW*0.11,CPW*0.11,CPW*0.10];
 
       function drawBatHdr(d, yy) {
         sf(d,CO.navy3); d.rect(ML,yy,CPW,hdrH,'F');
@@ -1525,28 +1525,25 @@ Zane Skansi,Kitchener Panthers`;
           oppPct2=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Opposite Field';}).length/spTot*100)+'%':'—';
         }
 
-        // K/BB: PBP primary, IBL fallback
-        var kbbVal=(function(){
-          var kv=null,bbv=null;
-          if(year==2025){
-            kv=pbp&&pbp.K_pct!=null?pbp.K_pct:null;
-            bbv=pbp&&pbp.BB_pct!=null?pbp.BB_pct:null;
-            if(kv==null&&iblS){kv=iblS.K!=null&&iblS.PA>0?iblS.K/iblS.PA*100:null;}
-            if(bbv==null&&iblS){bbv=iblS.BB!=null&&iblS.PA>0?iblS.BB/iblS.PA*100:null;}
-          } else {
-            kv=s.K_pct!=null?s.K_pct:null;
-            bbv=s.BB_pct!=null?s.BB_pct:null;
-          }
-          if(kv!=null&&bbv!=null&&bbv>0) return f2(kv/bbv);
-          if(kv!=null&&bbv===0) return 'BB=0';
-          return '—';
-        })();
+        // K% and BB%: PBP primary, IBL fallback
+        var kv2=null,bbv2=null;
+        if(year==2025){
+          kv2=pbp&&pbp.K_pct!=null?pbp.K_pct:null;
+          bbv2=pbp&&pbp.BB_pct!=null?pbp.BB_pct:null;
+          if(kv2==null&&iblS){kv2=iblS.K!=null&&iblS.PA>0?iblS.K/iblS.PA*100:null;}
+          if(bbv2==null&&iblS){bbv2=iblS.BB!=null&&iblS.PA>0?iblS.BB/iblS.PA*100:null;}
+        } else {
+          kv2=s.K_pct!=null?s.K_pct:null;
+          bbv2=s.BB_pct!=null?s.BB_pct:null;
+        }
+        var kVal  = kv2!=null  ? f1(kv2)+'%'  : '—';
+        var bbVal = bbv2!=null ? f1(bbv2)+'%' : '—';
         // SB: IBL History for both years
         var sbVal=(function(){
           if(iblS&&iblS.SB!=null) return String(Math.round(iblS.SB));
           return '—';
         })();
-        var vals=[s.batter,bats,avg,ops,kbbVal,sbVal,pullPct,strPct2,oppPct2];
+        var vals=[s.batter,bats,avg,ops,kVal,bbVal,sbVal,pullPct,strPct2,oppPct2];
 
         var fs = 7;
         var cx=ML;
@@ -1681,8 +1678,8 @@ Zane Skansi,Kitchener Panthers`;
       var rowH = 9;
       var hdrH2 = 7;
 
-      var hdrs=['PITCHER','HAND','ERA','WHIP','K/BB','FPS%','STRIKE%','TTP','REST','ARSENAL'];
-      var cWs =[CPW*0.17,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.07,CPW*0.07,CPW*0.08,CPW*0.07,CPW*0.07,CPW*0.27];
+      var hdrs=['PITCHER','HAND','ERA','WHIP','K%','BB%','FPS%','STRIKE%','TTP','REST','ARSENAL'];
+      var cWs =[CPW*0.17,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.055,CPW*0.055,CPW*0.07,CPW*0.08,CPW*0.07,CPW*0.07,CPW*0.23];
 
       function drawPitHdr(d, yy) {
         sf(d,CO.navy3); d.rect(ML,yy,CPW,hdrH2,'F');
@@ -1812,19 +1809,16 @@ Zane Skansi,Kitchener Panthers`;
           var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
           return counts[dom]/tot>=0.5 ? dom : 'S';
         })();
-        // K/BB ratio
-        var kbbPVal=(function(){
-          var kp=null,bbp=null;
-          if(year==2025&&pbpP){kp=pbpP.K_pct!=null?pbpP.K_pct:null;bbp=pbpP.BB_pct!=null?pbpP.BB_pct:null;}
-          if(kp==null&&pd.K_pct!=null) kp=pd.K_pct;
-          if(bbp==null&&pd.BB_pct!=null) bbp=pd.BB_pct;
-          if(kp!=null&&bbp!=null&&bbp>0) return f2(kp/bbp);
-          if(kp!=null&&bbp===0) return 'BB=0';
-          return '—';
-        })();
+        // K% and BB%
+        var kp2=null,bbp2=null;
+        if(year==2025&&pbpP){kp2=pbpP.K_pct!=null?pbpP.K_pct:null;bbp2=pbpP.BB_pct!=null?pbpP.BB_pct:null;}
+        if(kp2==null&&pd.K_pct!=null) kp2=pd.K_pct;
+        if(bbp2==null&&pd.BB_pct!=null) bbp2=pd.BB_pct;
+        var kPctVal  = kp2!=null  ? f1(kp2)+'%'  : '—';
+        var bbPctVal = bbp2!=null ? f1(bbp2)+'%' : '—';
         // REST: days since last outing
         var restVal = daysRest===99?'—':daysRest===0?'TODAY':daysRest+'d';
-        var vals=[nameDisp,handVal,eraVal,whipVal,kbbPVal,fpsVal,strVal,ttpVal,restVal,arsenal];
+        var vals=[nameDisp,handVal,eraVal,whipVal,kPctVal,bbPctVal,fpsVal,strVal,ttpVal,restVal,arsenal];
 
         // Start a new page if this row won't fit
         if (y + rowH > pageBottom2) {
