@@ -1182,19 +1182,16 @@ Zane Skansi,Kitchener Panthers`;
         bp.scatter.forEach(function(s){ if(s.pitcher) knownPitchers.add(s.pitcher.toLowerCase().trim()); });
       });
 
-      // Build set of all roster player names (any team) to exclude cross-team bleed
-      var rosterNamesP = new Set();
-      GP_ROSTER_2025.forEach(function(row){ rosterNamesP.add(row.player.trim().toLowerCase()); });
-
       // Roster = active players on this team with pitcher data
-      // If knownPitchers is completely empty (no DATA loaded), show all roster players unchecked
-      var noDataLoaded = knownPitchers.size === 0;
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
         var k = row.player.toLowerCase().trim();
-        if ((noDataLoaded || knownPitchers.has(k)) && !seenK.has(k)) { seenK.add(k); playerNames.push(row.player); }
+        if (knownPitchers.has(k) && !seenK.has(k)) { seenK.add(k); playerNames.push(row.player); }
       });
+      // Build set of all roster player names (any team) to exclude cross-team bleed
+      var rosterNamesP = new Set();
+      GP_ROSTER_2025.forEach(function(row){ rosterNamesP.add(row.player.trim().toLowerCase()); });
 
       // Inactive: pitchers in data whose 2025 team matches but aren't on current roster at all
       pitchersArr.forEach(function(p) {
@@ -1224,12 +1221,10 @@ Zane Skansi,Kitchener Panthers`;
 
       var seenB = {};
       // Active: roster players on this team who have batter data
-      // If knownBatters is completely empty (no DATA loaded), show all roster players unchecked
-      var noBatterData = knownBatters.size === 0;
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
-        if ((noBatterData || knownBatters.has(row.player.trim().toLowerCase())) && !seenB[row.player])
+        if (knownBatters.has(row.player.trim().toLowerCase()) && !seenB[row.player])
           seenB[row.player] = { batter: row.player, AB: 0 };
       });
       // Enrich AB counts from summary data — only for players already confirmed on this team via roster
@@ -1265,7 +1260,7 @@ Zane Skansi,Kitchener Panthers`;
 
     if (!playerNames.length) {
       picker.classList.remove('open'); picker.innerHTML = '';
-      alert('No ' + (action === 'pitchers-pdf' ? 'pitcher' : 'batter') + ' data found for ' + oppName + ' in ' + year + '. Make sure the season data file is loaded.');
+      alert('No ' + (action === 'pitchers-pdf' ? 'pitcher' : 'batter') + ' data found for ' + oppName + ' in ' + year + '.');
       return;
     }
 
