@@ -4886,10 +4886,10 @@ function initBatterGameLog(name, pitch) {
 
     // POV label
     ctx.save();
-    ctx.font='bold 7px DM Mono,monospace';
-    ctx.fillStyle='rgba(255,184,28,0.65)';
-    ctx.textAlign='center'; ctx.textBaseline='top';
-    ctx.fillText("PITCHER'S POV",(zx1+zx2)/2,2);
+    ctx.font='bold 9px DM Mono,monospace';
+    ctx.fillStyle='rgba(255,184,28,0.75)';
+    ctx.textAlign='center'; ctx.textBaseline='bottom';
+    ctx.fillText("FROM A PITCHER'S POV",(zx1+zx2)/2,zy1-4);
     ctx.restore();
 
     if (view==='heatmap') {
