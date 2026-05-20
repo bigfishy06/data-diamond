@@ -1404,7 +1404,7 @@ Zane Skansi,Kitchener Panthers`;
       var rowH = 9;
       var hdrH = 7;
 
-      var hdrs = ['PLAYER','BATS','AVG','OPS','K%','BB%','SB','PULL','STRAIGHT','OPPO'];
+      var hdrs = ['PLAYER','BATS','AVG','OPS','K','BB','SB','PULL','STRAIGHT','OPPO'];
       var cWs  = [CPW*0.24,CPW*0.07,CPW*0.09,CPW*0.09,CPW*0.045,CPW*0.045,CPW*0.07,CPW*0.11,CPW*0.11,CPW*0.10];
 
       function drawBatHdr(d, yy) {
@@ -1525,19 +1525,17 @@ Zane Skansi,Kitchener Panthers`;
           oppPct2=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Opposite Field';}).length/spTot*100)+'%':'—';
         }
 
-        // K% and BB%: PBP primary, IBL fallback
-        var kv2=null,bbv2=null;
+        // K and BB totals: IBL raw counts for 2025, summary counts for 2026
+        var kRaw=null,bbRaw=null;
         if(year==2025){
-          kv2=pbp&&pbp.K_pct!=null?pbp.K_pct:null;
-          bbv2=pbp&&pbp.BB_pct!=null?pbp.BB_pct:null;
-          if(kv2==null&&iblS){kv2=iblS.K!=null&&iblS.PA>0?iblS.K/iblS.PA*100:null;}
-          if(bbv2==null&&iblS){bbv2=iblS.BB!=null&&iblS.PA>0?iblS.BB/iblS.PA*100:null;}
+          kRaw  = iblS&&iblS.K!=null  ? Math.round(iblS.K)  : null;
+          bbRaw = iblS&&iblS.BB!=null ? Math.round(iblS.BB) : null;
         } else {
-          kv2=s.K_pct!=null?s.K_pct:null;
-          bbv2=s.BB_pct!=null?s.BB_pct:null;
+          kRaw  = s.K!=null  ? Math.round(s.K)  : null;
+          bbRaw = s.BB!=null ? Math.round(s.BB) : null;
         }
-        var kVal  = kv2!=null  ? f1(kv2)+'%'  : '—';
-        var bbVal = bbv2!=null ? f1(bbv2)+'%' : '—';
+        var kVal  = kRaw!=null  ? String(kRaw)  : '—';
+        var bbVal = bbRaw!=null ? String(bbRaw) : '—';
         // SB: IBL History for both years
         var sbVal=(function(){
           if(iblS&&iblS.SB!=null) return String(Math.round(iblS.SB));
@@ -1678,7 +1676,7 @@ Zane Skansi,Kitchener Panthers`;
       var rowH = 9;
       var hdrH2 = 7;
 
-      var hdrs=['PITCHER','HAND','ERA','WHIP','K%','BB%','FPS%','STRIKE%','TTP','REST','ARSENAL'];
+      var hdrs=['PITCHER','HAND','ERA','WHIP','K','BB','FPS%','STRIKE%','TTP','REST','ARSENAL'];
       var cWs =[CPW*0.17,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.055,CPW*0.055,CPW*0.07,CPW*0.08,CPW*0.07,CPW*0.07,CPW*0.23];
 
       function drawPitHdr(d, yy) {
@@ -1809,13 +1807,12 @@ Zane Skansi,Kitchener Panthers`;
           var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
           return counts[dom]/tot>=0.5 ? dom : 'S';
         })();
-        // K% and BB%
-        var kp2=null,bbp2=null;
-        if(year==2025&&pbpP){kp2=pbpP.K_pct!=null?pbpP.K_pct:null;bbp2=pbpP.BB_pct!=null?pbpP.BB_pct:null;}
-        if(kp2==null&&pd.K_pct!=null) kp2=pd.K_pct;
-        if(bbp2==null&&pd.BB_pct!=null) bbp2=pd.BB_pct;
-        var kPctVal  = kp2!=null  ? f1(kp2)+'%'  : '—';
-        var bbPctVal = bbp2!=null ? f1(bbp2)+'%' : '—';
+        // K and BB totals: IBL history for 2025, scatter K + pd.BB for 2026
+        var bbsRaw=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+        var kPctVal  = year==2025 ? (iblP&&iblP.K!=null  ? String(Math.round(iblP.K))  : String(ks))
+                                  : String(ks);
+        var bbPctVal = year==2025 ? (iblP&&iblP.BB!=null ? String(Math.round(iblP.BB)) : String(bbsRaw))
+                                  : (pd.BB!=null          ? String(Math.round(pd.BB))   : String(bbsRaw));
         // REST: days since last outing
         var restVal = daysRest===99?'—':daysRest===0?'TODAY':daysRest+'d';
         var vals=[nameDisp,handVal,eraVal,whipVal,kPctVal,bbPctVal,fpsVal,strVal,ttpVal,restVal,arsenal];
