@@ -2198,71 +2198,112 @@ Zane Skansi,Kitchener Panthers`;
     if (typeof DATA === 'undefined') { alert('Data is still loading.'); restore(); return; }
 
     var GUE_NAME = 'Guelph Royals';
-    var pitchersArr  = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
-    var pitchesData  = (DATA.pitches  && Array.isArray(DATA.pitches))  ? DATA.pitches  : [];
-    var iblH         = DATA.iblHistory || {};
-    var yr           = String(year);
+    var pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
+    var pitchesData = (DATA.pitches  && Array.isArray(DATA.pitches))  ? DATA.pitches  : [];
+    var yr          = String(year);
 
-    // Collect scatter per pitcher
-    var pitcherScatter = {};
+    // ── Build set of known pitcher keys from all data sources ──────────────
+    var knownPitcherKeys = new Set();
+    pitchersArr.forEach(function(p){ if(p.pitcher) knownPitcherKeys.add(p.pitcher.toLowerCase().trim()); });
     pitchesData.forEach(function(bp){
       if (!bp.scatter) return;
-      bp.scatter.forEach(function(s){
-        var pn=s.pitcher; if(!pn) return;
-        var kk=pn.toLowerCase().trim();
-        if(!pitcherScatter[kk]) pitcherScatter[kk]=[];
-        pitcherScatter[kk].push(s);
-      });
+      bp.scatter.forEach(function(s){ if(s.pitcher) knownPitcherKeys.add(s.pitcher.toLowerCase().trim()); });
     });
-    pitchersArr.forEach(function(p){
-      if (!p.scatter || !Array.isArray(p.scatter) || !p.pitcher) return;
-      var kk=p.pitcher.toLowerCase().trim();
-      if(!pitcherScatter[kk]) pitcherScatter[kk]=[];
-      p.scatter.forEach(function(s){ pitcherScatter[kk].push(s); });
+    if (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers))
+      DATA.pbpPitchers.forEach(function(p){ if(p.pitcher) knownPitcherKeys.add(p.pitcher.toLowerCase().trim()); });
+
+    // ── Full Guelph roster key set ─────────────────────────────────────────
+    var rosterKeys = new Set();
+    GP_ROSTER_2025.forEach(function(row){
+      var rt = resolveTeam(row.team);
+      if (rt && rt.name === GUE_NAME) rosterKeys.add(row.player.toLowerCase().trim());
     });
 
-    // All Guelph pitchers from roster
-    var knownPitchers = new Set(Object.keys(pitcherScatter));
-    pitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(p.pitcher.toLowerCase().trim()); });
-    var seenK = new Set();
-    var allPitcherNames = [];
+    // ── Separate into active pitchers, active position players, inactive pitchers
+    var activePitchers = [], activeBatters = [], inactivePitchers = [];
+    var seen = new Set();
+
     GP_ROSTER_2025.forEach(function(row){
       var rt = resolveTeam(row.team);
       if (!rt || rt.name !== GUE_NAME) return;
       var k = row.player.toLowerCase().trim();
-      if (!seenK.has(k)) { seenK.add(k); allPitcherNames.push(row.player); }
+      if (seen.has(k)) return;
+      seen.add(k);
+      if (knownPitcherKeys.has(k)) activePitchers.push(row.player);
+      else activeBatters.push(row.player);
     });
-    allPitcherNames.sort();
+    activePitchers.sort(); activeBatters.sort();
 
-    // Show pitcher picker
-    var card = btn ? btn.closest('.gp-card') : null;
+    // Inactive: pitcher data exists but player not on current roster
+    knownPitcherKeys.forEach(function(k){
+      if (rosterKeys.has(k) || seen.has(k)) return;
+      var dispName = null;
+      pitchersArr.forEach(function(p){ if (!dispName && p.pitcher && p.pitcher.toLowerCase().trim()===k) dispName=p.pitcher; });
+      if (!dispName) pitchesData.forEach(function(bp){
+        if (!bp.scatter||dispName) return;
+        bp.scatter.forEach(function(s){ if (!dispName && s.pitcher && s.pitcher.toLowerCase().trim()===k) dispName=s.pitcher; });
+      });
+      if (dispName) { inactivePitchers.push(dispName); seen.add(k); }
+    });
+    inactivePitchers.sort();
+
+    var card   = btn ? btn.closest('.gp-card') : null;
     var picker = card ? card.querySelector('.gp-year-picker') : null;
-    if (!picker) { genPitchAvailPDF(allPitcherNames, btn, restore, yr); return; }
+    if (!picker) { genPitchAvailPDF(activePitchers, btn, restore, yr); return; }
 
     var selectId = 'pa-sel-' + Date.now();
-    var rowsHtml = allPitcherNames.map(function(name){
-      var hasData = knownPitchers.has(name.toLowerCase().trim());
+
+    function renderDivider(label) {
+      return '<div style="padding:4px 10px 3px;font-family:\'DM Mono\',monospace;font-size:9px;' +
+        'letter-spacing:0.12em;color:rgba(255,184,28,0.6);background:rgba(255,184,28,0.06);' +
+        'border-top:1px solid rgba(255,184,28,0.12);border-bottom:1px solid rgba(255,184,28,0.1)">' + label + '</div>';
+    }
+    function renderRow(name, checked, dim) {
+      var color = dim ? 'rgba(255,255,255,0.35)' : '#fff';
       return '<label style="display:flex;align-items:center;gap:8px;padding:5px 10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04)" ' +
         'onmouseover="this.style.background=\'rgba(255,184,28,0.06)\'" onmouseout="this.style.background=\'\'">' +
-        '<input type="checkbox" value="'+name.replace(/"/g,'&quot;')+'"'+(hasData?' checked':'')+
+        '<input type="checkbox" value="' + name.replace(/"/g,'&quot;') + '"' + (checked ? ' checked' : '') +
         ' style="accent-color:#FFB81C;width:13px;height:13px;cursor:pointer;flex-shrink:0">' +
-        '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:'+(hasData?'#fff':'rgba(255,255,255,0.45)')+'">'+name+'</span>'+
+        '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:' + color + '">' + name + '</span>' +
         '</label>';
-    }).join('');
+    }
+
+    var rowsHtml = '';
+    rowsHtml += renderDivider('PITCHERS — ACTIVE');
+    if (activePitchers.length) {
+      activePitchers.forEach(function(n){ rowsHtml += renderRow(n, true, false); });
+    } else {
+      rowsHtml += '<div style="padding:6px 10px;font-family:\'DM Mono\',monospace;font-size:10px;color:rgba(255,255,255,0.25)">No pitcher data loaded</div>';
+    }
+    if (inactivePitchers.length) {
+      rowsHtml += renderDivider('PITCHERS — INACTIVE');
+      inactivePitchers.forEach(function(n){ rowsHtml += renderRow(n, false, true); });
+    }
+    rowsHtml += renderDivider('POSITION PLAYERS — ACTIVE');
+    activeBatters.forEach(function(n){ rowsHtml += renderRow(n, false, true); });
 
     picker.style.cssText = 'display:block;border:1px solid rgba(255,184,28,0.2);border-radius:3px;overflow:hidden;margin-top:-6px;background:rgba(13,20,32,0.95)';
     picker.innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:rgba(255,184,28,0.08);border-bottom:1px solid rgba(255,184,28,0.15)">' +
-        '<span style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.45)">PITCHERS — '+yr+'</span>' +
-        '<button onclick="this.closest(\'.gp-year-picker\').classList.remove(\'open\');this.closest(\'.gp-year-picker\').style.cssText=\'\';this.closest(\'.gp-year-picker\').innerHTML=\'\'" '+
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;' +
+        'background:rgba(255,184,28,0.08);border-bottom:1px solid rgba(255,184,28,0.15)">' +
+        '<span style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.45)">' +
+          'GUELPH ROYALS — MANAGER SHEET — ' + yr +
+        '</span>' +
+        '<button onclick="this.closest(\'.gp-year-picker\').classList.remove(\'open\');' +
+          'this.closest(\'.gp-year-picker\').style.cssText=\'\';' +
+          'this.closest(\'.gp-year-picker\').innerHTML=\'\'" ' +
           'style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:14px;line-height:1;padding:0">×</button>' +
       '</div>' +
-      '<div id="'+selectId+'" style="max-height:220px;overflow-y:auto;padding:4px 0">'+rowsHtml+'</div>' +
+      '<div id="' + selectId + '" style="max-height:280px;overflow-y:auto;padding:0">' + rowsHtml + '</div>' +
       '<div style="padding:8px 10px;border-top:1px solid rgba(255,184,28,0.15)">' +
-        '<button onclick="paRunWithSelected(\''+selectId+'\',\''+yr+'\')" '+
-          'style="width:100%;padding:8px;background:rgba(255,184,28,0.14);border:1px solid rgba(255,184,28,0.35);border-radius:3px;color:#FFB81C;font-family:\'Bebas Neue\',sans-serif;font-size:13px;letter-spacing:0.1em;cursor:pointer" '+
-          'onmouseover="this.style.background=\'rgba(255,184,28,0.26)\'" onmouseout="this.style.background=\'rgba(255,184,28,0.14)\'">GENERATE PDF</button>' +
+        '<button onclick="paRunWithSelected(\'' + selectId + '\',\'' + yr + '\')" ' +
+          'style="width:100%;padding:8px;background:rgba(255,184,28,0.14);border:1px solid rgba(255,184,28,0.35);' +
+          'border-radius:3px;color:#FFB81C;font-family:\'Bebas Neue\',sans-serif;font-size:13px;' +
+          'letter-spacing:0.1em;cursor:pointer" ' +
+          'onmouseover="this.style.background=\'rgba(255,184,28,0.26)\'" ' +
+          'onmouseout="this.style.background=\'rgba(255,184,28,0.14)\'">GENERATE PDF</button>' +
       '</div>';
+
     picker.classList.add('open');
     if (btn) btn.disabled = false;
     restore();
