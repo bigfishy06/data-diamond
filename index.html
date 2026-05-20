@@ -1115,15 +1115,12 @@ Zane Skansi,Kitchener Panthers`;
     // Pitch availability: skip year picker entirely, always 2026
     if (action === 'pitch-avail') {
       picker.classList.remove('open'); picker.innerHTML = '';
-      var prevSeason0 = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
-      if (typeof swapSeasonData === 'function') swapSeasonData('year:2026');
-      function restorePA0() { if (typeof swapSeasonData === 'function') swapSeasonData(prevSeason0); }
       var btnPA0 = null;
       var cardPA0 = picker.closest ? picker.closest('.gp-card') : null;
       if (cardPA0) cardPA0.querySelectorAll('.gp-btn').forEach(function(b) {
         if ((b.querySelector('.gp-btn-label')||{}).textContent.includes('PITCH AVAIL')) btnPA0 = b;
       });
-      openPitchAvailSheet(oppName, 2026, btnPA0, restorePA0);
+      openPitchAvailSheet(oppName, 2026, btnPA0, null);
       return;
     }
 
@@ -1146,15 +1143,12 @@ Zane Skansi,Kitchener Panthers`;
     // For pitch availability, skip year picker entirely — always use 2026
     if (action === 'pitch-avail') {
       picker.classList.remove('open'); picker.innerHTML = '';
-      var prevSA = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
-      if (typeof swapSeasonData === 'function') swapSeasonData('year:2026');
-      function restorePA() { if (typeof swapSeasonData === 'function') swapSeasonData(prevSA); }
       var cardPA = picker.closest('.gp-card');
       var btnPA = null;
       if (cardPA) { cardPA.querySelectorAll('.gp-btn').forEach(function(b) {
         if ((b.querySelector('.gp-btn-label')||{}).textContent.includes('PITCH AVAIL')) btnPA = b;
       }); }
-      openPitchAvailSheet(oppName, 2026, btnPA, restorePA);
+      openPitchAvailSheet(oppName, 2026, btnPA, null);
       return;
     }
     // For fielder sheet, skip player selection and run directly
@@ -2250,7 +2244,6 @@ Zane Skansi,Kitchener Panthers`;
       '</div>';
     picker.classList.add('open');
     if (btn) btn.disabled = false;
-    restore();
   }
 
   function paRunWithSelected(selectId, yr) {
