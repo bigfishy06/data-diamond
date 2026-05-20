@@ -1435,7 +1435,7 @@ Zane Skansi,Kitchener Panthers`;
       var pageBottom = PH - 10;
       var n = batters.length || 1;
       var availH = pageBottom - y;
-      var rowH = Math.min(14, Math.max(8, availH / (n + 1)));
+      var rowH = Math.max(8, availH / (n + 1));
 
       var hdrs = ['PLAYER','BATS','AVG','OPS','K','BB','SB','PULL','STRAIGHT','OPPO'];
       var cWs  = [CPW*0.22,CPW*0.07,CPW*0.08,CPW*0.08,CPW*0.06,CPW*0.06,CPW*0.06,CPW*0.12,CPW*0.12,CPW*0.13];
@@ -1561,7 +1561,7 @@ Zane Skansi,Kitchener Panthers`;
         sf(d,idx%2===0?[14,21,40]:[11,17,32]); d.rect(ML,y,CPW,rowH,'F');
         sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
 
-        var fs = rowH >= 11 ? 8 : 7;
+        var fs = rowH >= 11 ? Math.min(10, 6 + (rowH - 11) * 0.2) : 7;
         cx=ML;
         vals.forEach(function(v,i){
           var isNm=i===0;
@@ -1691,7 +1691,7 @@ Zane Skansi,Kitchener Panthers`;
       var pageBottom2 = PH - 10;
       var n2 = pitchers.length || 1;
       var availH2 = pageBottom2 - y;
-      var rowH = Math.min(16, Math.max(9, availH2 / (n2 + 1)));
+      var rowH = Math.max(9, availH2 / (n2 + 1));
 
       var hdrs=['PITCHER','HAND','ERA','WHIP','K','BB','FPS%','STRIKE%','TTP','REST','ARSENAL'];
       var cWs =[CPW*0.17,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.05,CPW*0.05,CPW*0.07,CPW*0.08,CPW*0.07,CPW*0.07,CPW*0.24];
@@ -1856,7 +1856,7 @@ Zane Skansi,Kitchener Panthers`;
         sf(d,idx%2===0?[14,21,40]:[11,17,32]); d.rect(ML,y,CPW,rowH,'F');
         sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
 
-        var fs2 = rowH >= 12 ? 8 : 7;
+        var fs2 = rowH >= 12 ? Math.min(10, 7 + (rowH - 12) * 0.15) : 7;
         cx=ML;
         vals.forEach(function(v,i){
           var isNm=i===0, isRest=i===8;
