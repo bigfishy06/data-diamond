@@ -484,8 +484,8 @@
           <button class="gp-btn" onclick="showYearPicker('${opp}',this,'batters-pdf')">
             <span class="gp-btn-label">OPP BATTERS PDF</span>
           </button>
-          <button class="gp-btn" onclick="showYearPicker('${opp}',this,'pitch-avail')">
-            <span class="gp-btn-label">PITCH AVAIL</span>
+          <button class="gp-btn" onclick="showYearPicker('${opp}',this,'fielder-sheet')">
+            <span class="gp-btn-label">FIELDER SHEET</span>
           </button>
         </div>
         <div class="gp-year-picker" id="year-picker-${idx}"></div>
@@ -1112,21 +1112,6 @@ Zane Skansi,Kitchener Panthers`;
       picker.classList.remove('open'); picker.innerHTML = ''; return;
     }
 
-    // Pitch availability: skip year picker entirely, always 2026
-    if (action === 'pitch-avail') {
-      picker.classList.remove('open'); picker.innerHTML = '';
-      var prevSeason0 = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
-      if (typeof swapSeasonData === 'function') swapSeasonData('year:2026');
-      function restorePA0() { if (typeof swapSeasonData === 'function') swapSeasonData(prevSeason0); }
-      var btnPA0 = null;
-      var cardPA0 = picker.closest ? picker.closest('.gp-card') : null;
-      if (cardPA0) cardPA0.querySelectorAll('.gp-btn').forEach(function(b) {
-        if ((b.querySelector('.gp-btn-label')||{}).textContent.includes('PITCH AVAIL')) btnPA0 = b;
-      });
-      openPitchAvailSheet(oppName, 2026, btnPA0, restorePA0);
-      return;
-    }
-
     picker.dataset.action = action;
     picker.innerHTML =
       '<span class="gp-year-label">SELECT SEASON</span>' +
@@ -1143,22 +1128,20 @@ Zane Skansi,Kitchener Panthers`;
     }
     var picker = yearBtn.closest('.gp-year-picker');
 
-    // For pitch availability, skip year picker entirely — always use 2026
-    if (action === 'pitch-avail') {
+    // For fielder sheet, skip player selection and run directly
+    if (action === 'fielder-sheet') {
       picker.classList.remove('open'); picker.innerHTML = '';
-      var prevSA = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
-      if (typeof swapSeasonData === 'function') swapSeasonData('year:2026');
-      function restorePA() { if (typeof swapSeasonData === 'function') swapSeasonData(prevSA); }
-      var cardPA = picker.closest('.gp-card');
-      var btnPA = null;
-      if (cardPA) { cardPA.querySelectorAll('.gp-btn').forEach(function(b) {
-        if ((b.querySelector('.gp-btn-label')||{}).textContent.includes('PITCH AVAIL')) btnPA = b;
+      var prevSeason = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
+      if (typeof swapSeasonData === 'function') swapSeasonData('year:' + year);
+      function restoreFs() { if (typeof swapSeasonData === 'function') swapSeasonData(prevSeason); }
+      var card0 = picker.closest('.gp-card');
+      var actionBtn0 = null;
+      if (card0) { card0.querySelectorAll('.gp-btn').forEach(function(b) {
+        if ((b.querySelector('.gp-btn-label')||{}).textContent.includes('FIELDER')) actionBtn0 = b;
       }); }
-      openPitchAvailSheet(oppName, 2026, btnPA, restorePA);
+      openFielderSheet(oppName, actionBtn0, restoreFs);
       return;
     }
-    // For fielder sheet, skip player selection and run directly
-
 
     // Swap data to chosen year so we can read the player list
     var prevSeason = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
@@ -1182,19 +1165,16 @@ Zane Skansi,Kitchener Panthers`;
         bp.scatter.forEach(function(s){ if(s.pitcher) knownPitchers.add(s.pitcher.toLowerCase().trim()); });
       });
 
-      // Build set of all roster player names (any team) to exclude cross-team bleed
-      var rosterNamesP = new Set();
-      GP_ROSTER_2025.forEach(function(row){ rosterNamesP.add(row.player.trim().toLowerCase()); });
-
       // Roster = active players on this team with pitcher data
-      // If knownPitchers is completely empty (no DATA loaded), show all roster players unchecked
-      var noDataLoaded = knownPitchers.size === 0;
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
         var k = row.player.toLowerCase().trim();
-        if ((noDataLoaded || knownPitchers.has(k)) && !seenK.has(k)) { seenK.add(k); playerNames.push(row.player); }
+        if (knownPitchers.has(k) && !seenK.has(k)) { seenK.add(k); playerNames.push(row.player); }
       });
+      // Build set of all roster player names (any team) to exclude cross-team bleed
+      var rosterNamesP = new Set();
+      GP_ROSTER_2025.forEach(function(row){ rosterNamesP.add(row.player.trim().toLowerCase()); });
 
       // Inactive: pitchers in data whose 2025 team matches but aren't on current roster at all
       pitchersArr.forEach(function(p) {
@@ -1224,12 +1204,10 @@ Zane Skansi,Kitchener Panthers`;
 
       var seenB = {};
       // Active: roster players on this team who have batter data
-      // If knownBatters is completely empty (no DATA loaded), show all roster players unchecked
-      var noBatterData = knownBatters.size === 0;
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
-        if ((noBatterData || knownBatters.has(row.player.trim().toLowerCase())) && !seenB[row.player])
+        if (knownBatters.has(row.player.trim().toLowerCase()) && !seenB[row.player])
           seenB[row.player] = { batter: row.player, AB: 0 };
       });
       // Enrich AB counts from summary data — only for players already confirmed on this team via roster
@@ -1265,7 +1243,7 @@ Zane Skansi,Kitchener Panthers`;
 
     if (!playerNames.length) {
       picker.classList.remove('open'); picker.innerHTML = '';
-      alert('No ' + (action === 'pitchers-pdf' ? 'pitcher' : 'batter') + ' data found for ' + oppName + ' in ' + year + '. Make sure the season data file is loaded.');
+      alert('No ' + (action === 'pitchers-pdf' ? 'pitcher' : 'batter') + ' data found for ' + oppName + ' in ' + year + '.');
       return;
     }
 
@@ -1437,8 +1415,8 @@ Zane Skansi,Kitchener Panthers`;
       var availH = pageBottom - y;
       var rowH = Math.min(14, Math.max(8, availH / (n + 1)));
 
-      var hdrs = ['PLAYER','BATS','AVG','OPS','K','BB','SB','PULL','STRAIGHT','OPPO'];
-      var cWs  = [CPW*0.22,CPW*0.07,CPW*0.08,CPW*0.08,CPW*0.06,CPW*0.06,CPW*0.06,CPW*0.12,CPW*0.12,CPW*0.13];
+      var hdrs = ['PLAYER','BATS','AVG','OPS','K/BB','SB','PULL','STRAIGHT','OPPO'];
+      var cWs  = [CPW*0.24,CPW*0.07,CPW*0.09,CPW*0.09,CPW*0.09,CPW*0.07,CPW*0.12,CPW*0.12,CPW*0.11];
       var hdrH = rowH * 0.65;
 
       // Header row
@@ -1490,20 +1468,15 @@ Zane Skansi,Kitchener Panthers`;
           return fps.length>=5 ? f1(sw/fps.length*100)+'%' : '—';
         })();
 
-        // BATS: deriveHand from scatter, fallback iblHistory.bats across any season
+        // BATS: deriveHand from scatter (matches main.js logic), fallback iblHistory.bats
         var bats = (function(){
           var counts={}, tot=0;
           sc.forEach(function(p){ var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-          if(tot>0){
-            var sides=Object.keys(counts);
-            if(sides.length===1) return sides[0];
-            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-            return counts[dom]/tot>=0.5 ? dom : 'S';
-          }
-          // Fallback: iblHistory.bats across any season
-          var iblAllS2 = DATA.iblHistory[s.batter]||[];
-          var batsRow = iblAllS2.find(function(r){return r.bats;});
-          return batsRow ? batsRow.bats : '?';
+          if(tot===0) return iblS&&iblS.bats ? iblS.bats : '?';
+          var sides=Object.keys(counts);
+          if(sides.length===1) return sides[0];
+          var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
+          return counts[dom]/tot>=0.5 ? dom : 'S';
         })();
 
         // GB%, FB%, LD%: 2025 = pbp_batters (most accurate), 2026 = summary2026 (normalized)
@@ -1542,21 +1515,28 @@ Zane Skansi,Kitchener Panthers`;
           oppPct2=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Opposite Field';}).length/spTot*100)+'%':'—';
         }
 
-        // K and BB raw counts
-        var kVal2=(function(){
-          if(year==2025) return iblS&&iblS.K!=null?String(Math.round(iblS.K)):(pbp&&pbp.K!=null?String(Math.round(pbp.K)):'—');
-          return s.K!=null?String(Math.round(s.K)):'—';
-        })();
-        var bbVal2=(function(){
-          if(year==2025) return iblS&&iblS.BB!=null?String(Math.round(iblS.BB)):(pbp&&pbp.BB!=null?String(Math.round(pbp.BB)):'—');
-          return s.BB!=null?String(Math.round(s.BB)):'—';
+        // K/BB: PBP primary, IBL fallback
+        var kbbVal=(function(){
+          var kv=null,bbv=null;
+          if(year==2025){
+            kv=pbp&&pbp.K_pct!=null?pbp.K_pct:null;
+            bbv=pbp&&pbp.BB_pct!=null?pbp.BB_pct:null;
+            if(kv==null&&iblS){kv=iblS.K!=null&&iblS.PA>0?iblS.K/iblS.PA*100:null;}
+            if(bbv==null&&iblS){bbv=iblS.BB!=null&&iblS.PA>0?iblS.BB/iblS.PA*100:null;}
+          } else {
+            kv=s.K_pct!=null?s.K_pct:null;
+            bbv=s.BB_pct!=null?s.BB_pct:null;
+          }
+          if(kv!=null&&bbv!=null&&bbv>0) return f2(kv/bbv);
+          if(kv!=null&&bbv===0) return 'BB=0';
+          return '—';
         })();
         // SB: IBL History for both years
         var sbVal=(function(){
           if(iblS&&iblS.SB!=null) return String(Math.round(iblS.SB));
           return '—';
         })();
-        var vals=[s.batter,bats,avg,ops,kVal2,bbVal2,sbVal,pullPct,strPct2,oppPct2];
+        var vals=[s.batter,bats,avg,ops,kbbVal,sbVal,pullPct,strPct2,oppPct2];
 
         sf(d,idx%2===0?[14,21,40]:[11,17,32]); d.rect(ML,y,CPW,rowH,'F');
         sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
@@ -1693,8 +1673,8 @@ Zane Skansi,Kitchener Panthers`;
       var availH2 = pageBottom2 - y;
       var rowH = Math.min(16, Math.max(9, availH2 / (n2 + 1)));
 
-      var hdrs=['PITCHER','HAND','ERA','WHIP','K','BB','FPS%','STRIKE%','TTP','REST','ARSENAL'];
-      var cWs =[CPW*0.17,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.05,CPW*0.05,CPW*0.07,CPW*0.08,CPW*0.07,CPW*0.07,CPW*0.24];
+      var hdrs=['PITCHER','HAND','ERA','WHIP','K/BB','FPS%','STRIKE%','TTP','REST','ARSENAL'];
+      var cWs =[CPW*0.17,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.07,CPW*0.07,CPW*0.08,CPW*0.07,CPW*0.07,CPW*0.27];
       var hdrH2 = rowH * 0.65;
 
       // Header row
@@ -1810,48 +1790,30 @@ Zane Skansi,Kitchener Panthers`;
 
         // HAND: scatter -> iblHistory.throws -> '?'
         var nameDisp=p.name; if(nameDisp.length>18)nameDisp=nameDisp.slice(0,17)+'.';
-        // HAND: deriveHand from scatter, fallback iblHistory.throws (any season)
+        // HAND: deriveHand from scatter (matches main.js logic), fallback iblHistory.throws
         var handVal = (function(){
           var counts={}, tot=0;
           p.sc.forEach(function(s){ var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-          if(tot>0){
-            var sides=Object.keys(counts);
-            if(sides.length===1) return sides[0];
-            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-            return counts[dom]/tot>=0.5 ? dom : 'S';
-          }
-          // Fallback: iblHistory.throws across any season
-          var throwsRow=(iblAll||[]).find(function(r){return r.throws;});
-          return throwsRow ? throwsRow.throws : '?';
+          if(tot===0) return iblP&&iblP.throws ? iblP.throws
+                             : (iblAll.length&&iblAll[0].throws ? iblAll[0].throws : '?');
+          var sides=Object.keys(counts);
+          if(sides.length===1) return sides[0];
+          var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
+          return counts[dom]/tot>=0.5 ? dom : 'S';
         })();
-        // K and BB raw counts — iblHistory > pitchers.json (pd) > scatter count
-        var kPitVal=(function(){
-          if(year==2025){
-            var r=(iblAll||[]).find(function(x){return (x.season||'').indexOf('2025')!==-1&&x.K!=null;});
-            if(r) return String(Math.round(r.K));
-            if(pd.K!=null) return String(Math.round(pd.K));
-            var cnt=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
-            return cnt>0?String(cnt):'—';
-          }
-          if(pd.K!=null) return String(Math.round(pd.K));
-          var cnt2=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
-          return cnt2>0?String(cnt2):'—';
-        })();
-        var bbPitVal=(function(){
-          if(year==2025){
-            var r=(iblAll||[]).find(function(x){return (x.season||'').indexOf('2025')!==-1&&x.BB!=null;});
-            if(r) return String(Math.round(r.BB));
-            if(pd.BB!=null) return String(Math.round(pd.BB));
-            var cnt=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
-            return cnt>0?String(cnt):'—';
-          }
-          if(pd.BB!=null) return String(Math.round(pd.BB));
-          var cnt2=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
-          return cnt2>0?String(cnt2):'—';
+        // K/BB ratio
+        var kbbPVal=(function(){
+          var kp=null,bbp=null;
+          if(year==2025&&pbpP){kp=pbpP.K_pct!=null?pbpP.K_pct:null;bbp=pbpP.BB_pct!=null?pbpP.BB_pct:null;}
+          if(kp==null&&pd.K_pct!=null) kp=pd.K_pct;
+          if(bbp==null&&pd.BB_pct!=null) bbp=pd.BB_pct;
+          if(kp!=null&&bbp!=null&&bbp>0) return f2(kp/bbp);
+          if(kp!=null&&bbp===0) return 'BB=0';
+          return '—';
         })();
         // REST: days since last outing
         var restVal = daysRest===99?'—':daysRest===0?'TODAY':daysRest+'d';
-        var vals=[nameDisp,handVal,eraVal,whipVal,kPitVal,bbPitVal,fpsVal,strVal,ttpVal,restVal,arsenal];
+        var vals=[nameDisp,handVal,eraVal,whipVal,kbbPVal,fpsVal,strVal,ttpVal,restVal,arsenal];
 
         sf(d,idx%2===0?[14,21,40]:[11,17,32]); d.rect(ML,y,CPW,rowH,'F');
         sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
@@ -2063,11 +2025,9 @@ Zane Skansi,Kitchener Panthers`;
         var daysRest = pd.last_game_date ? Math.floor((today2 - new Date(pd.last_game_date+'T00:00:00')) / 86400000) : 99;
         var lastCount = pd.last_pitch_count || 0;
         var avail, availBg, availColor;
-        var lastDateDisp = pd.last_game_date ? pd.last_game_date.slice(5).replace('-','/') : 'NO DATA';
-        avail = lastDateDisp;
-        if      (daysRest <= 1) { availBg='rgba(220,50,50,0.15)';   availColor='#f87171'; }
-        else if (daysRest <= 3) { availBg='rgba(255,140,0,0.15)';   availColor='#FFB81C'; }
-        else                    { availBg='rgba(50,200,100,0.15)';   availColor='#34d399'; }
+        if      (daysRest <= 1)                     { avail='UNAVAILABLE'; availBg='rgba(220,50,50,0.15)';   availColor='#f87171'; }
+        else if (daysRest === 2 && lastCount >= 20)  { avail='QUESTIONABLE'; availBg='rgba(255,140,0,0.15)'; availColor='#FFB81C'; }
+        else                                         { avail='AVAILABLE';    availBg='rgba(50,200,100,0.15)';availColor='#34d399'; }
         var restNote = daysRest===99 ? 'No recent data' : daysRest===0 ? 'Pitched today' : daysRest===1 ? 'Pitched yesterday ('+lastCount+' pitches)' : daysRest+' days rest — last: '+lastCount+' pitches';
 
         // Time to plate
@@ -2182,390 +2142,162 @@ Zane Skansi,Kitchener Panthers`;
     picker.classList.add('open');
   }
 
-  // ── PITCH AVAILABILITY SHEET ─────────────────────────────────────────────────
-  function openPitchAvailSheet(oppName, year, btn, restore) {
+  function openFielderSheet(oppName, btn, restore) {
     restore = restore || function(){};
-    if (typeof DATA === 'undefined') { alert('Data is still loading.'); restore(); return; }
+    if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined') {
+      alert('Data is still loading. Please wait a moment and try again.'); restore(); return;
+    }
+    if (btn) { btn.classList.add('gp-generating'); btn.textContent = '…'; }
 
-    var GUE_NAME = 'Guelph Royals';
-    var pitchersArr  = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
-    var pitchesData  = (DATA.pitches  && Array.isArray(DATA.pitches))  ? DATA.pitches  : [];
-    var iblH         = DATA.iblHistory || {};
-    var yr           = String(year);
+    var oppT   = resolveTeam(oppName);
+    var teamId = oppT ? oppT.id : null;
 
-    // Collect scatter per pitcher
-    var pitcherScatter = {};
-    pitchesData.forEach(function(bp){
-      if (!bp.scatter) return;
-      bp.scatter.forEach(function(s){
-        var pn=s.pitcher; if(!pn) return;
-        var kk=pn.toLowerCase().trim();
-        if(!pitcherScatter[kk]) pitcherScatter[kk]=[];
-        pitcherScatter[kk].push(s);
+    // Helper fns
+    function f3(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(3).replace('0.','.'); }
+    function fN(v){ if(v==null||isNaN(v)) return '—'; return String(Math.round(v)); }
+    function pct(n, tot){ return tot ? Math.round(n/tot*100)+'%' : '—'; }
+
+    // Determine active status for current season
+    var iblYear = (typeof _activeSeason !== 'undefined') ? _activeSeason.replace('year:','') : '2026';
+    function isActiveBatter(name) {
+      return iblYear === '2025' ? gpIsActive2025(name) : true;
+    }
+
+    // Gather ALL scatter entries per batter across every DATA.pitches entry for this team
+    var batterSc = {};
+    DATA.pitches.forEach(function(e) {
+      if (!e.scatter || !e.scatter.length) return;
+      var t = resolveTeam(e.team);
+      if (!(t && t.id === teamId)) return;
+      var name = e.batter;
+      if (!name) return;
+      if (!batterSc[name]) batterSc[name] = [];
+      e.scatter.forEach(function(s) { batterSc[name].push(s); });
+    });
+
+    // Active players only, sorted alphabetically
+    var orderedNames = Object.keys(batterSc).filter(isActiveBatter).sort();
+
+    var rows = orderedNames.map(function(name) {
+      var sc = batterSc[name];
+      var batted = sc.filter(function(s) {
+        return ['Groundout','Flyout','Single','Double','Triple','Home Run',
+                'Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(s.outcome);
       });
-    });
-    pitchersArr.forEach(function(p){
-      if (!p.scatter || !Array.isArray(p.scatter) || !p.pitcher) return;
-      var kk=p.pitcher.toLowerCase().trim();
-      if(!pitcherScatter[kk]) pitcherScatter[kk]=[];
-      p.scatter.forEach(function(s){ pitcherScatter[kk].push(s); });
-    });
-
-    // All Guelph pitchers from roster
-    var knownPitchers = new Set(Object.keys(pitcherScatter));
-    pitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(p.pitcher.toLowerCase().trim()); });
-    var seenK = new Set();
-    var allPitcherNames = [];
-    GP_ROSTER_2025.forEach(function(row){
-      var rt = resolveTeam(row.team);
-      if (!rt || rt.name !== GUE_NAME) return;
-      var k = row.player.toLowerCase().trim();
-      if (!seenK.has(k)) { seenK.add(k); allPitcherNames.push(row.player); }
-    });
-    allPitcherNames.sort();
-
-    // Show pitcher picker
-    var card = btn ? btn.closest('.gp-card') : null;
-    var picker = card ? card.querySelector('.gp-year-picker') : null;
-    if (!picker) { genPitchAvailPDF(allPitcherNames, btn, restore, yr); return; }
-
-    var selectId = 'pa-sel-' + Date.now();
-    var rowsHtml = allPitcherNames.map(function(name){
-      var hasData = knownPitchers.has(name.toLowerCase().trim());
-      return '<label style="display:flex;align-items:center;gap:8px;padding:5px 10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04)" ' +
-        'onmouseover="this.style.background=\'rgba(255,184,28,0.06)\'" onmouseout="this.style.background=\'\'">' +
-        '<input type="checkbox" value="'+name.replace(/"/g,'&quot;')+'"'+(hasData?' checked':'')+
-        ' style="accent-color:#FFB81C;width:13px;height:13px;cursor:pointer;flex-shrink:0">' +
-        '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:'+(hasData?'#fff':'rgba(255,255,255,0.45)')+'">'+name+'</span>'+
-        '</label>';
-    }).join('');
-
-    picker.style.cssText = 'display:block;border:1px solid rgba(255,184,28,0.2);border-radius:3px;overflow:hidden;margin-top:-6px;background:rgba(13,20,32,0.95)';
-    picker.innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:rgba(255,184,28,0.08);border-bottom:1px solid rgba(255,184,28,0.15)">' +
-        '<span style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.45)">PITCHERS — '+yr+'</span>' +
-        '<button onclick="this.closest(\'.gp-year-picker\').classList.remove(\'open\');this.closest(\'.gp-year-picker\').style.cssText=\'\';this.closest(\'.gp-year-picker\').innerHTML=\'\'" '+
-          'style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:14px;line-height:1;padding:0">×</button>' +
-      '</div>' +
-      '<div id="'+selectId+'" style="max-height:220px;overflow-y:auto;padding:4px 0">'+rowsHtml+'</div>' +
-      '<div style="padding:8px 10px;border-top:1px solid rgba(255,184,28,0.15)">' +
-        '<button onclick="paRunWithSelected(\''+selectId+'\',\''+yr+'\')" '+
-          'style="width:100%;padding:8px;background:rgba(255,184,28,0.14);border:1px solid rgba(255,184,28,0.35);border-radius:3px;color:#FFB81C;font-family:\'Bebas Neue\',sans-serif;font-size:13px;letter-spacing:0.1em;cursor:pointer" '+
-          'onmouseover="this.style.background=\'rgba(255,184,28,0.26)\'" onmouseout="this.style.background=\'rgba(255,184,28,0.14)\'">GENERATE PDF</button>' +
-      '</div>';
-    picker.classList.add('open');
-    if (btn) btn.disabled = false;
-    restore();
-  }
-
-  function paRunWithSelected(selectId, yr) {
-    var sel = document.getElementById(selectId);
-    if (!sel) return;
-    var checked = Array.from(sel.querySelectorAll('input[type=checkbox]:checked')).map(function(c){ return c.value; });
-    if (!checked.length) { alert('Select at least one pitcher.'); return; }
-    var picker = sel.closest ? sel.closest('.gp-year-picker') : null;
-    if (picker) { picker.classList.remove('open'); picker.style.cssText=''; picker.innerHTML=''; }
-    genPitchAvailPDF(checked, null, null, yr);
-  }
-
-  function genPitchAvailPDF(selectedNames, btn, restore, yr) {
-    restore = restore || function(){};
-    yr = yr || '2026';
-    if (btn) { if(btn.querySelector){var lbl=btn.querySelector('.gp-btn-label');if(lbl)lbl.textContent='Generating…';} btn.disabled=true; }
-
-    var pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
-    var pitchesData = (DATA.pitches  && Array.isArray(DATA.pitches))  ? DATA.pitches  : [];
-    var iblH        = DATA.iblHistory || {};
-
-    function daysSince(dateStr) {
-      if (!dateStr) return 99;
-      var today = new Date(); today.setHours(0,0,0,0);
-      return Math.floor((today - new Date(dateStr+'T00:00:00')) / 86400000);
-    }
-    function pitchesInDays(sc, n) {
-      var today = new Date(); today.setHours(0,0,0,0);
-      var cutoff = new Date(today); cutoff.setDate(cutoff.getDate()-n);
-      var cs = cutoff.toISOString().slice(0,10);
-      return sc.filter(function(s){ return s.date && s.date >= cs; }).length;
-    }
-    function paHand(sc, side) {
-      var counts={}, tot=0;
-      sc.forEach(function(s){ var v=s[side]; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-      if(!tot) return null;
-      var dom=Object.keys(counts).reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-      return counts[dom]/tot>=0.5?dom:'S';
-    }
-    function splitStats(sc) {
-      var bf=sc.length, ks=0, bbs=0, hits=0, str=0, sw=0, swStr=0;
-      sc.forEach(function(s){
-        if(['Strikeout Swinging','Strikeout Looking'].includes(s.outcome)) ks++;
-        if(s.outcome==='Walk'||s.outcome==='Intentional Walk') bbs++;
-        if(['Single','Double','Triple','Home Run'].includes(s.outcome)) hits++;
-        if(['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome)) str++;
-        if(['Swinging Strike','Foul','Strikeout Swinging'].includes(s.outcome)) sw++;
-        if(s.outcome==='Swinging Strike') swStr++;
-      });
-      var f1=function(n,d){return d>2?Math.round(n/d*100)+'%':'—';};
-      return { bf:bf, k:ks, bb:bbs,
-        baa:bf>2?(hits/bf).toFixed(3).replace('0.','.'):'—',
-        kPct:f1(ks,bf), bbPct:f1(bbs,bf), strPct:f1(str,bf), whiffPct:f1(swStr,sw) };
-    }
-
-    var pitcherScatter = {};
-    pitchesData.forEach(function(bp){
-      if (!bp.scatter) return;
-      bp.scatter.forEach(function(s){
-        var pn=s.pitcher; if(!pn) return;
-        var kk=pn.toLowerCase().trim();
-        if(!pitcherScatter[kk]) pitcherScatter[kk]=[];
-        pitcherScatter[kk].push(s);
-      });
-    });
-    pitchersArr.forEach(function(p){
-      if (!p.scatter||!Array.isArray(p.scatter)||!p.pitcher) return;
-      var kk=p.pitcher.toLowerCase().trim();
-      if(!pitcherScatter[kk]) pitcherScatter[kk]=[];
-      p.scatter.forEach(function(s){ pitcherScatter[kk].push(s); });
-    });
-
-    var pitcherRows = selectedNames.map(function(name){
-      var kk=name.toLowerCase().trim();
-      var sc=pitcherScatter[kk]||[];
-      var pd=pitchersArr.find(function(p){return p.pitcher&&p.pitcher.toLowerCase().trim()===kk;})||{};
-      var hand=paHand(sc,'pitcher_side');
-      if(!hand){ var iR=(iblH[name]||[]).find(function(r){return r.throws;}); hand=iR?iR.throws:'?'; }
-      var dates=sc.map(function(s){return s.date;}).filter(Boolean).sort().reverse();
-      var lastDate=dates[0]||null, days=daysSince(lastDate);
-      var iblRows=iblH[name]||[];
-      var iblRow=iblRows.filter(function(r){return (r.season||'').indexOf(yr)!==-1&&(r.IP||0)>0;})[0]
-               ||iblRows.filter(function(r){return (r.IP||0)>0;})[0]||null;
-      var era=iblRow&&iblRow.ERA!=null?parseFloat(iblRow.ERA).toFixed(2):(pd.ERA!=null?String(pd.ERA):'—');
-      var ip=iblRow&&iblRow.IP!=null?String(iblRow.IP):(pd.IP!=null?String(pd.IP):'—');
+      var pull     = batted.filter(function(s){ return s.spray === 'Pull'; }).length;
+      var straight = batted.filter(function(s){ return s.spray === 'Straightaway'; }).length;
+      var opp      = batted.filter(function(s){ return s.spray === 'Opposite Field'; }).length;
+      var sprayTot = pull + straight + opp;
+      var gb = batted.filter(function(s){ return s.contact === 'Ground Ball'; }).length;
+      var fb = batted.filter(function(s){ return s.contact === 'Fly Ball'; }).length;
+      var ld = batted.filter(function(s){ return s.contact === 'Line Drive'; }).length;
+      var pu = batted.filter(function(s){ return s.contact === 'Pop Up'; }).length;
+      var contactTot = gb + fb + ld + pu;
+      var sum = DATA.summary.find(function(p){ return p.batter === name; });
       return {
-        name:name, hand:hand, era:era, ip:ip,
-        lastDisplay:lastDate?lastDate.slice(5).replace('-','/'):'—',
-        restDisplay:days===99?'—':days===0?'Today':days+'d ago',
-        days:days, p3:pitchesInDays(sc,3), p7:pitchesInDays(sc,7), p14:pitchesInDays(sc,14),
-        lhh:splitStats(sc.filter(function(s){return s.batter_side==='L';})),
-        rhh:splitStats(sc.filter(function(s){return s.batter_side==='R';})),
-        availRgb:days<=1?[220,38,38]:days<=3?[234,179,8]:[22,163,74]
+        name:     name,
+        avg:      sum ? f3(sum.AVG) : '—',
+        hr:       sum ? fN(sum.HR)  : '—',
+        pull:     pct(pull,sprayTot), straight: pct(straight,sprayTot), opp: pct(opp,sprayTot),
+        gb:       pct(gb,contactTot), fb: pct(fb,contactTot), ld: pct(ld,contactTot), pu: pct(pu,contactTot)
       };
     });
 
-    ensureJsPDF(function(){
-      // ── Palette & helpers ────────────────────────────────────────────────
-      var CO={
-        bg:[8,13,26],panel:[14,21,40],panel2:[18,27,52],border:[28,40,68],
-        gold:[255,184,28],white:[255,255,255],light:[185,198,220],dim:[90,108,140],
-        green:[34,197,94],greenBg:[22,78,42],
-        amber:[250,189,0],amberBg:[78,58,10],
-        red:[248,113,113],redBg:[90,28,28],
-        blue:[96,165,250],blueBg:[23,37,84],
-        teal:[45,212,191]
-      };
-      function sf(c,rgb){c.setFillColor(rgb[0],rgb[1],rgb[2]);}
-      function sd(c,rgb){c.setDrawColor(rgb[0],rgb[1],rgb[2]);}
-      function st(c,rgb){c.setTextColor(rgb[0],rgb[1],rgb[2]);}
-      function rect(doc,x,y,w,h,fill,stroke){
-        if(fill){sf(doc,fill);doc.rect(x,y,w,h,'F');}
-        if(stroke){sd(doc,stroke);doc.rect(x,y,w,h,'S');}
-      }
+    // Build a hidden card element, render it with html2canvas, then download
+    var gold = '#FFB81C';
+    var teamLabel = oppT ? oppT.name.toUpperCase() : oppName.toUpperCase();
 
-      // Cards per row — up to 4, auto-fit
-      var n = pitcherRows.length;
-      var COLS = n <= 3 ? n : n <= 8 ? Math.ceil(n/2) : 4;
-      var ROWS_PAGES = Math.ceil(n / COLS);
-
-      // Page dimensions (landscape A4)
-      var PW=297,PH=210,PAD=10,GAP=5;
-      var HEADER_H = 14;
-      var FOOTER_H = 7;
-      var usableW = PW - PAD*2;
-      var usableH = PH - HEADER_H - FOOTER_H - PAD*2;
-      var CARD_W = (usableW - GAP*(COLS-1)) / COLS;
-
-      // Card inner layout
-      var NAME_H    = 10;
-      var AVAIL_H   = 7;
-      var META_H    = 6;
-      var DIVIDER_H = 1.5;
-      var SPLIT_HDR = 5.5;
-      var SPLIT_ROW = 5;
-      var CARD_H    = NAME_H + AVAIL_H + META_H + DIVIDER_H + SPLIT_HDR + SPLIT_ROW*2 + 4;
-
-      // Centre cards vertically if one row
-      var totalCardsH = ROWS_PAGES * CARD_H + (ROWS_PAGES-1)*GAP;
-      var startY = HEADER_H + PAD + Math.max(0,(usableH - totalCardsH)/2);
-
-      var pageCount = 1;
-
-      function drawPageBg(doc) {
-        sf(doc,CO.bg); doc.rect(0,0,PW,PH,'F');
-        // top gold bar
-        sf(doc,CO.gold); doc.rect(0,0,PW,1.5,'F');
-        // header band
-        sf(doc,CO.panel); doc.rect(0,1.5,PW,HEADER_H-1.5,'F');
-        // header text
-        doc.setFont('helvetica','bold'); doc.setFontSize(11); st(doc,CO.gold);
-        doc.text('GUELPH ROYALS', PAD, 10);
-        doc.setFont('helvetica','normal'); doc.setFontSize(8); st(doc,CO.dim);
-        doc.text('PITCH AVAILABILITY', PAD+52, 10);
-        doc.setFont('helvetica','normal'); doc.setFontSize(7); st(doc,CO.dim);
-        doc.text(yr + '  ·  ' + new Date().toLocaleDateString('en-CA') + '  ·  DATA DIAMOND CBL', PW-PAD, 10, {align:'right'});
-        // bottom footer
-        sf(doc,CO.panel); doc.rect(0,PH-FOOTER_H,PW,FOOTER_H,'F');
-        sf(doc,CO.gold);  doc.rect(0,PH-1,PW,1,'F');
-        doc.setFont('helvetica','normal'); doc.setFontSize(6); st(doc,CO.dim);
-        doc.text('DATA DIAMOND  ·  CBL  ·  GUELPH ROYALS PITCH AVAILABILITY  ·  '+yr, PW/2, PH-2.5, {align:'center'});
-      }
-
-      var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4', orientation:'landscape' });
-      drawPageBg(d);
-
-      // ── Draw each pitcher card ────────────────────────────────────────────
-      pitcherRows.forEach(function(r, idx) {
-        // New page if needed
-        if (idx > 0 && idx % COLS === 0) {
-          d.addPage();
-          drawPageBg(d);
-        }
-        var col = idx % COLS;
-        var cx  = PAD + col*(CARD_W + GAP);
-        var cy  = startY;
-
-        // Card background + border
-        rect(d, cx, cy, CARD_W, CARD_H, CO.panel, CO.border);
-
-        // Left accent bar — coloured by status
-        var accentClr = r.days<=1 ? CO.red : r.days<=3 ? CO.amber : CO.green;
-        sf(d, accentClr); d.rect(cx, cy, 2, CARD_H, 'F');
-
-        var ix = cx + 3.5; // inner x after accent
-
-        // ── Name row ──────────────────────────────────────────────────────
-        var ny = cy + 6.5;
-        d.setFont('helvetica','bold'); d.setFontSize(8.5); st(d,CO.white);
-        var nameStr = r.name.toUpperCase();
-        // Truncate if too long
-        while(d.getTextWidth(nameStr) > CARD_W - 22 && nameStr.length > 4) nameStr = nameStr.slice(0,-1);
-        if(nameStr !== r.name.toUpperCase()) nameStr += '…';
-        d.text(nameStr, ix, ny);
-
-        // Hand badge top-right
-        if(r.hand && r.hand !== '?') {
-          var hx2 = cx+CARD_W-2.5;
-          d.setFont('helvetica','bold'); d.setFontSize(6.5); st(d,CO.gold);
-          d.text(r.hand, hx2, ny, {align:'right'});
-        }
-
-        // ERA / IP sub-line
-        var metaY = ny + 4;
-        d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-        d.text('ERA '+r.era+'   IP '+r.ip, ix, metaY);
-
-        // ── Status badge ─────────────────────────────────────────────────
-        var badgeY = cy + NAME_H + 1;
-        var badgeBg  = r.days<=1 ? CO.redBg  : r.days<=3 ? CO.amberBg  : CO.greenBg;
-        var badgeFg  = r.days<=1 ? CO.red    : r.days<=3 ? CO.amber     : CO.green;
-        var badgeW   = CARD_W - 4;
-        rect(d, cx+2, badgeY, badgeW, AVAIL_H-1, badgeBg, null);
-        d.setFont('helvetica','bold'); d.setFontSize(7); st(d, badgeFg);
-        d.text(r.lastDisplay !== '—' ? 'LAST: '+r.lastDisplay : 'NO DATA', cx+2+badgeW/2, badgeY+4, {align:'center'});
-
-        // ── Last app / rest / pitch counts ───────────────────────────────
-        var metaRow = badgeY + AVAIL_H + 0.5;
-        var cols4 = ['LAST','REST','P/3D','P/7D'];
-        var vals4 = [r.lastDisplay, r.restDisplay, String(r.p3), String(r.p7)];
-        var cw4 = badgeW/4;
-        cols4.forEach(function(lbl,i) {
-          var mx = cx+2 + i*cw4;
-          d.setFont('helvetica','normal'); d.setFontSize(5); st(d,CO.dim);
-          d.text(lbl, mx+cw4/2, metaRow+2.5, {align:'center'});
-          var valClr = (lbl==='P/3D'&&r.p3>0) ? CO.red : (lbl==='P/7D'&&r.p7>20) ? CO.amber : CO.light;
-          d.setFont('helvetica','bold'); d.setFontSize(6.5); st(d, valClr);
-          d.text(vals4[i], mx+cw4/2, metaRow+7, {align:'center'});
-          if(i>0){ sd(d,CO.border); d.setLineWidth(0.08); d.line(mx,metaRow,mx,metaRow+META_H+1); }
-        });
-
-        // ── Divider ───────────────────────────────────────────────────────
-        var divY = metaRow + META_H + 2;
-        sd(d,CO.border); d.setLineWidth(0.2); d.line(cx+2,divY,cx+CARD_W-2,divY);
-
-        // ── Splits ───────────────────────────────────────────────────────
-        var splitY = divY + 2;
-        // Column headers
-        var sCols = ['','BF','K%','BB%','BAA','STR%','WHF%'];
-        var sCWArr = [CARD_W*0.14, CARD_W*0.1, CARD_W*0.14, CARD_W*0.14, CARD_W*0.14, CARD_W*0.17, CARD_W*0.17];
-        var shx = cx+2;
-        sCols.forEach(function(h,i){
-          d.setFont('helvetica','bold'); d.setFontSize(5); st(d,CO.dim);
-          d.text(h, shx+sCWArr[i]/2, splitY+3.5, {align:'center'});
-          shx+=sCWArr[i];
-        });
-
-        [[r.lhh,'vs LHH',CO.blue,CO.blueBg],[r.rhh,'vs RHH',CO.red,CO.redBg]].forEach(function(item,si){
-          var sp=item[0], lbl=item[1], fg=item[2], bg=item[3];
-          var rowY = splitY + SPLIT_HDR + si*SPLIT_ROW;
-          // Row bg
-          sf(d,bg); d.rect(cx+2, rowY, CARD_W-4, SPLIT_ROW-0.5, 'F');
-          var rx = cx+2;
-          // Label
-          d.setFont('helvetica','bold'); d.setFontSize(5.5); st(d,fg);
-          d.text(lbl, rx+sCWArr[0]/2, rowY+3.5, {align:'center'});
-          rx+=sCWArr[0];
-          // Stats
-          var sVals=[String(sp.bf),sp.kPct,sp.bbPct,sp.baa,sp.strPct,sp.whiffPct];
-          sVals.forEach(function(v,i){
-            d.setFont('helvetica','normal'); d.setFontSize(5.5); st(d,CO.light);
-            d.text(v, rx+sCWArr[i+1]/2, rowY+3.5, {align:'center'});
-            rx+=sCWArr[i+1];
-          });
-        });
+    var headers = ['PLAYER','AVG','HR','PULL%','STR%','OPP%','GB%','FB%','LD%','PU%'];
+    var tableHtml = '<thead><tr>';
+    headers.forEach(function(h, i) {
+      var sep   = (i===3||i===6) ? 'border-left:1px solid rgba(255,255,255,0.1);' : '';
+      var align = i===0 ? 'text-align:left' : 'text-align:center';
+      tableHtml += '<th style="padding:4px 7px;'+align+';'+sep+'color:'+gold+';font-size:8px;letter-spacing:1.2px;font-weight:500;white-space:nowrap;border-bottom:1px solid rgba(255,184,28,0.45)">'+h+'</th>';
+    });
+    tableHtml += '</tr></thead><tbody>';
+    rows.forEach(function(r, i) {
+      var bg   = i%2===0 ? 'rgba(255,255,255,0.025)' : 'transparent';
+      var vals = [r.name, r.avg, r.hr, r.pull, r.straight, r.opp, r.gb, r.fb, r.ld, r.pu];
+      tableHtml += '<tr style="background:'+bg+'">';
+      vals.forEach(function(v, ci) {
+        var sep   = (ci===3||ci===6) ? 'border-left:1px solid rgba(255,255,255,0.07);' : '';
+        var align = ci===0 ? 'text-align:left;color:#fff;font-weight:500' : 'text-align:center;color:rgba(255,255,255,0.8)';
+        tableHtml += '<td style="padding:2px 7px;'+align+';'+sep+'font-size:9px;border-bottom:1px solid rgba(255,255,255,0.04);white-space:nowrap">'+v+'</td>';
       });
-
-      // Footer page count
-      d.setFont('helvetica','normal'); d.setFontSize(5.5); st(d,CO.dim);
-
-      d.save('Guelph_Pitch_Availability_'+yr+'.pdf');
-      if(btn){btn.disabled=false;var l2=btn.querySelector?btn.querySelector('.gp-btn-label'):null;if(l2)l2.textContent='PITCH AVAIL';}
-      restore();
+      tableHtml += '</tr>';
     });
+    tableHtml += '</tbody>';
+
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'position:fixed;left:-9999px;top:0;width:720px;background:#0e1525;border:1.5px solid rgba(255,184,28,0.45);border-radius:4px;padding:10px 14px;font-family:"DM Mono",monospace;box-shadow:0 4px 24px rgba(0,0,0,0.5);';
+    wrap.innerHTML =
+      '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:11px;letter-spacing:2px;color:'+gold+';margin-bottom:5px;border-bottom:1px solid rgba(255,184,28,0.3);padding-bottom:3px;display:flex;justify-content:space-between;align-items:center;">' +
+        '<span>'+teamLabel+' BATTERS</span>' +
+        '<span style="font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:1px">DATA DIAMOND — FIELDER SHEET</span>' +
+      '</div>' +
+      '<table style="width:100%;border-collapse:collapse;font-size:8px;">'+tableHtml+'</table>';
+    document.body.appendChild(wrap);
+
+    // Use html2canvas (loaded via CDN on scouting, add it here if missing)
+    function doCapture() {
+      html2canvas(wrap, { backgroundColor:'#0e1525', scale:3, useCORS:true }).then(function(canvas) {
+        document.body.removeChild(wrap);
+        var a = document.createElement('a');
+        a.download = 'fielder-sheet-' + oppName.replace(/\s+/g,'-').toLowerCase() + '.png';
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+        btn.classList.remove('gp-generating');
+        if (btn) {
+          btn.classList.remove('gp-generating');
+          btn.innerHTML = '<span class="gp-btn-icon"></span><span class="gp-btn-label">FIELDER SHEET</span>';
+        }
+        restore();
+      });
+    }
+
+    if (window.html2canvas) {
+      doCapture();
+    } else {
+      // Dynamically load html2canvas then capture
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js';
+      s.onload = doCapture;
+      document.head.appendChild(s);
+    }
   }
 
-
-
-  // ── TEAM LOOKUP FALLBACK ─────────────────────────────────────────────────
-  if (typeof resolveTeam === 'undefined') {
-    var _CBL_TEAMS = [
-      { id:'guelph',    name:'Guelph Royals',            abbreviation:'GUE', primaryColor:'#003DA5' },
-      { id:'barrie',    name:'Barrie Baycats',            abbreviation:'BAR', primaryColor:'#E31837' },
-      { id:'brantford', name:'Brantford Red Sox',         abbreviation:'BRF', primaryColor:'#C8102E' },
-      { id:'chatham',   name:'Chatham-Kent Barnstormers', abbreviation:'CKB', primaryColor:'#00703C' },
-      { id:'hamilton',  name:'Hamilton Cardinals',        abbreviation:'HAM', primaryColor:'#C8102E' },
-      { id:'kitchener', name:'Kitchener Panthers',        abbreviation:'KIT', primaryColor:'#FF6B00' },
-      { id:'london',    name:'London Majors',             abbreviation:'LON', primaryColor:'#002D62' },
-      { id:'toronto',   name:'Toronto Maple Leafs',       abbreviation:'TOR', primaryColor:'#00205B' },
-      { id:'welland',   name:'Welland Jackfish',          abbreviation:'WEL', primaryColor:'#006341' },
-    ];
-    window.resolveTeam = function(nameOrId) {
-      if (!nameOrId) return null;
-      var q = nameOrId.toLowerCase().trim();
-      return _CBL_TEAMS.find(function(t) {
-        return t.name.toLowerCase() === q || t.id === q || t.abbreviation.toLowerCase() === q;
-      }) || null;
-    };
-  }
-
-  // ── DATA STUB FALLBACK ───────────────────────────────────────────────────
-  if (typeof DATA === 'undefined') {
-    window.DATA = { pitches:[], summary:[], pitchers:[], pbpBatters:[], pbpPitchers:[], iblHistory:{} };
-  }
-
-  // ── INIT ─────────────────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function() {
-    buildGamePrepGrid();
+    // Wait for DATA to load before building grid
+    var attempts = 0;
+    function tryBuild() {
+      if ((typeof DATA !== 'undefined' && DATA.summary && DATA.summary.length) || attempts > 20) {
+        buildGamePrepGrid();
+      } else {
+        attempts++;
+        setTimeout(tryBuild, 300);
+      }
+    }
+    tryBuild();
   });
-
   </script>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="logo">
+          <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none">
+            <svg class="logo-diamond" viewBox="0 0 40 40" fill="none" style="width:24px;height:24px">
+              <polygon points="20,2 38,20 20,38 2,20" stroke="#FFB81C" stroke-width="2.5" fill="none"/>
+              <circle cx="20" cy="20" r="3" fill="#FFB81C"/>
+            </svg>
+            <span class="logo-text" style="font-size:16px">Data<em>Diamond</em></span>
+          </a>
+        </div>
+        <p class="footer-note">Not affiliated with CBL</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
