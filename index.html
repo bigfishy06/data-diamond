@@ -1666,6 +1666,14 @@ Zane Skansi,Kitchener Panthers`;
         var selSet2 = {};
         selectedNames.forEach(function(n){ selSet2[n.toLowerCase().trim()] = true; });
         pitchers = pitchers.filter(function(p){ return selSet2[p.name.toLowerCase().trim()]; });
+        // Add any selected pitchers not found in any data source (show with — values)
+        var foundKeys2 = new Set(pitchers.map(function(p){ return p.name.toLowerCase().trim(); }));
+        selectedNames.forEach(function(n){
+          if (!foundKeys2.has(n.toLowerCase().trim())) {
+            pitchers.push({name:n, sc:[]});
+          }
+        });
+        pitchers.sort(function(a,b){return a.name.localeCompare(b.name);});
       }
 
       if (!pitchers.length) {
