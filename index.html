@@ -2014,7 +2014,7 @@ Zane Skansi,Kitchener Panthers`;
         picker.appendChild(row);
       });
 
-    // ── PITCHER SUMMARY PANEL ────────────────────────────────────────────
+    // ── PITCHER SUMMARY PANEL (Pitch Availability style) ────────────────
     } else {
       var seen = new Set();
       DATA.pitches.forEach(function(bp) {
@@ -2046,6 +2046,21 @@ Zane Skansi,Kitchener Panthers`;
         pitcherList.push({ name: name, sc: sc });
       });
       pitcherList.sort(function(a,b){ return a.name.localeCompare(b.name); });
+
+      // Column header row
+      var colHdr = document.createElement('div');
+      colHdr.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:5px 10px;background:rgba(255,184,28,0.06);border-bottom:1px solid rgba(255,184,28,0.15);gap:8px';
+      colHdr.innerHTML =
+        '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;color:rgba(255,255,255,0.35);flex:1">PITCHER</div>' +
+        '<div style="display:flex;align-items:center;gap:14px;flex-shrink:0">' +
+          '<div style="min-width:28px;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:rgba(255,184,28,0.6)">ERA</div>' +
+          '<div style="min-width:24px;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:rgba(255,184,28,0.6)">IP</div>' +
+          '<div style="min-width:28px;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:rgba(255,184,28,0.6)">P/3D</div>' +
+          '<div style="min-width:28px;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:rgba(255,184,28,0.6)">P/7D</div>' +
+          '<div style="min-width:36px;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:rgba(255,184,28,0.6)">TTP</div>' +
+        '</div>' +
+        '<div style="min-width:60px;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:rgba(255,184,28,0.6)">LAST APP</div>';
+      picker.appendChild(colHdr);
 
       // Schedule data for availability
       var today2 = new Date(); today2.setHours(0,0,0,0);
@@ -2115,61 +2130,51 @@ Zane Skansi,Kitchener Panthers`;
           return c.toDataURL('image/png');
         }
 
-        var row = document.createElement('div');
-        row.style.cssText = 'padding:16px;border-bottom:1px solid rgba(255,255,255,0.06);';
-
-        // Name + availability
-        var nameRow = document.createElement('div');
-        nameRow.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px';
-        nameRow.innerHTML =
-          '<div style="font-family:var(--font-display);font-size:15px;letter-spacing:0.05em;color:#fff">' + p.name + '</div>' +
-          '<div style="display:flex;align-items:center;gap:12px">' +
-            '<div style="padding:4px 10px;background:'+availBg+';border:1px solid '+availColor+';border-radius:4px;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.1em;color:'+availColor+'">'+avail+'</div>' +
-            '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.35)">'+restNote+'</div>' +
-          '</div>';
-        row.appendChild(nameRow);
-
-        // Time to plate
-        var ttpRow = document.createElement('div');
-        ttpRow.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:12px';
-        ttpRow.innerHTML =
-          '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.3)">TIME TO PLATE</div>' +
-          '<div style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:'+ttpColor+'">' + (ttp != null ? ttp.toFixed(2)+'s' : '—') + '</div>' +
-          '<div style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.1em;color:'+ttpColor+'">'+ttpLabel+'</div>';
-        row.appendChild(ttpRow);
-
-        // Heat maps
-        var heatRow = document.createElement('div');
-        heatRow.style.cssText = 'display:flex;gap:16px;flex-wrap:wrap';
-
-        function makeHeatCell(pts, label) {
-          var wrap = document.createElement('div');
-          wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:4px';
-          var lbl = document.createElement('div');
-          lbl.style.cssText = 'font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;color:rgba(255,255,255,0.35)';
-          lbl.textContent = label;
-          wrap.appendChild(lbl);
-          if (pts.length >= 3) {
-            var img = document.createElement('img');
-            img.src = buildMiniHeat(pts);
-            img.style.cssText = 'width:120px;height:138px;border-radius:4px;border:1px solid rgba(255,255,255,0.08)';
-            wrap.appendChild(img);
-            var cnt = document.createElement('div');
-            cnt.style.cssText = 'font-family:var(--font-mono);font-size:9px;color:rgba(255,255,255,0.25)';
-            cnt.textContent = pts.length + ' pitches';
-            wrap.appendChild(cnt);
-          } else {
-            var na = document.createElement('div');
-            na.style.cssText = 'width:120px;height:138px;border-radius:4px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.2)';
-            na.textContent = 'No data';
-            wrap.appendChild(na);
-          }
-          return wrap;
+        // Pitch counts for last 3 / 7 days
+        var today3 = new Date(); today3.setHours(0,0,0,0);
+        function pitchesInDaysLocal(arr, n) {
+          var cutoff = new Date(today3); cutoff.setDate(cutoff.getDate()-n);
+          var cs = cutoff.toISOString().slice(0,10);
+          return arr.filter(function(s){ return s.date && s.date >= cs; }).length;
         }
+        var p3 = pitchesInDaysLocal(sc, 3);
+        var p7 = pitchesInDaysLocal(sc, 7);
+        var p3Color = p3 > 0 ? '#f87171' : 'rgba(255,255,255,0.5)';
+        var p7Color = p7 > 20 ? '#FFB81C' : 'rgba(255,255,255,0.5)';
 
-        heatRow.appendChild(makeHeatCell(scR, 'vs RHH'));
-        heatRow.appendChild(makeHeatCell(scL, 'vs LHH'));
-        row.appendChild(heatRow);
+        // ERA from pitchers data
+        var pd2 = DATA.pitchers.find(function(x){ return x.pitcher === p.name; }) || {};
+        var iblAll2 = (DATA.iblHistory && DATA.iblHistory[p.name]) || [];
+        var iblRow2 = iblAll2.filter(function(r){ return (r.IP||0)>0; })[0] || null;
+        var eraDisp = iblRow2 && iblRow2.ERA != null ? parseFloat(iblRow2.ERA).toFixed(2) : (pd2.ERA != null ? String(pd2.ERA) : '—');
+        var ipDisp  = iblRow2 && iblRow2.IP  != null ? String(iblRow2.IP)  : (pd2.IP  != null ? String(pd2.IP)  : '—');
+
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:rgba(13,20,32,0.6);border-bottom:1px solid rgba(255,255,255,0.04);gap:8px;';
+
+        // Name
+        var nameEl = document.createElement('div');
+        nameEl.style.cssText = 'font-family:var(--font-mono);font-size:11px;color:#fff;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
+        nameEl.textContent = p.name;
+
+        // Stats cluster
+        var statsEl = document.createElement('div');
+        statsEl.style.cssText = 'display:flex;align-items:center;gap:14px;flex-shrink:0';
+        statsEl.innerHTML =
+          '<div style="text-align:center"><div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5);font-weight:600">'+eraDisp+'</div><div style="font-family:var(--font-mono);font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:0.08em">ERA</div></div>' +
+          '<div style="text-align:center"><div style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5);font-weight:600">'+ipDisp+'</div><div style="font-family:var(--font-mono);font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:0.08em">IP</div></div>' +
+          '<div style="text-align:center"><div style="font-family:var(--font-mono);font-size:11px;color:'+p3Color+';font-weight:600">'+p3+'</div><div style="font-family:var(--font-mono);font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:0.08em">P/3D</div></div>' +
+          '<div style="text-align:center"><div style="font-family:var(--font-mono);font-size:11px;color:'+p7Color+';font-weight:600">'+p7+'</div><div style="font-family:var(--font-mono);font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:0.08em">P/7D</div></div>' +
+          '<div style="text-align:center"><div style="font-family:var(--font-mono);font-size:11px;color:'+ttpColor+';font-weight:600">'+(ttp != null ? ttp.toFixed(2)+'s' : '—')+'</div><div style="font-family:var(--font-mono);font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:0.08em">TTP</div></div>';
+
+        // Availability badge
+        var badgeEl = document.createElement('div');
+        badgeEl.style.cssText = 'padding:3px 8px;background:'+availBg+';border:1px solid '+availColor+';border-radius:3px;font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:0.1em;color:'+availColor+';white-space:nowrap;flex-shrink:0';
+        badgeEl.textContent = avail;
+
+        row.appendChild(nameEl);
+        row.appendChild(statsEl);
+        row.appendChild(badgeEl);
         picker.appendChild(row);
       });
     }
