@@ -1514,9 +1514,10 @@ Zane Skansi,Kitchener Panthers`;
       var rowsPerPageB = Math.floor((availHB - hdrH) / 7);
       var totalPagesB  = Math.ceil(batters.length / rowsPerPageB);
       // Single page: fill exactly. Multi-page: pack rows evenly per page.
+      // Floor to 3dp to prevent floating-point accumulation triggering a false page break.
       var rowH = totalPagesB === 1
-        ? (availHB - hdrH) / batters.length
-        : (availHB - hdrH) / rowsPerPageB;
+        ? Math.floor((availHB - hdrH) / batters.length * 1000) / 1000
+        : Math.floor((availHB - hdrH) / rowsPerPageB * 1000) / 1000;
       rowH = Math.max(7, rowH);
       var pageBottom = pageBottomB;
 
@@ -1811,9 +1812,10 @@ Zane Skansi,Kitchener Panthers`;
       var rowsPerPageP = Math.floor((availHP - hdrH2) / 7);
       var totalPagesP  = Math.ceil(pitchers.length / rowsPerPageP);
       // Single page: fill exactly. Multi-page: pack rows evenly per page.
+      // Floor to 3dp to prevent floating-point accumulation triggering a false page break.
       var rowH = totalPagesP === 1
-        ? (availHP - hdrH2) / pitchers.length
-        : (availHP - hdrH2) / rowsPerPageP;
+        ? Math.floor((availHP - hdrH2) / pitchers.length * 1000) / 1000
+        : Math.floor((availHP - hdrH2) / rowsPerPageP * 1000) / 1000;
       rowH = Math.max(7, rowH);
 
       var hdrs=['PITCHER','HAND','ERA','WHIP','K','BB','FPS%','STRIKE%','TTP','REST','ARSENAL'];
