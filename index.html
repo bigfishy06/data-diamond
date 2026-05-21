@@ -2240,10 +2240,16 @@ Zane Skansi,Kitchener Panthers`;
     var attempts = 0;
     function tryBuild() {
       if ((typeof DATA !== 'undefined' && DATA.summary && DATA.summary.length) || attempts > 20) {
-        // Debug: log field names from first row of each dataset so we can confirm CSV column names
-        if(typeof DATA!=='undefined'){
-          if(DATA.summary&&DATA.summary[0]) console.log('[DD] summary fields:', Object.keys(DATA.summary[0]));
-          if(DATA.pitchers&&DATA.pitchers[0]) console.log('[DD] pitchers fields:', Object.keys(DATA.pitchers[0]));
+        // Debug: log first row of each dataset for both years so we can see exact field names
+        if(typeof DATA!=='undefined' && typeof swapSeasonData==='function'){
+          var _dbgCur=(typeof _activeSeason!=='undefined')?_activeSeason:'year:2026';
+          swapSeasonData('year:2026');
+          if(DATA.summary&&DATA.summary[0]) console.log('[DD 2026] summary row:', JSON.stringify(DATA.summary[0]));
+          if(DATA.pitchers&&DATA.pitchers[0]) console.log('[DD 2026] pitchers row:', JSON.stringify(DATA.pitchers[0]));
+          swapSeasonData('year:2025');
+          if(DATA.summary&&DATA.summary[0]) console.log('[DD 2025] summary row:', JSON.stringify(DATA.summary[0]));
+          if(DATA.pitchers&&DATA.pitchers[0]) console.log('[DD 2025] pitchers row:', JSON.stringify(DATA.pitchers[0]));
+          swapSeasonData(_dbgCur);
         }
         buildGamePrepGrid();
       } else {
