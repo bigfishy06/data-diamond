@@ -541,7 +541,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Adam Odd",
@@ -700,7 +702,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Andew Savage",
@@ -726,7 +730,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Andrew Savage",
@@ -793,7 +799,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Andy Groening",
@@ -1085,7 +1093,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Andy Leader",
@@ -1513,7 +1523,9 @@
         "date": "2026-05-16",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Angel Guerrero",
@@ -2043,7 +2055,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Ashton Patterson",
@@ -2164,7 +2178,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Austin Gurney",
@@ -2955,7 +2971,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Brandon Hernandez",
@@ -3461,7 +3479,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Brandon Hupe",
@@ -3735,7 +3755,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Brandon Nicoll",
@@ -4367,7 +4389,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Brendan Luther",
@@ -5251,7 +5275,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Brody Black",
@@ -5807,7 +5833,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Bryce Arnold",
@@ -6576,7 +6604,9 @@
         "date": "2026-05-16",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Canice Ejoh",
@@ -7024,7 +7054,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Carlos Domiguez",
@@ -7354,7 +7386,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Carlos Dominguez",
@@ -7589,7 +7623,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Carson Johnson",
@@ -7691,7 +7727,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Cassidy Watt",
@@ -8002,7 +8040,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Charlie Towers",
@@ -8465,7 +8505,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Christian Ortega",
@@ -8510,7 +8552,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Clayton Keyes",
@@ -8574,7 +8618,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Conner Morro",
@@ -8866,7 +8912,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Cooper Tomkinson",
@@ -9239,7 +9287,9 @@
         "date": "2026-05-14",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Daika Abe",
@@ -9685,7 +9735,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Daiki Abe",
@@ -10205,7 +10257,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Darlin German",
@@ -10672,7 +10726,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "David Draayers",
@@ -10755,7 +10811,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Deivis Nadal",
@@ -11397,7 +11455,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Dennis Dei Baning",
@@ -12242,7 +12302,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Drew Donaldson",
@@ -12743,7 +12805,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Edgar Figueroa",
@@ -13079,7 +13143,9 @@
         "date": "2026-05-14",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "S",
+    "Bats": "S"
   },
   {
     "batter": "Eduardo De Oleo",
@@ -13599,7 +13665,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Ethan Mann",
@@ -14144,7 +14212,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Ethan Paulos",
@@ -14721,7 +14791,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Evan Magill",
@@ -15260,7 +15332,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Francisco Hernandez",
@@ -15842,7 +15916,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Garrett Takamatsu",
@@ -16328,7 +16404,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Gianfranco Morello",
@@ -16926,7 +17004,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Greyson Barrett",
@@ -17505,7 +17585,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "J.D Williams",
@@ -17807,7 +17889,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Jacob Bonzon",
@@ -18118,7 +18202,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Jaden Babiuk",
@@ -18487,7 +18573,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Jaden Brown",
@@ -18701,7 +18789,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Jake Sanford",
@@ -18823,7 +18913,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Jakob Cantor",
@@ -19362,7 +19454,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "James Smibert",
@@ -19749,7 +19843,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Jamie Cabral",
@@ -20119,7 +20215,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Jarrett Burney",
@@ -20430,7 +20528,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Jeramie Veilleux",
@@ -20456,7 +20556,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Jonah Weisner",
@@ -21301,7 +21403,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Josh Williams",
@@ -21922,7 +22026,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Julien Monks",
@@ -22234,7 +22340,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Justin Gideon",
@@ -22833,7 +22941,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Kian Johnston",
@@ -23320,7 +23430,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Kirk Gibson",
@@ -23497,7 +23609,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Kyle Kush",
@@ -23751,7 +23865,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Kyle Poapst",
@@ -24312,7 +24428,9 @@
         "date": "2026-05-14",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Lee Kucera",
@@ -24433,7 +24551,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Liam Wilson",
@@ -25154,7 +25274,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Luca Boscarino",
@@ -25199,7 +25321,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Lucas Bateman",
@@ -25627,7 +25751,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Lucas Lefebvre",
@@ -25847,7 +25973,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Lucas Lefevbre",
@@ -26025,7 +26153,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Luis Jean",
@@ -26526,7 +26656,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Maikol Escotto",
@@ -27245,7 +27377,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Malik WIlliams",
@@ -27461,7 +27595,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Malik Williams",
@@ -27601,7 +27737,9 @@
         "date": "2026-05-10",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Marcos Castillo",
@@ -27914,7 +28052,9 @@
         "date": "2026-05-16",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Marcus Castillo",
@@ -28074,7 +28214,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Marcus Knecht",
@@ -28993,7 +29135,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Mateo Zeppieri",
@@ -29952,7 +30096,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Matt Brandt",
@@ -30637,7 +30783,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Matteo Zeppieri",
@@ -30917,7 +31065,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Matthew Fabian",
@@ -31342,7 +31492,9 @@
         "date": "2026-05-10",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Matthew Ward",
@@ -31855,7 +32007,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Mike Cecchetto",
@@ -32438,7 +32592,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Mitsuki Fukuda",
@@ -33121,7 +33277,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Nick Iannantone",
@@ -33302,7 +33460,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Nick Iannatone",
@@ -33597,7 +33757,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Noel McGarry-Doyle",
@@ -34117,7 +34279,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Nolan Machibroda",
@@ -34523,7 +34687,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Owen Constantineau",
@@ -35072,7 +35238,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Petey Keifer",
@@ -35269,7 +35437,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Petey Kiefer",
@@ -36010,7 +36180,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Rafael Gross",
@@ -36384,7 +36556,9 @@
         "date": "2026-05-10",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Reyny Reyes",
@@ -36579,7 +36753,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Reyny Reyez",
@@ -36795,7 +36971,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Robert Mackie",
@@ -36882,7 +37060,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Robert Mullen",
@@ -37668,7 +37848,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Roberto Caro",
@@ -38132,7 +38314,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "S",
+    "Bats": "S"
   },
   {
     "batter": "Ryan Dos Santos",
@@ -38753,7 +38937,9 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Ryan Potrecz",
@@ -38874,7 +39060,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Ryan Rijo",
@@ -39186,7 +39374,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Ryder Hancock",
@@ -39331,7 +39521,9 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Samuele Bruno",
@@ -39433,7 +39625,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Spencer Morin",
@@ -39916,7 +40110,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Spenser Ross",
@@ -40626,7 +40822,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Starling Joseph",
@@ -41152,7 +41350,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Tanner Rempel",
@@ -41535,7 +41735,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Thomas Green",
@@ -42329,7 +42531,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Tim Holyk",
@@ -42722,7 +42926,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Trent Lawson",
@@ -43187,7 +43393,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Trent Lenihan",
@@ -43652,7 +43860,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Tucker Zdunich",
@@ -44051,7 +44261,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Tyler Duncan",
@@ -44856,7 +45068,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Tyson Gomm",
@@ -44939,7 +45153,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Wandy Ciprian",
@@ -45138,7 +45354,9 @@
         "date": "2026-05-14",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Wandy Cyprien",
@@ -45240,7 +45458,9 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Yasiel Puig",
@@ -46455,7 +46675,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Yolki Pena",
@@ -46750,7 +46972,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Yordan Manduley",
@@ -47299,7 +47523,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Yosuke Fujie",
@@ -48262,7 +48488,9 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ]
+    ],
+    "bats": "S",
+    "Bats": "S"
   },
   {
     "batter": "Yosvani Penalver",
@@ -49321,7 +49549,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Yunior Ibarra",
@@ -50390,7 +50620,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   },
   {
     "batter": "Yushin Ohta",
@@ -51032,7 +51264,9 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "L",
+    "Bats": "L"
   },
   {
     "batter": "Zane Skansi",
@@ -51767,6 +52001,8 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ]
+    ],
+    "bats": "R",
+    "Bats": "R"
   }
 ]

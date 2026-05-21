@@ -861,7 +861,8 @@
     'koki takashi':'Koki Togashi','koki togashi':'Koki Togashi',
     'ricardo alvarez delugo':'Ricardo Alvarez de Lugo','ricardo de lugo':'Ricardo Alvarez de Lugo',
     'ricardo alvarez de lugo':'Ricardo Alvarez de Lugo','teo ortega':'Teodoro Ortega',
-    'teodoro ortega':'Teodoro Ortega','yuri yikoyama':'Yuri Yokoyama','yuri yokoyama':'Yuri Yokoyama'
+    'teodoro ortega':'Teodoro Ortega','yuri yikoyama':'Yuri Yokoyama','yuri yokoyama':'Yuri Yokoyama',
+    'jaden babiak':'Jaden Babiuk','jaden babiuk':'Jaden Babiuk'
   };
   function gpCanonical(n){ var t=(n||'').replace(/\s+/g,' ').trim(); return NAME_ALIASES_GP[t.toLowerCase()]||t; }
   function gpNorm(n){ return gpCanonical(n).toLowerCase(); }
@@ -890,6 +891,49 @@
       if (v != null && !isNaN(v)) return Number(v);
     }
     return null;
+  }
+  function gpDominantSide(points, field, switchAware) {
+    var counts = {}, tot = 0;
+    (points || []).forEach(function(p) {
+      var v = p && p[field];
+      if (v) { counts[v] = (counts[v] || 0) + 1; tot++; }
+    });
+    var sides = Object.keys(counts);
+    if (!tot || !sides.length) return null;
+    if (sides.length === 1) return sides[0];
+    var dom = sides.reduce(function(a,b){ return counts[a] >= counts[b] ? a : b; });
+    var minShare = Math.min.apply(null, sides.map(function(s){ return counts[s] / tot; }));
+    if (switchAware && sides.indexOf('L') !== -1 && sides.indexOf('R') !== -1 && minShare >= 0.15) return 'S';
+    return dom;
+  }
+  function gpGatherBatterScatter(name, sources) {
+    var key = gpNorm(name), arr = [];
+    (sources || []).forEach(function(src) {
+      (src || []).forEach(function(bp) {
+        if (!bp) return;
+        if (bp.scatter) {
+          (bp.scatter || []).forEach(function(p) {
+            var b = p.batter || bp.batter;
+            if (b && gpNorm(b) === key) arr.push(p);
+          });
+        }
+      });
+    });
+    return arr;
+  }
+  function gpGatherPitcherScatter(name, sources) {
+    var key = gpNorm(name), arr = [];
+    (sources || []).forEach(function(src) {
+      (src || []).forEach(function(bp) {
+        if (!bp) return;
+        var scatter = Array.isArray(bp.scatter) ? bp.scatter : [];
+        scatter.forEach(function(p) {
+          var pitcher = p.pitcher || bp.pitcher;
+          if (pitcher && gpNorm(pitcher) === key) arr.push(p);
+        });
+      });
+    });
+    return arr;
   }
 
   var GP_ROSTER_2025_CSV = `Player,Team
@@ -1194,29 +1238,29 @@ Zane Skansi,Kitchener Panthers`;
       var pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
       var pbpPitchersArr = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
       var knownPitchers = new Set();
-      pitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(p.pitcher.toLowerCase().trim()); });
-      pbpPitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(p.pitcher.toLowerCase().trim()); });
+      pitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(gpNorm(p.pitcher)); });
+      pbpPitchersArr.forEach(function(p){ if(p.pitcher) knownPitchers.add(gpNorm(p.pitcher)); });
       pitchesData.forEach(function(bp){
         if(!bp.scatter) return;
-        bp.scatter.forEach(function(s){ if(s.pitcher) knownPitchers.add(s.pitcher.toLowerCase().trim()); });
+        bp.scatter.forEach(function(s){ if(s.pitcher) knownPitchers.add(gpNorm(s.pitcher)); });
       });
 
       // Roster = active players on this team with pitcher data
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
-        var k = row.player.toLowerCase().trim();
+        var k = gpNorm(row.player);
         if (knownPitchers.has(k) && !seenK.has(k)) { seenK.add(k); playerNames.push(row.player); }
       });
       // Build set of all roster player names (any team) to exclude cross-team bleed
       var rosterNamesP = new Set();
-      GP_ROSTER_2025.forEach(function(row){ rosterNamesP.add(row.player.trim().toLowerCase()); });
+      GP_ROSTER_2025.forEach(function(row){ rosterNamesP.add(gpNorm(row.player)); });
 
       // Inactive: pitchers in data whose 2025 team matches but aren't on current roster at all
       pitchersArr.forEach(function(p) {
         if (!p.pitcher || !p.pitcher_team) return;
         var pt = resolveTeam(p.pitcher_team);
-        var k = p.pitcher.toLowerCase().trim();
+        var k = gpNorm(p.pitcher);
         if (pt && pt.name === oppName && !seenK.has(k) && !rosterNamesP.has(k)) {
           seenK.add(k); playerNames.push(p.pitcher);
         }
@@ -1224,7 +1268,7 @@ Zane Skansi,Kitchener Panthers`;
       pbpPitchersArr.forEach(function(p) {
         if (!p.pitcher || !p.pitcher_team) return;
         var pt = resolveTeam(p.pitcher_team);
-        var k = p.pitcher.toLowerCase().trim();
+        var k = gpNorm(p.pitcher);
         if (pt && pt.name === oppName && !seenK.has(k) && !rosterNamesP.has(k)) {
           seenK.add(k); playerNames.push(p.pitcher);
         }
@@ -1233,37 +1277,39 @@ Zane Skansi,Kitchener Panthers`;
     } else {
       // batters-pdf — build set of names with batter data first
       var knownBatters = new Set();
-      summaryData.forEach(function(p){ if(p.batter) knownBatters.add(p.batter.trim().toLowerCase()); });
-      pitchesData.forEach(function(bp){ if(bp.batter) knownBatters.add(bp.batter.trim().toLowerCase()); });
+      summaryData.forEach(function(p){ if(p.batter) knownBatters.add(gpNorm(p.batter)); });
+      pitchesData.forEach(function(bp){ if(bp.batter) knownBatters.add(gpNorm(bp.batter)); });
       var pbpBattersArr = (DATA.pbpBatters && Array.isArray(DATA.pbpBatters)) ? DATA.pbpBatters : [];
-      pbpBattersArr.forEach(function(p){ if(p.batter) knownBatters.add(p.batter.trim().toLowerCase()); });
+      pbpBattersArr.forEach(function(p){ if(p.batter) knownBatters.add(gpNorm(p.batter)); });
 
       var seenB = {};
       // Active: roster players on this team who have batter data
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
-        if (knownBatters.has(row.player.trim().toLowerCase()) && !seenB[row.player])
-          seenB[row.player] = { batter: row.player, AB: 0 };
+        var rk = gpNorm(row.player);
+        if (knownBatters.has(rk) && !seenB[rk])
+          seenB[rk] = { batter: row.player, AB: 0 };
       });
       // Enrich AB counts from summary data — only for players already confirmed on this team via roster
       summaryData.forEach(function(p) {
-        if (!seenB[p.batter]) return; // must already be roster-confirmed
-        if ((p.AB||0) > (seenB[p.batter].AB||0)) seenB[p.batter] = p;
+        var pk = gpNorm(p.batter);
+        if (!seenB[pk]) return; // must already be roster-confirmed
+        if ((p.AB||0) > (seenB[pk].AB||0)) seenB[pk] = p;
       });
       // Build set of all roster player names (any team) to exclude from inactive
       var rosterNames = new Set();
-      GP_ROSTER_2025.forEach(function(row){ rosterNames.add(row.player.trim().toLowerCase()); });
+      GP_ROSTER_2025.forEach(function(row){ rosterNames.add(gpNorm(row.player)); });
 
       // Inactive: batters in pbp whose 2025 team matches, not on current roster at all
       pbpBattersArr.forEach(function(p) {
         if (!p.batter || !p.batter_team) return;
         var t = resolveTeam(p.batter_team);
-        var k = p.batter.trim().toLowerCase();
-        if (t && t.name === oppName && !seenB[p.batter] && !rosterNames.has(k))
-          seenB[p.batter] = { batter: p.batter, AB: 0 };
+        var k = gpNorm(p.batter);
+        if (t && t.name === oppName && !seenB[k] && !rosterNames.has(k))
+          seenB[k] = { batter: p.batter, AB: 0 };
       });
-      playerNames = Object.keys(seenB).sort(function(a,b){ return (seenB[b].AB||0)-(seenB[a].AB||0); });
+      playerNames = Object.keys(seenB).sort(function(a,b){ return (seenB[b].AB||0)-(seenB[a].AB||0); }).map(function(k){ return seenB[k].batter; });
     }
 
     // Restore data after gathering names — actual PDF gen will swap again
@@ -1406,24 +1452,24 @@ Zane Skansi,Kitchener Panthers`;
       GP_ROSTER_2025.forEach(function(row) {
         var rowTeam = resolveTeam(row.team);
         if (!rowTeam || rowTeam.name !== oppName) return;
-        var k = row.player.trim().toLowerCase();
+        var k = gpNorm(row.player);
         if (!_seenBat.has(k)) { _seenBat.add(k); batterNames.push(row.player); }
       });
       // Also include any summary batters on this team not on roster (inactive)
       var _rosterAll = new Set();
-      GP_ROSTER_2025.forEach(function(row){ _rosterAll.add(row.player.trim().toLowerCase()); });
+      GP_ROSTER_2025.forEach(function(row){ _rosterAll.add(gpNorm(row.player)); });
       _sum.forEach(function(p) {
         var t = resolveTeam(p.batter_team);
         if (!t || t.name !== oppName) return;
-        var k = p.batter.trim().toLowerCase();
+        var k = gpNorm(p.batter);
         if (!_seenBat.has(k) && !_rosterAll.has(k)) { _seenBat.add(k); batterNames.push(p.batter); }
       });
 
       // Filter to selected if provided
       if (selectedNames && selectedNames.length) {
         var selSet = {};
-        selectedNames.forEach(function(n){ selSet[n.toLowerCase().trim()] = true; });
-        batterNames = batterNames.filter(function(n){ return selSet[n.toLowerCase().trim()]; });
+        selectedNames.forEach(function(n){ selSet[gpNorm(n)] = true; });
+        batterNames = batterNames.filter(function(n){ return selSet[gpNorm(n)]; });
       }
 
       // Build batter objects from summary lookup, sorted by AB desc
@@ -1528,37 +1574,22 @@ Zane Skansi,Kitchener Panthers`;
           return fps.length>=5 ? f1(sw/fps.length*100)+'%' : '—';
         })();
 
-        // BATS: both years — scatter-based 50% rule (mirrors deriveHand in main.js) is primary.
-        // batter_side only exists in 2025 scatter; for 2026 we read DATA._pitches25 directly.
+        // BATS: derive from the selected season scatter first. 2026 handedness lives in
+        // pitches2026 scatter as batter_side, not in summary2026 top-level rows.
         var bats = (function(){
-          // Build scatter source: prefer 2025 pitches (which have batter_side) regardless of report year
-          var _scSrc = (DATA._pitches25 && Array.isArray(DATA._pitches25)) ? DATA._pitches25 : DATA.pitches;
-          var counts={}, tot=0;
-          _scSrc.forEach(function(bp){
-            if(!bp.scatter) return;
-            bp.scatter.forEach(function(p){
-              if(p.batter && gpNorm(p.batter)===nameLower){
-                var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;}
-              }
-            });
-          });
-          // Also check current-year scatter in case it does have batter_side
-          if(tot===0){
-            sc.forEach(function(p){ var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-          }
-          if(tot>0){
-            var sides=Object.keys(counts);
-            if(sides.length===1) return sides[0];
-            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-            if(counts[dom]/tot>=0.5) return dom;
-            return 'S';
-          }
-          // No scatter at all — fall back to summary field (2026) or IBL history
           if(year==2026){
+            var side26 = gpDominantSide(sc, 'batter_side', true)
+                      || gpDominantSide(gpGatherBatterScatter(s.batter, [DATA.pitches2026]), 'batter_side', true);
+            if(side26) return side26;
             var _b=s.Bats||s.bats||s.bat_hand||s.BatHand||s.Bat||s.bat||s.side||s.Side||null;
             if(_b) return _b;
+          } else {
+            var side25 = gpDominantSide(sc, 'batter_side', true)
+                      || gpDominantSide(gpGatherBatterScatter(s.batter, [DATA._pitches25, DATA.pitches]), 'batter_side', true);
+            if(side25) return side25;
           }
-          return iblS&&iblS.bats ? iblS.bats : '—';
+          var iblBatHand = (iblAllS || []).find(function(r){ return r.bats; });
+          return iblS&&iblS.bats ? iblS.bats : (iblBatHand ? iblBatHand.bats : '—');
         })();
 
         // GB%, FB%, LD%: 2025 = pbp_batters (most accurate), 2026 = summary2026 (normalized)
@@ -1927,40 +1958,24 @@ Zane Skansi,Kitchener Panthers`;
         var arsenal=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];}).slice(0,3)
           .map(function(e){return e[0].slice(0,4)+' '+f1(xp(e[1],tot))+'%';}).join('  ')||'—';
 
-        // HAND: both years — scatter-based 50% rule (mirrors deriveHand in main.js) is primary.
-        // pitcher_side only exists in 2025 scatter; for 2026 we read DATA._pitches25 directly.
+        // HAND: derive from the selected season scatter first. 2026 handedness lives in
+        // pitchers2026/pitches2026 scatter as pitcher_side, not in top-level rows.
         var nameDisp=p.name; if(nameDisp.length>18)nameDisp=nameDisp.slice(0,17)+'.';
         var handVal = (function(){
-          var pitcherKeyH = gpNorm(p.name);
-          // Build scatter source: prefer 2025 pitches (which have pitcher_side)
-          var _scSrcH = (DATA._pitches25 && Array.isArray(DATA._pitches25)) ? DATA._pitches25 : DATA.pitches;
-          var counts={}, tot=0;
-          _scSrcH.forEach(function(bp){
-            if(!bp.scatter) return;
-            bp.scatter.forEach(function(s){
-              if(s.pitcher && gpNorm(s.pitcher)===pitcherKeyH){
-                var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;}
-              }
-            });
-          });
-          // Also check current-year scatter in case it has pitcher_side
-          if(tot===0){
-            p.sc.forEach(function(s){ var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-          }
-          if(tot>0){
-            var sides=Object.keys(counts);
-            if(sides.length===1) return sides[0];
-            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-            if(counts[dom]/tot>=0.5) return dom;
-            return 'S';
-          }
-          // No scatter — fall back to data source
           if(year==2026){
+            var side26 = gpDominantSide(p.sc, 'pitcher_side', false)
+                      || gpDominantSide((pd.scatter && Array.isArray(pd.scatter)) ? pd.scatter : [], 'pitcher_side', false)
+                      || gpDominantSide(gpGatherPitcherScatter(p.name, [DATA.pitches2026, DATA.pitchers2026]), 'pitcher_side', false);
+            if(side26) return side26;
             var _th=pd.throws||pd.Throws||pd.throw_hand||pd.ThrowHand||pd.hand||pd.Hand||pd.Throws_hand||pd.pitching_hand||null;
             if(_th) return _th;
+          } else {
+            var side25 = gpDominantSide(p.sc, 'pitcher_side', false)
+                      || gpDominantSide(gpGatherPitcherScatter(p.name, [DATA._pitches25, DATA.pitches]), 'pitcher_side', false);
+            if(side25) return side25;
           }
-          return iblP&&iblP.throws ? iblP.throws
-               : (iblAll.length&&iblAll[0].throws ? iblAll[0].throws : '—');
+          var iblThrowHand = (iblAll || []).find(function(r){ return r.throws; });
+          return iblP&&iblP.throws ? iblP.throws : (iblThrowHand ? iblThrowHand.throws : '—');
         })();
         // K and BB totals: IBL history for 2025; datadiamond2026.csv for 2026 — try all likely field names
         var bbsRaw=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;

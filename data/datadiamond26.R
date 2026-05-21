@@ -155,6 +155,24 @@ pitches_json <- pitches %>%
     .groups = "drop"
   )
 
+batter_hands <- pitches %>%
+  filter(trimws(batter_side) != "") %>%
+  count(batter, batter_side, name = "n") %>%
+  group_by(batter) %>%
+  summarise(
+    bats = ifelse(
+      n_distinct(batter_side) > 1 &&
+        all(c("L","R") %in% batter_side) &&
+        min(n / sum(n)) >= 0.15,
+      "S",
+      batter_side[which.max(n)]
+    ),
+    .groups = "drop"
+  )
+
+pitches_json <- pitches_json %>%
+  left_join(batter_hands, by = "batter")
+
 # ── Innings pitched per pitcher ────────────────────────────────────────────────
 ip_per_game <- pitches %>%
   group_by(pitcher, date) %>%
@@ -292,6 +310,18 @@ pitcher_stats <- pitches %>%
   select(-BABIP_den, -strikes, -swings, -whiffs, -fp_pitches, -fp_strikes,
          -two_strike_pa, -putaways, -batted_balls, -gb, -fb, -ld, -po,
          -ab_against, -H_allowed, -HR_allowed, -SF_allowed)
+
+pitcher_hands <- pitches %>%
+  filter(trimws(pitcher_side) != "") %>%
+  count(pitcher, pitcher_side, name = "n") %>%
+  group_by(pitcher) %>%
+  summarise(
+    throws = pitcher_side[which.max(n)],
+    .groups = "drop"
+  )
+
+pitcher_stats <- pitcher_stats %>%
+  left_join(pitcher_hands, by = "pitcher")
 
 # ── Per-pitcher scatter ────────────────────────────────────────────────────────
 pitcher_scatter <- pitches %>%
