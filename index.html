@@ -1511,11 +1511,12 @@ Zane Skansi,Kitchener Panthers`;
       var pageBottomB = PH - 10;
       var availHB = pageBottomB - contentTopB;
       // Fit rows to fill the page — never smaller than 7mm or larger than 14mm
-      var rowsPerPageB = Math.floor((availHB - hdrH) / 9);
+      var rowsPerPageB = Math.floor((availHB - hdrH) / 7);
       var totalPagesB  = Math.ceil(batters.length / rowsPerPageB);
+      // Single page: fill exactly. Multi-page: pack rows evenly per page.
       var rowH = totalPagesB === 1
-        ? Math.min(14, (availHB - hdrH) / batters.length)
-        : Math.min(14, (availHB - hdrH) / rowsPerPageB);
+        ? (availHB - hdrH) / batters.length
+        : (availHB - hdrH) / rowsPerPageB;
       rowH = Math.max(7, rowH);
       var pageBottom = pageBottomB;
 
@@ -1807,11 +1808,12 @@ Zane Skansi,Kitchener Panthers`;
       var pageBottom2 = PH - 10;
       var availHP = pageBottom2 - contentTopP;
       // Fit rows to fill the page — never smaller than 7mm or larger than 14mm
-      var rowsPerPageP = Math.floor((availHP - hdrH2) / 9);
+      var rowsPerPageP = Math.floor((availHP - hdrH2) / 7);
       var totalPagesP  = Math.ceil(pitchers.length / rowsPerPageP);
+      // Single page: fill exactly. Multi-page: pack rows evenly per page.
       var rowH = totalPagesP === 1
-        ? Math.min(14, (availHP - hdrH2) / pitchers.length)
-        : Math.min(14, (availHP - hdrH2) / rowsPerPageP);
+        ? (availHP - hdrH2) / pitchers.length
+        : (availHP - hdrH2) / rowsPerPageP;
       rowH = Math.max(7, rowH);
 
       var hdrs=['PITCHER','HAND','ERA','WHIP','K','BB','FPS%','STRIKE%','TTP','REST','ARSENAL'];
