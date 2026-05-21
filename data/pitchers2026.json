@@ -29,6 +29,7 @@
     "FB_pct": 0,
     "LD_pct": 16.7,
     "PO_pct": 33.3,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.3076,
@@ -810,9 +811,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Aidan Armitage",
@@ -844,6 +843,7 @@
     "FB_pct": 0,
     "LD_pct": 28.6,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.517,
@@ -1745,9 +1745,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Alex Lanigan",
@@ -1779,6 +1777,7 @@
     "FB_pct": 16.7,
     "LD_pct": 16.7,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.0057,
@@ -2020,9 +2019,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Alfred Vega",
@@ -2054,6 +2051,7 @@
     "FB_pct": 13.3,
     "LD_pct": 20,
     "PO_pct": 20,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.6937,
@@ -3495,9 +3493,7 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Andrew Case",
@@ -3529,6 +3525,7 @@
     "FB_pct": 20,
     "LD_pct": 0,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.7075,
@@ -3970,9 +3967,7 @@
         "date": "2026-05-16",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Anthony Porcellato",
@@ -4004,6 +3999,7 @@
     "FB_pct": 40,
     "LD_pct": 0,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.6393,
@@ -5045,9 +5041,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Barwin Colon",
@@ -5079,6 +5073,7 @@
     "FB_pct": 25,
     "LD_pct": 50,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.6233,
@@ -5920,9 +5915,7 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Ben Abram",
@@ -5954,6 +5947,7 @@
     "FB_pct": 20,
     "LD_pct": 15,
     "PO_pct": 10,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.1279,
@@ -7575,9 +7569,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Ben Hewitt",
@@ -7609,6 +7601,7 @@
     "FB_pct": 0,
     "LD_pct": 33.3,
     "PO_pct": 33.3,
+    "throws": "R",
     "scatter": [
       {
         "x": 1.4321,
@@ -7890,9 +7883,7 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Benjamin Sitarenios",
@@ -7924,6 +7915,7 @@
     "FB_pct": 0,
     "LD_pct": 0,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.06,
@@ -8145,9 +8137,7 @@
         "date": "2026-05-14",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Braedan Pakkala",
@@ -8179,6 +8169,7 @@
     "FB_pct": 0,
     "LD_pct": 0,
     "PO_pct": 0,
+    "throws": "L",
     "scatter": [
       {
         "x": 0.1266,
@@ -8420,9 +8411,7 @@
         "date": "2026-05-14",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Brandon Deans",
@@ -8454,6 +8443,7 @@
     "FB_pct": 28.6,
     "LD_pct": 14.3,
     "PO_pct": 28.6,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.7633,
@@ -9255,9 +9245,7 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Breidy Encarnacion",
@@ -9289,6 +9277,7 @@
     "FB_pct": 0,
     "LD_pct": 66.7,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.2063,
@@ -9730,9 +9719,7 @@
         "date": "2026-05-14",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Caleb Cassie",
@@ -9764,6 +9751,7 @@
     "FB_pct": 16.7,
     "LD_pct": 16.7,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -1.1606,
@@ -10445,9 +10433,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Caleb Seroski",
@@ -10479,6 +10465,7 @@
     "FB_pct": 11.1,
     "LD_pct": 22.2,
     "PO_pct": 22.2,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.6233,
@@ -11320,9 +11307,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Carlos Sano",
@@ -11354,9 +11339,8 @@
     "FB_pct": 0,
     "LD_pct": 0,
     "PO_pct": 0,
-    "scatter": {},
     "throws": "R",
-    "Throws": "R"
+    "scatter": {}
   },
   {
     "pitcher": "Casey Bouilliere - Howard",
@@ -11388,6 +11372,7 @@
     "FB_pct": 25,
     "LD_pct": 25,
     "PO_pct": 50,
+    "throws": "R",
     "scatter": [
       {
         "x": 1.456,
@@ -11629,9 +11614,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Colbey Klepper",
@@ -11663,6 +11646,7 @@
     "FB_pct": 0,
     "LD_pct": 16.7,
     "PO_pct": 33.3,
+    "throws": "R",
     "scatter": [
       {
         "x": -1.2715,
@@ -12464,9 +12448,7 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Colby Klepper",
@@ -12498,6 +12480,7 @@
     "FB_pct": 44.4,
     "LD_pct": 11.1,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.6157,
@@ -13239,9 +13222,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Connor Cory",
@@ -13273,6 +13254,7 @@
     "FB_pct": 0,
     "LD_pct": 0,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.0378,
@@ -13554,9 +13536,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Connor Irvine",
@@ -13588,6 +13568,7 @@
     "FB_pct": 42.9,
     "LD_pct": 14.3,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.8499,
@@ -13909,9 +13890,7 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Dakota Parsons",
@@ -13943,6 +13922,7 @@
     "FB_pct": 20,
     "LD_pct": 20,
     "PO_pct": 10,
+    "throws": "R",
     "scatter": [
       {
         "x": 1.709,
@@ -15204,9 +15184,7 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Deivy Mendez",
@@ -15238,6 +15216,7 @@
     "FB_pct": null,
     "LD_pct": null,
     "PO_pct": null,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.3458,
@@ -15559,9 +15538,7 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Dustin Davidson",
@@ -15593,9 +15570,8 @@
     "FB_pct": 0,
     "LD_pct": 33.3,
     "PO_pct": 0,
-    "scatter": {},
     "throws": "L",
-    "Throws": "L"
+    "scatter": {}
   },
   {
     "pitcher": "Dylan Kints",
@@ -15627,6 +15603,7 @@
     "FB_pct": 33.3,
     "LD_pct": 0,
     "PO_pct": 16.7,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.0055,
@@ -16308,9 +16285,7 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Elian Serrata ",
@@ -16342,6 +16317,7 @@
     "FB_pct": 25,
     "LD_pct": 25,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.1193,
@@ -17035,6 +17011,7 @@
     "FB_pct": 40,
     "LD_pct": 40,
     "PO_pct": 0,
+    "throws": "L",
     "scatter": [
       {
         "x": 1.0741,
@@ -18596,9 +18573,7 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Eric Pettipiece",
@@ -18630,6 +18605,7 @@
     "FB_pct": 20,
     "LD_pct": 30,
     "PO_pct": 10,
+    "throws": "L",
     "scatter": [
       {
         "x": -0.9947,
@@ -18791,9 +18767,7 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Evan Elliott",
@@ -18825,6 +18799,7 @@
     "FB_pct": 21.1,
     "LD_pct": 15.8,
     "PO_pct": 15.8,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.1004,
@@ -20886,9 +20861,7 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Frank Garces",
@@ -20920,6 +20893,7 @@
     "FB_pct": 23.1,
     "LD_pct": 15.4,
     "PO_pct": 30.8,
+    "throws": "L",
     "scatter": [
       {
         "x": -0.1397,
@@ -22801,9 +22775,7 @@
         "date": "2026-05-14",
         "in_zone": false
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Frankie Gulko",
@@ -22835,6 +22807,7 @@
     "FB_pct": 0,
     "LD_pct": 66.7,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.748,
@@ -23296,9 +23269,7 @@
         "date": "2026-05-14",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Freisis Adames",
@@ -23330,6 +23301,7 @@
     "FB_pct": 50,
     "LD_pct": 0,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.9609,
@@ -23891,9 +23863,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Garret Day",
@@ -23925,6 +23895,7 @@
     "FB_pct": 0,
     "LD_pct": 40,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.0797,
@@ -24126,9 +24097,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Greg Rapp",
@@ -24160,6 +24129,7 @@
     "FB_pct": 22.2,
     "LD_pct": 33.3,
     "PO_pct": 0,
+    "throws": "L",
     "scatter": [
       {
         "x": 0.0571,
@@ -25161,9 +25131,7 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Hector Yan",
@@ -25195,6 +25163,7 @@
     "FB_pct": 14.3,
     "LD_pct": 57.1,
     "PO_pct": 0,
+    "throws": "L",
     "scatter": [
       {
         "x": 0.0057,
@@ -26356,9 +26325,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Jack Seward",
@@ -26390,6 +26357,7 @@
     "FB_pct": 0,
     "LD_pct": 25,
     "PO_pct": 25,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.8282,
@@ -26711,9 +26679,7 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Jacob Kush",
@@ -26745,6 +26711,7 @@
     "FB_pct": 33.3,
     "LD_pct": 16.7,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -1.0597,
@@ -28126,9 +28093,7 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Jacob Liberta",
@@ -28160,6 +28125,7 @@
     "FB_pct": 20,
     "LD_pct": 30,
     "PO_pct": 0,
+    "throws": "L",
     "scatter": [
       {
         "x": -0.111,
@@ -28641,9 +28607,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Jorge De La Cruz",
@@ -28675,6 +28639,7 @@
     "FB_pct": 14.3,
     "LD_pct": 28.6,
     "PO_pct": 28.6,
+    "throws": "R",
     "scatter": [
       {
         "x": 1.2611,
@@ -29696,9 +29661,7 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Juan Mejia",
@@ -29730,6 +29693,7 @@
     "FB_pct": 16.7,
     "LD_pct": 33.3,
     "PO_pct": 16.7,
+    "throws": "L",
     "scatter": [
       {
         "x": 0.5313,
@@ -29891,9 +29855,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Kade Douglas",
@@ -29925,6 +29887,7 @@
     "FB_pct": 20,
     "LD_pct": 20,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.2376,
@@ -30726,9 +30689,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Kade Kozak",
@@ -30760,6 +30721,7 @@
     "FB_pct": 0,
     "LD_pct": 0,
     "PO_pct": 50,
+    "throws": "L",
     "scatter": [
       {
         "x": 1.3084,
@@ -31561,9 +31523,7 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Kevin Escorcia",
@@ -31595,6 +31555,7 @@
     "FB_pct": 28.6,
     "LD_pct": 0,
     "PO_pct": 28.6,
+    "throws": "L",
     "scatter": [
       {
         "x": -0.3501,
@@ -32256,9 +32217,7 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Kyle Poapst",
@@ -32290,6 +32249,7 @@
     "FB_pct": 20,
     "LD_pct": 20,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.204,
@@ -32731,9 +32691,7 @@
         "date": "2026-05-10",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Luis Ramirez",
@@ -32765,6 +32723,7 @@
     "FB_pct": 22.2,
     "LD_pct": 22.2,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.8208,
@@ -33046,9 +33005,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Matt Rivas",
@@ -33080,6 +33037,7 @@
     "FB_pct": 7.1,
     "LD_pct": 42.9,
     "PO_pct": 7.1,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.4282,
@@ -34521,9 +34479,7 @@
         "date": "2026-05-14",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Mitzuki Akatsuka",
@@ -34555,6 +34511,7 @@
     "FB_pct": 0,
     "LD_pct": 66.7,
     "PO_pct": 33.3,
+    "throws": "L",
     "scatter": [
       {
         "x": -0.7309,
@@ -34896,9 +34853,7 @@
         "date": "2026-05-17",
         "in_zone": false
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Mizuki Akatsuka",
@@ -34930,6 +34885,7 @@
     "FB_pct": 50,
     "LD_pct": 0,
     "PO_pct": 25,
+    "throws": "R",
     "scatter": [
       {
         "x": 1.3435,
@@ -35711,9 +35667,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Nick Veselinovic",
@@ -35745,6 +35699,7 @@
     "FB_pct": 50,
     "LD_pct": 25,
     "PO_pct": 0,
+    "throws": "L",
     "scatter": [
       {
         "x": 0.1044,
@@ -36286,9 +36241,7 @@
         "date": "2026-05-14",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Noah Law",
@@ -36320,6 +36273,7 @@
     "FB_pct": 16.7,
     "LD_pct": 33.3,
     "PO_pct": 16.7,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.5685,
@@ -37061,9 +37015,7 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Oscar Moreta",
@@ -37095,6 +37047,7 @@
     "FB_pct": 0,
     "LD_pct": 0,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.1599,
@@ -37376,9 +37329,7 @@
         "date": "2026-05-14",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Owen Boon",
@@ -37410,6 +37361,7 @@
     "FB_pct": 27.3,
     "LD_pct": 18.2,
     "PO_pct": 45.5,
+    "throws": "R",
     "scatter": [
       {
         "x": 1.5385,
@@ -38771,9 +38723,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Owen MacNeil",
@@ -38805,6 +38755,7 @@
     "FB_pct": 20,
     "LD_pct": 10,
     "PO_pct": 30,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.6913,
@@ -40026,9 +39977,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Owen Macneil",
@@ -40060,6 +40009,7 @@
     "FB_pct": 33.3,
     "LD_pct": 22.2,
     "PO_pct": 22.2,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.1626,
@@ -41281,9 +41231,7 @@
         "date": "2026-05-10",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Owen Ozanich",
@@ -41315,6 +41263,7 @@
     "FB_pct": 66.7,
     "LD_pct": 33.3,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -0.722,
@@ -41556,9 +41505,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Pedro De Los Santos",
@@ -41590,6 +41537,7 @@
     "FB_pct": 0,
     "LD_pct": 0,
     "PO_pct": 0,
+    "throws": "L",
     "scatter": [
       {
         "x": 0.0906,
@@ -42351,9 +42299,7 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Ryan Capuano",
@@ -42385,6 +42331,7 @@
     "FB_pct": 0,
     "LD_pct": 100,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.349,
@@ -43106,9 +43053,7 @@
         "date": "2026-05-10",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Ryan Dos Santos",
@@ -43140,6 +43085,7 @@
     "FB_pct": 80,
     "LD_pct": 0,
     "PO_pct": 0,
+    "throws": "R",
     "scatter": [
       {
         "x": -1.329,
@@ -43381,9 +43327,7 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Samuel Quintana",
@@ -43415,6 +43359,7 @@
     "FB_pct": 9.1,
     "LD_pct": 9.1,
     "PO_pct": 18.2,
+    "throws": "L",
     "scatter": [
       {
         "x": 1.2399,
@@ -44996,9 +44941,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Saul Vasquez",
@@ -45030,6 +44973,7 @@
     "FB_pct": 25,
     "LD_pct": 0,
     "PO_pct": 12.5,
+    "throws": "L",
     "scatter": [
       {
         "x": -0.4197,
@@ -46231,9 +46175,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Skylar Janisse",
@@ -46265,9 +46207,8 @@
     "FB_pct": 0,
     "LD_pct": 100,
     "PO_pct": 0,
-    "scatter": {},
     "throws": "R",
-    "Throws": "R"
+    "scatter": {}
   },
   {
     "pitcher": "Steven Hospital",
@@ -46299,6 +46240,7 @@
     "FB_pct": 0,
     "LD_pct": 0,
     "PO_pct": 66.7,
+    "throws": "R",
     "scatter": [
       {
         "x": 0.2678,
@@ -46660,9 +46602,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Teodoro Ortega",
@@ -46694,6 +46634,7 @@
     "FB_pct": 18.8,
     "LD_pct": 25,
     "PO_pct": 18.8,
+    "throws": "R",
     "scatter": [
       {
         "x": -1.7805,
@@ -48315,9 +48256,7 @@
         "date": "2026-05-16",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Travis Keys",
@@ -48349,6 +48288,7 @@
     "FB_pct": 21.4,
     "LD_pct": 28.6,
     "PO_pct": 7.1,
+    "throws": "L",
     "scatter": [
       {
         "x": -0.7833,
@@ -49150,9 +49090,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Victor Payano",
@@ -49184,6 +49122,7 @@
     "FB_pct": 46.7,
     "LD_pct": 6.7,
     "PO_pct": 13.3,
+    "throws": "L",
     "scatter": [
       {
         "x": -1.4171,
@@ -50105,9 +50044,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Wilgenis Alvarado",
@@ -50139,6 +50076,7 @@
     "FB_pct": 23.1,
     "LD_pct": 30.8,
     "PO_pct": 0,
+    "throws": "L",
     "scatter": [
       {
         "x": -0.8733,
@@ -51180,9 +51118,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Yadian Martinez",
@@ -51214,6 +51150,7 @@
     "FB_pct": 27.3,
     "LD_pct": 15.2,
     "PO_pct": 12.1,
+    "throws": "R",
     "scatter": [
       {
         "x": 1.3227,
@@ -54235,9 +54172,7 @@
         "date": "2026-05-17",
         "in_zone": true
       }
-    ],
-    "throws": "R",
-    "Throws": "R"
+    ]
   },
   {
     "pitcher": "Yuri Yokoyama",
@@ -54269,6 +54204,7 @@
     "FB_pct": 18.2,
     "LD_pct": 36.4,
     "PO_pct": 9.1,
+    "throws": "L",
     "scatter": [
       {
         "x": -0.8111,
@@ -55450,9 +55386,7 @@
         "date": "2026-05-15",
         "in_zone": true
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   },
   {
     "pitcher": "Zachary Laird",
@@ -55484,6 +55418,7 @@
     "FB_pct": 16.7,
     "LD_pct": 33.3,
     "PO_pct": 16.7,
+    "throws": "L",
     "scatter": [
       {
         "x": 1.2272,
@@ -55625,8 +55560,6 @@
         "date": "2026-05-15",
         "in_zone": false
       }
-    ],
-    "throws": "L",
-    "Throws": "L"
+    ]
   }
 ]

@@ -352,7 +352,8 @@ pitcher_scatter <- pitches %>%
   )
 
 pitcher_json <- pitcher_stats %>%
-  left_join(pitcher_scatter, by = "pitcher")
+  left_join(pitcher_scatter, by = "pitcher") %>%
+  mutate(scatter = ifelse(is.na(scatter), list(list()), scatter))
 
 # ── Write JSON ─────────────────────────────────────────────────────────────────
 write_json(pitches_json,
