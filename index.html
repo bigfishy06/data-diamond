@@ -1239,11 +1239,15 @@ Zane Skansi,Kitchener Panthers`;
     }
 
     function renderRow(name, checked) {
+      var in2025 = has2025Report.has(name.trim().toLowerCase());
+      var nameHtml = in2025
+        ? '<span style="text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(255,184,28,0.55)">' + name + '</span>'
+        : name;
       return '<label style="display:flex;align-items:center;gap:8px;padding:5px 10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04)" ' +
         'onmouseover="this.style.background=\'rgba(255,184,28,0.06)\'" onmouseout="this.style.background=\'\'">' +
         '<input type="checkbox" value="' + name.replace(/"/g,'&quot;') + '"' + (checked ? ' checked' : '') +
           ' style="accent-color:#FFB81C;width:13px;height:13px;cursor:pointer;flex-shrink:0">' +
-        '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:' + (checked ? '#fff' : 'rgba(255,255,255,0.45)') + '">' + name + '</span>' +
+        '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:' + (checked ? '#fff' : 'rgba(255,255,255,0.45)') + '">' + nameHtml + '</span>' +
         '</label>';
     }
 
@@ -1478,8 +1482,10 @@ Zane Skansi,Kitchener Panthers`;
           return fps.length>=5 ? f1(sw/fps.length*100)+'%' : '—';
         })();
 
-        // BATS: deriveHand from scatter (matches main.js logic), fallback iblHistory.bats
+        // BATS: 2026 = datadiamond2026.csv (s.Bats), fallback scatter, then iblHistory
+        //       2025 = scatter derived, fallback iblHistory.bats
         var bats = (function(){
+          if(year==2026 && s.Bats) return s.Bats;
           var counts={}, tot=0;
           sc.forEach(function(p){ var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
           if(tot===0) return iblS&&iblS.bats ? iblS.bats : '?';
@@ -1525,13 +1531,19 @@ Zane Skansi,Kitchener Panthers`;
           oppPct2=spTot>=3?f1(spBatted.filter(function(p){return p.spray==='Opposite Field';}).length/spTot*100)+'%':'—';
         }
 
-        // K and BB totals: IBL raw counts for 2025, summary counts for 2026
+        // K and BB totals: IBL raw counts for 2025; datadiamond2026.csv (DATA.summary) for 2026
         var kRaw=null,bbRaw=null;
         if(year==2025){
           kRaw  = iblS&&iblS.K!=null  ? Math.round(iblS.K)  : null;
           bbRaw = iblS&&iblS.BB!=null ? Math.round(iblS.BB) : null;
         } else {
-          kRaw  = s.K!=null  ? Math.round(s.K)  : null;
+          // 2026: K sourced from datadiamond2026.csv (s.K), fallback to scatter-derived Ks
+          if(s.K!=null){
+            kRaw = Math.round(s.K);
+          } else {
+            var scKs=sc.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';});
+            kRaw = scKs.length>0 ? scKs.length : null;
+          }
           bbRaw = s.BB!=null ? Math.round(s.BB) : null;
         }
         var kVal  = kRaw!=null  ? String(kRaw)  : '—';
@@ -1794,10 +1806,11 @@ Zane Skansi,Kitchener Panthers`;
         var arsenal=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];}).slice(0,3)
           .map(function(e){return e[0].slice(0,4)+' '+f1(xp(e[1],tot))+'%';}).join('  ')||'—';
 
-        // HAND: scatter -> iblHistory.throws -> '?'
+        // HAND: 2026 = pitchers2026 (pd.throws) primary, fallback scatter, then iblHistory
+        //       2025 = scatter derived, fallback iblHistory.throws
         var nameDisp=p.name; if(nameDisp.length>18)nameDisp=nameDisp.slice(0,17)+'.';
-        // HAND: deriveHand from scatter (matches main.js logic), fallback iblHistory.throws
         var handVal = (function(){
+          if(year==2026 && pd.throws) return pd.throws;
           var counts={}, tot=0;
           p.sc.forEach(function(s){ var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
           if(tot===0) return iblP&&iblP.throws ? iblP.throws
@@ -1813,8 +1826,11 @@ Zane Skansi,Kitchener Panthers`;
                                   : String(ks);
         var bbPctVal = year==2025 ? (iblP&&iblP.BB!=null ? String(Math.round(iblP.BB)) : String(bbsRaw))
                                   : (pd.BB!=null          ? String(Math.round(pd.BB))   : String(bbsRaw));
-        // REST: days since last outing
-        var restVal = daysRest===99?'—':daysRest===0?'TODAY':daysRest+'d';
+        // REST: days since last outing — human-readable
+        var restVal = daysRest===99 ? '—'
+                    : daysRest===0 ? 'TODAY'
+                    : daysRest===1 ? 'YESTERDAY'
+                    : daysRest+'d AGO';
         var vals=[nameDisp,handVal,eraVal,whipVal,kPctVal,bbPctVal,fpsVal,strVal,ttpVal,restVal,arsenal];
 
         // Start a new page if this row won't fit
@@ -1844,7 +1860,7 @@ Zane Skansi,Kitchener Panthers`;
         var fs2 = 7;
         var cx=ML;
         vals.forEach(function(v,i){
-          var isNm=i===0, isRest=i===8;
+          var isNm=i===0, isRest=i===9;
           var restC=daysRest<=1?[248,113,113]:daysRest<=2?[255,184,28]:[52,211,153];
           d.setFont('helvetica',isNm||isRest?'bold':'normal'); d.setFontSize(fs2);
           st(d,isRest?restC:isNm?CO.white:CO.light);
