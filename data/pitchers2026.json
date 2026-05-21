@@ -11340,7 +11340,7 @@
     "LD_pct": 0,
     "PO_pct": 0,
     "throws": "R",
-    "scatter": {}
+    "scatter": []
   },
   {
     "pitcher": "Casey Bouilliere - Howard",
@@ -15571,7 +15571,7 @@
     "LD_pct": 33.3,
     "PO_pct": 0,
     "throws": "L",
-    "scatter": {}
+    "scatter": []
   },
   {
     "pitcher": "Dylan Kints",
@@ -46208,7 +46208,7 @@
     "LD_pct": 100,
     "PO_pct": 0,
     "throws": "R",
-    "scatter": {}
+    "scatter": []
   },
   {
     "pitcher": "Steven Hospital",

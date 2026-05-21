@@ -351,9 +351,21 @@ pitcher_scatter <- pitches %>%
     .groups = "drop"
   )
 
+# Empty scatter template — same columns as pitcher_scatter rows, zero rows.
+# Ensures pitchers with no x/y data get scatter:[] (not null/{}) in JSON.
+empty_scatter_df <- data.frame(
+  x = numeric(0), y = numeric(0), pitch_type = character(0),
+  outcome = character(0), result = character(0), count = character(0),
+  contact = character(0), spray = character(0), inning = integer(0),
+  outs = integer(0), runners = integer(0), time_to_plate = numeric(0),
+  batter = character(0), batter_team = character(0), batter_side = character(0),
+  pitcher_side = character(0), date = character(0), in_zone = logical(0),
+  stringsAsFactors = FALSE
+)
+
 pitcher_json <- pitcher_stats %>%
   left_join(pitcher_scatter, by = "pitcher") %>%
-  mutate(scatter = ifelse(is.na(scatter), list(list()), scatter))
+  mutate(scatter = lapply(scatter, function(s) if (is.null(s)) empty_scatter_df else s))
 
 # ── Write JSON ─────────────────────────────────────────────────────────────────
 write_json(pitches_json,

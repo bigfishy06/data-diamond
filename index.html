@@ -1809,7 +1809,7 @@ Zane Skansi,Kitchener Panthers`;
       var pitRowIndex = 0;
 
       pitchers.forEach(function(p,idx){
-        var sc=p.sc;
+        var sc=Array.isArray(p.sc)?p.sc:[];
         var _pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
         var _pbpPArr = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
         var pd=gpFindByName(_pitchersArr, 'pitcher', p.name)||{};
@@ -2233,7 +2233,7 @@ Zane Skansi,Kitchener Panthers`;
             }
           });
         });
-        // Fall back to scatter stored directly on DATA.pitchers entry
+        // Fall back to scatter on DATA.pitchers entry (guard against {} from R serialization)
         if (!sc.length) {
           var pdEntry = (DATA.pitchers || []).find(function(x){ return x.pitcher === name; });
           if (pdEntry && Array.isArray(pdEntry.scatter)) sc = pdEntry.scatter;
