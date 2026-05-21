@@ -1500,13 +1500,24 @@ Zane Skansi,Kitchener Panthers`;
           return fps.length>=5 ? f1(sw/fps.length*100)+'%' : '—';
         })();
 
-        // BATS: both years — scatter-based 50% rule (mirrors deriveHand in main.js) is primary;
-        //       2026: fallback to datadiamond2026.csv field names, then iblHistory
-        //       2025: fallback to iblHistory.bats
+        // BATS: both years — scatter-based 50% rule (mirrors deriveHand in main.js) is primary.
+        // batter_side only exists in 2025 scatter; for 2026 we read DATA._pitches25 directly.
         var bats = (function(){
-          // Apply the 50% rule from main.js deriveHand() using scatter batter_side
+          // Build scatter source: prefer 2025 pitches (which have batter_side) regardless of report year
+          var _scSrc = (DATA._pitches25 && Array.isArray(DATA._pitches25)) ? DATA._pitches25 : DATA.pitches;
           var counts={}, tot=0;
-          sc.forEach(function(p){ var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
+          _scSrc.forEach(function(bp){
+            if(!bp.scatter) return;
+            bp.scatter.forEach(function(p){
+              if(p.batter && p.batter.toLowerCase()===nameLower){
+                var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;}
+              }
+            });
+          });
+          // Also check current-year scatter in case it does have batter_side
+          if(tot===0){
+            sc.forEach(function(p){ var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
+          }
           if(tot>0){
             var sides=Object.keys(counts);
             if(sides.length===1) return sides[0];
@@ -1514,9 +1525,9 @@ Zane Skansi,Kitchener Panthers`;
             if(counts[dom]/tot>=0.5) return dom;
             return 'S';
           }
-          // No scatter — fall back to data source
+          // No scatter at all — fall back to summary field (2026) or IBL history
           if(year==2026){
-            var _b=s.Bats||s.bats||s.bat_hand||s.BatHand||s.Bat||s.bat||s.Hits||s.hits||s.side||s.Side||null;
+            var _b=s.Bats||s.bats||s.bat_hand||s.BatHand||s.Bat||s.bat||s.side||s.Side||null;
             if(_b) return _b;
           }
           return iblS&&iblS.bats ? iblS.bats : '?';
@@ -1749,9 +1760,58 @@ Zane Skansi,Kitchener Panthers`;
         var iblP=iblAll.filter(function(r){return r.IP>0&&(r.season||'').indexOf(iblYear)!==-1;})[0]
                  ||iblAll.filter(function(r){return r.IP>0;})[0]||null;
 
-        var daysRest=pd.last_game_date?Math.floor((today2-new Date(pd.last_game_date+'T00:00:00'))/86400000):99;
-        var lastCount=pd.last_pitch_count||0;
-        var recentGames=pd.recent_games||[]; // array of {date, pitches} for multi-day check
+        var daysRest, lastCount, recentGames;
+        if(pd.last_game_date){
+          // 2025 pitchers.json has last_game_date / last_pitch_count / recent_games
+          daysRest    = Math.floor((today2-new Date(pd.last_game_date+'T00:00:00'))/86400000);
+          lastCount   = pd.last_pitch_count||0;
+          recentGames = pd.recent_games||[];
+        } else {
+          // 2026: derive last outing date from scatter pitch dates
+          // Each scatter record should have a 'date' or 'game_date' field
+          var _scDates = [];
+          sc.forEach(function(s){
+            var _d = s.date||s.game_date||s.Date||s.Game_Date||null;
+            if(_d && /^\d{4}-\d{2}-\d{2}/.test(String(_d))) _scDates.push(String(_d).slice(0,10));
+          });
+          // Also search 2025 scatter for this pitcher to catch any cross-year data
+          var _p25src = (DATA._pitches25 && Array.isArray(DATA._pitches25)) ? DATA._pitches25 : [];
+          var _pitcherKeyR = p.name.toLowerCase().trim();
+          _p25src.forEach(function(bp){
+            if(!bp.scatter) return;
+            bp.scatter.forEach(function(s){
+              if(s.pitcher && s.pitcher.toLowerCase().trim()===_pitcherKeyR){
+                var _d = s.date||s.game_date||s.Date||s.Game_Date||null;
+                if(_d && /^\d{4}-\d{2}-\d{2}/.test(String(_d))) _scDates.push(String(_d).slice(0,10));
+              }
+            });
+          });
+          if(_scDates.length){
+            _scDates.sort();
+            var _lastDate = _scDates[_scDates.length-1];
+            daysRest  = Math.floor((today2-new Date(_lastDate+'T00:00:00'))/86400000);
+            lastCount = 0; // pitch count not available without pitchers.json
+            // Build recentGames from unique dates with pitch counts
+            var _dateGroups = {};
+            sc.forEach(function(s){
+              var _d = s.date||s.game_date||s.Date||s.Game_Date||null;
+              if(_d && /^\d{4}-\d{2}-\d{2}/.test(String(_d))){
+                var _dk = String(_d).slice(0,10);
+                _dateGroups[_dk] = (_dateGroups[_dk]||0)+1;
+              }
+            });
+            recentGames = Object.keys(_dateGroups).map(function(dt){ return {date:dt, pitches:_dateGroups[dt]}; });
+            // Use most recent game's pitch count as lastCount
+            if(recentGames.length){
+              recentGames.sort(function(a,b){return a.date<b.date?1:-1;});
+              lastCount = recentGames[0].pitches;
+            }
+          } else {
+            daysRest    = 99;
+            lastCount   = 0;
+            recentGames = [];
+          }
+        }
         // Check 3 consecutive days pitched
         var consec3=false;
         if(recentGames.length>=3){
@@ -1836,14 +1896,26 @@ Zane Skansi,Kitchener Panthers`;
         var arsenal=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];}).slice(0,3)
           .map(function(e){return e[0].slice(0,4)+' '+f1(xp(e[1],tot))+'%';}).join('  ')||'—';
 
-        // HAND: both years — scatter-based 50% rule (mirrors deriveHand in main.js) is primary;
-        //       2026: fallback to pitchers2026/datadiamond2026 field names, then iblHistory
-        //       2025: fallback to iblHistory.throws
+        // HAND: both years — scatter-based 50% rule (mirrors deriveHand in main.js) is primary.
+        // pitcher_side only exists in 2025 scatter; for 2026 we read DATA._pitches25 directly.
         var nameDisp=p.name; if(nameDisp.length>18)nameDisp=nameDisp.slice(0,17)+'.';
         var handVal = (function(){
-          // Apply the 50% rule from main.js deriveHand() using scatter pitcher_side
+          var pitcherKeyH = p.name.toLowerCase().trim();
+          // Build scatter source: prefer 2025 pitches (which have pitcher_side)
+          var _scSrcH = (DATA._pitches25 && Array.isArray(DATA._pitches25)) ? DATA._pitches25 : DATA.pitches;
           var counts={}, tot=0;
-          p.sc.forEach(function(s){ var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
+          _scSrcH.forEach(function(bp){
+            if(!bp.scatter) return;
+            bp.scatter.forEach(function(s){
+              if(s.pitcher && s.pitcher.toLowerCase().trim()===pitcherKeyH){
+                var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;}
+              }
+            });
+          });
+          // Also check current-year scatter in case it has pitcher_side
+          if(tot===0){
+            p.sc.forEach(function(s){ var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
+          }
           if(tot>0){
             var sides=Object.keys(counts);
             if(sides.length===1) return sides[0];
