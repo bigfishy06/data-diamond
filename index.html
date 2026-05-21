@@ -1506,9 +1506,18 @@ Zane Skansi,Kitchener Panthers`;
       d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
       sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
 
-      var pageBottom = PH - 10;
-      var rowH = 9;
       var hdrH = 7;
+      var contentTopB = MT+20;
+      var pageBottomB = PH - 10;
+      var availHB = pageBottomB - contentTopB;
+      // Fit rows to fill the page — never smaller than 7mm or larger than 14mm
+      var rowsPerPageB = Math.floor((availHB - hdrH) / 9);
+      var totalPagesB  = Math.ceil(batters.length / rowsPerPageB);
+      var rowH = totalPagesB === 1
+        ? Math.min(14, (availHB - hdrH) / batters.length)
+        : Math.min(14, (availHB - hdrH) / rowsPerPageB);
+      rowH = Math.max(7, rowH);
+      var pageBottom = pageBottomB;
 
       var hdrs = ['PLAYER','BATS','AVG','OPS','K','BB','SB','PULL','STRAIGHT','OPPO'];
       var cWs  = [CPW*0.24,CPW*0.07,CPW*0.09,CPW*0.09,CPW*0.045,CPW*0.045,CPW*0.07,CPW*0.11,CPW*0.11,CPW*0.10];
@@ -1525,7 +1534,7 @@ Zane Skansi,Kitchener Panthers`;
         return yy+hdrH;
       }
 
-      var y = MT+20;
+      var y = contentTopB;
       y = drawBatHdr(d, y);
 
       var rowIndex = 0;
@@ -1793,9 +1802,17 @@ Zane Skansi,Kitchener Panthers`;
       sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
 
       var today2 = gameDate ? new Date(gameDate + 'T00:00:00') : new Date(); today2.setHours(0,0,0,0);
-      var pageBottom2 = PH - 10;
-      var rowH = 9;
       var hdrH2 = 7;
+      var contentTopP = MT+20;
+      var pageBottom2 = PH - 10;
+      var availHP = pageBottom2 - contentTopP;
+      // Fit rows to fill the page — never smaller than 7mm or larger than 14mm
+      var rowsPerPageP = Math.floor((availHP - hdrH2) / 9);
+      var totalPagesP  = Math.ceil(pitchers.length / rowsPerPageP);
+      var rowH = totalPagesP === 1
+        ? Math.min(14, (availHP - hdrH2) / pitchers.length)
+        : Math.min(14, (availHP - hdrH2) / rowsPerPageP);
+      rowH = Math.max(7, rowH);
 
       var hdrs=['PITCHER','HAND','ERA','WHIP','K','BB','FPS%','STRIKE%','TTP','REST','ARSENAL'];
       var cWs =[CPW*0.17,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.055,CPW*0.055,CPW*0.07,CPW*0.08,CPW*0.07,CPW*0.07,CPW*0.23];
@@ -1812,7 +1829,7 @@ Zane Skansi,Kitchener Panthers`;
         return yy+hdrH2;
       }
 
-      var y = MT+20;
+      var y = contentTopP;
       y = drawPitHdr(d, y);
 
       var pitRowIndex = 0;
