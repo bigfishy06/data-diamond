@@ -732,7 +732,10 @@
 
   function genPitcherPDF(player, team) {
     var d=new window.jspdf.jsPDF({unit:'mm',format:'a4'}), sc=player.scatter||[];
-    var tot=sc.length;
+    // Look up pre-computed row from pitchers data (pitchers2026.json) for no-scatter fallback
+    var _pdEntry = (typeof DATA!=='undefined' && DATA.pitchers) ? (DATA.pitchers.find(function(x){return x.pitcher===player.name;})||{}) : {};
+    var hasScatter = sc.length > 0;
+    var tot = hasScatter ? sc.length : (_pdEntry.total_pitches!=null ? _pdEntry.total_pitches : 0);
     var ks=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
     var bbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
     var hits=sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
@@ -741,14 +744,20 @@
     var calS=sc.filter(function(s){return s.outcome==='Called Strike';}).length;
     var balls=sc.filter(function(s){return s.outcome==='Ball';}).length;
     var inZ=sc.filter(function(s){return s.x!=null&&s.x>=-1&&s.x<=1&&s.y!=null&&s.y>=0&&s.y<=1;}).length;
+    // Use pre-computed values when no scatter data
+    var _ksDisp  = !hasScatter && _pdEntry.K!=null  ? String(Math.round(_pdEntry.K))  : String(ks);
+    var _bbsDisp = !hasScatter && _pdEntry.BB!=null ? String(Math.round(_pdEntry.BB)) : String(bbs);
+    var _kPct    = !hasScatter && _pdEntry.K_pct!=null   ? f1(_pdEntry.K_pct)+'%'   : f1(xp(ks,tot))+'%';
+    var _strPct  = !hasScatter && _pdEntry.STR_pct!=null ? f1(_pdEntry.STR_pct)+'%' : f1(xp(str,tot))+'%';
+    var _znPct   = !hasScatter ? '—' : f1(xp(inZ,tot))+'%';
     drawBg(d);drawHdr(d,player.name,'PITCHER',team);
     var y=MT+32;
-    y=drawBoxes(d,[['PITCHES',String(tot)],['K',String(ks)],['BB',String(bbs)],
-      ['K%',f1(xp(ks,tot))+'%'],['STR%',f1(xp(str,tot))+'%'],['ZN%',f1(xp(inZ,tot))+'%']],y);
+    y=drawBoxes(d,[['PITCHES',String(tot)],['K',_ksDisp],['BB',_bbsDisp],
+      ['K%',_kPct],['STR%',_strPct],['ZN%',_znPct]],y);
     y+=4;y=drawSec(d,'Pitching Stats',y);
     var ph=['PITCHES','K','BB','HIT','STR','SW-STR','CL-STR','BALL','K%','BB%','STR%','ZN%'];
-    y=drawTbl(d,ph,[[tot,ks,bbs,hits,str,swS,calS,balls,
-      f1(xp(ks,tot))+'%',f1(xp(bbs,tot))+'%',f1(xp(str,tot))+'%',f1(xp(inZ,tot))+'%'].map(String)],
+    y=drawTbl(d,ph,[[tot,_ksDisp,_bbsDisp,hits,str,swS,calS,balls,
+      _kPct,(!hasScatter&&_pdEntry.BB_pct!=null?f1(_pdEntry.BB_pct)+'%':f1(xp(bbs,tot))+'%'),_strPct,_znPct].map(String)],
       Array(ph.length).fill(CPW/ph.length),y,[8,10]);
     y+=2;
     var tc2={};
@@ -1901,7 +1910,9 @@ Zane Skansi,Kitchener Panthers`;
         // ERA: always IBL History (both years) — pbp ERA is unreliable (often 0)
         var eraVal = iblP&&iblP.ERA!=null ? f2(iblP.ERA) : '—';
 
-        var tot=sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
+        var scTot=sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
+        // If no scatter data, fall back to pre-computed totals from pitchers2026 row (pd)
+        var tot = scTot > 0 ? scTot : (pd.total_pitches != null ? pd.total_pitches : 0);
         var ks=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
         var str=sc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
 
@@ -1911,9 +1922,9 @@ Zane Skansi,Kitchener Panthers`;
         var whipVal=(function(){
           if(year==2025 && pbpP&&pbpP.WHIP!=null) return f2(pbpP.WHIP);
           if(year==2026 && pd.IP>0){
-            // Calculate from scatter: (BB + H) / IP
-            var scBbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
-            var scH=sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
+            // Use scatter counts if available, otherwise pd pre-computed BB
+            var scBbs=scTot>0 ? sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length : (pd.BB!=null?pd.BB:0);
+            var scH=scTot>0 ? sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length : 0;
             return f2((scBbs+scH)/pd.IP);
           }
           // scatter fallback
