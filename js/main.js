@@ -820,8 +820,10 @@ function getPitcherWhipFromData(name) {
   var ip = pd && pd.IP != null ? parseFloat(pd.IP) : null;
   if (!(ip > 0)) return null;
   var bb = pd && pd.BB != null ? Number(pd.BB) : 0;
-  var h = pd && pd.H != null ? Number(pd.H) : 0;
-  if (!h) h = getPitcherScatterHits(name, pd);
+  // Prefer H_allowed from pitchers2026 (counts all hits, not just x/y ones)
+  var h  = pd && pd.H_allowed != null ? Number(pd.H_allowed) : null;
+  if (h === null) h = pd && pd.H != null ? Number(pd.H) : null;
+  if (h === null) h = getPitcherScatterHits(name, pd);
   return (bb + h) / ip;
 }
 function getPitchPlayer(name) {
@@ -1537,7 +1539,11 @@ function renderTeamGrid(content) {
     return DATA.pitchers2026.filter(function(pd){ return pd.pitcher !== 'Pitcher'; }).map(function(pd) {
       var teamObj = resolveTeam(pd.pitcher_team || pd.team);
       var m = scMap[pd.pitcher] || {};
-      var whip    = (pd.IP > 0 && m.tot) ? (m.bb + m.h) / pd.IP : null;
+      // Use pd.H_allowed (from R script) if available — scatter misses hits on no-x/y pitches.
+      // Fall back to scatter hits when H_allowed absent. Show null if neither available.
+      var _whipH  = pd.H_allowed != null ? pd.H_allowed : (m.tot ? m.h : null);
+      var _whipBB = pd.BB        != null ? pd.BB        : (m.tot ? m.bb : 0);
+      var whip    = (pd.IP > 0 && _whipH !== null) ? (_whipBB + _whipH) / pd.IP : null;
       var swingPct = m.tot   > 0 ? m.swings / m.tot   * 100 : null;
       var whiffPct = m.swings > 0 ? m.whiffs / m.swings * 100 : null;
       var bip     = m.gb + m.fb + m.ld + m.po;
@@ -2891,7 +2897,9 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     var scP  = sc.filter(function(s){ return s.x != null && s.y != null; });
     var pd   = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
     var pbpPO = getPbpPitcher(name) || {};
-    var tot  = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+    var scTot = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+    // Fall back to pd.total_pitches for no-x/y pitchers so rate stats compute correctly
+    var tot  = scTot > 0 ? scTot : (pd.total_pitches != null ? pd.total_pitches : 0);
     var ks   = sc.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
     var bbs  = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
     var str  = sc.filter(function(s){ return ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
@@ -3374,8 +3382,8 @@ function buildPbpPitcherLeague() {
     // ERA already built from iblHistory above
     if (p.WHIP != null) {
       o.whip.push(p.WHIP);
-    } else if (p.IP > 0 && p.BB != null && p.H != null) {
-      o.whip.push((Number(p.BB) + Number(p.H)) / parseFloat(p.IP));
+    } else if (p.IP > 0 && p.BB != null && (p.H_allowed != null || p.H != null)) {
+      o.whip.push((Number(p.BB) + Number(p.H_allowed != null ? p.H_allowed : p.H)) / parseFloat(p.IP));
     } else if (p.IP > 0 && p.BB != null) {
       o.whip.push((Number(p.BB) + getPitcherScatterHits(p.pitcher, p)) / parseFloat(p.IP));
     }
