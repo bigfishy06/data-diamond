@@ -1922,10 +1922,14 @@ Zane Skansi,Kitchener Panthers`;
         var whipVal=(function(){
           if(year==2025 && pbpP&&pbpP.WHIP!=null) return f2(pbpP.WHIP);
           if(year==2026 && pd.IP>0){
-            // Use scatter counts if available, otherwise pd pre-computed BB
-            var scBbs=scTot>0 ? sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length : (pd.BB!=null?pd.BB:0);
-            var scH=scTot>0 ? sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length : 0;
-            return f2((scBbs+scH)/pd.IP);
+            // Use pd.H_allowed if available (exported after R script update),
+            // otherwise fall back to scatter hits. If neither, show —.
+            var scBbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
+            var bbsForWhip = pd.BB!=null ? pd.BB : scBbs;
+            var hForWhip   = pd.H_allowed!=null ? pd.H_allowed
+                           : (scTot>0 ? sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length : null);
+            if(hForWhip===null) return '—';
+            return f2((bbsForWhip+hForWhip)/pd.IP);
           }
           // scatter fallback
           var scBbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;

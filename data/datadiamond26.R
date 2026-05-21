@@ -249,6 +249,7 @@ pitcher_stats <- pitches %>%
   group_by(pitcher) %>%
   summarise(
     pitcher_team      = last(pitcher_team),
+    last_game_date    = as.character(max(as.Date(date[date != "" & !is.na(date)]), na.rm = TRUE)),
     total_pitches     = sum(outcome != "" & !is.na(outcome)),
     K                 = sum(is_k),
     BB                = sum(is_bb),
@@ -309,7 +310,7 @@ pitcher_stats <- pitches %>%
   ) %>%
   select(-BABIP_den, -strikes, -swings, -whiffs, -fp_pitches, -fp_strikes,
          -two_strike_pa, -putaways, -batted_balls, -gb, -fb, -ld, -po,
-         -ab_against, -H_allowed, -HR_allowed, -SF_allowed)
+         -ab_against, -HR_allowed, -SF_allowed)
 
 pitcher_hands <- pitches %>%
   filter(trimws(pitcher_side) != "") %>%
