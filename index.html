@@ -1134,6 +1134,23 @@ Zane Skansi,Kitchener Panthers`;
     }
     var picker = yearBtn.closest('.gp-year-picker');
 
+    // Build set of players who have 2025 reports before swapping to chosen year
+    var has2025Report = new Set();
+    if (typeof swapSeasonData === 'function') {
+      swapSeasonData('year:2025');
+      var _s25   = (DATA.summary  && Array.isArray(DATA.summary))  ? DATA.summary  : [];
+      var _p25   = (DATA.pitches  && Array.isArray(DATA.pitches))  ? DATA.pitches  : [];
+      var _pit25 = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
+      _s25.forEach(function(r){ if(r.batter)   has2025Report.add(r.batter.trim().toLowerCase()); });
+      _pit25.forEach(function(p){ if(p.pitcher) has2025Report.add(p.pitcher.trim().toLowerCase()); });
+      _p25.forEach(function(bp){
+        if(bp.batter) has2025Report.add(bp.batter.trim().toLowerCase());
+        if(bp.scatter) bp.scatter.forEach(function(s){
+          if(s.pitcher) has2025Report.add(s.pitcher.trim().toLowerCase());
+        });
+      });
+    }
+
     // Swap data to chosen year so we can read the player list
     var prevSeason = (typeof _activeSeason !== 'undefined') ? _activeSeason : 'year:2026';
     if (typeof swapSeasonData === 'function') swapSeasonData('year:' + year);
