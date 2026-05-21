@@ -478,10 +478,10 @@
           </div>
         </div>
         <div class="gp-btns">
-          <button class="gp-btn" onclick="showYearPicker('${opp}',this,'pitchers-pdf')">
+          <button class="gp-btn" onclick="showYearPicker('${opp}',this,'pitchers-pdf','${game.date}')">
             <span class="gp-btn-label">OPP PITCHERS PDF</span>
           </button>
-          <button class="gp-btn" onclick="showYearPicker('${opp}',this,'batters-pdf')">
+          <button class="gp-btn" onclick="showYearPicker('${opp}',this,'batters-pdf','${game.date}')">
             <span class="gp-btn-label">OPP BATTERS PDF</span>
           </button>
         </div>
@@ -1105,7 +1105,7 @@ Zane Skansi,Kitchener Panthers`;
   }
 
   // ── YEAR PICKER ───────────────────────────────────────────────────────────
-  function showYearPicker(oppName, btn, action) {
+  function showYearPicker(oppName, btn, action, gameDate) {
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined') {
       alert('Data is still loading. Please wait a moment and try again.'); return;
     }
@@ -1119,16 +1119,17 @@ Zane Skansi,Kitchener Panthers`;
     }
 
     picker.dataset.action = action;
+    var gd = gameDate || '';
     picker.innerHTML =
       '<span class="gp-year-label">SELECT SEASON</span>' +
-      '<button class="gp-year-btn" onclick="showPlayerSelector(\'' + oppName + '\',\'' + action + '\',2025,this)">2025</button>' +
-      '<button class="gp-year-btn" onclick="showPlayerSelector(\'' + oppName + '\',\'' + action + '\',2026,this)">2026</button>' +
+      '<button class="gp-year-btn" onclick="showPlayerSelector(\'' + oppName + '\',\'' + action + '\',2025,this,\'' + gd + '\')">2025</button>' +
+      '<button class="gp-year-btn" onclick="showPlayerSelector(\'' + oppName + '\',\'' + action + '\',2026,this,\'' + gd + '\')">2026</button>' +
       '<button class="gp-year-cancel" onclick="this.closest(\'.gp-year-picker\').classList.remove(\'open\');this.closest(\'.gp-year-picker\').innerHTML=\'\'">×</button>';
     picker.classList.add('open');
   }
 
   // ── PLAYER SELECTOR (shown after year is chosen, for pitchers/batters PDF) ──
-  function showPlayerSelector(oppName, action, year, yearBtn) {
+  function showPlayerSelector(oppName, action, year, yearBtn, gameDate) {
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined') {
       alert('Data is still loading. Please wait a moment and try again.'); return;
     }
@@ -1297,7 +1298,7 @@ Zane Skansi,Kitchener Panthers`;
     html +=
         '</div>' +
         '<div style="padding:8px 10px;border-top:1px solid rgba(255,184,28,0.15)">' +
-          '<button onclick="gpRunWithSelected(\'' + oppName + '\',\'' + action + '\',' + year + ',\'' + selectId + '\',this)" ' +
+          '<button onclick="gpRunWithSelected(\'' + oppName + '\',\'' + action + '\',' + year + ',\'' + selectId + '\',this,\'' + (gameDate||'') + '\')" ' +
             'style="width:100%;padding:8px;background:rgba(255,184,28,0.14);border:1px solid rgba(255,184,28,0.35);border-radius:3px;color:#FFB81C;font-family:\'Bebas Neue\',sans-serif;font-size:13px;letter-spacing:0.1em;cursor:pointer;transition:background 0.15s" ' +
             'onmouseover="this.style.background=\'rgba(255,184,28,0.26)\'" onmouseout="this.style.background=\'rgba(255,184,28,0.14)\'">' +
             'GENERATE PDF' +
@@ -1310,7 +1311,7 @@ Zane Skansi,Kitchener Panthers`;
     picker.classList.add('open');
   }
 
-  function gpRunWithSelected(oppName, action, year, selectId, genBtn) {
+  function gpRunWithSelected(oppName, action, year, selectId, genBtn, gameDate) {
     var container = document.getElementById(selectId);
     if (!container) return;
     var selected = [];
@@ -1343,7 +1344,7 @@ Zane Skansi,Kitchener Panthers`;
     }
 
     if (action === 'pitchers-pdf') {
-      genOppPitchersPDF(oppName, actionBtn, restore, selected, year);
+      genOppPitchersPDF(oppName, actionBtn, restore, selected, year, gameDate);
     } else if (action === 'batters-pdf') {
       genOppBattersPDF(oppName, actionBtn, restore, selected, year);
     }
@@ -1499,20 +1500,26 @@ Zane Skansi,Kitchener Panthers`;
           return fps.length>=5 ? f1(sw/fps.length*100)+'%' : '—';
         })();
 
-        // BATS: 2026 = datadiamond2026.csv (try all likely field names), fallback scatter, then iblHistory
-        //       2025 = scatter derived, fallback iblHistory.bats
+        // BATS: both years — scatter-based 50% rule (mirrors deriveHand in main.js) is primary;
+        //       2026: fallback to datadiamond2026.csv field names, then iblHistory
+        //       2025: fallback to iblHistory.bats
         var bats = (function(){
+          // Apply the 50% rule from main.js deriveHand() using scatter batter_side
+          var counts={}, tot=0;
+          sc.forEach(function(p){ var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
+          if(tot>0){
+            var sides=Object.keys(counts);
+            if(sides.length===1) return sides[0];
+            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
+            if(counts[dom]/tot>=0.5) return dom;
+            return 'S';
+          }
+          // No scatter — fall back to data source
           if(year==2026){
             var _b=s.Bats||s.bats||s.bat_hand||s.BatHand||s.Bat||s.bat||s.Hits||s.hits||s.side||s.Side||null;
             if(_b) return _b;
           }
-          var counts={}, tot=0;
-          sc.forEach(function(p){ var v=p.batter_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-          if(tot===0) return iblS&&iblS.bats ? iblS.bats : '?';
-          var sides=Object.keys(counts);
-          if(sides.length===1) return sides[0];
-          var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-          return counts[dom]/tot>=0.5 ? dom : 'S';
+          return iblS&&iblS.bats ? iblS.bats : '?';
         })();
 
         // GB%, FB%, LD%: 2025 = pbp_batters (most accurate), 2026 = summary2026 (normalized)
@@ -1554,6 +1561,7 @@ Zane Skansi,Kitchener Panthers`;
         // K and BB totals: IBL raw counts for 2025; datadiamond2026.csv (DATA.summary) for 2026
         var kRaw=null,bbRaw=null;
         if(year==2025){
+          // 2025: K strictly from IBL History only — no scatter fallback
           kRaw  = iblS&&iblS.K!=null  ? Math.round(iblS.K)  : null;
           bbRaw = iblS&&iblS.BB!=null ? Math.round(iblS.BB) : null;
         } else {
@@ -1608,7 +1616,7 @@ Zane Skansi,Kitchener Panthers`;
   }
 
   // ── OPP PITCHERS PDF — compact two-column table, guaranteed one page ─────
-  function genOppPitchersPDF(oppName, btn, restore, selectedNames, year) {
+  function genOppPitchersPDF(oppName, btn, restore, selectedNames, year, gameDate) {
     year = year || ((typeof _activeSeason !== 'undefined') ? _activeSeason.replace('year:','') : '2026');
     restore = restore || function(){};
     if (typeof resolveTeam === 'undefined' || typeof DATA === 'undefined' || !DATA.pitches) {
@@ -1705,7 +1713,7 @@ Zane Skansi,Kitchener Panthers`;
       d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
       sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
 
-      var today2=new Date(); today2.setHours(0,0,0,0);
+      var today2 = gameDate ? new Date(gameDate + 'T00:00:00') : new Date(); today2.setHours(0,0,0,0);
       var pageBottom2 = PH - 10;
       var rowH = 9;
       var hdrH2 = 7;
@@ -1828,22 +1836,28 @@ Zane Skansi,Kitchener Panthers`;
         var arsenal=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];}).slice(0,3)
           .map(function(e){return e[0].slice(0,4)+' '+f1(xp(e[1],tot))+'%';}).join('  ')||'—';
 
-        // HAND: 2026 = pitchers2026/datadiamond2026 — try all likely field names
-        //       2025 = scatter derived, fallback iblHistory.throws
+        // HAND: both years — scatter-based 50% rule (mirrors deriveHand in main.js) is primary;
+        //       2026: fallback to pitchers2026/datadiamond2026 field names, then iblHistory
+        //       2025: fallback to iblHistory.throws
         var nameDisp=p.name; if(nameDisp.length>18)nameDisp=nameDisp.slice(0,17)+'.';
         var handVal = (function(){
+          // Apply the 50% rule from main.js deriveHand() using scatter pitcher_side
+          var counts={}, tot=0;
+          p.sc.forEach(function(s){ var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
+          if(tot>0){
+            var sides=Object.keys(counts);
+            if(sides.length===1) return sides[0];
+            var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
+            if(counts[dom]/tot>=0.5) return dom;
+            return 'S';
+          }
+          // No scatter — fall back to data source
           if(year==2026){
             var _th=pd.throws||pd.Throws||pd.throw_hand||pd.ThrowHand||pd.hand||pd.Hand||pd.Throws_hand||pd.pitching_hand||null;
             if(_th) return _th;
           }
-          var counts={}, tot=0;
-          p.sc.forEach(function(s){ var v=s.pitcher_side; if(v){counts[v]=(counts[v]||0)+1;tot++;} });
-          if(tot===0) return iblP&&iblP.throws ? iblP.throws
-                             : (iblAll.length&&iblAll[0].throws ? iblAll[0].throws : '?');
-          var sides=Object.keys(counts);
-          if(sides.length===1) return sides[0];
-          var dom=sides.reduce(function(a,b){return counts[a]>=counts[b]?a:b;});
-          return counts[dom]/tot>=0.5 ? dom : 'S';
+          return iblP&&iblP.throws ? iblP.throws
+               : (iblAll.length&&iblAll[0].throws ? iblAll[0].throws : '?');
         })();
         // K and BB totals: IBL history for 2025; datadiamond2026.csv for 2026 — try all likely field names
         var bbsRaw=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
