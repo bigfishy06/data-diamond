@@ -2209,6 +2209,12 @@ Zane Skansi,Kitchener Panthers`;
           if (pt && pt.name === oppName) seen.add(s.pitcher);
         });
       });
+      // Also include pitchers in DATA.pitchers for the opponent team who have no scatter data
+      (DATA.pitchers || []).forEach(function(p) {
+        if (!p.pitcher || !p.pitcher_team) return;
+        var pt = resolveTeam(p.pitcher_team);
+        if (pt && pt.name === oppName) seen.add(p.pitcher);
+      });
 
       if (!seen.size) {
         picker.innerHTML += '<div style="padding:16px;color:rgba(255,255,255,0.4);font-family:var(--font-mono);font-size:12px">No data available.</div>';
@@ -2227,6 +2233,11 @@ Zane Skansi,Kitchener Panthers`;
             }
           });
         });
+        // Fall back to scatter stored directly on DATA.pitchers entry
+        if (!sc.length) {
+          var pdEntry = (DATA.pitchers || []).find(function(x){ return x.pitcher === name; });
+          if (pdEntry && Array.isArray(pdEntry.scatter)) sc = pdEntry.scatter;
+        }
         pitcherList.push({ name: name, sc: sc });
       });
       pitcherList.sort(function(a,b){ return a.name.localeCompare(b.name); });
