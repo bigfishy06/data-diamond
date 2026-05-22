@@ -2179,15 +2179,15 @@ Zane Skansi,Kitchener Panthers`;
     }
     var pitBBKDisp=_pitBBKVal!=null?f2(_pitBBKVal):'—';
     // Raw K and BB counts for pitcher
-    // 2025: IBL History only; 2026: scatter-derived ks/bbs counts
+    // 2025: IBL History only; 2026: pd26 primary (counts all pitches incl. no-x/y), scatter fallback
     var _pitKCount = selSeason==='2025'
       ? iblK((_iblAllP||[]).find(function(r){return (r.season||'').indexOf('2025')!==-1&&iblK(r)!=null;}))
-      : ks;
+      : (pd26&&pd26.K!=null ? pd26.K : ks);
     var _pitBBCount = selSeason==='2025'
       ? iblBB((_iblAllP||[]).find(function(r){return (r.season||'').indexOf('2025')!==-1&&iblBB(r)!=null;}))
-      : bbs;
-    var _pitKDisp  = selSeason==='2025' ? (_pitKCount!=null ? String(Math.round(_pitKCount)) : '—') : (ks>0?String(ks):'—');
-    var _pitBBDisp = selSeason==='2025' ? (_pitBBCount!=null ? String(Math.round(_pitBBCount)) : '—') : (bbs>0?String(bbs):'—');
+      : (pd26&&pd26.BB!=null ? pd26.BB : bbs);
+    var _pitKDisp  = _pitKCount!=null ? String(Math.round(_pitKCount)) : '—';
+    var _pitBBDisp = _pitBBCount!=null ? String(Math.round(_pitBBCount)) : '—';
     y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['FPS%',fpsVal],['STRIKE%',strVal],['K',_pitKDisp],['BB',_pitBBDisp]],y);
     y+=4;
 
