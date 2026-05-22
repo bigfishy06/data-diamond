@@ -1781,37 +1781,79 @@ Zane Skansi,Kitchener Panthers`;
 
     var batterPoints=[];
 
-    // AVG/OPS production
-    if(_avgEarly>=0.300) batterPoints.push({dot:'#f87171',text:'Solid hitter ('+f3(_avgEarly)+' AVG, '+f3(_opsEarly)+' OPS) — one of the better contact averages in the league. Limit mistakes in the zone.'});
-    else if(_avgEarly>=0.250) batterPoints.push({dot:'#FFB81C',text:'Decent hitter ('+f3(_avgEarly)+' AVG, '+f3(_opsEarly)+' OPS) — above-average contact, can hurt you. Mix locations and keep him off-balance.'});
-    else batterPoints.push({dot:'#34d399',text:'Struggling offensively ('+f3(_avgEarly)+' AVG, '+f3(_opsEarly)+' OPS) — attack the zone with confidence.'});
+    // ── POINT 1: Production (AVG + OPS combined) ─────────────────────────
+    if(_avgEarly>=0.300) batterPoints.push({dot:'#f87171',text:'Dangerous hitter ('+f3(_avgEarly)+' AVG / '+f3(_opsEarly)+' OPS) — elite contact, high on-base. Avoid leaving pitches in the zone; work edges and change eye levels.'});
+    else if(_avgEarly>=0.250) batterPoints.push({dot:'#FFB81C',text:'Productive hitter ('+f3(_avgEarly)+' AVG / '+f3(_opsEarly)+' OPS) — above-average contact. Do not fall behind in counts; he punishes pitchers\' mistakes.'});
+    else batterPoints.push({dot:'#34d399',text:'Struggling offensively ('+f3(_avgEarly)+' AVG / '+f3(_opsEarly)+' OPS) — attack the zone with confidence; he has not been making pitchers pay.'});
 
-    // Plate discipline — BB%
-    if(_bbEarly>=15) batterPoints.push({dot:'#f87171',text:'Outstanding plate discipline ('+f1(_bbEarly)+'% BB) — draws walks at an elite rate. Stay in the zone; do not nibble.'});
-    else if(_bbEarly>=10) batterPoints.push({dot:'#FFB81C',text:'Patient hitter ('+f1(_bbEarly)+'% BB) — works counts well. Mix your approach; do not fall behind early.'});
-    else batterPoints.push({dot:'#34d399',text:'Aggressive hitter ('+f1(_bbEarly)+'% BB) — almost never walks, pitchers can exploit this. Use edges and off-speed away.'});
-
-    // K rate
-    if(_kEarly>=25) batterPoints.push({dot:'#34d399',text:'High K rate ('+f1(_kEarly)+'%) — a real vulnerability. Power stuff and put-away pitches work here.'});
-    else if(_kEarly>=18) batterPoints.push({dot:'#FFB81C',text:'Average K rate ('+f1(_kEarly)+'%) — can be struck out but not easily. Mix in put-away pitches when ahead.'});
-    else if(_kEarly<=15) batterPoints.push({dot:'#f87171',text:'Very hard to strikeout ('+f1(_kEarly)+'% K) — makes consistent contact. Keep the ball down, avoid mistakes.'});
-
-    // Swing%
-    if(_swEarly!=null){
-      if(_swEarly>=52) batterPoints.push({dot:'#34d399',text:'Free swinger ('+f1(_swEarly)+'% swing) — off-speed away works. He offers at pitches out of the zone.'});
-      else if(_swEarly<=35) batterPoints.push({dot:'#f87171',text:'Very selective ('+f1(_swEarly)+'% swing) — waits for his pitch. Throw quality strikes or he takes the walk.'});
+    // ── POINT 2: BB% and Swing% RECONCILED — avoids the "doesn't walk" + "patient" contradiction ──
+    // Combine plate discipline (BB%) with swing aggressiveness (Swing%) into one unified read.
+    // Four meaningful combos:
+    //   High BB + Low Swing  = truly elite plate discipline, rarely swings, takes walks
+    //   High BB + High Swing = high swing but still draws walks — foul-off king, grinds counts
+    //   Low BB + High Swing  = free swinger, expands zone aggressively, can be exploited
+    //   Low BB + Low Swing   = selective but never walks — hits his pitch early or goes out on strikes
+    var _highBB = _bbEarly >= 12;
+    var _midBB  = _bbEarly >= 7 && _bbEarly < 12;
+    var _lowBB  = _bbEarly < 7;
+    var _highSw = _swEarly!=null && _swEarly >= 50;
+    var _lowSw  = _swEarly!=null && _swEarly <= 37;
+    if(_highBB && _lowSw){
+      batterPoints.push({dot:'#f87171',text:'Elite plate discipline ('+f1(_bbEarly)+'% BB, '+(_swEarly!=null?f1(_swEarly):'—')+'% swing) — takes many pitches, earns walks freely. Stay in the zone and do not nibble; every ball counts.'});
+    } else if(_highBB && _highSw){
+      batterPoints.push({dot:'#f87171',text:'Grinds at-bats ('+f1(_bbEarly)+'% BB, '+f1(_swEarly)+'% swing) — swings often but still draws walks; he fouls off pitches and works deep counts. Avoid 3-ball counts at all costs.'});
+    } else if(_highBB){
+      batterPoints.push({dot:'#f87171',text:'Patient hitter ('+f1(_bbEarly)+'% BB) — works counts and earns walks at an above-average rate. Stay in the zone; do not nibble or fall behind.'});
+    } else if(_lowBB && _highSw){
+      batterPoints.push({dot:'#34d399',text:'Free swinger ('+f1(_bbEarly)+'% BB, '+f1(_swEarly)+'% swing) — expands the zone aggressively and rarely walks. Use off-speed away and edges; he will chase.'});
+    } else if(_lowBB && _lowSw){
+      batterPoints.push({dot:'#FFB81C',text:'Selective early, rarely walks ('+f1(_bbEarly)+'% BB, '+(_swEarly!=null?f1(_swEarly):'—')+'% swing) — waits for his pitch but does not draw many walks; he tends to swing at strikes he likes or take himself out. Get ahead and make him chase.'});
+    } else if(_lowBB){
+      batterPoints.push({dot:'#34d399',text:'Aggressive hitter ('+f1(_bbEarly)+'% BB) — almost never walks. Exploit this by working the edges; he tends to offer at borderline pitches.'});
+    } else if(_midBB && _highSw){
+      batterPoints.push({dot:'#FFB81C',text:'Active at the plate ('+f1(_bbEarly)+'% BB, '+f1(_swEarly)+'% swing) — swings often but shows some patience. Mix in and out; avoid leaving pitches over the middle.'});
+    } else {
+      batterPoints.push({dot:'#FFB81C',text:'Average plate discipline ('+f1(_bbEarly)+'% BB'+(_swEarly!=null?', '+f1(_swEarly)+'% swing':'')+') — no extreme tendencies. Mix your approach and change speeds to disrupt his timing.'});
     }
 
-    // Whiff%
-    if(_whEarly!=null){
-      if(_whEarly>=30) batterPoints.push({dot:'#34d399',text:'High whiff rate ('+f1(_whEarly)+'%) — breaking balls generate misses. Go to put-away pitch with confidence.'});
-      else if(_whEarly<=10) batterPoints.push({dot:'#f87171',text:'Elite bat-to-ball ('+f1(_whEarly)+'% whiff) — rarely misses. Location and sequencing are critical.'});
+    // ── POINT 3: K% and Whiff% RECONCILED — avoids "hard to K" + "misses a lot" contradiction ──
+    // High Whiff + Low K = fouls everything off, grinds counts, doesn't punch out — warn pitcher
+    // High Whiff + High K = true swing-and-miss bat — exploitable
+    // Low Whiff + Low K  = elite bat-to-ball — makes contact consistently
+    var _highK    = _kEarly >= 24;
+    var _lowK     = _kEarly <= 15;
+    var _highWhiff= _whEarly!=null && _whEarly >= 28;
+    var _lowWhiff = _whEarly!=null && _whEarly <= 12;
+    if(_highK && _highWhiff){
+      batterPoints.push({dot:'#34d399',text:'Swing-and-miss bat ('+f1(_kEarly)+'% K, '+f1(_whEarly)+'% whiff) — genuinely misses pitches, especially breaking balls. Go to your put-away pitch with confidence when ahead.'});
+    } else if(_highK && !_highWhiff){
+      batterPoints.push({dot:'#34d399',text:'Strikeout-prone ('+f1(_kEarly)+'% K) — gets beaten by stuff even without a high whiff rate; likely takes called third strikes or gets jammed. Expand out of zone when ahead.'});
+    } else if(_lowK && _highWhiff){
+      batterPoints.push({dot:'#f87171',text:'Fouls everything off ('+f1(_kEarly)+'% K but '+f1(_whEarly)+'% whiff) — misses pitches but stays alive; he grinds at-bats. Expect long counts; be careful with pitch selection late in at-bats.'});
+    } else if(_lowK && _lowWhiff){
+      batterPoints.push({dot:'#f87171',text:'Elite bat-to-ball ('+f1(_kEarly)+'% K, '+f1(_whEarly)+'% whiff) — rarely misses and almost never strikes out. Location and pitch sequencing are critical; he will put the ball in play.'});
+    } else if(_lowK){
+      batterPoints.push({dot:'#f87171',text:'Hard to strikeout ('+f1(_kEarly)+'% K) — makes consistent contact and puts the ball in play. Keep the ball down and work the corners.'});
+    } else if(_highWhiff){
+      batterPoints.push({dot:'#34d399',text:'High whiff rate ('+f1(_whEarly)+'%) — can be beaten with movement. Use breaking balls and off-speed when ahead in the count.'});
     }
 
-    // FP swing
+    // ── POINT 4: FP Swing% in context of BB% — avoids "never walks" + "patient early" contradiction ──
+    // Only fire FP Swing if it adds something not already said in Point 2.
     if(_fpEarly!=null){
-      if(_fpEarly>=50) batterPoints.push({dot:'#f87171',text:'Attacks first pitches ('+f1(_fpEarly)+'%) — pitchers can get ahead cheap. Be ready on pitch one.'});
-      else if(_fpEarly<=20) batterPoints.push({dot:'#34d399',text:'Takes first pitches ('+f1(_fpEarly)+'%) — very patient early. Get a free strike on pitch one every at-bat.'});
+      if(_fpEarly>=50 && !_highBB){
+        // Attacks early AND doesn't draw walks — clear aggressive profile, not contradictory
+        batterPoints.push({dot:'#f87171',text:'First-pitch hacker ('+f1(_fpEarly)+'% FP swing) — swings at a lot of opening pitches. Get a free strike on pitch one; he makes your job easy early in counts.'});
+      } else if(_fpEarly>=50 && _highBB){
+        // Attacks early but draws walks — nuanced: aggressive in good counts but patient overall
+        batterPoints.push({dot:'#FFB81C',text:'Attacks first pitches ('+f1(_fpEarly)+'% FP swing) but still draws walks ('+f1(_bbEarly)+'% BB) — he is selective about which first pitches he takes. Throw quality strikes pitch one, but do not nibble thereafter.'});
+      } else if(_fpEarly<=20 && !_highBB){
+        // Takes first pitches but doesn't walk — selective early, hits his pitch later
+        batterPoints.push({dot:'#FFB81C',text:'Takes pitch one ('+f1(_fpEarly)+'% FP swing) but rarely walks ('+f1(_bbEarly)+'% BB) — patient early, then commits; he is looking for a specific pitch after getting a read. Attack on pitch two with your best stuff.'});
+      } else if(_fpEarly<=20 && _highBB){
+        // Takes first pitches AND walks — truly patient
+        batterPoints.push({dot:'#f87171',text:'Very patient early ('+f1(_fpEarly)+'% FP swing) with high BB% ('+f1(_bbEarly)+'%) — takes pitch one deliberately and works deep counts. Do not give free balls; get ahead on pitch two.'});
+      }
     }
 
     batterPoints=batterPoints.slice(0,5);
@@ -1866,25 +1908,54 @@ Zane Skansi,Kitchener Panthers`;
 
     function hCard(label,value,color,note,sub){return{label:label,value:value,color:color,note:note,sub:sub||''};}
     var hl=[];
+
+    // FP SWING % — cross-aware of overall Swing% to avoid opposite-advice contradiction
     var fpSwC=fpSwingPct!=null?(fpSwingPct>=55?'#f87171':fpSwingPct>=40?'#FFB81C':'#34d399'):'#666';
-    hl.push(hCard('FP SWING %',
-      fpSwingPct!=null?f1(fpSwingPct)+'%':'—',fpSwC,
-      fpSwingPct!=null?(fpSwingPct>=55?'Attacks first pitch — throw strikes.':fpSwingPct>=40?'Sometimes swings early.':'Takes pitches — work ahead.'):'No data.','1st Pitch Swing %'));
+    var _fpSwNote;
+    if(fpSwingPct==null){_fpSwNote='No data.';}
+    else if(fpSwingPct>=55&&swingPct!=null&&swingPct>=50){_fpSwNote='Swings early and often — pitch one is a real at-bat. Throw a quality strike.';}
+    else if(fpSwingPct>=55&&swingPct!=null&&swingPct<42){_fpSwNote='Jumps on pitch one but selective after — throw a borderline strike early.';}
+    else if(fpSwingPct>=55){_fpSwNote='Attacks first pitches — throw a strike on pitch one, get ahead cheap.';}
+    else if(fpSwingPct<=25&&swingPct!=null&&swingPct<42){_fpSwNote='Patient at all times — takes pitch one and waits for his pitch. Use pitch one for a free strike.';}
+    else if(fpSwingPct<=25){_fpSwNote='Takes first pitches consistently — get a free strike on pitch one.';}
+    else{_fpSwNote='Moderate first-pitch swing — no strong lean early.';}
+    hl.push(hCard('FP SWING %',fpSwingPct!=null?f1(fpSwingPct)+'%':'—',fpSwC,_fpSwNote,'1st Pitch Swing %'));
+
+    // SWING % — overall aggressiveness
     var swC=swingPct!=null?(swingPct>=52?'#34d399':swingPct>=42?'#FFB81C':'#f87171'):'#666';
-    hl.push(hCard('SWING %',
-      swingPct!=null?f1(swingPct)+'%':'—',swC,
-      swingPct!=null?(swingPct>=52?'Swings often — use off-speed away.':swingPct>=42?'Mix pitches in and out.':'Very selective — waits for his pitch, work the zone.'):'No data.','Overall Swing %'));
+    var _swNote;
+    if(swingPct==null){_swNote='No data.';}
+    else if(swingPct>=52){_swNote='Expands zone often — use off-speed away and edges; he chases.';}
+    else if(swingPct<=37){_swNote='Selectively swings — waits for his pitch. Throw strikes; balls count.';}
+    else{_swNote='Average swing rate — mix in and out; no strong pull tendency.';}
+    hl.push(hCard('SWING %',swingPct!=null?f1(swingPct)+'%':'—',swC,_swNote,'Overall Swing %'));
+
+    // WHIFF % — cross-aware of Chase% to avoid "use breaking balls" vs "does not chase" contradiction
     var whC=whiffPct!=null?(whiffPct>=30?'#34d399':whiffPct>=20?'#FFB81C':'#f87171'):'#666';
-    hl.push(hCard('WHIFF %',
-      whiffPct!=null?f1(whiffPct)+'%':'—',whC,
-      whiffPct!=null?(whiffPct>=30?'Misses often — use breaking stuff.':whiffPct>=20?'Some swing and miss.':'Makes contact — be precise.'):'No data.','Whiff % on Swings'));
+    var _whNote;
+    if(whiffPct==null){_whNote='No data.';}
+    else if(whiffPct>=30&&chasePct!=null&&chasePct>=30){_whNote='Misses and chases — breaking balls off the plate, he bites and whiffs.';}
+    else if(whiffPct>=30&&chasePct!=null&&chasePct<20){_whNote='Whiffs in zone but not a chaser — beat him with late movement inside the zone.';}
+    else if(whiffPct>=30){_whNote='Generates swing-and-miss — go to your put-away pitch when ahead.';}
+    else if(whiffPct<=12&&chasePct!=null&&chasePct>=30){_whNote='Makes contact but chases — pull him off plate; expect contact, not whiffs.';}
+    else if(whiffPct<=12){_whNote='Rarely misses on swings — location and sequencing are critical.';}
+    else{_whNote='Some swing-and-miss — use put-away pitches when ahead in the count.';}
+    hl.push(hCard('WHIFF %',whiffPct!=null?f1(whiffPct)+'%':'—',whC,_whNote,'Whiff % on Swings'));
+
+    // CHASE % — cross-aware of Whiff% to avoid misleading strategy
     var chC=chasePct!=null?(chasePct>=35?'#34d399':chasePct>=22?'#FFB81C':'#f87171'):'#666';
-    hl.push(hCard('CHASE %',
-      chasePct!=null?f1(chasePct)+'%':'—',chC,
-      chasePct!=null?(chasePct>=35?'Use waste pitches — he bites.':chasePct>=22?'Occasional chase — mix.':'Does not chase — stay in zone.'):'No data.','Chase % (out of zone)'));
+    var _chNote;
+    if(chasePct==null){_chNote='No data.';}
+    else if(chasePct>=35&&whiffPct!=null&&whiffPct>=28){_chNote='Chases and misses out of zone — breaking balls away, he bites and whiffs.';}
+    else if(chasePct>=35&&whiffPct!=null&&whiffPct<18){_chNote='Chases out of zone but makes contact — draw him off plate, expect contact not whiffs.';}
+    else if(chasePct>=35){_chNote='Offers at pitches out of zone — use waste pitches when ahead; he bites.';}
+    else if(chasePct<20){_chNote='Does not chase — stay in the zone; balls only help him.';}
+    else{_chNote='Occasional chaser — mix in a waste pitch when ahead, do not rely on it.';}
+    hl.push(hCard('CHASE %',chasePct!=null?f1(chasePct)+'%':'—',chC,_chNote,'Chase % (out of zone)'));
+
     hl.push(hCard('SB',
       _sbVal!=null?fN(_sbVal):'—','#60a5fa',
-      _sbVal!=null?(_sbVal>=10?'Elite baserunner — threat on bases.':_sbVal>=5?'Active on bases — keep an eye on him.':'Low stolen base total.'):'No data.','Stolen bases'));
+      _sbVal!=null?(_sbVal>=10?'Elite baserunner — vary slide steps, hold runners.':_sbVal>=5?'Active on bases — keep runners honest.':'Low SB count — no significant running threat.'):'No data.','Stolen bases'));
 
     var cardW2=(CPW-4*4)/5,cardH2=28;
     hl.forEach(function(h,i){
@@ -1944,16 +2015,25 @@ Zane Skansi,Kitchener Panthers`;
     var _batBBCount = selSeason==='2025'
       ? iblBB(iblB)
       : (s.BB!=null ? s.BB : null);
+    // Plate Discipline cards — PS/PA note is cross-aware of BB count to avoid "aggressive" + high walks contradiction
+    var _pspaNote;
+    if(pspa==null){_pspaNote='';}
+    else if(pspa>=4.0&&_batBBCount!=null&&_batBBCount>=10){_pspaNote='Works counts deep + walks often — never nibble, every ball matters.';}
+    else if(pspa>=4.0&&_batBBCount!=null&&_batBBCount<5){_pspaNote='Sees many pitches but does not walk — grinds counts and puts ball in play.';}
+    else if(pspa>=4.0){_pspaNote='Works deep counts — pitch economy matters; he extends at-bats.';}
+    else if(pspa<3.5&&_batBBCount!=null&&_batBBCount>=10){_pspaNote='First-pitch aggressive but still walks — selective about which first pitches he swings at.';}
+    else if(pspa<3.5){_pspaNote='Resolves at-bats quickly — put-away pitch in 2 strikes finishes him.';}
+    else{_pspaNote='Average pitch count per PA — no extreme tendency.';}
     var discStats=[
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
        color:pspa!=null?(pspa>=4.0?'#34d399':pspa>=3.5?'#FFB81C':'#f87171'):'#555',
-       note:pspa!=null?(pspa>=4.0?'Works counts deeply':pspa>=3.5?'Average pitch count':'First-pitch aggressive'):''},
+       note:_pspaNote},
       {label:'K',sub:'Strikeouts',val:_batKCount!=null?String(Math.round(_batKCount)):'—',
        color:_batKCount!=null?(_batKCount>=30?'#34d399':_batKCount>=15?'#FFB81C':'#f87171'):'#555',
-       note:''},
+       note:_batKCount!=null?(_batKCount>=30?'High K total — put-away pitch works':_batKCount>=15?'Moderate K vulnerability':'Rarely strikes out'):'' },
       {label:'BB',sub:'Walks',val:_batBBCount!=null?String(Math.round(_batBBCount)):'—',
        color:_batBBCount!=null?(_batBBCount>=15?'#34d399':_batBBCount>=7?'#FFB81C':'#f87171'):'#555',
-       note:''},
+       note:_batBBCount!=null?(_batBBCount>=15?'High walk total — stay in zone':_batBBCount>=7?'Earns some walks — do not fall behind':'Almost never walks — use edges freely'):''},
     ];
     var nDisc=discStats.length, dW2=(CPW-(nDisc-1)*4)/nDisc, dH2=28;
     discStats.forEach(function(stat,i){
@@ -2202,39 +2282,64 @@ Zane Skansi,Kitchener Panthers`;
     var topPitch=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];})[0];
 
     // ── Build 3–5 key scouting bullet points ─────────────────────────────
+    // Logic: reconcile FPS% and STR% together to avoid contradictory advice.
+    // FPS% = how often he gets a strike on pitch 1 (early aggression indicator).
+    // STR% = overall strike rate across all pitches (sustained command indicator).
+    // When FPS% is high but STR% is low: he gets ahead early but loses command as
+    // counts deepen — the correct advice is nuanced, not contradictory.
     var pitcherPoints = [];
 
     // K rate
-    if(kPct2>=0.25) pitcherPoints.push({dot:'#f87171', text:'Elite K rate ('+Math.round(kPct2*100)+'%) — expect swing-and-miss stuff. Shorten your swing, protect the zone.'});
+    if(kPct2>=0.25) pitcherPoints.push({dot:'#f87171', text:'Elite K rate ('+Math.round(kPct2*100)+'%) — expect swing-and-miss stuff. Shorten your swing and protect the zone.'});
     else if(kPct2>=0.18) pitcherPoints.push({dot:'#FFB81C', text:'Above-avg K rate ('+Math.round(kPct2*100)+'%) — stay patient and look for your pitch before expanding.'});
     else pitcherPoints.push({dot:'#34d399', text:'Low K rate ('+Math.round(kPct2*100)+'%) — put the ball in play hard. He does not overpower hitters.'});
 
     // BB / Command
-    if(bbPct2>=0.12) pitcherPoints.push({dot:'#34d399', text:'Poor command ('+Math.round(bbPct2*100)+'% BB) — work counts, let him fall behind. Free passes are available.'});
-    else if(bbPct2<=0.05) pitcherPoints.push({dot:'#f87171', text:'Elite command ('+Math.round(bbPct2*100)+'% BB) — he throws strikes. Do not expect walks; be ready to swing early.'});
-    else pitcherPoints.push({dot:'#FFB81C', text:'Average command ('+Math.round(bbPct2*100)+'% BB) — mix approach; he finds the zone but can miss.'});
+    if(bbPct2>=0.12) pitcherPoints.push({dot:'#34d399', text:'Poor command ('+Math.round(bbPct2*100)+'% BB) — work deep counts; he tends to lose the zone. Free passes are available.'});
+    else if(bbPct2<=0.05) pitcherPoints.push({dot:'#f87171', text:'Elite command ('+Math.round(bbPct2*100)+'% BB) — he locates well all game. Do not count on a walk; always have a swing plan.'});
+    else pitcherPoints.push({dot:'#FFB81C', text:'Average command ('+Math.round(bbPct2*100)+'% BB) — he finds the zone but can miss in longer counts. Work the count if behind.'});
 
-    // Strike%
-    if(strPct3>=0.68) pitcherPoints.push({dot:'#f87171', text:'Strike machine ('+Math.round(strPct3*100)+'% STR) — do not fall behind. Be aggressive in hitter\'s counts.'});
-    else if(strPct3<=0.55) pitcherPoints.push({dot:'#34d399', text:'Below-avg strike rate ('+Math.round(strPct3*100)+'% STR) — take pitches and make him work the count.'});
-
-    // FPS%
+    // ── FPS% + STR% reconciled into a single unified point ──────────────
+    // This prevents the "take pitches" vs "have a plan on pitch one" contradiction.
     if(fpsPct!=null){
-      if(fpsPct>=65) pitcherPoints.push({dot:'#f87171', text:'Gets ahead often ('+f1(fpsPct)+'% FPS) — do not give him a free strike. Have a plan on pitch one.'});
-      else if(fpsPct<=50) pitcherPoints.push({dot:'#34d399', text:'Weak first-pitch strikes ('+f1(fpsPct)+'% FPS) — take pitch one and let him fall behind in the count.'});
+      var highFPS = fpsPct >= 65;   // gets ahead early
+      var lowFPS  = fpsPct <= 50;   // struggles to get ahead
+      var highSTR = strPct3 >= 0.60; // sustains strikes overall
+      var lowSTR  = strPct3 <= 0.52; // loses command after pitch 1
+
+      if(highFPS && highSTR){
+        // Dangerous all game: attacks early AND sustains it
+        pitcherPoints.push({dot:'#f87171', text:'Gets ahead early ('+f1(fpsPct)+'% FPS) and sustains it ('+Math.round(strPct3*100)+'% STR) — he is a strike-thrower all count long. Be aggressive early; he will not give in.'});
+      } else if(highFPS && lowSTR){
+        // The contradiction case: ahead early but fades — nuanced advice
+        pitcherPoints.push({dot:'#FFB81C', text:'Gets ahead early ('+f1(fpsPct)+'% FPS) but command fades ('+Math.round(strPct3*100)+'% STR) — protect on pitch one, then work the count deep; he tends to lose the zone as the at-bat extends.'});
+      } else if(lowFPS && lowSTR){
+        // Struggles to throw strikes at all — take pitches freely
+        pitcherPoints.push({dot:'#34d399', text:'Struggles to throw strikes: low FPS ('+f1(fpsPct)+'%) and low overall STR ('+Math.round(strPct3*100)+'%) — take pitches freely and make him earn every count. Do not swing at borderline offerings.'});
+      } else if(lowFPS && highSTR){
+        // Odd combo: works his way into the zone; take pitch 1 but be ready after
+        pitcherPoints.push({dot:'#FFB81C', text:'Slow to get ahead ('+f1(fpsPct)+'% FPS) but finds the zone over time ('+Math.round(strPct3*100)+'% STR) — take pitch one, then be ready to swing as counts deepen.'});
+      } else {
+        // Average in both: no strong lean either way
+        pitcherPoints.push({dot:'#FFB81C', text:'Average first-pitch strikes ('+f1(fpsPct)+'% FPS) and overall STR ('+Math.round(strPct3*100)+'%) — no clear pitch-count pattern; read the situation and be selective in pitcher\'s counts.'});
+      }
+    } else if(strPct3>=0.68){
+      pitcherPoints.push({dot:'#f87171', text:'Strike machine ('+Math.round(strPct3*100)+'% STR) — stays in the zone all count long. Be aggressive in hitter\'s counts; he will keep throwing strikes.'});
+    } else if(strPct3<=0.52){
+      pitcherPoints.push({dot:'#34d399', text:'Below-avg strike rate ('+Math.round(strPct3*100)+'% STR) — take pitches and make him work deep counts. He struggles to consistently locate.'});
     }
 
     // Primary pitch
     if(topPitch && tot>0){
       var tpPct=Math.round(topPitch[1]/tot*100);
-      if(tpPct>=55) pitcherPoints.push({dot:'#a78bfa', text:'Heavily relies on '+topPitch[0]+' ('+tpPct+'%) — sit on it, especially early. Look for it in fastball counts.'});
-      else pitcherPoints.push({dot:'#a78bfa', text:'Primary pitch: '+topPitch[0]+' ('+tpPct+'%) — genuine two-pitch mix. Adjust your plan mid at-bat.'});
+      if(tpPct>=55) pitcherPoints.push({dot:'#a78bfa', text:'Heavily relies on '+topPitch[0]+' ('+tpPct+'%) — sit on it, especially early in the count. Have a clear plan when you see it coming.'});
+      else pitcherPoints.push({dot:'#a78bfa', text:'Primary pitch is '+topPitch[0]+' ('+tpPct+'%) but he mixes well — adjust your read mid at-bat and do not lock in on one pitch type.'});
     }
 
     // TTP stealing note
     if(ttp!=null){
-      if(ttp>=1.5) pitcherPoints.push({dot:'#34d399', text:'Very slow to plate ('+ttp.toFixed(2)+'s) — running game is wide open. Attack bases freely.'});
-      else if(ttp<1.2) pitcherPoints.push({dot:'#f87171', text:'Quick delivery ('+ttp.toFixed(2)+'s) — do not attempt to steal. Window to run is extremely small.'});
+      if(ttp>=1.5) pitcherPoints.push({dot:'#34d399', text:'Very slow to plate ('+ttp.toFixed(2)+'s) — running game is wide open. Get a good read and go; the window is generous.'});
+      else if(ttp<1.2) pitcherPoints.push({dot:'#f87171', text:'Quick delivery ('+ttp.toFixed(2)+'s) — do not attempt to steal. The window to run is extremely small.'});
     }
 
     // Cap at 5 points
