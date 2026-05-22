@@ -127,7 +127,6 @@ pitches <- pitches %>%
 
 # ── Build per-batter pitch list (pitches2026.json) ────────────────────────────
 pitches_json <- pitches %>%
-  filter(!is.na(pitch_x), !is.na(pitch_y)) %>%
   group_by(batter) %>%
   summarise(
     team         = last(batter_team),
@@ -326,7 +325,6 @@ pitcher_stats <- pitcher_stats %>%
 
 # ── Per-pitcher scatter ────────────────────────────────────────────────────────
 pitcher_scatter <- pitches %>%
-  filter(!is.na(pitch_x), !is.na(pitch_y)) %>%
   group_by(pitcher) %>%
   summarise(
     scatter = list(data.frame(

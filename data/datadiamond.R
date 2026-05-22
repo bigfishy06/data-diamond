@@ -125,7 +125,6 @@ pitches <- pitches %>%
 
 # ── Build per-batter pitch list (pitches.json) ────────────────────────────────
 pitches_json <- pitches %>%
-  filter(!is.na(pitch_x), !is.na(pitch_y)) %>%
   group_by(batter) %>%
   summarise(
     team         = last(batter_team),
@@ -229,6 +228,7 @@ pitcher_stats <- pitches %>%
   group_by(pitcher) %>%
   summarise(
     pitcher_team      = last(pitcher_team),
+    last_game_date    = as.character(max(as.Date(date[date != "" & !is.na(date)]), na.rm = TRUE)),
     total_pitches     = sum(outcome != "" & !is.na(outcome)),
     K                 = sum(is_k),
     BB                = sum(is_bb),
@@ -289,11 +289,10 @@ pitcher_stats <- pitches %>%
   ) %>%
   select(-BABIP_den, -strikes, -swings, -whiffs, -fp_pitches, -fp_strikes,
          -two_strike_pa, -putaways, -batted_balls, -gb, -fb, -ld, -po,
-         -ab_against, -H_allowed, -HR_allowed, -SF_allowed)
+         -ab_against, -HR_allowed, -SF_allowed)
 
 # ── Per-pitcher scatter ────────────────────────────────────────────────────────
 pitcher_scatter <- pitches %>%
-  filter(!is.na(pitch_x), !is.na(pitch_y)) %>%
   group_by(pitcher) %>%
   summarise(
     scatter = list(data.frame(
@@ -319,8 +318,20 @@ pitcher_scatter <- pitches %>%
     .groups = "drop"
   )
 
+# Empty scatter template — ensures pitchers with no x/y data get scatter:[] not null in JSON
+empty_scatter_df <- data.frame(
+  x = numeric(0), y = numeric(0), pitch_type = character(0),
+  outcome = character(0), result = character(0), count = character(0),
+  contact = character(0), spray = character(0), inning = integer(0),
+  outs = integer(0), runners = integer(0), time_to_plate = numeric(0),
+  batter = character(0), batter_team = character(0), batter_side = character(0),
+  pitcher_side = character(0), date = character(0), in_zone = logical(0),
+  stringsAsFactors = FALSE
+)
+
 pitcher_json <- pitcher_stats %>%
-  left_join(pitcher_scatter, by = "pitcher")
+  left_join(pitcher_scatter, by = "pitcher") %>%
+  mutate(scatter = lapply(scatter, function(s) if (is.null(s)) empty_scatter_df else s))
 
 # ── Write JSON ─────────────────────────────────────────────────────────────────
 write_json(pitches_json,
