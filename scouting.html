@@ -1836,6 +1836,9 @@ Zane Skansi,Kitchener Panthers`;
       batterPoints.push({dot:'#f87171',text:'Hard to strikeout ('+f1(_kEarly)+'% K) — makes consistent contact and puts the ball in play. Keep the ball down and work the corners.'});
     } else if(_highWhiff){
       batterPoints.push({dot:'#34d399',text:'High whiff rate ('+f1(_whEarly)+'%) — can be beaten with movement. Use breaking balls and off-speed when ahead in the count.'});
+    } else {
+      // Average K range (16-23%) with no whiff data — still report K rate with neutral framing
+      batterPoints.push({dot:'#FFB81C',text:'Average K rate ('+f1(_kEarly)+'%) — can be struck out but not easily. Mix in put-away pitches when ahead in the count.'});
     }
 
     // ── POINT 4: FP Swing% in context of BB% — avoids "never walks" + "patient early" contradiction ──
@@ -2327,6 +2330,9 @@ Zane Skansi,Kitchener Panthers`;
       pitcherPoints.push({dot:'#f87171', text:'Strike machine ('+Math.round(strPct3*100)+'% STR) — stays in the zone all count long. Be aggressive in hitter\'s counts; he will keep throwing strikes.'});
     } else if(strPct3<=0.52){
       pitcherPoints.push({dot:'#34d399', text:'Below-avg strike rate ('+Math.round(strPct3*100)+'% STR) — take pitches and make him work deep counts. He struggles to consistently locate.'});
+    } else {
+      // fpsPct null and average STR (53-67%) — still give a count-management note
+      pitcherPoints.push({dot:'#FFB81C', text:'Average strike rate ('+Math.round(strPct3*100)+'% STR) — no strong count tendency. Mix approach; he finds the zone but is not dominant in it.'});
     }
 
     // Primary pitch
