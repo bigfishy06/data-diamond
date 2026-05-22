@@ -144,6 +144,7 @@ pitches_json <- pitches %>%
       time_to_plate = time_to_plate,
       pitcher       = pitcher,
       pitcher_team  = pitcher_team,
+      batter_team   = batter_team,
       batter_side   = batter_side,
       pitcher_side  = pitcher_side,
       date          = as.character(date),

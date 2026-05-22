@@ -2481,7 +2481,7 @@ function renderPlayerDetail(name, type, content) {
     var _filterBar = document.getElementById('season-filter-bar');
     if (!_filterBar) return;
     if (!_allSeasonOpts.length) { _filterBar.innerHTML = ''; return; }
-    var SEASON_TABS = ['overview', 'percentile', 'zone', 'splits', 'usage'];
+    var SEASON_TABS = ['overview', 'percentile', 'zone', 'splits'];
     if (!SEASON_TABS.includes(activeTab)) { _filterBar.innerHTML = ''; return; }
 
     function btnStyle(active, unavailable) {
@@ -4244,18 +4244,6 @@ function renderGameLog(name, pitch) {
   });
   if (!sc.length && pitch && pitch.scatter) sc = pitch.scatter;
 
-  // Filter scatter to the active season year so game log only shows selected season
-  var _glYear = _activeSeason.replace('year:', '');
-  if (_glYear && _glYear !== 'all') {
-    sc = sc.filter(function(s) {
-      var d = s.date || '';
-      if (d.length === 10 && d[4] === '-') return d.slice(0, 4) === _glYear;
-      var parts = d.split('-');
-      if (parts.length === 3 && parts[2].length === 2) return ('20' + parts[2]) === _glYear;
-      return true;
-    });
-  }
-
   if (!sc.length) {
     return '<div class="empty-state"><div class="empty-state-icon">&#128203;</div><h3>No game data available</h3></div>';
   }
@@ -4611,18 +4599,6 @@ function renderGameLog(name, pitch) {
 function renderBatterGameLog(name, pitch) {
   var sc = pitch && pitch.scatter ? pitch.scatter : [];
 
-  // Filter to the active season year so batter game log only shows selected season
-  var _bglYear = _activeSeason.replace('year:', '');
-  if (_bglYear && _bglYear !== 'all') {
-    sc = sc.filter(function(s) {
-      var d = s.date || '';
-      if (d.length === 10 && d[4] === '-') return d.slice(0, 4) === _bglYear;
-      var parts = d.split('-');
-      if (parts.length === 3 && parts[2].length === 2) return ('20' + parts[2]) === _bglYear;
-      return true;
-    });
-  }
-
   if (!sc.length) return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Game Log</span></div><div style="padding:20px;color:rgba(255,255,255,0.4);font-family:var(--font-mono);font-size:12px">No pitch data available.</div></div>';
 
   // Group by date
@@ -4648,18 +4624,6 @@ function initBatterGameLog(name, pitch) {
   var tbody = document.getElementById('bgl-tbody');
   if (!tbody) return;
   var sc = pitch && pitch.scatter ? pitch.scatter : [];
-
-  // Filter to active season so initBatterGameLog stays in sync with renderBatterGameLog
-  var _ibglYear = _activeSeason.replace('year:', '');
-  if (_ibglYear && _ibglYear !== 'all') {
-    sc = sc.filter(function(s) {
-      var d = s.date || '';
-      if (d.length === 10 && d[4] === '-') return d.slice(0, 4) === _ibglYear;
-      var parts = d.split('-');
-      if (parts.length === 3 && parts[2].length === 2) return ('20' + parts[2]) === _ibglYear;
-      return true;
-    });
-  }
 
   if (!sc.length) return;
 
