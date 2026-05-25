@@ -2421,6 +2421,7 @@ Zane Skansi,Kitchener Panthers`;
     // Pitch Arsenal
     var sT=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];});
     if(sT.length){
+      y+=3;
       y=drawSec(d,'Pitch Arsenal — What He Throws and How Effective Each Pitch Is',y);
       var atH=['PITCH TYPE','USAGE %','STRIKE %','BALL %','WHIFF %'];
       var atL=['Name of pitch','% of all pitches','Strike rate','Ball rate','Miss rate on swings'];
@@ -2466,15 +2467,14 @@ Zane Skansi,Kitchener Panthers`;
       return{hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(function(s){return s.x!=null&&s.y!=null;})};
     });
     var iw=CPW/2-4,gap=8;
-    // Overhead: drawSec(7) + titles(4) + stat table(14) + gap(3) = 28mm
-    // Heat map native aspect ratio = 414/360 = 1.15 (taller than wide)
-    var splitsOverhead=28;
-    var splitsMinNeeded=splitsOverhead+55+8; // 55mm min heat map + 8mm footer gap
+    // Overhead: gap(3) + drawSec(7) + titles(4) + stat table(14) + gap(3) = 31mm
+    var splitsOverhead=31;
+    var splitsMinNeeded=splitsOverhead+55+8;
     if(PH-y < splitsMinNeeded){d.addPage();drawBg(d);y=MT+8;}
-    // Fill remaining page space with heat maps, respecting native aspect ratio
     var heatAvail=PH-12-8-y-splitsOverhead;
-    var ihIdeal=Math.round(iw*1.15); // native ratio
-    var ih=Math.max(50,Math.min(ihIdeal,Math.round(heatAvail)));
+    var ihIdeal=Math.round(iw*1.15);
+    var ih=Math.max(50,Math.min(70,Math.min(ihIdeal,Math.round(heatAvail))));
+    y+=3;
     y=drawSec(d,'Splits — RHH vs. LHH',y);
     splitData.forEach(function(sd2,i){
       if(!sd2.sub.length)return;
