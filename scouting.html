@@ -2128,6 +2128,7 @@ Zane Skansi,Kitchener Panthers`;
       // ── LEFT / CENTRE: Spray Direction ────────────────────────────────────
       if(hasSpray){
         var pp4=Math.round(pullC2/spTot2*100),sp4=Math.round(strC3/spTot2*100),op4=Math.round(100-pp4-sp4);
+        var pp4r=pullC2/spTot2*100,sp4r=strC3/spTot2*100,op4r=oppC2/spTot2*100;
         var spraySegs=[{label:'Pull',pct:pp4,color:'#f87171'},{label:'Str',pct:sp4,color:'#FFB81C'},{label:'Oppo',pct:op4,color:'#60a5fa'}].filter(function(sg){return sg.pct>0;});
         var sprayImg=mkDonut(spraySegs,'DIR');
         d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
@@ -2144,9 +2145,9 @@ Zane Skansi,Kitchener Panthers`;
         });
         var sRec2,sColor2,sNote2;
         if(spTot2<5){sRec2='NONE';sColor2='#888888';sNote2='Not enough data — play standard.';}
-        else if(pp4>=40&&pp4>sp4&&pp4>op4){sRec2='PULL';sColor2='#f87171';sNote2='Pull hitter — shift to pull side.';}
-        else if(op4>=40&&op4>pp4&&op4>sp4){sRec2='OPPO';sColor2='#60a5fa';sNote2='Goes opposite often — shade that way.';}
-        else if(sp4>=40&&sp4>pp4&&sp4>op4){sRec2='STRAIGHT';sColor2='#FFB81C';sNote2='Up the middle — play standard.';}
+        else if(pp4r>=40&&pp4r>sp4r&&pp4r>op4r){sRec2='PULL';sColor2='#f87171';sNote2='Pull hitter — shift to pull side.';}
+        else if(op4r>=40&&op4r>pp4r&&op4r>sp4r){sRec2='OPPO';sColor2='#60a5fa';sNote2='Goes opposite often — shade that way.';}
+        else if(sp4r>=40&&sp4r>pp4r&&sp4r>op4r){sRec2='STRAIGHT';sColor2='#FFB81C';sNote2='Up the middle — play standard.';}
         else{sRec2='NONE';sColor2='#888888';sNote2='Balanced — no shift needed.';}
         var legRows=Math.ceil(spraySegs.length/2);
         var shiftY=legy2+legRows*6.5+3;
