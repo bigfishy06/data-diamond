@@ -2473,7 +2473,7 @@ Zane Skansi,Kitchener Panthers`;
     if(PH-y < splitsMinNeeded){d.addPage();drawBg(d);y=MT+8;}
     var heatAvail=PH-12-8-y-splitsOverhead;
     var ihIdeal=Math.round(iw*1.15);
-    var ih=Math.max(50,Math.min(70,Math.min(ihIdeal,Math.round(heatAvail))));
+    var ih=Math.max(50,Math.min(ihIdeal,Math.round(heatAvail)));
     y+=3;
     y=drawSec(d,'Splits — RHH vs. LHH',y);
     splitData.forEach(function(sd2,i){
