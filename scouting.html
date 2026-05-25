@@ -2518,12 +2518,8 @@ Zane Skansi,Kitchener Panthers`;
       if(!sd2.subXY.length)return;
       var xOff=ML+i*(iw+gap);
       d.addImage(mkHeat(sd2.subXY),'PNG',xOff,y,iw,ih);
-      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
-      d.text('Heat map vs. '+(sd2.hand==='R'?'RHH (Right-Handed Batters)':'LHH (Left-Handed Batters)'),xOff+iw/2,y+ih+3,{align:'center'});
-      d.setFont('helvetica','italic');d.setFontSize(5.5);st(d,CO.dim);
-      d.text('Bright zones = where he pitches most. Attack zones that are cold (rarely pitched).',xOff+iw/2,y+ih+7,{align:'center'});
     });
-    y+=ih+12;
+    y+=ih+4;
     drawFoot(d,player.name,'PITCHER');
     d.save('scouting_'+player.name.replace(/ /g,'_')+'_pitcher.pdf');
   }
