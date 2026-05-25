@@ -2472,8 +2472,10 @@ Zane Skansi,Kitchener Panthers`;
       return{hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(function(s){return s.x!=null&&s.y!=null;})};
     });
     var iw=CPW/2-4,gap=8;
-    if(y>170){d.addPage();drawBg(d);y=MT+8;}
-    // Section header + description + stat-table overhead = 7+6+5+17+4 = 39mm
+    // Overhead for splits section before heat maps: drawSec(7) + desc(6) + titles(5) + stat table(17) + gap(4) = 39mm
+    // Minimum heat map height we consider acceptable = 55mm. Total minimum = 39+55+10(footer) = 104mm
+    var splitsMinNeeded=104;
+    if(PH-y < splitsMinNeeded){d.addPage();drawBg(d);y=MT+8;}
     // Reserve 10mm for footer gap. Remaining space goes to heat maps.
     var heatAvail=PH-12-10-y-39; // space left for heat map rows after all splits overhead
     var ih=Math.max(50,Math.min(90,Math.round(heatAvail)));
