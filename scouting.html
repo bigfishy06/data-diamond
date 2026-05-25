@@ -2144,9 +2144,9 @@ Zane Skansi,Kitchener Panthers`;
         });
         var sRec2,sColor2,sNote2;
         if(spTot2<5){sRec2='NONE';sColor2='#888888';sNote2='Not enough data — play standard.';}
-        else if(pp4>=50){sRec2='PULL';sColor2='#f87171';sNote2='Pull hitter — shift to pull side.';}
+        else if(pp4>=40){sRec2='PULL';sColor2='#f87171';sNote2='Pull hitter — shift to pull side.';}
         else if(op4>=40){sRec2='OPPO';sColor2='#60a5fa';sNote2='Goes opposite often — shade that way.';}
-        else if(sp4>=50){sRec2='STRAIGHT';sColor2='#FFB81C';sNote2='Up the middle — play standard.';}
+        else if(sp4>=40){sRec2='STRAIGHT';sColor2='#FFB81C';sNote2='Up the middle — play standard.';}
         else{sRec2='NONE';sColor2='#888888';sNote2='Balanced — no shift needed.';}
         var legRows=Math.ceil(spraySegs.length/2);
         var shiftY=legy2+legRows*6.5+3;
@@ -2571,9 +2571,9 @@ Zane Skansi,Kitchener Panthers`;
         shift = 'NONE';
       } else {
         var pullPct2 = pull/sprayTot, oppPct2 = opp/sprayTot, strPct2 = straight/sprayTot;
-        if      (pullPct2 >= 0.55) shift = 'PULL';
-        else if (oppPct2  >= 0.45) shift = 'OPPO';
-        else if (strPct2  >= 0.50) shift = 'STRAIGHT';
+        if      (pullPct2 >= 0.40) shift = 'PULL';
+        else if (oppPct2  >= 0.40) shift = 'OPPO';
+        else if (strPct2  >= 0.40) shift = 'STRAIGHT';
         else                        shift = 'NONE';
       }
       return {
