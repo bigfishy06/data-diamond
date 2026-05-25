@@ -2472,24 +2472,23 @@ Zane Skansi,Kitchener Panthers`;
       return{hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(function(s){return s.x!=null&&s.y!=null;})};
     });
     var iw=CPW/2-4,gap=8;
-    // Overhead for splits section before heat maps: drawSec(7) + desc(6) + titles(5) + stat table(17) + gap(4) = 39mm
-    // Minimum heat map height we consider acceptable = 55mm. Total minimum = 39+55+10(footer) = 104mm
-    var splitsMinNeeded=104;
+    // Overhead: drawSec(7) + titles(4) + stat table(14) + gap(3) = 28mm
+    // Heat map native aspect ratio = 414/360 = 1.15 (taller than wide)
+    var splitsOverhead=28;
+    var splitsMinNeeded=splitsOverhead+55+8; // 55mm min heat map + 8mm footer gap
     if(PH-y < splitsMinNeeded){d.addPage();drawBg(d);y=MT+8;}
-    // Reserve 10mm for footer gap. Remaining space goes to heat maps.
-    var heatAvail=PH-12-10-y-39; // space left for heat map rows after all splits overhead
-    var ih=Math.max(50,Math.min(90,Math.round(heatAvail)));
-    y=drawSec(d,'Splits vs. Right-Handed Batters (RHH) and Left-Handed Batters (LHH)',y);
-    d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
-    d.text('These show how the pitcher performs differently against right vs. left-handed batters.',ML,y+1);
-    y+=6;
+    // Fill remaining page space with heat maps, respecting native aspect ratio
+    var heatAvail=PH-12-8-y-splitsOverhead;
+    var ihIdeal=Math.round(iw*1.15); // native ratio
+    var ih=Math.max(50,Math.min(ihIdeal,Math.round(heatAvail)));
+    y=drawSec(d,'Splits — RHH vs. LHH',y);
     splitData.forEach(function(sd2,i){
       if(!sd2.sub.length)return;
       var xOff=ML+i*(iw+gap);
-      d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
-      d.text('vs. '+(sd2.hand==='R'?'RIGHT-HANDED BATTERS (RHH)':'LEFT-HANDED BATTERS (LHH)'),xOff+iw/2,y,{align:'center'});
+      d.setFont('helvetica','bold');d.setFontSize(7);st(d,CO.gold);
+      d.text('vs. '+(sd2.hand==='R'?'RIGHT-HANDED (RHH)':'LEFT-HANDED (LHH)'),xOff+iw/2,y,{align:'center'});
     });
-    y+=5;
+    y+=4;
     splitData.forEach(function(sd2,i){
       if(!sd2.sub.length)return;
       var xOff=ML+i*(iw+gap);var cw=iw/2;
@@ -2503,23 +2502,23 @@ Zane Skansi,Kitchener Panthers`;
       var fpStrSplit=fpSplit.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
       var fpsPctSplit=fpSplit.length>=3?f1(fpStrSplit/fpSplit.length*100)+'%':'—';
       var row=[f1(xp(sd2.ss,sd2.sub.length))+'%',fpsPctSplit];
-      sf(d,CO.navy2);d.rect(xOff,y,iw,9,'F');
-      sd(d,CO.gold);d.setLineWidth(0.3);d.line(xOff,y+9,xOff+iw,y+9);
+      sf(d,CO.navy2);d.rect(xOff,y,iw,7,'F');
+      sd(d,CO.gold);d.setLineWidth(0.3);d.line(xOff,y+7,xOff+iw,y+7);
       var cx4=xOff;
       headers.forEach(function(h,hi){
-        d.setFont('helvetica','bold');d.setFontSize(6);st(d,CO.gold);d.text(h,cx4+cw/2,y+3.5,{align:'center'});
-        d.setFont('helvetica','normal');d.setFontSize(4.5);st(d,CO.dim);d.text(hdesc[hi],cx4+cw/2,y+7.5,{align:'center'});
+        d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.gold);d.text(h,cx4+cw/2,y+3,{align:'center'});
+        d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);d.text(hdesc[hi],cx4+cw/2,y+6,{align:'center'});
         cx4+=cw;
       });
-      sf(d,CO.navy3);d.rect(xOff,y+9,iw,8,'F');
+      sf(d,CO.navy3);d.rect(xOff,y+7,iw,7,'F');
       cx4=xOff;
       row.forEach(function(v){
-        d.setFont('helvetica','bold');d.setFontSize(9);st(d,CO.white);
-        d.text(v,cx4+cw/2,y+15,{align:'center'});cx4+=cw;
+        d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.white);
+        d.text(v,cx4+cw/2,y+12.5,{align:'center'});cx4+=cw;
       });
-      sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(xOff,y,iw,17,'S');
+      sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(xOff,y,iw,14,'S');
     });
-    y+=21;
+    y+=17;
     splitData.forEach(function(sd2,i){
       if(!sd2.subXY.length)return;
       var xOff=ML+i*(iw+gap);
