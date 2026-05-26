@@ -1440,8 +1440,8 @@ function renderTeamGrid(content) {
 
     // Tabs
     '<div class="tabs-bar"><div class="tabs">' +
-    '<button class="tab-btn active" data-ltab="pitching">Pitching</button>' +
-    '<button class="tab-btn" data-ltab="hitting">Hitting</button>' +
+    '<button class="tab-btn active" data-ltab="hitting">Hitting</button>' +
+    '<button class="tab-btn" data-ltab="pitching">Pitching</button>' +
     '</div></div>' +
 
     // Filter panel
@@ -1475,7 +1475,7 @@ function renderTeamGrid(content) {
     '</div>';
 
   // ── STATE ────────────────────────────────────────────────────────────────────
-  var _lsTab      = 'pitching';
+  var _lsTab      = 'hitting';
   var _lsSearch   = '';
   var _lsTeam     = '';
   var _lsMin      = 0;           // min IP (pitching) or min AB (hitting)
@@ -1818,7 +1818,7 @@ function renderTeamGrid(content) {
 
   // Initial render
   renderGroupBtns();
-  _lsSortCol = 2; _lsSortAsc = false; // Pitches desc
+  _lsSortCol = 2; _lsSortAsc = false; // default numeric stat desc
   renderTable();
 }
 
@@ -2060,15 +2060,15 @@ function renderPlayerList(content) {
     '<button class="zone-filter-btn" data-season="year:2025">2025</button>' +
     '</div></div>' +
     '<div class="tabs-bar"><div class="tabs">' +
-    '<button class="tab-btn active" data-tab="pitchers">Pitchers</button>' +
-    '<button class="tab-btn" data-tab="batters">Batters</button>' +
+    '<button class="tab-btn active" data-tab="batters">Batters</button>' +
+    '<button class="tab-btn" data-tab="pitchers">Pitchers</button>' +
     '</div></div>' +
     '<div id="player-list-content"></div></div>';
 
   const listContent = document.getElementById('player-list-content');
   const tabs = content.querySelectorAll('.tab-btn');
   const seasonBtns = content.querySelectorAll('#players-season-filter [data-season]');
-  var activeListTab = 'pitchers';
+  var activeListTab = 'batters';
 
   function renderList(type) {
     activeListTab = type;
@@ -2157,7 +2157,7 @@ function renderPlayerList(content) {
       renderList(activeListTab);
     });
   });
-  renderList('pitchers');
+  renderList('batters');
 }
 
 function renderPlayerDetail(name, type, content) {
