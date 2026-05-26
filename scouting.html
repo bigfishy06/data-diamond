@@ -1859,128 +1859,185 @@ Zane Skansi,Kitchener Panthers`;
       }
     }
 
-    batterPoints=batterPoints.slice(0,5);
+    // Pick the single most impactful batter point: red (danger) > green (exploit) > yellow (neutral)
+    var _bpPriority=function(dot){return dot==='#f87171'?0:dot==='#34d399'?1:2;};
+    batterPoints.sort(function(a,b){return _bpPriority(a.dot)-_bpPriority(b.dot);});
+    var focusPoint=batterPoints[0]||{dot:'#FFB81C',text:'No data available.'};
+    var fpDr=parseInt(focusPoint.dot.slice(1,3),16)||255,fpDg=parseInt(focusPoint.dot.slice(3,5),16)||184,fpDb=parseInt(focusPoint.dot.slice(5,7),16)||28;
 
-    var kpBoxHB=7+batterPoints.length*6.5+4;
-    d.setFillColor(13,20,40);d.rect(ML,y,CPW,kpBoxHB,'F');
-    d.setDrawColor(255,184,28);d.setLineWidth(0.3);d.rect(ML,y,CPW,kpBoxHB,'S');
-    d.setFillColor(255,184,28);d.rect(ML,y,CPW,2,'F');
-    d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.gold);
-    d.text('KEY SCOUTING POINTS',ML+3,y+6);
-    batterPoints.forEach(function(pt,i){
-      var py2=y+10+i*6.5;
-      var dr=parseInt(pt.dot.slice(1,3),16)||1,dg=parseInt(pt.dot.slice(3,5),16)||1,db=parseInt(pt.dot.slice(5,7),16)||1;
-      d.setFillColor(dr,dg,db);d.circle(ML+4,py2-1,1.1,'F');
-      d.setFont('helvetica','normal');d.setFontSize(5.5);st(d,CO.white);
-      var maxW3=CPW-10,txt=pt.text;
-      while(txt.length>10&&d.getTextWidth(txt)>maxW3)txt=txt.slice(0,txt.lastIndexOf(' '));
-      d.text(txt,ML+7,py2);
-    });
-    y+=kpBoxHB+4;
+    // Draw single large hyper-focus box
+    var hfBoxH=26;
+    d.setFillColor(13,20,40);d.rect(ML,y,CPW,hfBoxH,'F');
+    d.setDrawColor(fpDr,fpDg,fpDb);d.setLineWidth(0.5);d.rect(ML,y,CPW,hfBoxH,'S');
+    d.setFillColor(fpDr,fpDg,fpDb);d.rect(ML,y,CPW,2.5,'F');
+    // Header label
+    d.setFont('helvetica','bold');d.setFontSize(5.5);d.setTextColor(fpDr,fpDg,fpDb);
+    d.text('HYPER FOCUS',ML+3,y+6.5);
+    // Large dot
+    d.setFillColor(fpDr,fpDg,fpDb);d.circle(ML+4,y+14,2,'F');
+    // Focus text — wrap across 2–3 lines
+    d.setFont('helvetica','bold');d.setFontSize(6.5);st(d,CO.white);
+    var _hfTxt=focusPoint.text,_hfMaxW=CPW-12,_hfWds=_hfTxt.split(' '),_hfLn='',_hfLns=[];
+    _hfWds.forEach(function(w){var t=_hfLn?_hfLn+' '+w:w;if(d.getTextWidth(t)>_hfMaxW){_hfLns.push(_hfLn);_hfLn=w;}else _hfLn=t;});
+    if(_hfLn)_hfLns.push(_hfLn);
+    _hfLns.slice(0,3).forEach(function(l,li){d.text(l,ML+9,y+13+li*6);});
+    y+=hfBoxH+4;
 
-    // ── Scout Summary ──────────────────────────────────────────────────────
-    y=drawSec(d,'Scout Summary',y);
-    // 2025 & 2026: pbp_batters.json provides SWING_pct, WHIFF_pct, FP_SWING_pct etc.
-    var pbp=selSeason==='2026'?null:(DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null);
-    var pa=(s.PA)||1, bb=(s.BB)||0, k=(s.K)||0;
+    // ── Approach — mirrors main.js zone/pitch-type logic exactly ──────────
+    y=drawSec(d,'Approach',y);
 
-    // Scout Summary cards: pbp_batters for 2025 (authoritative), summary for 2026.
-    var fpSwingPct=pbp&&pbp.FP_SWING_pct!=null?pbp.FP_SWING_pct:(s.FP_Swing_pct!=null?s.FP_Swing_pct:(s.FP_SWING_pct!=null?s.FP_SWING_pct:null));
-    var swingPct=pbp&&pbp.SWING_pct!=null?pbp.SWING_pct:(s.Swing_pct!=null?s.Swing_pct:null);
-    var whiffPct=pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct:(s.Whiff_pct!=null?s.Whiff_pct:null);
+    // ── shared metric helpers ─────────────────────────────────────────────
+    var _IN_PLAY_B=['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
+    var _HITS_B=['Single','Double','Triple','Home Run'];
+    var _KS_B=['Strikeout Swinging','Strikeout Looking'];
+    function _zwB(pts){ var sw=pts.filter(function(p){return['Swinging Strike','Foul'].concat(_IN_PLAY_B).includes(p.outcome);}).length; var wh=pts.filter(function(p){return p.outcome==='Swinging Strike';}).length; return sw>=5?wh/sw:null; }
+    function _zbaB(pts){ var ab=pts.filter(function(p){return _IN_PLAY_B.concat(_KS_B).includes(p.outcome);}).length; var h=pts.filter(function(p){return _HITS_B.includes(p.outcome);}).length; return ab>=5?h/ab:null; }
+    // lgArr iterates ALL pitches in DATA (both years share same scatter store)
+    function _lgArrB(fn,mfn){ var a=[]; DATA.pitches.forEach(function(bp){ var pts=(bp.scatter||[]).filter(function(p){return p.x!=null&&p.y!=null&&fn(p);}); var v=mfn(pts); if(v!=null)a.push(v); }); return a; }
+    function _pctRankB(val,arr){ if(!arr.length||val==null)return null; var below=arr.filter(function(v){return v<val;}).length; var equal=arr.filter(function(v){return v===val;}).length; return (below+equal*0.5)/arr.length; }
+    function _extremityB(pct){ return pct==null?0:Math.abs(pct-0.5)*2; }
 
-    // SB: from summary or IBL History — defined early so Scout Summary SB card can use it
-    var _sbVal=s.SB!=null?s.SB:null;
-    if(_sbVal==null){
-      var _iblSBrow=getIblRowsByName(player.name).find(function(r){return (r.season||'').indexOf(selSeason)!==-1&&r.SB!=null;});
-      if(_iblSBrow)_sbVal=_iblSBrow.SB;
-    }
+    var _approachResult=(function(){
+      // Use allSc which is already season-filtered scatter for this batter
+      var scB=allSc.filter(function(p){return p.x!=null&&p.y!=null;});
+      if(!scB.length) return {dot:'#60a5fa',label:'',val:'—',note:'No pitch location data available.'};
 
-    // Chase % — from summary Chase_pct (computed in R from x/y coordinates).
-    // 2026: s = summary2026 row; 2025: summary row (both now include Chase_pct).
-    // Fall back to scatter in_zone if Chase_pct not yet in the JSON (pre-rerun data).
-    var chasePct=(function(){
-      if(s.Chase_pct!=null) return s.Chase_pct;
-      // Scatter fallback for older JSON without Chase_pct
-      var _pitchObj3=_pitchObj||(function(){ var po=getPitchPlayerForRoster(player.name); return po&&po.scatter&&po.scatter.length?po:null; })();
-      var allSc3=_pitchObj3&&_pitchObj3.scatter?_pitchObj3.scatter:[];
-      var ooz=allSc3.filter(function(s2){return s2.in_zone===false||s2.in_zone==='false';});
-      var csw=ooz.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Foul';}).length;
-      return ooz.length>=5?csw/ooz.length*100:null;
+      // Handedness-aware zone boundaries — identical to main.js
+      var side=scB[0].batter_side||'R';
+      var insideFn =side==='R'?function(p){return p.y<-0.1;}:function(p){return p.y>0.1;};
+      var outsideFn=side==='R'?function(p){return p.y>0.1;}:function(p){return p.y<-0.1;};
+      var highFn=function(p){return p.x>0.6;};
+      var lowFn=function(p){return p.x<0.35;};
+      var oozFn=function(p){return p.in_zone===false;};
+
+      var candidates=[];
+      function addC(label,val,pct,hi,good,bad){ if(val!=null&&pct!=null)candidates.push({label:label,val:val,pct:pct,hi:hi,goodNote:good,badNote:bad}); }
+
+      // ── Zone location checks (matches main.js ZONE_CHECKS) ───────────────
+      [{label:'Inside',fn:insideFn},{label:'Away',fn:outsideFn},
+       {label:'Up in Zone',fn:highFn},{label:'Low in Zone',fn:lowFn},
+       {label:'Out of Zone',fn:oozFn}
+      ].forEach(function(zc){
+        var pts=scB.filter(zc.fn);
+        var myW=_zwB(pts), lgW=_lgArrB(zc.fn,_zwB);
+        var myBA=_zbaB(pts), lgBA=_lgArrB(zc.fn,_zbaB);
+        if(myW!=null)  addC(zc.label+' WHIFF%', f1(myW*100)+'%',  _pctRankB(myW,lgW),   false,
+          null,'Whiffs at an above-average rate on pitches '+zc.label.toLowerCase()+' — a location pitchers are exploiting.');
+        if(myBA!=null) addC(zc.label+' AVG',    f3(myBA),           _pctRankB(myBA,lgBA), true,
+          'Strong production on pitches '+zc.label.toLowerCase()+' — a clear hitting strength.',
+          'Struggles to produce on pitches '+zc.label.toLowerCase()+' — a notable weakness.');
+      });
+
+      // ── Pitch-type checks + zone+pitch combos (matches main.js exactly) ──
+      var pitchTypes=[];
+      scB.forEach(function(p){if(p.pitch_type&&!pitchTypes.includes(p.pitch_type))pitchTypes.push(p.pitch_type);});
+      pitchTypes.forEach(function(pt){
+        var ptFn=function(p){return p.pitch_type===pt;};
+        var pts=scB.filter(ptFn); if(pts.length<6)return;
+        var myW=_zwB(pts), myBA=_zbaB(pts);
+        var lgW=_lgArrB(ptFn,_zwB), lgBA=_lgArrB(ptFn,_zbaB);
+        if(myW!=null)  addC(pt+' WHIFF%', f1(myW*100)+'%', _pctRankB(myW,lgW), false,
+          null,'Whiffs at an above-average rate against the '+pt+' — pitchers are using it to their advantage.');
+        if(myBA!=null) addC(pt+' AVG', f3(myBA), _pctRankB(myBA,lgBA), true,
+          'Above-average production against the '+pt+' — handles it well.',
+          'Struggles against the '+pt+' — a hole in the swing pitchers can attack.');
+        [{label:'Inside & Up',fn:function(p){return insideFn(p)&&highFn(p);}},
+         {label:'Inside & Low',fn:function(p){return insideFn(p)&&lowFn(p);}},
+         {label:'Away & Up',fn:function(p){return outsideFn(p)&&highFn(p);}},
+         {label:'Away & Low',fn:function(p){return outsideFn(p)&&lowFn(p);}}
+        ].forEach(function(cz){
+          var fn=function(p){return p.pitch_type===pt&&cz.fn(p);};
+          var cpts=scB.filter(fn); if(cpts.length<5)return;
+          var cW=_zwB(cpts), cBA=_zbaB(cpts);
+          var lcW=_lgArrB(fn,_zwB), lcBA=_lgArrB(fn,_zbaB);
+          if(cW!=null)  addC(pt+' · '+cz.label+' WHIFF%', f1(cW*100)+'%', _pctRankB(cW,lcW), false,
+            null,'Extremely high whiff rate on '+pt+' '+cz.label.toLowerCase()+' — a reliable put-away spot for pitchers.');
+          if(cBA!=null) addC(pt+' · '+cz.label+' AVG', f3(cBA), _pctRankB(cBA,lcBA), true,
+            'Exceptional production on '+pt+' '+cz.label.toLowerCase()+' — a true damage zone.',
+            'Near-zero production on '+pt+' '+cz.label.toLowerCase()+' — pitchers should go here.');
+        });
+      });
+
+      // ── Rate-stat fallbacks when x/y candidates are thin ─────────────────
+      // Use pbp_batters for 2025 (authoritative), summary for 2026
+      var _pbpB=selSeason==='2025'?(DATA.pbpBatters?DATA.pbpBatters.find(function(p){return normName(p.batter)===normName(player.name);}):null):null;
+      var _swPct=_pbpB&&_pbpB.SWING_pct!=null?_pbpB.SWING_pct:(s.Swing_pct!=null?s.Swing_pct:null);
+      var _whPct=_pbpB&&_pbpB.WHIFF_pct!=null?_pbpB.WHIFF_pct:(s.Whiff_pct!=null?s.Whiff_pct:null);
+      var _fpPct=_pbpB&&_pbpB.FP_SWING_pct!=null?_pbpB.FP_SWING_pct:(s.FP_Swing_pct!=null?s.FP_Swing_pct:(s.FP_SWING_pct!=null?s.FP_SWING_pct:null));
+      // in-zone swing / contact / chase from scatter (same as main.js)
+      var _scBall=allSc;
+      var _inZPts=_scBall.filter(function(p){return p.in_zone===true;});
+      var _inZSw=_inZPts.filter(function(p){return['Swinging Strike','Foul'].concat(_IN_PLAY_B).includes(p.outcome);}).length;
+      var _inZCon=_inZPts.filter(function(p){return['Foul'].concat(_IN_PLAY_B).includes(p.outcome);}).length;
+      var _oozPts=_scBall.filter(function(p){return p.in_zone===false;});
+      var _chases=_oozPts.filter(function(p){return p.outcome==='Swinging Strike'||p.outcome==='Foul';}).length;
+      var _myIzSw=_inZPts.length?_inZSw/_inZPts.length:null;
+      var _myIzCon=_inZSw>0?_inZCon/_inZSw:null;
+      var _myChase=_oozPts.length?_chases/_oozPts.length:null;
+      var _lgIzSw=[],_lgIzCon=[],_lgChase=[];
+      DATA.pitches.forEach(function(bp){
+        var s2=bp.scatter||[];
+        var iz2=s2.filter(function(p){return p.in_zone===true;});
+        var izSw2=iz2.filter(function(p){return['Swinging Strike','Foul'].concat(_IN_PLAY_B).includes(p.outcome);}).length;
+        var izCon2=iz2.filter(function(p){return['Foul'].concat(_IN_PLAY_B).includes(p.outcome);}).length;
+        var ooz2=s2.filter(function(p){return p.in_zone===false;});
+        var ch2=ooz2.filter(function(p){return p.outcome==='Swinging Strike'||p.outcome==='Foul';}).length;
+        if(iz2.length>0) _lgIzSw.push(izSw2/iz2.length);
+        if(izSw2>0)      _lgIzCon.push(izCon2/izSw2);
+        if(ooz2.length>0)_lgChase.push(ch2/ooz2.length);
+      });
+      if(_myIzSw!=null&&_lgIzSw.length) addC('IZ SWING%',f1(_myIzSw*100)+'%',_pctRankB(_myIzSw,_lgIzSw),true,
+        'Attacks pitches in the zone at an elite rate.',
+        'Below-average zone swing rate — taking more strikes than most hitters.');
+      if(_myIzCon!=null&&_lgIzCon.length) addC('IZ CONTACT%',f1(_myIzCon*100)+'%',_pctRankB(_myIzCon,_lgIzCon),true,
+        'Exceptional in-zone contact — rarely misses a pitch in the strike zone.',
+        'Struggles significantly to make contact on pitches in the strike zone.');
+      if(_myChase!=null&&_lgChase.length) addC('CHASE%',f1(_myChase*100)+'%',_pctRankB(_myChase,_lgChase),false,
+        null,'One of the highest chase rates — easily baited outside the strike zone.');
+      var _lgSw=[],_lgWh=[];
+      DATA.pitches.forEach(function(bp){ var sc2=bp.scatter||[]; var t2=sc2.filter(function(p){return p.outcome&&p.outcome!=='';}).length; if(!t2)return; var sw2=sc2.filter(function(p){return['Swinging Strike','Foul'].concat(_IN_PLAY_B).includes(p.outcome);}).length; var ws2=sc2.filter(function(p){return p.outcome==='Swinging Strike';}).length; _lgSw.push(sw2/t2*100); if(sw2>0)_lgWh.push(ws2/sw2*100); });
+      if(_swPct!=null&&_lgSw.length) addC('SWING%',f1(_swPct)+'%',_pctRankB(_swPct,_lgSw),false,null,'Passive approach — very selective, rarely offers. Throw strikes; every ball counts.');
+      if(_whPct!=null&&_lgWh.length) addC('WHIFF%',f1(_whPct)+'%',_pctRankB(_whPct,_lgWh),false,'Elite bat-to-ball — rarely misses on swings. Location and sequencing are critical.','High whiff rate — struggles to make contact on swings. Use your put-away pitch when ahead.');
+      if(_fpPct!=null){ var _lgFp=[]; DATA.pitches.forEach(function(bp){ var sc2=bp.scatter||[]; var fp2=sc2.filter(function(p,i){if(i===0)return true;var prev=sc2[i-1];return p.batter!==prev.batter||p.inning!==prev.inning||p.half_inning!==prev.half_inning;}); if(!fp2.length)return; var fps2=fp2.filter(function(p){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].concat(_IN_PLAY_B).includes(p.outcome);}).length; _lgFp.push(fps2/fp2.length*100); }); if(_lgFp.length) addC('FP SWING%',f1(_fpPct)+'%',_pctRankB(_fpPct,_lgFp),false,null,'Swings at first pitches frequently — pitchers can get ahead cheaply. Throw strikes on pitch one.'); }
+
+      if(!candidates.length) return {dot:'#60a5fa',label:'',val:'—',note:'Not enough data to identify a key approach trend.'};
+
+      // Pick the single most extreme candidate — identical to main.js tier logic
+      candidates.sort(function(a,b){return _extremityB(b.pct)-_extremityB(a.pct);});
+      var best=candidates[0];
+      var isGood=(best.hi&&best.pct>=0.5)||(!best.hi&&best.pct<=0.5);
+      var note=isGood?best.goodNote:best.badNote;
+      if(!note){ note=isGood?'A clear hitting strength.':'A location or pitch pitchers can exploit.'; }
+      var ext=_extremityB(best.pct);
+      var dot=ext>=0.8?(isGood?'#34d399':'#f87171'):(ext>=0.6?(isGood?'#34d399':'#f87171'):'#FFB81C');
+      return {dot:dot, label:best.label, val:best.val, note:note};
     })();
 
-    function hCard(label,value,color,note,sub){return{label:label,value:value,color:color,note:note,sub:sub||''};}
-    var hl=[];
-
-    // FP SWING % — cross-aware of overall Swing% to avoid opposite-advice contradiction
-    var fpSwC=fpSwingPct!=null?(fpSwingPct>=55?'#f87171':fpSwingPct>=40?'#FFB81C':'#34d399'):'#666';
-    var _fpSwNote;
-    if(fpSwingPct==null){_fpSwNote='No data.';}
-    else if(fpSwingPct>=55&&swingPct!=null&&swingPct>=50){_fpSwNote='Swings early and often — pitch one is a real at-bat. Throw a quality strike.';}
-    else if(fpSwingPct>=55&&swingPct!=null&&swingPct<42){_fpSwNote='Jumps on pitch one but selective after — throw a borderline strike early.';}
-    else if(fpSwingPct>=55){_fpSwNote='Attacks first pitches — throw a strike on pitch one, get ahead cheap.';}
-    else if(fpSwingPct<=25&&swingPct!=null&&swingPct<42){_fpSwNote='Patient at all times — takes pitch one and waits for his pitch. Use pitch one for a free strike.';}
-    else if(fpSwingPct<=25){_fpSwNote='Takes first pitches consistently — get a free strike on pitch one.';}
-    else{_fpSwNote='Moderate first-pitch swing — no strong lean early.';}
-    hl.push(hCard('FP SWING %',fpSwingPct!=null?f1(fpSwingPct)+'%':'—',fpSwC,_fpSwNote,'1st Pitch Swing %'));
-
-    // SWING % — overall aggressiveness
-    var swC=swingPct!=null?(swingPct>=52?'#34d399':swingPct>=42?'#FFB81C':'#f87171'):'#666';
-    var _swNote;
-    if(swingPct==null){_swNote='No data.';}
-    else if(swingPct>=52){_swNote='Expands zone often — use off-speed away and edges; he chases.';}
-    else if(swingPct<=37){_swNote='Selectively swings — waits for his pitch. Throw strikes; balls count.';}
-    else{_swNote='Average swing rate — mix in and out; no strong pull tendency.';}
-    hl.push(hCard('SWING %',swingPct!=null?f1(swingPct)+'%':'—',swC,_swNote,'Overall Swing %'));
-
-    // WHIFF % — cross-aware of Chase% to avoid "use breaking balls" vs "does not chase" contradiction
-    var whC=whiffPct!=null?(whiffPct>=30?'#34d399':whiffPct>=20?'#FFB81C':'#f87171'):'#666';
-    var _whNote;
-    if(whiffPct==null){_whNote='No data.';}
-    else if(whiffPct>=30&&chasePct!=null&&chasePct>=30){_whNote='Misses and chases — breaking balls off the plate, he bites and whiffs.';}
-    else if(whiffPct>=30&&chasePct!=null&&chasePct<20){_whNote='Whiffs in zone but not a chaser — beat him with late movement inside the zone.';}
-    else if(whiffPct>=30){_whNote='Generates swing-and-miss — go to your put-away pitch when ahead.';}
-    else if(whiffPct<=12&&chasePct!=null&&chasePct>=30){_whNote='Makes contact but chases — pull him off plate; expect contact, not whiffs.';}
-    else if(whiffPct<=12){_whNote='Rarely misses on swings — location and sequencing are critical.';}
-    else{_whNote='Some swing-and-miss — use put-away pitches when ahead in the count.';}
-    hl.push(hCard('WHIFF %',whiffPct!=null?f1(whiffPct)+'%':'—',whC,_whNote,'Whiff % on Swings'));
-
-    // CHASE % — cross-aware of Whiff% to avoid misleading strategy
-    var chC=chasePct!=null?(chasePct>=35?'#34d399':chasePct>=22?'#FFB81C':'#f87171'):'#666';
-    var _chNote;
-    if(chasePct==null){_chNote='No data.';}
-    else if(chasePct>=35&&whiffPct!=null&&whiffPct>=28){_chNote='Chases and misses out of zone — breaking balls away, he bites and whiffs.';}
-    else if(chasePct>=35&&whiffPct!=null&&whiffPct<18){_chNote='Chases out of zone but makes contact — draw him off plate, expect contact not whiffs.';}
-    else if(chasePct>=35){_chNote='Offers at pitches out of zone — use waste pitches when ahead; he bites.';}
-    else if(chasePct<20){_chNote='Does not chase — stay in the zone; balls only help him.';}
-    else{_chNote='Occasional chaser — mix in a waste pitch when ahead, do not rely on it.';}
-    hl.push(hCard('CHASE %',chasePct!=null?f1(chasePct)+'%':'—',chC,_chNote,'Chase % (out of zone)'));
-
-    hl.push(hCard('SB',
-      _sbVal!=null?fN(_sbVal):'—','#60a5fa',
-      _sbVal!=null?(_sbVal>=10?'Elite baserunner — vary slide steps, hold runners.':_sbVal>=5?'Active on bases — keep runners honest.':'Low SB count — no significant running threat.'):'No data.','Stolen bases'));
-
-    var cardW2=(CPW-4*4)/5,cardH2=28;
-    hl.forEach(function(h,i){
-      var hx=ML+i*(cardW2+4);
-      var hex=h.color.slice(1);if(hex.length===3){hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];}
-      var cr=parseInt(hex.slice(0,2),16)||1,cg=parseInt(hex.slice(2,4),16)||1,cb=parseInt(hex.slice(4,6),16)||1;
-      d.setFillColor(13,20,40);d.rect(hx,y,cardW2,cardH2,'F');
-      d.setFillColor(cr,cg,cb);d.rect(hx,y,cardW2,2.5,'F');
-      d.setDrawColor(cr,cg,cb);d.setLineWidth(0.35);d.rect(hx,y,cardW2,cardH2,'S');
-      d.setFont('helvetica','bold');d.setFontSize(7);d.setTextColor(cr,cg,cb);
-      d.text(h.label,hx+cardW2/2,y+7,{align:'center'});
-      d.setFont('helvetica','normal');d.setFontSize(4.5);st(d,CO.dim);
-      d.text(h.sub||'',hx+cardW2/2,y+11,{align:'center'});
-      d.setFont('helvetica','bold');d.setFontSize(11);st(d,CO.white);
-      d.text(h.value,hx+cardW2/2,y+19,{align:'center'});
-      d.setFont('helvetica','normal');d.setFontSize(4.5);st(d,CO.dim);
-      var wds=h.note.split(' '),ln='',lns=[];
-      wds.forEach(function(w){var t=ln?ln+' '+w:w;if(d.getTextWidth(t)>cardW2-2){lns.push(ln);ln=w;}else ln=t;});
-      if(ln)lns.push(ln);
-      lns.slice(0,1).forEach(function(l){d.text(l,hx+cardW2/2,y+24,{align:'center'});});
-    });
-    y+=cardH2+5;
+    // Draw single compact approach row — keeps page to one page
+    var _aDr=parseInt(_approachResult.dot.slice(1,3),16)||96;
+    var _aDg=parseInt(_approachResult.dot.slice(3,5),16)||165;
+    var _aDb=parseInt(_approachResult.dot.slice(5,7),16)||250;
+    var _aBoxH=22;
+    d.setFillColor(13,20,40);d.rect(ML,y,CPW,_aBoxH,'F');
+    d.setDrawColor(_aDr,_aDg,_aDb);d.setLineWidth(0.4);d.rect(ML,y,CPW,_aBoxH,'S');
+    d.setFillColor(_aDr,_aDg,_aDb);d.rect(ML,y,CPW,2,'F');
+    d.setFont('helvetica','bold');d.setFontSize(5.5);d.setTextColor(_aDr,_aDg,_aDb);
+    d.text('APPROACH',ML+3,y+5.5);
+    d.setFillColor(_aDr,_aDg,_aDb);d.circle(ML+4,y+12,1.5,'F');
+    d.setFont('helvetica','bold');d.setFontSize(9);d.setTextColor(_aDr,_aDg,_aDb);
+    d.text(_approachResult.val,ML+9,y+13.5);
+    var _aValW=d.getTextWidth(_approachResult.val);
+    d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.dim);
+    d.text(_approachResult.label,ML+11+_aValW,y+13.5);
+    var _aLblW=_approachResult.label?d.getTextWidth(_approachResult.label):0;
+    var _aNoteX=ML+(_approachResult.label?13+_aValW+_aLblW:9);
+    var _aNoteMaxW=CPW-(_aNoteX-ML)-2;
+    d.setFont('helvetica','normal');d.setFontSize(5.5);st(d,CO.light);
+    var _aNwds=_approachResult.note.split(' '),_aNln='',_aNlns=[];
+    _aNwds.forEach(function(w){var t=_aNln?_aNln+' '+w:w;if(d.getTextWidth(t)>_aNoteMaxW){_aNlns.push(_aNln);_aNln=w;}else _aNln=t;});
+    if(_aNln)_aNlns.push(_aNln);
+    _aNlns.slice(0,2).forEach(function(l,li){d.text(l,_aNoteX,y+13.5+li*5.5);});
+    y+=_aBoxH+3;
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
     y=drawSec(d,'Plate Discipline',y);
@@ -2275,10 +2332,115 @@ Zane Skansi,Kitchener Panthers`;
     y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['FPS%',fpsVal],['STRIKE%',strVal],['K',_pitKDisp],['BB',_pitBBDisp]],y);
     y+=2;
 
-    y=drawSec(d,'Scouting Summary — What Batters Should Know',y);
-    var kPct2  = selSeason==='2026'?(pd26&&pd26.K_pct!=null?pd26.K_pct/100:(tot>0?ks/tot:0)):(iblK(iblP2)!=null&&iblP2&&iblP2.BF>0?iblK(iblP2)/iblP2.BF:(pbpP2&&pbpP2.K_pct!=null?pbpP2.K_pct/100:(tot>0?ks/tot:0)));
-    var bbPct2 = selSeason==='2026'?(pd26&&pd26.BB_pct!=null?pd26.BB_pct/100:(tot>0?bbs/tot:0)):(iblBB(iblP2)!=null&&iblP2&&iblP2.BF>0?iblBB(iblP2)/iblP2.BF:(pbpP2&&pbpP2.BB_pct!=null?pbpP2.BB_pct/100:(tot>0?bbs/tot:0)));
-    var strPct3= selSeason==='2026'?(pd26&&pd26.STR_pct!=null?pd26.STR_pct/100:(tot>0?str/tot:0)):(pbpP2&&pbpP2.STR_pct!=null?pbpP2.STR_pct/100:(tot>0?str/tot:0));
+    y=drawSec(d,'Approach',y);
+
+    // ── shared metric helpers (pitcher perspective) ───────────────────────
+    var _IN_PLAY_P=['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
+    var _HITS_P=['Single','Double','Triple','Home Run'];
+    var _KS_P=['Strikeout Swinging','Strikeout Looking'];
+    function _zwP(pts){ var sw=pts.filter(function(p){return['Swinging Strike','Foul'].concat(_IN_PLAY_P).includes(p.outcome);}).length; var wh=pts.filter(function(p){return p.outcome==='Swinging Strike';}).length; return sw>=5?wh/sw:null; }
+    function _zbaP(pts){ var ab=pts.filter(function(p){return _IN_PLAY_P.concat(_KS_P).includes(p.outcome);}).length; var h=pts.filter(function(p){return _HITS_P.includes(p.outcome);}).length; return ab>=5?h/ab:null; }
+    function _lgArrP(fn,mfn){ var a=[]; DATA.pitches.forEach(function(bp){ var pts=(bp.scatter||[]).filter(function(p){return p.x!=null&&p.y!=null&&fn(p);}); var v=mfn(pts); if(v!=null)a.push(v); }); return a; }
+    function _pctRankP(val,arr){ if(!arr.length||val==null)return null; var below=arr.filter(function(v){return v<val;}).length; var equal=arr.filter(function(v){return v===val;}).length; return (below+equal*0.5)/arr.length; }
+    function _extremityP(pct){ return pct==null?0:Math.abs(pct-0.5)*2; }
+
+    var _pitApproachResult=(function(){
+      var scP=sc.filter(function(p){return p.x!=null&&p.y!=null;});
+
+      // Rate-stat candidates used both as fallback (no x/y) and supplemental
+      var _lgK2=[],_lgBB2=[],_lgStr2=[];
+      DATA.pitches.forEach(function(bp){ var sc2=bp.scatter||[]; var t2=sc2.filter(function(p){return p.outcome&&p.outcome!=='';}).length; if(!t2)return; var ks2=sc2.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';}).length; var bbs2=sc2.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length; var str2=sc2.filter(function(p){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(p.outcome);}).length; _lgK2.push(ks2/t2); _lgBB2.push(bbs2/t2); _lgStr2.push(str2/t2); });
+
+      if(!scP.length){
+        // No x/y data — fall back to K%, BB%, STR% (same as main.js fallback path)
+        var _cands2=[];
+        if(kPct2>0&&_lgK2.length) _cands2.push({label:'K%',val:Math.round(kPct2*100)+'%',pct:_pctRankP(kPct2,_lgK2),hi:true,goodNote:'Elite K rate — generates swing-and-miss consistently. Shorten your swing and protect the zone.',badNote:'Low K rate — he does not overpower hitters. Put the ball in play hard.'});
+        if(bbPct2>0&&_lgBB2.length) _cands2.push({label:'BB%',val:Math.round(bbPct2*100)+'%',pct:_pctRankP(bbPct2,_lgBB2),hi:false,goodNote:'Elite command — almost never walks. Always have a swing plan; a hittable pitch is coming.',badNote:'Poor command — walk rate is elevated. Work deep counts; free passes are available.'});
+        if(strPct3>0&&_lgStr2.length) _cands2.push({label:'STR%',val:strVal,pct:_pctRankP(strPct3,_lgStr2),hi:true,goodNote:'Throws strikes consistently — be aggressive early; free counts are rare.',badNote:'Below-average strike rate — take pitches freely and make him work.'});
+        if(!_cands2.length) return {dot:'#60a5fa',label:'',val:'—',note:'Not enough data to identify a key approach trend.'};
+        _cands2.sort(function(a,b){return _extremityP(b.pct)-_extremityP(a.pct);});
+        var _b2=_cands2[0], _isGood2=(_b2.hi&&_b2.pct>=0.5)||(!_b2.hi&&_b2.pct<=0.5);
+        var _dot2=_extremityP(_b2.pct)>=0.6?(_isGood2?'#34d399':'#f87171'):'#FFB81C';
+        return {dot:_dot2,label:_b2.label,val:_b2.val,note:_isGood2?_b2.goodNote:_b2.badNote};
+      }
+
+      // ── x/y available: pitch-type + zone checks (mirrors main.js exactly) ──
+      var inZoneFnP=function(p){return p.in_zone===true;};
+      var PZONES=[
+        {label:'Up in Zone',  fn:function(p){return inZoneFnP(p)&&p.x>0.6;}},
+        {label:'Low in Zone', fn:function(p){return inZoneFnP(p)&&p.x<0.35;}},
+        {label:'Inside Edge', fn:function(p){return inZoneFnP(p)&&p.y<-0.5;}},
+        {label:'Outside Edge',fn:function(p){return inZoneFnP(p)&&p.y>0.5;}},
+        {label:'Out of Zone', fn:function(p){return!inZoneFnP(p);}}
+      ];
+      var candidates=[];
+      function addCP(label,val,pct,hi,good,bad){ if(val!=null&&pct!=null)candidates.push({label:label,val:val,pct:pct,hi:hi,goodNote:good,badNote:bad}); }
+
+      var pitchTypesP=[];
+      scP.forEach(function(p){if(p.pitch_type&&!pitchTypesP.includes(p.pitch_type))pitchTypesP.push(p.pitch_type);});
+      pitchTypesP.forEach(function(pt){
+        var ptFn=function(p){return p.pitch_type===pt;};
+        var pts=scP.filter(ptFn); if(pts.length<6)return;
+        var myW=_zwP(pts), myBA=_zbaP(pts);
+        var lgW=_lgArrP(ptFn,_zwP), lgBA=_lgArrP(ptFn,_zbaP);
+        if(myW!=null)  addCP(pt+' WHIFF%', f1(myW*100)+'%', _pctRankP(myW,lgW), true,
+          'The '+pt+' is generating elite whiffs — a true out-pitch. Trust it when ahead.',
+          'Hitters are squaring up the '+pt+'. Look to drive it; limited swing-and-miss.');
+        if(myBA!=null) addCP(pt+' AVG AGNST', f3(myBA), _pctRankP(myBA,lgBA), false,
+          null,
+          'Hitters are batting above average against the '+pt+'. Look to attack it.');
+        PZONES.forEach(function(pz){
+          var fn=function(p){return p.pitch_type===pt&&pz.fn(p);};
+          var cpts=scP.filter(fn); if(cpts.length<5)return;
+          var cW=_zwP(cpts), lcW=_lgArrP(fn,_zwP);
+          if(cW!=null) addCP(pt+' · '+pz.label, f1(cW*100)+'%', _pctRankP(cW,lcW), true,
+            pt+' '+pz.label.toLowerCase()+' is an elite weapon — hitters almost never make contact.',
+            'Hitters handle the '+pt+' '+pz.label.toLowerCase()+' well — a spot to limit.');
+        });
+      });
+
+      // Rate-stat fallbacks supplementing x/y candidates
+      if(kPct2>0&&_lgK2.length) addCP('K%',Math.round(kPct2*100)+'%',_pctRankP(kPct2,_lgK2),true,'Elite K rate — generates swing-and-miss. Shorten your swing and protect the zone.','Low K rate — he does not overpower hitters. Put the ball in play hard.');
+      if(bbPct2>0&&_lgBB2.length) addCP('BB%',Math.round(bbPct2*100)+'%',_pctRankP(bbPct2,_lgBB2),false,'Elite command — almost never walks. Always have a swing plan.','Poor command — work deep counts; free passes are available.');
+      if(strPct3>0&&_lgStr2.length) addCP('STR%',strVal,_pctRankP(strPct3,_lgStr2),true,'Throws strikes consistently — be aggressive early; free counts are rare.','Below-average strike rate — take pitches freely and make him work.');
+
+      if(!candidates.length) return {dot:'#60a5fa',label:'',val:'—',note:'Not enough data to identify a key approach trend.'};
+
+      candidates.sort(function(a,b){return _extremityP(b.pct)-_extremityP(a.pct);});
+      var best=candidates[0];
+      var isGood=(best.hi&&best.pct>=0.5)||(!best.hi&&best.pct<=0.5);
+      var note=isGood?best.goodNote:best.badNote;
+      if(!note){ note=isGood?'A reliable weapon — use it confidently.':'A spot hitters are exploiting.'; }
+      var ext=_extremityP(best.pct);
+      var dot=ext>=0.6?(isGood?'#34d399':'#f87171'):'#FFB81C';
+      return {dot:dot, label:best.label, val:best.val, note:note};
+    })();
+
+    // Draw single compact approach row — keeps page to one page
+    var _paDr=parseInt(_pitApproachResult.dot.slice(1,3),16)||96;
+    var _paDg=parseInt(_pitApproachResult.dot.slice(3,5),16)||165;
+    var _paDb=parseInt(_pitApproachResult.dot.slice(5,7),16)||250;
+    var _paBoxH=22;
+    d.setFillColor(13,20,40);d.rect(ML,y,CPW,_paBoxH,'F');
+    d.setDrawColor(_paDr,_paDg,_paDb);d.setLineWidth(0.4);d.rect(ML,y,CPW,_paBoxH,'S');
+    d.setFillColor(_paDr,_paDg,_paDb);d.rect(ML,y,CPW,2,'F');
+    d.setFont('helvetica','bold');d.setFontSize(5.5);d.setTextColor(_paDr,_paDg,_paDb);
+    d.text('APPROACH',ML+3,y+5.5);
+    d.setFillColor(_paDr,_paDg,_paDb);d.circle(ML+4,y+12,1.5,'F');
+    d.setFont('helvetica','bold');d.setFontSize(9);d.setTextColor(_paDr,_paDg,_paDb);
+    d.text(_pitApproachResult.val,ML+9,y+13.5);
+    var _paValW=d.getTextWidth(_pitApproachResult.val);
+    d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.dim);
+    d.text(_pitApproachResult.label,ML+11+_paValW,y+13.5);
+    var _paLblW=_pitApproachResult.label?d.getTextWidth(_pitApproachResult.label):0;
+    var _paNoteX=ML+(_pitApproachResult.label?13+_paValW+_paLblW:9);
+    var _paNoteMaxW=CPW-(_paNoteX-ML)-2;
+    d.setFont('helvetica','normal');d.setFontSize(5.5);st(d,CO.light);
+    var _paNwds=_pitApproachResult.note.split(' '),_paNln='',_paNlns=[];
+    _paNwds.forEach(function(w){var t=_paNln?_paNln+' '+w:w;if(d.getTextWidth(t)>_paNoteMaxW){_paNlns.push(_paNln);_paNln=w;}else _paNln=t;});
+    if(_paNln)_paNlns.push(_paNln);
+    _paNlns.slice(0,2).forEach(function(l,li){d.text(l,_paNoteX,y+13.5+li*5.5);});
+    y+=_paBoxH+3;
     var znPct=tot>0?inZ/tot:0;
     if(selSeason==='2026'){if(pd26&&pd26.FPS_pct!=null)fpsPct=pd26.FPS_pct;}
     else{if(pbpP2&&pbpP2.FP_STR_pct!=null)fpsPct=pbpP2.FP_STR_pct;}
@@ -2349,26 +2511,29 @@ Zane Skansi,Kitchener Panthers`;
       else if(ttp<1.2) pitcherPoints.push({dot:'#f87171', text:'Quick delivery ('+ttp.toFixed(2)+'s) — do not attempt to steal. The window to run is extremely small.'});
     }
 
-    // Cap at 5 points
-    pitcherPoints = pitcherPoints.slice(0,5);
+    // Pick the single most impactful pitcher point: red (danger for batter) > green (opportunity) > yellow (neutral)
+    var _ppPriority=function(dot){return dot==='#f87171'?0:dot==='#34d399'?1:dot==='#a78bfa'?2:3;};
+    pitcherPoints.sort(function(a,b){return _ppPriority(a.dot)-_ppPriority(b.dot);});
+    var pitFocusPoint=pitcherPoints[0]||{dot:'#FFB81C',text:'No data available.'};
+    var pfDr=parseInt(pitFocusPoint.dot.slice(1,3),16)||255,pfDg=parseInt(pitFocusPoint.dot.slice(3,5),16)||184,pfDb=parseInt(pitFocusPoint.dot.slice(5,7),16)||28;
 
-    // Draw the key points box — compact single-line rows
-    var kpRH=6.5, kpBoxH=7+pitcherPoints.length*kpRH+4;
-    d.setFillColor(13,20,40);d.rect(ML,y,CPW,kpBoxH,'F');
-    d.setDrawColor(255,184,28);d.setLineWidth(0.3);d.rect(ML,y,CPW,kpBoxH,'S');
-    d.setFillColor(255,184,28);d.rect(ML,y,CPW,2,'F');
-    d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.gold);
-    d.text('KEY SCOUTING POINTS',ML+3,y+6);
-    pitcherPoints.forEach(function(pt,i){
-      var py2=y+10+i*kpRH;
-      var dr=parseInt(pt.dot.slice(1,3),16)||1,dg=parseInt(pt.dot.slice(3,5),16)||1,db=parseInt(pt.dot.slice(5,7),16)||1;
-      d.setFillColor(dr,dg,db);d.circle(ML+4,py2-1,1.1,'F');
-      d.setFont('helvetica','normal');d.setFontSize(5.5);st(d,CO.white);
-      var maxW3=CPW-10,txt=pt.text;
-      while(txt.length>10&&d.getTextWidth(txt)>maxW3)txt=txt.slice(0,txt.lastIndexOf(' '));
-      d.text(txt,ML+7,py2);
-    });
-    y+=kpBoxH+2;
+    // Draw single large hyper-focus box
+    var phfBoxH=26;
+    d.setFillColor(13,20,40);d.rect(ML,y,CPW,phfBoxH,'F');
+    d.setDrawColor(pfDr,pfDg,pfDb);d.setLineWidth(0.5);d.rect(ML,y,CPW,phfBoxH,'S');
+    d.setFillColor(pfDr,pfDg,pfDb);d.rect(ML,y,CPW,2.5,'F');
+    // Header label
+    d.setFont('helvetica','bold');d.setFontSize(5.5);d.setTextColor(pfDr,pfDg,pfDb);
+    d.text('HYPER FOCUS',ML+3,y+6.5);
+    // Large dot
+    d.setFillColor(pfDr,pfDg,pfDb);d.circle(ML+4,y+14,2,'F');
+    // Focus text — wrap across 2–3 lines
+    d.setFont('helvetica','bold');d.setFontSize(6.5);st(d,CO.white);
+    var _phfTxt=pitFocusPoint.text,_phfMaxW=CPW-12,_phfWds=_phfTxt.split(' '),_phfLn='',_phfLns=[];
+    _phfWds.forEach(function(w){var t=_phfLn?_phfLn+' '+w:w;if(d.getTextWidth(t)>_phfMaxW){_phfLns.push(_phfLn);_phfLn=w;}else _phfLn=t;});
+    if(_phfLn)_phfLns.push(_phfLn);
+    _phfLns.slice(0,3).forEach(function(l,li){d.text(l,ML+9,y+13+li*6);});
+    y+=phfBoxH+2;
 
     // TTP highlight card (if data available)
     if(ttp!=null){
