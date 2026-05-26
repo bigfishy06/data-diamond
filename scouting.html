@@ -1805,7 +1805,7 @@ Zane Skansi,Kitchener Panthers`;
 
     var _approachResult=(function(){
       var scB=allSc.filter(function(p){return p.x!=null&&p.y!=null;});
-      function batterFallback(){
+      function batterFallback(noPlots){
         var opsNum=iblB&&iblB.OPS!=null?parseFloat(iblB.OPS):(s.OPS!=null?parseFloat(s.OPS):null);
         var avgNum=iblB&&iblB.AVG!=null?parseFloat(iblB.AVG):(s.AVG!=null?parseFloat(s.AVG):null);
         var kRate=pa>0?(selSeason==='2025'&&iblK(iblB)!=null?iblK(iblB)/pa:(s.K_pct!=null?s.K_pct/100:k/pa)):null;
@@ -1816,9 +1816,11 @@ Zane Skansi,Kitchener Panthers`;
         if(kRate!=null) opts.push({score:Math.abs(kRate-0.20),dot:kRate>=0.26?'#34d399':(kRate<=0.13?'#f87171':'#FFB81C'),spot:'Key stat: K% '+f1(kRate*100)+'%',label:'K%',val:f1(kRate*100)+'%',note:kRate>=0.26?'No reliable plotted-location recommendation is available. The strikeout rate is the clearest attack point: finish him when ahead.':'No reliable plotted-location recommendation is available. The low strikeout rate says he puts the ball in play; prioritize weak contact.'});
         if(bbRate!=null) opts.push({score:Math.abs(bbRate-0.08),dot:bbRate>=0.13?'#f87171':(bbRate<=0.04?'#34d399':'#FFB81C'),spot:'Key stat: BB% '+f1(bbRate*100)+'%',label:'BB%',val:f1(bbRate*100)+'%',note:bbRate>=0.13?'No reliable plotted-location recommendation is available. The walk rate is the warning: throw strikes and avoid nibbling.':'No reliable plotted-location recommendation is available. The low walk rate gives pitchers room to expand carefully.'});
         opts.sort(function(a,b){return b.score-a.score;});
-        return opts[0]||{dot:'#60a5fa',label:'NO X AND Y PLOTS',val:'',spot:'Key stat unavailable',region:null,note:'No plotted pitch locations or useful fallback stat are available.'};
+        var pick=opts[0]||{score:0,dot:'#60a5fa',label:'DATA',val:'',spot:'Key stat unavailable',region:null,note:'No plotted pitch locations or useful fallback stat are available.'};
+        pick.fallbackLabel=noPlots?'NO X AND Y PLOTS':'NO RELIABLE ZONE';
+        return pick;
       }
-      if(!scB.length) return batterFallback();
+      if(!scB.length) return batterFallback(true);
 
       var leftFn=function(p){return p.y<-0.1;};
       var rightFn=function(p){return p.y>0.1;};
@@ -1867,7 +1869,7 @@ Zane Skansi,Kitchener Panthers`;
         });
       });
 
-      if(!candidates.length) return batterFallback();
+      if(!candidates.length) return batterFallback(false);
       candidates.sort(function(a,b){return b.score-a.score;});
       var best=candidates[0];
       var dot=best.score>=0.75?'#34d399':'#FFB81C';
@@ -1884,16 +1886,17 @@ Zane Skansi,Kitchener Panthers`;
     d.setFillColor(_aDr,_aDg,_aDb);d.rect(ML,y,2.4,_aBoxH,'F');
     var _aTextX=ML+40;
     if(_approachResult.region){drawAttackZone(d,ML+6,y+5,28,28,_approachResult.region,_approachResult.dot);}
-    else{_aTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_aDr,_aDg,_aDb);d.text('NO PLOT DATA - STAT FALLBACK',_aTextX,y+6.5);}
+    else{_aTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_aDr,_aDg,_aDb);d.text(_approachResult.fallbackLabel||'STAT FALLBACK',_aTextX,y+6.5);}
     d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
     var _aAction=_approachResult.region?('Go to: '+_approachResult.spot):(_approachResult.spot||_approachResult.label);
-    d.text(_aAction,_aTextX,y+10.5,{maxWidth:CPW-46});
+    var _aTextW=_approachResult.region?CPW-46:CPW-14;
+    d.text(_aAction,_aTextX,y+10.5,{maxWidth:_aTextW});
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
     var _aNwds=_approachResult.note.split(' '),_aNln='',_aNlns=[];
-    _aNwds.forEach(function(w){var t=_aNln?_aNln+' '+w:w;if(d.getTextWidth(t)>CPW-48){_aNlns.push(_aNln);_aNln=w;}else _aNln=t;});
+    _aNwds.forEach(function(w){var t=_aNln?_aNln+' '+w:w;if(d.getTextWidth(t)>_aTextW){_aNlns.push(_aNln);_aNln=w;}else _aNln=t;});
     if(_aNln)_aNlns.push(_aNln);
     _aNlns.slice(0,3).forEach(function(l,li){d.text(l,_aTextX,y+18+li*5);});
-    if(_approachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_aDr,_aDg,_aDb);d.text('Evidence: '+_approachResult.label+' '+_approachResult.val,_aTextX,y+34,{maxWidth:CPW-48});}
+    if(_approachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_aDr,_aDg,_aDb);d.text('Evidence: '+_approachResult.label+' '+_approachResult.val,_aTextX,y+34,{maxWidth:_aTextW});}
     y+=_aBoxH+4;
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
@@ -2212,7 +2215,7 @@ Zane Skansi,Kitchener Panthers`;
 
     var _pitApproachResult=(function(){
       var scP=sc.filter(function(p){return p.x!=null&&p.y!=null;});
-      function pitcherFallback(){
+      function pitcherFallback(noPlots){
         var baaNum=selSeason==='2026'?(pd26&&pd26.BAA!=null?parseFloat(pd26.BAA):null):(pbpP2&&pbpP2.BA_against!=null?parseFloat(pbpP2.BA_against):(player.baa!=null?parseFloat(player.baa):null));
         var whipNum=selSeason==='2026'?(pd26&&pd26.IP>0?(function(){var _h=pd26.H_allowed!=null?pd26.H_allowed:hits;var _bb=pd26.BB!=null?pd26.BB:bbs;return (_bb+_h)/pd26.IP;})():null):(pbpP2&&pbpP2.WHIP!=null?parseFloat(pbpP2.WHIP):(player.whip!=null?parseFloat(player.whip):null));
         var opts=[];
@@ -2223,10 +2226,12 @@ Zane Skansi,Kitchener Panthers`;
         if(strPct3!=null) opts.push({score:Math.abs(strPct3-0.60),dot:strPct3>=0.68?'#f87171':(strPct3<=0.52?'#34d399':'#FFB81C'),spot:'Key stat: STR% '+f1(strPct3*100)+'%',label:'STR%',val:f1(strPct3*100)+'%',note:strPct3>=0.68?'No reliable plotted-location recommendation is available. He fills the zone, so be ready to hit early-count strikes.':'No reliable plotted-location recommendation is available. His strike rate is low, so make him work in the zone.'});
         if(whipNum!=null&&workloadIp>=3) opts.push({score:Math.abs(whipNum-1.25)/2,dot:whipNum>=1.45?'#34d399':(whipNum<=1.05?'#f87171':'#FFB81C'),spot:'Key stat: WHIP '+f2(whipNum),label:'WHIP',val:f2(whipNum),note:whipNum>=1.45?'No reliable plotted-location recommendation is available. He allows traffic, so stay patient and build innings.':'No reliable plotted-location recommendation is available. He limits baserunners, so do not waste hittable pitches.'});
         opts.sort(function(a,b){return b.score-a.score;});
-        return opts[0]||{dot:'#60a5fa',label:'NO X AND Y PLOTS',val:'',spot:'Key stat unavailable',region:null,note:'No plotted pitch locations or useful fallback stat are available.'};
+        var pick=opts[0]||{score:0,dot:'#60a5fa',label:'DATA',val:'',spot:'Key stat unavailable',region:null,note:'No plotted pitch locations or useful fallback stat are available.'};
+        pick.fallbackLabel=noPlots?'NO X AND Y PLOTS':'NO RELIABLE ZONE';
+        return pick;
       }
       if(!scP.length){
-        return pitcherFallback();
+        return pitcherFallback(true);
       }
 
       var inZoneFnP=function(p){return p.in_zone===true;};
@@ -2262,7 +2267,7 @@ Zane Skansi,Kitchener Panthers`;
         });
       });
 
-      if(!candidates.length) return pitcherFallback();
+      if(!candidates.length) return pitcherFallback(false);
       candidates.sort(function(a,b){return b.score-a.score;});
       var best=candidates[0];
       var dot=best.score>=0.75?'#34d399':'#FFB81C';
@@ -2279,16 +2284,17 @@ Zane Skansi,Kitchener Panthers`;
     d.setFillColor(_paDr,_paDg,_paDb);d.rect(ML,y,2.4,_paBoxH,'F');
     var _paTextX=ML+40;
     if(_pitApproachResult.region){drawAttackZone(d,ML+6,y+5,28,28,_pitApproachResult.region,_pitApproachResult.dot);}
-    else{_paTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_paDr,_paDg,_paDb);d.text('NO PLOT DATA - STAT FALLBACK',_paTextX,y+6.5);}
+    else{_paTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_paDr,_paDg,_paDb);d.text(_pitApproachResult.fallbackLabel||'STAT FALLBACK',_paTextX,y+6.5);}
     d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
     var _paAction=_pitApproachResult.region?('Look for: '+_pitApproachResult.spot):(_pitApproachResult.spot||_pitApproachResult.label);
-    d.text(_paAction,_paTextX,y+10.5,{maxWidth:CPW-46});
+    var _paTextW=_pitApproachResult.region?CPW-46:CPW-14;
+    d.text(_paAction,_paTextX,y+10.5,{maxWidth:_paTextW});
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
     var _paNwds=_pitApproachResult.note.split(' '),_paNln='',_paNlns=[];
-    _paNwds.forEach(function(w){var t=_paNln?_paNln+' '+w:w;if(d.getTextWidth(t)>CPW-48){_paNlns.push(_paNln);_paNln=w;}else _paNln=t;});
+    _paNwds.forEach(function(w){var t=_paNln?_paNln+' '+w:w;if(d.getTextWidth(t)>_paTextW){_paNlns.push(_paNln);_paNln=w;}else _paNln=t;});
     if(_paNln)_paNlns.push(_paNln);
     _paNlns.slice(0,3).forEach(function(l,li){d.text(l,_paTextX,y+18+li*5);});
-    if(_pitApproachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_paDr,_paDg,_paDb);d.text('Evidence: '+_pitApproachResult.label+' '+_pitApproachResult.val,_paTextX,y+34,{maxWidth:CPW-48});}
+    if(_pitApproachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_paDr,_paDg,_paDb);d.text('Evidence: '+_pitApproachResult.label+' '+_pitApproachResult.val,_paTextX,y+34,{maxWidth:_paTextW});}
     y+=_paBoxH+4;
     var znPct=tot>0?inZ/tot:0;
     if(selSeason==='2026'){if(pd26&&pd26.FPS_pct!=null)fpsPct=pd26.FPS_pct;}
