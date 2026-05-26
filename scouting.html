@@ -1504,10 +1504,9 @@ Zane Skansi,Kitchener Panthers`;
     sd(d,CO.navy3);d.setLineWidth(0.2);d.rect(ML,y,tw,hh+rows.length*rh,'S');
     return y+hh+rows.length*rh+3;
   }
-  var SCOUTING_APPROACH_BUILD='APPROACH V4';
   function drawFoot(d,name,role){
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.dim);
-    d.text('Data Diamond - CBL Scouting Report '+selSeason+' - '+SCOUTING_APPROACH_BUILD,ML,PH-6);
+    d.text('Data Diamond  �  CBL Scouting Report '+selSeason,ML,PH-6);
     d.text(name+'  •  '+role,ML+CPW,PH-6,{align:'right'});
     sf(d,CO.gold);d.rect(0,PH-1.5,PW,1.5,'F');
   }
@@ -1812,13 +1811,13 @@ Zane Skansi,Kitchener Panthers`;
         var kRate=pa>0?(selSeason==='2025'&&iblK(iblB)!=null?iblK(iblB)/pa:(s.K_pct!=null?s.K_pct/100:k/pa)):null;
         var bbRate=pa>0?(selSeason==='2025'&&iblBB(iblB)!=null?iblBB(iblB)/pa:(s.BB_pct!=null?s.BB_pct/100:bb/pa)):null;
         var opts=[];
-        if(opsNum!=null) opts.push({score:Math.abs(opsNum-0.720),dot:opsNum>=0.800?'#f87171':(opsNum<=0.620?'#34d399':'#FFB81C'),spot:'Key stat: OPS '+f3(opsNum),label:'OPS',val:f3(opsNum),note:opsNum>=0.800?'No reliable plotted-location recommendation is available. Use the bat as the warning: he is producing at a dangerous OPS level.':'No reliable plotted-location recommendation is available. Use the bat as the read: his OPS has been manageable.'});
-        if(avgNum!=null) opts.push({score:Math.abs(avgNum-0.250),dot:avgNum>=0.300?'#f87171':(avgNum<=0.220?'#34d399':'#FFB81C'),spot:'Key stat: AVG '+f3(avgNum),label:'AVG',val:f3(avgNum),note:avgNum>=0.300?'No reliable plotted-location recommendation is available. Treat him as a contact threat and avoid free mistakes over the plate.':'No reliable plotted-location recommendation is available. His batting average suggests pitchers can challenge him.'});
-        if(kRate!=null) opts.push({score:Math.abs(kRate-0.20),dot:kRate>=0.26?'#34d399':(kRate<=0.13?'#f87171':'#FFB81C'),spot:'Key stat: K% '+f1(kRate*100)+'%',label:'K%',val:f1(kRate*100)+'%',note:kRate>=0.26?'No reliable plotted-location recommendation is available. The strikeout rate is the clearest attack point: finish him when ahead.':'No reliable plotted-location recommendation is available. The low strikeout rate says he puts the ball in play; prioritize weak contact.'});
-        if(bbRate!=null) opts.push({score:Math.abs(bbRate-0.08),dot:bbRate>=0.13?'#f87171':(bbRate<=0.04?'#34d399':'#FFB81C'),spot:'Key stat: BB% '+f1(bbRate*100)+'%',label:'BB%',val:f1(bbRate*100)+'%',note:bbRate>=0.13?'No reliable plotted-location recommendation is available. The walk rate is the warning: throw strikes and avoid nibbling.':'No reliable plotted-location recommendation is available. The low walk rate gives pitchers room to expand carefully.'});
+        if(opsNum!=null) opts.push({score:Math.abs(opsNum-0.720),dot:opsNum>=0.800?'#f87171':(opsNum<=0.620?'#34d399':'#FFB81C'),spot:'OPS '+f3(opsNum),label:'OPS',val:f3(opsNum),note:opsNum>=0.800?'Producing at a dangerous OPS level. Avoid free mistakes over the plate.':'OPS has been manageable. Pitchers can challenge with a clear plan.'});
+        if(avgNum!=null) opts.push({score:Math.abs(avgNum-0.250),dot:avgNum>=0.300?'#f87171':(avgNum<=0.220?'#34d399':'#FFB81C'),spot:'AVG '+f3(avgNum),label:'AVG',val:f3(avgNum),note:avgNum>=0.300?'Treat him as a contact threat. Avoid free mistakes over the plate.':'Batting average suggests pitchers can challenge him in the zone.'});
+        if(kRate!=null) opts.push({score:Math.abs(kRate-0.20),dot:kRate>=0.26?'#34d399':(kRate<=0.13?'#f87171':'#FFB81C'),spot:'K% '+f1(kRate*100)+'%',label:'K%',val:f1(kRate*100)+'%',note:kRate>=0.26?'Strikeout rate is the clearest attack point. Finish him when ahead.':'Low strikeout rate says he puts the ball in play. Prioritize weak contact.'});
+        if(bbRate!=null) opts.push({score:Math.abs(bbRate-0.08),dot:bbRate>=0.13?'#f87171':(bbRate<=0.04?'#34d399':'#FFB81C'),spot:'BB% '+f1(bbRate*100)+'%',label:'BB%',val:f1(bbRate*100)+'%',note:bbRate>=0.13?'Walk rate is the warning. Throw strikes and avoid nibbling.':'Low walk rate gives pitchers room to expand carefully.'});
         opts.sort(function(a,b){return b.score-a.score;});
-        var pick=opts[0]||{score:0,dot:'#60a5fa',label:'DATA',val:'',spot:'Key stat unavailable',region:null,note:'No plotted pitch locations or useful fallback stat are available.'};
-        pick.fallbackLabel=noPlots?'NO X AND Y PLOTS':'NO RELIABLE ZONE';
+        var pick=opts[0]||{score:0,dot:'#60a5fa',label:'DATA',val:'',spot:'Limited data',region:null,note:'There is not enough reliable data for a specific approach callout.'};
+        pick.fallbackLabel=pick.val?'KEY STAT':'LIMITED DATA';
         return pick;
       }
       if(!scB.length) return batterFallback(true);
@@ -1897,7 +1896,7 @@ Zane Skansi,Kitchener Panthers`;
     _aNwds.forEach(function(w){var t=_aNln?_aNln+' '+w:w;if(d.getTextWidth(t)>_aTextW){_aNlns.push(_aNln);_aNln=w;}else _aNln=t;});
     if(_aNln)_aNlns.push(_aNln);
     _aNlns.slice(0,3).forEach(function(l,li){d.text(l,_aTextX,y+18+li*5);});
-    if(_approachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_aDr,_aDg,_aDb);d.text('Evidence: '+_approachResult.label+' '+_approachResult.val,_aTextX,y+34,{maxWidth:_aTextW});}
+    if(_approachResult.region&&_approachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_aDr,_aDg,_aDb);d.text('Evidence: '+_approachResult.label+' '+_approachResult.val,_aTextX,y+34,{maxWidth:_aTextW});}
     y+=_aBoxH+4;
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
@@ -2221,14 +2220,14 @@ Zane Skansi,Kitchener Panthers`;
         var whipNum=selSeason==='2026'?(pd26&&pd26.IP>0?(function(){var _h=pd26.H_allowed!=null?pd26.H_allowed:hits;var _bb=pd26.BB!=null?pd26.BB:bbs;return (_bb+_h)/pd26.IP;})():null):(pbpP2&&pbpP2.WHIP!=null?parseFloat(pbpP2.WHIP):(player.whip!=null?parseFloat(player.whip):null));
         var opts=[];
         var workloadIp=selSeason==='2026'&&pd26&&pd26.IP!=null?pd26.IP:(player.ip||0);
-        if(baaNum!=null&&workloadIp>=3) opts.push({score:Math.abs(baaNum-0.250),dot:baaNum>=0.280?'#34d399':(baaNum<=0.210?'#f87171':'#FFB81C'),spot:'Key stat: BAA '+f3(baaNum),label:'BAA',val:f3(baaNum),note:baaNum>=0.280?'No reliable plotted-location recommendation is available. Batters are getting hits against him overall, so look for pitches in your hitting zone.':'No reliable plotted-location recommendation is available. His batting average against is low, so do not force marginal pitches.'});
-        if(kPct2!=null) opts.push({score:Math.abs(kPct2-0.20),dot:kPct2>=0.27?'#f87171':(kPct2<=0.14?'#34d399':'#FFB81C'),spot:'Key stat: K% '+f1(kPct2*100)+'%',label:'K%',val:f1(kPct2*100)+'%',note:kPct2>=0.27?'No reliable plotted-location recommendation is available. The strikeout rate is the warning: protect the zone and shorten up with two strikes.':'No reliable plotted-location recommendation is available. The low strikeout rate says contact is available; put the ball in play.'});
-        if(bbPct2!=null) opts.push({score:Math.abs(bbPct2-0.08),dot:bbPct2>=0.12?'#34d399':(bbPct2<=0.04?'#f87171':'#FFB81C'),spot:'Key stat: BB% '+f1(bbPct2*100)+'%',label:'BB%',val:f1(bbPct2*100)+'%',note:bbPct2>=0.12?'No reliable plotted-location recommendation is available. His walk rate is elevated, so make him prove he can throw strikes.':'No reliable plotted-location recommendation is available. He does not walk many hitters, so have a swing plan early.'});
-        if(strPct3!=null) opts.push({score:Math.abs(strPct3-0.60),dot:strPct3>=0.68?'#f87171':(strPct3<=0.52?'#34d399':'#FFB81C'),spot:'Key stat: STR% '+f1(strPct3*100)+'%',label:'STR%',val:f1(strPct3*100)+'%',note:strPct3>=0.68?'No reliable plotted-location recommendation is available. He fills the zone, so be ready to hit early-count strikes.':'No reliable plotted-location recommendation is available. His strike rate is low, so make him work in the zone.'});
-        if(whipNum!=null&&workloadIp>=3) opts.push({score:Math.abs(whipNum-1.25)/2,dot:whipNum>=1.45?'#34d399':(whipNum<=1.05?'#f87171':'#FFB81C'),spot:'Key stat: WHIP '+f2(whipNum),label:'WHIP',val:f2(whipNum),note:whipNum>=1.45?'No reliable plotted-location recommendation is available. He allows traffic, so stay patient and build innings.':'No reliable plotted-location recommendation is available. He limits baserunners, so do not waste hittable pitches.'});
+        if(baaNum!=null&&workloadIp>=3) opts.push({score:Math.abs(baaNum-0.250),dot:baaNum>=0.280?'#34d399':(baaNum<=0.210?'#f87171':'#FFB81C'),spot:'BAA '+f3(baaNum),label:'BAA',val:f3(baaNum),note:baaNum>=0.280?'Batters are getting hits against him overall. Look for pitches in your hitting zone.':'Batting average against is low. Do not force marginal pitches.'});
+        if(kPct2!=null) opts.push({score:Math.abs(kPct2-0.20),dot:kPct2>=0.27?'#f87171':(kPct2<=0.14?'#34d399':'#FFB81C'),spot:'K% '+f1(kPct2*100)+'%',label:'K%',val:f1(kPct2*100)+'%',note:kPct2>=0.27?'Strikeout rate is the warning. Protect the zone and shorten up with two strikes.':'Low strikeout rate says contact is available. Put the ball in play.'});
+        if(bbPct2!=null) opts.push({score:Math.abs(bbPct2-0.08),dot:bbPct2>=0.12?'#34d399':(bbPct2<=0.04?'#f87171':'#FFB81C'),spot:'BB% '+f1(bbPct2*100)+'%',label:'BB%',val:f1(bbPct2*100)+'%',note:bbPct2>=0.12?'Walk rate is elevated. Make him prove he can throw strikes.':'He does not walk many hitters. Have a swing plan early.'});
+        if(strPct3!=null) opts.push({score:Math.abs(strPct3-0.60),dot:strPct3>=0.68?'#f87171':(strPct3<=0.52?'#34d399':'#FFB81C'),spot:'STR% '+f1(strPct3*100)+'%',label:'STR%',val:f1(strPct3*100)+'%',note:strPct3>=0.68?'He fills the zone. Be ready to hit early-count strikes.':'Strike rate is low. Make him work in the zone.'});
+        if(whipNum!=null&&workloadIp>=3) opts.push({score:Math.abs(whipNum-1.25)/2,dot:whipNum>=1.45?'#34d399':(whipNum<=1.05?'#f87171':'#FFB81C'),spot:'WHIP '+f2(whipNum),label:'WHIP',val:f2(whipNum),note:whipNum>=1.45?'He allows traffic. Stay patient and build innings.':'He limits baserunners. Do not waste hittable pitches.'});
         opts.sort(function(a,b){return b.score-a.score;});
-        var pick=opts[0]||{score:0,dot:'#60a5fa',label:'DATA',val:'',spot:'Key stat unavailable',region:null,note:'No plotted pitch locations or useful fallback stat are available.'};
-        pick.fallbackLabel=noPlots?'NO X AND Y PLOTS':'NO RELIABLE ZONE';
+        var pick=opts[0]||{score:0,dot:'#60a5fa',label:'DATA',val:'',spot:'Limited data',region:null,note:'There is not enough reliable data for a specific approach callout.'};
+        pick.fallbackLabel=pick.val?'KEY STAT':'LIMITED DATA';
         return pick;
       }
       if(!scP.length){
@@ -2237,10 +2236,14 @@ Zane Skansi,Kitchener Panthers`;
 
       var inZoneFnP=function(p){return p.in_zone===true;};
       var PZONES=[
-        {label:'Up in Zone',spot:'up in the zone',region:{h:'all',v:'top'},fn:function(p){return inZoneFnP(p)&&p.x>0.6;}},
-        {label:'Low in Zone',spot:'low in the zone',region:{h:'all',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.x<0.35;}},
-        {label:'Left Corner',spot:'left corner of the strike zone',region:{h:'left',v:'all'},fn:function(p){return inZoneFnP(p)&&p.y<-0.5;}},
-        {label:'Right Corner',spot:'right corner of the strike zone',region:{h:'right',v:'all'},fn:function(p){return inZoneFnP(p)&&p.y>0.5;}}
+        {label:'Up Right Corner',spot:'Up Right Corner',region:{h:'right',v:'top'},fn:function(p){return inZoneFnP(p)&&p.x>0.6&&p.y>0.5;}},
+        {label:'Up Left Corner',spot:'Up Left Corner',region:{h:'left',v:'top'},fn:function(p){return inZoneFnP(p)&&p.x>0.6&&p.y<-0.5;}},
+        {label:'Low Right Corner',spot:'Low Right Corner',region:{h:'right',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.x<0.35&&p.y>0.5;}},
+        {label:'Low Left Corner',spot:'Low Left Corner',region:{h:'left',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.x<0.35&&p.y<-0.5;}},
+        {label:'Up in Zone',spot:'Up in Zone',region:{h:'all',v:'top'},fn:function(p){return inZoneFnP(p)&&p.x>0.6;}},
+        {label:'Low in Zone',spot:'Low in Zone',region:{h:'all',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.x<0.35;}},
+        {label:'Right Edge',spot:'Right Edge',region:{h:'right',v:'all'},fn:function(p){return inZoneFnP(p)&&p.y>0.5;}},
+        {label:'Left Edge',spot:'Left Edge',region:{h:'left',v:'all'},fn:function(p){return inZoneFnP(p)&&p.y<-0.5;}}
       ];
       var candidates=[];
       function addAttack(label,val,pct,note,score,spot,region){
@@ -2252,7 +2255,7 @@ Zane Skansi,Kitchener Panthers`;
         var myBA=_zbaP(pts), lgBA=_lgArrP(pz.fn,_zbaP);
         var baPct=_pctRankP(myBA,lgBA);
         if(myBA!=null&&myBA>=0.250) addAttack(pz.label+' AVG AGNST', f3(myBA), baPct,
-          'Batters should look for pitches in the '+pz.spot+'. The plotted pitch locations show production there.', baPct, pz.spot, pz.region);
+          'Batters should look for pitches in the '+pz.spot.toLowerCase()+'. The plotted pitch locations show production there.', baPct, pz.spot, pz.region);
       });
 
       var pitchTypesP=[];
@@ -2264,7 +2267,7 @@ Zane Skansi,Kitchener Panthers`;
           var cBA=_zbaP(cpts), lcBA=_lgArrP(fn,_zbaP);
           var cBAPct=_pctRankP(cBA,lcBA);
           if(cBA!=null&&cBA>=0.250) addAttack(pt+' - '+pz.label+' AVG AGNST', f3(cBA), cBAPct,
-            'Batters should look for '+pt+' in the '+pz.spot+'. That plotted location is getting hit.', cBAPct, pz.spot, pz.region);
+            'Batters should look for '+pt+' in the '+pz.spot.toLowerCase()+'. That plotted location is getting hit.', cBAPct, pz.spot, pz.region);
         });
       });
 
@@ -2295,7 +2298,7 @@ Zane Skansi,Kitchener Panthers`;
     _paNwds.forEach(function(w){var t=_paNln?_paNln+' '+w:w;if(d.getTextWidth(t)>_paTextW){_paNlns.push(_paNln);_paNln=w;}else _paNln=t;});
     if(_paNln)_paNlns.push(_paNln);
     _paNlns.slice(0,3).forEach(function(l,li){d.text(l,_paTextX,y+18+li*5);});
-    if(_pitApproachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_paDr,_paDg,_paDb);d.text('Evidence: '+_pitApproachResult.label+' '+_pitApproachResult.val,_paTextX,y+34,{maxWidth:_paTextW});}
+    if(_pitApproachResult.region&&_pitApproachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_paDr,_paDg,_paDb);d.text('Evidence: '+_pitApproachResult.label+' '+_pitApproachResult.val,_paTextX,y+34,{maxWidth:_paTextW});}
     y+=_paBoxH+4;
     var znPct=tot>0?inZ/tot:0;
     if(selSeason==='2026'){if(pd26&&pd26.FPS_pct!=null)fpsPct=pd26.FPS_pct;}
