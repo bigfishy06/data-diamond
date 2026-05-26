@@ -1504,9 +1504,10 @@ Zane Skansi,Kitchener Panthers`;
     sd(d,CO.navy3);d.setLineWidth(0.2);d.rect(ML,y,tw,hh+rows.length*rh,'S');
     return y+hh+rows.length*rh+3;
   }
+  var SCOUTING_APPROACH_BUILD='APPROACH V4';
   function drawFoot(d,name,role){
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.dim);
-    d.text('Data Diamond  —  CBL Scouting Report '+selSeason,ML,PH-6);
+    d.text('Data Diamond - CBL Scouting Report '+selSeason+' - '+SCOUTING_APPROACH_BUILD,ML,PH-6);
     d.text(name+'  •  '+role,ML+CPW,PH-6,{align:'right'});
     sf(d,CO.gold);d.rect(0,PH-1.5,PW,1.5,'F');
   }
@@ -2238,8 +2239,8 @@ Zane Skansi,Kitchener Panthers`;
       var PZONES=[
         {label:'Up in Zone',spot:'up in the zone',region:{h:'all',v:'top'},fn:function(p){return inZoneFnP(p)&&p.x>0.6;}},
         {label:'Low in Zone',spot:'low in the zone',region:{h:'all',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.x<0.35;}},
-        {label:'Left Corner',spot:'left side of the zone',region:{h:'left',v:'all'},fn:function(p){return inZoneFnP(p)&&p.y<-0.5;}},
-        {label:'Right Corner',spot:'right side of the zone',region:{h:'right',v:'all'},fn:function(p){return inZoneFnP(p)&&p.y>0.5;}}
+        {label:'Left Corner',spot:'left corner of the strike zone',region:{h:'left',v:'all'},fn:function(p){return inZoneFnP(p)&&p.y<-0.5;}},
+        {label:'Right Corner',spot:'right corner of the strike zone',region:{h:'right',v:'all'},fn:function(p){return inZoneFnP(p)&&p.y>0.5;}}
       ];
       var candidates=[];
       function addAttack(label,val,pct,note,score,spot,region){
@@ -2251,7 +2252,7 @@ Zane Skansi,Kitchener Panthers`;
         var myBA=_zbaP(pts), lgBA=_lgArrP(pz.fn,_zbaP);
         var baPct=_pctRankP(myBA,lgBA);
         if(myBA!=null&&myBA>=0.250) addAttack(pz.label+' AVG AGNST', f3(myBA), baPct,
-          'Batters should look to hit pitches on the '+pz.spot+'. The plotted pitches show production there.', baPct, pz.spot, pz.region);
+          'Batters should look for pitches in the '+pz.spot+'. The plotted pitch locations show production there.', baPct, pz.spot, pz.region);
       });
 
       var pitchTypesP=[];
@@ -2263,7 +2264,7 @@ Zane Skansi,Kitchener Panthers`;
           var cBA=_zbaP(cpts), lcBA=_lgArrP(fn,_zbaP);
           var cBAPct=_pctRankP(cBA,lcBA);
           if(cBA!=null&&cBA>=0.250) addAttack(pt+' - '+pz.label+' AVG AGNST', f3(cBA), cBAPct,
-            'Batters should look for '+pt+' on the '+pz.spot+'. That plotted area is getting hit.', cBAPct, pz.spot, pz.region);
+            'Batters should look for '+pt+' in the '+pz.spot+'. That plotted location is getting hit.', cBAPct, pz.spot, pz.region);
         });
       });
 
