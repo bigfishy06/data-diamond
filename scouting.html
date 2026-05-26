@@ -1778,7 +1778,7 @@ Zane Skansi,Kitchener Panthers`;
 
     var _approachResult=(function(){
       var scB=allSc.filter(function(p){return p.x!=null&&p.y!=null;});
-      if(!scB.length) return {dot:'#60a5fa',label:'',val:'-',note:'There are no x and y plots.'};
+      if(!scB.length) return {dot:'#60a5fa',label:'NO X AND Y PLOTS',val:'',note:'No plotted pitch locations are available, so no approach recommendation is shown.'};
 
       var side=scB[0].batter_side||'R';
       var insideFn =side==='R'?function(p){return p.y<-0.1;}:function(p){return p.y>0.1;};
@@ -1835,7 +1835,7 @@ Zane Skansi,Kitchener Panthers`;
         });
       });
 
-      if(!candidates.length) return {dot:'#60a5fa',label:'',val:'-',note:'No clear attack spot from x and y plots.'};
+      if(!candidates.length) return {dot:'#60a5fa',label:'NO CLEAR PLOT TREND',val:'',note:'The plotted pitches do not show a strong location or pitch-type recommendation.'};
       candidates.sort(function(a,b){return b.score-a.score;});
       var best=candidates[0];
       var dot=best.score>=0.75?'#34d399':'#FFB81C';
@@ -1853,10 +1853,9 @@ Zane Skansi,Kitchener Panthers`;
     d.setFont('helvetica','bold');d.setFontSize(5.8);d.setTextColor(_aDr,_aDg,_aDb);
     d.text('APPROACH',ML+4,y+6.3);
     d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
-    var _aTarget=_approachResult.label?('ATTACK: '+_approachResult.label):'ATTACK';
-    d.text(_aTarget,ML+4,y+14.2,{maxWidth:CPW-34});
-    d.setFont('helvetica','bold');d.setFontSize(9);d.setTextColor(_aDr,_aDg,_aDb);
-    d.text(_approachResult.val,ML+CPW-4,y+14.2,{align:'right'});
+    var _aTarget=_approachResult.label||'APPROACH';
+    var _aTitle=_approachResult.val?(_aTarget+'  '+_approachResult.val):_aTarget;
+    d.text(_aTitle,ML+4,y+14.2,{maxWidth:CPW-8});
     d.setFont('helvetica','normal');d.setFontSize(6.4);st(d,CO.light);
     var _aNwds=_approachResult.note.split(' '),_aNln='',_aNlns=[];
     _aNwds.forEach(function(w){var t=_aNln?_aNln+' '+w:w;if(d.getTextWidth(t)>CPW-8){_aNlns.push(_aNln);_aNln=w;}else _aNln=t;});
@@ -2181,7 +2180,7 @@ Zane Skansi,Kitchener Panthers`;
     var _pitApproachResult=(function(){
       var scP=sc.filter(function(p){return p.x!=null&&p.y!=null;});
       if(!scP.length){
-        return {dot:'#60a5fa',label:'',val:'-',note:'There are no x and y plots.'};
+        return {dot:'#60a5fa',label:'NO X AND Y PLOTS',val:'',note:'No plotted pitch locations are available, so no approach recommendation is shown.'};
       }
 
       var inZoneFnP=function(p){return p.in_zone===true;};
@@ -2189,8 +2188,7 @@ Zane Skansi,Kitchener Panthers`;
         {label:'Up in Zone',  fn:function(p){return inZoneFnP(p)&&p.x>0.6;}},
         {label:'Low in Zone', fn:function(p){return inZoneFnP(p)&&p.x<0.35;}},
         {label:'Inside Edge', fn:function(p){return inZoneFnP(p)&&p.y<-0.5;}},
-        {label:'Outside Edge',fn:function(p){return inZoneFnP(p)&&p.y>0.5;}},
-        {label:'Out of Zone', fn:function(p){return!inZoneFnP(p);}}
+        {label:'Outside Edge',fn:function(p){return inZoneFnP(p)&&p.y>0.5;}}
       ];
       var candidates=[];
       function addAttack(label,val,pct,note,score){
@@ -2233,7 +2231,7 @@ Zane Skansi,Kitchener Panthers`;
         });
       });
 
-      if(!candidates.length) return {dot:'#60a5fa',label:'',val:'-',note:'No clear attack spot from x and y plots.'};
+      if(!candidates.length) return {dot:'#60a5fa',label:'NO CLEAR PLOT TREND',val:'',note:'The plotted pitches do not show a strong location or pitch-type recommendation.'};
       candidates.sort(function(a,b){return b.score-a.score;});
       var best=candidates[0];
       var dot=best.score>=0.75?'#34d399':'#FFB81C';
@@ -2251,10 +2249,9 @@ Zane Skansi,Kitchener Panthers`;
     d.setFont('helvetica','bold');d.setFontSize(5.8);d.setTextColor(_paDr,_paDg,_paDb);
     d.text('APPROACH',ML+4,y+6.3);
     d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
-    var _paTarget=_pitApproachResult.label?('ATTACK: '+_pitApproachResult.label):'ATTACK';
-    d.text(_paTarget,ML+4,y+14.2,{maxWidth:CPW-34});
-    d.setFont('helvetica','bold');d.setFontSize(9);d.setTextColor(_paDr,_paDg,_paDb);
-    d.text(_pitApproachResult.val,ML+CPW-4,y+14.2,{align:'right'});
+    var _paTarget=_pitApproachResult.label||'APPROACH';
+    var _paTitle=_pitApproachResult.val?(_paTarget+'  '+_pitApproachResult.val):_paTarget;
+    d.text(_paTitle,ML+4,y+14.2,{maxWidth:CPW-8});
     d.setFont('helvetica','normal');d.setFontSize(6.4);st(d,CO.light);
     var _paNwds=_pitApproachResult.note.split(' '),_paNln='',_paNlns=[];
     _paNwds.forEach(function(w){var t=_paNln?_paNln+' '+w:w;if(d.getTextWidth(t)>CPW-8){_paNlns.push(_paNln);_paNln=w;}else _paNln=t;});
