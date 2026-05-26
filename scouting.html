@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Scouting Reports — Data Diamond</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css" />`r`n  <link rel="icon" href="data:," />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1748,6 +1748,9 @@ Zane Skansi,Kitchener Panthers`;
     var iblB=selSeason==='2026'
       ? null
       : (_iblAll.find(function(r){return (r.season||'').indexOf('2025')!==-1&&r.AB>0;})||_iblAll.filter(function(r){return r.AB>0;})[0]||null);
+    var pbp=player.pbp||null;
+    var pa=selSeason==='2026' ? (s.PA||0) : (iblPA(iblB)||s.PA||0);
+    var k=s.K||0, bb=s.BB||0;
     // RBI always from iblHistory — find matching season entry first
     var _iblRBI=_iblAll.find(function(r){return (r.season||'').indexOf(selSeason)!==-1&&r.RBI!=null;})||_iblAll.find(function(r){return r.RBI!=null;})||null;
     var rbiVal=_iblRBI?fN(_iblRBI.RBI):(s.RBI!=null?fN(s.RBI):'—');
@@ -1900,7 +1903,7 @@ Zane Skansi,Kitchener Panthers`;
     var _approachResult=(function(){
       // Use allSc which is already season-filtered scatter for this batter
       var scB=allSc.filter(function(p){return p.x!=null&&p.y!=null;});
-      if(!scB.length) return {dot:'#60a5fa',label:'',val:'—',note:'No pitch location data available.'};
+      if(!scB.length) return {dot:'#60a5fa',label:'',val:'�',note:'There are no x/y plots.'};
 
       // Handedness-aware zone boundaries — identical to main.js
       var side=scB[0].batter_side||'R';
@@ -2332,6 +2335,15 @@ Zane Skansi,Kitchener Panthers`;
     y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['FPS%',fpsVal],['STRIKE%',strVal],['K',_pitKDisp],['BB',_pitBBDisp]],y);
     y+=2;
 
+    var kPct2=selSeason==='2026'
+      ? (pd26&&pd26.K_pct!=null?pd26.K_pct/100:(tot>0?ks/tot:0))
+      : (pbpP2&&pbpP2.K_pct!=null?pbpP2.K_pct/100:(tot>0?ks/tot:0));
+    var bbPct2=selSeason==='2026'
+      ? (pd26&&pd26.BB_pct!=null?pd26.BB_pct/100:(tot>0?bbs/tot:0))
+      : (pbpP2&&pbpP2.BB_pct!=null?pbpP2.BB_pct/100:(tot>0?bbs/tot:0));
+    var strPct3=selSeason==='2026'
+      ? (pd26&&pd26.STR_pct!=null?pd26.STR_pct/100:(tot>0?str/tot:0))
+      : (pbpP2&&pbpP2.STR_pct!=null?pbpP2.STR_pct/100:(tot>0?str/tot:0));
     y=drawSec(d,'Approach',y);
 
     // ── shared metric helpers (pitcher perspective) ───────────────────────
@@ -2347,21 +2359,12 @@ Zane Skansi,Kitchener Panthers`;
     var _pitApproachResult=(function(){
       var scP=sc.filter(function(p){return p.x!=null&&p.y!=null;});
 
-      // Rate-stat candidates used both as fallback (no x/y) and supplemental
+      // Rate-stat candidates supplement x/y findings; no-coordinate reports state that no plots exist.
       var _lgK2=[],_lgBB2=[],_lgStr2=[];
       DATA.pitches.forEach(function(bp){ var sc2=bp.scatter||[]; var t2=sc2.filter(function(p){return p.outcome&&p.outcome!=='';}).length; if(!t2)return; var ks2=sc2.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';}).length; var bbs2=sc2.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length; var str2=sc2.filter(function(p){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(p.outcome);}).length; _lgK2.push(ks2/t2); _lgBB2.push(bbs2/t2); _lgStr2.push(str2/t2); });
 
       if(!scP.length){
-        // No x/y data — fall back to K%, BB%, STR% (same as main.js fallback path)
-        var _cands2=[];
-        if(kPct2>0&&_lgK2.length) _cands2.push({label:'K%',val:Math.round(kPct2*100)+'%',pct:_pctRankP(kPct2,_lgK2),hi:true,goodNote:'Elite K rate — generates swing-and-miss consistently. Shorten your swing and protect the zone.',badNote:'Low K rate — he does not overpower hitters. Put the ball in play hard.'});
-        if(bbPct2>0&&_lgBB2.length) _cands2.push({label:'BB%',val:Math.round(bbPct2*100)+'%',pct:_pctRankP(bbPct2,_lgBB2),hi:false,goodNote:'Elite command — almost never walks. Always have a swing plan; a hittable pitch is coming.',badNote:'Poor command — walk rate is elevated. Work deep counts; free passes are available.'});
-        if(strPct3>0&&_lgStr2.length) _cands2.push({label:'STR%',val:strVal,pct:_pctRankP(strPct3,_lgStr2),hi:true,goodNote:'Throws strikes consistently — be aggressive early; free counts are rare.',badNote:'Below-average strike rate — take pitches freely and make him work.'});
-        if(!_cands2.length) return {dot:'#60a5fa',label:'',val:'—',note:'Not enough data to identify a key approach trend.'};
-        _cands2.sort(function(a,b){return _extremityP(b.pct)-_extremityP(a.pct);});
-        var _b2=_cands2[0], _isGood2=(_b2.hi&&_b2.pct>=0.5)||(!_b2.hi&&_b2.pct<=0.5);
-        var _dot2=_extremityP(_b2.pct)>=0.6?(_isGood2?'#34d399':'#f87171'):'#FFB81C';
-        return {dot:_dot2,label:_b2.label,val:_b2.val,note:_isGood2?_b2.goodNote:_b2.badNote};
+        return {dot:'#60a5fa',label:'',val:'�',note:'There are no x/y plots.'};
       }
 
       // ── x/y available: pitch-type + zone checks (mirrors main.js exactly) ──
