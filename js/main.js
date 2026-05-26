@@ -2060,15 +2060,15 @@ function renderPlayerList(content) {
     '<button class="zone-filter-btn" data-season="year:2025">2025</button>' +
     '</div></div>' +
     '<div class="tabs-bar"><div class="tabs">' +
-    '<button class="tab-btn active" data-tab="batters">Batters</button>' +
-    '<button class="tab-btn" data-tab="pitchers">Pitchers</button>' +
+    '<button class="tab-btn active" data-tab="pitchers">Pitchers</button>' +
+    '<button class="tab-btn" data-tab="batters">Batters</button>' +
     '</div></div>' +
     '<div id="player-list-content"></div></div>';
 
   const listContent = document.getElementById('player-list-content');
   const tabs = content.querySelectorAll('.tab-btn');
   const seasonBtns = content.querySelectorAll('#players-season-filter [data-season]');
-  var activeListTab = 'batters';
+  var activeListTab = 'pitchers';
 
   function renderList(type) {
     activeListTab = type;
@@ -2157,7 +2157,7 @@ function renderPlayerList(content) {
       renderList(activeListTab);
     });
   });
-  renderList('batters');
+  renderList('pitchers');
 }
 
 function renderPlayerDetail(name, type, content) {
