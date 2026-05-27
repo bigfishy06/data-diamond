@@ -495,6 +495,10 @@ function normalizeDataDiamondPitcherRow(p) {
   if (p.SWING_pct == null && p.Swing_pct != null) p.SWING_pct = p.Swing_pct;
   if (p.WHIFF_pct == null && p.Whiff_pct != null) p.WHIFF_pct = p.Whiff_pct;
   if (p.CONTACT_pct == null && p.WHIFF_pct != null) p.CONTACT_pct = 100 - p.WHIFF_pct;
+  if ((p.BF || 0) > 0) {
+    p.K_pct = (p.K || 0) / p.BF * 100;
+    p.BB_pct = (p.BB || 0) / p.BF * 100;
+  }
   if (p.FP_STR_pct == null && p.FPS_pct != null) p.FP_STR_pct = p.FPS_pct;
   if (p.PUTAWAY_pct == null && p.Putaway_pct != null) p.PUTAWAY_pct = p.Putaway_pct;
   if (p.BA_against == null && p.BAA != null) p.BA_against = p.BAA;
@@ -728,15 +732,34 @@ function fmtIP(v) {
   return innings + '.' + outs;
 }
 // ── ZONE DETECTION FROM X/Y COORDINATES ──────────
-// Strike zone: x (horizontal) -1 to 1, y (vertical) 0 to 1
-// These boundaries match the drawn zone: toCx(-1)/toCx(1) and toCy(1)/toCy(0)
+// Strike zone: x (horizontal) -1 to 1, y (vertical) 0 to 1.
+// Zone/chase stats must be based on actual coordinates, not the cached in_zone flag.
+function hasPitchLocation(s) {
+  return s &&
+    s.x !== null && s.x !== undefined && s.x !== '' &&
+    s.y !== null && s.y !== undefined && s.y !== '' &&
+    !isNaN(Number(s.x)) && !isNaN(Number(s.y));
+}
 function xyInZone(s) {
-  if (s.x == null || s.y == null) return s.in_zone === true; // fallback
-  return s.x >= -1 && s.x <= 1 && s.y >= 0 && s.y <= 1;
+  if (!hasPitchLocation(s)) return false;
+  var x = Number(s.x), y = Number(s.y);
+  return x >= -1 && x <= 1 && y >= 0 && y <= 1;
 }
 function xyOutOfZone(s) {
-  if (s.x == null || s.y == null) return s.in_zone === false; // fallback
-  return !(s.x >= -1 && s.x <= 1 && s.y >= 0 && s.y <= 1);
+  if (!hasPitchLocation(s)) return false;
+  return !xyInZone(s);
+}
+var SWING_OUTCOMES_FOR_CHASE = [
+  'Swinging Strike', 'Foul',
+  'Strikeout Swinging', 'Dropped Third Strike Swinging',
+  'Single', 'Double', 'Triple', 'Home Run',
+  'Groundout', 'Flyout', 'Popout', 'Lineout',
+  'Double Play', 'Triple Play', 'Error',
+  'Sacrifice Fly', 'Sac Fly Double Play',
+  'Sacrifice Bunt', 'Sac Bunt Double Play'
+];
+function isChaseSwing(s) {
+  return SWING_OUTCOMES_FOR_CHASE.includes(s.outcome);
 }
 
 function hexToRgba(hex, a) {
@@ -1435,7 +1458,7 @@ function renderTeamGrid(content) {
     { key:'ISO',     label:'ISO',     group:'Rate',     align:'right', fmt:fmt3,   raw:function(r){ return rawV(r.ISO,3); },              desc:true              },
     { key:'wOBA',    label:'wOBA',    group:'Rate',     align:'right', fmt:fmt3,   raw:function(r){ return rawV(r.wOBA,3); },             desc:true              },
     // Discipline
-    { key:'_kpct',   label:'K%',      group:'Discipline',align:'right',fmt:pct1,   raw:function(r){ var p=r.PA||r.AB; return p>0?pct1raw((r.K||0)/p*100):''; }, desc:false },
+    { key:'_kpct',   label:'K%',      group:'Discipline',align:'right',fmt:pct1,   raw:function(r){ var p=r.PA||r.AB; return p>0?pct1raw(((r.K||0)+(r.DTS||0))/p*100):''; }, desc:false },
     { key:'_bbpct',  label:'BB%',     group:'Discipline',align:'right',fmt:pct1,   raw:function(r){ var p=r.PA||r.AB; return p>0?pct1raw((r.BB||0)/p*100):''; }, desc:true  }
   ];
 
@@ -2588,7 +2611,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
   function lgArr(filterFn, metricFn) {
     var arr = [];
     DATA.pitches.forEach(function(bp) {
-      var pts = (bp.scatter || []).filter(function(s){ return s.x != null && s.y != null && filterFn(s); });
+      var pts = (bp.scatter || []).filter(function(s){ return hasPitchLocation(s) && filterFn(s); });
       var v = metricFn(pts);
       if (v != null) arr.push(v);
     });
@@ -2638,7 +2661,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
   // BATTER DATA
   // ══════════════════════════════
   if (type === 'batter') {
-    var scB = sc.filter(function(s){ return s.x != null && s.y != null; });
+    var scB = sc.filter(hasPitchLocation);
     var side = scB.length ? (scB[0].batter_side || 'R') : 'R';
     var insideFn  = side === 'R' ? function(s){ return s.y < -0.1; } : function(s){ return s.y > 0.1; };
     var outsideFn = side === 'R' ? function(s){ return s.y >  0.1; } : function(s){ return s.y < -0.1; };
@@ -2845,7 +2868,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     var inZoneSwings = inZonePts.filter(function(s){ return ['Swinging Strike','Foul'].concat(IN_PLAY).includes(s.outcome); }).length;
     var inZoneCon    = inZonePts.filter(function(s){ return ['Foul'].concat(IN_PLAY).includes(s.outcome); }).length;
     var oozPts  = scB.filter(oozFn);
-    var chases  = oozPts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
+    var chases  = oozPts.filter(isChaseSwing).length;
     var myIzSwing = inZonePts.length  ? inZoneSwings / inZonePts.length : null;
     var myIzCon   = inZoneSwings > 0  ? inZoneCon    / inZoneSwings     : null;
     var myChase   = oozPts.length > 0 ? chases        / oozPts.length   : null;
@@ -2856,7 +2879,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       var izSw2=iz2.filter(function(s){return['Swinging Strike','Foul'].concat(IN_PLAY).includes(s.outcome);}).length;
       var izCon2=iz2.filter(function(s){return['Foul'].concat(IN_PLAY).includes(s.outcome);}).length;
       var ooz2=s2.filter(function(s){return xyOutOfZone(s);});
-      var ch2=ooz2.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Foul';}).length;
+      var ch2=ooz2.filter(isChaseSwing).length;
       if(iz2.length>0)  lgIzSwing.push(izSw2/iz2.length);
       if(izSw2>0)       lgIzCon.push(izCon2/izSw2);
       if(ooz2.length>0) lgChase.push(ch2/ooz2.length);
@@ -2919,7 +2942,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
   // PITCHER DATA
   // ══════════════════════════════
   if (type === 'pitcher') {
-    var scP  = sc.filter(function(s){ return s.x != null && s.y != null; });
+    var scP  = sc.filter(hasPitchLocation);
     var pd   = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
     var pbpPO = getPbpPitcher(name) || {};
     var scTot = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
@@ -3049,7 +3072,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       {label:'Low in Zone',fn:function(s){return inZoneFn(s)&&s.x<0.35;}},
       {label:'Inside Edge',fn:function(s){return inZoneFn(s)&&s.y<-0.5;}},
       {label:'Outside Edge',fn:function(s){return inZoneFn(s)&&s.y>0.5;}},
-      {label:'Out of Zone',fn:function(s){return!inZoneFn(s);}}
+      {label:'Out of Zone',fn:xyOutOfZone}
     ];
     pitchTypes.forEach(function(pt){
       var ptFn=function(s){return s.pitch_type===pt;};
@@ -3590,7 +3613,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     var inZoneSwings = inZonePts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
     var inZoneContact= inZonePts.filter(function(s){ return s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
     var oozPts       = sc.filter(xyOutOfZone);
-    var chases       = oozPts.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
+    var chases       = oozPts.filter(isChaseSwing).length;
 
     // runners = 3-char string: pos0=1st, pos1=2nd, pos2=3rd. '1' = occupied.
     // RISP = runner on 2nd (pos1) or 3rd (pos2)
@@ -3665,7 +3688,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         var izSw2   = inZ2.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
         var izCon2  = inZ2.filter(function(s){ return s.outcome === 'Foul' || ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome); }).length;
         var ooz2    = sc2.filter(xyOutOfZone);
-        var ch2     = ooz2.filter(function(s){ return s.outcome === 'Swinging Strike' || s.outcome === 'Foul'; }).length;
+        var ch2     = ooz2.filter(isChaseSwing).length;
         var risp2   = sc2.filter(function(s){ return hasRISP(s); });
         var rAB2    = risp2.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
         var rH2     = risp2.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
@@ -3686,9 +3709,9 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         o.bb.push(tot2 > 0 ? bbs2/tot2 : 0);
         if (ks2 > 0) o.bbk.push(bbs2/ks2);
         o.pspa.push(tot2 / pa2);
-        o.izSwing.push(inZ2.length > 0 ? izSw2/inZ2.length : 0);
-        o.izContact.push(izSw2 > 0 ? izCon2/izSw2 : 0);
-        o.chase.push(ooz2.length > 0 ? ch2/ooz2.length : 0);
+        if (inZ2.length > 0) o.izSwing.push(izSw2/inZ2.length);
+        if (izSw2 > 0) o.izContact.push(izCon2/izSw2);
+        if (ooz2.length > 0) o.chase.push(ch2/ooz2.length);
         if (rAB2 >= 5) o.baRisp.push(rH2/rAB2);
         if (bip2 > 0) { o.gb.push(gb2/bip2); o.fb.push(fb2/bip2); o.lo.push(lo2/bip2); o.po.push(po2/bip2); }
         if (fp2.length >= 5) { o.fpSwing.push(fpSw2/fp2.length); o.fpStrike.push(fpStr2/fp2.length); }
@@ -3790,7 +3813,9 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
           if (p.Pull_pct    !=null) o.pull.push(p.Pull_pct);
           if (p.Oppo_pct    !=null) o.oppo.push(p.Oppo_pct);
           if (p.Str_pct     !=null) o.str.push(p.Str_pct);
-          if (p.zone_pct    !=null) o.zone.push(p.zone_pct);
+          var pPitch = DATA.pitches.find(function(bp){ return normPlayerName(bp.batter) === normPlayerName(p.batter); });
+          var pLoc = pPitch && pPitch.scatter ? pPitch.scatter.filter(hasPitchLocation) : [];
+          if (pLoc.length) o.zone.push(pLoc.filter(xyInZone).length / pLoc.length * 100);
           if (p.GB_pct !=null) o.gb.push(p.GB_pct);
           if (p.FB_pct !=null) o.fb.push(p.FB_pct);
           if (p.LO_pct !=null) o.lo.push(p.LO_pct);
@@ -3811,7 +3836,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
           var izSw2=inZ2.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Foul'||IN_PLAY.includes(s.outcome);}).length;
           var izCon2=inZ2.filter(function(s){return s.outcome==='Foul'||IN_PLAY.includes(s.outcome);}).length;
           var ooz2=sc2.filter(xyOutOfZone);
-          var ch2=ooz2.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Foul';}).length;
+          var ch2=ooz2.filter(isChaseSwing).length;
           if(inZ2.length>0) izSw.push(izSw2/inZ2.length);
           if(izSw2>0) izCon.push(izCon2/izSw2);
           if(ooz2.length>0) ch.push(ch2/ooz2.length);
@@ -3821,6 +3846,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       var p26IzSwing  =inZonePts.length>0?inZoneSwings/inZonePts.length:null;
       var p26IzContact=inZoneSwings>0?inZoneContact/inZoneSwings:null;
       var p26Chase    =oozPts.length>0?chases/oozPts.length:null;
+      var p26LocPts   =sc.filter(hasPitchLocation);
+      var p26Zone     =p26LocPts.length>0?p26LocPts.filter(xyInZone).length/p26LocPts.length*100:null;
       allBars=[
         {lbl:'BA',         val:sum.AVG!=null?fmt3(sum.AVG):null,                        pct:_lpRank(sum.AVG,lg26.avg),                                     good:true},
         {lbl:'OBP',        val:sum.OBP!=null?fmt3(sum.OBP):null,                        pct:_lpRank(sum.OBP,lg26.obp),                                     good:true},
@@ -3836,7 +3863,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         {lbl:'IZ SWING%',  val:p26IzSwing!=null?fmt1(p26IzSwing*100)+'%':null,         pct:_lpRank(p26IzSwing,lg26iz.izSwing),                            good:true},
         {lbl:'IZ CONTACT%',val:p26IzContact!=null?fmt1(p26IzContact*100)+'%':null,     pct:_lpRank(p26IzContact,lg26iz.izContact),                        good:true},
         {lbl:'CHASE%',     val:p26Chase!=null?fmt1(p26Chase*100)+'%':null,              pct:p26Chase!=null?1-_lpRank(p26Chase,lg26iz.chase):null,           good:true},
-        {lbl:'ZONE%',      val:sum.zone_pct!=null?fmt1(sum.zone_pct)+'%':null,           pct:_lpRank(sum.zone_pct,lg26.zone),                               good:true},
+        {lbl:'ZONE%',      val:p26Zone!=null?fmt1(p26Zone)+'%':null,                     pct:_lpRank(p26Zone,lg26.zone),                                   good:true},
         {lbl:'SWING%',     val:sum.SWING_pct!=null?fmt1(sum.SWING_pct)+'%':null,        pct:sum.SWING_pct!=null?1-_lpRank(sum.SWING_pct,lg26.swing):null,   good:true},
         {lbl:'WHIFF%',     val:sum.WHIFF_pct!=null?fmt1(sum.WHIFF_pct)+'%':null,        pct:sum.WHIFF_pct!=null?1-_lpRank(sum.WHIFF_pct,lg26.whiff):null,   good:true},
         {lbl:'CONTACT%',   val:sum.CONTACT_pct!=null?fmt1(sum.CONTACT_pct)+'%':null,    pct:_lpRank(sum.CONTACT_pct,lg26.contact),                         good:true},
@@ -3900,7 +3927,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
           var izSw2=inZ2.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Foul'||IN_PLAY25.includes(s.outcome);}).length;
           var izCon2=inZ2.filter(function(s){return s.outcome==='Foul'||IN_PLAY25.includes(s.outcome);}).length;
           var ooz2=sc2.filter(xyOutOfZone);
-          var ch2=ooz2.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Foul';}).length;
+          var ch2=ooz2.filter(isChaseSwing).length;
           if(inZ2.length>0) lgIzSw25.push(izSw2/inZ2.length);
           if(izSw2>0) lgIzCon25.push(izCon2/izSw2);
           if(ooz2.length>0) lgCh25.push(ch2/ooz2.length);
@@ -4431,7 +4458,7 @@ function renderGameLog(name, pitch) {
             var ip  = pts.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
             var sw  = swS+fo+ip;
             var oozP = pts.filter(xyOutOfZone);
-            var chaseSwP = oozP.filter(function(s){return['Swinging Strike','Foul','Strikeout Swinging','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Error','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
+            var chaseSwP = oozP.filter(isChaseSwing).length;
             var chaseP = oozP.length>=2 ? fmt1(chaseSwP/oozP.length*100)+'%' : '--';
             var dot = tcMap[t]||'#888';
             return '<tr>' +
@@ -4475,7 +4502,7 @@ function renderGameLog(name, pitch) {
       var canvasId = 'gl-canvas-' + dt.replace(/-/g,'');
       var canvas = document.getElementById(canvasId);
       if (!canvas) return;
-      var allPts = gsc.filter(function(s){ return s.x!=null && s.y!=null; });
+      var allPts = gsc.filter(hasPitchLocation);
       if (!allPts.length) return;
 
       var mode = glViewMode[dt] || 'scatter';
@@ -4680,7 +4707,7 @@ function initBatterGameLog(name, pitch) {
       var whiffStr = swings>0 ? fmt1(swStr/swings*100)+'%' : '--';
       // Chase%
       var ooz = gsc.filter(OOZ);
-      var chaseSwings = ooz.filter(function(s){ return SWING_OUTCOMES.includes(s.outcome); }).length;
+      var chaseSwings = ooz.filter(isChaseSwing).length;
       var chaseStr = ooz.length>=3 ? fmt1(chaseSwings/ooz.length*100)+'%' : '--';
       // Opponent
       var oppLabel = '--';
@@ -4786,7 +4813,7 @@ function initBatterGameLog(name, pitch) {
       var ip  = pts2.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Error','Sacrifice Fly'].includes(s.outcome);}).length;
       var sw  = swS+fo+ip;
       var ooz = pts2.filter(OOZ_FN);
-      var chaseSw = ooz.filter(function(s){return SWING_OUTS2.includes(s.outcome);}).length;
+      var chaseSw = ooz.filter(isChaseSwing).length;
       var chaseStr = ooz.length>=2 ? fmt1(chaseSw/ooz.length*100)+'%' : '--';
       var dot = typeColorMap2[t]||'#888';
       return '<tr>' +
@@ -4917,7 +4944,7 @@ function initBatterGameLog(name, pitch) {
     var zx1=toCx(-1),zx2=toCx(1),zy1=toCy(1),zy2=toCy(0);
 
     // Filter pitches for this mode
-    var pts = gsc.filter(function(s){ return s.x!=null&&s.y!=null&&mode.fn(s); });
+    var pts = gsc.filter(function(s){ return hasPitchLocation(s)&&mode.fn(s); });
 
     // POV label
     ctx.save();
@@ -5102,13 +5129,13 @@ function renderZone(name, type, pitch, container, seasonFilter) {
   seasonFilter = seasonFilter || 'all';
   var points = [];
   if (type === 'batter' && pitch && pitch.scatter) {
-    points = pitch.scatter.filter(function(s) { return s.x != null && s.y != null; });
+    points = pitch.scatter.filter(hasPitchLocation);
   } else if (type === 'pitcher') {
     var _zoneNameKey = normPlayerName(name);
     DATA.pitches.forEach(function(bp) {
       if (!bp.scatter) return;
       bp.scatter.forEach(function(s) {
-        if (normPlayerName(s.pitcher) === _zoneNameKey && s.x != null && s.y != null) points.push(s);
+        if (normPlayerName(s.pitcher) === _zoneNameKey && hasPitchLocation(s)) points.push(s);
       });
     });
   }
@@ -5179,7 +5206,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
   var ks       = points.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
   var hits     = points.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
   var swStr    = points.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
-  var chases   = points.filter(function(s){ return xyOutOfZone(s)&&(s.outcome==='Swinging Strike'||s.outcome==='Foul'); }).length;
+  var chases   = points.filter(function(s){ return xyOutOfZone(s)&&isChaseSwing(s); }).length;
 
   var legendHTML = typeSet.map(function(t) {
     return '<div class="legend-item"><div class="legend-dot" style="background:' + typeColorMap[t] + '"></div>' + t + '</div>';
@@ -5807,7 +5834,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     var fks  = f.filter(function(s){ return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking'; }).length;
     var fh   = f.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
     var fsw  = f.filter(function(s){ return s.outcome==='Swinging Strike'; }).length;
-    var fch  = f.filter(function(s){ return xyOutOfZone(s)&&(s.outcome==='Swinging Strike'||s.outcome==='Foul'); }).length;
+    var fch  = f.filter(function(s){ return xyOutOfZone(s)&&isChaseSwing(s); }).length;
     var el;
     if ((el=document.getElementById('zs-pitches'))) el.textContent = n;
     if ((el=document.getElementById('zs-zone')))    el.textContent = n>0 ? fmt1(iz/n*100)+'%' : '—';

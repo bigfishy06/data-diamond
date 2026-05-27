@@ -263,8 +263,8 @@ pitcher_stats <- pitches %>%
     IP = ifelse(is.na(IP), 0, IP),
 
     # ── Existing rate stats ────────────────────────────────────────────────────
-    K_pct     = ifelse(total_pitches > 0, round(K       / total_pitches * 100, 1), NA),
-    BB_pct    = ifelse(total_pitches > 0, round(BB      / total_pitches * 100, 1), NA),
+    K_pct     = ifelse(BF > 0,            round(K       / BF * 100, 1),            NA),
+    BB_pct    = ifelse(BF > 0,            round(BB      / BF * 100, 1),            NA),
     K_BB      = ifelse(BB > 0,            round(K / BB,  2),                        NA),
     STR_pct   = ifelse(total_pitches > 0, round(strikes / total_pitches * 100, 1), NA),
 

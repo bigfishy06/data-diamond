@@ -158,7 +158,7 @@ summary_stats <- pitches %>%
     AVG    = ifelse(AB > 0, round(H / AB, 3), 0),
     SLG    = ifelse(AB > 0, round((`1B` + 2*`2B` + 3*`3B` + 4*HR) / AB, 3), 0),
     OBP    = ifelse((AB + BB + HBP + SF) > 0,
-                    round((H + BB + HBP + CI) / (AB + BB + HBP + SF), 3), 0),
+                    round((H + BB + HBP) / (AB + BB + HBP + SF), 3), 0),
     OPS    = round(OBP + SLG, 3),
     K_pct  = ifelse(PA > 0, round((K + DTS) / PA * 100, 1), 0),
     BB_pct = ifelse(PA > 0, round(BB / PA * 100, 1), 0),
