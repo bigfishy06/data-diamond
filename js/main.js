@@ -3241,9 +3241,9 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       spraySVG   = buildDonut(spSegs, 60,60,48,30, []);
       sprayLegend= buildLegend(spSegs);
       var sLabel,sDesc,sColor;
-      if(pullPct>=50){sLabel='PULL';sDesc='Pull hitter — shift infield to pull side.';sColor='#f87171';}
-      else if(oppPct>=40){sLabel='OPPO';sDesc='Goes opposite often — shade that way.';sColor='#60a5fa';}
-      else if(strPct2>=50){sLabel='STRAIGHT';sDesc='Hits up the middle — play standard alignment.';sColor='#FFB81C';}
+      if(pullPct>40&&pullPct>strPct2&&pullPct>oppPct){sLabel='PULL';sDesc='Pull hitter — shift infield to pull side.';sColor='#f87171';}
+      else if(oppPct>40&&oppPct>pullPct&&oppPct>strPct2){sLabel='OPPO';sDesc='Goes opposite often — shade that way.';sColor='#60a5fa';}
+      else if(strPct2>40&&strPct2>pullPct&&strPct2>oppPct){sLabel='STRAIGHT';sDesc='Hits up the middle — play standard alignment.';sColor='#FFB81C';}
       else{sLabel='NONE';sDesc='Balanced — no shift needed.';sColor='rgba(255,255,255,0.4)';}
       shiftHTML=
         '<div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.07)"></div>'+
@@ -4448,37 +4448,53 @@ function renderGameLog(name, pitch) {
           '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">By Pitch Type</div>' +
           '<table class="stat-table" style="margin-bottom:20px"><thead><tr>' +
           '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>STR%</th><th>WHIFF%</th><th>Chase%</th>' +
-          '</tr></thead><tbody>' +
-          typeSet.map(function(t){
-            var pts = gsc.filter(function(s){return (s.pitch_type||'Unknown')===t;});
-            var n = pts.length;
-            var str = pts.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
-            var swS = pts.filter(function(s){return s.outcome==='Swinging Strike';}).length;
-            var fo  = pts.filter(function(s){return s.outcome==='Foul';}).length;
-            var ip  = pts.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
-            var sw  = swS+fo+ip;
-            var oozP = pts.filter(xyOutOfZone);
-            var chaseSwP = oozP.filter(isChaseSwing).length;
-            var chaseP = oozP.length>=2 ? fmt1(chaseSwP/oozP.length*100)+'%' : '--';
-            var dot = tcMap[t]||'#888';
-            return '<tr>' +
-              '<td style="text-align:left"><span style="display:inline-flex;align-items:center;gap:6px">' +
-                '<span style="width:8px;height:8px;border-radius:50%;background:'+dot+';flex-shrink:0"></span>' +
-                '<span style="color:var(--text)">'+t+'</span></span></td>' +
-              '<td>'+n+'</td>' +
-              '<td class="highlight-val">'+fmt1(n/gTot*100)+'%</td>' +
-              '<td>'+(n>0?fmt1(str/n*100)+'%':'--')+'</td>' +
-              '<td>'+(sw>0?fmt1(swS/sw*100)+'%':'--')+'</td>' +
-              '<td>'+chaseP+'</td>' +
-              '</tr>';
-          }).join('') +
+          '</tr></thead><tbody id="gl-detail-type-rows-'+dt.replace(/-/g,'')+'">' +
+          buildPitcherDetailRows(gsc, tcMap) +
           '</tbody></table>' +
           // PA-level outcomes
           '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Outcomes</div>' +
-          buildOutcomeList(gsc) +
+          '<div id="gl-detail-outcomes-'+dt.replace(/-/g,'')+'">' + buildOutcomeList(gsc) + '</div>' +
         '</div>' +
       '</div>' +
       '</div>';
+    }
+
+    function buildPitcherDetailRows(points, tcMap) {
+      var total = points.length;
+      if (!total) return '<tr><td colspan="6" style="text-align:center;color:rgba(255,255,255,0.35);padding:18px">No pitches for this filter</td></tr>';
+      var typeCounts = {};
+      points.forEach(function(s){ var t=s.pitch_type||'Unknown'; typeCounts[t]=(typeCounts[t]||0)+1; });
+      return Object.keys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a];}).map(function(t){
+        var pts = points.filter(function(s){return (s.pitch_type||'Unknown')===t;});
+        var n = pts.length;
+        var str = pts.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+        var swS = pts.filter(function(s){return s.outcome==='Swinging Strike';}).length;
+        var fo  = pts.filter(function(s){return s.outcome==='Foul';}).length;
+        var ip  = pts.filter(function(s){return['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
+        var sw  = swS+fo+ip;
+        var oozP = pts.filter(xyOutOfZone);
+        var chaseSwP = oozP.filter(isChaseSwing).length;
+        var chaseP = oozP.length>=2 ? fmt1(chaseSwP/oozP.length*100)+'%' : '--';
+        var dot = tcMap[t]||'#888';
+        return '<tr>' +
+          '<td style="text-align:left"><span style="display:inline-flex;align-items:center;gap:6px">' +
+            '<span style="width:8px;height:8px;border-radius:50%;background:'+dot+';flex-shrink:0"></span>' +
+            '<span style="color:var(--text)">'+t+'</span></span></td>' +
+          '<td>'+n+'</td>' +
+          '<td class="highlight-val">'+fmt1(n/total*100)+'%</td>' +
+          '<td>'+(n>0?fmt1(str/n*100)+'%':'--')+'</td>' +
+          '<td>'+(sw>0?fmt1(swS/sw*100)+'%':'--')+'</td>' +
+          '<td>'+chaseP+'</td>' +
+          '</tr>';
+      }).join('');
+    }
+
+    function updatePitcherGameDetail(dt, points, tcMap) {
+      var key = dt.replace(/-/g,'');
+      var rows = document.getElementById('gl-detail-type-rows-' + key);
+      if (rows) rows.innerHTML = buildPitcherDetailRows(points, tcMap);
+      var outcomes = document.getElementById('gl-detail-outcomes-' + key);
+      if (outcomes) outcomes.innerHTML = buildOutcomeList(points);
     }
 
     function buildOutcomeList(gsc) {
@@ -4503,7 +4519,6 @@ function renderGameLog(name, pitch) {
       var canvas = document.getElementById(canvasId);
       if (!canvas) return;
       var allPts = gsc.filter(hasPitchLocation);
-      if (!allPts.length) return;
 
       var mode = glViewMode[dt] || 'scatter';
 
@@ -4517,6 +4532,13 @@ function renderGameLog(name, pitch) {
       var ctx = canvas.getContext('2d');
       ctx.scale(DPR, DPR);
       ctx.clearRect(0, 0, CSS_W, CSS_H);
+      if (!allPts.length) {
+        ctx.fillStyle = 'rgba(255,255,255,0.28)';
+        ctx.font = '12px DM Mono,monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('No pitch location data', CSS_W/2, CSS_H/2);
+        return;
+      }
 
       var W = CSS_W, H = CSS_H;
       var PAD_L=32, PAD_R=12, PAD_T=12, PAD_B=32;
@@ -4578,16 +4600,18 @@ function renderGameLog(name, pitch) {
       if (ptBtn) {
         var dt2 = ptBtn.dataset.dt, type2 = ptBtn.dataset.type;
         var gsc2 = gameMap[dt2]; if (!gsc2) return;
-        document.querySelectorAll('.gl-pt-btn[data-dt="'+dt2+'"]').forEach(function(b) {
+        var detailScope2 = ptBtn.closest('.game-detail') || document;
+        detailScope2.querySelectorAll('.gl-pt-btn[data-dt="'+dt2+'"]').forEach(function(b) {
           b.style.background='rgba(255,255,255,0.05)'; b.style.color='rgba(255,255,255,0.6)'; b.classList.remove('active');
         });
         ptBtn.style.background='rgba(255,184,28,0.15)'; ptBtn.style.color='#FFB81C'; ptBtn.classList.add('active');
-        var activeHand2 = document.querySelector('.gl-hand-btn.active[data-dt="'+dt2+'"]');
+        var activeHand2 = detailScope2.querySelector('.gl-hand-btn.active[data-dt="'+dt2+'"]');
         var handF2 = activeHand2 ? activeHand2.dataset.hand : 'all';
         var filtered = gsc2;
         if (handF2 !== 'all') filtered = filtered.filter(function(s){ return s.batter_side === handF2; });
         if (type2 !== 'all') filtered = filtered.filter(function(s){ return (s.pitch_type||'Unknown')===type2; });
         drawGameCanvas(dt2, filtered, typeColorMap);
+        updatePitcherGameDetail(dt2, filtered, typeColorMap);
         return;
       }
       // Batter hand filter
@@ -4595,16 +4619,18 @@ function renderGameLog(name, pitch) {
       if (hBtn) {
         var dt4 = hBtn.dataset.dt, hand4 = hBtn.dataset.hand;
         var gsc4 = gameMap[dt4]; if (!gsc4) return;
-        document.querySelectorAll('.gl-hand-btn[data-dt="'+dt4+'"]').forEach(function(b){
+        var detailScope4 = hBtn.closest('.game-detail') || document;
+        detailScope4.querySelectorAll('.gl-hand-btn[data-dt="'+dt4+'"]').forEach(function(b){
           b.style.background='rgba(255,255,255,0.05)'; b.style.color='rgba(255,255,255,0.6)'; b.classList.remove('active');
         });
         hBtn.style.background='rgba(255,184,28,0.15)'; hBtn.style.color='#FFB81C'; hBtn.classList.add('active');
-        var activePT4 = document.querySelector('.gl-pt-btn.active[data-dt="'+dt4+'"]');
+        var activePT4 = detailScope4.querySelector('.gl-pt-btn.active[data-dt="'+dt4+'"]');
         var ptType4 = activePT4 ? activePT4.dataset.type : 'all';
         var filtered4 = gsc4;
         if (hand4 !== 'all') filtered4 = filtered4.filter(function(s){ return s.batter_side === hand4; });
         if (ptType4 !== 'all') filtered4 = filtered4.filter(function(s){ return (s.pitch_type||'Unknown')===ptType4; });
         drawGameCanvas(dt4, filtered4, typeColorMap);
+        updatePitcherGameDetail(dt4, filtered4, typeColorMap);
         return;
       }
       // Scatter / Heat Map toggle
@@ -4675,11 +4701,19 @@ function initBatterGameLog(name, pitch) {
 
   // Heatmap modes
   var HM_MODES = [
-    { id:'pitches', label:'Pitches',  color:'#60a5fa', fn: function(s){ return true; } },
-    { id:'whiffs',  label:'Whiffs',   color:'#f87171', fn: function(s){ return s.outcome==='Swinging Strike'; } },
-    { id:'contact', label:'Contact',  color:'#34d399', fn: function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sacrifice Bunt','Truncated Out'].includes(s.outcome); } },
-    { id:'hits',    label:'Hits',     color:'#FFB81C', fn: function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); } }
+    { id:'pitches', label:'Pitches',  fn: function(s){ return true; } },
+    { id:'whiffs',  label:'Whiffs',   fn: function(s){ return s.outcome==='Swinging Strike'; } },
+    { id:'contact', label:'Contact',  fn: function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sacrifice Bunt','Truncated Out'].includes(s.outcome); } },
+    { id:'hits',    label:'Hits',     fn: function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); } }
   ];
+  var BGL_PITCH_COLORS = {'Fastball':'#f87171','Breaking Ball':'#60a5fa','Offspeed':'#a78bfa','Changeup':'#34d399','Curveball':'#fb923c','Slider':'#facc15','Cutter':'#f472b6','Sinker':'#22d3ee'};
+  var BGL_FALLBACK_COLORS = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee'];
+  var bglTypeCounts = {};
+  sc.forEach(function(s){ var t=s.pitch_type||'Unknown'; bglTypeCounts[t]=(bglTypeCounts[t]||0)+1; });
+  var bglTypeColorMap = {};
+  Object.keys(bglTypeCounts).sort(function(a,b){return bglTypeCounts[b]-bglTypeCounts[a];}).forEach(function(t,i){
+    bglTypeColorMap[t] = BGL_PITCH_COLORS[t] || BGL_FALLBACK_COLORS[i % BGL_FALLBACK_COLORS.length];
+  });
 
   var CONTACT_OUTCOMES = ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sacrifice Bunt','Truncated Out'];
   var HIT_OUTCOMES     = ['Single','Double','Triple','Home Run'];
@@ -4776,15 +4810,12 @@ function initBatterGameLog(name, pitch) {
     var typeCounts2 = {};
     gsc.forEach(function(s){ var t=s.pitch_type||'Unknown'; typeCounts2[t]=(typeCounts2[t]||0)+1; });
     var typeSet2 = Object.keys(typeCounts2).sort(function(a,b){return typeCounts2[b]-typeCounts2[a];});
-    var BATTER_PITCH_COLORS = {'Fastball':'#f87171','Breaking Ball':'#60a5fa','Offspeed':'#a78bfa','Changeup':'#34d399','Curveball':'#fb923c','Slider':'#facc15','Cutter':'#f472b6','Sinker':'#22d3ee'};
-    var FB_COLORS2 = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee'];
-    var typeColorMap2 = {};
-    typeSet2.forEach(function(t,i){ typeColorMap2[t]=BATTER_PITCH_COLORS[t]||FB_COLORS2[i%FB_COLORS2.length]; });
+    var typeColorMap2 = bglTypeColorMap;
 
     var modeBtns = HM_MODES.map(function(m, i){
       var active = i===0;
       return '<button class="bgl-mode-btn '+(active?'active':'')+'" data-mode="'+m.id+'" data-dt="'+dt+'" '+
-        'style="'+bglBtnStyle(active, m.color)+'">'+m.label+'</button>';
+        'style="'+bglBtnStyle(active, '#FFB81C')+'">'+m.label+'</button>';
     }).join('');
 
     // Pitch type filter buttons — same style as pitcher game log
@@ -4896,8 +4927,8 @@ function initBatterGameLog(name, pitch) {
         });
         var m = HM_MODES.find(function(x){ return x.id===btn.dataset.mode; });
         if (m) {
-          btn.style.background='rgba('+hexToRgb(m.color)+',0.15)';
-          btn.style.color=m.color; btn.style.borderColor=m.color; btn.classList.add('active');
+          btn.style.background='rgba(255,184,28,0.15)';
+          btn.style.color='#FFB81C'; btn.style.borderColor='#FFB81C'; btn.classList.add('active');
         }
         var v = bglViewMode[dt] || 'scatter';
         if (m) drawBatterCanvas(dt, getBglFiltered(), m, v);
@@ -4945,6 +4976,13 @@ function initBatterGameLog(name, pitch) {
 
     // Filter pitches for this mode
     var pts = gsc.filter(function(s){ return hasPitchLocation(s)&&mode.fn(s); });
+    if (!gsc.filter(hasPitchLocation).length) {
+      ctx.fillStyle = 'rgba(255,255,255,0.28)';
+      ctx.font = '12px DM Mono,monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('No pitch location data', CSS_W/2, CSS_H/2);
+      return;
+    }
 
     // POV label
     ctx.save();
@@ -4958,10 +4996,10 @@ function initBatterGameLog(name, pitch) {
       // Full KDE heatmap — identical to Strike Zone section
       if (pts.length) drawKdeHeatmap(ctx, pts, W, H, PAD_L, PAD_R, PAD_T, PAD_B, X_MIN, X_MAX, Y_MIN, Y_MAX);
     } else {
-      // Scatter — colour dots by mode colour
-      var rgb = hexToRgb(mode.color);
+      // Scatter dots keep pitch-type colors regardless of the active result filter.
       pts.forEach(function(s){
         var cx=toCx(s.x), cy=toCy(s.y);
+        var rgb = hexToRgb(bglTypeColorMap[s.pitch_type||'Unknown'] || '#888888');
         ctx.beginPath(); ctx.arc(cx,cy,4,0,Math.PI*2);
         ctx.fillStyle='rgba('+rgb+',0.7)'; ctx.fill();
         ctx.strokeStyle='rgba('+rgb+',0.9)'; ctx.lineWidth=0.8; ctx.stroke();
