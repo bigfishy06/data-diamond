@@ -1479,7 +1479,10 @@ Zane Skansi,Kitchener Panthers`;
       d.setFillColor(zr,zg,zb);d.rect(x+1.5,y+1.5,w-3,h-3,'F');
       d.setFillColor(8,13,27);d.rect(zx,zy,zw,zh,'F');
     } else if(region){
-      var col={left:0,mid:1,right:2,all:0}[region.h||'all'];
+      // Mirror horizontal axis for batter's POV: pitcher's left = batter's right
+      var _rh=region.h||'all';
+      if(perspective==='BATTER'){if(_rh==='left')_rh='right';else if(_rh==='right')_rh='left';}
+      var col={left:0,mid:1,right:2,all:0}[_rh];
       var row={top:0,mid:1,bottom:2,all:0}[region.v||'all'];
       var hx=region.h==='all'?zx:zx+col*zw/3;
       var hy=region.v==='all'?zy:zy+row*zh/3;
@@ -2517,7 +2520,7 @@ Zane Skansi,Kitchener Panthers`;
     splitData.forEach(function(sd2,i){
       if(!sd2.subXY.length)return;
       var xOff=ML+i*(iw+gap);
-      d.addImage(mkHeat(sd2.subXY,'PITCHER'),'PNG',xOff,y,iw,ih);
+      d.addImage(mkHeat(sd2.subXY,'BATTER'),'PNG',xOff,y,iw,ih);
     });
     y+=ih+4;
     drawFoot(d,player.name,'PITCHER');
