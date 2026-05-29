@@ -1958,17 +1958,17 @@ Zane Skansi,Kitchener Panthers`;
     if(_approachResult.region){drawAttackZone(d,ML+6,y+5,28,28,_approachResult.region,_approachResult.dot,'PITCHER');}
     else{_aTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_aDr,_aDg,_aDb);d.text(_approachResult.fallbackLabel||'STAT FALLBACK',_aTextX,y+6.5);}
     d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
-    var _aSpotDisp=flipLR(_approachResult.spot||'');
+    var _aSpotDisp=_approachResult.spot||'';
     var _aAction=_approachResult.region?('Go to: '+_aSpotDisp):(_aSpotDisp||_approachResult.label);
     var _aTextW=_approachResult.region?CPW-46:CPW-14;
     d.text(_aAction,_aTextX,y+10.5,{maxWidth:_aTextW});
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
-    var _aNoteDisp=flipLR(_approachResult.note);
+    var _aNoteDisp=_approachResult.note;
     var _aNwds=_aNoteDisp.split(' '),_aNln='',_aNlns=[];
     _aNwds.forEach(function(w){var t=_aNln?_aNln+' '+w:w;if(d.getTextWidth(t)>_aTextW){_aNlns.push(_aNln);_aNln=w;}else _aNln=t;});
     if(_aNln)_aNlns.push(_aNln);
     _aNlns.slice(0,3).forEach(function(l,li){d.text(l,_aTextX,y+18+li*5);});
-    if(_approachResult.region&&_approachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_aDr,_aDg,_aDb);d.text('Evidence: '+flipLR(_approachResult.label)+' '+_approachResult.val,_aTextX,y+34,{maxWidth:_aTextW});}
+    if(_approachResult.region&&_approachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_aDr,_aDg,_aDb);d.text('Evidence: '+_approachResult.label+' '+_approachResult.val,_aTextX,y+34,{maxWidth:_aTextW});}
     y+=_aBoxH+4;
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
@@ -2363,17 +2363,17 @@ Zane Skansi,Kitchener Panthers`;
     if(_pitApproachResult.region){drawAttackZone(d,ML+6,y+5,28,28,_pitApproachResult.region,_pitApproachResult.dot,'BATTER');}
     else{_paTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_paDr,_paDg,_paDb);d.text(_pitApproachResult.fallbackLabel||'STAT FALLBACK',_paTextX,y+6.5);}
     d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
-    var _paSpotDisp=flipLR(_pitApproachResult.spot||'');
+    var _paSpotDisp=_pitApproachResult.spot||'';
     var _paAction=_pitApproachResult.region?('Look for: '+_paSpotDisp):(_paSpotDisp||_pitApproachResult.label);
     var _paTextW=_pitApproachResult.region?CPW-46:CPW-14;
     d.text(_paAction,_paTextX,y+10.5,{maxWidth:_paTextW});
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
-    var _paNoteDisp=flipLR(_pitApproachResult.note);
+    var _paNoteDisp=_pitApproachResult.note;
     var _paNwds=_paNoteDisp.split(' '),_paNln='',_paNlns=[];
     _paNwds.forEach(function(w){var t=_paNln?_paNln+' '+w:w;if(d.getTextWidth(t)>_paTextW){_paNlns.push(_paNln);_paNln=w;}else _paNln=t;});
     if(_paNln)_paNlns.push(_paNln);
     _paNlns.slice(0,3).forEach(function(l,li){d.text(l,_paTextX,y+18+li*5);});
-    if(_pitApproachResult.region&&_pitApproachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_paDr,_paDg,_paDb);d.text('Evidence: '+flipLR(_pitApproachResult.label)+' '+_pitApproachResult.val,_paTextX,y+34,{maxWidth:_paTextW});}
+    if(_pitApproachResult.region&&_pitApproachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_paDr,_paDg,_paDb);d.text('Evidence: '+_pitApproachResult.label+' '+_pitApproachResult.val,_paTextX,y+34,{maxWidth:_paTextW});}
     y+=_paBoxH+4;
     var locTot=sc.filter(hasPitchLocation).length;
     var znPct=locTot>0?inZ/locTot:0;
