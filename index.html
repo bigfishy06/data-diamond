@@ -2285,14 +2285,7 @@ Zane Skansi,Kitchener Panthers`;
         var sc = p.sc;
         var pd = DATA.pitchers.find(function(x){ return x.pitcher === p.name; }) || {};
 
-        // Availability
-        var daysRest = pd.last_game_date ? Math.floor((today2 - new Date(pd.last_game_date+'T00:00:00')) / 86400000) : 99;
-        var lastCount = pd.last_pitch_count || 0;
-        var avail, availBg, availColor;
-        if      (daysRest <= 1)                     { avail='UNAVAILABLE'; availBg='rgba(220,50,50,0.15)';   availColor='#f87171'; }
-        else if (daysRest === 2 && lastCount >= 20)  { avail='QUESTIONABLE'; availBg='rgba(255,140,0,0.15)'; availColor='#FFB81C'; }
-        else                                         { avail='AVAILABLE';    availBg='rgba(50,200,100,0.15)';availColor='#34d399'; }
-        var restNote = daysRest===99 ? 'No recent data' : daysRest===0 ? 'Pitched today' : daysRest===1 ? 'Pitched yesterday ('+lastCount+' pitches)' : daysRest+' days rest — last: '+lastCount+' pitches';
+
 
         // Time to plate
         var ttp = pd.avg_time_to_plate != null ? pd.avg_time_to_plate : null;
@@ -2361,11 +2354,7 @@ Zane Skansi,Kitchener Panthers`;
           return _found;
         })();
         nameRow.innerHTML =
-          '<div style="font-family:var(--font-display);font-size:15px;letter-spacing:0.05em;color:#fff' + (_has25p?';text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,184,28,0.6)':'') + '">' + _pn + '</div>' +
-          '<div style="display:flex;align-items:center;gap:12px">' +
-            '<div style="padding:4px 10px;background:'+availBg+';border:1px solid '+availColor+';border-radius:4px;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.1em;color:'+availColor+'">'+avail+'</div>' +
-            '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.35)">'+restNote+'</div>' +
-          '</div>';
+          '<div style="font-family:var(--font-display);font-size:15px;letter-spacing:0.05em;color:#fff' + (_has25p?';text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,184,28,0.6)':'') + '">' + _pn + '</div>';
         row.appendChild(nameRow);
 
         // Time to plate
