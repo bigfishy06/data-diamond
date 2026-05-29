@@ -1818,7 +1818,7 @@ Zane Skansi,Kitchener Panthers`;
       rowH = Math.max(7, rowH);
 
       var hdrs=['PITCHER','HAND','ERA','WHIP','K','BB','FPS%','STRIKE%','TTP','ARSENAL'];
-      var cWs =[CPW*0.19,CPW*0.07,CPW*0.08,CPW*0.08,CPW*0.06,CPW*0.06,CPW*0.08,CPW*0.09,CPW*0.08,CPW*0.27];
+      var cWs =[CPW*0.18,CPW*0.06,CPW*0.07,CPW*0.07,CPW*0.055,CPW*0.055,CPW*0.07,CPW*0.08,CPW*0.065,CPW*0.315];
 
       function drawPitHdr(d, yy) {
         sf(d,CO.navy3); d.rect(ML,yy,CPW,hdrH2,'F');
@@ -1977,7 +1977,8 @@ Zane Skansi,Kitchener Panthers`;
         var cx=ML;
         vals.forEach(function(v,i){
           var isNm=i===0;
-          d.setFont('helvetica',isNm?'bold':'normal'); d.setFontSize(fs2);
+          var isArsenal=i===vals.length-1;
+          d.setFont('helvetica',isNm?'bold':'normal'); d.setFontSize(isArsenal?6:fs2);
           st(d,isNm?CO.white:CO.light);
           d.text(String(v), isNm?cx+3:cx+cWs[i]/2, y+rowH*0.62, {align:isNm?'left':'center'});
           if(i<vals.length-1){ sd(d,[25,40,65]);d.setLineWidth(0.08);d.line(cx+cWs[i],y,cx+cWs[i],y+rowH); }
