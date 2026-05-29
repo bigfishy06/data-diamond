@@ -1525,7 +1525,8 @@ Zane Skansi,Kitchener Panthers`;
     sf(d,CO.gold);d.rect(0,PH-1.5,PW,1.5,'F');
   }
 
-  function mkScatter(sc){
+  function mkScatter(sc,perspective){
+    perspective=perspective||'BATTER';
     var W=400,H=460,PD=30,c=document.createElement('canvas');c.width=W;c.height=H;
     var ctx=c.getContext('2d'),xmn=-2.5,xmx=2.5,ymn=-0.8,ymx=1.5;
     function px(x){return PD+((x-xmn)/(xmx-xmn))*(W-PD*2);}
@@ -1544,7 +1545,7 @@ Zane Skansi,Kitchener Panthers`;
     }
     ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(255,184,28,0.75)';
     ctx.textAlign='center';ctx.textBaseline='bottom';
-    ctx.fillText("FROM A BATTER'S POV",(px(-1)+px(1))/2,py(1)-6);ctx.restore();
+    ctx.fillText("FROM A "+perspective+"'S POV",(px(-1)+px(1))/2,py(1)-6);ctx.restore();
     var PC={'Fastball':'#f87171','Breaking Ball':'#60a5fa','Offspeed':'#a78bfa',
       'Changeup':'#34d399','Curveball':'#fb923c','Slider':'#facc15','Cutter':'#f472b6','Sinker':'#22d3ee'};
     var FL=['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15'];
@@ -1559,7 +1560,8 @@ Zane Skansi,Kitchener Panthers`;
     });
     return c.toDataURL('image/png');
   }
-  function mkGrid(sc){
+  function mkGrid(sc,perspective){
+    perspective=perspective||'BATTER';
     var W=360,H=360,PD=20,c=document.createElement('canvas');c.width=W;c.height=H;
     var ctx=c.getContext('2d');ctx.fillStyle='#0e1525';ctx.fillRect(0,0,W,H);
     var pts=sc.filter(hasPitchLocation),tot=pts.length;if(!tot)return c.toDataURL('image/png');
@@ -1585,10 +1587,11 @@ Zane Skansi,Kitchener Panthers`;
     ctx.strokeStyle='rgba(255,184,28,0.9)';ctx.lineWidth=2.5;ctx.strokeRect(px(-1),py(1),px(1)-px(-1),py(0)-py(1));
     ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(255,184,28,0.75)';
     ctx.textAlign='center';ctx.textBaseline='bottom';
-    ctx.fillText("FROM A BATTER'S POV",(px(-1)+px(1))/2,py(1)-4);ctx.restore();
+    ctx.fillText("FROM A "+perspective+"'S POV",(px(-1)+px(1))/2,py(1)-4);ctx.restore();
     return c.toDataURL('image/png');
   }
-  function mkHeat(sc){
+  function mkHeat(sc,perspective){
+    perspective=perspective||'BATTER';
     var W=360,H=414,PD=20,c=document.createElement('canvas');c.width=W;c.height=H;
     var ctx=c.getContext('2d');ctx.fillStyle='#0e1525';ctx.fillRect(0,0,W,H);
     var GW=60,GH=70,SIG=4,xmn=-2.5,xmx=2.5,ymn=-0.8,ymx=1.5;
@@ -1623,7 +1626,7 @@ Zane Skansi,Kitchener Panthers`;
     ctx.strokeStyle='rgba(255,184,28,0.9)';ctx.lineWidth=2.5;ctx.strokeRect(px3(-1),py3(1),px3(1)-px3(-1),py3(0)-py3(1));
     ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(255,184,28,0.75)';
     ctx.textAlign='center';ctx.textBaseline='bottom';
-    ctx.fillText("FROM A BATTER'S POV",(px3(-1)+px3(1))/2,py3(1)-4);ctx.restore();
+    ctx.fillText("FROM A "+perspective+"'S POV",(px3(-1)+px3(1))/2,py3(1)-4);ctx.restore();
     return c.toDataURL('image/png');
   }
   function mkDonut(segs, title) {
@@ -1760,11 +1763,12 @@ Zane Skansi,Kitchener Panthers`;
     return c.toDataURL('image/png');
   }
 
-  function addCharts(d,sc,y){
+  function addCharts(d,sc,y,perspective){
+    perspective=perspective||'BATTER';
     var iw=58,ih=66,gap=(CPW-iw*3)/2;
-    d.addImage(mkScatter(sc),'PNG',ML,y,iw,ih);
-    d.addImage(mkGrid(sc),'PNG',ML+iw+gap,y,iw,ih);
-    d.addImage(mkHeat(sc),'PNG',ML+(iw+gap)*2,y,iw,ih);
+    d.addImage(mkScatter(sc,perspective),'PNG',ML,y,iw,ih);
+    d.addImage(mkGrid(sc,perspective),'PNG',ML+iw+gap,y,iw,ih);
+    d.addImage(mkHeat(sc,perspective),'PNG',ML+(iw+gap)*2,y,iw,ih);
     d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
     d.text('Scatter',ML+iw/2,y+ih+3,{align:'center'});
     d.text('Zone Grid',ML+iw+gap+iw/2,y+ih+3,{align:'center'});
@@ -1804,7 +1808,7 @@ Zane Skansi,Kitchener Panthers`;
     y+=4;
 
     // Approach - x and y plotted pitch data only.
-    y=drawSec(d,'Approach',y);
+    y=drawSec(d,'Approach — From a Pitcher\'s POV',y);
 
     // ── shared metric helpers ─────────────────────────────────────────────
     var _IN_PLAY_B=['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
@@ -2215,7 +2219,7 @@ Zane Skansi,Kitchener Panthers`;
     var strPct3=selSeason==='2026'
       ? (pd26&&pd26.STR_pct!=null?pd26.STR_pct/100:(tot>0?str/tot:0))
       : (pbpP2&&pbpP2.STR_pct!=null?pbpP2.STR_pct/100:(tot>0?str/tot:0));
-    y=drawSec(d,'Approach',y);
+    y=drawSec(d,'Approach — From a Batter\'s POV',y);
 
     // ── shared metric helpers (pitcher perspective) ───────────────────────
     var _IN_PLAY_P=['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
@@ -2468,7 +2472,7 @@ Zane Skansi,Kitchener Panthers`;
     splitData.forEach(function(sd2,i){
       if(!sd2.subXY.length)return;
       var xOff=ML+i*(iw+gap);
-      d.addImage(mkHeat(sd2.subXY),'PNG',xOff,y,iw,ih);
+      d.addImage(mkHeat(sd2.subXY,'PITCHER'),'PNG',xOff,y,iw,ih);
     });
     y+=ih+4;
     drawFoot(d,player.name,'PITCHER');
