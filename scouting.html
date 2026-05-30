@@ -2309,14 +2309,17 @@ Zane Skansi,Kitchener Panthers`;
       var inZoneFnP=xyInZone;
       var PZONES=[
         // s.x=horizontal(-1=left,1=right), s.y=vertical(0=bottom,1=top) — matches main.js
-        {label:'Up Right Corner',spot:'Up Right Corner',region:{h:'right',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66&&p.x>0.33;}},
-        {label:'Up Left Corner',spot:'Up Left Corner',region:{h:'left',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66&&p.x<-0.33;}},
-        {label:'Low Right Corner',spot:'Low Right Corner',region:{h:'right',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33&&p.x>0.33;}},
-        {label:'Low Left Corner',spot:'Low Left Corner',region:{h:'left',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33&&p.x<-0.33;}},
+        // Zone is displayed FROM A BATTER'S POV: drawAttackZone flips h left<->right,
+        // so pitcher's right (x>0.33) appears on the BATTER'S LEFT side of the displayed zone.
+        // Labels and spots use batter-facing language to match what is highlighted on screen.
+        {label:'Up Left Corner',spot:'Up Left Corner',region:{h:'right',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66&&p.x>0.33;}},
+        {label:'Up Right Corner',spot:'Up Right Corner',region:{h:'left',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66&&p.x<-0.33;}},
+        {label:'Low Left Corner',spot:'Low Left Corner',region:{h:'right',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33&&p.x>0.33;}},
+        {label:'Low Right Corner',spot:'Low Right Corner',region:{h:'left',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33&&p.x<-0.33;}},
         {label:'Up in Zone',spot:'Up in Zone',region:{h:'all',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66;}},
         {label:'Low in Zone',spot:'Low in Zone',region:{h:'all',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33;}},
-        {label:'Right Side',spot:'Right Side',region:{h:'right',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x>0.33;}},
-        {label:'Left Side',spot:'Left Side',region:{h:'left',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x<-0.33;}}
+        {label:'Left Side',spot:'Left Side',region:{h:'right',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x>0.33;}},
+        {label:'Right Side',spot:'Right Side',region:{h:'left',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x<-0.33;}}
       ];
       var candidates=[];
       function addAttack(label,val,pct,note,score,spot,region){
