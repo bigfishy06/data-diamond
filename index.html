@@ -809,8 +809,14 @@
       var sz=sub.filter(function(s){return s.x!=null&&s.x>=-1&&s.x<=1&&s.y!=null&&s.y>=0&&s.y<=1;}).length;
       return{hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(function(s){return s.x!=null&&s.y!=null;})};
     });
-    var iw=CPW/2-4,ih=Math.round(iw*1.15),gap=8;
-    if(y>200){d.addPage();drawBg(d);y=MT+8;}
+    var gap=8;
+    // Dynamically size heat maps to fill exactly the remaining page space.
+    // Budget: splitLabel(5) + splitStats(20) + ih + caption(4) + footer(10) must fit in PH - y.
+    var ihMax = PH - y - 5 - 20 - 4 - 10;
+    // Also cap at a reasonable maximum (CPW/2 * 1.15) and enforce a minimum of 40mm
+    var ihCap = Math.round((CPW/2-4)*1.15);
+    var ih = Math.max(40, Math.min(ihCap, ihMax));
+    var iw = Math.round(ih / 1.15);
     splitData.forEach(function(sd2,i){
       if(!sd2.sub.length)return;
       var xOff=ML+i*(iw+gap);
@@ -1742,7 +1748,9 @@ Zane Skansi,Kitchener Panthers`;
           sx += statWs[i];
         });
 
-        var hmH2=Math.max(0, Math.min(blockH-nameH-1.0, 24));
+        var hmLabelH=4.2;
+        var hmY=nameY+nameH+hmLabelH+0.9;
+        var hmH2=Math.max(0, Math.min(blockBottom-hmY-0.8, 22));
         var hmW2=hmH2*0.87;
         var hmX=ML+CPW-hmW2-3;
         var attackText=approachText==='Not enough data' ? 'Attack: not enough data' : 'Attack: '+approachText;
@@ -1752,10 +1760,10 @@ Zane Skansi,Kitchener Panthers`;
           topTxt(whiffText, ML+3, attackY+Math.min(attackH-1.0,6.8), CPW-hmW2-10, labelFs, hasHeat?'bold':'normal', hasHeat?CO.dim:CO.dim, 'left');
         }
         if(hmH2>=6){
-          d.addImage(mkHeat(whiffPts),'PNG', hmX, nameY+nameH+0.5, hmW2, hmH2);
-          d.setFillColor(255,255,255); d.rect(hmX, nameY+nameH+0.5, hmW2, Math.min(4.2, hmH2), 'F');
+          d.setFillColor(255,255,255); d.rect(hmX, nameY+nameH+0.5, hmW2, hmLabelH, 'F');
           d.setFont('helvetica','bold'); d.setFontSize(labelFs); st(d,CO.gold);
           d.text('WHIFF HEAT MAP', hmX+1, nameY+nameH+3.2);
+          d.addImage(mkHeat(whiffPts),'PNG', hmX, hmY, hmW2, hmH2);
         }
 
         curY += blockH;
