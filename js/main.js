@@ -1,15 +1,15 @@
 /* ================================================
-   DATA DIAMOND — main.js v6
+   DATA DIAMOND - main.js v6
    Powered by summary.json + pitches.json
 ================================================ */
 
 function getBase() { return '/'; }
 
-// ── GOOGLE AUTH ───────────────────────────────────
+// -- GOOGLE AUTH -----------------------------------
 const AUTH = {
   CLIENT_ID: '348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com',
 
-  // ✅ Add every email address that is allowed to access the site
+  // OK Add every email address that is allowed to access the site
   ALLOWED_EMAILS: [
     'christiansturgeon06@gmail.com'
   ],
@@ -28,13 +28,13 @@ const AUTH = {
     const onLoginPage = path === 'login.html';
 
     if (!AUTH._user) {
-      // Not signed in — send to login page (unless already there)
+      // Not signed in - send to login page (unless already there)
       if (!onLoginPage) { window.location.href = getBase() + 'login.html'; return false; }
       return false;
     }
 
     if (onLoginPage) {
-      // Already signed in — bounce to home
+      // Already signed in - bounce to home
       window.location.href = getBase() + 'index.html';
       return false;
     }
@@ -50,7 +50,7 @@ const AUTH = {
 
     if (!AUTH.ALLOWED_EMAILS.map(function(e){ return e.toLowerCase(); }).includes(email)) {
       document.getElementById('login-error').textContent =
-        '⛔ ' + email + ' is not authorised to access this site.';
+        'BLOCKED ' + email + ' is not authorised to access this site.';
       return;
     }
 
@@ -440,7 +440,7 @@ function displayTeamForPlayer(name, fallbackTeam) {
     if (activeTeam) return activeTeam.abbreviation;
   }
   var t = resolveTeam(fallbackTeam);
-  return t ? t.abbreviation : (fallbackTeam || '—');
+  return t ? t.abbreviation : (fallbackTeam || '-');
 }
 
 function playerHasSeasonData(name, type, year) {
@@ -470,7 +470,7 @@ function playerHasSeasonData(name, type, year) {
     pitches25.some(function(bp) { return normPlayerName(bp.batter) === k && bp.scatter && bp.scatter.length; });
 }
 
-// ── Data normalization ───────────────────────────────────────────────────────
+// -- Data normalization -------------------------------------------------------
 function normalizeDataDiamondBatterRow(p) {
   if (!p) return;
   if (p.SWING_pct == null && p.Swing_pct != null) p.SWING_pct = p.Swing_pct;
@@ -506,17 +506,17 @@ function normalizeDataDiamondPitcherRow(p) {
   if (p.pitches == null && p.total_pitches != null) p.pitches = p.total_pitches;
 }
 
-// ── Data store — all years kept separately, never merged ─────────────────────
+// -- Data store - all years kept separately, never merged ---------------------
 let DATA = {
   summary: [], pitches: [], pitchers: [], iblHistory: {},
   pbpBatters: [], pbpPitchers: [],
   summary2026: [], pitches2026: [], pitchers2026: []
 };
 
-// ── Global season tracker (set by season filter buttons) ──────────────────────
+// -- Global season tracker (set by season filter buttons) ----------------------
 var _activeSeason = 'year:2026'; // default to current datadiamond season
 
-// ── swapSeasonData: swap DATA.summary/pitches/pitchers to the selected year ───
+// -- swapSeasonData: swap DATA.summary/pitches/pitchers to the selected year ---
 function swapSeasonData(yr) {
   _activeSeason = yr;
   if (yr === 'year:2026') {
@@ -546,7 +546,7 @@ function getSeasonData() {
   };
 }
 
-// ── ACCESS CONTROL ─────────────────────────────────
+// -- ACCESS CONTROL ---------------------------------
 const ACCESS = {
   GUELPH_NAMES: ['Guelph Royals', 'guelph royals', 'GUE', 'gue'],
 
@@ -610,7 +610,7 @@ const ACCESS = {
 };
 
 
-// ── INIT ──────────────────────────────────────────
+// -- INIT ------------------------------------------
 async function init() {
   // Auth gate: stop here if user is not signed in
   if (!AUTH.init()) return;
@@ -639,7 +639,7 @@ async function loadAll() {
   try {
     const base = getBase();
 
-    // Load 2025 and 2026 files in parallel — each year is independent, no crossover
+    // Load 2025 and 2026 files in parallel - each year is independent, no crossover
     const [
       sumRes, pitRes, pitcherRes, iblRes, pbpBRes, pbpPRes,
       sum26Res, pit26Res, pitcher26Res
@@ -655,7 +655,7 @@ async function loadAll() {
       fetch(base + 'data/pitchers2026.json'),
     ]);
 
-    // 2025 data — stored separately, never merged with 2026
+    // 2025 data - stored separately, never merged with 2026
     if (sumRes.ok)     DATA.summary     = await sumRes.json();
     if (pitRes.ok)     DATA.pitches     = await pitRes.json();
     if (pitcherRes.ok) DATA.pitchers    = await pitcherRes.json();
@@ -663,8 +663,8 @@ async function loadAll() {
     if (pbpBRes.ok)    DATA.pbpBatters  = await pbpBRes.json();
     if (pbpPRes.ok)    DATA.pbpPitchers = await pbpPRes.json();
 
-    // 2026 data — stored separately, no pbp (ERA/RBI from ibl_history.json)
-    // If 2026 file missing, stays empty — no fallback to 2025
+    // 2026 data - stored separately, no pbp (ERA/RBI from ibl_history.json)
+    // If 2026 file missing, stays empty - no fallback to 2025
     DATA.summary2026   = sum26Res.ok     ? await sum26Res.json()     : [];
     DATA.pitches2026   = pit26Res.ok     ? await pit26Res.json()     : [];
     DATA.pitchers2026  = pitcher26Res.ok ? await pitcher26Res.json() : [];
@@ -692,21 +692,21 @@ async function loadAll() {
   }
 }
 
-// ── HELPERS ───────────────────────────────────────
+// -- HELPERS ---------------------------------------
 function fmt3(v) {
-  if (v == null || isNaN(v)) return '—';
+  if (v == null || isNaN(v)) return '-';
   return parseFloat(v).toFixed(3).replace('0.', '.');
 }
 function fmt2(v) {
-  if (v == null || isNaN(v)) return '—';
+  if (v == null || isNaN(v)) return '-';
   return parseFloat(v).toFixed(2);
 }
 function fmt1(v) {
-  if (v == null || isNaN(v)) return '—';
+  if (v == null || isNaN(v)) return '-';
   return parseFloat(v).toFixed(1);
 }
 function fmtN(v) {
-  if (v == null || isNaN(v)) return '—';
+  if (v == null || isNaN(v)) return '-';
   return Math.round(v);
 }
 function ddMissing() {
@@ -725,13 +725,13 @@ function fmtIPOrDash(v) {
   return (v == null || isNaN(v)) ? ddMissing() : fmtIP(v);
 }
 function fmtIP(v) {
-  if (v == null || isNaN(v)) return '—';
+  if (v == null || isNaN(v)) return '-';
   const totalOuts = Math.round(parseFloat(v) * 3);
   const innings = Math.floor(totalOuts / 3);
   const outs = totalOuts % 3;
   return innings + '.' + outs;
 }
-// ── ZONE DETECTION FROM X/Y COORDINATES ──────────
+// -- ZONE DETECTION FROM X/Y COORDINATES ----------
 // Strike zone: x (horizontal) -1 to 1, y (vertical) 0 to 1.
 // Zone/chase stats must be based on actual coordinates, not the cached in_zone flag.
 function hasPitchLocation(s) {
@@ -769,7 +769,7 @@ function hexToRgba(hex, a) {
 function navigate(url) { window.location.href = getBase() + url; }
 
 function getPbpBatter(name) {
-  // No pbp for 2026 — returns null, callers fall back to summary/scatter
+  // No pbp for 2026 - returns null, callers fall back to summary/scatter
   if (_activeSeason === 'year:2026') return null;
   return DATA.pbpBatters.find(function(p) { return p.batter === name; }) || null;
 }
@@ -902,7 +902,7 @@ function getAllBatters() {
 }
 
 function getAllPitchers() {
-  // Normalise helper — trim + collapse internal whitespace to prevent duplicates
+  // Normalise helper - trim + collapse internal whitespace to prevent duplicates
   // caused by a trailing space or double-space in one data source vs another.
   function normName(n) { return (n || '').replace(/\s+/g, ' ').trim(); }
 
@@ -937,9 +937,9 @@ function getAllPitchers() {
   return Object.values(canonical).sort(function(a,b){ return a.localeCompare(b); });
 }
 
-// ── TICKER ────────────────────────────────────────
+// -- TICKER ----------------------------------------
 function makeRosterBatterRecord2025(name, teamName) {
-  // Use year-fixed 2025 stores — DATA.pbpBatters/summary/pitches swap with season selection
+  // Use year-fixed 2025 stores - DATA.pbpBatters/summary/pitches swap with season selection
   var pbpBatters25 = DATA._pbpBatters25 || [];
   var summary25    = DATA._summary25    || [];
   var pitches25    = DATA._pitches25    || [];
@@ -975,7 +975,7 @@ function getActivePitcherNames2025(teamId) {
 }
 
 function getInferredBatterRecords2025(teamId) {
-  // Use year-fixed 2025 stores — DATA.pbpBatters/summary/pitches swap with season selection
+  // Use year-fixed 2025 stores - DATA.pbpBatters/summary/pitches swap with season selection
   var pbpBatters25 = DATA._pbpBatters25 || [];
   var summary25    = DATA._summary25    || [];
   var pitches25    = DATA._pitches25    || [];
@@ -1005,7 +1005,7 @@ function getInferredBatterRecords2025(teamId) {
 }
 
 function getInferredPitcherNames2025(teamId) {
-  // Use year-fixed 2025 stores — DATA.pbpPitchers/pitches swap with season selection
+  // Use year-fixed 2025 stores - DATA.pbpPitchers/pitches swap with season selection
   var pbpPitchers25 = DATA._pbpPitchers25 || [];
   var pitches25     = DATA._pitches25     || [];
   var seen = {};
@@ -1047,7 +1047,7 @@ function buildTicker() {
   }).join('');
 }
 
-// ── GLOBAL SEARCH ─────────────────────────────────
+// -- GLOBAL SEARCH ---------------------------------
 function initGlobalSearch() {
   const input    = document.getElementById('global-search');
   const dropdown = document.getElementById('search-dropdown');
@@ -1082,9 +1082,9 @@ function initGlobalSearch() {
   });
 }
 
-// ══════════════════════════════════════════════════
+// ==================================================
 // HOME PAGE
-// ══════════════════════════════════════════════════
+// ==================================================
 function initHomePage() {
   buildHomeTeamsGrid();
 }
@@ -1119,9 +1119,9 @@ function buildHomeTeamsGrid() {
   });
 }
 
-// ══════════════════════════════════════════════════
+// ==================================================
 // LEAGUE PAGE
-// ══════════════════════════════════════════════════
+// ==================================================
 function initLeaguePage() {
   const content = document.getElementById('tab-content');
   const tabs    = document.querySelectorAll('.tab-btn');
@@ -1140,7 +1140,7 @@ function initLeaguePage() {
 function renderHittingLeaderboards(container) {
   const players = DATA.summary.filter(function(p) { return p.AB > 0; });
   if (!players.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No data yet</h3></div>';
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon"></div><h3>No data yet</h3></div>';
     return;
   }
 
@@ -1179,7 +1179,7 @@ function renderHittingLeaderboards(container) {
       sorted.map(function(p, i) {
         const team = resolveTeam(p.batter_team);
         const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
-        const val = p[board.key] != null ? board.fmt(p[board.key]) : '—';
+        const val = p[board.key] != null ? board.fmt(p[board.key]) : '-';
         return '<div class="leader-row" data-name="' + p.batter + '" data-type="batter">' +
           '<span class="leader-rank ' + rankClass + '">' + (i+1) + '</span>' +
           '<span class="leader-name">' + p.batter + '</span>' +
@@ -1212,7 +1212,7 @@ function renderPitchingLeaderboards(container) {
   const pitchers = DATA.pitchers;
 
   if (!pitchers.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No pitcher data</h3></div>';
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon"></div><h3>No pitcher data</h3></div>';
     return;
   }
 
@@ -1264,7 +1264,7 @@ function renderPitchingLeaderboards(container) {
       sorted.map(function(p, i) {
         const team = resolveTeam(p.pitcher_team);
         const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
-        const val = p[board.key] != null ? board.fmt(p[board.key]) : '—';
+        const val = p[board.key] != null ? board.fmt(p[board.key]) : '-';
         return '<div class="leader-row" data-name="' + p.pitcher + '" data-type="pitcher">' +
           '<span class="leader-rank ' + rankClass + '">' + (i+1) + '</span>' +
           '<span class="leader-name">' + p.pitcher + '</span>' +
@@ -1283,10 +1283,10 @@ function renderPitchingLeaderboards(container) {
   container.appendChild(grid);
 }
 
-// ══════════════════════════════════════════════════
+// ==================================================
 // TEAMS PAGE
-// ══════════════════════════════════════════════════
-// ── Shared team roster helpers (match players page exactly) ────────────────
+// ==================================================
+// -- Shared team roster helpers (match players page exactly) ----------------
 function getTeamBatters(teamId) {
   if (_activeSeason === 'year:2025') {
     return getActiveBatterRecords2025(teamId).concat(getInferredBatterRecords2025(teamId)).map(function(p) {
@@ -1374,20 +1374,20 @@ function initTeamsPage() {
 
 function renderTeamGrid(content) {
 
-  // ── COLUMN DEFINITIONS ─────────────────────────────────────────────────────
+  // -- COLUMN DEFINITIONS -----------------------------------------------------
   // Every stat derivable from datadiamond2026 sources:
   //   pitchers2026: pitcher, pitcher_team, IP, total_pitches,
   //                 K_pct, BB_pct, STR_pct, EA_pct, K_BB, Early_pct, Ahead_pct,
   //                 WHIFF_pct, SWING_pct, GB_pct, FB_pct, LO_pct, PO_pct,
   //                 FP_STR_pct, PUTAWAY_pct, BA_against, BABIP, BF
-  //   pitches2026 scatter: BB+H counts → WHIP; Ks, outs → computed fields
+  //   pitches2026 scatter: BB+H counts -> WHIP; Ks, outs -> computed fields
   //   summary2026: batter, batter_team, AB, H, AVG, OBP, SLG, OPS, HR, BB, K,
   //                2B, 3B, HBP, SF, PA, R, SB, CS, ISO, BABIP, BB_K, wOBA
 
-  var pct1 = function(v){ return v != null ? fmt1(v)+'%' : '—'; };
+  var pct1 = function(v){ return v != null ? fmt1(v)+'%' : '-'; };
   var pct1raw = function(v){ return v != null ? parseFloat(v).toFixed(1) : ''; };
 
-  // Raw (unformatted) extractors for CSV — parallel to fmt functions
+  // Raw (unformatted) extractors for CSV - parallel to fmt functions
   function rawV(v, decimals) {
     if (v == null || isNaN(parseFloat(v))) return '';
     return decimals != null ? parseFloat(v).toFixed(decimals) : String(v);
@@ -1398,7 +1398,7 @@ function renderTeamGrid(content) {
     return Math.floor(totalOuts/3) + '.' + (totalOuts%3);
   }
 
-  // ── PITCHER COLUMNS ─────────────────────────────────────────────────────────
+  // -- PITCHER COLUMNS ---------------------------------------------------------
   var PITCH_COLS = [
     // Identity
     { key:'pitcher',      label:'Pitcher',   group:'Identity',  align:'left',  fmt:null,          raw:function(r){ return r.pitcher||''; },                        desc:false, link:true  },
@@ -1432,7 +1432,7 @@ function renderTeamGrid(content) {
     { key:'PO_pct',       label:'PU%',       group:'Contact',   align:'right', fmt:pct1,          raw:function(r){ return pct1raw(r.PO_pct); },                    desc:false             }
   ];
 
-  // ── BATTER COLUMNS ──────────────────────────────────────────────────────────
+  // -- BATTER COLUMNS ----------------------------------------------------------
   var HIT_COLS = [
     // Identity
     { key:'batter',  label:'Batter',  group:'Identity', align:'left',  fmt:null,   raw:function(r){ return r.batter||''; },              desc:false, link:true  },
@@ -1462,14 +1462,14 @@ function renderTeamGrid(content) {
     { key:'_bbpct',  label:'BB%',     group:'Discipline',align:'right',fmt:pct1,   raw:function(r){ var p=r.PA||r.AB; return p>0?pct1raw((r.BB||0)/p*100):''; }, desc:true  }
   ];
 
-  // ── GROUP LABELS (for filter UI) ────────────────────────────────────────────
+  // -- GROUP LABELS (for filter UI) --------------------------------------------
   var PITCH_GROUPS = ['Identity','Workload','Results','Command','SwingWhiff','Contact'];
   var HIT_GROUPS   = ['Identity','Counting','Rate','Discipline'];
 
-  // ── PAGE HTML ───────────────────────────────────────────────────────────────
+  // -- PAGE HTML ---------------------------------------------------------------
   content.innerHTML =
     '<section class="page-hero"><div class="hero-bg"></div><div class="container">' +
-    '<p class="hero-eyebrow">Canadian Baseball League · 2026</p>' +
+    '<p class="hero-eyebrow">Canadian Baseball League - 2026</p>' +
     '<h1 class="hero-title">LEAGUE<br><span>STATS</span></h1></div></section>' +
     '<div class="container" style="padding-top:40px;padding-bottom:80px">' +
 
@@ -1485,17 +1485,17 @@ function renderTeamGrid(content) {
 
       // Row 1: search + team + min AB/IP + export
       '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px">' +
-        '<input id="ls-search" placeholder="Search player…" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#fff;font-size:12px;font-family:var(--font-mono);padding:6px 11px;outline:none;width:160px"/>' +
+        '<input id="ls-search" placeholder="Search player..." style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#fff;font-size:12px;font-family:var(--font-mono);padding:6px 11px;outline:none;width:160px"/>' +
         '<select id="ls-team" style="background:#0e1525;border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:rgba(255,255,255,0.7);font-size:12px;font-family:var(--font-mono);padding:6px 10px;cursor:pointer;outline:none">' +
           '<option value="">All Teams</option>' +
-          TEAMS.map(function(t){ return '<option value="'+t.id+'">'+t.abbreviation+' – '+t.name+'</option>'; }).join('') +
+          TEAMS.map(function(t){ return '<option value="'+t.id+'">'+t.abbreviation+' - '+t.name+'</option>'; }).join('') +
         '</select>' +
         '<label style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:6px;white-space:nowrap">' +
           '<span id="ls-min-label">Min IP</span>' +
           '<input id="ls-min" type="number" min="0" value="0" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#fff;font-size:12px;font-family:var(--font-mono);padding:5px 8px;outline:none;width:60px"/>' +
         '</label>' +
         '<span id="ls-row-count" style="font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.3);margin-left:auto;white-space:nowrap"></span>' +
-        '<button id="ls-export" style="background:rgba(255,184,28,0.1);border:1px solid rgba(255,184,28,0.35);color:#FFB81C;font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;padding:6px 14px;border-radius:4px;cursor:pointer;white-space:nowrap;transition:background .15s">⬇ CSV</button>' +
+        '<button id="ls-export" style="background:rgba(255,184,28,0.1);border:1px solid rgba(255,184,28,0.35);color:#FFB81C;font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;padding:6px 14px;border-radius:4px;cursor:pointer;white-space:nowrap;transition:background .15s">down CSV</button>' +
       '</div>' +
 
       // Row 2: column group toggles
@@ -1509,7 +1509,7 @@ function renderTeamGrid(content) {
     '<div id="ls-table-wrap" style="margin-top:14px"></div>' +
     '</div>';
 
-  // ── STATE ────────────────────────────────────────────────────────────────────
+  // -- STATE --------------------------------------------------------------------
   var _lsTab      = 'hitting';
   var _lsSearch   = '';
   var _lsTeam     = '';
@@ -1522,7 +1522,7 @@ function renderTeamGrid(content) {
     hitting:  { Identity:true, Counting:true, Rate:true, Discipline:false }
   };
 
-  // ── COMPUTED FIELDS on batter rows ──────────────────────────────────────────
+  // -- COMPUTED FIELDS on batter rows ------------------------------------------
   function enrichBatter(p) {
     var pa = p.PA || (p.AB + (p.BB||0) + (p.HBP||0) + (p.SF||0)) || 0;
     // BABIP: prefer JSON value (from R), fall back to computed
@@ -1539,7 +1539,7 @@ function renderTeamGrid(content) {
     });
   }
 
-  // ── BUILD ROW DATA ───────────────────────────────────────────────────────────
+  // -- BUILD ROW DATA -----------------------------------------------------------
   function buildPitcherRows() {
     // Pre-compute per-pitcher stats from pitches2026 scatter
     var scMap = {};
@@ -1574,7 +1574,7 @@ function renderTeamGrid(content) {
     return DATA.pitchers2026.filter(function(pd){ return pd.pitcher !== 'Pitcher'; }).map(function(pd) {
       var teamObj = resolveTeam(pd.pitcher_team || pd.team);
       var m = scMap[pd.pitcher] || {};
-      // Use pd.H_allowed (from R script) if available — scatter misses hits on no-x/y pitches.
+      // Use pd.H_allowed (from R script) if available - scatter misses hits on no-x/y pitches.
       // Fall back to scatter hits when H_allowed absent. Show null if neither available.
       var _whipH  = pd.H_allowed != null ? pd.H_allowed : (m.tot ? m.h : null);
       var _whipBB = pd.BB        != null ? pd.BB        : (m.tot ? m.bb : 0);
@@ -1596,7 +1596,7 @@ function renderTeamGrid(content) {
       return Object.assign({}, pd, {
         WHIP:    whip,
         ERA:     era,
-        _team:   teamObj ? teamObj.abbreviation : '—',
+        _team:   teamObj ? teamObj.abbreviation : '-',
         _teamId: teamObj ? teamObj.id           : null
       });
     });
@@ -1606,7 +1606,7 @@ function renderTeamGrid(content) {
     return DATA.summary2026.filter(function(p){ return p.AB > 0 && p.batter !== 'Batter'; }).map(function(p) {
       var teamObj = resolveTeam(p.batter_team || p.team);
       var r = enrichBatter(p);
-      r._team   = teamObj ? teamObj.abbreviation : '—';
+      r._team   = teamObj ? teamObj.abbreviation : '-';
       r._teamId = teamObj ? teamObj.id           : null;
       // RBI from iblHistory Summer 2026 entry (AB > 0, season contains '2026')
       var iblEntry = (DATA.iblHistory[p.batter] || []).find(function(s) {
@@ -1617,14 +1617,14 @@ function renderTeamGrid(content) {
     });
   }
 
-  // ── VISIBLE COLS FOR CURRENT TAB ─────────────────────────────────────────────
+  // -- VISIBLE COLS FOR CURRENT TAB ---------------------------------------------
   function visibleCols() {
     var allCols   = _lsTab === 'pitching' ? PITCH_COLS : HIT_COLS;
     var groupVis  = _visGroups[_lsTab];
     return allCols.filter(function(c){ return groupVis[c.group]; });
   }
 
-  // ── RENDER GROUP BUTTONS ─────────────────────────────────────────────────────
+  // -- RENDER GROUP BUTTONS -----------------------------------------------------
   function renderGroupBtns() {
     var groups    = _lsTab === 'pitching' ? PITCH_GROUPS : HIT_GROUPS;
     var groupVis  = _visGroups[_lsTab];
@@ -1658,7 +1658,7 @@ function renderTeamGrid(content) {
     });
   }
 
-  // ── MAIN RENDER ──────────────────────────────────────────────────────────────
+  // -- MAIN RENDER --------------------------------------------------------------
   function renderTable() {
     var cols    = visibleCols();
     var nameKey = _lsTab === 'pitching' ? 'pitcher' : 'batter';
@@ -1698,7 +1698,7 @@ function renderTeamGrid(content) {
     var minLbl = document.getElementById('ls-min-label');
     if (minLbl) minLbl.textContent = _lsTab === 'pitching' ? 'Min IP' : 'Min AB';
 
-    // thead — group headers
+    // thead - group headers
     var groupSpans = {};
     cols.forEach(function(c){
       groupSpans[c.group] = (groupSpans[c.group]||0) + 1;
@@ -1721,7 +1721,7 @@ function renderTeamGrid(content) {
 
     var thHTML = '<tr style="border-bottom:2px solid rgba(255,255,255,0.1)">' +
       cols.map(function(col, i) {
-        var arrow = (_lsSortCol === i) ? (_lsSortAsc ? ' ▲' : ' ▼') : '';
+        var arrow = (_lsSortCol === i) ? (_lsSortAsc ? ' ^' : ' v') : '';
         return '<th style="text-align:'+col.align+';white-space:nowrap;cursor:pointer;' +
           'padding:8px 10px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;' +
           'color:'+(_lsSortCol===i?'#FFB81C':'rgba(255,255,255,0.45)')+';' +
@@ -1737,7 +1737,7 @@ function renderTeamGrid(content) {
         'onmouseout="this.style.background=\'\'">' +
         cols.map(function(col) {
           var val  = r[col.key];
-          var disp = (val == null) ? '—' : (col.fmt ? col.fmt(val) : String(val));
+          var disp = (val == null) ? '-' : (col.fmt ? col.fmt(val) : String(val));
           var style = 'padding:8px 10px;font-family:var(--font-mono);font-size:11px;' +
             'text-align:'+col.align+';white-space:nowrap;' +
             'border-right:1px solid rgba(255,255,255,0.02);';
@@ -1792,7 +1792,7 @@ function renderTeamGrid(content) {
     _lastFiltered = filtered;
   }
 
-  // ── CSV EXPORT ───────────────────────────────────────────────────────────────
+  // -- CSV EXPORT ---------------------------------------------------------------
   var _lastFiltered = [];
 
   function exportCSV() {
@@ -1819,7 +1819,7 @@ function renderTeamGrid(content) {
     URL.revokeObjectURL(url);
   }
 
-  // ── WIRE CONTROLS ────────────────────────────────────────────────────────────
+  // -- WIRE CONTROLS ------------------------------------------------------------
   // Tabs
   content.querySelectorAll('.tab-btn[data-ltab]').forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -1904,7 +1904,7 @@ function renderTeamDetail(teamId, content) {
 
     if (type === 'hitting') {
       if (!players.length) {
-        statsContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No hitting data</h3></div>';
+        statsContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon"></div><h3>No hitting data</h3></div>';
         return;
       }
 
@@ -1932,10 +1932,10 @@ function renderTeamDetail(teamId, content) {
       // Summary stat boxes
       const summaryHTML =
         '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:24px">' +
-        statBox('AVG', teamAVG != null ? fmt3(teamAVG) : '—', team.primaryColor) +
-        statBox('OBP', teamOBP != null ? fmt3(teamOBP) : '—', team.primaryColor) +
-        statBox('SLG', teamSLG != null ? fmt3(teamSLG) : '—', team.primaryColor) +
-        statBox('OPS', teamOPS != null ? fmt3(teamOPS) : '—', team.primaryColor) +
+        statBox('AVG', teamAVG != null ? fmt3(teamAVG) : '-', team.primaryColor) +
+        statBox('OBP', teamOBP != null ? fmt3(teamOBP) : '-', team.primaryColor) +
+        statBox('SLG', teamSLG != null ? fmt3(teamSLG) : '-', team.primaryColor) +
+        statBox('OPS', teamOPS != null ? fmt3(teamOPS) : '-', team.primaryColor) +
         statBox('HR',  fmtN(totHR), team.primaryColor) +
         statBox('BB',  fmtN(totBB), team.primaryColor) +
         statBox('K',   fmtN(totK),  team.primaryColor) +
@@ -1944,7 +1944,7 @@ function renderTeamDetail(teamId, content) {
       const summaryCard = document.createElement('div');
       summaryCard.className = 'stat-card fade-up';
       summaryCard.innerHTML = '<div class="stat-card-header"><span class="stat-card-title">Team Hitting</span>' +
-        '<span class="stat-card-subtitle">' + teamBattersRaw.length + ' players · ' + totAB + ' AB</span></div>' +
+        '<span class="stat-card-subtitle">' + teamBattersRaw.length + ' players - ' + totAB + ' AB</span></div>' +
         summaryHTML;
       statsContent.appendChild(summaryCard);
 
@@ -1960,7 +1960,7 @@ function renderTeamDetail(teamId, content) {
     } else {
       // PITCHING
       if (!teamPitchers.length) {
-        statsContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚾</div><h3>No pitching data</h3></div>';
+        statsContent.innerHTML = '<div class="empty-state"><div class="empty-state-icon"></div><h3>No pitching data</h3></div>';
         return;
       }
 
@@ -1988,13 +1988,13 @@ function renderTeamDetail(teamId, content) {
 
       const summaryHTML =
         '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:24px">' +
-        statBox('ERA',    teamERA  != null ? fmt2(teamERA)  : '—', team.primaryColor) +
+        statBox('ERA',    teamERA  != null ? fmt2(teamERA)  : '-', team.primaryColor) +
         statBox('IP',     fmt1(totIP),   team.primaryColor) +
         statBox('Pitches',fmtN(totPitches), team.primaryColor) +
-        statBox('K%',     avgK    != null ? fmt1(avgK)+'%'  : '—', team.primaryColor) +
-        statBox('BB%',    avgBB   != null ? fmt1(avgBB)+'%' : '—', team.primaryColor) +
-        statBox('STR%',   avgSTR  != null ? fmt1(avgSTR)+'%': '—', team.primaryColor) +
-        statBox('E+A%',   avgEA   != null ? fmt1(avgEA)+'%' : '—', team.primaryColor) +
+        statBox('K%',     avgK    != null ? fmt1(avgK)+'%'  : '-', team.primaryColor) +
+        statBox('BB%',    avgBB   != null ? fmt1(avgBB)+'%' : '-', team.primaryColor) +
+        statBox('STR%',   avgSTR  != null ? fmt1(avgSTR)+'%': '-', team.primaryColor) +
+        statBox('E+A%',   avgEA   != null ? fmt1(avgEA)+'%' : '-', team.primaryColor) +
         '</div>';
 
       const summaryCard = document.createElement('div');
@@ -2033,7 +2033,7 @@ function buildTeamPitcherTable(pitchers) {
       var yr = _activeSeason.replace('year:', '');
       var iblS = (DATA.iblHistory[pd.pitcher] || []).find(function(s){ return (s.season||'').indexOf(yr)!==-1; });
       if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
-      return '—';
+      return '-';
     })();
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + pd.pitcher + '" data-type="pitcher">' + pd.pitcher + '</a></td>' +
@@ -2045,9 +2045,9 @@ function buildTeamPitcherTable(pitchers) {
     '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
-// ══════════════════════════════════════════════════
+// ==================================================
 // PLAYERS PAGE
-// ══════════════════════════════════════════════════
+// ==================================================
 function initPlayersPage() {
   const params     = new URLSearchParams(window.location.search);
   const playerName = params.get('player');
@@ -2236,9 +2236,9 @@ function renderPlayerDetail(name, type, content) {
     if (rosterTeam) team = rosterTeam;
   }
 
-  document.title = name + ' — Data Diamond';
+  document.title = name + ' - Data Diamond';
 
-  // ── Collect player bio details (used in hero + overview) ──────────────────────
+  // -- Collect player bio details (used in hero + overview) ----------------------
   var _iblAll  = DATA.iblHistory[name] || [];
   var _ibl     = _iblAll.length ? _iblAll[0] : null;
 
@@ -2267,7 +2267,7 @@ function renderPlayerDetail(name, type, content) {
   var _throws = deriveHand(_pitcherScatter, 'pitcher_side');
 
   var playerInfo = {
-    pos:      _ibl && _ibl.pos    ? _ibl.pos    : (type === 'pitcher' ? 'P' : '—'),
+    pos:      _ibl && _ibl.pos    ? _ibl.pos    : (type === 'pitcher' ? 'P' : '-'),
     bats:     _bats   || (_ibl && _ibl.bats   ? _ibl.bats   : null),
     throws:   _throws || (_ibl && _ibl.throws ? _ibl.throws : null),
     height:   _ibl && _ibl.height ? _ibl.height : null,
@@ -2452,7 +2452,7 @@ function renderPlayerDetail(name, type, content) {
 
   tabs.forEach(function(tb) { tb.addEventListener('click', function() { activateTab(tb.dataset.tab); }); });
 
-  // ── Season filter — years from datadiamond scatter dates ─────────────────────
+  // -- Season filter - years from datadiamond scatter dates ---------------------
   var _seenYears = {};
   var _allSeasonOpts = [];
 
@@ -2487,7 +2487,7 @@ function renderPlayerDetail(name, type, content) {
     _allSeasonOpts.push({ label: yr, year: yr });
   });
 
-  // Fallback: if no scatter dates, pull years from iblHistory — but only show 2025
+  // Fallback: if no scatter dates, pull years from iblHistory - but only show 2025
   if (!_allSeasonOpts.length) {
     var has2025ibl = (DATA.iblHistory[name] || []).some(function(s) {
       return (s.season||'').indexOf('2025') !== -1 && (type === 'pitcher' ? s.IP > 0 : s.AB > 0);
@@ -2559,7 +2559,7 @@ function renderPlayerDetail(name, type, content) {
   activateTab('overview');
 }
 
-// ── OVERVIEW TAB ──────────────────────────────────
+// -- OVERVIEW TAB ----------------------------------
 function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
   seasonFilter = seasonFilter || 'all';
   var seasonYear = seasonFilter.replace('year:', ''); // strip 'year:' prefix
@@ -2585,7 +2585,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     : (_ovIblAll.find(function(s){ return s.season && s.season.indexOf(seasonFilter) !== -1; }) || null);
   var pbpP = getPbpPitcher(name);
 
-  // ── Shared percentile helper ───────────────────
+  // -- Shared percentile helper -------------------
   function pctRank(val, arr) {
     if (!arr.length || val == null) return null;
     var below = arr.filter(function(v){ return v < val; }).length;
@@ -2593,7 +2593,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     return (below + equal * 0.5) / arr.length;
   }
 
-  // ── Zone / pitch-type helpers ──────────────────
+  // -- Zone / pitch-type helpers ------------------
   var IN_PLAY = ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
   var HITS    = ['Single','Double','Triple','Home Run'];
   var KS      = ['Strikeout Swinging','Strikeout Looking'];
@@ -2618,7 +2618,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     return arr;
   }
 
-  // ── Tier classifier ────────────────────────────
+  // -- Tier classifier ----------------------------
   function tier(pct, higherIsBetter) {
     if (pct == null) return null;
     var p = higherIsBetter ? pct : (1 - pct);
@@ -2629,7 +2629,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     return null;
   }
 
-  // ── Collect all findings ───────────────────────
+  // -- Collect all findings -----------------------
   var positives = [];   // elite / strong
   var negatives = [];   // poor / weak
   var approach  = [];   // location / pitch-type notes (any tier)
@@ -2657,9 +2657,9 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     addInsight(approach, label, val, note);
   }
 
-  // ══════════════════════════════
+  // ==============================
   // BATTER DATA
-  // ══════════════════════════════
+  // ==============================
   if (type === 'batter') {
     var scB = sc.filter(hasPitchLocation);
     var side = scB.length ? (scB[0].batter_side || 'R') : 'R';
@@ -2670,11 +2670,11 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     var inZoneFn  = xyInZone;
     var oozFn     = xyOutOfZone;
 
-    // ── PBP-based stats (preferred) ───────────────
+    // -- PBP-based stats (preferred) ---------------
     var d = (_activeSeason === 'year:2026' && sum) ? sum : pbpB;  // 2026 DataDiamond row, 2025 PBP row
     var lgB = buildPbpBatterLeague();
 
-    // ── Compute from scatter if no pbpB or sum ────
+    // -- Compute from scatter if no pbpB or sum ----
     var scComputed = null;
     if (!d && (!sum || !sum.AVG) && sc.length >= 5) {
       var cPA=0,cAB=0,cH=0,c1B=0,c2B=0,c3B=0,cHR=0,cBB=0,cHBP=0,cK=0,cSF=0;
@@ -2729,7 +2729,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       return (below + equal * 0.5) / arr.length;
     }
 
-    // Slash line — 2026: datadiamond (sum/pbp) for AVG/OBP/SLG/OPS/HR, iblHistory for RBI
+    // Slash line - 2026: datadiamond (sum/pbp) for AVG/OBP/SLG/OPS/HR, iblHistory for RBI
     //            2025: iblHistory for all, then pbpB fallback
     var _is26batter = _activeSeason === 'year:2026';
     var srcAVG = _is26batter ? (sum ? sum.AVG : null)                  : (getSeasonAVG(name) != null ? getSeasonAVG(name) : (d ? d.AVG : (sum ? sum.AVG : null)));
@@ -2754,25 +2754,25 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       return s.length && s[0].RBI != null ? s[0].RBI : null;
     }).filter(function(v){ return v != null; }) : [];
 
-    evalStat('AVG', srcAVG != null ? fmt3(srcAVG) : '—', pctRankB(srcAVG, lgAvg), true,
-      { elite:'Hitting at an outstanding rate — one of the best averages in the league.', strong:'Solid contact rate, well above the league average.',
-        weak:'Below-average batting average — contact consistency is a concern.', poor:'Struggling to make consistent contact, one of the lowest averages in the league.' });
-    evalStat('OBP', srcOBP != null ? fmt3(srcOBP) : '—', pctRankB(srcOBP, lgObp), true,
-      { elite:'Gets on base at an elite rate — rarely makes an easy out.', strong:'Consistently reaches base above the league average.',
-        weak:'On-base percentage is below average — makes outs at a high rate.', poor:'Very low on-base percentage, one of the worst in the league.' });
-    evalStat('SLG', srcSLG != null ? fmt3(srcSLG) : '—', pctRankB(srcSLG, lgSlg), true,
-      { elite:'Exceptional power numbers — driving the ball with elite authority.', strong:'Above-average slugger with real extra-base pop.',
-        weak:'Below-average slugging — lacks extra-base hit production.', poor:'Very low slugging percentage, struggles to drive the ball with power.' });
-    evalStat('OPS', srcOPS != null ? fmt3(srcOPS) : '—', pctRankB(srcOPS, lgOps), true,
-      { elite:'Elite overall offensive production — top-tier combination of on-base and power.', strong:'Above-average run producer combining OBP and slugging effectively.',
-        weak:'Below-average overall offensive output.', poor:'Among the lowest OPS in the league — struggles getting on base and driving the ball.' });
-    evalStat('HR',  srcHR  != null ? fmtN(srcHR)  : '—', pctRankB(srcHR,  lgHr),  true,
-      { elite:'Among the league leaders in home runs — a genuine power threat.', strong:'Above-average home run production.', weak:null, poor:null });
+    evalStat('AVG', srcAVG != null ? fmt3(srcAVG) : '-', pctRankB(srcAVG, lgAvg), true,
+      { elite:'Hitting at an outstanding rate - one of the best averages in the league.', strong:'Solid contact rate, well above the league average.',
+        weak:'Below-average batting average - contact consistency is a concern.', poor:'Struggling to make consistent contact, one of the lowest averages in the league.' });
+    evalStat('OBP', srcOBP != null ? fmt3(srcOBP) : '-', pctRankB(srcOBP, lgObp), true,
+      { elite:'Gets on base at an elite rate - rarely makes an easy out.', strong:'Consistently reaches base above the league average.',
+        weak:'On-base percentage is below average - makes outs at a high rate.', poor:'Very low on-base percentage, one of the worst in the league.' });
+    evalStat('SLG', srcSLG != null ? fmt3(srcSLG) : '-', pctRankB(srcSLG, lgSlg), true,
+      { elite:'Exceptional power numbers - driving the ball with elite authority.', strong:'Above-average slugger with real extra-base pop.',
+        weak:'Below-average slugging - lacks extra-base hit production.', poor:'Very low slugging percentage, struggles to drive the ball with power.' });
+    evalStat('OPS', srcOPS != null ? fmt3(srcOPS) : '-', pctRankB(srcOPS, lgOps), true,
+      { elite:'Elite overall offensive production - top-tier combination of on-base and power.', strong:'Above-average run producer combining OBP and slugging effectively.',
+        weak:'Below-average overall offensive output.', poor:'Among the lowest OPS in the league - struggles getting on base and driving the ball.' });
+    evalStat('HR',  srcHR  != null ? fmtN(srcHR)  : '-', pctRankB(srcHR,  lgHr),  true,
+      { elite:'Among the league leaders in home runs - a genuine power threat.', strong:'Above-average home run production.', weak:null, poor:null });
     if (srcRBI != null) evalStat('RBI', fmtN(srcRBI), pctRankB(srcRBI, lgRbi), true,
-      { elite:'Among the league leaders in RBI — a true run producer.', strong:'Above-average RBI production — driving in runs consistently.',
-        weak:'Below-average RBI total — struggling to drive in runners.', poor:'One of the lowest RBI totals in the league.' });
+      { elite:'Among the league leaders in RBI - a true run producer.', strong:'Above-average RBI production - driving in runs consistently.',
+        weak:'Below-average RBI total - struggling to drive in runners.', poor:'One of the lowest RBI totals in the league.' });
 
-    // ── Discipline stats from PBP or scatter ─────────────────
+    // -- Discipline stats from PBP or scatter -----------------
     if (d) {
       // Build scatter-based league arrays as fallback when pbpBatters is empty
       var _lgSwing=lgB.swing.length?lgB.swing.map(function(v){return v;}):[];
@@ -2796,32 +2796,32 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
           if(!_lgBB.length) _lgBB.push((p.BB||0)/pPA*100);
         });
       }
-      evalStat('SWING%',    d.SWING_pct   != null ? fmt1(d.SWING_pct)+'%'   : '—', pctRankB(d.SWING_pct,   _lgSwing),   false,
-        { weak:'Passive approach — below-average swing rate, letting a lot of pitches go.', poor:'One of the lowest swing rates in the league — very selective, rarely offers.' });
-      evalStat('WHIFF%',    d.WHIFF_pct   != null ? fmt1(d.WHIFF_pct)+'%'   : '—', d.WHIFF_pct != null ? 1-pctRankB(d.WHIFF_pct, _lgWhiff) : null, true,
-        { elite:'Excellent bat-to-ball skills — one of the lowest whiff rates in the league.', strong:'Above-average contact rate on swings.',
-          weak:'High whiff rate — misses on a significant portion of swings.', poor:'One of the highest whiff rates in the league — struggles to make bat-on-ball contact.' });
-      evalStat('K%',        d.K_pct       != null ? fmt1(d.K_pct)+'%'       : '—', d.K_pct != null ? 1-pctRankB(d.K_pct, _lgK) : null, true,
-        { elite:'Exceptional strikeout avoidance — one of the hardest to put away in the league.', strong:'Below-average strikeout rate — makes consistent contact.',
-          weak:'Strikeout rate is elevated — pitchers are regularly putting this hitter away.', poor:'One of the highest strikeout rates in the league — a major vulnerability.' });
-      evalStat('BB%',       d.BB_pct      != null ? fmt1(d.BB_pct)+'%'      : '—', pctRankB(d.BB_pct, _lgBB), true,
-        { elite:'Outstanding plate discipline — draws walks at an elite rate.', strong:'Above-average walk rate, shows good patience at the plate.',
-          weak:'Low walk rate — rarely works counts or forces free passes.', poor:'Almost never walks — an aggressive approach that pitchers can exploit.' });
-      evalStat('PS/PA',     d.PS_PA       != null ? fmt2(d.PS_PA)           : '—', pctRankB(d.PS_PA,       lgB.pspa),    true,
-        { elite:'Sees an elite number of pitches per PA — works counts to exhaustion.', strong:'Above-average pitch count per PA — runs up counts and tires pitchers.',
-          weak:'Below-average pitches per PA — tends to swing early in counts.', poor:'One of the lowest PS/PA in the league — very first-pitch aggressive.' });
-      evalStat('CONTACT%',  d.CONTACT_pct != null ? fmt1(d.CONTACT_pct)+'%' : '—', pctRankB(d.CONTACT_pct, lgB.contact), true,
-        { elite:'Elite bat-to-ball ability — makes contact at one of the highest rates in the league.', strong:'Above-average contact rate — consistently puts the ball in play.',
-          weak:'Below-average contact rate — missing more often than most hitters.', poor:'Struggles to make contact on swings — one of the lowest contact rates in the league.' });
-      evalStat('GB%',       d.GB_pct      != null ? fmt1(d.GB_pct)+'%'      : '—', d.GB_pct != null ? 1-pctRankB(d.GB_pct, lgB.gb) : null, true,
-        { elite:'Excellent ground ball avoidance — hits the ball in the air consistently.', strong:'Above-average tendency to avoid ground balls.',
-          weak:'Heavy ground ball hitter — limiting extra-base potential.', poor:'One of the highest ground ball rates — nearly everything stays on the ground.' });
-      evalStat('FB%',       d.FB_pct      != null ? fmt1(d.FB_pct)+'%'      : '—', pctRankB(d.FB_pct, lgB.fb), true,
-        { elite:'Elite fly ball rate — generates air contact at a top-tier rate.', strong:'Above-average fly ball rate — good power profile.',
+      evalStat('SWING%',    d.SWING_pct   != null ? fmt1(d.SWING_pct)+'%'   : '-', pctRankB(d.SWING_pct,   _lgSwing),   false,
+        { weak:'Passive approach - below-average swing rate, letting a lot of pitches go.', poor:'One of the lowest swing rates in the league - very selective, rarely offers.' });
+      evalStat('WHIFF%',    d.WHIFF_pct   != null ? fmt1(d.WHIFF_pct)+'%'   : '-', d.WHIFF_pct != null ? 1-pctRankB(d.WHIFF_pct, _lgWhiff) : null, true,
+        { elite:'Excellent bat-to-ball skills - one of the lowest whiff rates in the league.', strong:'Above-average contact rate on swings.',
+          weak:'High whiff rate - misses on a significant portion of swings.', poor:'One of the highest whiff rates in the league - struggles to make bat-on-ball contact.' });
+      evalStat('K%',        d.K_pct       != null ? fmt1(d.K_pct)+'%'       : '-', d.K_pct != null ? 1-pctRankB(d.K_pct, _lgK) : null, true,
+        { elite:'Exceptional strikeout avoidance - one of the hardest to put away in the league.', strong:'Below-average strikeout rate - makes consistent contact.',
+          weak:'Strikeout rate is elevated - pitchers are regularly putting this hitter away.', poor:'One of the highest strikeout rates in the league - a major vulnerability.' });
+      evalStat('BB%',       d.BB_pct      != null ? fmt1(d.BB_pct)+'%'      : '-', pctRankB(d.BB_pct, _lgBB), true,
+        { elite:'Outstanding plate discipline - draws walks at an elite rate.', strong:'Above-average walk rate, shows good patience at the plate.',
+          weak:'Low walk rate - rarely works counts or forces free passes.', poor:'Almost never walks - an aggressive approach that pitchers can exploit.' });
+      evalStat('PS/PA',     d.PS_PA       != null ? fmt2(d.PS_PA)           : '-', pctRankB(d.PS_PA,       lgB.pspa),    true,
+        { elite:'Sees an elite number of pitches per PA - works counts to exhaustion.', strong:'Above-average pitch count per PA - runs up counts and tires pitchers.',
+          weak:'Below-average pitches per PA - tends to swing early in counts.', poor:'One of the lowest PS/PA in the league - very first-pitch aggressive.' });
+      evalStat('CONTACT%',  d.CONTACT_pct != null ? fmt1(d.CONTACT_pct)+'%' : '-', pctRankB(d.CONTACT_pct, lgB.contact), true,
+        { elite:'Elite bat-to-ball ability - makes contact at one of the highest rates in the league.', strong:'Above-average contact rate - consistently puts the ball in play.',
+          weak:'Below-average contact rate - missing more often than most hitters.', poor:'Struggles to make contact on swings - one of the lowest contact rates in the league.' });
+      evalStat('GB%',       d.GB_pct      != null ? fmt1(d.GB_pct)+'%'      : '-', d.GB_pct != null ? 1-pctRankB(d.GB_pct, lgB.gb) : null, true,
+        { elite:'Excellent ground ball avoidance - hits the ball in the air consistently.', strong:'Above-average tendency to avoid ground balls.',
+          weak:'Heavy ground ball hitter - limiting extra-base potential.', poor:'One of the highest ground ball rates - nearly everything stays on the ground.' });
+      evalStat('FB%',       d.FB_pct      != null ? fmt1(d.FB_pct)+'%'      : '-', pctRankB(d.FB_pct, lgB.fb), true,
+        { elite:'Elite fly ball rate - generates air contact at a top-tier rate.', strong:'Above-average fly ball rate - good power profile.',
           weak:null, poor:null });
-      evalStat('FP SWING%', d.FP_SWING_pct!= null ? fmt1(d.FP_SWING_pct)+'%': '—', d.FP_SWING_pct != null ? 1-pctRankB(d.FP_SWING_pct, lgB.fpSwing) : null, true,
-        { elite:'Takes first pitches at an elite rate — forces pitchers to throw strikes.', strong:'Patient on first pitches — works deeper into counts.',
-          weak:'Swings at first pitches frequently — pitchers can get ahead cheaply.', poor:'One of the most aggressive first-pitch hitters — almost always offers.' });
+      evalStat('FP SWING%', d.FP_SWING_pct!= null ? fmt1(d.FP_SWING_pct)+'%': '-', d.FP_SWING_pct != null ? 1-pctRankB(d.FP_SWING_pct, lgB.fpSwing) : null, true,
+        { elite:'Takes first pitches at an elite rate - forces pitchers to throw strikes.', strong:'Patient on first pitches - works deeper into counts.',
+          weak:'Swings at first pitches frequently - pitchers can get ahead cheaply.', poor:'One of the most aggressive first-pitch hitters - almost always offers.' });
     } else {
       // Fallback to scatter-based stats if no PBP data
       var totP = sc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
@@ -2851,14 +2851,14 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
         var pPA=p.PA||(p.AB+(p.BB||0)+(p.HBP||0)+(p.SF||0))||1;
         lgK.push((p.K||0)/pPA); lgBB.push((p.BB||0)/pPA);
       });
-      evalStat('SWING%', mySwing!=null?fmt1(mySwing*100)+'%':'—', pctRank(mySwing,lgSwing), true,
+      evalStat('SWING%', mySwing!=null?fmt1(mySwing*100)+'%':'-', pctRank(mySwing,lgSwing), true,
         { elite:'Attacks pitches at an elite rate.', strong:'Above-average swing rate.',
-          weak:'Passive approach — below-average swing rate.', poor:'One of the lowest swing rates in the league.' });
-      evalStat('WHIFF%', myWhiff!=null?fmt1(myWhiff*100)+'%':'—', pctRank(myWhiff,lgWhiff), false,
-        { weak:'High whiff rate — misses on a significant portion of swings.', poor:'One of the highest whiff rates — struggles to make contact.' });
-      evalStat('K%',     myK!=null?fmt1(myK*100)+'%':'—',         pctRank(myK,lgK),         false,
+          weak:'Passive approach - below-average swing rate.', poor:'One of the lowest swing rates in the league.' });
+      evalStat('WHIFF%', myWhiff!=null?fmt1(myWhiff*100)+'%':'-', pctRank(myWhiff,lgWhiff), false,
+        { weak:'High whiff rate - misses on a significant portion of swings.', poor:'One of the highest whiff rates - struggles to make contact.' });
+      evalStat('K%',     myK!=null?fmt1(myK*100)+'%':'-',         pctRank(myK,lgK),         false,
         { weak:'Strikeout rate is elevated.', poor:'One of the highest strikeout rates in the league.' });
-      evalStat('BB%',    myBB!=null?fmt1(myBB*100)+'%':'—',        pctRank(myBB,lgBB),       true,
+      evalStat('BB%',    myBB!=null?fmt1(myBB*100)+'%':'-',        pctRank(myBB,lgBB),       true,
         { elite:'Outstanding plate discipline.', strong:'Above-average walk rate.',
           weak:'Low walk rate.', poor:'Almost never walks.' });
     }
@@ -2884,14 +2884,14 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       if(izSw2>0)       lgIzCon.push(izCon2/izSw2);
       if(ooz2.length>0) lgChase.push(ch2/ooz2.length);
     });
-    evalStat('IZ SWING%',   myIzSwing!=null?fmt1(myIzSwing*100)+'%':'—', pctRank(myIzSwing,lgIzSwing), true,
-      { elite:'Attacks pitches in the zone at an elite rate.', strong:'Above-average zone swing rate — recognizes and attacks strikes.',
-        weak:'Below-average zone swing rate — taking more strikes than most hitters.', poor:'One of the lowest in-zone swing rates — frequently lets hittable pitches pass.' });
-    evalStat('IZ CONTACT%', myIzCon!=null?fmt1(myIzCon*100)+'%':'—',     pctRank(myIzCon,lgIzCon),   true,
-      { elite:'Exceptional in-zone contact — rarely misses a pitch in the strike zone.', strong:'Above-average contact rate on pitches in the zone.',
-        weak:'Below-average in-zone contact — missing strikes more often than most.', poor:'Struggles significantly to make contact on pitches in the strike zone.' });
-    evalStat('CHASE%',      myChase!=null?fmt1(myChase*100)+'%':'—',      pctRank(myChase,lgChase),   false,
-      { weak:'Chases pitches out of the zone at an above-average rate.', poor:'One of the highest chase rates in the league — easily baited outside the strike zone.' });
+    evalStat('IZ SWING%',   myIzSwing!=null?fmt1(myIzSwing*100)+'%':'-', pctRank(myIzSwing,lgIzSwing), true,
+      { elite:'Attacks pitches in the zone at an elite rate.', strong:'Above-average zone swing rate - recognizes and attacks strikes.',
+        weak:'Below-average zone swing rate - taking more strikes than most hitters.', poor:'One of the lowest in-zone swing rates - frequently lets hittable pitches pass.' });
+    evalStat('IZ CONTACT%', myIzCon!=null?fmt1(myIzCon*100)+'%':'-',     pctRank(myIzCon,lgIzCon),   true,
+      { elite:'Exceptional in-zone contact - rarely misses a pitch in the strike zone.', strong:'Above-average contact rate on pitches in the zone.',
+        weak:'Below-average in-zone contact - missing strikes more often than most.', poor:'Struggles significantly to make contact on pitches in the strike zone.' });
+    evalStat('CHASE%',      myChase!=null?fmt1(myChase*100)+'%':'-',      pctRank(myChase,lgChase),   false,
+      { weak:'Chases pitches out of the zone at an above-average rate.', poor:'One of the highest chase rates in the league - easily baited outside the strike zone.' });
 
     // Zone / pitch-type approach checks
     var ZONE_CHECKS = [
@@ -2902,11 +2902,11 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     ZONE_CHECKS.forEach(function(zc) {
       var pts=scB.filter(zc.fn), myW=zoneWhiff(pts), myBA=zoneBA(pts);
       var lgW=lgArr(zc.fn,zoneWhiff), lgBA=lgArr(zc.fn,zoneBA);
-      evalZone(zc.label+' WHIFF%', myW!=null?fmt1(myW*100)+'%':'—', pctRank(myW,lgW), false,
-        null, 'Whiffs at an above-average rate on pitches '+zc.label.toLowerCase()+' — a location pitchers are exploiting.');
-      evalZone(zc.label+' AVG', myBA!=null?fmt3(myBA):'—', pctRank(myBA,lgBA), true,
-        'Strong production on pitches '+zc.label.toLowerCase()+' — a clear hitting strength.',
-        'Struggles to produce on pitches '+zc.label.toLowerCase()+' — a notable weakness.');
+      evalZone(zc.label+' WHIFF%', myW!=null?fmt1(myW*100)+'%':'-', pctRank(myW,lgW), false,
+        null, 'Whiffs at an above-average rate on pitches '+zc.label.toLowerCase()+' - a location pitchers are exploiting.');
+      evalZone(zc.label+' AVG', myBA!=null?fmt3(myBA):'-', pctRank(myBA,lgBA), true,
+        'Strong production on pitches '+zc.label.toLowerCase()+' - a clear hitting strength.',
+        'Struggles to produce on pitches '+zc.label.toLowerCase()+' - a notable weakness.');
     });
     var pitchTypes=[];
     scB.forEach(function(s){ if(s.pitch_type&&!pitchTypes.includes(s.pitch_type))pitchTypes.push(s.pitch_type); });
@@ -2914,11 +2914,11 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       var ptFn=function(s){return s.pitch_type===pt;};
       var pts=scB.filter(ptFn); if(pts.length<6)return;
       var myW=zoneWhiff(pts), myBA=zoneBA(pts), lgW=lgArr(ptFn,zoneWhiff), lgBA=lgArr(ptFn,zoneBA);
-      evalZone(pt+' WHIFF%', myW!=null?fmt1(myW*100)+'%':'—', pctRank(myW,lgW), false,
-        null, 'Whiffs at an above-average rate against the '+pt+' — pitchers are using it to their advantage.');
-      evalZone(pt+' AVG', myBA!=null?fmt3(myBA):'—', pctRank(myBA,lgBA), true,
-        'Above-average production against the '+pt+' — handles it well.',
-        'Struggles against the '+pt+' — a hole in the swing pitchers can attack.');
+      evalZone(pt+' WHIFF%', myW!=null?fmt1(myW*100)+'%':'-', pctRank(myW,lgW), false,
+        null, 'Whiffs at an above-average rate against the '+pt+' - pitchers are using it to their advantage.');
+      evalZone(pt+' AVG', myBA!=null?fmt3(myBA):'-', pctRank(myBA,lgBA), true,
+        'Above-average production against the '+pt+' - handles it well.',
+        'Struggles against the '+pt+' - a hole in the swing pitchers can attack.');
       var COMBOS=[
         {label:'Inside & Up',fn:function(s){return insideFn(s)&&highFn(s);}},
         {label:'Inside & Low',fn:function(s){return insideFn(s)&&lowFn(s);}},
@@ -2929,18 +2929,18 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
         var fn=function(s){return s.pitch_type===pt&&cz.fn(s);};
         var cpts=scB.filter(fn); if(cpts.length<5)return;
         var cW=zoneWhiff(cpts), cBA=zoneBA(cpts), lcW=lgArr(fn,zoneWhiff), lcBA=lgArr(fn,zoneBA);
-        evalZone(pt+' · '+cz.label+' WHIFF%', cW!=null?fmt1(cW*100)+'%':'—', pctRank(cW,lcW), false,
-          null, 'Extremely high whiff rate on '+pt+' '+cz.label.toLowerCase()+' — a reliable put-away spot for pitchers.');
-        evalZone(pt+' · '+cz.label+' AVG', cBA!=null?fmt3(cBA):'—', pctRank(cBA,lcBA), true,
-          'Exceptional production on '+pt+' '+cz.label.toLowerCase()+' — a true damage zone.',
-          'Near-zero production on '+pt+' '+cz.label.toLowerCase()+' — pitchers should go here.');
+        evalZone(pt+' - '+cz.label+' WHIFF%', cW!=null?fmt1(cW*100)+'%':'-', pctRank(cW,lcW), false,
+          null, 'Extremely high whiff rate on '+pt+' '+cz.label.toLowerCase()+' - a reliable put-away spot for pitchers.');
+        evalZone(pt+' - '+cz.label+' AVG', cBA!=null?fmt3(cBA):'-', pctRank(cBA,lcBA), true,
+          'Exceptional production on '+pt+' '+cz.label.toLowerCase()+' - a true damage zone.',
+          'Near-zero production on '+pt+' '+cz.label.toLowerCase()+' - pitchers should go here.');
       });
     });
   }
 
-  // ══════════════════════════════
+  // ==============================
   // PITCHER DATA
-  // ══════════════════════════════
+  // ==============================
   if (type === 'pitcher') {
     var scP  = sc.filter(hasPitchLocation);
     var pd   = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
@@ -3028,37 +3028,37 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       });
     }
 
-    evalStat('STR%',     myStr!=null  ?fmt1(myStr*100)+'%'  :'—', pctRank(myStr,lgP.str),    true,
-      { elite:'OUTSTANDING strike thrower — working ahead and in the zone at an elite rate. The foundation of good pitching.', strong:'Above-average strike rate — commanding the zone and putting hitters on the defensive.',
-        weak:'CONCERN: Below-average strike rate — falling behind in counts too often. Must improve strike-throwing or walks will follow.', poor:'RED FLAG: Very low strike rate — one of the least accurate pitchers in the league. Walks and long counts are destroying effectiveness.' });
-    evalStat('SWING%',   mySwing!=null?fmt1(mySwing*100)+'%':'—', pctRank(mySwing,lgP.swing), true,
-      { elite:'Induces swings at an elite rate — hitters cannot lay off.', strong:'Above-average induced swing rate — forcing hitters to offer.',
-        weak:'Below-average induced swing rate — hitters comfortable taking pitches.', poor:'One of the lowest induced swing rates — hitters lay off consistently.' });
-    evalStat('WHIFF%',   myWhiff!=null?fmt1(myWhiff*100)+'%':'—', pctRank(myWhiff,lgP.whiff), true,
-      { elite:'Elite swing-and-miss stuff — one of the most unhittable pitchers in the league.', strong:'Above-average whiff rate — pitches hitters struggle to square up.',
-        weak:'Below-average whiff rate — hitters squaring up swings too often.', poor:'Very few whiffs generated — hitters putting the ball in play on nearly every swing.' });
-    evalStat('K%',       myK!=null    ?fmt1(myK*100)+'%'    :'—', pctRank(myK,lgP.k),        true,
-      { elite:'Elite strikeout rate — one of the most dominant put-away pitchers in the league.', strong:'Above-average ability to finish hitters with strikeouts.',
-        weak:'Below-average strikeout rate — needs better put-away pitches to finish hitters.', poor:'Very low strikeout rate — struggles to put hitters away once ahead in the count.' });
-    evalStat('BB%',      myBB!=null   ?fmt1(myBB*100)+'%'   :'—', myBB!=null ? 1-pctRank(myBB,lgP.bb) : null, true,
-      { elite:'Elite command — walks almost nobody. The mark of a true strike thrower.', strong:'Low walk rate — rarely giving free passes, staying ahead and in control.',
-        weak:'RED FLAG: Walk rate is elevated — free passes are killing innings. Must throw strikes and challenge hitters.', poor:'CRITICAL ISSUE: One of the highest walk rates in the league. Walks are unacceptable — must attack the zone.' });
-    evalStat('E+A%',     myEA!=null   ?fmt1(myEA)+'%'       :'—', pctRank(myEA,lgP.ea),      true,
-      { elite:'Works ahead in counts at an elite rate — dictates every at-bat from pitch one.', strong:'Consistently gets into advantageous counts early — a sign of excellent command.',
-        weak:'Falls behind in counts too often — hitters dictate the at-bat. Must throw more first-pitch strikes.', poor:'Rarely gets ahead — almost never in the drivers seat. First-pitch strikes must be the priority.' });
-    evalStat('K/BB',     myKBB!=null  ?fmt2(myKBB)          :'—', pctRank(myKBB,lgP.kbb),    true,
-      { elite:'Outstanding K/BB ratio — strikes out hitters at a much higher rate than walking them. The ideal profile.', strong:'Good K/BB — strikeouts outpacing walks, a sign of quality command and stuff.',
-        weak:'Low K/BB — walks are nearly cancelling out strikeouts. Must cut walks to let stuff play up.', poor:'Very poor K/BB — walks are undermining everything. Cannot allow free bases at this rate.' });
-    evalStat('ERA',      era!=null    ?fmt2(era)             :'—', pctRank(era,lgP.era),      false,
-      { weak:'ERA is above average — runs scoring at a higher-than-ideal rate.', poor:'One of the highest ERAs in the league — struggling to prevent runs consistently.' });
-    evalStat('WHIP',     whip!=null   ?fmt2(whip)            :'—', pctRank(whip,lgP.whip),    false,
-      { weak:'Elevated WHIP — too many baserunners per inning, often from walks.', poor:'One of the highest WHIPs in the league — walks and hits creating constant traffic on the bases.' });
-    evalStat('BA AGNST', baAgst!=null ?fmt3(baAgst)          :'—', pctRank(baAgst,lgP.baAgst),false,
-      { weak:'Hitters batting above average against this pitcher — making too much contact.', poor:'One of the highest batting averages against in the league — hitters consistently squaring the ball up.' });
+    evalStat('STR%',     myStr!=null  ?fmt1(myStr*100)+'%'  :'-', pctRank(myStr,lgP.str),    true,
+      { elite:'OUTSTANDING strike thrower - working ahead and in the zone at an elite rate. The foundation of good pitching.', strong:'Above-average strike rate - commanding the zone and putting hitters on the defensive.',
+        weak:'CONCERN: Below-average strike rate - falling behind in counts too often. Must improve strike-throwing or walks will follow.', poor:'RED FLAG: Very low strike rate - one of the least accurate pitchers in the league. Walks and long counts are destroying effectiveness.' });
+    evalStat('SWING%',   mySwing!=null?fmt1(mySwing*100)+'%':'-', pctRank(mySwing,lgP.swing), true,
+      { elite:'Induces swings at an elite rate - hitters cannot lay off.', strong:'Above-average induced swing rate - forcing hitters to offer.',
+        weak:'Below-average induced swing rate - hitters comfortable taking pitches.', poor:'One of the lowest induced swing rates - hitters lay off consistently.' });
+    evalStat('WHIFF%',   myWhiff!=null?fmt1(myWhiff*100)+'%':'-', pctRank(myWhiff,lgP.whiff), true,
+      { elite:'Elite swing-and-miss stuff - one of the most unhittable pitchers in the league.', strong:'Above-average whiff rate - pitches hitters struggle to square up.',
+        weak:'Below-average whiff rate - hitters squaring up swings too often.', poor:'Very few whiffs generated - hitters putting the ball in play on nearly every swing.' });
+    evalStat('K%',       myK!=null    ?fmt1(myK*100)+'%'    :'-', pctRank(myK,lgP.k),        true,
+      { elite:'Elite strikeout rate - one of the most dominant put-away pitchers in the league.', strong:'Above-average ability to finish hitters with strikeouts.',
+        weak:'Below-average strikeout rate - needs better put-away pitches to finish hitters.', poor:'Very low strikeout rate - struggles to put hitters away once ahead in the count.' });
+    evalStat('BB%',      myBB!=null   ?fmt1(myBB*100)+'%'   :'-', myBB!=null ? 1-pctRank(myBB,lgP.bb) : null, true,
+      { elite:'Elite command - walks almost nobody. The mark of a true strike thrower.', strong:'Low walk rate - rarely giving free passes, staying ahead and in control.',
+        weak:'RED FLAG: Walk rate is elevated - free passes are killing innings. Must throw strikes and challenge hitters.', poor:'CRITICAL ISSUE: One of the highest walk rates in the league. Walks are unacceptable - must attack the zone.' });
+    evalStat('E+A%',     myEA!=null   ?fmt1(myEA)+'%'       :'-', pctRank(myEA,lgP.ea),      true,
+      { elite:'Works ahead in counts at an elite rate - dictates every at-bat from pitch one.', strong:'Consistently gets into advantageous counts early - a sign of excellent command.',
+        weak:'Falls behind in counts too often - hitters dictate the at-bat. Must throw more first-pitch strikes.', poor:'Rarely gets ahead - almost never in the drivers seat. First-pitch strikes must be the priority.' });
+    evalStat('K/BB',     myKBB!=null  ?fmt2(myKBB)          :'-', pctRank(myKBB,lgP.kbb),    true,
+      { elite:'Outstanding K/BB ratio - strikes out hitters at a much higher rate than walking them. The ideal profile.', strong:'Good K/BB - strikeouts outpacing walks, a sign of quality command and stuff.',
+        weak:'Low K/BB - walks are nearly cancelling out strikeouts. Must cut walks to let stuff play up.', poor:'Very poor K/BB - walks are undermining everything. Cannot allow free bases at this rate.' });
+    evalStat('ERA',      era!=null    ?fmt2(era)             :'-', pctRank(era,lgP.era),      false,
+      { weak:'ERA is above average - runs scoring at a higher-than-ideal rate.', poor:'One of the highest ERAs in the league - struggling to prevent runs consistently.' });
+    evalStat('WHIP',     whip!=null   ?fmt2(whip)            :'-', pctRank(whip,lgP.whip),    false,
+      { weak:'Elevated WHIP - too many baserunners per inning, often from walks.', poor:'One of the highest WHIPs in the league - walks and hits creating constant traffic on the bases.' });
+    evalStat('BA AGNST', baAgst!=null ?fmt3(baAgst)          :'-', pctRank(baAgst,lgP.baAgst),false,
+      { weak:'Hitters batting above average against this pitcher - making too much contact.', poor:'One of the highest batting averages against in the league - hitters consistently squaring the ball up.' });
     var ipVal = _is26pit ? pd.IP : getSeasonIP(name);
-    evalStat('IP',       ipVal>0      ?fmtIP(ipVal)          :'—', pctRank(ipVal||0,lgP.ip),  true,
-      { elite:'Elite innings pitched — a true workhorse, going deep into games and saving the bullpen.', strong:'Above-average innings total — consistently pitching deep into games.',
-        weak:'Below-average innings total — often pitching in shorter stints.', poor:'One of the lowest innings pitched — limited workload this season.' });
+    evalStat('IP',       ipVal>0      ?fmtIP(ipVal)          :'-', pctRank(ipVal||0,lgP.ip),  true,
+      { elite:'Elite innings pitched - a true workhorse, going deep into games and saving the bullpen.', strong:'Above-average innings total - consistently pitching deep into games.',
+        weak:'Below-average innings total - often pitching in shorter stints.', poor:'One of the lowest innings pitched - limited workload this season.' });
 
 
 
@@ -3078,27 +3078,27 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       var ptFn=function(s){return s.pitch_type===pt;};
       var pts=scP.filter(ptFn); if(pts.length<6)return;
       var myW=zoneWhiff(pts), myBA=zoneBA(pts), lgW=lgArr(ptFn,zoneWhiff), lgBA=lgArr(ptFn,zoneBA);
-      evalZone(pt+' WHIFF%', myW!=null?fmt1(myW*100)+'%':'—', pctRank(myW,lgW), true,
-        'The '+pt+' is generating elite whiffs — a true out-pitch.',
-        'Hitters are squaring up the '+pt+' consistently — limited swing-and-miss.');
-      evalZone(pt+' AVG AGNST', myBA!=null?fmt3(myBA):'—', pctRank(myBA,lgBA), false,
+      evalZone(pt+' WHIFF%', myW!=null?fmt1(myW*100)+'%':'-', pctRank(myW,lgW), true,
+        'The '+pt+' is generating elite whiffs - a true out-pitch.',
+        'Hitters are squaring up the '+pt+' consistently - limited swing-and-miss.');
+      evalZone(pt+' AVG AGNST', myBA!=null?fmt3(myBA):'-', pctRank(myBA,lgBA), false,
         null, 'Hitters are posting an above-average average against the '+pt+'.');
       PZONES.forEach(function(pz){
         var fn=function(s){return s.pitch_type===pt&&pz.fn(s);};
         var cpts=scP.filter(fn); if(cpts.length<5)return;
         var cW=zoneWhiff(cpts), lcW=lgArr(fn,zoneWhiff);
-        evalZone(pt+' · '+pz.label, cW!=null?fmt1(cW*100)+'%':'—', pctRank(cW,lcW), true,
-          pt+' '+pz.label.toLowerCase()+' is an elite weapon — hitters almost never make contact.',
-          'Hitters handle the '+pt+' '+pz.label.toLowerCase()+' well — a spot to limit.');
+        evalZone(pt+' - '+pz.label, cW!=null?fmt1(cW*100)+'%':'-', pctRank(cW,lcW), true,
+          pt+' '+pz.label.toLowerCase()+' is an elite weapon - hitters almost never make contact.',
+          'Hitters handle the '+pt+' '+pz.label.toLowerCase()+' well - a spot to limit.');
       });
     });
   }
 
-  // ══════════════════════════════════════════════
+  // ==============================================
   // RENDER
-  // ══════════════════════════════════════════════
+  // ==============================================
 
-  // ── Player identity card ───────────────────────
+  // -- Player identity card -----------------------
   var accentColor = pi.teamColor || '#FFB81C';
   var bioItems = [];
   if (pi.teamName) bioItems.push({ label: 'Team', val: pi.teamName });
@@ -3120,7 +3120,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       '</div>'
     : '';
 
-  // ── Section builder ────────────────────────────
+  // -- Section builder ----------------------------
   function makeSection(title, items, accentCol, emptyMsg) {
     var colorsMap = {
       green:  { bg: 'rgba(80,200,120,0.07)',  border: 'rgba(80,200,120,0.25)',  dot: '#50C878', label: 'rgba(80,200,120,0.9)'  },
@@ -3241,10 +3241,10 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       spraySVG   = buildDonut(spSegs, 60,60,48,30, []);
       sprayLegend= buildLegend(spSegs);
       var sLabel,sDesc,sColor;
-      if(pullPct>40&&pullPct>strPct2&&pullPct>oppPct){sLabel='PULL';sDesc='Pull hitter — shift infield to pull side.';sColor='#f87171';}
-      else if(oppPct>40&&oppPct>pullPct&&oppPct>strPct2){sLabel='OPPO';sDesc='Goes opposite often — shade that way.';sColor='#60a5fa';}
-      else if(strPct2>40&&strPct2>pullPct&&strPct2>oppPct){sLabel='STRAIGHT';sDesc='Hits up the middle — play standard alignment.';sColor='#FFB81C';}
-      else{sLabel='NONE';sDesc='Balanced — no shift needed.';sColor='rgba(255,255,255,0.4)';}
+      if(pullPct>40&&pullPct>strPct2&&pullPct>oppPct){sLabel='PULL';sDesc='Pull hitter - shift infield to pull side.';sColor='#f87171';}
+      else if(oppPct>40&&oppPct>pullPct&&oppPct>strPct2){sLabel='OPPO';sDesc='Goes opposite often - shade that way.';sColor='#60a5fa';}
+      else if(strPct2>40&&strPct2>pullPct&&strPct2>oppPct){sLabel='STRAIGHT';sDesc='Hits up the middle - play standard alignment.';sColor='#FFB81C';}
+      else{sLabel='NONE';sDesc='Balanced - no shift needed.';sColor='rgba(255,255,255,0.4)';}
       shiftHTML=
         '<div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.07)"></div>'+
         '<div style="min-width:140px">'+
@@ -3282,26 +3282,26 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     var ttp = pdG.avg_time_to_plate != null ? pdG.avg_time_to_plate : null;
 
     if (ttp != null) {
-      // Scale: 1.0s (fast) → 1.8s (slow). Midpoint = 1.35s
+      // Scale: 1.0s (fast) -> 1.8s (slow). Midpoint = 1.35s
       var minT = 1.0, maxT = 1.8;
       var midT = 1.35;
 
       // Two zones: <1.35 = quick (green/good for pitcher), >=1.35 = slow (red/bad for pitcher)
       var gaugeColor, riskLabel, riskDesc;
       if (ttp < 1.35) {
-        gaugeColor = '#34d399'; // green — quick delivery, hard to steal
+        gaugeColor = '#34d399'; // green - quick delivery, hard to steal
         riskLabel  = 'QUICK DELIVERY';
-        riskDesc   = 'Delivers quickly — base runners have a very difficult time stealing.';
+        riskDesc   = 'Delivers quickly - base runners have a very difficult time stealing.';
       } else {
-        gaugeColor = '#f87171'; // red — slow delivery, steal risk
+        gaugeColor = '#f87171'; // red - slow delivery, steal risk
         riskLabel  = 'SLOW DELIVERY';
-        riskDesc   = 'Slow to the plate — base runners can steal freely. Alert your catcher.';
+        riskDesc   = 'Slow to the plate - base runners can steal freely. Alert your catcher.';
       }
 
       // Build SVG gauge (semicircle)
       var gR = 54, gCx = 70, gCy = 74;
 
-      // Needle angle: map ttp to 180°→0° (left=fast, right=slow)
+      // Needle angle: map ttp to 180deg->0deg (left=fast, right=slow)
       var clampedT  = Math.max(minT, Math.min(maxT, ttp));
       var needlePct = (clampedT - minT) / (maxT - minT);
       var needleDeg = 180 - needlePct * 180;
@@ -3324,7 +3324,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
           ' A ' + ir + ' ' + ir + ' 0 0 0 ' + ix2.toFixed(1) + ' ' + iy2.toFixed(1) + ' Z';
       }
 
-      // Two zone boundary angles (180°=left/fast, 0°=right/slow)
+      // Two zone boundary angles (180deg=left/fast, 0deg=right/slow)
       var gsRad  = Math.PI;
       var midPct = (midT - minT) / (maxT - minT);
       var midDeg = 180 - midPct * 180;
@@ -3385,7 +3385,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
   return identityCard + donutHTML + pitcherGaugeHTML + cols;
 }
 
-// ── PBP-based league percentile arrays ────────────────────────────────────
+// -- PBP-based league percentile arrays ------------------------------------
 function buildPbpBatterLeague() {
   var o = { avg:[], obp:[], slg:[], ops:[], iso:[], babip:[], kpct:[], bbpct:[], bbk:[], pspa:[],
             swing:[], whiff:[], contact:[], fpSwing:[], gb:[], fb:[], lo:[], po:[] };
@@ -3417,7 +3417,7 @@ function buildPbpBatterLeague() {
 function buildPbpPitcherLeague() {
   var o = { era:[], whip:[], baAgst:[], babip:[], kpct:[], bbpct:[], kbb:[], str:[], swing:[],
             whiff:[], contact:[], fpStr:[], putaway:[], ea:[], early:[], ahead:[], gb:[], fb:[], lo:[], po:[] };
-  // ERA league array from iblHistory (same source as getSeasonERA) — season-filtered
+  // ERA league array from iblHistory (same source as getSeasonERA) - season-filtered
   var _pbpPitLgYr = _activeSeason.replace('year:', '');
   Object.keys(DATA.iblHistory).forEach(function(name) {
     var ibl = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(_pbpPitLgYr) !== -1; });
@@ -3461,7 +3461,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
   seasonFilter = seasonFilter || 'all';
   var seasonYear = seasonFilter.replace('year:', '');
 
-  // ── Shared bar renderer ───────────────────────
+  // -- Shared bar renderer -----------------------
   function makeSavantBar(b, labelWidth) {
     var p      = Math.max(0, Math.min(1, b.pct || 0));
     var colorP = Math.max(0, Math.min(1, b.good ? p : (1 - p)));
@@ -3491,7 +3491,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     '</div>';
   }
 
-  // ── Checkbox filter card builder ──────────────
+  // -- Checkbox filter card builder --------------
   // defaultStats: array of lbl strings shown by default. All others hidden until checked.
   // extraHeaderHTML: injected between header and checkbox panel (e.g. season selector).
   function buildFilteredCard(cardId, title, subtitle, allBars, labelWidth, extraHeaderHTML, defaultStats) {
@@ -3499,7 +3499,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     var barsId    = cardId + '-bars';
     var defaults  = defaultStats || allBars.map(function(b){ return b.lbl; });
 
-    // Build initial bar HTML — only render bars that are in defaults
+    // Build initial bar HTML - only render bars that are in defaults
     var barsHTML = allBars.map(function(b) {
       var visible = defaults.indexOf(b.lbl) !== -1;
       var barHtml = makeSavantBar(b, labelWidth);
@@ -3508,7 +3508,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       return barHtml;
     }).join('');
 
-    // Checkbox panel HTML — two-column grid of checkboxes
+    // Checkbox panel HTML - two-column grid of checkboxes
     var cbHTML = allBars.map(function(b) {
       var checked = defaults.indexOf(b.lbl) !== -1;
       var gold    = '#FFB81C';
@@ -3593,9 +3593,9 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     return html;
   }
 
-  // ══════════════════════════════════════════════
+  // ==============================================
   // BATTER
-  // ══════════════════════════════════════════════
+  // ==============================================
   if (type === 'batter' && sum) {
     var sc = (pitch && pitch.scatter) ? pitch.scatter : [];
     var ZX1 = -1, ZX2 = 1, ZY1 = 0, ZY2 = 1;
@@ -3621,7 +3621,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       var r = String(s.runners || '000');
       return r[1] === '1' || r[2] === '1';
     }
-    // ── RISP (runner on 2nd pos1 or 3rd pos2 of '000' string) ──────────────────
+    // -- RISP (runner on 2nd pos1 or 3rd pos2 of '000' string) ------------------
     var rispPts  = sc.filter(function(s){ return hasRISP(s); });
     var rispAB   = rispPts.filter(function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Strikeout Swinging','Strikeout Looking'].includes(s.outcome); }).length;
     var rispHits = rispPts.filter(function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); }).length;
@@ -3632,7 +3632,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     var _iblB = (DATA.iblHistory[name]||[]).filter(function(s){ return s.AB > 0; });
     if (_iblB.length && _iblB[0].RBI != null) myRBI = _iblB[0].RBI;
 
-    // ── Contact type from outcomes ────────────────────────────────────────────
+    // -- Contact type from outcomes --------------------------------------------
     var gbB    = sc.filter(function(s){ return s.outcome === 'Groundout' || s.outcome === 'Double Play' || s.outcome === 'Triple Play'; }).length;
     var fbB    = sc.filter(function(s){ return s.outcome === 'Flyout' || s.outcome === 'Sacrifice Fly' || s.outcome === 'Sac Fly Double Play'; }).length;
     var loB    = sc.filter(function(s){ return s.outcome === 'Lineout'; }).length;
@@ -3946,9 +3946,9 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     return buildFilteredCard('pct-batter', 'Percentile Stats', pitchCount + ' pitches seen', allBars, 110, null, null);
   }
 
-  // ══════════════════════════════════════════════
+  // ==============================================
   // PITCHER
-  // ══════════════════════════════════════════════
+  // ==============================================
   if (type === 'pitcher' && pitch && pitch.scatter) {
     var pmDates = new Set();
     var pmYears = new Set();
@@ -4064,27 +4064,27 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         tot: tot,
         bars: [
           // Outcome stats
-          { lbl: 'ERA',  val: era  != null ? fmt2(era)  : '—', pct: era  != null ? 1-lp(era,  lgP.era)  : 0, good: true },
-          { lbl: 'WHIP', val: whip != null ? fmt2(whip) : '—', pct: whip != null ? 1-lp(whip, lgP.whip) : 0, good: true },
-          { lbl: 'BA AGNST', val: baAgst!=null   ? fmt3(baAgst)           :'—', pct: baAgst!=null   ? 1-lp(baAgst,      lgP.baAgst)  : 0, good: true },
-          { lbl: 'BABIP',    val: babip!=null    ? fmt3(babip)            :'—', pct: babip!=null    ? 1-lp(babip,       lgP.babip)   : 0, good: true },
+          { lbl: 'ERA',  val: era  != null ? fmt2(era)  : '-', pct: era  != null ? 1-lp(era,  lgP.era)  : 0, good: true },
+          { lbl: 'WHIP', val: whip != null ? fmt2(whip) : '-', pct: whip != null ? 1-lp(whip, lgP.whip) : 0, good: true },
+          { lbl: 'BA AGNST', val: baAgst!=null   ? fmt3(baAgst)           :'-', pct: baAgst!=null   ? 1-lp(baAgst,      lgP.baAgst)  : 0, good: true },
+          { lbl: 'BABIP',    val: babip!=null    ? fmt3(babip)            :'-', pct: babip!=null    ? 1-lp(babip,       lgP.babip)   : 0, good: true },
           // Rate stats
-          { lbl: 'FPS%',     val: fpStrikePct!=null ? fmt1(fpStrikePct*100)+'%':'—', pct: fpStrikePct!=null ? lp(fpStrikePct, lgP.fpStrike) : 0, good: true },
-          { lbl: 'SWING%',   val: tot>0          ? fmt1(swings/tot*100)+'%':'—', pct: tot>0         ? lp(swings/tot,    lgP.swing)   : 0, good: true },
-          { lbl: 'WHIFF%',   val: swings>0       ? fmt1(swStr/swings*100)+'%':'—', pct: swings>0    ? lp(swStr/swings,  lgP.whiff)   : 0, good: true },
-          { lbl: 'CONTACT%', val: swings>0       ? fmt1((swings-swStr)/swings*100)+'%':'—', pct: swings>0 ? 1-lp((swings-swStr)/swings, lgP.contact) : 0, good: true },
-          { lbl: 'K%',       val: tot>0          ? fmt1(ks/tot*100)+'%'   :'—', pct: tot>0          ? lp(ks/tot,        lgP.k)       : 0, good: true },
-          { lbl: 'BB%',      val: tot>0          ? fmt1(bbs/tot*100)+'%'  :'—', pct: tot>0          ? 1-lp(bbs/tot,     lgP.bb)      : 0, good: true },
-          { lbl: 'E+A%',     val: pd.EA_pct!=null? fmt1(pd.EA_pct)+'%'   :'—', pct: lp(pd.EA_pct,  lgP.ea),  good: true },
-          { lbl: 'K/BB',     val: pd.K_BB!=null  ? fmt2(pd.K_BB)         :'—', pct: lp(pd.K_BB,    lgP.kbb), good: true },
+          { lbl: 'FPS%',     val: fpStrikePct!=null ? fmt1(fpStrikePct*100)+'%':'-', pct: fpStrikePct!=null ? lp(fpStrikePct, lgP.fpStrike) : 0, good: true },
+          { lbl: 'SWING%',   val: tot>0          ? fmt1(swings/tot*100)+'%':'-', pct: tot>0         ? lp(swings/tot,    lgP.swing)   : 0, good: true },
+          { lbl: 'WHIFF%',   val: swings>0       ? fmt1(swStr/swings*100)+'%':'-', pct: swings>0    ? lp(swStr/swings,  lgP.whiff)   : 0, good: true },
+          { lbl: 'CONTACT%', val: swings>0       ? fmt1((swings-swStr)/swings*100)+'%':'-', pct: swings>0 ? 1-lp((swings-swStr)/swings, lgP.contact) : 0, good: true },
+          { lbl: 'K%',       val: tot>0          ? fmt1(ks/tot*100)+'%'   :'-', pct: tot>0          ? lp(ks/tot,        lgP.k)       : 0, good: true },
+          { lbl: 'BB%',      val: tot>0          ? fmt1(bbs/tot*100)+'%'  :'-', pct: tot>0          ? 1-lp(bbs/tot,     lgP.bb)      : 0, good: true },
+          { lbl: 'E+A%',     val: pd.EA_pct!=null? fmt1(pd.EA_pct)+'%'   :'-', pct: lp(pd.EA_pct,  lgP.ea),  good: true },
+          { lbl: 'K/BB',     val: pd.K_BB!=null  ? fmt2(pd.K_BB)         :'-', pct: lp(pd.K_BB,    lgP.kbb), good: true },
           // Contact type
-          { lbl: 'GB%',      val: bip>0          ? fmt1(gb/bip*100)+'%'  :'—', pct: bip>0          ? lp(gb/bip,        lgP.gb)      : 0, good: true },
-          { lbl: 'FB%',      val: bip>0          ? fmt1(fb/bip*100)+'%'  :'—', pct: bip>0          ? 1-lp(fb/bip,      lgP.fb)      : 0, good: true },
-          { lbl: 'LO%',      val: bip>0          ? fmt1(lo/bip*100)+'%'  :'—', pct: bip>0          ? lp(lo/bip,        lgP.lo)      : 0, good: true },
-          { lbl: 'PU%',      val: bip>0          ? fmt1(po/bip*100)+'%'  :'—', pct: bip>0          ? 1-lp(po/bip,      lgP.po)      : 0, good: true },
+          { lbl: 'GB%',      val: bip>0          ? fmt1(gb/bip*100)+'%'  :'-', pct: bip>0          ? lp(gb/bip,        lgP.gb)      : 0, good: true },
+          { lbl: 'FB%',      val: bip>0          ? fmt1(fb/bip*100)+'%'  :'-', pct: bip>0          ? 1-lp(fb/bip,      lgP.fb)      : 0, good: true },
+          { lbl: 'LO%',      val: bip>0          ? fmt1(lo/bip*100)+'%'  :'-', pct: bip>0          ? lp(lo/bip,        lgP.lo)      : 0, good: true },
+          { lbl: 'PU%',      val: bip>0          ? fmt1(po/bip*100)+'%'  :'-', pct: bip>0          ? 1-lp(po/bip,      lgP.po)      : 0, good: true },
           // First pitch & 2-strike
-          { lbl: 'PUTAWAY%', val: twoKKpct!=null    ? fmt1(twoKKpct*100)+'%'   :'—', pct: twoKKpct!=null    ? lp(twoKKpct,   lgP.twoKK)   : 0, good: true },
-        ].filter(function(b){ return b.val !== '—'; })
+          { lbl: 'PUTAWAY%', val: twoKKpct!=null    ? fmt1(twoKKpct*100)+'%'   :'-', pct: twoKKpct!=null    ? lp(twoKKpct,   lgP.twoKK)   : 0, good: true },
+        ].filter(function(b){ return b.val !== '-'; })
       };
     }
     var sc     = pitch ? pitch.scatter : [];
@@ -4175,7 +4175,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         ].filter(function(b){return b.val!=null&&b.pct!=null;});
       } else if (m.bars.length) {
         // Scatter-only fallback (no PBP): use calcBars result, but IBL for ERA/IP/WHIP
-        allBars = m.bars.filter(function(b){return b.val!==null&&b.val!=='—';});
+        allBars = m.bars.filter(function(b){return b.val!==null&&b.val!=='-';});
       } else {
         allBars = [];
       }
@@ -4215,7 +4215,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
 
     var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', (tot || 0) + ' batters faced', allBars, 80, null, null);
 
-    // Wire season dropdown — updates pitch count subtitle and re-renders bars
+    // Wire season dropdown - updates pitch count subtitle and re-renders bars
     setTimeout(function() {
       var sel = document.getElementById('pm-season-select');
       if (!sel) return;
@@ -4257,10 +4257,10 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
     var lgWhip2= Object.values(DATA.iblHistory||{}).map(function(ss){ var s=(ss||[]).filter(function(r){return r.IP>0;}); return s.length&&s[0].WHIP!=null?s[0].WHIP:null; }).filter(function(v){return v!=null;});
     function lpIbl2(val,arr,invert){ if(!arr.length||val==null) return 0; var below=arr.filter(function(v){return v<val;}).length; var p=(below+0.5)/arr.length; return invert?1-p:p; }
     var iblBars = [
-      { lbl:'ERA',  val:_iblPitPct.ERA !=null?fmt2(_iblPitPct.ERA) :'—', pct:lpIbl2(_iblPitPct.ERA, lgEra2, true), good:true },
-      { lbl:'WHIP', val:_iblPitPct.WHIP!=null?fmt2(_iblPitPct.WHIP):'—', pct:lpIbl2(_iblPitPct.WHIP,lgWhip2,true), good:true },
-      { lbl:'IP',   val:_iblPitPct.IP  !=null?fmtIP(_iblPitPct.IP) :'—', pct:0.5, good:true },
-    ].filter(function(b){return b.val!=='—';});
+      { lbl:'ERA',  val:_iblPitPct.ERA !=null?fmt2(_iblPitPct.ERA) :'-', pct:lpIbl2(_iblPitPct.ERA, lgEra2, true), good:true },
+      { lbl:'WHIP', val:_iblPitPct.WHIP!=null?fmt2(_iblPitPct.WHIP):'-', pct:lpIbl2(_iblPitPct.WHIP,lgWhip2,true), good:true },
+      { lbl:'IP',   val:_iblPitPct.IP  !=null?fmtIP(_iblPitPct.IP) :'-', pct:0.5, good:true },
+    ].filter(function(b){return b.val!=='-';});
     if (iblBars.length) {
       return buildFilteredCard('pct-pitcher','Percentile Stats',
         (_iblPitPct.IP||0)+' IP', iblBars, 80, null, null);
@@ -4273,7 +4273,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
 
 // -- PITCH USAGE TAB ----------------------------------------
 function renderGameLog(name, pitch) {
-  // Collect pitcher's pitches — both seasons
+  // Collect pitcher's pitches - both seasons
   var _nameKey = normPlayerName(name);
   var sc = [];
   var srcData = (_activeSeason === 'year:2026') ? DATA.pitches2026 : DATA.pitches;
@@ -4368,7 +4368,7 @@ function renderGameLog(name, pitch) {
         summaryRow.style.cssText = 'cursor:pointer;' + (isOpen ? 'background:rgba(255,184,28,0.06);' : '');
         summaryRow.dataset.date = dt;
         summaryRow.innerHTML =
-          '<td style="padding-left:12px;color:rgba(255,184,28,0.7);font-size:14px">' + (isOpen ? '▾' : '▸') + '</td>' +
+          '<td style="padding-left:12px;color:rgba(255,184,28,0.7);font-size:14px">' + (isOpen ? 'v' : '>') + '</td>' +
           '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:11px">' + dateLabel + '</td>' +
           '<td><span style="font-family:var(--font-mono);font-size:11px;font-weight:600">' + oppLabel + '</span></td>' +
           '<td>' + gTot + '</td>' +
@@ -4522,7 +4522,7 @@ function renderGameLog(name, pitch) {
 
       var mode = glViewMode[dt] || 'scatter';
 
-      // Canvas sizing — match Strike Zone section exactly
+      // Canvas sizing - match Strike Zone section exactly
       var DPR = window.devicePixelRatio || 1;
       var CSS_W = 300, CSS_H = 413;
       canvas.width  = CSS_W * DPR;
@@ -4544,7 +4544,7 @@ function renderGameLog(name, pitch) {
       var PAD_L=32, PAD_R=12, PAD_T=12, PAD_B=32;
       var PW = W-PAD_L-PAD_R, PH = H-PAD_T-PAD_B;
 
-      // Fixed bounds — same for both scatter and heatmap so zone never jumps
+      // Fixed bounds - same for both scatter and heatmap so zone never jumps
       var X_MIN=-2.5, X_MAX=2.5, Y_MIN=-0.8, Y_MAX=2.2;
 
       function toCx(x){ return PAD_L+((x-X_MIN)/(X_MAX-X_MIN))*PW; }
@@ -4561,10 +4561,10 @@ function renderGameLog(name, pitch) {
       ctx.restore();
 
       if (mode==='heatmap') {
-        // KDE heatmap — identical to Strike Zone section
+        // KDE heatmap - identical to Strike Zone section
         drawKdeHeatmap(ctx, allPts, W, H, PAD_L, PAD_R, PAD_T, PAD_B, X_MIN, X_MAX, Y_MIN, Y_MAX);
       } else {
-        // Scatter dots — solid color by pitch type, no symbols
+        // Scatter dots - solid color by pitch type, no symbols
         allPts.forEach(function(s) {
           var t=s.pitch_type||'Unknown', color=tcMap[t]||'#888';
           var cx=toCx(s.x), cy=toCy(s.y);
@@ -4574,7 +4574,7 @@ function renderGameLog(name, pitch) {
         });
       }
 
-      // Zone fill + border + grid — always drawn on top
+      // Zone fill + border + grid - always drawn on top
       ctx.fillStyle='rgba(255,184,28,0.03)';
       ctx.fillRect(zx1,zy1,zx2-zx1,zy2-zy1);
       ctx.strokeStyle='rgba(255,184,28,0.85)'; ctx.lineWidth=2;
@@ -4593,7 +4593,7 @@ function renderGameLog(name, pitch) {
              ';color:' + (active ? '#FFB81C' : 'rgba(255,255,255,0.6)') + ';transition:all 0.15s';
     }
 
-    // Wire pitch type filter + scatter/heatmap toggle — delegated
+    // Wire pitch type filter + scatter/heatmap toggle - delegated
     document.addEventListener('click', function glFilter(e) {
       // Pitch type filter
       var ptBtn = e.target.closest('.gl-pt-btn');
@@ -4757,7 +4757,7 @@ function initBatterGameLog(name, pitch) {
       var summaryRow = document.createElement('tr');
       summaryRow.style.cssText = 'cursor:pointer;'+(isOpen?'background:rgba(255,184,28,0.06);':'');
       summaryRow.innerHTML =
-        '<td style="padding-left:12px;color:rgba(255,184,28,0.7);font-size:14px">'+(isOpen?'▾':'▸')+'</td>'+
+        '<td style="padding-left:12px;color:rgba(255,184,28,0.7);font-size:14px">'+(isOpen?'v':'>')+'</td>'+
         '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:11px">'+dateLabel+'</td>'+
         '<td><span style="font-family:var(--font-mono);font-size:11px;font-weight:600">'+oppLabel+'</span></td>'+
         '<td>'+gTot+'</td><td>'+paCount+'</td><td class="highlight-val">'+avgStr+'</td>'+
@@ -4818,7 +4818,7 @@ function initBatterGameLog(name, pitch) {
         'style="'+bglBtnStyle(active, '#FFB81C')+'">'+m.label+'</button>';
     }).join('');
 
-    // Pitch type filter buttons — same style as pitcher game log
+    // Pitch type filter buttons - same style as pitcher game log
     var ptFilterBtns =
       '<button class="bgl-pt-btn active" data-type="all" data-dt="'+dt+'" style="'+bglBtnStyle(true,'#FFB81C')+'">All</button>' +
       typeSet2.map(function(t){
@@ -4966,7 +4966,7 @@ function initBatterGameLog(name, pitch) {
     var PAD_L=32, PAD_R=12, PAD_T=12, PAD_B=32;
     var PW=W-PAD_L-PAD_R, PH=H-PAD_T-PAD_B;
 
-    // Fixed bounds — same for both scatter and heatmap so zone never jumps
+    // Fixed bounds - same for both scatter and heatmap so zone never jumps
     var X_MIN=-2.5, X_MAX=2.5, Y_MIN=-0.8, Y_MAX=2.2;
 
     function toCx(x){ return PAD_L+((x-X_MIN)/(X_MAX-X_MIN))*PW; }
@@ -4993,7 +4993,7 @@ function initBatterGameLog(name, pitch) {
     ctx.restore();
 
     if (view==='heatmap') {
-      // Full KDE heatmap — identical to Strike Zone section
+      // Full KDE heatmap - identical to Strike Zone section
       if (pts.length) drawKdeHeatmap(ctx, pts, W, H, PAD_L, PAD_R, PAD_T, PAD_B, X_MIN, X_MAX, Y_MIN, Y_MAX);
     } else {
       // Scatter dots keep pitch-type colors regardless of the active result filter.
@@ -5006,7 +5006,7 @@ function initBatterGameLog(name, pitch) {
       });
     }
 
-    // Zone border + grid — always on top, gold like Strike Zone
+    // Zone border + grid - always on top, gold like Strike Zone
     ctx.fillStyle='rgba(255,184,28,0.03)';
     ctx.fillRect(zx1,zy1,zx2-zx1,zy2-zy1);
     ctx.strokeStyle='rgba(255,184,28,0.85)'; ctx.lineWidth=1.5;
@@ -5024,7 +5024,7 @@ function initBatterGameLog(name, pitch) {
 
 
 
-  // Shared KDE heatmap renderer — identical colour ramp and sigma to Strike Zone section
+  // Shared KDE heatmap renderer - identical colour ramp and sigma to Strike Zone section
   function drawKdeHeatmap(ctx, pts, W, H, PAD_L, PAD_R, PAD_T, PAD_B, X_MIN, X_MAX, Y_MIN, Y_MAX) {
     var PW = W - PAD_L - PAD_R, PH = H - PAD_T - PAD_B;
     var GW = 200, GH = 200;
@@ -5095,7 +5095,7 @@ function renderSeasonStats(name, type, sum, pitch) {
   });
 
   if (!seasons.length) {
-    return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No historical data available</h3></div>';
+    return '<div class="empty-state"><div class="empty-state-icon"></div><h3>No historical data available</h3></div>';
   }
 
   var html = '<div class="stat-card"><div class="stat-card-header">' +
@@ -5120,40 +5120,40 @@ function renderSeasonStats(name, type, sum, pitch) {
   seasons.forEach(function(s) {
     html += '<tr>';
     html += '<td style="color:var(--text-dim);white-space:nowrap">' + s.season + '</td>';
-    html += '<td style="white-space:nowrap">' + (s.team || '—') + '</td>';
+    html += '<td style="white-space:nowrap">' + (s.team || '-') + '</td>';
 
     if (type === 'pitcher') {
       html +=
-        '<td>' + (s.W   != null ? s.W   : '—') + '</td>' +
-        '<td>' + (s.L   != null ? s.L   : '—') + '</td>' +
-        '<td class="highlight-val">' + (s.ERA != null ? fmt2(s.ERA) : '—') + '</td>' +
-        '<td>' + (s.G   != null ? s.G   : '—') + '</td>' +
-        '<td>' + (s.GS  != null ? s.GS  : '—') + '</td>' +
-        '<td>' + (s.SV  != null ? s.SV  : '—') + '</td>' +
-        '<td>' + (s.IP  != null ? fmtIP(s.IP) : '—') + '</td>' +
-        '<td>' + (s.HA  != null ? s.HA  : '—') + '</td>' +
-        '<td>' + (s.ER  != null ? s.ER  : '—') + '</td>' +
-        '<td>' + (s.BBA != null ? s.BBA : '—') + '</td>' +
-        '<td class="highlight-val">' + (s.KP  != null ? s.KP  : '—') + '</td>' +
-        '<td>' + (s.WP  != null ? s.WP  : '—') + '</td>';
+        '<td>' + (s.W   != null ? s.W   : '-') + '</td>' +
+        '<td>' + (s.L   != null ? s.L   : '-') + '</td>' +
+        '<td class="highlight-val">' + (s.ERA != null ? fmt2(s.ERA) : '-') + '</td>' +
+        '<td>' + (s.G   != null ? s.G   : '-') + '</td>' +
+        '<td>' + (s.GS  != null ? s.GS  : '-') + '</td>' +
+        '<td>' + (s.SV  != null ? s.SV  : '-') + '</td>' +
+        '<td>' + (s.IP  != null ? fmtIP(s.IP) : '-') + '</td>' +
+        '<td>' + (s.HA  != null ? s.HA  : '-') + '</td>' +
+        '<td>' + (s.ER  != null ? s.ER  : '-') + '</td>' +
+        '<td>' + (s.BBA != null ? s.BBA : '-') + '</td>' +
+        '<td class="highlight-val">' + (s.KP  != null ? s.KP  : '-') + '</td>' +
+        '<td>' + (s.WP  != null ? s.WP  : '-') + '</td>';
     } else {
       html +=
-        '<td>' + (s.pos  != null ? s.pos  : '—') + '</td>' +
-        '<td>' + (s.G    != null ? s.G    : '—') + '</td>' +
-        '<td>' + (s.AB   != null ? s.AB   : '—') + '</td>' +
-        '<td>' + (s.R    != null ? s.R    : '—') + '</td>' +
-        '<td>' + (s.H    != null ? s.H    : '—') + '</td>' +
-        '<td>' + (s['2B']!= null ? s['2B']: '—') + '</td>' +
-        '<td>' + (s['3B']!= null ? s['3B']: '—') + '</td>' +
-        '<td>' + (s.HR   != null ? s.HR   : '—') + '</td>' +
-        '<td>' + (s.RBI  != null ? s.RBI  : '—') + '</td>' +
-        '<td>' + (s.SB   != null ? s.SB   : '—') + '</td>' +
-        '<td>' + (s.BB   != null ? s.BB   : '—') + '</td>' +
-        '<td>' + (s.SO   != null ? s.SO   : '—') + '</td>' +
-        '<td class="highlight-val">' + (s.AVG != null ? fmt3(s.AVG) : '—') + '</td>' +
-        '<td>' + (s.OBP  != null ? fmt3(s.OBP) : '—') + '</td>' +
-        '<td>' + (s.SLG  != null ? fmt3(s.SLG) : '—') + '</td>' +
-        '<td class="highlight-val">' + (s.OPS  != null ? fmt3(s.OPS) : '—') + '</td>';
+        '<td>' + (s.pos  != null ? s.pos  : '-') + '</td>' +
+        '<td>' + (s.G    != null ? s.G    : '-') + '</td>' +
+        '<td>' + (s.AB   != null ? s.AB   : '-') + '</td>' +
+        '<td>' + (s.R    != null ? s.R    : '-') + '</td>' +
+        '<td>' + (s.H    != null ? s.H    : '-') + '</td>' +
+        '<td>' + (s['2B']!= null ? s['2B']: '-') + '</td>' +
+        '<td>' + (s['3B']!= null ? s['3B']: '-') + '</td>' +
+        '<td>' + (s.HR   != null ? s.HR   : '-') + '</td>' +
+        '<td>' + (s.RBI  != null ? s.RBI  : '-') + '</td>' +
+        '<td>' + (s.SB   != null ? s.SB   : '-') + '</td>' +
+        '<td>' + (s.BB   != null ? s.BB   : '-') + '</td>' +
+        '<td>' + (s.SO   != null ? s.SO   : '-') + '</td>' +
+        '<td class="highlight-val">' + (s.AVG != null ? fmt3(s.AVG) : '-') + '</td>' +
+        '<td>' + (s.OBP  != null ? fmt3(s.OBP) : '-') + '</td>' +
+        '<td>' + (s.SLG  != null ? fmt3(s.SLG) : '-') + '</td>' +
+        '<td class="highlight-val">' + (s.OPS  != null ? fmt3(s.OPS) : '-') + '</td>';
     }
 
     html += '</tr>';
@@ -5162,7 +5162,7 @@ function renderSeasonStats(name, type, sum, pitch) {
   html += '</tbody></table></div></div>';
   return html;
 }
-// ── STRIKE ZONE TAB ───────────────────────────────
+// -- STRIKE ZONE TAB -------------------------------
 function renderZone(name, type, pitch, container, seasonFilter) {
   seasonFilter = seasonFilter || 'all';
   var points = [];
@@ -5226,11 +5226,11 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     return true;
   }
 
-  // ── ZONE DIMENSIONS ──────────────────────────────
+  // -- ZONE DIMENSIONS ------------------------------
   // Strike zone: x from -1 to 1 (width = 2 units)
-  // Strike zone: y from 0 to 1.5 (height = 1.5 units) — taller/slimmer shape
+  // Strike zone: y from 0 to 1.5 (height = 1.5 units) - taller/slimmer shape
   // x = vertical (0=bottom of zone, 1=top), y = horizontal (-1=left, 0=middle, 1=right catcher view)
-  // Canvas toCanvasX maps x→screen-x and toCanvasY maps y→screen-y, so for rendering:
+  // Canvas toCanvasX maps x->screen-x and toCanvasY maps y->screen-y, so for rendering:
   // screen horizontal = x data axis, screen vertical = y data axis (canvas already handles this correctly via toCanvasX/toCanvasY)
   // Zone boundaries: x (horiz on screen) -1..1, y (vert on screen) 0..1
   // BUT actual data: x=vertical, y=horizontal. We keep ZONE constants for canvas rendering unchanged,
@@ -5322,7 +5322,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     '<div class="zone-stat-box"><div class="zone-stat-val" id="zs-chases">' + chases + '</div><div class="zone-stat-lbl">Chases</div></div>' +
     '</div></div></div></div></div>';
 
-  // ── Canvas setup ──────────────────────────────
+  // -- Canvas setup ------------------------------
   var activeResult   = 'all';
   var activeView     = 'scatter';
   var activeType     = 'all';
@@ -5331,7 +5331,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
   var activeSeasonFilter = seasonFilter || 'all';
 
   // SCATTER_BOUNDS: wide view for scatter plot
-  // CLEAN_BOUNDS: zoomed view for grid/heatmap — ratio matches zone aspect (wider than tall in data space)
+  // CLEAN_BOUNDS: zoomed view for grid/heatmap - ratio matches zone aspect (wider than tall in data space)
   var SCATTER_BOUNDS = { xMin:-2.5, xMax:2.5,  yMin:-0.8, yMax:2.2  };
   var CLEAN_BOUNDS   = { xMin:-1.85, xMax:1.85, yMin:-0.85, yMax:1.85 };
   var X_MIN = CLEAN_BOUNDS.xMin, X_MAX = CLEAN_BOUNDS.xMax;
@@ -5362,7 +5362,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
   function fromCanvasX(cx) { return X_MIN + ((cx - PAD_L) / PW) * (X_MAX - X_MIN); }
   function fromCanvasY(cy) { return Y_MIN + (PH - (cy - PAD_T)) / PH * (Y_MAX - Y_MIN); }
 
-  // ── Shared background ─────────────────────────
+  // -- Shared background -------------------------
   function drawBatterSilhouette(facingRight) {
     // Traces the reference silhouette: batter in load/stride position
     // facing toward the zone. Front foot lifted, back foot planted,
@@ -5392,7 +5392,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     ctx.lineCap     = 'round';
     ctx.lineJoin    = 'round';
 
-    // ── Full body silhouette as one filled shape ────
+    // -- Full body silhouette as one filled shape ----
     // Traced in CCW order from back foot, matching reference image pose:
     // back foot planted, front foot lifted/striding toward zone,
     // knees bent deeply, butt out, torso upright-ish, hands at ear, bat back.
@@ -5463,7 +5463,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
 
     ctx.fill();
 
-    // ── Torso / upper body ─────────────────────────
+    // -- Torso / upper body -------------------------
     ctx.beginPath();
     // Waist left (away from zone side)
     ctx.moveTo(p(-0.06, 0.48).x, p(-0.06, 0.48).y);
@@ -5474,7 +5474,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     );
     // Neck
     ctx.lineTo(p( 0.02, 0.82).x, p( 0.02, 0.82).y);
-    // Front shoulder (toward zone, slightly lower — coiled)
+    // Front shoulder (toward zone, slightly lower - coiled)
     ctx.lineTo(p( 0.14, 0.78).x, p( 0.14, 0.78).y);
     // Right side of torso down to waist right
     ctx.quadraticCurveTo(
@@ -5488,7 +5488,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     );
     ctx.fill();
 
-    // ── Head ───────────────────────────────────────
+    // -- Head ---------------------------------------
     var headCx = p( 0.02, 0.90).x;
     var headCy = p( 0.02, 0.90).y;
     var hr2 = scale * 0.085;
@@ -5504,7 +5504,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     ctx.closePath();
     ctx.fill();
 
-    // ── Arms — both hands up near ear, elbow bent ──
+    // -- Arms - both hands up near ear, elbow bent --
     // Hands position: above/behind back shoulder, near ear
     var handX = p(-0.02, 0.98).x;
     var handY = p(-0.02, 0.98).y;
@@ -5529,7 +5529,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     );
     ctx.stroke();
 
-    // ── Bat — from hands, angled back over shoulder ─
+    // -- Bat - from hands, angled back over shoulder -
     var batLen = scale * 0.62;
     var batW   = scale * 0.03;
     ctx.lineWidth = batW;
@@ -5572,7 +5572,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     }
   }
 
-  // ── Strike zone box — uses current active bounds so dots and box align ──
+  // -- Strike zone box - uses current active bounds so dots and box align --
   function drawStrikeZone() {
     function czx(x) { return toCanvasX(x); }
     function czy(y) { return toCanvasY(y); }
@@ -5601,7 +5601,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     }
   }
 
-  // ── Scatter draw ───────────────────────────────
+  // -- Scatter draw -------------------------------
   function drawScatter(filtered) {
     filtered.forEach(function(s) {
       var cx=toCanvasX(s.x), cy=toCanvasY(s.y), color=dotColor(s);
@@ -5615,7 +5615,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     });
   }
 
-  // ── Zone Grid: Savant-style 13 zones ─────────────────────────────
+  // -- Zone Grid: Savant-style 13 zones -----------------------------
   function drawGrid(filtered) {
     var total = filtered.length;
 
@@ -5641,7 +5641,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
       z.pct = total > 0 ? z.count/total*100 : 0;
     });
 
-    // 4 outer shadow zones — Statcast style
+    // 4 outer shadow zones - Statcast style
     // TL: above zone + left of zone (top-left quadrant outside)
     // TR: above zone + right of zone (top-right corner)
     // BL: below zone + left (bottom-left corner)
@@ -5707,15 +5707,15 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     var sqW = zoneW / 3;
     var sqH = zoneH / 3;
 
-    // Outer cell positions — Statcast 13-zone layout:
+    // Outer cell positions - Statcast 13-zone layout:
     // TL: top-left, spans 2/3 of zone width, sits above zone
     // TR: top-right corner only (1/3 wide), sits above zone
     // BL: bottom-left corner only (1/3 wide), sits below zone
     // BR: bottom-right, spans 2/3 of zone width, sits below zone
-    outer[0].px = { x:SX1,        y:SY1-sqH, w:sqW*2, h:sqH };  // TL — wide, above-left
-    outer[1].px = { x:SX1+sqW*2,  y:SY1-sqH, w:sqW,   h:sqH };  // TR — narrow, above-right
-    outer[2].px = { x:SX1,        y:SY2,     w:sqW,   h:sqH };  // BL — narrow, below-left
-    outer[3].px = { x:SX1+sqW,    y:SY2,     w:sqW*2, h:sqH };  // BR — wide, below-right
+    outer[0].px = { x:SX1,        y:SY1-sqH, w:sqW*2, h:sqH };  // TL - wide, above-left
+    outer[1].px = { x:SX1+sqW*2,  y:SY1-sqH, w:sqW,   h:sqH };  // TR - narrow, above-right
+    outer[2].px = { x:SX1,        y:SY2,     w:sqW,   h:sqH };  // BL - narrow, below-left
+    outer[3].px = { x:SX1+sqW,    y:SY2,     w:sqW*2, h:sqH };  // BR - wide, below-right
 
     // Draw outer cells
     outer.forEach(function(z) {
@@ -5767,7 +5767,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     });
   }
 
-  // ── Heat map draw ────────────────────────────────
+  // -- Heat map draw --------------------------------
   function drawHeatmap(filtered) {
     if (!filtered.length) return;
 
@@ -5865,7 +5865,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     ctx.fillText('LO',scaleX+10,scaleY+scaleH);
   }
 
-  // ── Update reactive stat boxes ─────────────────
+  // -- Update reactive stat boxes -----------------
   function updateStats(f) {
     var n    = f.length;
     var iz   = f.filter(xyInZone).length;
@@ -5875,7 +5875,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     var fch  = f.filter(function(s){ return xyOutOfZone(s)&&isChaseSwing(s); }).length;
     var el;
     if ((el=document.getElementById('zs-pitches'))) el.textContent = n;
-    if ((el=document.getElementById('zs-zone')))    el.textContent = n>0 ? fmt1(iz/n*100)+'%' : '—';
+    if ((el=document.getElementById('zs-zone')))    el.textContent = n>0 ? fmt1(iz/n*100)+'%' : '-';
     if ((el=document.getElementById('zs-ks')))      el.textContent = fks;
     if ((el=document.getElementById('zs-hits')))    el.textContent = fh;
     if ((el=document.getElementById('zs-swk')))     el.textContent = fsw;
@@ -5884,7 +5884,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     if (sub) sub.textContent = n + ' pitches plotted';
   }
 
-  // ── Main draw ──────────────────────────────────
+  // -- Main draw ----------------------------------
   function drawZone() {
     ctx.clearRect(0, 0, W * DPR, H * DPR);
     var clean = (activeView === 'grid' || activeView === 'heatmap');
@@ -5923,7 +5923,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
 
   requestAnimationFrame(function() { drawZone(); });
 
-  // ── Tooltip (scatter only) ─────────────────────
+  // -- Tooltip (scatter only) ---------------------
   var tooltip = document.getElementById('zone-tooltip');
 
   canvas.addEventListener('mousemove', function(e) {
@@ -5960,12 +5960,12 @@ function renderZone(name, type, pitch, container, seasonFilter) {
       var dotStyle = 'display:inline-block;width:10px;height:10px;border-radius:50%;background:'+typeColorMap[t]+';margin-right:6px;vertical-align:middle';
       tooltip.innerHTML =
         '<div class="zt-pitch"><span style="'+dotStyle+'"></span>'+t+'</div>'+
-        '<div class="zt-row"><span>Outcome</span><span>'+(best.outcome||'—')+'</span></div>'+
-        '<div class="zt-row"><span>Count</span><span>'+(best.count||'—')+'</span></div>'+
-        '<div class="zt-row"><span>Pitcher</span><span>'+(best.pitcher||'—')+'</span></div>'+
+        '<div class="zt-row"><span>Outcome</span><span>'+(best.outcome||'-')+'</span></div>'+
+        '<div class="zt-row"><span>Count</span><span>'+(best.count||'-')+'</span></div>'+
+        '<div class="zt-row"><span>Pitcher</span><span>'+(best.pitcher||'-')+'</span></div>'+
         (best.contact ? '<div class="zt-row"><span>Contact</span><span>'+best.contact+'</span></div>' : '')+
         (best.spray   ? '<div class="zt-row"><span>Spray</span><span>'+best.spray+'</span></div>' : '')+
-        '<div class="zt-coords">x: '+(best.x!=null?best.x.toFixed(3):'—')+'  y: '+(best.y!=null?best.y.toFixed(3):'—')+'</div>';
+        '<div class="zt-coords">x: '+(best.x!=null?best.x.toFixed(3):'-')+'  y: '+(best.y!=null?best.y.toFixed(3):'-')+'</div>';
       tooltip.classList.remove('hidden');
     } else {
       canvas.style.cursor = 'default';
@@ -5978,7 +5978,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     canvas.style.cursor = 'default';
   });
 
-  // ── Filter buttons ─────────────────────────────
+  // -- Filter buttons -----------------------------
   container.querySelectorAll('#zone-view-btns .zone-filter-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       container.querySelectorAll('#zone-view-btns .zone-filter-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -6019,7 +6019,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
 }
 
 
-// ── SPLITS TAB ────────────────────────────────────
+// -- SPLITS TAB ------------------------------------
 function renderSplits(name, type, pitch, seasonFilter) {
   seasonFilter = seasonFilter || 'all';
   var _splitsYear = seasonFilter.replace('year:', '');
@@ -6045,7 +6045,7 @@ function renderSplits(name, type, pitch, seasonFilter) {
   }
 
   if (!points.length) {
-    return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No split data</h3></div>';
+    return '<div class="empty-state"><div class="empty-state-icon"></div><h3>No split data</h3></div>';
   }
 
   var total = points.length;
@@ -6084,7 +6084,7 @@ function renderSplits(name, type, pitch, seasonFilter) {
 
 function buildSplitsTables(points) {
   var total = points.length;
-  if (!total) return '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No data for this filter</h3></div>';
+  if (!total) return '<div class="empty-state"><div class="empty-state-icon"></div><h3>No data for this filter</h3></div>';
 
   var COUNT_GROUPS = [
     { key: 'all',    label: 'All Counts',    test: function()     { return true; } },
@@ -6114,7 +6114,7 @@ function buildSplitsTables(points) {
       var n = subset.length;
       if (!n) {
         return '<tr><td style="text-align:left;color:var(--text-mid)">' + grp.label + '</td>' +
-          typeSet.map(function() { return '<td style="color:var(--text-dim)">—</td>'; }).join('') +
+          typeSet.map(function() { return '<td style="color:var(--text-dim)">-</td>'; }).join('') +
           '<td>0</td></tr>';
       }
       var tc = {};
@@ -6173,7 +6173,7 @@ function buildSplitsTables(points) {
   return pitchMixHTML + countTableHTML;
 }
 
-// ── TABLE BUILDERS ────────────────────────────────
+// -- TABLE BUILDERS --------------------------------
 function buildHittingTable(players) {
   const sorted = players.slice().sort(function(a,b){ return a.batter.localeCompare(b.batter); });
   const rows = sorted.map(function(p) {
@@ -6185,7 +6185,7 @@ function buildHittingTable(players) {
       var yr = _activeSeason.replace('year:', '');
       var iblS = (DATA.iblHistory[p.batter] || []).find(function(s){ return (s.season||'').indexOf(yr)!==-1; });
       if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
-      return '—';
+      return '-';
     })());
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + p.batter + '" data-type="batter">' + p.batter + '</a></td>' +
@@ -6203,7 +6203,7 @@ function buildPbpPitcherTable(pitchers) {
     const team = resolveTeam(p.pitcher_team);
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + p.pitcher + '" data-type="pitcher">' + p.pitcher + '</a></td>' +
-      '<td>' + (team ? team.abbreviation : '—') + '</td>' +
+      '<td>' + (team ? team.abbreviation : '-') + '</td>' +
       '</tr>';
   }).join('');
   return '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
@@ -6227,7 +6227,7 @@ function buildPitcherListTable(names) {
       var yr = _activeSeason.replace('year:', '');
       var iblS = (DATA.iblHistory[name] || []).find(function(s){ return (s.season||'').indexOf(yr)!==-1; });
       if (iblS && iblS.team) { var t2 = resolveTeam(iblS.team); return t2 ? t2.abbreviation : iblS.team; }
-      return '—';
+      return '-';
     })());
     return '<tr>' +
       '<td><a class="player-name-cell" data-name="' + name + '" data-type="pitcher">' + name + '</a></td>' +
@@ -6239,7 +6239,7 @@ function buildPitcherListTable(names) {
     '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
 
-// ── SORT + LINKS ──────────────────────────────────
+// -- SORT + LINKS ----------------------------------
 function initTableSort(table) {
   if (!table) return;
   const headers = table.querySelectorAll('th');
@@ -6288,7 +6288,7 @@ function initPlayerLinks(container, type) {
   });
 }
 
-// ── NOTES TAB ─────────────────────────────────────
+// -- NOTES TAB -------------------------------------
 function renderNotes(playerName, container) {
   var user = AUTH._user || {};
   var storageKey = 'notes:' + playerName.toLowerCase().replace(/\s+/g, '_');
@@ -6327,7 +6327,7 @@ function renderNotes(playerName, container) {
           '</div>' +
         '</div>' +
         (n.author === (user.name || user.email)
-          ? '<button data-idx="' + i + '" class="note-delete-btn" style="background:transparent;border:none;color:rgba(220,80,80,0.5);font-size:16px;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0" title="Delete">×</button>'
+          ? '<button data-idx="' + i + '" class="note-delete-btn" style="background:transparent;border:none;color:rgba(220,80,80,0.5);font-size:16px;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0" title="Delete">x</button>'
           : '') +
       '</div>';
     }).join('');
