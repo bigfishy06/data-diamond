@@ -618,9 +618,6 @@
     ctx.beginPath();ctx.moveTo(px(-1),yi);ctx.lineTo(px(1),yi);ctx.stroke();
     ctx.strokeStyle='rgba(255,184,28,0.9)';ctx.lineWidth=2.5;
     ctx.strokeRect(px(-1),py(1),px(1)-px(-1),py(0)-py(1));
-    ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(255,184,28,0.75)';
-    ctx.textAlign='center';ctx.textBaseline='bottom';
-    ctx.fillText("FROM A PITCHER'S POV",(px(-1)+px(1))/2,py(1)-6);ctx.restore();
     var PC={'Fastball':'#f87171','Breaking Ball':'#60a5fa','Offspeed':'#a78bfa',
       'Changeup':'#34d399','Curveball':'#fb923c','Slider':'#facc15','Cutter':'#f472b6','Sinker':'#22d3ee'};
     var FL=['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15'];
@@ -659,16 +656,14 @@
       ctx.fillText(xp(cell.cnt,tot).toFixed(1)+'%',(px(cell.x1)+px(cell.x2))/2,(py(cell.y1)+py(cell.y2))/2);
     });
     ctx.strokeStyle='rgba(255,184,28,0.9)';ctx.lineWidth=2.5;ctx.strokeRect(px(-1),py(1),px(1)-px(-1),py(0)-py(1));
-    ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(255,184,28,0.75)';
-    ctx.textAlign='center';ctx.textBaseline='bottom';
-    ctx.fillText("FROM A PITCHER'S POV",(px(-1)+px(1))/2,py(1)-4);ctx.restore();
     return c.toDataURL('image/png');
   }
   function mkHeat(sc,perspective){
     perspective=perspective||'PITCHER';
-    var W=360,H=414,PD=20,c=document.createElement('canvas');c.width=W;c.height=H;
+    // Use tight padding so the zone fills the canvas and nothing is clipped.
+    var W=360,H=360,PD=16,c=document.createElement('canvas');c.width=W;c.height=H;
     var ctx=c.getContext('2d');ctx.fillStyle='#0e1525';ctx.fillRect(0,0,W,H);
-    var GW=60,GH=70,SIG=4,xmn=-2.5,xmx=2.5,ymn=-0.8,ymx=1.5;
+    var GW=60,GH=60,SIG=4,xmn=-2.5,xmx=2.5,ymn=-0.8,ymx=1.5;
     var den=new Float32Array(GW*GH);
     sc.forEach(function(s){
       if(s.x==null||s.y==null)return;
@@ -701,22 +696,26 @@
     function px3(x){var v=perspective==='BATTER'?-x:x;return PD+((v-xmn)/(xmx-xmn))*(W-PD*2);}
     function py3(y){return H-PD-((y-ymn)/(ymx-ymn))*(H-PD*2);}
     var zLeft=Math.min(px3(-1),px3(1)),zRight=Math.max(px3(-1),px3(1));
+    // Strike zone box only — no text label
     ctx.strokeStyle='rgba(255,184,28,0.9)';ctx.lineWidth=2.5;ctx.strokeRect(zLeft,py3(1),zRight-zLeft,py3(0)-py3(1));
-    ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(255,184,28,0.75)';
-    ctx.textAlign='center';ctx.textBaseline='bottom';
-    ctx.fillText("FROM A "+perspective+"'S POV",(zLeft+zRight)/2,py3(1)-4);ctx.restore();
     return c.toDataURL('image/png');
   }
   function addCharts(d,sc,y){
-    var iw=58,ih=66,gap=(CPW-iw*3)/2;
-    d.addImage(mkScatter(sc),'PNG',ML,y,iw,ih);
-    d.addImage(mkGrid(sc),'PNG',ML+iw+gap,y,iw,ih);
-    d.addImage(mkHeat(sc),'PNG',ML+(iw+gap)*2,y,iw,ih);
+    var gap=8;
+    var rightW=Math.floor(CPW*0.55); // dominant heat map ~102mm
+    var leftW=CPW-rightW-gap;        // two small charts stacked on left
+    var bigH=rightW;                 // square heat map (1:1 canvas)
+    var smallH=Math.round(bigH/2)-3; // each small chart, stacked with 4mm gap
+    // Left column: scatter (top) + grid (bottom)
+    d.addImage(mkScatter(sc),'PNG',ML,y,leftW,smallH);
+    d.addImage(mkGrid(sc),'PNG',ML,y+smallH+4,leftW,smallH);
+    // Right column: large heat map
+    d.addImage(mkHeat(sc),'PNG',ML+leftW+gap,y,rightW,bigH);
     d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
-    d.text('Scatter',ML+iw/2,y+ih+3,{align:'center'});
-    d.text('Zone Grid',ML+iw+gap+iw/2,y+ih+3,{align:'center'});
-    d.text('Heat Map',ML+(iw+gap)*2+iw/2,y+ih+3,{align:'center'});
-    return y+ih+8;
+    d.text('Scatter',ML+leftW/2,y+smallH+3,{align:'center'});
+    d.text('Zone Grid',ML+leftW/2,y+smallH+4+smallH+3,{align:'center'});
+    d.text('Heat Map',ML+leftW+gap+rightW/2,y+bigH+3,{align:'center'});
+    return y+bigH+8;
   }
 
   function genBatterPDF(player, team) {
@@ -813,10 +812,10 @@
     // Dynamically size heat maps to fill exactly the remaining page space.
     // Budget: splitLabel(5) + splitStats(20) + ih + caption(4) + footer(10) must fit in PH - y.
     var ihMax = PH - y - 5 - 20 - 4 - 10;
-    // Also cap at a reasonable maximum (CPW/2 * 1.15) and enforce a minimum of 40mm
-    var ihCap = Math.round((CPW/2-4)*1.15);
+    // mkHeat canvas is now square (360x360), so iw == ih. Cap at (CPW/2 - 4).
+    var ihCap = CPW/2 - 4;
     var ih = Math.max(40, Math.min(ihCap, ihMax));
-    var iw = Math.round(ih / 1.15);
+    var iw = ih; // square
     splitData.forEach(function(sd2,i){
       if(!sd2.sub.length)return;
       var xOff=ML+i*(iw+gap);
