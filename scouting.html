@@ -289,7 +289,7 @@
       font-size: 8px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: #FFB81C;
+      color: #1e3c78;
       margin-bottom: 6px;
     }
     .cheat-stat-row {
@@ -415,8 +415,8 @@
       <div style="overflow-x:auto">
         <div id="fielder-card-wrap" style="
           width:5in; min-height:3in;
-          background:#0e1525;
-          border:1.5px solid rgba(255,184,28,0.45);
+          background:#ffffff;
+          border:1.5px solid rgba(30,60,120,0.4);
           border-radius:4px;
           padding:8px 12px;
           font-family:'DM Mono',monospace;
@@ -431,7 +431,7 @@
             display:flex;justify-content:space-between;align-items:center;
           ">
             <span id="fielder-card-team-name">TEAM</span>
-            <span style="font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:1px">DATA DIAMOND — FIELDER CHEAT SHEET</span>
+            <span style="font-size:8px;color:rgba(30,60,120,0.4);letter-spacing:1px">DATA DIAMOND — FIELDER CHEAT SHEET</span>
           </div>
           <table id="fielder-card-table" style="width:100%;border-collapse:collapse;font-size:8px;"></table>
         </div>
@@ -1378,8 +1378,16 @@ Zane Skansi,Kitchener Panthers`;
   var jsPDFLib = window.jspdf;
   var PW=210,PH=297,ML=12,MT=12,CPW=210-24;
   function rgb(r,g,b){return[r,g,b];}
-  var CO={navy:rgb(14,21,37),navy2:rgb(21,31,53),navy3:rgb(28,42,69),
-    gold:rgb(255,184,28),white:rgb(255,255,255),dim:rgb(107,122,154),light:rgb(168,180,204)};
+  // Printer-friendly palette: white background, dark text, minimal yellow
+  var CO={
+    navy:rgb(255,255,255),      // page background → white
+    navy2:rgb(240,242,246),     // card background → light grey
+    navy3:rgb(228,232,238),     // alternate row → slightly darker grey
+    gold:rgb(30,60,120),        // accent (was gold) → dark navy blue (readable on white)
+    white:rgb(20,30,50),        // "white" text → now dark navy
+    dim:rgb(80,90,110),         // dim text → medium grey-blue
+    light:rgb(60,75,100)        // light text → darker for readability
+  };
   function sf(d,c){d.setFillColor(c[0],c[1],c[2]);}
   function st(d,c){d.setTextColor(c[0],c[1],c[2]);}
   function sd(d,c){d.setDrawColor(c[0],c[1],c[2]);}
@@ -1400,7 +1408,7 @@ Zane Skansi,Kitchener Panthers`;
     return !xyInZone(s);
   }
 
-  function drawBg(d){sf(d,CO.navy);d.rect(0,0,PW,PH,'F');sf(d,CO.gold);d.rect(0,0,PW,1.2,'F');}
+  function drawBg(d){sf(d,CO.navy);d.rect(0,0,PW,PH,'F');d.setFillColor(30,60,120);d.rect(0,0,PW,1.2,'F');}
   function drawLogoImg(d, lx, ly, size) {
     var px=8, sz=Math.round(size*px);
     var can=document.createElement('canvas'); can.width=sz; can.height=sz;
@@ -1408,19 +1416,19 @@ Zane Skansi,Kitchener Panthers`;
     var cx=sz/2, cy=sz/2, R=(size*0.45)*px, r=(size*0.27)*px, dot=(size*0.1)*px;
     // Outer diamond
     ctx.beginPath(); ctx.moveTo(cx,cy-R); ctx.lineTo(cx+R,cy); ctx.lineTo(cx,cy+R); ctx.lineTo(cx-R,cy); ctx.closePath();
-    ctx.strokeStyle='#FFB81C'; ctx.lineWidth=2.5*px/8; ctx.stroke();
+    ctx.strokeStyle='#1e3c78'; ctx.lineWidth=2.5*px/8; ctx.stroke();
     // Inner diamond fill
     ctx.beginPath(); ctx.moveTo(cx,cy-r); ctx.lineTo(cx+r,cy); ctx.lineTo(cx,cy+r); ctx.lineTo(cx-r,cy); ctx.closePath();
-    ctx.fillStyle='rgba(255,184,28,0.15)'; ctx.fill();
-    ctx.strokeStyle='#FFB81C'; ctx.lineWidth=1.5*px/8; ctx.stroke();
+    ctx.fillStyle='rgba(30,60,120,0.12)'; ctx.fill();
+    ctx.strokeStyle='#1e3c78'; ctx.lineWidth=1.5*px/8; ctx.stroke();
     // Center dot
     ctx.beginPath(); ctx.arc(cx,cy,dot,0,2*Math.PI);
-    ctx.fillStyle='#FFB81C'; ctx.fill();
+    ctx.fillStyle='#1e3c78'; ctx.fill();
     d.addImage(can.toDataURL('image/png'),'PNG',lx-size/2,ly-size/2,size,size);
   }
 
   function drawHdr(d,name,role,team,hand){
-    var tc=hx(team.color==='#888888'?'#666666':team.color);
+    var tc=hx(team.color==='#888888'?'#334466':team.color);
     sf(d,CO.navy2);d.roundedRect(ML,MT,CPW,26,3,3,'F');
     d.setFillColor(tc[0],tc[1],tc[2]);d.roundedRect(ML,MT,4,26,2,2,'F');
     // Team abbr
@@ -1432,25 +1440,23 @@ Zane Skansi,Kitchener Panthers`;
     if(hand){
       var nameW=d.getTextWidth(name.toUpperCase());
       var handPrefix=role==='PITCHER'?'Throws ':'Bats ';
-      d.setFont('helvetica','bold');d.setFontSize(7.5);st(d,CO.gold);
+      d.setFont('helvetica','bold');d.setFontSize(7.5);d.setTextColor(tc[0],tc[1],tc[2]);
       d.text(handPrefix+hand,ML+40+nameW,MT+12.5);
     }
-    d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
+    d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.dim);
     d.text(role+'  •  '+team.name+'  •  CBL '+selSeason,ML+38,MT+21);
-    // Logo — top right, matching website style (diamond left, text right, right-aligned in header)
+    // Logo — top right
     var logoSize=16, ly=MT+13;
-    // right edge of content area
     var rightEdge=ML+CPW-2;
-    // text block: "Data" + "Diamond" stacked, estimate ~16mm wide at fontSize 9
     var txtW=16, gap=2;
     var lx=rightEdge-txtW-gap-logoSize/2;
     drawLogoImg(d, lx, ly, logoSize);
     var txLeft=lx+logoSize/2+gap;
     d.setFont('helvetica','bold'); d.setFontSize(9); st(d,CO.white);
     d.text('Data', txLeft, ly-2);
-    d.setFont('helvetica','bold'); d.setFontSize(9); st(d,CO.gold);
+    d.setFont('helvetica','bold'); d.setFontSize(9); d.setTextColor(tc[0],tc[1],tc[2]);
     d.text('Diamond', txLeft, ly+6);
-    sd(d,CO.gold);d.setLineWidth(0.4);d.line(ML,MT+27,ML+CPW,MT+27);
+    d.setDrawColor(tc[0],tc[1],tc[2]);d.setLineWidth(0.4);d.line(ML,MT+27,ML+CPW,MT+27);
   }
   function drawBoxes(d,stats,y){
     var bw=CPW/stats.length;
@@ -1467,7 +1473,7 @@ Zane Skansi,Kitchener Panthers`;
   function drawSec(d,text,y){
     d.setFont('helvetica','bold');d.setFontSize(7.5);st(d,CO.gold);
     d.text(text.toUpperCase(),ML,y);
-    sd(d,CO.navy3);d.setLineWidth(0.3);d.line(ML,y+2,ML+CPW,y+2);
+    sd(d,CO.navy3);d.setLineWidth(0.5);d.line(ML,y+2,ML+CPW,y+2);
     return y+7;
   }
   function flipLR(s){
@@ -1478,11 +1484,11 @@ Zane Skansi,Kitchener Panthers`;
   function drawAttackZone(d,x,y,w,h,region,color,perspective){
     var zr=parseInt(color.slice(1,3),16)||96,zg=parseInt(color.slice(3,5),16)||165,zb=parseInt(color.slice(5,7),16)||250;
     var zx=x+w*0.22,zy=y+h*0.12,zw=w*0.56,zh=h*0.76;
-    d.setFillColor(8,13,27);d.rect(x,y,w,h,'F');
-    d.setDrawColor(55,65,90);d.setLineWidth(0.25);d.rect(x,y,w,h,'S');
+    d.setFillColor(240,242,246);d.rect(x,y,w,h,'F');
+    d.setDrawColor(180,190,210);d.setLineWidth(0.25);d.rect(x,y,w,h,'S');
     if(region&&region.out){
       d.setFillColor(zr,zg,zb);d.rect(x+1.5,y+1.5,w-3,h-3,'F');
-      d.setFillColor(8,13,27);d.rect(zx,zy,zw,zh,'F');
+      d.setFillColor(255,255,255);d.rect(zx,zy,zw,zh,'F');
     } else if(region){
       // Mirror horizontal axis for batter's POV: pitcher's left = batter's right
       var _rh=region.h||'all';
@@ -1496,20 +1502,20 @@ Zane Skansi,Kitchener Panthers`;
       var hh=_rv==='all'?zh:zh/3;
       d.setFillColor(zr,zg,zb);d.rect(hx,hy,hw,hh,'F');
     }
-    d.setDrawColor(255,184,28);d.setLineWidth(0.45);d.rect(zx,zy,zw,zh,'S');
-    d.setDrawColor(255,184,28);d.setLineWidth(0.18);
+    d.setDrawColor(30,60,120);d.setLineWidth(0.45);d.rect(zx,zy,zw,zh,'S');
+    d.setDrawColor(30,60,120);d.setLineWidth(0.18);
     d.line(zx+zw/3,zy,zx+zw/3,zy+zh);d.line(zx+2*zw/3,zy,zx+2*zw/3,zy+zh);
     d.line(zx,zy+zh/3,zx+zw,zy+zh/3);d.line(zx,zy+2*zh/3,zx+zw,zy+2*zh/3);
     if(perspective){
-      d.setFont('helvetica','bold');d.setFontSize(3.2);st(d,CO.dim);
+      d.setFont('helvetica','bold');d.setFontSize(3.2);d.setTextColor(30,60,120);
       d.text('FROM A '+perspective+"'S POV",x+w/2,y+3.5,{align:'center'});
     }
   }
   function drawTbl(d,headers,rows,colW,y,hlCols){
     hlCols=hlCols||[];
     var rh=7,hh=8,tw=colW.reduce(function(a,b){return a+b;},0);
-    sf(d,CO.navy2);d.rect(ML,y,tw,hh,'F');
-    sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+hh,ML+tw,y+hh);
+    sf(d,CO.navy3);d.rect(ML,y,tw,hh,'F');
+    sd(d,CO.gold);d.setLineWidth(0.5);d.line(ML,y+hh,ML+tw,y+hh);
     d.setFont('helvetica','bold');d.setFontSize(6.5);st(d,CO.gold);
     var cx=ML;
     headers.forEach(function(h,i){d.text(h,cx+colW[i]/2,y+5.5,{align:'center'});cx+=colW[i];});
@@ -1520,50 +1526,46 @@ Zane Skansi,Kitchener Panthers`;
       row.forEach(function(cell,ci){
         var hl=hlCols.includes(ci);
         d.setFont('helvetica',hl?'bold':'normal');d.setFontSize(6.5);
-        st(d,hl?CO.white:CO.light);
+        st(d,hl?CO.white:CO.dim);
         d.text(String(cell),cx+colW[ci]/2,ry+4.8,{align:'center'});cx+=colW[ci];
       });
     });
-    sd(d,CO.navy3);d.setLineWidth(0.2);d.rect(ML,y,tw,hh+rows.length*rh,'S');
+    sd(d,CO.navy3);d.setLineWidth(0.4);d.rect(ML,y,tw,hh+rows.length*rh,'S');
     return y+hh+rows.length*rh+3;
   }
   function drawFoot(d,name,role){
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.dim);
-    d.text('Data Diamond  �  CBL Scouting Report '+selSeason,ML,PH-6);
+    d.text('Data Diamond  •  CBL Scouting Report '+selSeason,ML,PH-6);
     d.text(name+'  •  '+role,ML+CPW,PH-6,{align:'right'});
-    sf(d,CO.gold);d.rect(0,PH-1.5,PW,1.5,'F');
+    d.setFillColor(30,60,120);d.rect(0,PH-1.5,PW,1.5,'F');
   }
 
   function mkScatter(sc,perspective){
-    // Coordinate system matches main.js exactly:
-    // s.x = horizontal (left/right), s.y = vertical (bottom/top)
-    // PITCHER'S POV: positive s.x = pitcher's right (rendered right on canvas)
-    // BATTER'S POV:  flip s.x so pitcher's right appears on batter's left
     perspective=perspective||'PITCHER';
     var W=400,H=460,PD=30,c=document.createElement('canvas');c.width=W;c.height=H;
     var ctx=c.getContext('2d');
     var xmn=-2.5,xmx=2.5,ymn=-0.8,ymx=2.2;
     function cx(x){ var v=perspective==='BATTER'?-x:x; return PD+((v-xmn)/(xmx-xmn))*(W-PD*2); }
     function cy(y){ return H-PD-((y-ymn)/(ymx-ymn))*(H-PD*2); }
-    ctx.fillStyle='#0e1525';ctx.fillRect(0,0,W,H);
-    ctx.strokeStyle='rgba(255,184,28,0.07)';ctx.lineWidth=1;
+    ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='rgba(30,60,120,0.12)';ctx.lineWidth=1;
     [-2,-1,0,1,2].forEach(function(v){ctx.beginPath();ctx.moveTo(cx(v),PD);ctx.lineTo(cx(v),H-PD);ctx.stroke();});
     [-0.5,0,0.5,1,1.5].forEach(function(v){ctx.beginPath();ctx.moveTo(PD,cy(v));ctx.lineTo(W-PD,cy(v));ctx.stroke();});
     var zL=Math.min(cx(-1),cx(1)),zR=Math.max(cx(-1),cx(1));
-    ctx.fillStyle='rgba(255,184,28,0.04)';ctx.fillRect(zL,cy(1),zR-zL,cy(0)-cy(1));
-    ctx.strokeStyle='rgba(255,184,28,0.85)';ctx.lineWidth=2;ctx.strokeRect(zL,cy(1),zR-zL,cy(0)-cy(1));
-    ctx.strokeStyle='rgba(255,184,28,0.25)';ctx.lineWidth=0.8;
+    ctx.fillStyle='rgba(30,60,120,0.05)';ctx.fillRect(zL,cy(1),zR-zL,cy(0)-cy(1));
+    ctx.strokeStyle='rgba(30,60,120,0.7)';ctx.lineWidth=2;ctx.strokeRect(zL,cy(1),zR-zL,cy(0)-cy(1));
+    ctx.strokeStyle='rgba(30,60,120,0.2)';ctx.lineWidth=0.8;
     for(var i=1;i<3;i++){
       var xi=zL+i*(zR-zL)/3,yi=cy(1)+i*(cy(0)-cy(1))/3;
       ctx.beginPath();ctx.moveTo(xi,cy(1));ctx.lineTo(xi,cy(0));ctx.stroke();
       ctx.beginPath();ctx.moveTo(zL,yi);ctx.lineTo(zR,yi);ctx.stroke();
     }
-    ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(255,184,28,0.75)';
+    ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(30,60,120,0.6)';
     ctx.textAlign='center';ctx.textBaseline='bottom';
     ctx.fillText("FROM A "+perspective+"'S POV",(zL+zR)/2,cy(1)-6);ctx.restore();
-    var PC={'Fastball':'#f87171','Breaking Ball':'#60a5fa','Offspeed':'#a78bfa',
-      'Changeup':'#34d399','Curveball':'#fb923c','Slider':'#facc15','Cutter':'#f472b6','Sinker':'#22d3ee'};
-    var FL=['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15'];
+    var PC={'Fastball':'#c0392b','Breaking Ball':'#2471a3','Offspeed':'#6c3483',
+      'Changeup':'#1a7a4a','Curveball':'#c0732b','Slider':'#b7950b','Cutter':'#a93266','Sinker':'#148080'};
+    var FL=['#c0392b','#2471a3','#6c3483','#1a7a4a','#c0732b','#b7950b'];
     var ti={},tc=0;
     sc.forEach(function(s){
       if(!hasPitchLocation(s))return;
@@ -1571,7 +1573,7 @@ Zane Skansi,Kitchener Panthers`;
       if(!(pt in ti))ti[pt]=tc++;
       var col=PC[pt]||FL[ti[pt]%FL.length];
       ctx.beginPath();ctx.arc(cx(Number(s.x)),cy(Number(s.y)),5,0,Math.PI*2);
-      ctx.fillStyle=col+'bb';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=0.8;ctx.stroke();
+      ctx.fillStyle=col+'cc';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=0.8;ctx.stroke();
     });
     return c.toDataURL('image/png');
   }
@@ -1580,7 +1582,7 @@ Zane Skansi,Kitchener Panthers`;
     // PITCHER POV: positive s.x = pitcher's right. BATTER POV: flip s.x.
     perspective=perspective||'PITCHER';
     var W=360,H=360,PD=20,c=document.createElement('canvas');c.width=W;c.height=H;
-    var ctx=c.getContext('2d');ctx.fillStyle='#0e1525';ctx.fillRect(0,0,W,H);
+    var ctx=c.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);
     var pts=sc.filter(hasPitchLocation),tot=pts.length;if(!tot)return c.toDataURL('image/png');
     function cpx(x){var v=perspective==='BATTER'?-x:x;return PD+((v+1)/2)*(W-PD*2);}
     function cpy(y){return H-PD-y*(H-PD*2);}
@@ -1595,17 +1597,18 @@ Zane Skansi,Kitchener Panthers`;
     }
     var mx=Math.max.apply(null,cells.map(function(c){return c.cnt;}))||1;
     cells.forEach(function(cell){
-      var t=cell.cnt/mx,r=Math.round(96+(255-96)*t),g=Math.round(165+(184-165)*t),b=Math.round(250+(28-250)*t);
-      ctx.fillStyle=cell.cnt===0?'rgba(255,184,28,0.05)':'rgba('+r+','+g+','+b+','+(0.3+0.65*t)+')';
-      ctx.fillRect(cpx(cell.x1),cpy(cell.y2),cpx(cell.x2)-cpx(cell.x1),cpy(cell.y1)-cpy(cell.y2));
-      ctx.strokeStyle='rgba(255,184,28,0.45)';ctx.lineWidth=1.5;
-      ctx.strokeRect(cpx(cell.x1),cpy(cell.y2),cpx(cell.x2)-cpx(cell.x1),cpy(cell.y1)-cpy(cell.y2));
-      ctx.fillStyle='rgba(255,255,255,0.85)';ctx.font='bold 18px monospace';
+      var t=cell.cnt/mx;var baseR=220,baseG=230,baseB=248,hiR=40,hiG=70,hiB=170;
+      ctx.fillStyle=cell.cnt===0?'rgba(30,60,120,0.04)':'rgba('+(Math.round(baseR+(hiR-baseR)*t))+','+(Math.round(baseG+(hiG-baseG)*t))+','+(Math.round(baseB+(hiB-baseB)*t))+','+(0.25+0.70*t)+')';
+      ctx.fillStyle=cell.cnt===0?'rgba(30,60,120,0.04)':'rgba('+(Math.round(baseR+(hiR-baseR)*t))+','+(Math.round(baseG+(hiG-baseG)*t))+','+(Math.round(baseB+(hiB-baseB)*t))+','+(0.25+0.70*t)+')';
+      ctx.strokeStyle='rgba(30,60,120,0.4)';ctx.lineWidth=1.5;
+      ctx.strokeStyle='rgba(30,60,120,0.4)';ctx.lineWidth=1.5;
+      ctx.fillStyle='rgba(15,25,55,0.92)';ctx.font='bold 18px monospace';
+      ctx.fillStyle='rgba(15,25,55,0.92)';ctx.font='bold 18px monospace';
       ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText(xp(cell.cnt,tot).toFixed(1)+'%',(cpx(cell.x1)+cpx(cell.x2))/2,(cpy(cell.y1)+cpy(cell.y2))/2);
-    });
-    ctx.strokeStyle='rgba(255,184,28,0.9)';ctx.lineWidth=2.5;ctx.strokeRect(cpx(-1),cpy(1),cpx(1)-cpx(-1),cpy(0)-cpy(1));
-    ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(255,184,28,0.75)';
+    ctx.strokeStyle='rgba(30,60,120,0.9)';ctx.lineWidth=2.5;ctx.strokeRect(cpx(-1),cpy(1),cpx(1)-cpx(-1),cpy(0)-cpy(1));
+    ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(30,60,120,0.65)';
+    ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(30,60,120,0.65)';
     ctx.textAlign='center';ctx.textBaseline='bottom';
     ctx.fillText("FROM A "+perspective+"'S POV",(cpx(-1)+cpx(1))/2,cpy(1)-4);ctx.restore();
     return c.toDataURL('image/png');
@@ -1614,8 +1617,8 @@ Zane Skansi,Kitchener Panthers`;
     // s.x=horizontal(left/right), s.y=vertical(bottom/top) — matches main.js drawKdeHeatmap exactly
     // PITCHER POV: positive s.x = pitcher's right. BATTER POV: flip s.x.
     perspective=perspective||'PITCHER';
-    var W=360,H=414,PD=20,c=document.createElement('canvas');c.width=W;c.height=H;
-    var ctx=c.getContext('2d');ctx.fillStyle='#0e1525';ctx.fillRect(0,0,W,H);
+    var ctx=c.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);
+    var ctx=c.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);
     var GW=200,GH=200,SIG=12;
     var xmn=-1.85,xmx=1.85,ymn=-0.85,ymx=1.85;
     var den=new Float32Array(GW*GH);
@@ -1667,16 +1670,16 @@ Zane Skansi,Kitchener Panthers`;
     function cpy3(y){return PD+PH-((y-ymn)/(ymx-ymn))*PH;}
     // Strike zone box — use min/max so width is always positive regardless of flip
     var zLeft=Math.min(cpx3(-1),cpx3(1)),zRight=Math.max(cpx3(-1),cpx3(1));
-    ctx.strokeStyle='rgba(255,184,28,0.9)';ctx.lineWidth=2.5;
+    ctx.strokeStyle='rgba(30,60,120,0.9)';ctx.lineWidth=2.5;
     ctx.strokeRect(zLeft,cpy3(1),zRight-zLeft,cpy3(0)-cpy3(1));
     // Inner 3x3 dividers
-    ctx.strokeStyle='rgba(255,184,28,0.25)';ctx.lineWidth=0.8;
+    ctx.strokeStyle='rgba(30,60,120,0.2)';ctx.lineWidth=0.8;
     for(var di=1;di<3;di++){
       var xi3=zLeft+di*(zRight-zLeft)/3,yi3=cpy3(1)+di*(cpy3(0)-cpy3(1))/3;
       ctx.beginPath();ctx.moveTo(xi3,cpy3(1));ctx.lineTo(xi3,cpy3(0));ctx.stroke();
       ctx.beginPath();ctx.moveTo(zLeft,yi3);ctx.lineTo(zRight,yi3);ctx.stroke();
     }
-    ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(255,184,28,0.75)';
+    ctx.save();ctx.font='bold 14px DM Mono,monospace';ctx.fillStyle='rgba(30,60,120,0.65)';
     ctx.textAlign='center';ctx.textBaseline='bottom';
     ctx.fillText("FROM A "+perspective+"'S POV",(zLeft+zRight)/2,cpy3(1)-4);ctx.restore();
     return c.toDataURL('image/png');
@@ -1684,7 +1687,7 @@ Zane Skansi,Kitchener Panthers`;
   function mkDonut(segs, title) {
     var W=320,H=320,c=document.createElement('canvas');c.width=W;c.height=H;
     var ctx=c.getContext('2d'),cx=W/2,cy=H/2,R=120,r=68;
-    ctx.fillStyle='#0e1525';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);
     var startA=-Math.PI/2;
     segs.forEach(function(seg){
       var sweep=(seg.pct/100)*2*Math.PI,endA=startA+sweep;
@@ -1694,13 +1697,13 @@ Zane Skansi,Kitchener Panthers`;
       // Percentage label inside slice
       if(seg.pct>=6){
         var midA=startA+sweep/2,lR=(R+r)/2;
-        ctx.fillStyle='#0e1525';ctx.font='bold 18px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillStyle='rgba(15,25,55,0.95)';ctx.font='bold 18px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
         ctx.fillText(Math.round(seg.pct)+'%',cx+lR*Math.cos(midA),cy+lR*Math.sin(midA));
       }
       startA=endA;
     });
     // Center label
-    ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='bold 20px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle='rgba(40,60,100,0.5)';ctx.font='bold 20px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(title,cx,cy);
     return c.toDataURL('image/png');
   }
@@ -1708,7 +1711,7 @@ Zane Skansi,Kitchener Panthers`;
   function mkSprayField(pullPct, strPct, oppPct, batterSide) {
     var W=480,H=420,c=document.createElement('canvas');c.width=W;c.height=H;
     var ctx=c.getContext('2d');
-    ctx.fillStyle='#0e1525';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);
 
     var hx=W/2, hy=H-20;
     var fieldR=H-55;
@@ -1724,9 +1727,9 @@ Zane Skansi,Kitchener Panthers`;
     ctx.moveTo(hx, hy);
     ctx.arc(hx, hy, fieldR, lfAngle, rfAngle);
     ctx.closePath();
-    ctx.fillStyle='rgba(34,197,94,0.07)';
+    ctx.fillStyle='rgba(34,197,94,0.10)';
     ctx.fill();
-    ctx.strokeStyle='rgba(34,197,94,0.4)';ctx.lineWidth=2;
+    ctx.strokeStyle='rgba(34,197,94,0.5)';ctx.lineWidth=2;
     ctx.stroke();
     ctx.restore();
 
@@ -1784,7 +1787,7 @@ Zane Skansi,Kitchener Panthers`;
 
     // Infield diamond
     var base = Math.min(85, fieldR * 0.22);
-    ctx.strokeStyle='rgba(255,255,255,0.55)';ctx.lineWidth=2;
+    ctx.strokeStyle='rgba(40,70,130,0.6)';ctx.lineWidth=2;
     ctx.beginPath();
     ctx.moveTo(hx, hy);
     ctx.lineTo(hx - base, hy - base);
@@ -1792,7 +1795,7 @@ Zane Skansi,Kitchener Panthers`;
     ctx.lineTo(hx + base, hy - base);
     ctx.closePath();
     ctx.stroke();
-    ctx.fillStyle='rgba(255,255,255,0.06)';ctx.fill();
+    ctx.fillStyle='rgba(40,70,130,0.05)';ctx.fill();
 
     // Bases
     [[hx,hy],[hx-base,hy-base],[hx,hy-base*2],[hx+base,hy-base]].forEach(function(pt){
@@ -1801,7 +1804,7 @@ Zane Skansi,Kitchener Panthers`;
     });
 
     // Direction labels (positioned inside field)
-    ctx.font='12px monospace';ctx.textAlign='center';ctx.fillStyle='rgba(255,255,255,0.4)';
+    ctx.font='12px monospace';ctx.textAlign='center';ctx.fillStyle='rgba(30,60,120,0.5)';
     var cfA = (lfAngle+rfAngle)/2;
     ctx.fillText('CF', hx+fieldR*0.82*Math.cos(cfA), hy+fieldR*0.82*Math.sin(cfA));
     ctx.fillText(isLHH?'RF':'LF', hx+fieldR*0.75*Math.cos(lfAngle+totalAng*0.1), hy+fieldR*0.75*Math.sin(lfAngle+totalAng*0.1));
@@ -2603,7 +2606,7 @@ Zane Skansi,Kitchener Panthers`;
       };
     });
 
-    var gold = '#FFB81C';
+    var gold = '#1e3c78';
     var headers = ['PLAYER','AVG','HR','PULL%','STR%','OPP%','GB%','FB%','LD%','SHIFT'];
     var html = '<thead><tr>';
     headers.forEach(function(h, i) {
@@ -2684,7 +2687,7 @@ Zane Skansi,Kitchener Panthers`;
 
     if (oppPitchers.length) {
       pitcherSection.style.display = 'block';
-      var pGold = '#FFB81C';
+      var pGold = '#1e3c78';
       var pHeaders = ['PITCHER','HAND','ERA','WHIP','STR%','K%'];
       var pH = '<thead><tr>';
       pHeaders.forEach(function(h,i){
@@ -2726,7 +2729,7 @@ Zane Skansi,Kitchener Panthers`;
     // Use html2canvas if available, otherwise fall back to print
     if (window.html2canvas) {
       html2canvas(wrap, {
-        backgroundColor: '#0e1525',
+        backgroundColor: '#ffffff',
         scale: 3,
         width: wrap.offsetWidth,
         height: wrap.offsetHeight,
