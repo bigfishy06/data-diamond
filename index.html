@@ -494,8 +494,15 @@
   // ── PDF REPORT GENERATOR (mirrors scouting.html) ──
   var PW=210,PH=297,ML=12,MT=12,CPW=210-24;
   function rgb(r,g,b){return[r,g,b];}
-  var CO={navy:rgb(14,21,37),navy2:rgb(21,31,53),navy3:rgb(28,42,69),
-    gold:rgb(255,184,28),white:rgb(255,255,255),dim:rgb(107,122,154),light:rgb(168,180,204)};
+  var CO={
+    navy:rgb(255,255,255),      // page background → white
+    navy2:rgb(240,242,246),     // card background → light grey
+    navy3:rgb(228,232,238),     // alternate row → slightly darker grey
+    gold:rgb(30,60,120),        // accent (was gold) → dark navy blue (readable on white)
+    white:rgb(20,30,50),        // "white" text → now dark navy
+    dim:rgb(80,90,110),         // dim text → medium grey-blue
+    light:rgb(60,75,100)        // light text → darker for readability
+  };
   function sf(d,c){d.setFillColor(c[0],c[1],c[2]);}
   function st(d,c){d.setTextColor(c[0],c[1],c[2]);}
   function sd(d,c){d.setDrawColor(c[0],c[1],c[2]);}
@@ -512,33 +519,46 @@
     var ctx=can.getContext('2d');
     var cx=sz/2, cy=sz/2, R=(size*0.45)*px, r=(size*0.27)*px, dot=(size*0.1)*px;
     ctx.beginPath(); ctx.moveTo(cx,cy-R); ctx.lineTo(cx+R,cy); ctx.lineTo(cx,cy+R); ctx.lineTo(cx-R,cy); ctx.closePath();
-    ctx.strokeStyle='#FFB81C'; ctx.lineWidth=2.5*px/8; ctx.stroke();
+    ctx.strokeStyle='#1e3c78'; ctx.lineWidth=2.5*px/8; ctx.stroke();
     ctx.beginPath(); ctx.moveTo(cx,cy-r); ctx.lineTo(cx+r,cy); ctx.lineTo(cx,cy+r); ctx.lineTo(cx-r,cy); ctx.closePath();
-    ctx.fillStyle='rgba(255,184,28,0.15)'; ctx.fill();
-    ctx.strokeStyle='#FFB81C'; ctx.lineWidth=1.5*px/8; ctx.stroke();
+    ctx.fillStyle='rgba(30,60,120,0.12)'; ctx.fill();
+    ctx.strokeStyle='#1e3c78'; ctx.lineWidth=1.5*px/8; ctx.stroke();
     ctx.beginPath(); ctx.arc(cx,cy,dot,0,2*Math.PI);
-    ctx.fillStyle='#FFB81C'; ctx.fill();
+    ctx.fillStyle='#1e3c78'; ctx.fill();
     d.addImage(can.toDataURL('image/png'),'PNG',lx-size/2,ly-size/2,size,size);
   }
 
-  function drawBg(d){sf(d,CO.navy);d.rect(0,0,PW,PH,'F');sf(d,CO.gold);d.rect(0,0,PW,1.2,'F');}
-  function drawHdr(d,name,role,team){
-    var tc=hx(team.color==='#888888'?'#666666':team.color);
+  function drawBg(d){sf(d,CO.navy);d.rect(0,0,PW,PH,'F');d.setFillColor(30,60,120);d.rect(0,0,PW,1.2,'F');}
+  function drawHdr(d,name,role,team,hand){
+    var tc=hx(team.color==='#888888'?'#334466':team.color);
     sf(d,CO.navy2);d.roundedRect(ML,MT,CPW,26,3,3,'F');
     d.setFillColor(tc[0],tc[1],tc[2]);d.roundedRect(ML,MT,4,26,2,2,'F');
+    // Team abbr
     d.setFont('helvetica','bold');d.setFontSize(20);d.setTextColor(tc[0],tc[1],tc[2]);
     d.text(team.abbr,ML+10,MT+17);
+    // Player name & handedness & role
     d.setFont('helvetica','bold');d.setFontSize(15);st(d,CO.white);
     d.text(name.toUpperCase(),ML+38,MT+12);
-    d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.light);
+    if(hand){
+      var nameW=d.getTextWidth(name.toUpperCase());
+      var handPrefix=role==='PITCHER'?'Throws ':'Bats ';
+      d.setFont('helvetica','bold');d.setFontSize(7.5);d.setTextColor(tc[0],tc[1],tc[2]);
+      d.text(handPrefix+hand,ML+40+nameW,MT+12.5);
+    }
+    d.setFont('helvetica','normal');d.setFontSize(8);st(d,CO.dim);
     d.text(role+'  •  '+team.name+'  •  CBL',ML+38,MT+21);
-    // Canvas logo
-    var lx=ML+CPW-14, ly=MT+13, logoSize=14;
+    // Logo — top right
+    var logoSize=16, ly=MT+13;
+    var rightEdge=ML+CPW-2;
+    var txtW=16, gap=2;
+    var lx=rightEdge-txtW-gap-logoSize/2;
     drawLogoImg(d, lx, ly, logoSize);
-    d.setFont('helvetica','bold'); d.setFontSize(7); st(d,CO.white);
-    d.text('Data', lx+8, ly-1.5);
-    st(d,CO.gold); d.text('Diamond', lx+8, ly+5);
-    sd(d,CO.gold);d.setLineWidth(0.4);d.line(ML,MT+27,ML+CPW,MT+27);
+    var txLeft=lx+logoSize/2+gap;
+    d.setFont('helvetica','bold'); d.setFontSize(9); st(d,CO.white);
+    d.text('Data', txLeft, ly-2);
+    d.setFont('helvetica','bold'); d.setFontSize(9); d.setTextColor(tc[0],tc[1],tc[2]);
+    d.text('Diamond', txLeft, ly+6);
+    d.setDrawColor(tc[0],tc[1],tc[2]);d.setLineWidth(0.4);d.line(ML,MT+27,ML+CPW,MT+27);
   }
   function drawBoxes(d,stats,y){
     var bw=CPW/stats.length;
@@ -553,16 +573,16 @@
     return y+18;
   }
   function drawSec(d,text,y){
-    d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
-    d.text('-- '+text.toUpperCase(),ML,y);
-    sd(d,CO.navy3);d.setLineWidth(0.3);d.line(ML+32,y-1,ML+CPW,y-1);
-    return y+5;
+    d.setFont('helvetica','bold');d.setFontSize(7.5);st(d,CO.gold);
+    d.text(text.toUpperCase(),ML,y);
+    sd(d,CO.navy3);d.setLineWidth(0.5);d.line(ML,y+2,ML+CPW,y+2);
+    return y+7;
   }
   function drawTbl(d,headers,rows,colW,y,hlCols){
     hlCols=hlCols||[];
     var rh=7,hh=8,tw=colW.reduce(function(a,b){return a+b;},0);
-    sf(d,CO.navy2);d.rect(ML,y,tw,hh,'F');
-    sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+hh,ML+tw,y+hh);
+    sf(d,CO.navy3);d.rect(ML,y,tw,hh,'F');
+    sd(d,CO.gold);d.setLineWidth(0.5);d.line(ML,y+hh,ML+tw,y+hh);
     d.setFont('helvetica','bold');d.setFontSize(6.5);st(d,CO.gold);
     var cx=ML;
     headers.forEach(function(h,i){d.text(h,cx+colW[i]/2,y+5.5,{align:'center'});cx+=colW[i];});
@@ -573,18 +593,18 @@
       row.forEach(function(cell,ci){
         var hl=hlCols.includes(ci);
         d.setFont('helvetica',hl?'bold':'normal');d.setFontSize(6.5);
-        st(d,hl?CO.white:CO.light);
+        st(d,hl?CO.white:CO.dim);
         d.text(String(cell),cx+colW[ci]/2,ry+4.8,{align:'center'});cx+=colW[ci];
       });
     });
-    sd(d,CO.navy3);d.setLineWidth(0.2);d.rect(ML,y,tw,hh+rows.length*rh,'S');
+    sd(d,CO.navy3);d.setLineWidth(0.4);d.rect(ML,y,tw,hh+rows.length*rh,'S');
     return y+hh+rows.length*rh+3;
   }
   function drawFoot(d,name,role){
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.dim);
-    d.text('Data Diamond  —  CBL Scouting Report',ML,PH-6);
+    d.text('Data Diamond  •  CBL Scouting Report',ML,PH-6);
     d.text(name+'  •  '+role,ML+CPW,PH-6,{align:'right'});
-    sf(d,CO.gold);d.rect(0,PH-1.5,PW,1.5,'F');
+    d.setFillColor(30,60,120);d.rect(0,PH-1.5,PW,1.5,'F');
   }
   function mkScatter(sc){
     var W=400,H=460,PD=30,c=document.createElement('canvas');c.width=W;c.height=H;
@@ -1493,7 +1513,7 @@ Zane Skansi,Kitchener Panthers`;
       }
 
       var d = new window.jspdf.jsPDF({ unit:'mm', format:'a4' });
-      var tc = hx(team.color === '#888888' ? '#666666' : team.color);
+      var tc = hx(team.color === '#888888' ? '#334466' : team.color);
 
       drawBg(d);
       sf(d,CO.navy2); d.roundedRect(ML,MT,CPW,16,2,2,'F');
@@ -1504,7 +1524,7 @@ Zane Skansi,Kitchener Panthers`;
       d.text((team.name+' — OPPOSING BATTERS').toUpperCase(), ML+24, MT+10);
       d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
       d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
-      sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
+      sd(d,CO.gold); d.setLineWidth(0.4); d.line(ML,MT+17,ML+CPW,MT+17);
 
       var hdrH = 7;
       var contentTopB = MT+20;
@@ -1553,7 +1573,7 @@ Zane Skansi,Kitchener Panthers`;
           d.text((team.name+' — OPPOSING BATTERS (cont.)').toUpperCase(), ML+24, MT+10);
           d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
           d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
-          sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
+          sd(d,CO.gold); d.setLineWidth(0.4); d.line(ML,MT+17,ML+CPW,MT+17);
           y = MT+20;
           y = drawBatHdr(d, y);
           rowIndex = 0;
@@ -1677,12 +1697,12 @@ Zane Skansi,Kitchener Panthers`;
 
         var fs = 7;
         var cx=ML;
-        sf(d,rowIndex%2===0?[14,21,40]:[11,17,32]); d.rect(ML,y,CPW,rowH,'F');
+        sf(d,rowIndex%2===0?CO.navy:CO.navy2); d.rect(ML,y,CPW,rowH,'F');
         sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
         vals.forEach(function(v,i){
           var isNm=i===0;
           d.setFont('helvetica',isNm?'bold':'normal'); d.setFontSize(fs);
-          st(d,isNm?CO.white:CO.light);
+          st(d,isNm?CO.white:CO.dim);
           var txt=String(v);
           if(isNm&&txt.length>22) txt=txt.slice(0,21)+'.';
           d.text(txt, isNm?cx+3:cx+cWs[i]/2, y+rowH*0.62, {align:isNm?'left':'center'});
@@ -1695,9 +1715,9 @@ Zane Skansi,Kitchener Panthers`;
 
       // Footer
       d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond  —  CBL Scouting Report', ML, PH-5);
+      d.text('Data Diamond  •  CBL Scouting Report', ML, PH-5);
       d.text(team.name+' Opposing Batters', ML+CPW, PH-5, {align:'right'});
-      sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
+      d.setFillColor(30,60,120); d.rect(0,PH-1.5,PW,1.5,'F');
 
       d.save(team.abbr+'_Opposing_Batters.pdf');
       if (btn) { btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF'; }
@@ -1718,7 +1738,7 @@ Zane Skansi,Kitchener Panthers`;
       var oppT = resolveTeam(oppName);
       var team = oppT ? { abbr: oppT.abbreviation, name: oppT.name, color: oppT.primaryColor }
                       : { abbr: oppName.slice(0,3).toUpperCase(), name: oppName, color: '#888888' };
-      var tc = hx(team.color === '#888888' ? '#666666' : team.color);
+      var tc = hx(team.color === '#888888' ? '#334466' : team.color);
 
       var seenKeys = new Set();
       var pitchers = [];
@@ -1801,7 +1821,7 @@ Zane Skansi,Kitchener Panthers`;
       d.text((team.name+' — OPPOSING PITCHERS').toUpperCase(), ML+24, MT+10);
       d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
       d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
-      sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
+      sd(d,CO.gold); d.setLineWidth(0.4); d.line(ML,MT+17,ML+CPW,MT+17);
 
       var hdrH2 = 7;
       var contentTopP = MT+20;
@@ -1952,9 +1972,9 @@ Zane Skansi,Kitchener Panthers`;
         // Start a new page if this row won't fit
         if (y + rowH > pageBottom2) {
           d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-          d.text('Data Diamond  —  CBL Scouting Report', ML, PH-5);
+          d.text('Data Diamond  •  CBL Scouting Report', ML, PH-5);
           d.text(team.name+' Opposing Pitchers', ML+CPW, PH-5, {align:'right'});
-          sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
+          d.setFillColor(30,60,120); d.rect(0,PH-1.5,PW,1.5,'F');
           d.addPage(); drawBg(d);
           sf(d,CO.navy2); d.roundedRect(ML,MT,CPW,16,2,2,'F');
           d.setFillColor(tc[0],tc[1],tc[2]); d.roundedRect(ML,MT,3,16,1,1,'F');
@@ -1964,13 +1984,13 @@ Zane Skansi,Kitchener Panthers`;
           d.text((team.name+' — OPPOSING PITCHERS (cont.)').toUpperCase(), ML+24, MT+10);
           d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
           d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
-          sd(d,CO.gold); d.setLineWidth(0.3); d.line(ML,MT+17,ML+CPW,MT+17);
+          sd(d,CO.gold); d.setLineWidth(0.4); d.line(ML,MT+17,ML+CPW,MT+17);
           y = MT+20;
           y = drawPitHdr(d, y);
           pitRowIndex = 0;
         }
 
-        sf(d,pitRowIndex%2===0?[14,21,40]:[11,17,32]); d.rect(ML,y,CPW,rowH,'F');
+        sf(d,pitRowIndex%2===0?CO.navy:CO.navy2); d.rect(ML,y,CPW,rowH,'F');
         sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
 
         var fs2 = 7;
@@ -1979,7 +1999,7 @@ Zane Skansi,Kitchener Panthers`;
           var isNm=i===0;
           var isArsenal=i===vals.length-1;
           d.setFont('helvetica',isNm?'bold':'normal'); d.setFontSize(isArsenal?6:fs2);
-          st(d,isNm?CO.white:CO.light);
+          st(d,isNm?CO.white:CO.dim);
           d.text(String(v), isNm?cx+3:cx+cWs[i]/2, y+rowH*0.62, {align:isNm?'left':'center'});
           if(i<vals.length-1){ sd(d,[25,40,65]);d.setLineWidth(0.08);d.line(cx+cWs[i],y,cx+cWs[i],y+rowH); }
           cx+=cWs[i];
@@ -1990,9 +2010,9 @@ Zane Skansi,Kitchener Panthers`;
 
       // Footer
       d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond  —  CBL Scouting Report', ML, PH-5);
+      d.text('Data Diamond  •  CBL Scouting Report', ML, PH-5);
       d.text(team.name+' Opposing Pitchers', ML+CPW, PH-5, {align:'right'});
-      sf(d,CO.gold); d.rect(0,PH-1.5,PW,1.5,'F');
+      d.setFillColor(30,60,120); d.rect(0,PH-1.5,PW,1.5,'F');
 
       d.save(team.abbr+'_Opposing_Pitchers.pdf');
       if (btn) { btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF'; }
