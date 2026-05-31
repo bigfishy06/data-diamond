@@ -1541,8 +1541,8 @@ Zane Skansi,Kitchener Panthers`;
       rowH = Math.max(7, rowH);
       var pageBottom = pageBottomB;
 
-      var hdrs = ['PLAYER','BATS','AVG','OPS','K','BB','SB','PULL','STRAIGHT','OPPO'];
-      var cWs  = [CPW*0.24,CPW*0.07,CPW*0.09,CPW*0.09,CPW*0.045,CPW*0.045,CPW*0.07,CPW*0.11,CPW*0.11,CPW*0.10];
+      var hdrs = ['PLAYER','BATS','AVG','OPS','APPROACH','SHIFT'];
+      var cWs  = [CPW*0.22,CPW*0.07,CPW*0.09,CPW*0.09,CPW*0.37,CPW*0.16];
 
       function drawBatHdr(d, yy) {
         sf(d,CO.navy3); d.rect(ML,yy,CPW,hdrH,'F');
@@ -1669,31 +1669,85 @@ Zane Skansi,Kitchener Panthers`;
         }
 
         // K and BB totals: IBL raw counts for 2025; datadiamond2026.csv (DATA.summary) for 2026
-        var kRaw=null,bbRaw=null;
-        if(year==2025){
-          // 2025: K strictly from IBL History only — no scatter fallback
-          kRaw  = gpFirstNum(iblS, ['K','SO']);
-          bbRaw = gpFirstNum(iblS, ['BB']);
-        } else {
-          // 2026: K from datadiamond2026.csv — try all likely field names
-          var _kv = s.K!=null?s.K : s.SO!=null?s.SO : s.Strikeouts!=null?s.Strikeouts : s.strikeouts!=null?s.strikeouts : s.so!=null?s.so : null;
-          if(_kv!=null){
-            kRaw = Math.round(_kv);
-          } else {
-            var scKs=sc.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';});
-            kRaw = scKs.length>0 ? scKs.length : null;
+        // ── Approach: mirror the scouting.html logic (scatter-based, stat fallback) ──
+        var approachText=(function(){
+          var scB=sc.filter(function(p){return p.x!=null&&p.y!=null;});
+          var _IN_PLAY=['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
+          var _HITS=['Single','Double','Triple','Home Run'];
+          var _KS=['Strikeout Swinging','Strikeout Looking'];
+          function zwB(pts){var sw=pts.filter(function(p){return['Swinging Strike','Foul'].concat(_IN_PLAY).includes(p.outcome);}).length;var wh=pts.filter(function(p){return p.outcome==='Swinging Strike';}).length;return sw>=5?wh/sw:null;}
+          function zbaB(pts){var ab=pts.filter(function(p){return _IN_PLAY.concat(_KS).includes(p.outcome);}).length;var h=pts.filter(function(p){return _HITS.includes(p.outcome);}).length;return ab>=5?h/ab:null;}
+          function lgArr(fn,mfn){var a=[];DATA.pitches.forEach(function(bp){var pts=(bp.scatter||[]).filter(function(p){return p.x!=null&&p.y!=null&&fn(p);});var v=mfn(pts);if(v!=null)a.push(v);});return a;}
+          function pctRank(val,arr){if(!arr.length||val==null)return null;var below=arr.filter(function(v){return v<val;}).length;var equal=arr.filter(function(v){return v===val;}).length;return(below+equal*0.5)/arr.length;}
+          if(!scB.length){
+            var opsNum=s.OPS!=null?parseFloat(s.OPS):null;
+            var kRate=s.K_pct!=null?s.K_pct/100:null;
+            if(opsNum!=null&&opsNum>=0.800) return 'Avoid free mistakes — danger OPS';
+            if(opsNum!=null&&opsNum<=0.620) return 'Challenge in zone — low OPS';
+            if(kRate!=null&&kRate>=0.26) return 'Finish when ahead — high K%';
+            if(kRate!=null&&kRate<=0.13) return 'Prioritize weak contact — low K%';
+            return 'Limited data';
           }
-          var _bbv = s.BB!=null?s.BB : s.bb!=null?s.bb : s.Walks!=null?s.Walks : s.walks!=null?s.walks : s.HBB!=null?s.HBB : null;
-          bbRaw = _bbv!=null ? Math.round(_bbv) : null;
-        }
-        var kVal  = kRaw!=null  ? String(kRaw)  : '—';
-        var bbVal = bbRaw!=null ? String(bbRaw) : '—';
-        // SB: IBL History for both years
-        var sbVal=(function(){
-          if(iblS&&iblS.SB!=null) return String(Math.round(iblS.SB));
-          return '—';
+          var leftFn=function(p){return p.x<-0.1;};
+          var rightFn=function(p){return p.x>0.1;};
+          var highFn=function(p){return p.y>0.66;};
+          var lowFn=function(p){return p.y<0.33;};
+          var zones=[
+            {label:'Left Side',fn:leftFn,spot:'Go inside — left side'},
+            {label:'Right Side',fn:rightFn,spot:'Work away — right side'},
+            {label:'Top of Zone',fn:highFn,spot:'Elevate — top of zone'},
+            {label:'Bottom of Zone',fn:lowFn,spot:'Pound low — bottom of zone'}
+          ];
+          var candidates=[];
+          zones.forEach(function(zc){
+            var pts=scB.filter(zc.fn);
+            var myW=zwB(pts),lgW=lgArr(zc.fn,zwB);
+            var myBA=zbaB(pts),lgBA=lgArr(zc.fn,zbaB);
+            var wPct=pctRank(myW,lgW),baPct=pctRank(myBA,lgBA);
+            if(myW!=null&&wPct>=0.55) candidates.push({score:wPct,spot:zc.spot+' (WHIFF)'});
+            if(myBA!=null&&(1-baPct)>=0.55) candidates.push({score:1-baPct,spot:zc.spot+' (weak contact)'});
+          });
+          if(!candidates.length){
+            // corner combos
+            var cornerZones=[
+              {fn:function(p){return p.x<-0.1&&p.y>0.66;},spot:'Up & in'},
+              {fn:function(p){return p.x>0.1&&p.y>0.66;},spot:'Up & away'},
+              {fn:function(p){return p.x<-0.1&&p.y<0.33;},spot:'Down & in'},
+              {fn:function(p){return p.x>0.1&&p.y<0.33;},spot:'Down & away'}
+            ];
+            cornerZones.forEach(function(cz){
+              var pts=scB.filter(cz.fn);if(pts.length<5)return;
+              var myW=zwB(pts),lgW=lgArr(cz.fn,zwB);
+              var wPct=pctRank(myW,lgW);
+              if(myW!=null&&wPct>=0.55) candidates.push({score:wPct,spot:cz.spot});
+            });
+          }
+          if(!candidates.length) return 'No clear zone advantage';
+          candidates.sort(function(a,b){return b.score-a.score;});
+          return candidates[0].spot;
         })();
-        var vals=[s.batter,bats,avg,ops,kVal,bbVal,sbVal,pullPct,strPct2,oppPct2];
+
+        // ── Shift: pull/oppo/straight >= 40% dominant direction ──
+        var shiftText=(function(){
+          var spBatted=batted.filter(function(p){return p.spray;});
+          var spTot=spBatted.length;
+          var pullN,oppN,strN;
+          if(sumS&&sumS.Pull_pct!=null){
+            pullN=sumS.Pull_pct; oppN=sumS.Oppo_pct||0; strN=sumS.Str_pct||0;
+            spTot=5; // satisfy threshold
+          } else {
+            pullN=spTot>=5?spBatted.filter(function(p){return p.spray==='Pull';}).length/spTot*100:0;
+            oppN=spTot>=5?spBatted.filter(function(p){return p.spray==='Opposite Field';}).length/spTot*100:0;
+            strN=spTot>=5?spBatted.filter(function(p){return p.spray==='Straightaway';}).length/spTot*100:0;
+          }
+          if(spTot<5) return 'None';
+          if(pullN>=40&&pullN>strN&&pullN>oppN) return 'PULL';
+          if(oppN>=40&&oppN>pullN&&oppN>strN) return 'OPPO';
+          if(strN>=40&&strN>pullN&&strN>oppN) return 'STRAIGHT';
+          return 'None';
+        })();
+
+        var vals=[s.batter,bats,avg,ops,approachText,shiftText];
 
         var fs = 7;
         var cx=ML;
@@ -1701,17 +1755,97 @@ Zane Skansi,Kitchener Panthers`;
         sd(d,CO.navy3); d.setLineWidth(0.1); d.line(ML,y+rowH,ML+CPW,y+rowH);
         vals.forEach(function(v,i){
           var isNm=i===0;
-          d.setFont('helvetica',isNm?'bold':'normal'); d.setFontSize(fs);
-          st(d,isNm?CO.white:CO.dim);
+          var isApproach=i===4;
+          var isShift=i===5;
+          var shiftColor=v==='PULL'?[248,113,113]:v==='OPPO'?[96,165,250]:v==='STRAIGHT'?[255,184,28]:[100,116,139];
+          d.setFont('helvetica',isNm?'bold':'normal'); d.setFontSize(isApproach?5.5:(isShift?7.5:fs));
+          if(isShift) d.setTextColor(shiftColor[0],shiftColor[1],shiftColor[2]);
+          else st(d,isNm?CO.white:CO.dim);
           var txt=String(v);
-          if(isNm&&txt.length>22) txt=txt.slice(0,21)+'.';
-          d.text(txt, isNm?cx+3:cx+cWs[i]/2, y+rowH*0.62, {align:isNm?'left':'center'});
+          if(isNm&&txt.length>20) txt=txt.slice(0,19)+'.';
+          if(isApproach){
+            // wrap approach text into up to 2 lines
+            var maxW=cWs[4]-4;
+            var words=txt.split(' ');var line1='',line2='';
+            for(var wi=0;wi<words.length;wi++){
+              var test=line1?line1+' '+words[wi]:words[wi];
+              if(d.getTextWidth(test)<=maxW){line1=test;}else{line2=words.slice(wi).join(' ');break;}
+            }
+            var lineH=rowH>10?4.5:3.5;
+            var baseY=line2?y+rowH*0.45:y+rowH*0.62;
+            d.text(line1,cx+2,baseY);
+            if(line2)d.text(line2,cx+2,baseY+lineH);
+          } else {
+            d.text(txt, isNm?cx+3:cx+cWs[i]/2, y+rowH*0.62, {align:isNm?'left':'center'});
+          }
           if(i<vals.length-1){ sd(d,[25,40,65]);d.setLineWidth(0.08);d.line(cx+cWs[i],y,cx+cWs[i],y+rowH); }
           cx+=cWs[i];
         });
         y+=rowH;
         rowIndex++;
       });
+
+      // ── WHIFF HEAT MAPS — pitcher's perspective ───────────────────────────
+      // Build per-batter whiff scatter (swinging strikes only with x/y)
+      var whiffBatters=[];
+      batters.forEach(function(s){
+        var nlKey=gpNorm(s.batter);
+        var whiffPts=[];
+        DATA.pitches.forEach(function(bp){
+          if(!bp.scatter)return;
+          bp.scatter.forEach(function(p){
+            if(p.batter&&gpNorm(p.batter)===nlKey&&p.x!=null&&p.y!=null&&p.outcome==='Swinging Strike')
+              whiffPts.push(p);
+          });
+        });
+        if(whiffPts.length>=3) whiffBatters.push({name:s.batter,pts:whiffPts});
+      });
+
+      if(whiffBatters.length){
+        // New page for heat maps
+        drawFoot(d, team.name+' Opposing Batters', 'BATTERS');
+        d.addPage(); drawBg(d);
+        sf(d,CO.navy2); d.roundedRect(ML,MT,CPW,16,2,2,'F');
+        d.setFillColor(tc[0],tc[1],tc[2]); d.roundedRect(ML,MT,3,16,1,1,'F');
+        d.setFont('helvetica','bold'); d.setFontSize(9); d.setTextColor(tc[0],tc[1],tc[2]);
+        d.text(team.abbr, ML+8, MT+10);
+        d.setFont('helvetica','bold'); d.setFontSize(10); st(d,CO.white);
+        d.text((team.name+' — WHIFF HEAT MAPS (PITCHER\'S POV)').toUpperCase(), ML+24, MT+10);
+        d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
+        d.text('Data Diamond  —  CBL', ML+CPW, MT+10, {align:'right'});
+        sd(d,CO.gold); d.setLineWidth(0.4); d.line(ML,MT+17,ML+CPW,MT+17);
+        d.setFont('helvetica','normal'); d.setFontSize(5.5); st(d,CO.dim);
+        d.text('Swinging strikes only — locations shown from pitcher\'s point of view', ML, MT+22);
+
+        var hmCols=4, hmW=40, hmH=46, hmGapX=4, hmGapY=12;
+        var hmStartY=MT+26;
+        var hmX=ML, hmY=hmStartY, hmCol=0;
+
+        whiffBatters.forEach(function(wb){
+          if(hmX+hmW>ML+CPW+2){ hmX=ML; hmY+=hmH+hmGapY; hmCol=0; }
+          if(hmY+hmH+hmGapY>PH-12){
+            drawFoot(d, team.name+' Opposing Batters', 'BATTERS');
+            d.addPage(); drawBg(d);
+            sf(d,CO.navy2); d.roundedRect(ML,MT,CPW,16,2,2,'F');
+            d.setFillColor(tc[0],tc[1],tc[2]); d.roundedRect(ML,MT,3,16,1,1,'F');
+            d.setFont('helvetica','bold'); d.setFontSize(9); d.setTextColor(tc[0],tc[1],tc[2]);
+            d.text(team.abbr, ML+8, MT+10);
+            d.setFont('helvetica','bold'); d.setFontSize(10); st(d,CO.white);
+            d.text((team.name+' — WHIFF HEAT MAPS (CONT.)').toUpperCase(), ML+24, MT+10);
+            sd(d,CO.gold); d.setLineWidth(0.4); d.line(ML,MT+17,ML+CPW,MT+17);
+            hmX=ML; hmY=MT+22; hmCol=0;
+          }
+          d.setFont('helvetica','bold'); d.setFontSize(5.5); st(d,CO.white);
+          var nameLabel=wb.name.length>16?wb.name.slice(0,15)+'.':wb.name;
+          d.text(nameLabel, hmX+hmW/2, hmY-1.5, {align:'center'});
+          d.addImage(mkHeat(wb.pts),'PNG',hmX,hmY,hmW,hmH);
+          d.setFont('helvetica','normal'); d.setFontSize(4.5); st(d,CO.dim);
+          d.text(wb.pts.length+' whiffs', hmX+hmW/2, hmY+hmH+2.5, {align:'center'});
+          hmCol++;
+          if(hmCol>=hmCols){ hmCol=0; hmX=ML; hmY+=hmH+hmGapY; }
+          else { hmX+=hmW+hmGapX; }
+        });
+      }
 
       // Footer
       d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
