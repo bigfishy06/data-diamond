@@ -1231,10 +1231,11 @@ Zane Skansi,Kitchener Panthers`;
     var rows = reportPitchCountGroups().map(function(grp) {
       var subset = (points || []).filter(function(s) { return grp.test(s.count || ''); });
       var n = subset.length;
+      var known = subset.filter(function(s) { return reportPitchTypeBucket(s) !== 'Unknown'; }).length;
       var row = [grp.label];
       typeSet.forEach(function(t) {
         var c = subset.filter(function(s) { return reportPitchTypeBucket(s) === t; }).length;
-        row.push(n ? f1(c/n*100) + '%' : '—');
+        row.push(known ? f1(c/known*100) + '%' : '—');
       });
       row.push(String(n));
       return row;
@@ -2082,6 +2083,37 @@ Zane Skansi,Kitchener Panthers`;
     });
     y+=dH2+5;
 
+    var _locSc=allSc.filter(hasPitchLocation);
+    var _whiffPts=_locSc.filter(function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';});
+    if(_locSc.length&&PH-y>126){
+      y=drawSec(d,'Whiff Heat Map',y);
+      var _swingOutcomes=['Swinging Strike','Strikeout Swinging','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
+      var _swings=_locSc.filter(function(p){return _swingOutcomes.includes(p.outcome);}).length;
+      var _whiffRate=_swings?f1(_whiffPts.length/_swings*100)+'%':'—';
+      var _mapH=Math.max(54,Math.min(78,PH-y-86));
+      var _mapW=_mapH/1.15;
+      var _mapX=ML+CPW-_mapW;
+      var _textW=CPW-_mapW-10;
+      d.setFillColor(245,247,251);d.rect(ML,y,_textW,Math.min(_mapH,58),'F');
+      d.setDrawColor(30,60,120);d.setLineWidth(0.25);d.rect(ML,y,_textW,Math.min(_mapH,58),'S');
+      d.setFont('helvetica','bold');d.setFontSize(7);st(d,CO.gold);
+      d.text('SWING-AND-MISS PROFILE',ML+4,y+7);
+      var _metricW=(_textW-12)/3;
+      [['WHIFFS',String(_whiffPts.length)],['WHIFF%',_whiffRate],['PITCHES',String(_locSc.length)]].forEach(function(m,i){
+        var mx=ML+4+i*(_metricW+3),my=y+12;
+        d.setFillColor(14,21,37);d.rect(mx,my,_metricW,18,'F');
+        d.setFont('helvetica','bold');d.setFontSize(5.4);st(d,CO.gold);d.text(m[0],mx+_metricW/2,my+5,{align:'center'});
+        d.setFont('helvetica','bold');d.setFontSize(11);st(d,CO.white);d.text(m[1],mx+_metricW/2,my+13,{align:'center'});
+      });
+      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
+      var _whiffNote=_whiffPts.length?'Heat map is built only from whiffs, from the batter viewpoint. Darker red areas are the best miss zones.':'No plotted whiffs found; use the approach box and pitch discipline instead.';
+      d.text(_whiffNote,ML+4,y+38,{maxWidth:_textW-8});
+      d.addImage(mkHeat(_whiffPts.length?_whiffPts:_locSc,'BATTER'),'PNG',_mapX,y,_mapW,_mapH);
+      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
+      d.text(_whiffPts.length?'Whiff Heat Map':'Pitch Location Heat Map',_mapX+_mapW/2,y+_mapH+3,{align:'center'});
+      y+=_mapH+8;
+    }
+
     // ── Two donuts: Spray Direction (left) + Batted Ball Profile (right) ──
     var _pitchObj2=player.pitch||getPitchPlayer(player.name)||(function(){ var po=getPitchPlayerForRoster(player.name); return po&&po.scatter&&po.scatter.length?po:null; })();
     var allSc2=_pitchObj2&&_pitchObj2.scatter?_pitchObj2.scatter:[];
@@ -2541,9 +2573,11 @@ Zane Skansi,Kitchener Panthers`;
     // Overhead: gap(3) + drawSec(7) + titles(4); stat table removed so heat maps can stay larger.
     var splitsOverhead=14;
     var heatAvail=PH-12-8-y-splitsOverhead;
-    var ihIdeal=Math.round(iw*1.15);
+    var heatAspect=414/360;
+    var ihIdeal=Math.round(iw*heatAspect);
     var drawSplitHeat=heatAvail>=28;
     var ih=Math.max(24,Math.min(ihIdeal,Math.round(heatAvail)));
+    var heatW=Math.min(iw,ih/heatAspect),heatH=heatW*heatAspect;
     if(PH-y < splitsOverhead+10){drawSplitHeat=false;}
     if(PH-y>=splitsOverhead+10){
     y+=3;
@@ -2558,10 +2592,10 @@ Zane Skansi,Kitchener Panthers`;
     if(drawSplitHeat){
       splitData.forEach(function(sd2,i){
         if(!sd2.subXY.length)return;
-        var xOff=ML+i*(iw+gap);
-        d.addImage(mkHeat(sd2.subXY,'BATTER'),'PNG',xOff,y,iw,ih);
+        var xOff=ML+i*(iw+gap)+(iw-heatW)/2;
+        d.addImage(mkHeat(sd2.subXY,'BATTER'),'PNG',xOff,y,heatW,heatH);
       });
-      y+=ih+4;
+      y+=heatH+4;
     } else {
       d.setFont('helvetica','normal');d.setFontSize(5);st(d,CO.dim);
       d.text('Heat maps omitted to keep this report on one page.',ML,y+4);

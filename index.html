@@ -536,10 +536,11 @@
     var rows = gpPitchCountGroups().map(function(grp) {
       var subset = (points || []).filter(function(s) { return grp.test(s.count || ''); });
       var n = subset.length;
+      var known = subset.filter(function(s) { return gpPitchTypeBucket(s) !== 'Unknown'; }).length;
       var row = [grp.label];
       typeSet.forEach(function(t) {
         var c = subset.filter(function(s) { return gpPitchTypeBucket(s) === t; }).length;
-        row.push(n ? f1(c/n*100) + '%' : '--');
+        row.push(known ? f1(c/known*100) + '%' : '--');
       });
       row.push(String(n));
       return row;
@@ -736,6 +737,8 @@
     return c.toDataURL('image/png');
   }
   function addCharts(d,sc,y){
+    var whiffPts=sc.filter(function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';});
+    var heatPts=whiffPts.length?whiffPts:sc;
     var gap=8;
     var rightW=Math.floor(CPW*0.55); // dominant heat map ~102mm
     var leftW=CPW-rightW-gap;        // two small charts stacked on left
@@ -744,12 +747,12 @@
     // Left column: scatter (top) + grid (bottom)
     d.addImage(mkScatter(sc),'PNG',ML,y,leftW,smallH);
     d.addImage(mkGrid(sc),'PNG',ML,y+smallH+4,leftW,smallH);
-    // Right column: large heat map
-    d.addImage(mkHeat(sc),'PNG',ML+leftW+gap,y,rightW,bigH);
+    // Right column: large whiff heat map, with all pitches as a fallback when no whiffs exist.
+    d.addImage(mkHeat(heatPts),'PNG',ML+leftW+gap,y,rightW,bigH);
     d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
     d.text('Scatter',ML+leftW/2,y+smallH+3,{align:'center'});
     d.text('Zone Grid',ML+leftW/2,y+smallH+4+smallH+3,{align:'center'});
-    d.text('Heat Map',ML+leftW+gap+rightW/2,y+bigH+3,{align:'center'});
+    d.text((whiffPts.length?'Whiff Heat Map':'Heat Map'),ML+leftW+gap+rightW/2,y+bigH+3,{align:'center'});
     return y+bigH+8;
   }
 
@@ -2159,8 +2162,10 @@ Zane Skansi,Kitchener Panthers`;
           d.text('VS LHH - BATTER POV', mapX+1, nameY+pitNameH+3.2);
           d.text('VS RHH - BATTER POV', mapX+mapW+gap+1, nameY+pitNameH+3.2);
           if(imgH>=4){
-            d.addImage(mkHeat(lhhPts,'BATTER'),'PNG', mapX, imgY, mapW, imgH);
-            d.addImage(mkHeat(rhhPts,'BATTER'),'PNG', mapX+mapW+gap, imgY, mapW, imgH);
+            var imgSize=Math.min(mapW,imgH);
+            var imgOffsetX=(mapW-imgSize)/2;
+            d.addImage(mkHeat(lhhPts,'BATTER'),'PNG', mapX+imgOffsetX, imgY, imgSize, imgSize);
+            d.addImage(mkHeat(rhhPts,'BATTER'),'PNG', mapX+mapW+gap+imgOffsetX, imgY, imgSize, imgSize);
           }
         }
 
