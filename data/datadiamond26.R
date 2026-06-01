@@ -3,8 +3,8 @@ library(jsonlite)
 
 # ── Load pitch data ────────────────────────────────────────────────────────────
 pitches_raw <- read.csv("C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/datadiamond2026.csv",
-                         header = TRUE,
-                         stringsAsFactors = FALSE)
+                        header = TRUE,
+                        stringsAsFactors = FALSE)
 
 pitches <- as.data.frame(pitches_raw)
 colnames(pitches) <- c("inning", "outs", "balls", "strikes", "count",
@@ -61,7 +61,7 @@ pitches <- pitches %>%
     in_zone = !is.na(pitch_x) & !is.na(pitch_y) &
       pitch_x >= -1   & pitch_x <= 1 &
       pitch_y >= 0    & pitch_y <= 1,
-
+    
     # ── Per-pitch flags for pitcher aggregation ──────────────────────────────
     is_hit        = outcome %in% c("Single", "Double", "Triple", "Home Run"),
     is_hr         = outcome == "Home Run",
@@ -72,7 +72,7 @@ pitches <- pitches %>%
     is_sf         = outcome %in% c("Sacrifice Fly", "Sac Fly Double Play"),
     is_pa         = !(outcome %in% PITCH_LEVEL),
     is_ab         = !(outcome %in% c(PITCH_LEVEL, NON_AB_PA_OUTCOMES)),
-
+    
     # Swing = any pitch batter offered at (contact or miss)
     is_swing      = outcome %in% c(
       "Swinging Strike", "Foul",
@@ -86,18 +86,18 @@ pitches <- pitches %>%
     # Whiff = swing and miss
     is_whiff      = outcome %in% c("Swinging Strike", "Strikeout Swinging",
                                    "Dropped Third Strike Swinging"),
-
+    
     # First-pitch (0-0 count)
     is_first_pitch = gsub("^'", "", count) == "0-0",
     is_fp_strike   = is_first_pitch &
-                     outcome %in% c("Called Strike", "Swinging Strike", "Foul",
-                                    "Strikeout Swinging", "Strikeout Looking",
-                                    "Dropped Third Strike Swinging", "Dropped Third Strike Looking"),
-
+      outcome %in% c("Called Strike", "Swinging Strike", "Foul",
+                     "Strikeout Swinging", "Strikeout Looking",
+                     "Dropped Third Strike Swinging", "Dropped Third Strike Looking"),
+    
     # Two-strike putaway
     is_two_strike_count = grepl("-2$", gsub("^'", "", count)),
     is_putaway          = is_two_strike_count & is_pa & is_k,
-
+    
     # Batted ball (any ball put in play)
     is_batted     = outcome %in% c(
       "Single", "Double", "Triple", "Home Run",
@@ -106,7 +106,7 @@ pitches <- pitches %>%
       "Sacrifice Fly", "Sac Fly Double Play",
       "Sacrifice Bunt", "Sac Bunt Double Play"
     ),
-
+    
     # Contact type: prefer contact_quality field, fall back to outcome shape
     contact_type  = case_when(
       contact_quality == "Ground Ball"                                              ~ "GB",
@@ -259,10 +259,10 @@ pitcher_stats <- pitches %>%
     SF_allowed        = sum(is_sf),
     ab_against        = sum(is_ab),
     strikes           = sum(outcome %in% c(
-                          "Called Strike", "Swinging Strike", "Foul",
-                          "Strikeout Looking", "Strikeout Swinging",
-                          "Dropped Third Strike Looking", "Dropped Third Strike Swinging"
-                        )),
+      "Called Strike", "Swinging Strike", "Foul",
+      "Strikeout Looking", "Strikeout Swinging",
+      "Dropped Third Strike Looking", "Dropped Third Strike Swinging"
+    )),
     swings            = sum(is_swing),
     whiffs            = sum(is_whiff),
     fp_pitches        = sum(is_first_pitch),
@@ -281,27 +281,27 @@ pitcher_stats <- pitches %>%
   left_join(ea_by_pitcher, by = "pitcher") %>%
   mutate(
     IP = ifelse(is.na(IP), 0, IP),
-
+    
     # ── Existing rate stats ────────────────────────────────────────────────────
     K_pct     = ifelse(BF > 0,            round(K       / BF * 100, 1),            NA),
     BB_pct    = ifelse(BF > 0,            round(BB      / BF * 100, 1),            NA),
     K_BB      = ifelse(BB > 0,            round(K / BB,  2),                        NA),
     STR_pct   = ifelse(total_pitches > 0, round(strikes / total_pitches * 100, 1), NA),
-
+    
     # ── NEW: Swing / Whiff / Putaway ──────────────────────────────────────────
     Swing_pct   = ifelse(total_pitches > 0, round(swings   / total_pitches * 100, 1), NA),
     Whiff_pct   = ifelse(swings > 0,        round(whiffs   / swings        * 100, 1), NA),
     Putaway_pct = ifelse(two_strike_pa > 0, round(putaways / two_strike_pa * 100, 1), NA),
-
+    
     # ── NEW: First-pitch strike % ──────────────────────────────────────────────
     FPS_pct     = ifelse(fp_pitches > 0,    round(fp_strikes / fp_pitches   * 100, 1), NA),
-
+    
     # ── NEW: BAA and BABIP against ────────────────────────────────────────────
     BAA         = ifelse(ab_against > 0,    round(H_allowed / ab_against, 3),           NA),
     BABIP_den   = ab_against - K - HR_allowed + SF_allowed,
     BABIP       = ifelse(BABIP_den > 0,
                          round((H_allowed - HR_allowed) / BABIP_den, 3),                NA),
-
+    
     # ── NEW: Contact type % (of all batted balls) ─────────────────────────────
     GB_pct      = ifelse(batted_balls > 0,  round(gb / batted_balls * 100, 1),          NA),
     FB_pct      = ifelse(batted_balls > 0,  round(fb / batted_balls * 100, 1),          NA),
