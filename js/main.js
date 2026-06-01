@@ -762,6 +762,131 @@ function isChaseSwing(s) {
   return SWING_OUTCOMES_FOR_CHASE.includes(s.outcome);
 }
 
+var PITCH_TYPE_DISPLAY_MODE = 'category';
+var PITCH_CATEGORY_COLORS = {
+  'Fastball': '#f87171',
+  'Offspeed': '#a78bfa',
+  'Unknown': '#94a3b8'
+};
+var PITCH_DETAIL_COLORS = {
+  'Fastball': '#f87171',
+  'Four-Seam Fastball': '#f87171',
+  'Two-Seam Fastball': '#fb7185',
+  'Sinker Fastball': '#22d3ee',
+  'Cut Fastball': '#f472b6',
+  'Breaking Ball': '#60a5fa',
+  'Slider': '#facc15',
+  'Sweeper': '#fde047',
+  'Curveball': '#fb923c',
+  'Knuckle Curve': '#fdba74',
+  'Slurve': '#c084fc',
+  'Offspeed': '#a78bfa',
+  'Changeup': '#34d399',
+  'Split-Finger Fastball': '#2dd4bf',
+  'Forkball': '#14b8a6',
+  'Knuckleball': '#818cf8',
+  'Unknown': '#94a3b8'
+};
+var PITCH_FALLBACK_COLORS = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee','#c084fc','#94a3b8'];
+var PITCH_TYPE_FULL_NAMES = {
+  'ff': 'Four-Seam Fastball',
+  'four seam': 'Four-Seam Fastball',
+  'four seamer': 'Four-Seam Fastball',
+  'four-seam': 'Four-Seam Fastball',
+  'four-seamer': 'Four-Seam Fastball',
+  'four seam fastball': 'Four-Seam Fastball',
+  'four-seam fastball': 'Four-Seam Fastball',
+  '4 seam': 'Four-Seam Fastball',
+  '4-seam': 'Four-Seam Fastball',
+  '4 seam fastball': 'Four-Seam Fastball',
+  '4-seam fastball': 'Four-Seam Fastball',
+  'fa': 'Fastball',
+  'fb': 'Fastball',
+  'fastball': 'Fastball',
+  'ft': 'Two-Seam Fastball',
+  'two seam': 'Two-Seam Fastball',
+  'two-seam': 'Two-Seam Fastball',
+  'two seam fastball': 'Two-Seam Fastball',
+  'two-seam fastball': 'Two-Seam Fastball',
+  '2 seam': 'Two-Seam Fastball',
+  '2-seam': 'Two-Seam Fastball',
+  '2 seam fastball': 'Two-Seam Fastball',
+  '2-seam fastball': 'Two-Seam Fastball',
+  'si': 'Sinker Fastball',
+  'sinker': 'Sinker Fastball',
+  'sinker fastball': 'Sinker Fastball',
+  'fc': 'Cut Fastball',
+  'cutter': 'Cut Fastball',
+  'cut fastball': 'Cut Fastball',
+  'ct': 'Cut Fastball',
+  'sl': 'Slider',
+  'slider': 'Slider',
+  'sweeper': 'Sweeper',
+  'sw': 'Sweeper',
+  'st': 'Sweeper',
+  'cu': 'Curveball',
+  'curve': 'Curveball',
+  'curveball': 'Curveball',
+  'kc': 'Knuckle Curve',
+  'knuckle curve': 'Knuckle Curve',
+  'knuckle-curve': 'Knuckle Curve',
+  'slurve': 'Slurve',
+  'ch': 'Changeup',
+  'change': 'Changeup',
+  'changeup': 'Changeup',
+  'fs': 'Split-Finger Fastball',
+  'splitter': 'Split-Finger Fastball',
+  'split finger': 'Split-Finger Fastball',
+  'split-finger': 'Split-Finger Fastball',
+  'split finger fastball': 'Split-Finger Fastball',
+  'split-finger fastball': 'Split-Finger Fastball',
+  'forkball': 'Forkball',
+  'fo': 'Forkball',
+  'knuckleball': 'Knuckleball',
+  'kn': 'Knuckleball',
+  'breaking ball': 'Breaking Ball',
+  'offspeed': 'Offspeed',
+  'unknown': 'Unknown'
+};
+
+function normalizePitchTypeName(t) {
+  return String(t || 'Unknown').trim() || 'Unknown';
+}
+function pitchTypeCategory(t) {
+  var pt = normalizePitchTypeName(t);
+  var key = pt.toLowerCase().replace(/[\s_-]+/g, ' ');
+  if (key.indexOf('fastball') !== -1 || key === 'four seam' || key === '4 seam' || key === 'two seam' || key === '2 seam' || key === 'sinker' || key === 'cutter' || key === 'cut fastball') return 'Fastball';
+  if (key.indexOf('slider') !== -1 || key.indexOf('curve') !== -1 || key.indexOf('sweeper') !== -1 || key.indexOf('slurve') !== -1 || key.indexOf('change') !== -1 || key.indexOf('split') !== -1 || key.indexOf('fork') !== -1 || key.indexOf('knuckle') !== -1 || key === 'breaking ball' || key === 'offspeed') return 'Offspeed';
+  return pt === 'Unknown' ? 'Unknown' : pt;
+}
+function pitchTypeFullName(t) {
+  var pt = normalizePitchTypeName(t);
+  var key = pt.toLowerCase().replace(/[\s_-]+/g, ' ');
+  return PITCH_TYPE_FULL_NAMES[key] || PITCH_TYPE_FULL_NAMES[pt.toLowerCase()] || pt;
+}
+function getPitchTypeLabel(s, mode) {
+  var raw = normalizePitchTypeName(s && (s.pitch_type || s.type));
+  return (mode || PITCH_TYPE_DISPLAY_MODE) === 'category' ? pitchTypeCategory(raw) : pitchTypeFullName(raw);
+}
+function buildPitchTypeCounts(points, mode) {
+  var counts = {};
+  (points || []).forEach(function(s) {
+    var t = getPitchTypeLabel(s, mode);
+    counts[t] = (counts[t] || 0) + 1;
+  });
+  return counts;
+}
+function buildPitchTypeColorMap(typeSet, mode) {
+  var map = {}, base = (mode || PITCH_TYPE_DISPLAY_MODE) === 'category' ? PITCH_CATEGORY_COLORS : PITCH_DETAIL_COLORS;
+  (typeSet || []).forEach(function(t, i) {
+    map[t] = base[t] || PITCH_FALLBACK_COLORS[i % PITCH_FALLBACK_COLORS.length];
+  });
+  return map;
+}
+function pitchTypeMatches(s, activeType, mode) {
+  return activeType === 'all' || getPitchTypeLabel(s, mode) === activeType;
+}
+
 function hexToRgba(hex, a) {
   const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
   return 'rgba('+r+','+g+','+b+','+a+')';
@@ -2301,7 +2426,7 @@ function renderPlayerDetail(name, type, content) {
     '<button class="tab-btn" data-tab="notes">Notes</button>' +
     '</div></div></div>' +
 
-    '<div class="container" style="padding-top:32px;padding-bottom:80px"><div id="season-filter-bar"></div><div id="player-tab-content"></div></div>';
+    '<div class="container" style="padding-top:32px;padding-bottom:80px"><div id="season-filter-bar"></div><div id="pitch-type-mode-bar"></div><div id="player-tab-content"></div></div>';
 
   if (team) {
     document.getElementById('player-hero-bg').style.background =
@@ -2371,6 +2496,7 @@ function renderPlayerDetail(name, type, content) {
   const tabs = content.querySelectorAll('.tab-btn');
 
   function activateTab(t) {
+    PITCH_TYPE_DISPLAY_MODE = pitchTypeMode;
     // Re-fetch data for the active season in case season was switched
     var currentSum       = getSummaryPlayer(name);
     var currentPitchData;
@@ -2510,6 +2636,8 @@ function renderPlayerDetail(name, type, content) {
       swapSeasonData(activeSeasonFilter);
     }
   }
+  var pitchTypeMode = localStorage.getItem('dd_pitch_type_mode') === 'detail' ? 'detail' : 'category';
+  PITCH_TYPE_DISPLAY_MODE = pitchTypeMode;
   var currentTab = 'overview';
 
   function renderSeasonFilterBar(activeTab) {
@@ -2548,10 +2676,37 @@ function renderPlayerDetail(name, type, content) {
     });
   }
 
+  function renderPitchTypeModeBar(activeTab) {
+    var bar = document.getElementById('pitch-type-mode-bar');
+    if (!bar) return;
+    if (!['overview', 'zone', 'splits', 'usage'].includes(activeTab)) { bar.innerHTML = ''; return; }
+    function modeBtn(mode, label) {
+      var active = pitchTypeMode === mode;
+      var style = 'font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;padding:5px 14px;border-radius:4px;transition:all .15s;cursor:pointer;' +
+        'border:1px solid ' + (active ? '#FFB81C' : 'rgba(255,255,255,0.1)') + ';' +
+        'background:' + (active ? 'rgba(255,184,28,0.12)' : 'rgba(255,255,255,0.03)') + ';' +
+        'color:' + (active ? '#FFB81C' : 'rgba(255,255,255,0.45)') + ';';
+      return '<button style="' + style + '" data-pt-mode="' + mode + '">' + label + '</button>';
+    }
+    bar.innerHTML =
+      '<div style="display:flex;align-items:center;gap:10px;padding:0 0 14px;border-bottom:1px solid rgba(255,255,255,0.05);margin-bottom:18px;flex-wrap:wrap">' +
+      '<span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:rgba(255,255,255,0.25);text-transform:uppercase;white-space:nowrap">Pitch Types</span>' +
+      '<div style="display:flex;gap:6px;flex-wrap:wrap">' + modeBtn('category', 'Categories') + modeBtn('detail', 'Intricate') + '</div></div>';
+    bar.querySelectorAll('[data-pt-mode]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        pitchTypeMode = btn.dataset.ptMode === 'detail' ? 'detail' : 'category';
+        PITCH_TYPE_DISPLAY_MODE = pitchTypeMode;
+        localStorage.setItem('dd_pitch_type_mode', pitchTypeMode);
+        activateTab(currentTab);
+      });
+    });
+  }
+
   var _origActivate = activateTab;
   activateTab = function(t) {
     currentTab = t;
     renderSeasonFilterBar(t);
+    renderPitchTypeModeBar(t);
     _origActivate(t);
   };
 
@@ -2909,9 +3064,9 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
         'Struggles to produce on pitches '+zc.label.toLowerCase()+' - a notable weakness.');
     });
     var pitchTypes=[];
-    scB.forEach(function(s){ if(s.pitch_type&&!pitchTypes.includes(s.pitch_type))pitchTypes.push(s.pitch_type); });
+    scB.forEach(function(s){ var pt=getPitchTypeLabel(s); if(pt&&!pitchTypes.includes(pt))pitchTypes.push(pt); });
     pitchTypes.forEach(function(pt) {
-      var ptFn=function(s){return s.pitch_type===pt;};
+      var ptFn=function(s){return getPitchTypeLabel(s)===pt;};
       var pts=scB.filter(ptFn); if(pts.length<6)return;
       var myW=zoneWhiff(pts), myBA=zoneBA(pts), lgW=lgArr(ptFn,zoneWhiff), lgBA=lgArr(ptFn,zoneBA);
       evalZone(pt+' WHIFF%', myW!=null?fmt1(myW*100)+'%':'-', pctRank(myW,lgW), false,
@@ -2926,7 +3081,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
         {label:'Away & Low',fn:function(s){return outsideFn(s)&&lowFn(s);}}
       ];
       COMBOS.forEach(function(cz) {
-        var fn=function(s){return s.pitch_type===pt&&cz.fn(s);};
+        var fn=function(s){return getPitchTypeLabel(s)===pt&&cz.fn(s);};
         var cpts=scB.filter(fn); if(cpts.length<5)return;
         var cW=zoneWhiff(cpts), cBA=zoneBA(cpts), lcW=lgArr(fn,zoneWhiff), lcBA=lgArr(fn,zoneBA);
         evalZone(pt+' - '+cz.label+' WHIFF%', cW!=null?fmt1(cW*100)+'%':'-', pctRank(cW,lcW), false,
@@ -3064,7 +3219,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
 
     // Zone / pitch-type approach
     var pitchTypes=[];
-    scP.forEach(function(s){if(s.pitch_type&&!pitchTypes.includes(s.pitch_type))pitchTypes.push(s.pitch_type);});
+    scP.forEach(function(s){var pt=getPitchTypeLabel(s); if(pt&&!pitchTypes.includes(pt))pitchTypes.push(pt);});
     // x = vertical (0=bottom, 1=top), y = horizontal (-1=left, 1=right catcher view)
     var inZoneFn=xyInZone;
     var PZONES=[
@@ -3075,7 +3230,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       {label:'Out of Zone',fn:xyOutOfZone}
     ];
     pitchTypes.forEach(function(pt){
-      var ptFn=function(s){return s.pitch_type===pt;};
+      var ptFn=function(s){return getPitchTypeLabel(s)===pt;};
       var pts=scP.filter(ptFn); if(pts.length<6)return;
       var myW=zoneWhiff(pts), myBA=zoneBA(pts), lgW=lgArr(ptFn,zoneWhiff), lgBA=lgArr(ptFn,zoneBA);
       evalZone(pt+' WHIFF%', myW!=null?fmt1(myW*100)+'%':'-', pctRank(myW,lgW), true,
@@ -3084,7 +3239,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
       evalZone(pt+' AVG AGNST', myBA!=null?fmt3(myBA):'-', pctRank(myBA,lgBA), false,
         null, 'Hitters are posting an above-average average against the '+pt+'.');
       PZONES.forEach(function(pz){
-        var fn=function(s){return s.pitch_type===pt&&pz.fn(s);};
+        var fn=function(s){return getPitchTypeLabel(s)===pt&&pz.fn(s);};
         var cpts=scP.filter(fn); if(cpts.length<5)return;
         var cW=zoneWhiff(cpts), lcW=lgArr(fn,zoneWhiff);
         evalZone(pt+' - '+pz.label, cW!=null?fmt1(cW*100)+'%':'-', pctRank(cW,lcW), true,
@@ -4295,19 +4450,12 @@ function renderGameLog(name, pitch) {
   });
   var gameDates = Object.keys(gameMap).sort();
 
-  var PITCH_COLORS = {
-    'Fastball':'#f87171','Breaking Ball':'#60a5fa','Offspeed':'#a78bfa',
-    'Changeup':'#34d399','Curveball':'#fb923c','Slider':'#facc15',
-    'Cutter':'#f472b6','Sinker':'#22d3ee'
-  };
-  var FALLBACK_COLORS = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee'];
+  var pitchTypeMode = PITCH_TYPE_DISPLAY_MODE;
 
   // Season-level pitch type color map
-  var allTypeCounts = {};
-  sc.forEach(function(s) { var t=s.pitch_type||'Unknown'; allTypeCounts[t]=(allTypeCounts[t]||0)+1; });
+  var allTypeCounts = buildPitchTypeCounts(sc, pitchTypeMode);
   var allTypeSet = Object.keys(allTypeCounts).sort(function(a,b){return allTypeCounts[b]-allTypeCounts[a];});
-  var typeColorMap = {};
-  allTypeSet.forEach(function(t,i){ typeColorMap[t]=PITCH_COLORS[t]||FALLBACK_COLORS[i%FALLBACK_COLORS.length]; });
+  var typeColorMap = buildPitchTypeColorMap(allTypeSet, pitchTypeMode);
 
   var html =
     '<div class="stat-card">' +
@@ -4408,7 +4556,7 @@ function renderGameLog(name, pitch) {
     function buildGameDetail(dt, gsc, tcMap) {
       var gTot = gsc.length;
       var typeCounts = {};
-      gsc.forEach(function(s){ var t=s.pitch_type||'Unknown'; typeCounts[t]=(typeCounts[t]||0)+1; });
+      gsc.forEach(function(s){ var t=getPitchTypeLabel(s, pitchTypeMode); typeCounts[t]=(typeCounts[t]||0)+1; });
       var typeSet = Object.keys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a];});
 
       // Pitch type filter buttons
@@ -4463,9 +4611,9 @@ function renderGameLog(name, pitch) {
       var total = points.length;
       if (!total) return '<tr><td colspan="6" style="text-align:center;color:rgba(255,255,255,0.35);padding:18px">No pitches for this filter</td></tr>';
       var typeCounts = {};
-      points.forEach(function(s){ var t=s.pitch_type||'Unknown'; typeCounts[t]=(typeCounts[t]||0)+1; });
-      return Object.keys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a];}).map(function(t){
-        var pts = points.filter(function(s){return (s.pitch_type||'Unknown')===t;});
+        points.forEach(function(s){ var t=getPitchTypeLabel(s, pitchTypeMode); typeCounts[t]=(typeCounts[t]||0)+1; });
+        return Object.keys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a];}).map(function(t){
+        var pts = points.filter(function(s){return getPitchTypeLabel(s, pitchTypeMode)===t;});
         var n = pts.length;
         var str = pts.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
         var swS = pts.filter(function(s){return s.outcome==='Swinging Strike';}).length;
@@ -4566,7 +4714,7 @@ function renderGameLog(name, pitch) {
       } else {
         // Scatter dots - solid color by pitch type, no symbols
         allPts.forEach(function(s) {
-          var t=s.pitch_type||'Unknown', color=tcMap[t]||'#888';
+          var t=getPitchTypeLabel(s, pitchTypeMode), color=tcMap[t]||'#888';
           var cx=toCx(s.x), cy=toCy(s.y);
           ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2);
           ctx.fillStyle=color+'cc'; ctx.fill();
@@ -4609,7 +4757,7 @@ function renderGameLog(name, pitch) {
         var handF2 = activeHand2 ? activeHand2.dataset.hand : 'all';
         var filtered = gsc2;
         if (handF2 !== 'all') filtered = filtered.filter(function(s){ return s.batter_side === handF2; });
-        if (type2 !== 'all') filtered = filtered.filter(function(s){ return (s.pitch_type||'Unknown')===type2; });
+        if (type2 !== 'all') filtered = filtered.filter(function(s){ return pitchTypeMatches(s, type2, pitchTypeMode); });
         drawGameCanvas(dt2, filtered, typeColorMap);
         updatePitcherGameDetail(dt2, filtered, typeColorMap);
         return;
@@ -4628,7 +4776,7 @@ function renderGameLog(name, pitch) {
         var ptType4 = activePT4 ? activePT4.dataset.type : 'all';
         var filtered4 = gsc4;
         if (hand4 !== 'all') filtered4 = filtered4.filter(function(s){ return s.batter_side === hand4; });
-        if (ptType4 !== 'all') filtered4 = filtered4.filter(function(s){ return (s.pitch_type||'Unknown')===ptType4; });
+        if (ptType4 !== 'all') filtered4 = filtered4.filter(function(s){ return pitchTypeMatches(s, ptType4, pitchTypeMode); });
         drawGameCanvas(dt4, filtered4, typeColorMap);
         updatePitcherGameDetail(dt4, filtered4, typeColorMap);
         return;
@@ -4648,7 +4796,7 @@ function renderGameLog(name, pitch) {
         var handF = activeH ? activeH.dataset.hand : 'all';
         var filtered3 = gsc3;
         if (handF !== 'all') filtered3 = filtered3.filter(function(s){ return s.batter_side === handF; });
-        if (ptType !== 'all') filtered3 = filtered3.filter(function(s){ return (s.pitch_type||'Unknown')===ptType; });
+        if (ptType !== 'all') filtered3 = filtered3.filter(function(s){ return pitchTypeMatches(s, ptType, pitchTypeMode); });
         drawGameCanvas(dt3, filtered3, typeColorMap);
         return;
       }
@@ -4706,14 +4854,11 @@ function initBatterGameLog(name, pitch) {
     { id:'contact', label:'Contact',  fn: function(s){ return ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sacrifice Bunt','Truncated Out'].includes(s.outcome); } },
     { id:'hits',    label:'Hits',     fn: function(s){ return ['Single','Double','Triple','Home Run'].includes(s.outcome); } }
   ];
-  var BGL_PITCH_COLORS = {'Fastball':'#f87171','Breaking Ball':'#60a5fa','Offspeed':'#a78bfa','Changeup':'#34d399','Curveball':'#fb923c','Slider':'#facc15','Cutter':'#f472b6','Sinker':'#22d3ee'};
-  var BGL_FALLBACK_COLORS = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee'];
+  var pitchTypeMode = PITCH_TYPE_DISPLAY_MODE;
   var bglTypeCounts = {};
-  sc.forEach(function(s){ var t=s.pitch_type||'Unknown'; bglTypeCounts[t]=(bglTypeCounts[t]||0)+1; });
-  var bglTypeColorMap = {};
-  Object.keys(bglTypeCounts).sort(function(a,b){return bglTypeCounts[b]-bglTypeCounts[a];}).forEach(function(t,i){
-    bglTypeColorMap[t] = BGL_PITCH_COLORS[t] || BGL_FALLBACK_COLORS[i % BGL_FALLBACK_COLORS.length];
-  });
+  sc.forEach(function(s){ var t=getPitchTypeLabel(s, pitchTypeMode); bglTypeCounts[t]=(bglTypeCounts[t]||0)+1; });
+  var bglTypeSet = Object.keys(bglTypeCounts).sort(function(a,b){return bglTypeCounts[b]-bglTypeCounts[a];});
+  var bglTypeColorMap = buildPitchTypeColorMap(bglTypeSet, pitchTypeMode);
 
   var CONTACT_OUTCOMES = ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sacrifice Bunt','Truncated Out'];
   var HIT_OUTCOMES     = ['Single','Double','Triple','Home Run'];
@@ -4808,7 +4953,7 @@ function initBatterGameLog(name, pitch) {
 
     // Pitch type breakdown
     var typeCounts2 = {};
-    gsc.forEach(function(s){ var t=s.pitch_type||'Unknown'; typeCounts2[t]=(typeCounts2[t]||0)+1; });
+    gsc.forEach(function(s){ var t=getPitchTypeLabel(s, pitchTypeMode); typeCounts2[t]=(typeCounts2[t]||0)+1; });
     var typeSet2 = Object.keys(typeCounts2).sort(function(a,b){return typeCounts2[b]-typeCounts2[a];});
     var typeColorMap2 = bglTypeColorMap;
 
@@ -4837,7 +4982,7 @@ function initBatterGameLog(name, pitch) {
     var OOZ_FN = xyOutOfZone;
     var SWING_OUTS2 = ['Swinging Strike','Foul','Strikeout Swinging','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Error','Sacrifice Fly'];
     var pitchTypeRows = typeSet2.map(function(t){
-      var pts2 = gsc.filter(function(s){return (s.pitch_type||'Unknown')===t;});
+      var pts2 = gsc.filter(function(s){return getPitchTypeLabel(s, pitchTypeMode)===t;});
       var n = pts2.length;
       var swS = pts2.filter(function(s){return s.outcome==='Swinging Strike';}).length;
       var fo  = pts2.filter(function(s){return s.outcome==='Foul';}).length;
@@ -4903,7 +5048,7 @@ function initBatterGameLog(name, pitch) {
     function getBglFiltered() {
       var activePT = document.querySelector('.bgl-pt-btn.active[data-dt="'+dt+'"]');
       var ptType = activePT ? activePT.dataset.type : 'all';
-      return ptType === 'all' ? gsc : gsc.filter(function(s){ return (s.pitch_type||'Unknown') === ptType; });
+      return ptType === 'all' ? gsc : gsc.filter(function(s){ return pitchTypeMatches(s, ptType, pitchTypeMode); });
     }
     // Wire pitch type filter buttons
     document.querySelectorAll('.bgl-pt-btn[data-dt="'+dt+'"]').forEach(function(btn) {
@@ -4999,7 +5144,7 @@ function initBatterGameLog(name, pitch) {
       // Scatter dots keep pitch-type colors regardless of the active result filter.
       pts.forEach(function(s){
         var cx=toCx(s.x), cy=toCy(s.y);
-        var rgb = hexToRgb(bglTypeColorMap[s.pitch_type||'Unknown'] || '#888888');
+        var rgb = hexToRgb(bglTypeColorMap[getPitchTypeLabel(s, pitchTypeMode)] || '#888888');
         ctx.beginPath(); ctx.arc(cx,cy,4,0,Math.PI*2);
         ctx.fillStyle='rgba('+rgb+',0.7)'; ctx.fill();
         ctx.strokeStyle='rgba('+rgb+',0.9)'; ctx.lineWidth=0.8; ctx.stroke();
@@ -5183,29 +5328,12 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     return;
   }
 
-  var PITCH_COLORS = {
-    'Fastball':     '#f87171',
-    'Breaking Ball':'#60a5fa',
-    'Offspeed':     '#a78bfa',
-    'Changeup':     '#34d399',
-    'Curveball':    '#fb923c',
-    'Slider':       '#facc15',
-    'Cutter':       '#f472b6',
-    'Sinker':       '#22d3ee'
-  };
-  var FALLBACK_COLORS = ['#f87171','#60a5fa','#a78bfa','#34d399','#fb923c','#facc15','#f472b6','#22d3ee'];
-  var typeCounts = {};
-  points.forEach(function(s) {
-    var t = s.pitch_type || s.type || 'Unknown';
-    typeCounts[t] = (typeCounts[t] || 0) + 1;
-  });
+  var pitchTypeMode = PITCH_TYPE_DISPLAY_MODE;
+  var typeCounts = buildPitchTypeCounts(points, pitchTypeMode);
   var typeSet = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
-  var typeColorMap = {};
-  typeSet.forEach(function(t, i) {
-    typeColorMap[t] = PITCH_COLORS[t] || FALLBACK_COLORS[i % FALLBACK_COLORS.length];
-  });
+  var typeColorMap = buildPitchTypeColorMap(typeSet, pitchTypeMode);
   function dotColor(s) {
-    var t = s.pitch_type || s.type || 'Unknown';
+    var t = getPitchTypeLabel(s, pitchTypeMode);
     return typeColorMap[t] || '#6b7a9a';
   }
 
@@ -5896,7 +6024,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
 
     var filtered = points.filter(function(s) {
       if (!resultMatch(s, activeResult)) return false;
-      if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
+      if (!pitchTypeMatches(s, activeType, pitchTypeMode)) return false;
       if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
       if (allDates.length > 1) {
         if (activeSeasonFilter !== 'all' && s.date && !s.date.startsWith(activeSeasonFilter.replace('year:', ''))) return false;
@@ -5935,7 +6063,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
     var best = null, bestDist = Infinity;
     var filtered = points.filter(function(s) {
       if (!resultMatch(s, activeResult)) return false;
-      if (activeType !== 'all' && (s.pitch_type || s.type || 'Unknown') !== activeType) return false;
+      if (!pitchTypeMatches(s, activeType, pitchTypeMode)) return false;
       if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
       if (allDates.length > 1) {
         if (activeSeasonFilter !== 'all' && s.date && !s.date.startsWith(activeSeasonFilter.replace('year:', ''))) return false;
@@ -5956,7 +6084,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
       var offY = tty > H*0.65 ? -110 : 8;
       tooltip.style.left = (ttx+offX)+'px';
       tooltip.style.top  = (tty+offY)+'px';
-      var t = best.pitch_type || best.type || 'Unknown';
+      var t = getPitchTypeLabel(best, pitchTypeMode);
       var dotStyle = 'display:inline-block;width:10px;height:10px;border-radius:50%;background:'+typeColorMap[t]+';margin-right:6px;vertical-align:middle';
       tooltip.innerHTML =
         '<div class="zt-pitch"><span style="'+dotStyle+'"></span>'+t+'</div>'+
@@ -6058,11 +6186,8 @@ function renderSplits(name, type, pitch, seasonFilter) {
     { key: 'pre2k',   label: 'Pre-2K',           test: function(c) { return ["'0-0","'1-0","'2-0","'3-0","'1-1","'2-1","'3-1",'0-0','1-0','2-0','3-0','1-1','2-1','3-1'].includes(c); } }
   ];
 
-  var typeCounts = {};
-  points.forEach(function(s) {
-    var t = s.pitch_type || s.type || 'Unknown';
-    typeCounts[t] = (typeCounts[t] || 0) + 1;
-  });
+  var pitchTypeMode = PITCH_TYPE_DISPLAY_MODE;
+  var typeCounts = buildPitchTypeCounts(points, pitchTypeMode);
   var typeSet = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
 
   var splitsHTML =
@@ -6094,11 +6219,8 @@ function buildSplitsTables(points) {
     { key: 'pre2k',  label: 'Pre-2K',        test: function(c) { c=c.replace(/^'/,''); return ['0-0','1-0','2-0','3-0','1-1','2-1','3-1'].includes(c); } }
   ];
 
-  var typeCounts = {};
-  points.forEach(function(s) {
-    var t = s.pitch_type || s.type || 'Unknown';
-    typeCounts[t] = (typeCounts[t] || 0) + 1;
-  });
+  var pitchTypeMode = PITCH_TYPE_DISPLAY_MODE;
+  var typeCounts = buildPitchTypeCounts(points, pitchTypeMode);
   var typeSet = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
 
   var countTableHTML =
@@ -6119,7 +6241,7 @@ function buildSplitsTables(points) {
       }
       var tc = {};
       typeSet.forEach(function(t) { tc[t] = 0; });
-      subset.forEach(function(s) { var t = s.pitch_type || s.type || 'Unknown'; if (tc[t]!==undefined) tc[t]++; });
+      subset.forEach(function(s) { var t = getPitchTypeLabel(s, pitchTypeMode); if (tc[t]!==undefined) tc[t]++; });
       return '<tr>' +
         '<td style="text-align:left;color:var(--text)">' + grp.label + '</td>' +
         typeSet.map(function(t) { return '<td class="highlight-val">' + fmt1(tc[t]/n*100) + '%</td>'; }).join('') +
@@ -6129,7 +6251,7 @@ function buildSplitsTables(points) {
 
   var typeMap = {};
   points.forEach(function(s) {
-    var t = s.pitch_type || s.type || 'Unknown';
+    var t = getPitchTypeLabel(s, pitchTypeMode);
     if (!typeMap[t]) typeMap[t] = { total:0, k:0, hit:0, ball:0, strike:0 };
     typeMap[t].total++;
     if (s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking') typeMap[t].k++;
