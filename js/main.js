@@ -876,12 +876,18 @@ function buildPitchTypeCounts(points, mode) {
   });
   return counts;
 }
+function visiblePitchTypeKeys(typeCounts) {
+  return Object.keys(typeCounts || {}).filter(function(t) { return t !== 'Unknown'; });
+}
 function buildPitchTypeColorMap(typeSet, mode) {
   var map = {}, base = (mode || PITCH_TYPE_DISPLAY_MODE) === 'category' ? PITCH_CATEGORY_COLORS : PITCH_DETAIL_COLORS;
   (typeSet || []).forEach(function(t, i) {
     map[t] = base[t] || PITCH_FALLBACK_COLORS[i % PITCH_FALLBACK_COLORS.length];
   });
   return map;
+}
+function shouldDisplayPitchType(s, mode) {
+  return getPitchTypeLabel(s, mode) !== 'Unknown';
 }
 function pitchTypeMatches(s, activeType, mode) {
   return activeType === 'all' || getPitchTypeLabel(s, mode) === activeType;
@@ -3064,7 +3070,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
         'Struggles to produce on pitches '+zc.label.toLowerCase()+' - a notable weakness.');
     });
     var pitchTypes=[];
-    scB.forEach(function(s){ var pt=getPitchTypeLabel(s); if(pt&&!pitchTypes.includes(pt))pitchTypes.push(pt); });
+    scB.forEach(function(s){ var pt=getPitchTypeLabel(s); if(pt&&pt!=='Unknown'&&!pitchTypes.includes(pt))pitchTypes.push(pt); });
     pitchTypes.forEach(function(pt) {
       var ptFn=function(s){return getPitchTypeLabel(s)===pt;};
       var pts=scB.filter(ptFn); if(pts.length<6)return;
@@ -3219,7 +3225,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
 
     // Zone / pitch-type approach
     var pitchTypes=[];
-    scP.forEach(function(s){var pt=getPitchTypeLabel(s); if(pt&&!pitchTypes.includes(pt))pitchTypes.push(pt);});
+    scP.forEach(function(s){var pt=getPitchTypeLabel(s); if(pt&&pt!=='Unknown'&&!pitchTypes.includes(pt))pitchTypes.push(pt);});
     // x = vertical (0=bottom, 1=top), y = horizontal (-1=left, 1=right catcher view)
     var inZoneFn=xyInZone;
     var PZONES=[
@@ -4454,7 +4460,7 @@ function renderGameLog(name, pitch) {
 
   // Season-level pitch type color map
   var allTypeCounts = buildPitchTypeCounts(sc, pitchTypeMode);
-  var allTypeSet = Object.keys(allTypeCounts).sort(function(a,b){return allTypeCounts[b]-allTypeCounts[a];});
+  var allTypeSet = visiblePitchTypeKeys(allTypeCounts).sort(function(a,b){return allTypeCounts[b]-allTypeCounts[a];});
   var typeColorMap = buildPitchTypeColorMap(allTypeSet, pitchTypeMode);
 
   var html =
@@ -4557,7 +4563,7 @@ function renderGameLog(name, pitch) {
       var gTot = gsc.length;
       var typeCounts = {};
       gsc.forEach(function(s){ var t=getPitchTypeLabel(s, pitchTypeMode); typeCounts[t]=(typeCounts[t]||0)+1; });
-      var typeSet = Object.keys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a];});
+      var typeSet = visiblePitchTypeKeys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a];});
 
       // Pitch type filter buttons
       var filterBtns = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">' +
@@ -4612,7 +4618,9 @@ function renderGameLog(name, pitch) {
       if (!total) return '<tr><td colspan="6" style="text-align:center;color:rgba(255,255,255,0.35);padding:18px">No pitches for this filter</td></tr>';
       var typeCounts = {};
         points.forEach(function(s){ var t=getPitchTypeLabel(s, pitchTypeMode); typeCounts[t]=(typeCounts[t]||0)+1; });
-        return Object.keys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a];}).map(function(t){
+        var visibleTypes = visiblePitchTypeKeys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a];});
+        if (!visibleTypes.length) return '<tr><td colspan="6" style="text-align:center;color:rgba(255,255,255,0.35);padding:18px">No displayable pitch types</td></tr>';
+        return visibleTypes.map(function(t){
         var pts = points.filter(function(s){return getPitchTypeLabel(s, pitchTypeMode)===t;});
         var n = pts.length;
         var str = pts.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
@@ -4666,7 +4674,7 @@ function renderGameLog(name, pitch) {
       var canvasId = 'gl-canvas-' + dt.replace(/-/g,'');
       var canvas = document.getElementById(canvasId);
       if (!canvas) return;
-      var allPts = gsc.filter(hasPitchLocation);
+      var allPts = gsc.filter(function(s) { return hasPitchLocation(s) && shouldDisplayPitchType(s, pitchTypeMode); });
 
       var mode = glViewMode[dt] || 'scatter';
 
@@ -4857,7 +4865,7 @@ function initBatterGameLog(name, pitch) {
   var pitchTypeMode = PITCH_TYPE_DISPLAY_MODE;
   var bglTypeCounts = {};
   sc.forEach(function(s){ var t=getPitchTypeLabel(s, pitchTypeMode); bglTypeCounts[t]=(bglTypeCounts[t]||0)+1; });
-  var bglTypeSet = Object.keys(bglTypeCounts).sort(function(a,b){return bglTypeCounts[b]-bglTypeCounts[a];});
+  var bglTypeSet = visiblePitchTypeKeys(bglTypeCounts).sort(function(a,b){return bglTypeCounts[b]-bglTypeCounts[a];});
   var bglTypeColorMap = buildPitchTypeColorMap(bglTypeSet, pitchTypeMode);
 
   var CONTACT_OUTCOMES = ['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sacrifice Bunt','Truncated Out'];
@@ -4954,7 +4962,7 @@ function initBatterGameLog(name, pitch) {
     // Pitch type breakdown
     var typeCounts2 = {};
     gsc.forEach(function(s){ var t=getPitchTypeLabel(s, pitchTypeMode); typeCounts2[t]=(typeCounts2[t]||0)+1; });
-    var typeSet2 = Object.keys(typeCounts2).sort(function(a,b){return typeCounts2[b]-typeCounts2[a];});
+    var typeSet2 = visiblePitchTypeKeys(typeCounts2).sort(function(a,b){return typeCounts2[b]-typeCounts2[a];});
     var typeColorMap2 = bglTypeColorMap;
 
     var modeBtns = HM_MODES.map(function(m, i){
@@ -5002,6 +5010,9 @@ function initBatterGameLog(name, pitch) {
         '<td>'+chaseStr+'</td>' +
         '</tr>';
     }).join('');
+    if (!pitchTypeRows) {
+      pitchTypeRows = '<tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.35);padding:18px">No displayable pitch types</td></tr>';
+    }
 
     return '<div style="padding:20px 24px">' +
       // Mode filter buttons full-width on top
@@ -5120,7 +5131,7 @@ function initBatterGameLog(name, pitch) {
     var zx1=toCx(-1),zx2=toCx(1),zy1=toCy(1),zy2=toCy(0);
 
     // Filter pitches for this mode
-    var pts = gsc.filter(function(s){ return hasPitchLocation(s)&&mode.fn(s); });
+    var pts = gsc.filter(function(s){ return hasPitchLocation(s)&&shouldDisplayPitchType(s, pitchTypeMode)&&mode.fn(s); });
     if (!gsc.filter(hasPitchLocation).length) {
       ctx.fillStyle = 'rgba(255,255,255,0.28)';
       ctx.font = '12px DM Mono,monospace';
@@ -5330,7 +5341,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
 
   var pitchTypeMode = PITCH_TYPE_DISPLAY_MODE;
   var typeCounts = buildPitchTypeCounts(points, pitchTypeMode);
-  var typeSet = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
+  var typeSet = visiblePitchTypeKeys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
   var typeColorMap = buildPitchTypeColorMap(typeSet, pitchTypeMode);
   function dotColor(s) {
     var t = getPitchTypeLabel(s, pitchTypeMode);
@@ -6022,7 +6033,8 @@ function renderZone(name, type, pitch, container, seasonFilter) {
 
     drawBackground(clean ? {clean:true} : {});
 
-    var filtered = points.filter(function(s) {
+    function zoneFilterMatch(s, hideUnknown) {
+      if (hideUnknown && !shouldDisplayPitchType(s, pitchTypeMode)) return false;
       if (!resultMatch(s, activeResult)) return false;
       if (!pitchTypeMatches(s, activeType, pitchTypeMode)) return false;
       if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
@@ -6031,13 +6043,16 @@ function renderZone(name, type, pitch, container, seasonFilter) {
         if (activeZoneDate !== 'all' && s.date !== activeZoneDate) return false;
       }
       return true;
-    });
+    }
+
+    var statFiltered = points.filter(function(s) { return zoneFilterMatch(s, false); });
+    var filtered = points.filter(function(s) { return zoneFilterMatch(s, true); });
 
     // Update pitch count label
     var countEl = document.getElementById('zone-pitch-count');
-    if (countEl) countEl.textContent = filtered.length + ' pitches plotted';
+    if (countEl) countEl.textContent = statFiltered.length + ' pitches plotted';
 
-    updateStats(filtered);
+    updateStats(statFiltered);
 
     if      (activeView === 'scatter') drawScatter(filtered);
     else if (activeView === 'grid')    drawGrid(filtered);
@@ -6062,6 +6077,7 @@ function renderZone(name, type, pitch, container, seasonFilter) {
 
     var best = null, bestDist = Infinity;
     var filtered = points.filter(function(s) {
+      if (!shouldDisplayPitchType(s, pitchTypeMode)) return false;
       if (!resultMatch(s, activeResult)) return false;
       if (!pitchTypeMatches(s, activeType, pitchTypeMode)) return false;
       if (activeHand !== 'all' && (type === 'batter' ? (s.pitcher_side || '') : (s.batter_side || s.side || '')) !== activeHand) return false;
@@ -6188,7 +6204,7 @@ function renderSplits(name, type, pitch, seasonFilter) {
 
   var pitchTypeMode = PITCH_TYPE_DISPLAY_MODE;
   var typeCounts = buildPitchTypeCounts(points, pitchTypeMode);
-  var typeSet = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
+  var typeSet = visiblePitchTypeKeys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
 
   var splitsHTML =
     '<div style="margin-bottom:16px;display:flex;align-items:center;gap:10px">' +
@@ -6221,7 +6237,7 @@ function buildSplitsTables(points) {
 
   var pitchTypeMode = PITCH_TYPE_DISPLAY_MODE;
   var typeCounts = buildPitchTypeCounts(points, pitchTypeMode);
-  var typeSet = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
+  var typeSet = visiblePitchTypeKeys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
 
   var countTableHTML =
     '<div class="stat-card" style="margin-bottom:20px">' +
@@ -6260,25 +6276,20 @@ function buildSplitsTables(points) {
     if (['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome)) typeMap[t].strike++;
   });
 
-  var sortedTypeEntries = Object.entries(typeMap).sort(function(a, b) { return b[1].total - a[1].total; });
-
-  var pitchMixHTML =
-    '<div class="stat-card" style="margin-bottom:20px">' +
-    '<div class="stat-card-header"><span class="stat-card-title">Pitch Mix</span></div>' +
-    '<div class="pitch-mix-grid">' +
-    sortedTypeEntries.map(function(e) {
+  var sortedTypeEntries = Object.entries(typeMap)
+    .filter(function(e) { return e[0] !== 'Unknown'; })
+    .sort(function(a, b) { return b[1].total - a[1].total; });
+  var pitchMixItems = sortedTypeEntries.length
+    ? sortedTypeEntries.map(function(e) {
       return '<div class="pitch-mix-item">' +
         '<div class="pitch-mix-pct">' + fmt1(e[1].total/total*100) + '%</div>' +
         '<div class="pitch-mix-type">' + e[0] + '</div>' +
         '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);margin-top:4px">' + e[1].total + ' pitches</div>' +
         '</div>';
-    }).join('') + '</div></div>' +
-    '<div class="stat-card" style="margin-bottom:20px">' +
-    '<div class="stat-card-header"><span class="stat-card-title">By Pitch Type</span></div>' +
-    '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
-    '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>K</th><th>HIT</th><th>STR%</th><th>BALL%</th>' +
-    '</tr></thead><tbody>' +
-    sortedTypeEntries.map(function(e) {
+    }).join('')
+    : '<div style="font-family:var(--font-mono);font-size:12px;color:var(--text-dim);padding:18px">No displayable pitch types</div>';
+  var pitchTypeTableRows = sortedTypeEntries.length
+    ? sortedTypeEntries.map(function(e) {
       var d = e[1];
       return '<tr>' +
         '<td style="text-align:left;color:var(--text)">' + e[0] + '</td>' +
@@ -6289,7 +6300,20 @@ function buildSplitsTables(points) {
         '<td>' + fmt1(d.strike/d.total*100) + '%</td>' +
         '<td>' + fmt1(d.ball/d.total*100) + '%</td>' +
         '</tr>';
-    }).join('') +
+    }).join('')
+    : '<tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:18px">No displayable pitch types</td></tr>';
+
+  var pitchMixHTML =
+    '<div class="stat-card" style="margin-bottom:20px">' +
+    '<div class="stat-card-header"><span class="stat-card-title">Pitch Mix</span></div>' +
+    '<div class="pitch-mix-grid">' +
+    pitchMixItems + '</div></div>' +
+    '<div class="stat-card" style="margin-bottom:20px">' +
+    '<div class="stat-card-header"><span class="stat-card-title">By Pitch Type</span></div>' +
+    '<div class="table-wrap"><table class="stat-table"><thead><tr>' +
+    '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>K</th><th>HIT</th><th>STR%</th><th>BALL%</th>' +
+    '</tr></thead><tbody>' +
+    pitchTypeTableRows +
     '</tbody></table></div></div>';
 
   return pitchMixHTML + countTableHTML;
