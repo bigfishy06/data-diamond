@@ -512,6 +512,40 @@
   function f1(v){if(v==null||isNaN(v))return'--';return parseFloat(v).toFixed(1);}
   function fN(v){if(v==null||isNaN(v))return'--';return String(Math.round(v));}
   function xp(n,d){return d>0?n/d*100:0;}
+  function gpPitchTypeBucket(s) {
+    var raw = String((s && (s.pitch_type || s.type)) || 'Unknown').trim() || 'Unknown';
+    var key = raw.toLowerCase().replace(/[\s_-]+/g, ' ');
+    if (key.indexOf('fastball') !== -1 || key === 'four seam' || key === '4 seam' || key === 'two seam' || key === '2 seam' || key === 'sinker' || key === 'cutter' || key === 'cut fastball') return 'Fastball';
+    if (key.indexOf('slider') !== -1 || key.indexOf('curve') !== -1 || key.indexOf('sweeper') !== -1 || key.indexOf('slurve') !== -1 || key.indexOf('change') !== -1 || key.indexOf('split') !== -1 || key.indexOf('fork') !== -1 || key.indexOf('knuckle') !== -1 || key === 'breaking ball' || key === 'offspeed') return 'Offspeed';
+    return 'Unknown';
+  }
+  function gpPitchCountGroups() {
+    return [
+      { label:'All Counts', test:function(){ return true; } },
+      { label:'Early Count', test:function(c){ c=String(c||'').replace(/^'/,''); return ['0-0','1-0','0-1'].includes(c); } },
+      { label:'Pitcher Ahead', test:function(c){ c=String(c||'').replace(/^'/,''); return ['0-1','0-2','1-2'].includes(c); } },
+      { label:'Pitcher Behind', test:function(c){ c=String(c||'').replace(/^'/,''); return ['1-0','2-0','3-0','2-1','3-1'].includes(c); } },
+      { label:'Pre-2K', test:function(c){ c=String(c||'').replace(/^'/,''); return ['0-0','1-0','2-0','3-0','1-1','2-1','3-1'].includes(c); } }
+    ];
+  }
+  function gpBuildPitchCountTendencyRows(points) {
+    var typeSet = ['Fastball','Offspeed'].filter(function(t) {
+      return (points || []).some(function(s) { return gpPitchTypeBucket(s) === t; });
+    });
+    if (!typeSet.length) return { types: [], rows: [] };
+    var rows = gpPitchCountGroups().map(function(grp) {
+      var subset = (points || []).filter(function(s) { return grp.test(s.count || ''); });
+      var n = subset.length;
+      var row = [grp.label];
+      typeSet.forEach(function(t) {
+        var c = subset.filter(function(s) { return gpPitchTypeBucket(s) === t; }).length;
+        row.push(n ? f1(c/n*100) + '%' : '--');
+      });
+      row.push(String(n));
+      return row;
+    });
+    return { types: typeSet, rows: rows };
+  }
 
   function drawLogoImg(d, lx, ly, size) {
     var px=8, sz=Math.round(size*px);
@@ -799,6 +833,14 @@
         return[t,String(cnt),f1(xp(cnt,tot))+'%',String(tk),String(th),f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%'];
       });
       y=drawTbl(d,atH,atR,atW,y,[2,5]);y+=2;
+    }
+    var tendency = gpBuildPitchCountTendencyRows(sc);
+    if(tendency.rows.length){
+      if(PH-y < 58){d.addPage();drawBg(d);y=MT+8;}
+      y=drawSec(d,'Pitch Tendencies by Count',y);
+      var tendHeaders = ['SITUATION'].concat(tendency.types).concat(['#']);
+      var tendW = [58].concat(tendency.types.map(function(){return 32;})).concat([18]);
+      y=drawTbl(d,tendHeaders,tendency.rows,tendW,y,[1,2]);y+=2;
     }
     var splitData=['R','L'].map(function(hand){
       var sub=sc.filter(function(s){return s.batter_side===hand;});
@@ -1991,6 +2033,15 @@ Zane Skansi,Kitchener Panthers`;
         sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
         var arsenal=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];}).slice(0,3)
           .map(function(e){return e[0].slice(0,4)+' '+f1(xp(e[1],tot))+'%';}).join('  ')||'--';
+        var tendCompact=(function(){
+          var tend=gpBuildPitchCountTendencyRows(sc);
+          if(!tend.rows.length)return'';
+          function val(row,label){var idx=tend.types.indexOf(label);return idx>=0?row[idx+1]:'--';}
+          return tend.rows.slice(1,4).map(function(r){
+            var shortLbl=r[0]==='Early Count'?'Early':r[0]==='Pitcher Ahead'?'Ahead':'Behind';
+            return shortLbl+' F/O '+val(r,'Fastball')+'/'+val(r,'Offspeed');
+          }).join('  ');
+        })();
 
         // HAND: derive from the selected season scatter first. 2026 handedness lives in
         // pitchers2026/pitches2026 scatter as pitcher_side, not in top-level rows.
@@ -2069,7 +2120,7 @@ Zane Skansi,Kitchener Panthers`;
 
         pitText('Arsenal: '+arsenal, ML+3, mapY+Math.min(pitMapH-1.1,3.6), CPW-mapsW-10, pitBodyFs, 'bold', CO.white, 'left');
         if(pitMapH>=8){
-          pitText('Maps show pitch density by hitter handedness', ML+3, mapY+Math.min(pitMapH-1.0,6.9), CPW-mapsW-10, pitLabelFs, 'normal', CO.dim, 'left');
+          pitText(tendCompact ? ('Counts: '+tendCompact) : 'Maps show pitch density by hitter handedness', ML+3, mapY+Math.min(pitMapH-1.0,6.9), CPW-mapsW-10, pitLabelFs, 'normal', CO.dim, 'left');
         }
         if(mapH>=6){
           var lblH=Math.min(4.4,mapH);
@@ -2394,6 +2445,23 @@ Zane Skansi,Kitchener Panthers`;
           '<div style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:'+ttpColor+'">' + (ttp != null ? ttp.toFixed(2)+'s' : '-') + '</div>' +
           '<div style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.1em;color:'+ttpColor+'">'+ttpLabel+'</div>';
         row.appendChild(ttpRow);
+
+        var tendency = gpBuildPitchCountTendencyRows(sc);
+        if (tendency.rows.length) {
+          var tendWrap = document.createElement('div');
+          tendWrap.style.cssText = 'margin-bottom:14px;overflow-x:auto';
+          var tendHeaders = ['COUNT'].concat(tendency.types).concat(['#']);
+          tendWrap.innerHTML =
+            '<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.3);margin-bottom:6px">PITCH TENDENCIES BY COUNT</div>' +
+            '<table style="width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:10px;min-width:340px">' +
+            '<thead><tr>' + tendHeaders.map(function(h,i){ return '<th style="text-align:'+(i===0?'left':'center')+';padding:6px 8px;border-bottom:1px solid rgba(255,184,28,0.25);color:#FFB81C">'+h+'</th>'; }).join('') + '</tr></thead>' +
+            '<tbody>' + tendency.rows.map(function(r,ri){
+              return '<tr style="background:'+(ri%2===0?'rgba(255,255,255,0.025)':'rgba(255,255,255,0.045)')+'">' +
+                r.map(function(c,i){ return '<td style="text-align:'+(i===0?'left':'center')+';padding:6px 8px;color:'+(i>0&&i<r.length-1?'#fff':'rgba(255,255,255,0.58)')+';font-weight:'+(i>0&&i<r.length-1?'700':'400')+'">'+c+'</td>'; }).join('') +
+              '</tr>';
+            }).join('') + '</tbody></table>';
+          row.appendChild(tendWrap);
+        }
 
         // Heat maps
         var heatRow = document.createElement('div');
