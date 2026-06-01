@@ -2538,8 +2538,8 @@ Zane Skansi,Kitchener Panthers`;
       return{hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(hasPitchLocation)};
     });
     var iw=CPW/2-4,gap=8;
-    // Overhead: gap(3) + drawSec(7) + titles(4) + stat table(14) + gap(3) = 31mm
-    var splitsOverhead=31;
+    // Overhead: gap(3) + drawSec(7) + titles(4); stat table removed so heat maps can stay larger.
+    var splitsOverhead=14;
     var heatAvail=PH-12-8-y-splitsOverhead;
     var ihIdeal=Math.round(iw*1.15);
     var drawSplitHeat=heatAvail>=28;
@@ -2555,36 +2555,6 @@ Zane Skansi,Kitchener Panthers`;
       d.text('vs. '+(sd2.hand==='R'?'RIGHT-HANDED (RHH)':'LEFT-HANDED (LHH)'),xOff+iw/2,y,{align:'center'});
     });
     y+=4;
-    splitData.forEach(function(sd2,i){
-      if(!sd2.sub.length)return;
-      var xOff=ML+i*(iw+gap);var cw=iw/2;
-      var headers=['STRIKE %','FPS%'];
-      var hdesc=['Strike rate','1st pitch strike %'];
-      var fpSplit=sd2.sub.filter(function(s,i){
-        if(i===0)return true;
-        var prev=sd2.sub[i-1];
-        return (s.batter!==prev.batter||s.inning!==prev.inning||s.half_inning!==prev.half_inning);
-      });
-      var fpStrSplit=fpSplit.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
-      var fpsPctSplit=fpSplit.length>=3?f1(fpStrSplit/fpSplit.length*100)+'%':'—';
-      var row=[f1(xp(sd2.ss,sd2.sub.length))+'%',fpsPctSplit];
-      sf(d,CO.navy2);d.rect(xOff,y,iw,7,'F');
-      sd(d,CO.gold);d.setLineWidth(0.3);d.line(xOff,y+7,xOff+iw,y+7);
-      var cx4=xOff;
-      headers.forEach(function(h,hi){
-        d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.gold);d.text(h,cx4+cw/2,y+3,{align:'center'});
-        d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);d.text(hdesc[hi],cx4+cw/2,y+6,{align:'center'});
-        cx4+=cw;
-      });
-      sf(d,CO.navy3);d.rect(xOff,y+7,iw,7,'F');
-      cx4=xOff;
-      row.forEach(function(v){
-        d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.white);
-        d.text(v,cx4+cw/2,y+12.5,{align:'center'});cx4+=cw;
-      });
-      sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(xOff,y,iw,14,'S');
-    });
-    y+=17;
     if(drawSplitHeat){
       splitData.forEach(function(sd2,i){
         if(!sd2.subXY.length)return;
