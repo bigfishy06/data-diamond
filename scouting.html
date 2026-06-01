@@ -1207,6 +1207,36 @@ Zane Skansi,Kitchener Panthers`;
   function f2(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(2); }
   function fN(v){ if(v==null||isNaN(v)) return '—'; return String(Math.round(v)); }
   function xp(n,d){ return d>0?n/d*100:0; }
+  function reportPitchTypeName(s) {
+    var raw = String((s && (s.pitch_type || s.type)) || 'Unknown').trim() || 'Unknown';
+    if (raw === 'Unknown') return 'Unknown';
+    var key = raw.toLowerCase().replace(/[\s_-]+/g, ' ');
+    if (key === 'fb' || key === 'four seam' || key === 'four seam fastball' || key === '4 seam') return 'Fastball';
+    if (key === 'two seam' || key === 'two seam fastball' || key === '2 seam') return 'Two-Seam Fastball';
+    if (key === 'cut fastball' || key === 'cutter') return 'Cutter';
+    if (key === 'sinker' || key === 'sinker fastball') return 'Sinker';
+    if (key === 'cb' || key === 'curve') return 'Curveball';
+    if (key === 'ch' || key === 'change') return 'Changeup';
+    if (key === 'split' || key === 'splitter' || key === 'split finger') return 'Splitter';
+    return raw.replace(/\b\w/g,function(c){return c.toUpperCase();});
+  }
+  function buildBatterPitchTypeRows(points) {
+    var pts=(points||[]).filter(function(p){return reportPitchTypeName(p)!=='Unknown';});
+    var total=pts.length;
+    if(!total)return [];
+    var swingOut=['Swinging Strike','Strikeout Swinging','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
+    var chaseOut=['Swinging Strike','Strikeout Swinging','Dropped Third Strike Swinging','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sac Fly Double Play','Sacrifice Bunt','Sac Bunt Double Play'];
+    var by={};
+    pts.forEach(function(p){var t=reportPitchTypeName(p);(by[t]=by[t]||[]).push(p);});
+    return Object.keys(by).map(function(t){
+      var arr=by[t],sw=arr.filter(function(p){return swingOut.includes(p.outcome);});
+      var wh=arr.filter(function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';}).length;
+      var oz=arr.filter(xyOutOfZone),ch=oz.filter(function(p){return chaseOut.includes(p.outcome);}).length;
+      var k=arr.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';}).length;
+      var bb=arr.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length;
+      return [t,f1(xp(arr.length,total))+'%',sw.length?f1(xp(wh,sw.length))+'%':'—',oz.length?f1(xp(ch,oz.length))+'%':'—',f1(xp(k,arr.length))+'%',f1(xp(bb,arr.length))+'%',arr.length];
+    }).sort(function(a,b){return b[6]-a[6];}).map(function(r){return r.slice(0,6);});
+  }
   function reportPitchTypeBucket(s) {
     var raw = String((s && (s.pitch_type || s.type)) || 'Unknown').trim() || 'Unknown';
     var key = raw.toLowerCase().replace(/[\s_-]+/g, ' ');
@@ -1888,10 +1918,10 @@ Zane Skansi,Kitchener Panthers`;
     var rbiVal=_iblRBI?fN(_iblRBI.RBI):(s.RBI!=null?fN(s.RBI):'—');
     var hrVal =iblB&&iblB.HR!=null?fN(iblB.HR):(s.HR!=null?fN(s.HR):'—');
     var avgVal2=iblB&&iblB.AVG!=null?f3(iblB.AVG):(s.AVG!=null?f3(s.AVG):'—');
-    var obpVal2=iblB&&iblB.OBP!=null?f3(iblB.OBP):(s.OBP!=null?f3(s.OBP):'—');
-    var slgVal2=iblB&&iblB.SLG!=null?f3(iblB.SLG):(s.SLG!=null?f3(s.SLG):'—');
     var opsVal2=iblB&&iblB.OPS!=null?f3(iblB.OPS):(s.OPS!=null?f3(s.OPS):'—');
-    y=drawBoxes(d,[['AVG',avgVal2],['OBP',obpVal2],['SLG',slgVal2],['OPS',opsVal2],['HR',hrVal],['RBI',rbiVal]],y);
+    var _iblSB=_iblAll.find(function(r){return (r.season||'').indexOf(selSeason)!==-1&&r.SB!=null;})||_iblAll.find(function(r){return r.SB!=null;})||null;
+    var sbVal=_iblSB?fN(_iblSB.SB):(s.SB!=null?fN(s.SB):(s.stolen_bases!=null?fN(s.stolen_bases):'—'));
+    y=drawBoxes(d,[['AVG',avgVal2],['OPS',opsVal2],['HR',hrVal],['RBI',rbiVal],['SB',sbVal]],y);
     y+=4;
 
     // Approach - x and y plotted pitch data only.
@@ -2085,33 +2115,10 @@ Zane Skansi,Kitchener Panthers`;
 
     var _locSc=allSc.filter(hasPitchLocation);
     var _whiffPts=_locSc.filter(function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';});
-    if(_locSc.length&&PH-y>126){
-      y=drawSec(d,'Whiff Heat Map',y);
-      var _swingOutcomes=['Swinging Strike','Strikeout Swinging','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
-      var _swings=_locSc.filter(function(p){return _swingOutcomes.includes(p.outcome);}).length;
-      var _whiffRate=_swings?f1(_whiffPts.length/_swings*100)+'%':'—';
-      var _mapH=Math.max(54,Math.min(78,PH-y-86));
-      var _mapW=_mapH/1.15;
-      var _mapX=ML+CPW-_mapW;
-      var _textW=CPW-_mapW-10;
-      d.setFillColor(245,247,251);d.rect(ML,y,_textW,Math.min(_mapH,58),'F');
-      d.setDrawColor(30,60,120);d.setLineWidth(0.25);d.rect(ML,y,_textW,Math.min(_mapH,58),'S');
-      d.setFont('helvetica','bold');d.setFontSize(7);st(d,CO.gold);
-      d.text('SWING-AND-MISS PROFILE',ML+4,y+7);
-      var _metricW=(_textW-12)/3;
-      [['WHIFFS',String(_whiffPts.length)],['WHIFF%',_whiffRate],['PITCHES',String(_locSc.length)]].forEach(function(m,i){
-        var mx=ML+4+i*(_metricW+3),my=y+12;
-        d.setFillColor(14,21,37);d.rect(mx,my,_metricW,18,'F');
-        d.setFont('helvetica','bold');d.setFontSize(5.4);st(d,CO.gold);d.text(m[0],mx+_metricW/2,my+5,{align:'center'});
-        d.setFont('helvetica','bold');d.setFontSize(11);st(d,CO.white);d.text(m[1],mx+_metricW/2,my+13,{align:'center'});
-      });
-      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
-      var _whiffNote=_whiffPts.length?'Heat map is built only from whiffs, from the batter viewpoint. Darker red areas are the best miss zones.':'No plotted whiffs found; use the approach box and pitch discipline instead.';
-      d.text(_whiffNote,ML+4,y+38,{maxWidth:_textW-8});
-      d.addImage(mkHeat(_whiffPts.length?_whiffPts:_locSc,'BATTER'),'PNG',_mapX,y,_mapW,_mapH);
-      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
-      d.text(_whiffPts.length?'Whiff Heat Map':'Pitch Location Heat Map',_mapX+_mapW/2,y+_mapH+3,{align:'center'});
-      y+=_mapH+8;
+    var _pitchRows=buildBatterPitchTypeRows(allSc).slice(0,5);
+    if(_pitchRows.length){
+      y=drawSec(d,'Batter Performance by Pitch Type',y);
+      y=drawTbl(d,['PITCH TYPE','%','WHIFF%','CHASE%','K%','BB%'],_pitchRows,[48,22,30,30,22,22],y,[1,2,3,4,5]);
     }
 
     // ── Two donuts: Spray Direction (left) + Batted Ball Profile (right) ──
@@ -2243,6 +2250,18 @@ Zane Skansi,Kitchener Panthers`;
       var legRowsCount=hasSpray?Math.ceil(([pullC2>0,strC3>0,oppC2>0].filter(Boolean).length)/2):0;
       var shiftBoxH=hasSpray?(legRowsCount*6.5+3+14):0;
       y+=5+chartH+shiftBoxH+4;
+    }
+
+    if(_locSc.length&&PH-y>44){
+      y=drawSec(d,'Whiff Heat Map',y);
+      var _heatPts=_whiffPts.length?_whiffPts:_locSc;
+      var _heatH=Math.max(38,Math.min(62,PH-y-14));
+      var _heatW=_heatH/1.15;
+      var _heatX=ML+(CPW-_heatW)/2;
+      d.addImage(mkHeat(_heatPts,'BATTER'),'PNG',_heatX,y,_heatW,_heatH);
+      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
+      d.text(_whiffPts.length?'Whiff Heat Map':'Pitch Location Heat Map',_heatX+_heatW/2,y+_heatH+3,{align:'center'});
+      y+=_heatH+7;
     }
 
     drawFoot(d,player.name,'BATTER');
@@ -2546,7 +2565,9 @@ Zane Skansi,Kitchener Panthers`;
         y=drawSec(d,'Pitch Tendencies by Count',y);
         var tendHeaders = ['SITUATION'].concat(tendency.types).concat(['#']);
         var tendW = [58].concat(tendency.types.map(function(){return 32;})).concat([18]);
+        var _oldML=ML;ML=_oldML+(CPW-tendW.reduce(function(a,b){return a+b;},0))/2;
         y=drawTbl(d,tendHeaders,tendency.rows,tendW,y,[1,2]);
+        ML=_oldML;
         y+=1;
       } else if(PH-y >= 16){
         function _tval(row,label){var idx=tendency.types.indexOf(label);return idx>=0?row[idx+1]:'—';}
