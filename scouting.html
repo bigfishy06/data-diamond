@@ -1208,17 +1208,7 @@ Zane Skansi,Kitchener Panthers`;
   function fN(v){ if(v==null||isNaN(v)) return '—'; return String(Math.round(v)); }
   function xp(n,d){ return d>0?n/d*100:0; }
   function reportPitchTypeName(s) {
-    var raw = String((s && (s.pitch_type || s.type)) || 'Unknown').trim() || 'Unknown';
-    if (raw === 'Unknown') return 'Unknown';
-    var key = raw.toLowerCase().replace(/[\s_-]+/g, ' ');
-    if (key === 'fb' || key === 'four seam' || key === 'four seam fastball' || key === '4 seam') return 'Fastball';
-    if (key === 'two seam' || key === 'two seam fastball' || key === '2 seam') return 'Two-Seam Fastball';
-    if (key === 'cut fastball' || key === 'cutter') return 'Cutter';
-    if (key === 'sinker' || key === 'sinker fastball') return 'Sinker';
-    if (key === 'cb' || key === 'curve') return 'Curveball';
-    if (key === 'ch' || key === 'change') return 'Changeup';
-    if (key === 'split' || key === 'splitter' || key === 'split finger') return 'Splitter';
-    return raw.replace(/\b\w/g,function(c){return c.toUpperCase();});
+    return reportPitchTypeBucket(s);
   }
   function buildBatterPitchTypeRows(points) {
     var pts=(points||[]).filter(function(p){return reportPitchTypeName(p)!=='Unknown';});
@@ -1236,6 +1226,16 @@ Zane Skansi,Kitchener Panthers`;
       var bb=arr.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length;
       return [t,f1(xp(arr.length,total))+'%',sw.length?f1(xp(wh,sw.length))+'%':'—',oz.length?f1(xp(ch,oz.length))+'%':'—',f1(xp(k,arr.length))+'%',f1(xp(bb,arr.length))+'%',arr.length];
     }).sort(function(a,b){return b[6]-a[6];}).map(function(r){return r.slice(0,6);});
+  }
+  function reportBestPitchType(points, filterFn, outcomeFn) {
+    var counts={};
+    (points||[]).filter(function(p){return !filterFn||filterFn(p);}).forEach(function(p){
+      if(outcomeFn&&!outcomeFn(p))return;
+      var t=reportPitchTypeName(p);
+      if(t==='Unknown')return;
+      counts[t]=(counts[t]||0)+1;
+    });
+    return Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];})[0]||'';
   }
   function reportPitchTypeBucket(s) {
     var raw = String((s && (s.pitch_type || s.type)) || 'Unknown').trim() || 'Unknown';
@@ -1978,10 +1978,12 @@ Zane Skansi,Kitchener Panthers`;
         var myW=_zwB(pts), lgW=_lgArrB(zc.fn,_zwB);
         var myBA=_zbaB(pts), lgBA=_lgArrB(zc.fn,_zbaB);
         var wPct=_pctRankB(myW,lgW), baPct=_pctRankB(myBA,lgBA);
+        var missType=reportBestPitchType(scB,zc.fn,function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';});
+        var weakType=reportBestPitchType(scB,zc.fn,function(p){return _IN_PLAY_B.concat(_KS_B).includes(p.outcome)&&!_HITS_B.includes(p.outcome);});
         if(myW!=null) addAttack(zc.label+' WHIFF%', f1(myW*100)+'%', wPct,
-          'Pitchers should work '+zc.spot+'. The plotted pitches show this hitter misses there.', wPct, zc.spot, zc.region);
+          'Pitchers should attack '+zc.spot+' with '+(missType||'the best swing-and-miss pitch')+'. The plotted pitches show this hitter misses there.', wPct, zc.spot+(missType?' with '+missType:''), zc.region);
         if(myBA!=null) addAttack(zc.label+' AVG', f3(myBA), baPct,
-          'Pitchers should work '+zc.spot+'. The plotted pitches show reduced damage there.', 1-baPct, zc.spot, zc.region);
+          'Pitchers should attack '+zc.spot+' with '+(weakType||'the best contact-management pitch')+'. The plotted pitches show reduced damage there.', 1-baPct, zc.spot+(weakType?' with '+weakType:''), zc.region);
       });
 
       var pitchTypes=[];
@@ -1997,10 +1999,11 @@ Zane Skansi,Kitchener Panthers`;
           var cW=_zwB(cpts), cBA=_zbaB(cpts);
           var lcW=_lgArrB(fn,_zwB), lcBA=_lgArrB(fn,_zbaB);
           var cWPct=_pctRankB(cW,lcW), cBAPct=_pctRankB(cBA,lcBA);
-          if(cW!=null) addAttack(pt+' - '+cz.label+' WHIFF%', f1(cW*100)+'%', cWPct,
-            'Pitchers should use '+pt+' '+cz.spot+'. This plotted area is a swing-and-miss spot.', cWPct, cz.spot, cz.region);
-          if(cBA!=null) addAttack(pt+' - '+cz.label+' AVG', f3(cBA), cBAPct,
-            'Pitchers should use '+pt+' '+cz.spot+'. This plotted area is suppressing damage.', 1-cBAPct, cz.spot, cz.region);
+          var ptName=reportPitchTypeName({pitch_type:pt});
+          if(cW!=null) addAttack(ptName+' - '+cz.label+' WHIFF%', f1(cW*100)+'%', cWPct,
+            'Pitchers should attack '+cz.spot+' with '+ptName+'. This plotted area is a swing-and-miss spot.', cWPct, cz.spot+' with '+ptName, cz.region);
+          if(cBA!=null) addAttack(ptName+' - '+cz.label+' AVG', f3(cBA), cBAPct,
+            'Pitchers should attack '+cz.spot+' with '+ptName+'. This plotted area is suppressing damage.', 1-cBAPct, cz.spot+' with '+ptName, cz.region);
         });
       });
 
@@ -2252,18 +2255,6 @@ Zane Skansi,Kitchener Panthers`;
       y+=5+chartH+shiftBoxH+4;
     }
 
-    if(_locSc.length&&PH-y>44){
-      y=drawSec(d,'Whiff Heat Map',y);
-      var _heatPts=_whiffPts.length?_whiffPts:_locSc;
-      var _heatH=Math.max(38,Math.min(62,PH-y-14));
-      var _heatW=_heatH/1.15;
-      var _heatX=ML+(CPW-_heatW)/2;
-      d.addImage(mkHeat(_heatPts,'BATTER'),'PNG',_heatX,y,_heatW,_heatH);
-      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
-      d.text(_whiffPts.length?'Whiff Heat Map':'Pitch Location Heat Map',_heatX+_heatW/2,y+_heatH+3,{align:'center'});
-      y+=_heatH+7;
-    }
-
     drawFoot(d,player.name,'BATTER');
     d.save('scouting_'+player.name.replace(/ /g,'_')+'_batter.pdf');
   }
@@ -2415,8 +2406,9 @@ Zane Skansi,Kitchener Panthers`;
         var pts=scP.filter(pz.fn); if(pts.length<5)return;
         var myBA=_zbaP(pts), lgBA=_lgArrP(pz.fn,_zbaP);
         var baPct=_pctRankP(myBA,lgBA);
+        var dmgType=reportBestPitchType(scP,pz.fn,function(p){return ['Single','Double','Triple','Home Run'].includes(p.outcome);});
         if(myBA!=null&&myBA>=0.250) addAttack(pz.label+' AVG AGNST', f3(myBA), baPct,
-          'Batters should look for pitches in the '+pz.spot.toLowerCase()+'. The plotted pitch locations show production there.', baPct, pz.spot, pz.region);
+          'Batters should look for '+(dmgType||'mistakes')+' in the '+pz.spot.toLowerCase()+'. The plotted pitch locations show production there.', baPct, pz.spot+(dmgType?' with '+dmgType:''), pz.region);
       });
 
       var pitchTypesP=[];
@@ -2427,8 +2419,9 @@ Zane Skansi,Kitchener Panthers`;
           var cpts=scP.filter(fn); if(cpts.length<5)return;
           var cBA=_zbaP(cpts), lcBA=_lgArrP(fn,_zbaP);
           var cBAPct=_pctRankP(cBA,lcBA);
-          if(cBA!=null&&cBA>=0.250) addAttack(pt+' - '+pz.label+' AVG AGNST', f3(cBA), cBAPct,
-            'Batters should look for '+pt+' in the '+pz.spot.toLowerCase()+'. That plotted location is getting hit.', cBAPct, pz.spot, pz.region);
+          var ptName=reportPitchTypeName({pitch_type:pt});
+          if(cBA!=null&&cBA>=0.250) addAttack(ptName+' - '+pz.label+' AVG AGNST', f3(cBA), cBAPct,
+            'Batters should look for '+ptName+' in the '+pz.spot.toLowerCase()+'. That plotted location is getting hit.', cBAPct, pz.spot+' with '+ptName, pz.region);
         });
       });
 
