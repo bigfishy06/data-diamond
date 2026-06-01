@@ -2417,7 +2417,7 @@ Zane Skansi,Kitchener Panthers`;
     if(selSeason==='2026'){if(pd26&&pd26.FPS_pct!=null)fpsPct=pd26.FPS_pct;}
     else{if(pbpP2&&pbpP2.FP_STR_pct!=null)fpsPct=pbpP2.FP_STR_pct;}
     var tc2={};sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
-    var topPitch=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];})[0];
+    var topPitch=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];})[0];
 
     // TTP highlight card (if data available)
     if(ttp!=null){
@@ -2469,7 +2469,7 @@ Zane Skansi,Kitchener Panthers`;
     }
 
     // Pitch Arsenal
-    var sT=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];});
+    var sT=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];});
     if(sT.length){
       y+=3;
       y=drawSec(d,'Pitch Arsenal — What He Throws and How Effective Each Pitch Is',y);
@@ -2510,12 +2510,22 @@ Zane Skansi,Kitchener Panthers`;
     var tendency = buildPitchCountTendencyRows(sc);
     if(tendency.rows.length){
       var tendNeed = 8 + tendency.rows.length * 7 + 10;
-      if(PH-y < tendNeed + 12){d.addPage();drawBg(d);y=MT+8;}
-      y=drawSec(d,'Pitch Tendencies by Count',y);
-      var tendHeaders = ['SITUATION'].concat(tendency.types).concat(['#']);
-      var tendW = [58].concat(tendency.types.map(function(){return 32;})).concat([18]);
-      y=drawTbl(d,tendHeaders,tendency.rows,tendW,y,[1,2]);
-      y+=1;
+      if(PH-y >= tendNeed + 58){
+        y=drawSec(d,'Pitch Tendencies by Count',y);
+        var tendHeaders = ['SITUATION'].concat(tendency.types).concat(['#']);
+        var tendW = [58].concat(tendency.types.map(function(){return 32;})).concat([18]);
+        y=drawTbl(d,tendHeaders,tendency.rows,tendW,y,[1,2]);
+        y+=1;
+      } else if(PH-y >= 16){
+        function _tval(row,label){var idx=tendency.types.indexOf(label);return idx>=0?row[idx+1]:'—';}
+        var tendLine=tendency.rows.slice(1,4).map(function(r){
+          var lbl=r[0]==='Early Count'?'Early':r[0]==='Pitcher Ahead'?'Ahead':'Behind';
+          return lbl+' F/O '+_tval(r,'Fastball')+'/'+_tval(r,'Offspeed');
+        }).join('   ');
+        d.setFont('helvetica','bold');d.setFontSize(6);st(d,CO.gold);d.text('COUNT TENDENCIES',ML,y+4);
+        d.setFont('helvetica','normal');d.setFontSize(5.2);st(d,CO.dim);d.text(tendLine,ML+34,y+4,{maxWidth:CPW-36});
+        y+=9;
+      }
     }
 
     // LHH / RHH Splits
@@ -2530,11 +2540,12 @@ Zane Skansi,Kitchener Panthers`;
     var iw=CPW/2-4,gap=8;
     // Overhead: gap(3) + drawSec(7) + titles(4) + stat table(14) + gap(3) = 31mm
     var splitsOverhead=31;
-    var splitsMinNeeded=splitsOverhead+55+8;
-    if(PH-y < splitsMinNeeded){d.addPage();drawBg(d);y=MT+8;}
     var heatAvail=PH-12-8-y-splitsOverhead;
     var ihIdeal=Math.round(iw*1.15);
-    var ih=Math.max(50,Math.min(ihIdeal,Math.round(heatAvail)));
+    var drawSplitHeat=heatAvail>=28;
+    var ih=Math.max(24,Math.min(ihIdeal,Math.round(heatAvail)));
+    if(PH-y < splitsOverhead+10){drawSplitHeat=false;}
+    if(PH-y>=splitsOverhead+10){
     y+=3;
     y=drawSec(d,'Splits — RHH vs. LHH',y);
     splitData.forEach(function(sd2,i){
@@ -2574,12 +2585,23 @@ Zane Skansi,Kitchener Panthers`;
       sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(xOff,y,iw,14,'S');
     });
     y+=17;
-    splitData.forEach(function(sd2,i){
-      if(!sd2.subXY.length)return;
-      var xOff=ML+i*(iw+gap);
-      d.addImage(mkHeat(sd2.subXY,'BATTER'),'PNG',xOff,y,iw,ih);
-    });
-    y+=ih+4;
+    if(drawSplitHeat){
+      splitData.forEach(function(sd2,i){
+        if(!sd2.subXY.length)return;
+        var xOff=ML+i*(iw+gap);
+        d.addImage(mkHeat(sd2.subXY,'BATTER'),'PNG',xOff,y,iw,ih);
+      });
+      y+=ih+4;
+    } else {
+      d.setFont('helvetica','normal');d.setFontSize(5);st(d,CO.dim);
+      d.text('Heat maps omitted to keep this report on one page.',ML,y+4);
+      y+=7;
+    }
+    } else if(PH-y>=10){
+      d.setFont('helvetica','normal');d.setFontSize(5);st(d,CO.dim);
+      d.text('Splits omitted to keep this report on one page.',ML,y+4);
+      y+=7;
+    }
     drawFoot(d,player.name,'PITCHER');
     d.save('scouting_'+player.name.replace(/ /g,'_')+'_pitcher.pdf');
   }

@@ -659,6 +659,7 @@
     sc.forEach(function(s){
       if(s.x==null||s.y==null)return;
       var pt=s.pitch_type||s.type||'Unknown';
+      if(pt==='Unknown')return;
       if(!(pt in ti))ti[pt]=tc2++;
       var col=PC[pt]||FL[ti[pt]%FL.length];
       ctx.beginPath();ctx.arc(px(s.x),py(s.y),5,0,Math.PI*2);
@@ -820,7 +821,7 @@
     y+=2;
     var tc2={};
     sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
-    var sT=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];});
+    var sT=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];});
     if(sT.length){
       y=drawSec(d,'Pitch Arsenal',y);
       var atH=['TYPE','COUNT','USAGE%','K','HIT','STR%','BALL%'],atW=[38,16,18,12,12,18,18];
@@ -836,11 +837,21 @@
     }
     var tendency = gpBuildPitchCountTendencyRows(sc);
     if(tendency.rows.length){
-      if(PH-y < 58){d.addPage();drawBg(d);y=MT+8;}
-      y=drawSec(d,'Pitch Tendencies by Count',y);
-      var tendHeaders = ['SITUATION'].concat(tendency.types).concat(['#']);
-      var tendW = [58].concat(tendency.types.map(function(){return 32;})).concat([18]);
-      y=drawTbl(d,tendHeaders,tendency.rows,tendW,y,[1,2]);y+=2;
+      if(PH-y >= 58){
+        y=drawSec(d,'Pitch Tendencies by Count',y);
+        var tendHeaders = ['SITUATION'].concat(tendency.types).concat(['#']);
+        var tendW = [58].concat(tendency.types.map(function(){return 32;})).concat([18]);
+        y=drawTbl(d,tendHeaders,tendency.rows,tendW,y,[1,2]);y+=2;
+      } else if(PH-y >= 14){
+        function _tval(row,label){var idx=tendency.types.indexOf(label);return idx>=0?row[idx+1]:'--';}
+        var tendLine=tendency.rows.slice(1,4).map(function(r){
+          var lbl=r[0]==='Early Count'?'Early':r[0]==='Pitcher Ahead'?'Ahead':'Behind';
+          return lbl+' F/O '+_tval(r,'Fastball')+'/'+_tval(r,'Offspeed');
+        }).join('   ');
+        d.setFont('helvetica','bold');d.setFontSize(6);st(d,CO.gold);d.text('COUNT TENDENCIES',ML,y+4);
+        d.setFont('helvetica','normal');d.setFontSize(5.2);st(d,CO.dim);d.text(tendLine,ML+34,y+4,{maxWidth:CPW-36});
+        y+=9;
+      }
     }
     var splitData=['R','L'].map(function(hand){
       var sub=sc.filter(function(s){return s.batter_side===hand;});
@@ -850,49 +861,57 @@
       var sz=sub.filter(function(s){return s.x!=null&&s.x>=-1&&s.x<=1&&s.y!=null&&s.y>=0&&s.y<=1;}).length;
       return{hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(function(s){return s.x!=null&&s.y!=null;})};
     });
-    var gap=8;
-    // Dynamically size heat maps to fill exactly the remaining page space.
-    // Budget: splitLabel(5) + splitStats(20) + ih + caption(4) + footer(10) must fit in PH - y.
-    var ihMax = PH - y - 5 - 20 - 4 - 10;
-    // mkHeat canvas is now square (360x360), so iw == ih. Cap at (CPW/2 - 4).
-    var ihCap = CPW/2 - 4;
-    var ih = Math.max(40, Math.min(ihCap, ihMax));
-    var iw = ih; // square
-    splitData.forEach(function(sd2,i){
-      if(!sd2.sub.length)return;
-      var xOff=ML+i*(iw+gap);
-      d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
-      d.text('VS '+(sd2.hand==='R'?'RHH':'LHH'),xOff+iw/2,y,{align:'center'});
-    });
-    y+=5;
-    splitData.forEach(function(sd2,i){
-      if(!sd2.sub.length)return;
-      var xOff=ML+i*(iw+gap);
-      var cw=iw/5;
-      var headers=['PITCHES','K','BB','STR%','ZN%'];
-      var row=[sd2.sub.length,sd2.sk,sd2.sb,f1(xp(sd2.ss,sd2.sub.length))+'%',f1(xp(sd2.sz,sd2.sub.length))+'%'].map(String);
-      sf(d,CO.navy2);d.rect(xOff,y,iw,8,'F');
-      sd(d,CO.gold);d.setLineWidth(0.3);d.line(xOff,y+8,xOff+iw,y+8);
-      d.setFont('helvetica','bold');d.setFontSize(6);st(d,CO.gold);
-      var cx=xOff;
-      headers.forEach(function(h){d.text(h,cx+cw/2,y+5,{align:'center'});cx+=cw;});
-      sf(d,CO.navy3);d.rect(xOff,y+8,iw,7,'F');
-      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.white);
-      cx=xOff;
-      row.forEach(function(v,vi){
-        if(vi===0||vi===1||vi===2){d.setFont('helvetica','bold');st(d,CO.white);}else{d.setFont('helvetica','normal');st(d,CO.dim);}
-        d.text(v,cx+cw/2,y+13,{align:'center'});cx+=cw;
+    var gap=8,iw=CPW/2-4;
+    var splitRoom=PH-y-10;
+    if(splitRoom>=30){
+      splitData.forEach(function(sd2,i){
+        if(!sd2.sub.length)return;
+        var xOff=ML+i*(iw+gap);
+        d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.gold);
+        d.text('VS '+(sd2.hand==='R'?'RHH':'LHH'),xOff+iw/2,y,{align:'center'});
       });
-    });
-    y+=20;
-    splitData.forEach(function(sd2,i){
-      if(!sd2.subXY.length)return;
-      var xOff=ML+i*(iw+gap);
-      d.addImage(mkHeat(sd2.subXY),'PNG',xOff,y,iw,ih);
-      d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
-      d.text('vs. '+(sd2.hand==='R'?'RHH':'LHH')+' Heat Map',xOff+iw/2,y+ih+3,{align:'center'});
-    });
-    y+=ih+10;
+      y+=5;
+      splitData.forEach(function(sd2,i){
+        if(!sd2.sub.length)return;
+        var xOff=ML+i*(iw+gap);
+        var cw=iw/5;
+        var headers=['PITCHES','K','BB','STR%','ZN%'];
+        var row=[sd2.sub.length,sd2.sk,sd2.sb,f1(xp(sd2.ss,sd2.sub.length))+'%',f1(xp(sd2.sz,sd2.sub.length))+'%'].map(String);
+        sf(d,CO.navy2);d.rect(xOff,y,iw,8,'F');
+        sd(d,CO.gold);d.setLineWidth(0.3);d.line(xOff,y+8,xOff+iw,y+8);
+        d.setFont('helvetica','bold');d.setFontSize(6);st(d,CO.gold);
+        var cx=xOff;
+        headers.forEach(function(h){d.text(h,cx+cw/2,y+5,{align:'center'});cx+=cw;});
+        sf(d,CO.navy3);d.rect(xOff,y+8,iw,7,'F');
+        d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.white);
+        cx=xOff;
+        row.forEach(function(v,vi){
+          if(vi===0||vi===1||vi===2){d.setFont('helvetica','bold');st(d,CO.white);}else{d.setFont('helvetica','normal');st(d,CO.dim);}
+          d.text(v,cx+cw/2,y+13,{align:'center'});cx+=cw;
+        });
+      });
+      y+=20;
+      var heatMax=PH-y-14;
+      var heatSize=Math.min(iw,heatMax);
+      if(heatSize>=28){
+        splitData.forEach(function(sd2,i){
+          if(!sd2.subXY.length)return;
+          var xOff=ML+i*(iw+gap)+(iw-heatSize)/2;
+          d.addImage(mkHeat(sd2.subXY),'PNG',xOff,y,heatSize,heatSize);
+          d.setFont('helvetica','normal');d.setFontSize(6);st(d,CO.dim);
+          d.text('vs. '+(sd2.hand==='R'?'RHH':'LHH')+' Heat Map',xOff+heatSize/2,y+heatSize+3,{align:'center'});
+        });
+        y+=heatSize+10;
+      } else {
+        d.setFont('helvetica','normal');d.setFontSize(5);st(d,CO.dim);
+        d.text('Heat maps omitted to keep this report on one page.',ML,y+4);
+        y+=7;
+      }
+    } else if(PH-y>=10){
+      d.setFont('helvetica','normal');d.setFontSize(5);st(d,CO.dim);
+      d.text('Splits omitted to keep this report on one page.',ML,y+4);
+      y+=7;
+    }
     drawFoot(d,player.name,'PITCHER');
     d.save('scouting_'+player.name.replace(/ /g,'_')+'_pitcher.pdf');
   }
@@ -2031,7 +2050,7 @@ Zane Skansi,Kitchener Panthers`;
         // Arsenal: always from scatter x/y data (both years)
         var tc2={};
         sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
-        var arsenal=Object.entries(tc2).sort(function(a,b){return b[1]-a[1];}).slice(0,3)
+        var arsenal=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];}).slice(0,3)
           .map(function(e){return e[0].slice(0,4)+' '+f1(xp(e[1],tot))+'%';}).join('  ')||'--';
         var tendCompact=(function(){
           var tend=gpBuildPitchCountTendencyRows(sc);
