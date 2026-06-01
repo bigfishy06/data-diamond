@@ -1921,7 +1921,7 @@ Zane Skansi,Kitchener Panthers`;
     var opsVal2=iblB&&iblB.OPS!=null?f3(iblB.OPS):(s.OPS!=null?f3(s.OPS):'—');
     var _iblSB=_iblAll.find(function(r){return (r.season||'').indexOf(selSeason)!==-1&&r.SB!=null;})||_iblAll.find(function(r){return r.SB!=null;})||null;
     var sbVal=_iblSB?fN(_iblSB.SB):(s.SB!=null?fN(s.SB):(s.stolen_bases!=null?fN(s.stolen_bases):'—'));
-    y=drawBoxes(d,[['AVG',avgVal2],['OPS',opsVal2],['HR',hrVal],['RBI',rbiVal],['SB',sbVal]],y);
+    y=drawBoxes(d,[['BA',avgVal2],['OPS',opsVal2],['HR',hrVal],['RBI',rbiVal],['SB',sbVal]],y);
     y+=4;
 
     // Approach - x and y plotted pitch data only.
@@ -1965,8 +1965,8 @@ Zane Skansi,Kitchener Panthers`;
       var oozFn=xyOutOfZone;
 
       var candidates=[];
-      function addAttack(label,val,pct,note,score,spot,region){
-        if(val!=null&&pct!=null&&score>=0.55)candidates.push({label:label,val:val,pct:pct,note:note,score:score,spot:spot,region:region});
+      function addAttack(label,val,pct,note,score,spot,region,combo){
+        if(val!=null&&pct!=null&&score>=0.55)candidates.push({label:label,val:val,pct:pct,note:note,score:score,spot:spot,region:region,combo:!!combo});
       }
 
       [{label:'Left Side',fn:leftFn,spot:'left side of the zone',region:{h:'left',v:'all'}},
@@ -1981,34 +1981,33 @@ Zane Skansi,Kitchener Panthers`;
         var missType=reportBestPitchType(scB,zc.fn,function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';});
         var weakType=reportBestPitchType(scB,zc.fn,function(p){return _IN_PLAY_B.concat(_KS_B).includes(p.outcome)&&!_HITS_B.includes(p.outcome);});
         if(myW!=null) addAttack(zc.label+' WHIFF%', f1(myW*100)+'%', wPct,
-          'Pitchers should attack '+zc.spot+' with '+(missType||'the best swing-and-miss pitch')+'. The plotted pitches show this hitter misses there.', wPct, zc.spot+(missType?' with '+missType:''), zc.region);
+          'Pitchers should attack '+zc.spot+' with '+(missType||'the best swing-and-miss pitch')+' because the whiff rate there is '+f1(myW*100)+'%.', wPct, zc.spot+(missType?' with '+missType:''), zc.region, false);
         if(myBA!=null) addAttack(zc.label+' AVG', f3(myBA), baPct,
-          'Pitchers should attack '+zc.spot+' with '+(weakType||'the best contact-management pitch')+'. The plotted pitches show reduced damage there.', 1-baPct, zc.spot+(weakType?' with '+weakType:''), zc.region);
+          'Pitchers should attack '+zc.spot+' with '+(weakType||'the best contact-management pitch')+' because the batting average there is '+f3(myBA)+'.', 1-baPct, zc.spot+(weakType?' with '+weakType:''), zc.region, false);
       });
 
-      var pitchTypes=[];
-      scB.forEach(function(p){if(p.pitch_type&&!pitchTypes.includes(p.pitch_type))pitchTypes.push(p.pitch_type);});
+      var pitchTypes=['Fastball','Offspeed'].filter(function(t){return scB.some(function(p){return reportPitchTypeName(p)===t;});});
       pitchTypes.forEach(function(pt){
         [{label:'Left Top',spot:'left-top corner',region:{h:'left',v:'top'},fn:function(p){return leftFn(p)&&highFn(p);}},
          {label:'Left Bottom',spot:'left-bottom corner',region:{h:'left',v:'bottom'},fn:function(p){return leftFn(p)&&lowFn(p);}},
          {label:'Right Top',spot:'right-top corner',region:{h:'right',v:'top'},fn:function(p){return rightFn(p)&&highFn(p);}},
          {label:'Right Bottom',spot:'right-bottom corner',region:{h:'right',v:'bottom'},fn:function(p){return rightFn(p)&&lowFn(p);}}
         ].forEach(function(cz){
-          var fn=function(p){return p.pitch_type===pt&&cz.fn(p);};
+          var fn=function(p){return reportPitchTypeName(p)===pt&&cz.fn(p);};
           var cpts=scB.filter(fn); if(cpts.length<5)return;
           var cW=_zwB(cpts), cBA=_zbaB(cpts);
           var lcW=_lgArrB(fn,_zwB), lcBA=_lgArrB(fn,_zbaB);
           var cWPct=_pctRankB(cW,lcW), cBAPct=_pctRankB(cBA,lcBA);
-          var ptName=reportPitchTypeName({pitch_type:pt});
+          var ptName=pt;
           if(cW!=null) addAttack(ptName+' - '+cz.label+' WHIFF%', f1(cW*100)+'%', cWPct,
-            'Pitchers should attack '+cz.spot+' with '+ptName+'. This plotted area is a swing-and-miss spot.', cWPct, cz.spot+' with '+ptName, cz.region);
+            'Pitchers should attack '+cz.spot+' with '+ptName+' because the whiff rate in that split is '+f1(cW*100)+'%.', cWPct, cz.spot+' with '+ptName, cz.region, true);
           if(cBA!=null) addAttack(ptName+' - '+cz.label+' AVG', f3(cBA), cBAPct,
-            'Pitchers should attack '+cz.spot+' with '+ptName+'. This plotted area is suppressing damage.', 1-cBAPct, cz.spot+' with '+ptName, cz.region);
+            'Pitchers should attack '+cz.spot+' with '+ptName+' because the batting average in that split is '+f3(cBA)+'.', 1-cBAPct, cz.spot+' with '+ptName, cz.region, true);
         });
       });
 
       if(!candidates.length) return batterFallback(false);
-      candidates.sort(function(a,b){return b.score-a.score;});
+      candidates.sort(function(a,b){return (b.combo?1:0)-(a.combo?1:0)||b.score-a.score;});
       var best=candidates[0];
       var dot=best.score>=0.75?'#34d399':'#FFB81C';
       return {dot:dot,label:best.label,val:best.val,spot:best.spot,region:best.region,note:best.note};
@@ -2398,8 +2397,8 @@ Zane Skansi,Kitchener Panthers`;
         {label:'Right Side',spot:'Right Side',region:{h:'left',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x<-0.33;}}
       ];
       var candidates=[];
-      function addAttack(label,val,pct,note,score,spot,region){
-        if(val!=null&&pct!=null&&score>=0.55)candidates.push({label:label,val:val,pct:pct,note:note,score:score,spot:spot,region:region});
+      function addAttack(label,val,pct,note,score,spot,region,combo){
+        if(val!=null&&pct!=null&&score>=0.55)candidates.push({label:label,val:val,pct:pct,note:note,score:score,spot:spot,region:region,combo:!!combo});
       }
 
       PZONES.forEach(function(pz){
@@ -2408,25 +2407,24 @@ Zane Skansi,Kitchener Panthers`;
         var baPct=_pctRankP(myBA,lgBA);
         var dmgType=reportBestPitchType(scP,pz.fn,function(p){return ['Single','Double','Triple','Home Run'].includes(p.outcome);});
         if(myBA!=null&&myBA>=0.250) addAttack(pz.label+' AVG AGNST', f3(myBA), baPct,
-          'Batters should look for '+(dmgType||'mistakes')+' in the '+pz.spot.toLowerCase()+'. The plotted pitch locations show production there.', baPct, pz.spot+(dmgType?' with '+dmgType:''), pz.region);
+          'Batters should look for '+(dmgType||'mistakes')+' in the '+pz.spot.toLowerCase()+' because the batting average there is '+f3(myBA)+'.', baPct, pz.spot+(dmgType?' with '+dmgType:''), pz.region, false);
       });
 
-      var pitchTypesP=[];
-      scP.forEach(function(p){if(p.pitch_type&&!pitchTypesP.includes(p.pitch_type))pitchTypesP.push(p.pitch_type);});
+      var pitchTypesP=['Fastball','Offspeed'].filter(function(t){return scP.some(function(p){return reportPitchTypeName(p)===t;});});
       pitchTypesP.forEach(function(pt){
         PZONES.forEach(function(pz){
-          var fn=function(p){return p.pitch_type===pt&&pz.fn(p);};
+          var fn=function(p){return reportPitchTypeName(p)===pt&&pz.fn(p);};
           var cpts=scP.filter(fn); if(cpts.length<5)return;
           var cBA=_zbaP(cpts), lcBA=_lgArrP(fn,_zbaP);
           var cBAPct=_pctRankP(cBA,lcBA);
-          var ptName=reportPitchTypeName({pitch_type:pt});
+          var ptName=pt;
           if(cBA!=null&&cBA>=0.250) addAttack(ptName+' - '+pz.label+' AVG AGNST', f3(cBA), cBAPct,
-            'Batters should look for '+ptName+' in the '+pz.spot.toLowerCase()+'. That plotted location is getting hit.', cBAPct, pz.spot+' with '+ptName, pz.region);
+            'Batters should look for '+ptName+' in the '+pz.spot.toLowerCase()+' because the batting average in that split is '+f3(cBA)+'.', cBAPct, pz.spot+' with '+ptName, pz.region, true);
         });
       });
 
       if(!candidates.length) return pitcherFallback(false);
-      candidates.sort(function(a,b){return b.score-a.score;});
+      candidates.sort(function(a,b){return (b.combo?1:0)-(a.combo?1:0)||b.score-a.score;});
       var best=candidates[0];
       var dot=best.score>=0.75?'#34d399':'#FFB81C';
       return {dot:dot,label:best.label,val:best.val,spot:best.spot,region:best.region,note:best.note};
