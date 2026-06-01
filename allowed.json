@@ -36,6 +36,11 @@
       "player": "Ryan Eakin"
     },
     {
+      "email": "Mcgwbab42@gmail.com",
+      "role": "admin",
+      "player": "McGowan Weddig"
+    },
+    {
       "email": "damontopolie@gmail.com",
       "role": "admin",
       "player": "Damon Topolie"
@@ -74,6 +79,11 @@
       "email": "garrett.takamatsu41@gmail.com",
       "role": "position_player",
       "player": "Garrett Takamatsu"
+    },
+    {
+      "email": "macleoje@pdsbnet.ca",
+      "role": "admin",
+      "player": "Jeff MacLeod"
     },
     {
       "email": "jdsalmonwilliams@gmail.com",
