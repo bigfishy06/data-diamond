@@ -1838,8 +1838,8 @@ Zane Skansi,Kitchener Panthers`;
         var hmX=ML+CPW-hmW2-3;
         var attackText = approachText==='Not enough data' ? 'Attack: not enough data' : 'Attack: '+approachText;
         topTxt(attackText, ML+3, attackY+Math.min(attackH-1.1,3.6), CPW-hmW2-10, noteFs, attackText==='Attack: not enough data'?'normal':'bold', attackText==='Attack: not enough data'?CO.dim:CO.white, 'left');
-        if(pitchTypeRows.length&&attackH>=13){
-          var ptX=ML+3,ptY=attackY+4.8,ptW=CPW-hmW2-10,ptRowH=Math.min(3.2,Math.max(2.6,(attackH-5.4)/3));
+        if(pitchTypeRows.length&&attackH>=7){
+          var ptX=ML+3,ptY=attackY+4.6,ptW=CPW-hmW2-10,ptRowH=Math.min(3.2,Math.max(2.2,(attackH-5.0)/3));
           var ptCols=[ptW*0.34,ptW*0.13,ptW*0.17,ptW*0.17,ptW*0.095,ptW*0.095];
           var tx2=ptX;
           sf(d,CO.navy3);d.rect(ptX,ptY,ptW,ptRowH,'F');
@@ -2186,8 +2186,9 @@ Zane Skansi,Kitchener Panthers`;
 
         var leftInfoW=CPW-mapsW-10;
         pitText('Arsenal: '+arsenal, ML+3, mapY+Math.min(pitMapH-1.1,3.6), leftInfoW, pitBodyFs, 'bold', CO.white, 'left');
-        if(tendInfo.rows.length && pitMapH>=17){
-          var tableX=ML+3,tableY=mapY+5.4,tableW=Math.min(74,leftInfoW),rowH=Math.min(3.4,Math.max(2.8,(pitMapH-6.2)/4));
+        if(tendInfo.rows.length){
+          var tableRows=pitMapH>=15?tendInfo.rows:tendInfo.rows.slice(0,3);
+          var tableX=ML+3,tableY=mapY+5.1,tableW=Math.min(74,leftInfoW),rowH=Math.min(3.4,Math.max(2.2,(pitMapH-5.8)/(tableRows.length+1)));
           var colW=[24,(tableW-24)/3,(tableW-24)/3,(tableW-24)/3];
           sf(d,CO.navy3);d.rect(tableX,tableY,tableW,rowH,'F');
           sd(d,CO.gold);d.setLineWidth(0.15);d.line(tableX,tableY+rowH,tableX+tableW,tableY+rowH);
@@ -2197,7 +2198,7 @@ Zane Skansi,Kitchener Panthers`;
             d.text(h,tx+(hi===0?1.2:colW[hi]/2),tableY+rowH-0.9,{align:hi===0?'left':'center'});
             tx+=colW[hi];
           });
-          tendInfo.rows.forEach(function(r,ri){
+          tableRows.forEach(function(r,ri){
             var ry=tableY+rowH*(ri+1);
             sf(d,ri%2===0?CO.navy:CO.navy2);d.rect(tableX,ry,tableW,rowH,'F');
             tx=tableX;
@@ -2207,7 +2208,7 @@ Zane Skansi,Kitchener Panthers`;
               tx+=colW[vi];
             });
           });
-          sd(d,[25,40,65]);d.setLineWidth(0.1);d.rect(tableX,tableY,tableW,rowH*(tendInfo.rows.length+1),'S');
+          sd(d,[25,40,65]);d.setLineWidth(0.1);d.rect(tableX,tableY,tableW,rowH*(tableRows.length+1),'S');
         } else if(pitMapH>=8){
           pitText(tendInfo.compact ? ('Counts: '+tendInfo.compact) : 'Maps show pitch density by hitter handedness', ML+3, mapY+Math.min(pitMapH-1.0,6.9), leftInfoW, pitLabelFs, 'normal', CO.dim, 'left');
         }
