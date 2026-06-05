@@ -1695,14 +1695,23 @@ Zane Skansi,Kitchener Panthers`;
         sd(d,CO.gold); d.setLineWidth(0.4); d.line(ML,MT+17,ML+CPW,MT+17);
       }
 
+      function drawOppFooter(label) {
+        d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
+        d.text('Data Diamond - CBL Scouting Report', ML, PH-5);
+        d.text(team.name+' '+label, ML+CPW, PH-5, {align:'right'});
+        d.setFillColor(30,60,120); d.rect(0,PH-1.5,PW,1.5,'F');
+      }
+
       drawPageHdr('OPPOSING BATTERS');
 
-      // Layout constants. Blocks are sized from the selected player count so the
-      // Opposing Batter report stays on a single page with one player per batter.
+      // Layout constants. Keep each card readable; paginate rather than shrinking
+      // every player into one page when the opponent has a full lineup selected.
       var contentTop = MT + 20;
       var pageBottom = PH - 10;
       var availH = pageBottom - contentTop;
-      var blockH = Math.floor((availH / Math.max(1, batters.length)) * 1000) / 1000;
+      var BATTERS_PER_PAGE = batters.length > 7 ? Math.ceil(batters.length / 2) : 7;
+      var batterRowsOnPage = Math.max(1, Math.min(BATTERS_PER_PAGE, batters.length));
+      var blockH = Math.floor((availH / batterRowsOnPage) * 1000) / 1000;
       var tightBlocks = blockH < 10;
       var nameH = tightBlocks ? blockH * 0.22 : Math.max(3.6, Math.min(4.8, blockH * 0.20));
       var statH = tightBlocks ? blockH * 0.28 : Math.max(4.2, Math.min(6.4, blockH * 0.28));
@@ -1731,6 +1740,13 @@ Zane Skansi,Kitchener Panthers`;
       var rowIndex = 0;
 
       batters.forEach(function(s) {
+        if(rowIndex>0 && rowIndex % BATTERS_PER_PAGE === 0){
+          drawOppFooter('Opposing Batters');
+          d.addPage();
+          drawPageHdr('OPPOSING BATTERS');
+          curY = contentTop;
+        }
+
         // -- Gather scatter ------------------------------------------------
         var sc = [];
         var nameLower = gpNorm(s.batter);
@@ -1964,11 +1980,7 @@ Zane Skansi,Kitchener Panthers`;
         rowIndex++;
       });
 
-      // Footer on last page
-      d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond - CBL Scouting Report', ML, PH-5);
-      d.text(team.name+' Opposing Batters', ML+CPW, PH-5, {align:'right'});
-      d.setFillColor(30,60,120); d.rect(0,PH-1.5,PW,1.5,'F');
+      drawOppFooter('Opposing Batters');
 
       d.save(team.abbr+'_Opposing_Batters.pdf');
       if (btn) { btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF'; }
@@ -2076,12 +2088,21 @@ Zane Skansi,Kitchener Panthers`;
         sd(d,CO.gold); d.setLineWidth(0.4); d.line(ML,MT+17,ML+CPW,MT+17);
       }
 
+      function drawPitFooter() {
+        d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
+        d.text('Data Diamond - CBL Scouting Report', ML, PH-5);
+        d.text(team.name+' Opposing Pitchers', ML+CPW, PH-5, {align:'right'});
+        d.setFillColor(30,60,120); d.rect(0,PH-1.5,PW,1.5,'F');
+      }
+
       drawPitPageHdr('OPPOSING PITCHERS');
 
       var contentTopP = MT+20;
       var pageBottom2 = PH - 10;
       var availHP = pageBottom2 - contentTopP;
-      var pitBlockH = Math.floor((availHP / Math.max(1, pitchers.length)) * 1000) / 1000;
+      var PITCHERS_PER_PAGE = pitchers.length > 5 ? Math.ceil(pitchers.length / 2) : 5;
+      var pitcherRowsOnPage = Math.max(1, Math.min(PITCHERS_PER_PAGE, pitchers.length));
+      var pitBlockH = Math.floor((availHP / pitcherRowsOnPage) * 1000) / 1000;
       var pitTight = pitBlockH < 14;
       var pitNameH = pitTight ? pitBlockH * 0.21 : Math.max(3.6, Math.min(4.8, pitBlockH * 0.19));
       var pitStatH = pitTight ? pitBlockH * 0.27 : Math.max(4.2, Math.min(6.2, pitBlockH * 0.26));
@@ -2115,6 +2136,13 @@ Zane Skansi,Kitchener Panthers`;
       var pitRowIndex = 0;
 
       pitchers.forEach(function(p,idx){
+        if(pitRowIndex>0 && pitRowIndex % PITCHERS_PER_PAGE === 0){
+          drawPitFooter();
+          d.addPage();
+          drawPitPageHdr('OPPOSING PITCHERS');
+          y = contentTopP;
+        }
+
         var sc=Array.isArray(p.sc)?p.sc:[];
         var _pitchersArr = (DATA.pitchers && Array.isArray(DATA.pitchers)) ? DATA.pitchers : [];
         var _pbpPArr = (DATA.pbpPitchers && Array.isArray(DATA.pbpPitchers)) ? DATA.pbpPitchers : [];
@@ -2339,11 +2367,7 @@ Zane Skansi,Kitchener Panthers`;
         pitRowIndex++;
       });
 
-      // Footer
-      d.setFont('helvetica','normal'); d.setFontSize(6); st(d,CO.dim);
-      d.text('Data Diamond - CBL Scouting Report', ML, PH-5);
-      d.text(team.name+' Opposing Pitchers', ML+CPW, PH-5, {align:'right'});
-      d.setFillColor(30,60,120); d.rect(0,PH-1.5,PW,1.5,'F');
+      drawPitFooter();
 
       d.save(team.abbr+'_Opposing_Pitchers.pdf');
       if (btn) { btn.disabled=false; btn.querySelector('.gp-btn-label').textContent='OPP PITCHERS PDF'; }
