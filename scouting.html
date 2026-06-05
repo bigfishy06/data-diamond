@@ -393,78 +393,6 @@
       </div>
     </div>
 
-    <div id="fielder-cheat-section" style="display:none;margin-top:48px">
-      <div class="cheat-sheet-title" id="fielder-cheat-title">Fielder Cheat Sheet</div>
-
-      <!-- Download button -->
-      <div style="margin-bottom:14px;display:flex;align-items:center;gap:12px">
-        <button id="dl-cheat-btn" onclick="downloadCheatCard()" style="
-          font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;
-          padding:9px 20px;border:none;border-radius:6px;
-          background:#FFB81C;color:#080c12;cursor:pointer;
-          display:flex;align-items:center;gap:8px;transition:background .15s;
-        " onmouseover="this.style.background='#ffc94d'" onmouseout="this.style.background='#FFB81C'">
-          ⬇ &nbsp;DOWNLOAD 3×5 CARD
-        </button>
-        <span style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25)">
-          Prints as a 5&quot; × 3&quot; index card
-        </span>
-      </div>
-
-      <!-- 3x5 card preview — 5in wide × 3in tall at 96dpi -->
-      <div style="overflow-x:auto">
-        <div id="fielder-card-wrap" style="
-          width:5in; min-height:3in;
-          background:#ffffff;
-          border:1.5px solid rgba(30,60,120,0.4);
-          border-radius:4px;
-          padding:8px 12px;
-          font-family:'DM Mono',monospace;
-          box-shadow:0 4px 24px rgba(0,0,0,0.5);
-        ">
-          <div id="fielder-card-header" style="
-            font-family:'Bebas Neue',sans-serif;
-            font-size:11px;letter-spacing:2px;
-            color:#FFB81C;margin-bottom:5px;
-            border-bottom:1px solid rgba(255,184,28,0.3);
-            padding-bottom:3px;
-            display:flex;justify-content:space-between;align-items:center;
-          ">
-            <span id="fielder-card-team-name">TEAM</span>
-            <span style="font-size:8px;color:rgba(30,60,120,0.4);letter-spacing:1px">DATA DIAMOND — FIELDER CHEAT SHEET</span>
-          </div>
-          <table id="fielder-card-table" style="width:100%;border-collapse:collapse;font-size:8px;"></table>
-        </div>
-      </div>
-
-      <!-- Opposing Pitchers section -->
-      <div id="opp-pitcher-section" style="margin-top:32px;display:none">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#FFB81C;margin-bottom:14px;border-bottom:1px solid rgba(255,184,28,0.3);padding-bottom:6px">
-          <span id="opp-pitcher-title">OPPOSING PITCHERS</span>
-        </div>
-        <div style="overflow-x:auto">
-          <table id="opp-pitcher-table" style="width:100%;border-collapse:collapse;font-size:11px;font-family:'DM Mono',monospace"></table>
-        </div>
-      </div>
-    </div>
-
-    <style>
-      @media print {
-        body * { visibility: hidden; }
-        #fielder-card-wrap, #fielder-card-wrap * { visibility: visible; }
-        #fielder-card-wrap {
-          position: fixed !important;
-          left: 0; top: 0;
-          width: 5in !important;
-          min-height: 3in !important;
-          border-radius: 0 !important;
-          box-shadow: none !important;
-          padding: 8px 12px !important;
-        }
-        @page { size: 5in 3in; margin: 0; }
-      }
-    </style>
-
   </div>
 
   <footer class="site-footer">
@@ -1207,6 +1135,12 @@ Zane Skansi,Kitchener Panthers`;
   function f2(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(2); }
   function fN(v){ if(v==null||isNaN(v)) return '—'; return String(Math.round(v)); }
   function xp(n,d){ return d>0?n/d*100:0; }
+  var REPORT_STRIKE_OUTCOMES = ['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sac Fly Double Play','Sacrifice Bunt','Sac Bunt Double Play'];
+  function reportIsStrikeOutcome(s){return s&&REPORT_STRIKE_OUTCOMES.includes(s.outcome);}
+  var REPORT_SWING_OUTCOMES = ['Swinging Strike','Foul','Strikeout Swinging','Dropped Third Strike Swinging','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sac Fly Double Play','Sacrifice Bunt','Sac Bunt Double Play'];
+  function reportIsSwingOutcome(s){return s&&REPORT_SWING_OUTCOMES.includes(s.outcome);}
+  var REPORT_WHIFF_OUTCOMES = ['Swinging Strike','Strikeout Swinging','Dropped Third Strike Swinging'];
+  function reportIsWhiffOutcome(s){return s&&REPORT_WHIFF_OUTCOMES.includes(s.outcome);}
   function reportPctParts(counts) {
     var total = counts.reduce(function(a,b){ return a + (Number(b) || 0); }, 0);
     if (!total) return counts.map(function(){ return '---'; });
@@ -1226,16 +1160,14 @@ Zane Skansi,Kitchener Panthers`;
     var pts=(points||[]).filter(function(p){return reportPitchTypeName(p)!=='Unknown';});
     var total=pts.length;
     if(!total)return [];
-    var swingOut=['Swinging Strike','Strikeout Swinging','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
-    var chaseOut=['Swinging Strike','Strikeout Swinging','Dropped Third Strike Swinging','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sac Fly Double Play','Sacrifice Bunt','Sac Bunt Double Play'];
     var by={};
     pts.forEach(function(p){var t=reportPitchTypeName(p);(by[t]=by[t]||[]).push(p);});
     var keys=Object.keys(by);
     var usageParts=reportPctParts(keys.map(function(t){return by[t].length;}));
     return keys.map(function(t,ti){
-      var arr=by[t],sw=arr.filter(function(p){return swingOut.includes(p.outcome);});
-      var wh=arr.filter(function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';}).length;
-      var oz=arr.filter(xyOutOfZone),ch=oz.filter(function(p){return chaseOut.includes(p.outcome);}).length;
+      var arr=by[t],sw=arr.filter(reportIsSwingOutcome);
+      var wh=arr.filter(reportIsWhiffOutcome).length;
+      var oz=arr.filter(xyOutOfZone),ch=oz.filter(reportIsSwingOutcome).length;
       var k=arr.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';}).length;
       var bb=arr.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length;
       return [t,usageParts[ti],sw.length?f1(xp(wh,sw.length))+'%':'—',oz.length?f1(xp(ch,oz.length))+'%':'—',f1(xp(k,arr.length))+'%',f1(xp(bb,arr.length))+'%',arr.length];
@@ -1277,9 +1209,13 @@ Zane Skansi,Kitchener Panthers`;
       var n = subset.length;
       var known = subset.filter(function(s) { return reportPitchTypeBucket(s) !== 'Unknown'; }).length;
       var row = [grp.label];
-      typeSet.forEach(function(t) {
+      var counts = typeSet.map(function(t) {
+        return subset.filter(function(s) { return reportPitchTypeBucket(s) === t; }).length;
+      });
+      var pctParts = known ? reportPctParts(counts) : [];
+      typeSet.forEach(function(t, i) {
         var c = subset.filter(function(s) { return reportPitchTypeBucket(s) === t; }).length;
-        row.push(known ? f1(c/known*100) + '%' : '—');
+        row.push(known ? pctParts[i] : '—');
       });
       row.push(String(n));
       return row;
@@ -1390,7 +1326,7 @@ Zane Skansi,Kitchener Panthers`;
         var _pdSc = selSeason==='2026' ? (findByName(DATA.pitchers,'pitcher',p.name)||{}) : {};
         var dispK2  = selSeason==='2025' && iblK(pitIbl)!=null ? fN(iblK(pitIbl)) : (pp&&pp.K_pct!=null  ? f1(pp.K_pct)+'%'  : (_pdSc.K_pct!=null ? f1(_pdSc.K_pct)+'%' : (p.scatter?(function(){var t=p.scatter.filter(function(s){return s.outcome&&s.outcome!=='';}).length||(_pdSc.total_pitches||0);var k=p.scatter.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;return t>0?Math.round(k/t*100)+'%':'—';})():'—')));
         var dispBB2 = selSeason==='2025' && iblBB(pitIbl)!=null ? fN(iblBB(pitIbl)) : (pp&&pp.BB_pct!=null ? f1(pp.BB_pct)+'%' : (_pdSc.BB_pct!=null ? f1(_pdSc.BB_pct)+'%' : (p.scatter?(function(){var t=p.scatter.filter(function(s){return s.outcome&&s.outcome!=='';}).length||(_pdSc.total_pitches||0);var b=p.scatter.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;return t>0?Math.round(b/t*100)+'%':'—';})():'—')));
-        var dispSTR = pp&&pp.STR_pct!=null? f1(pp.STR_pct)+'%': (_pdSc.STR_pct!=null ? f1(_pdSc.STR_pct)+'%' : (p.scatter?(function(){var t=p.scatter.filter(function(s){return s.outcome&&s.outcome!=='';}).length||(_pdSc.total_pitches||0);var st=p.scatter.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;return t>0?Math.round(st/t*100)+'%':'—';})():'—'));
+        var dispSTR = p.scatter&&p.scatter.length?(function(){var t=p.scatter.filter(function(s){return s.outcome&&s.outcome!=='';}).length||(_pdSc.total_pitches||0);var st=p.scatter.filter(reportIsStrikeOutcome).length;return t>0?Math.round(st/t*100)+'%':'—';})():(pp&&pp.STR_pct!=null? f1(pp.STR_pct)+'%': (_pdSc.STR_pct!=null ? f1(_pdSc.STR_pct)+'%' : '—'));
         var dispBF  = pp&&pp.BF!=null     ? fN(pp.BF)         : (_pdSc.total_pitches!=null ? fN(_pdSc.total_pitches) : (p.scatter?fN(p.scatter.filter(function(s){return s.outcome&&s.outcome!=='';}).length):'—'));
         statsHTML = '<span><span class="prc-stat-val">'+dispBF+'</span> BF</span>' +
           '<span><span class="prc-stat-val">'+dispK2+'</span> '+(selSeason==='2025'?'K':'K%')+'</span>' +
@@ -1441,8 +1377,7 @@ Zane Skansi,Kitchener Panthers`;
       renderCards(inactivePlayers, document.getElementById('inactive-player-grid'), true);
     }
 
-    // Build cheat sheets after player list renders
-    buildFielderCheatSheet(selTeam);
+    // Player selection ends at the downloadable player cards.
   }
 
   function showToast(msg, color) {
@@ -1945,7 +1880,7 @@ Zane Skansi,Kitchener Panthers`;
     var _IN_PLAY_B=['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
     var _HITS_B=['Single','Double','Triple','Home Run'];
     var _KS_B=['Strikeout Swinging','Strikeout Looking'];
-    function _zwB(pts){ var sw=pts.filter(function(p){return['Swinging Strike','Foul'].concat(_IN_PLAY_B).includes(p.outcome);}).length; var wh=pts.filter(function(p){return p.outcome==='Swinging Strike';}).length; return sw>=5?wh/sw:null; }
+    function _zwB(pts){ var sw=pts.filter(reportIsSwingOutcome).length; var wh=pts.filter(reportIsWhiffOutcome).length; return sw>=5?wh/sw:null; }
     function _zbaB(pts){ var ab=pts.filter(function(p){return _IN_PLAY_B.concat(_KS_B).includes(p.outcome);}).length; var h=pts.filter(function(p){return _HITS_B.includes(p.outcome);}).length; return ab>=5?h/ab:null; }
     // lgArr iterates ALL pitches in DATA (both years share same scatter store)
     function _lgArrB(fn,mfn){ var a=[]; DATA.pitches.forEach(function(bp){ var pts=(bp.scatter||[]).filter(function(p){return hasPitchLocation(p)&&fn(p);}); var v=mfn(pts); if(v!=null)a.push(v); }); return a; }
@@ -1992,7 +1927,7 @@ Zane Skansi,Kitchener Panthers`;
         var myW=_zwB(pts), lgW=_lgArrB(zc.fn,_zwB);
         var myBA=_zbaB(pts), lgBA=_lgArrB(zc.fn,_zbaB);
         var wPct=_pctRankB(myW,lgW), baPct=_pctRankB(myBA,lgBA);
-        var missType=reportBestPitchType(scB,zc.fn,function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';});
+        var missType=reportBestPitchType(scB,zc.fn,reportIsWhiffOutcome);
         var weakType=reportBestPitchType(scB,zc.fn,function(p){return _IN_PLAY_B.concat(_KS_B).includes(p.outcome)&&!_HITS_B.includes(p.outcome);});
         if(myW!=null) addAttack(zc.label+' WHIFF%', f1(myW*100)+'%', wPct,
           'Pitchers should attack '+zc.spot+' with '+(missType||'the best swing-and-miss pitch')+' because the whiff rate there is '+f1(myW*100)+'%.', wPct, zc.spot+(missType?' with '+missType:''), zc.region, false);
@@ -2057,7 +1992,7 @@ Zane Skansi,Kitchener Panthers`;
     var pspa=selSeason==='2026'
       ? (s.pitches_seen&&pa>0?s.pitches_seen/pa:null)
       : (pbp&&pbp.PS_PA!=null?pbp.PS_PA:(s.pitches_seen&&pa>0?s.pitches_seen/pa:null));
-    var ssN=sc.filter(function(s2){return s2.outcome==='Swinging Strike'||s2.outcome==='Strikeout Swinging';}).length;
+    var ssN=sc.filter(reportIsWhiffOutcome).length;
     var kPct2=selSeason==='2026'
       ? (s.K_pct!=null?s.K_pct/100:(pa>0?k/pa:0))
       : (iblK(iblB)!=null&&iblPA(iblB)>0?iblK(iblB)/iblPA(iblB):(pbp&&pbp.K_pct!=null?pbp.K_pct/100:(pa>0?k/pa:0)));
@@ -2130,7 +2065,7 @@ Zane Skansi,Kitchener Panthers`;
     y+=dH2+5;
 
     var _locSc=allSc.filter(hasPitchLocation);
-    var _whiffPts=_locSc.filter(function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';});
+    var _whiffPts=_locSc.filter(reportIsWhiffOutcome);
     var _pitchRows=buildBatterPitchTypeRows(allSc).slice(0,5);
     if(_pitchRows.length){
       y=drawSec(d,'Batter Performance by Pitch Type',y);
@@ -2282,8 +2217,8 @@ Zane Skansi,Kitchener Panthers`;
     var ks=sc.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
     var bbs=sc.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
     var hits=sc.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
-    var str=sc.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
-    var swS=sc.filter(function(s){return s.outcome==='Swinging Strike';}).length;
+    var str=sc.filter(reportIsStrikeOutcome).length;
+    var swS=sc.filter(reportIsWhiffOutcome).length;
     var calS=sc.filter(function(s){return s.outcome==='Called Strike';}).length;
     var balls=sc.filter(function(s){return s.outcome==='Ball';}).length;
     var inZ=sc.filter(xyInZone).length;
@@ -2295,7 +2230,7 @@ Zane Skansi,Kitchener Panthers`;
       var prev=sc[i-1];
       return (s.batter!==prev.batter||s.inning!==prev.inning||s.half_inning!==prev.half_inning);
     });
-    var fpStr=fp.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(s.outcome);}).length;
+    var fpStr=fp.filter(reportIsStrikeOutcome).length;
     var fpsPct = fp.length>=5 ? fpStr/fp.length*100 : (player.fps_pct!=null?player.fps_pct:null);
     var ttp = player.avg_ttp != null ? player.avg_ttp : null;
 
@@ -2322,9 +2257,11 @@ Zane Skansi,Kitchener Panthers`;
     var kPctVal=selSeason==='2026'
       ? (pd26&&pd26.K_pct!=null?f1(pd26.K_pct)+'%':f1(xp(ks,tot))+'%')
       : (pbpP2&&pbpP2.K_pct!=null?f1(pbpP2.K_pct)+'%':f1(xp(ks,tot))+'%');
-    var strVal=selSeason==='2026'
-      ? (pd26&&pd26.STR_pct!=null?f1(pd26.STR_pct)+'%':f1(xp(str,tot))+'%')
-      : (pbpP2&&pbpP2.STR_pct!=null?f1(pbpP2.STR_pct)+'%':f1(xp(str,tot))+'%');
+    var strVal=sc.length
+      ? f1(xp(str,tot))+'%'
+      : (selSeason==='2026'
+        ? (pd26&&pd26.STR_pct!=null?f1(pd26.STR_pct)+'%':f1(xp(str,tot))+'%')
+        : (pbpP2&&pbpP2.STR_pct!=null?f1(pbpP2.STR_pct)+'%':f1(xp(str,tot))+'%'));
     var fpsVal=selSeason==='2026'
       ? (pd26&&pd26.FPS_pct!=null?f1(pd26.FPS_pct)+'%':(fpsPct!=null?f1(fpsPct)+'%':'—'))
       : (pbpP2&&pbpP2.FP_STR_pct!=null?f1(pbpP2.FP_STR_pct)+'%':(fpsPct!=null?f1(fpsPct)+'%':'—'));
@@ -2359,16 +2296,18 @@ Zane Skansi,Kitchener Panthers`;
     var bbPct2=selSeason==='2026'
       ? (pd26&&pd26.BB_pct!=null?pd26.BB_pct/100:(tot>0?bbs/tot:0))
       : (pbpP2&&pbpP2.BB_pct!=null?pbpP2.BB_pct/100:(tot>0?bbs/tot:0));
-    var strPct3=selSeason==='2026'
-      ? (pd26&&pd26.STR_pct!=null?pd26.STR_pct/100:(tot>0?str/tot:0))
-      : (pbpP2&&pbpP2.STR_pct!=null?pbpP2.STR_pct/100:(tot>0?str/tot:0));
+    var strPct3=sc.length
+      ? (tot>0?str/tot:0)
+      : (selSeason==='2026'
+        ? (pd26&&pd26.STR_pct!=null?pd26.STR_pct/100:(tot>0?str/tot:0))
+        : (pbpP2&&pbpP2.STR_pct!=null?pbpP2.STR_pct/100:(tot>0?str/tot:0)));
     y=drawSec(d,'Approach',y);
 
     // ── shared metric helpers (pitcher perspective) ───────────────────────
     var _IN_PLAY_P=['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
     var _HITS_P=['Single','Double','Triple','Home Run'];
     var _KS_P=['Strikeout Swinging','Strikeout Looking'];
-    function _zwP(pts){ var sw=pts.filter(function(p){return['Swinging Strike','Foul'].concat(_IN_PLAY_P).includes(p.outcome);}).length; var wh=pts.filter(function(p){return p.outcome==='Swinging Strike';}).length; return sw>=5?wh/sw:null; }
+    function _zwP(pts){ var sw=pts.filter(reportIsSwingOutcome).length; var wh=pts.filter(reportIsWhiffOutcome).length; return sw>=5?wh/sw:null; }
     function _zbaP(pts){ var ab=pts.filter(function(p){return _IN_PLAY_P.concat(_KS_P).includes(p.outcome);}).length; var h=pts.filter(function(p){return _HITS_P.includes(p.outcome);}).length; return ab>=5?h/ab:null; }
     function _lgArrP(fn,mfn){ var a=[]; DATA.pitches.forEach(function(bp){ var pts=(bp.scatter||[]).filter(function(p){return hasPitchLocation(p)&&fn(p);}); var v=mfn(pts); if(v!=null)a.push(v); }); return a; }
     function _pctRankP(val,arr){ if(!arr.length||val==null)return null; var below=arr.filter(function(v){return v<val;}).length; var equal=arr.filter(function(v){return v===val;}).length; return (below+equal*0.5)/arr.length; }
@@ -2543,10 +2482,10 @@ Zane Skansi,Kitchener Panthers`;
       var usageParts=reportPctParts(sT.map(function(e){return e[1];}));
       var atR=sT.map(function(e,ei){
         var t=e[0],cnt=e[1],tp=sc.filter(function(s){return(s.pitch_type||s.type||'Unknown')===t;});
-        var ts=tp.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+        var ts=tp.filter(reportIsStrikeOutcome).length;
         var tb=tp.filter(function(s){return s.outcome==='Ball';}).length;
-        var tSwings=tp.filter(function(s){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging'].includes(s.outcome);}).length;
-        var tWhiff=tp.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Strikeout Swinging';}).length;
+        var tSwings=tp.filter(reportIsSwingOutcome).length;
+        var tWhiff=tp.filter(reportIsWhiffOutcome).length;
         return[t,usageParts[ei],f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%',tSwings>0?f1(tWhiff/tSwings*100)+'%':'—'];
       });
       var ar=y+9;
@@ -2592,7 +2531,7 @@ Zane Skansi,Kitchener Panthers`;
       var sub=sc.filter(function(s){return s.batter_side===hand;});
       var sk=sub.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
       var sb=sub.filter(function(s){return s.outcome==='Walk'||s.outcome==='Intentional Walk';}).length;
-      var ss=sub.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
+      var ss=sub.filter(reportIsStrikeOutcome).length;
       var sz=sub.filter(xyInZone).length;
       return{hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(hasPitchLocation)};
     });
@@ -2641,6 +2580,7 @@ Zane Skansi,Kitchener Panthers`;
   function buildFielderCheatSheet(teamId) {
     var section = document.getElementById('fielder-cheat-section');
     var table   = document.getElementById('fielder-card-table');
+    if (!section || !table) return;
     if (selType !== 'batter') { section.style.display = 'none'; return; }
 
     var team = TEAMS_SC.find(function(t){ return t.id === teamId; });
@@ -2819,6 +2759,7 @@ Zane Skansi,Kitchener Panthers`;
 
   function downloadCheatCard() {
     var wrap = document.getElementById('fielder-card-wrap');
+    if (!wrap) return;
     var teamTitle = document.getElementById('fielder-card-team-name').textContent;
 
     // Use html2canvas if available, otherwise fall back to print
