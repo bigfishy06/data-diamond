@@ -1207,6 +1207,18 @@ Zane Skansi,Kitchener Panthers`;
   function f2(v){ if(v==null||isNaN(v)) return '—'; return parseFloat(v).toFixed(2); }
   function fN(v){ if(v==null||isNaN(v)) return '—'; return String(Math.round(v)); }
   function xp(n,d){ return d>0?n/d*100:0; }
+  function reportPctParts(counts) {
+    var total = counts.reduce(function(a,b){ return a + (Number(b) || 0); }, 0);
+    if (!total) return counts.map(function(){ return '---'; });
+    var raw = counts.map(function(c){ return (Number(c) || 0) * 1000 / total; });
+    var units = raw.map(function(v){ return Math.floor(v); });
+    var remain = 1000 - units.reduce(function(a,b){ return a + b; }, 0);
+    raw.map(function(v,i){ return { i:i, r:v - units[i] }; })
+      .sort(function(a,b){ return b.r - a.r || a.i - b.i; })
+      .slice(0, remain)
+      .forEach(function(x){ units[x.i]++; });
+    return units.map(function(u){ return (u / 10).toFixed(1) + '%'; });
+  }
   function reportPitchTypeName(s) {
     return reportPitchTypeBucket(s);
   }
@@ -1218,13 +1230,15 @@ Zane Skansi,Kitchener Panthers`;
     var chaseOut=['Swinging Strike','Strikeout Swinging','Dropped Third Strike Swinging','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Sacrifice Fly','Sac Fly Double Play','Sacrifice Bunt','Sac Bunt Double Play'];
     var by={};
     pts.forEach(function(p){var t=reportPitchTypeName(p);(by[t]=by[t]||[]).push(p);});
-    return Object.keys(by).map(function(t){
+    var keys=Object.keys(by);
+    var usageParts=reportPctParts(keys.map(function(t){return by[t].length;}));
+    return keys.map(function(t,ti){
       var arr=by[t],sw=arr.filter(function(p){return swingOut.includes(p.outcome);});
       var wh=arr.filter(function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';}).length;
       var oz=arr.filter(xyOutOfZone),ch=oz.filter(function(p){return chaseOut.includes(p.outcome);}).length;
       var k=arr.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';}).length;
       var bb=arr.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length;
-      return [t,f1(xp(arr.length,total))+'%',sw.length?f1(xp(wh,sw.length))+'%':'—',oz.length?f1(xp(ch,oz.length))+'%':'—',f1(xp(k,arr.length))+'%',f1(xp(bb,arr.length))+'%',arr.length];
+      return [t,usageParts[ti],sw.length?f1(xp(wh,sw.length))+'%':'—',oz.length?f1(xp(ch,oz.length))+'%':'—',f1(xp(k,arr.length))+'%',f1(xp(bb,arr.length))+'%',arr.length];
     }).sort(function(a,b){return b[6]-a[6];}).map(function(r){return r.slice(0,6);});
   }
   function reportBestPitchType(points, filterFn, outcomeFn) {
@@ -2516,7 +2530,7 @@ Zane Skansi,Kitchener Panthers`;
       y+=3;
       y=drawSec(d,'Pitch Arsenal — What He Throws and How Effective Each Pitch Is',y);
       var atH=['PITCH TYPE','USAGE %','STRIKE %','BALL %','WHIFF %'];
-      var atL=['Name of pitch','% of all pitches','Strike rate','Ball rate','Miss rate on swings'];
+      var atL=['Name of pitch','% of known pitches','Strike rate','Ball rate','Miss rate on swings'];
       var atW=[50,28,28,28,28];
       sf(d,CO.navy2);d.rect(ML,y,CPW,9,'F');
       sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+9,ML+CPW,y+9);
@@ -2526,13 +2540,14 @@ Zane Skansi,Kitchener Panthers`;
         d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);d.text(atL[i],ax+atW[i]/2,y+7.5,{align:'center'});
         ax+=atW[i];
       });
-      var atR=sT.map(function(e){
+      var usageParts=reportPctParts(sT.map(function(e){return e[1];}));
+      var atR=sT.map(function(e,ei){
         var t=e[0],cnt=e[1],tp=sc.filter(function(s){return(s.pitch_type||s.type||'Unknown')===t;});
         var ts=tp.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
         var tb=tp.filter(function(s){return s.outcome==='Ball';}).length;
         var tSwings=tp.filter(function(s){return['Swinging Strike','Foul','Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Sacrifice Fly','Sacrifice Bunt','Error','Strikeout Swinging'].includes(s.outcome);}).length;
         var tWhiff=tp.filter(function(s){return s.outcome==='Swinging Strike'||s.outcome==='Strikeout Swinging';}).length;
-        return[t,f1(xp(cnt,tot))+'%',f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%',tSwings>0?f1(tWhiff/tSwings*100)+'%':'—'];
+        return[t,usageParts[ei],f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%',tSwings>0?f1(tWhiff/tSwings*100)+'%':'—'];
       });
       var ar=y+9;
       atR.forEach(function(row,ri){

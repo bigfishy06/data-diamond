@@ -512,6 +512,18 @@
   function f1(v){if(v==null||isNaN(v))return'--';return parseFloat(v).toFixed(1);}
   function fN(v){if(v==null||isNaN(v))return'--';return String(Math.round(v));}
   function xp(n,d){return d>0?n/d*100:0;}
+  function gpPctParts(counts) {
+    var total = counts.reduce(function(a,b){ return a + (Number(b) || 0); }, 0);
+    if (!total) return counts.map(function(){ return '--'; });
+    var raw = counts.map(function(c){ return (Number(c) || 0) * 1000 / total; });
+    var units = raw.map(function(v){ return Math.floor(v); });
+    var remain = 1000 - units.reduce(function(a,b){ return a + b; }, 0);
+    raw.map(function(v,i){ return { i:i, r:v - units[i] }; })
+      .sort(function(a,b){ return b.r - a.r || a.i - b.i; })
+      .slice(0, remain)
+      .forEach(function(x){ units[x.i]++; });
+    return units.map(function(u){ return (u / 10).toFixed(1) + '%'; });
+  }
   function gpPitchTypeName(s) {
     return gpPitchTypeBucket(s);
   }
@@ -525,13 +537,15 @@
     function outZone(p){if(!hasLoc(p))return false;var x=Number(p.x),y=Number(p.y);return !(x>=-1&&x<=1&&y>=0&&y<=1);}
     var by={};
     pts.forEach(function(p){var t=gpPitchTypeName(p);(by[t]=by[t]||[]).push(p);});
-    return Object.keys(by).map(function(t){
+    var keys = Object.keys(by);
+    var usageParts = gpPctParts(keys.map(function(t){ return by[t].length; }));
+    return keys.map(function(t, ti){
       var arr=by[t],sw=arr.filter(function(p){return swingOut.includes(p.outcome);});
       var wh=arr.filter(function(p){return p.outcome==='Swinging Strike'||p.outcome==='Strikeout Swinging';}).length;
       var oz=arr.filter(outZone),ch=oz.filter(function(p){return chaseOut.includes(p.outcome);}).length;
       var k=arr.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';}).length;
       var bb=arr.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length;
-      return [t,f1(xp(arr.length,total))+'%',sw.length?f1(xp(wh,sw.length))+'%':'--',oz.length?f1(xp(ch,oz.length))+'%':'--',f1(xp(k,arr.length))+'%',f1(xp(bb,arr.length))+'%',arr.length];
+      return [t,usageParts[ti],sw.length?f1(xp(wh,sw.length))+'%':'--',oz.length?f1(xp(ch,oz.length))+'%':'--',f1(xp(k,arr.length))+'%',f1(xp(bb,arr.length))+'%',arr.length];
     }).sort(function(a,b){return b[6]-a[6];}).map(function(r){return r.slice(0,6);});
   }
   function gpBestPitchType(points, filterFn, outcomeFn) {
@@ -570,9 +584,13 @@
       var n = subset.length;
       var known = subset.filter(function(s) { return gpPitchTypeBucket(s) !== 'Unknown'; }).length;
       var row = [grp.label];
-      typeSet.forEach(function(t) {
+      var counts = typeSet.map(function(t) {
+        return subset.filter(function(s) { return gpPitchTypeBucket(s) === t; }).length;
+      });
+      var pctParts = known ? gpPctParts(counts) : [];
+      typeSet.forEach(function(t, i) {
         var c = subset.filter(function(s) { return gpPitchTypeBucket(s) === t; }).length;
-        row.push(known ? f1(c/known*100) + '%' : '--');
+        row.push(known ? pctParts[i] : '--');
       });
       row.push(String(n));
       return row;
@@ -647,10 +665,10 @@
   }
   function drawTbl(d,headers,rows,colW,y,hlCols){
     hlCols=hlCols||[];
-    var rh=7,hh=8,tw=colW.reduce(function(a,b){return a+b;},0);
+    var rh=7.6,hh=8.4,tw=colW.reduce(function(a,b){return a+b;},0);
     sf(d,CO.navy3);d.rect(ML,y,tw,hh,'F');
     sd(d,CO.gold);d.setLineWidth(0.5);d.line(ML,y+hh,ML+tw,y+hh);
-    d.setFont('helvetica','bold');d.setFontSize(6.5);st(d,CO.gold);
+    d.setFont('helvetica','bold');d.setFontSize(7.2);st(d,CO.gold);
     var cx=ML;
     headers.forEach(function(h,i){d.text(h,cx+colW[i]/2,y+5.5,{align:'center'});cx+=colW[i];});
     rows.forEach(function(row,ri){
@@ -659,7 +677,7 @@
       cx=ML;
       row.forEach(function(cell,ci){
         var hl=hlCols.includes(ci);
-        d.setFont('helvetica',hl?'bold':'normal');d.setFontSize(6.5);
+        d.setFont('helvetica',hl?'bold':'normal');d.setFontSize(7.2);
         st(d,hl?CO.white:CO.dim);
         d.text(String(cell),cx+colW[ci]/2,ry+4.8,{align:'center'});cx+=colW[ci];
       });
@@ -796,10 +814,11 @@
       Array(6).fill(CPW/6),y);
     y+=2;
     var pm=s.pitch_mix||{};
-    if(Object.keys(pm).length){
+    var pmH=Object.keys(pm).filter(function(k){return String(k).trim() !== 'Unknown';});
+    if(pmH.length){
       y=drawSec(d,'Pitch Mix Faced',y);
-      var pmH=Object.keys(pm);
-      y=drawTbl(d,pmH,[pmH.map(function(k){var v=pm[k];return f1(v<=1?v*100:v)+'%';})],Array(pmH.length).fill(CPW/pmH.length),y);
+      var pmPct=gpPctParts(pmH.map(function(k){var v=Number(pm[k])||0;return v<=1?v*100:v;}));
+      y=drawTbl(d,pmH,[pmPct],Array(pmH.length).fill(CPW/pmH.length),y);
       y+=2;
     }
     var ptRows=gpBuildBatterPitchTypeRows(sc).slice(0,5);
@@ -857,13 +876,14 @@
     if(sT.length){
       y=drawSec(d,'Pitch Arsenal',y);
       var atH=['TYPE','COUNT','USAGE%','K','HIT','STR%','BALL%'],atW=[38,16,18,12,12,18,18];
-      var atR=sT.map(function(e){
+      var usageParts=gpPctParts(sT.map(function(e){return e[1];}));
+      var atR=sT.map(function(e,ei){
         var t=e[0],cnt=e[1],tp=sc.filter(function(s){return(s.pitch_type||s.type||'Unknown')===t;});
         var tk=tp.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
         var th=tp.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
         var ts=tp.filter(function(s){return['Called Strike','Swinging Strike','Foul','Strikeout Swinging','Strikeout Looking'].includes(s.outcome);}).length;
         var tb=tp.filter(function(s){return s.outcome==='Ball';}).length;
-        return[t,String(cnt),f1(xp(cnt,tot))+'%',String(tk),String(th),f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%'];
+        return[t,String(cnt),usageParts[ei],String(tk),String(th),f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%'];
       });
       y=drawTbl(d,atH,atR,atW,y,[2,5]);y+=2;
     }
@@ -1623,11 +1643,11 @@ Zane Skansi,Kitchener Panthers`;
       var nameH = tightBlocks ? blockH * 0.24 : Math.max(3.2, Math.min(4.6, blockH * 0.22));
       var statH = tightBlocks ? blockH * 0.22 : Math.max(3.0, Math.min(4.2, blockH * 0.20));
       var attackH = Math.max(2.8, blockH - nameH - statH - 0.35);
-      var bodyFs = blockH < 9 ? 3.5 : blockH < 11 ? 4.1 : blockH < 15 ? 4.8 : 5.5;
-      var nameFs = Math.min(6.5, bodyFs + 1.1);
-      var labelFs = Math.max(3.6, bodyFs - 0.8);
-      var noteFs = Math.max(3.8, bodyFs - 0.4);
-      var statWs = [28,30,31,32,32];
+      var bodyFs = blockH < 9 ? 3.8 : blockH < 11 ? 4.4 : blockH < 15 ? 5.1 : 5.8;
+      var nameFs = Math.min(7.0, bodyFs + 1.2);
+      var labelFs = Math.max(3.9, bodyFs - 0.75);
+      var noteFs = Math.max(4.1, bodyFs - 0.35);
+      var statWs = [16,18,21,25,20,22,24,24];
 
       function fitTxt(txt, maxW, fs, fontStyle) {
         txt = String(txt == null ? '' : txt);
@@ -1693,8 +1713,8 @@ Zane Skansi,Kitchener Panthers`;
         var batted=sc.filter(function(p){return['Groundout','Flyout','Single','Double','Triple','Home Run','Lineout','Popout','Error','Double Play','Sacrifice Fly'].includes(p.outcome);});
         var sumS=summaryByName[gpNorm(s.batter)];
 
-        // Shift
-        var shiftText=(function(){
+        // Shift and spray direction
+        var shiftInfo=(function(){
           var spBatted=batted.filter(function(p){return p.spray;});
           var spTot=spBatted.length;
           var pullN,oppN,strN;
@@ -1705,12 +1725,16 @@ Zane Skansi,Kitchener Panthers`;
             oppN =spTot>=5?spBatted.filter(function(p){return p.spray==='Opposite Field';}).length/spTot*100:0;
             strN =spTot>=5?spBatted.filter(function(p){return p.spray==='Straightaway';}).length/spTot*100:0;
           }
-          if(spTot<5)return'None';
-          if(pullN>=40&&pullN>strN&&pullN>oppN)return'PULL';
-          if(oppN>=40&&oppN>pullN&&oppN>strN)return'OPPO';
-          if(strN>=40&&strN>pullN&&strN>oppN)return'STRAIGHT';
-          return'None';
+          var out={pull:'--',straight:'--',oppo:'--',text:'None'};
+          if(spTot>=5){
+            out.pull=f1(pullN)+'%'; out.straight=f1(strN)+'%'; out.oppo=f1(oppN)+'%';
+            if(pullN>=40&&pullN>strN&&pullN>oppN)out.text='PULL';
+            else if(oppN>=40&&oppN>pullN&&oppN>strN)out.text='OPPO';
+            else if(strN>=40&&strN>pullN&&strN>oppN)out.text='STRAIGHT';
+          }
+          return out;
         })();
+        var shiftText=shiftInfo.text;
 
         // Approach & whiff heat map
         var scXY     = sc.filter(function(p){return p.x!=null&&p.y!=null;});
@@ -1821,13 +1845,17 @@ Zane Skansi,Kitchener Panthers`;
         [
           {lbl:'BA',val:avg,color:CO.white},
           {lbl:'OPS',val:ops,color:CO.white},
+          {lbl:'Pull %',val:shiftInfo.pull,color:CO.white},
+          {lbl:'Straightaway %',val:shiftInfo.straight,color:CO.white},
+          {lbl:'Oppo %',val:shiftInfo.oppo,color:CO.white},
           {lbl:'SHIFT',val:shiftText,color:shiftColor},
           {lbl:'Whiff Rate',val:whiffPct,color:CO.white},
           {lbl:'Chase Rate',val:chasePct,color:CO.white}
         ].forEach(function(stat,i){
-          topTxt(stat.lbl, sx, statY+Math.min(statH-0.9,3.3), statWs[i]-4, labelFs, 'bold', CO.gold, 'left');
-          topTxt(stat.val, sx+14, statY+Math.min(statH-0.75,3.45), statWs[i]-16, bodyFs, 'bold', stat.color, 'left');
-          if(i<4){ sd(d,[25,40,65]); d.setLineWidth(0.08); d.line(sx+statWs[i]-2,statY,sx+statWs[i]-2,attackY); }
+          var cellW=statWs[i];
+          var lbl=stat.lbl.replace('Straightaway','Str').replace(' Rate','');
+          topTxt(lbl+' '+stat.val, sx+1, statY+Math.min(statH-0.75,3.45), cellW-2, Math.max(labelFs, bodyFs-0.4), 'bold', stat.color, 'left');
+          if(i<statWs.length-1){ sd(d,[25,40,65]); d.setLineWidth(0.08); d.line(sx+cellW-2,statY,sx+cellW-2,attackY); }
           sx += statWs[i];
         });
 
@@ -1991,9 +2019,9 @@ Zane Skansi,Kitchener Panthers`;
       var pitNameH = pitTight ? pitBlockH * 0.22 : Math.max(3.2, Math.min(4.8, pitBlockH * 0.20));
       var pitStatH = pitTight ? pitBlockH * 0.22 : Math.max(3.0, Math.min(4.2, pitBlockH * 0.18));
       var pitMapH = Math.max(3.0, pitBlockH - pitNameH - pitStatH - 0.35);
-      var pitBodyFs = pitBlockH < 11 ? 3.5 : pitBlockH < 15 ? 4.2 : 5.0;
-      var pitNameFs = Math.min(6.4, pitBodyFs + 1.1);
-      var pitLabelFs = Math.max(3.5, pitBodyFs - 0.75);
+      var pitBodyFs = pitBlockH < 11 ? 3.8 : pitBlockH < 15 ? 4.5 : 5.3;
+      var pitNameFs = Math.min(6.9, pitBodyFs + 1.2);
+      var pitLabelFs = Math.max(3.8, pitBodyFs - 0.7);
       var pitStatWs = [20,22,16,16,20,21,20];
 
       function pitFit(txt, maxW, fs, fontStyle) {
@@ -2093,8 +2121,9 @@ Zane Skansi,Kitchener Panthers`;
         // Arsenal: always from scatter x/y data (both years)
         var tc2={};
         sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
-        var arsenal=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];}).slice(0,3)
-          .map(function(e){return e[0].slice(0,4)+' '+f1(xp(e[1],tot))+'%';}).join('  ')||'--';
+        var arsenal=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];}).slice(0,3);
+        var arsenalPct=gpPctParts(arsenal.map(function(e){return e[1];}));
+        arsenal=arsenal.map(function(e,i){return e[0].slice(0,4)+' '+arsenalPct[i];}).join('  ')||'--';
         var tendInfo=(function(){
           var tend=gpBuildPitchCountTendencyRows(sc);
           if(!tend.rows.length)return{compact:'',rows:[]};
