@@ -1534,7 +1534,7 @@ Zane Skansi,Kitchener Panthers`;
         : name;
       return '<label style="display:flex;align-items:center;gap:8px;padding:5px 10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04)" ' +
         'onmouseover="this.style.background=\'rgba(255,184,28,0.06)\'" onmouseout="this.style.background=\'\'">' +
-        '<input type="checkbox" value="' + name.replace(/"/g,'&quot;') + '"' + (checked ? ' checked' : '') +
+        '<input type="checkbox" value="' + name.replace(/"/g,'&quot;') + '" data-key="' + gpNorm(name).replace(/"/g,'&quot;') + '"' + (checked ? ' checked' : '') +
           ' style="accent-color:#FFB81C;width:13px;height:13px;cursor:pointer;flex-shrink:0">' +
         '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:' + (checked ? '#fff' : 'rgba(255,255,255,0.45)') + '">' + nameHtml + '</span>' +
         '</label>';
@@ -1586,7 +1586,7 @@ Zane Skansi,Kitchener Panthers`;
     var container = document.getElementById(selectId);
     if (!container) return;
     var selected = [];
-    container.querySelectorAll('input[type=checkbox]:checked').forEach(function(cb) { selected.push(cb.value); });
+    container.querySelectorAll('input[type=checkbox]:checked').forEach(function(cb) { selected.push(cb.dataset.key || gpNorm(cb.value)); });
     if (!selected.length) { alert('Please select at least one player.'); return; }
 
     // Close the picker
@@ -1663,14 +1663,21 @@ Zane Skansi,Kitchener Panthers`;
       });
 
       if (selectedNames && selectedNames.length) {
+        var selectedKeys = selectedNames.map(function(n){ return gpNorm(n); });
         var selSet = {};
-        selectedNames.forEach(function(n){ selSet[gpNorm(n)] = true; });
+        selectedKeys.forEach(function(k){ selSet[k] = true; });
         batterNames = batterNames.filter(function(n){ return selSet[gpNorm(n)]; });
       }
 
       var batters = batterNames.map(function(name) {
         return summaryByName[gpNorm(name)] || { batter: name, AB: 0 };
       }).sort(function(a,b){ return (b.AB||0)-(a.AB||0); });
+      if (selectedNames && selectedNames.length) {
+        var selectedBatterKeys = selectedNames.map(function(n){ return gpNorm(n); });
+        var batterByKey = {};
+        batters.forEach(function(p){ batterByKey[gpNorm(p.batter)] = p; });
+        batters = selectedBatterKeys.map(function(k){ return batterByKey[k]; }).filter(Boolean);
+      }
 
       if (!batters.length) {
         if (btn) { btn.disabled = false; btn.querySelector('.gp-btn-label').textContent = 'OPP BATTERS PDF'; }
@@ -2062,9 +2069,13 @@ Zane Skansi,Kitchener Panthers`;
       pitchers.sort(function(a,b){return a.name.localeCompare(b.name);});
       // Filter to selected players if provided
       if (selectedNames && selectedNames.length) {
+        var selectedPitcherKeys = selectedNames.map(function(n){ return gpNorm(n); });
         var selSet2 = {};
-        selectedNames.forEach(function(n){ selSet2[n.toLowerCase().trim()] = true; });
-        pitchers = pitchers.filter(function(p){ return selSet2[p.name.toLowerCase().trim()]; });
+        selectedPitcherKeys.forEach(function(k){ selSet2[k] = true; });
+        pitchers = pitchers.filter(function(p){ return selSet2[gpNorm(p.name)]; });
+        var pitcherByKey = {};
+        pitchers.forEach(function(p){ pitcherByKey[gpNorm(p.name)] = p; });
+        pitchers = selectedPitcherKeys.map(function(k){ return pitcherByKey[k]; }).filter(Boolean);
       }
 
       if (!pitchers.length) {
