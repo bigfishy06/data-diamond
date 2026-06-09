@@ -1918,6 +1918,7 @@ Zane Skansi,Kitchener Panthers`;
         pts.forEach(function(p){if(outcomeFn&&!outcomeFn(p))return;var t=reportPitchTypeName(p);if(t!=='Unknown')by[t]=(by[t]||0)+1;});
         return Object.keys(by).sort(function(a,b){return by[b]-by[a];})[0]||'pitches';
       }
+      function capFirstText(txt){txt=String(txt||'');return txt?txt.charAt(0).toUpperCase()+txt.slice(1):txt;}
       function hitCountPattern(){
         var by={};
         scB.filter(function(p){return _HITS_B.includes(p.outcome)&&p.count;}).forEach(function(p){
@@ -1949,9 +1950,9 @@ Zane Skansi,Kitchener Panthers`;
       var hitText=hitPick.hits+' hit'+(hitPick.hits!==1?'s':'')+(hitPick.baa!=null?' / BAA '+f3(hitPick.baa):'');
       var whiffPitch=topPitchType(whiffPick.pts,reportIsWhiffOutcome);
       var hitPitch=topPitchType(hitPick.pts,function(p){return _HITS_B.includes(p.outcome);});
-      var whiffLine=whiffPick.zone.spot+' with '+whiffPitch+' ('+whiffRate+')';
-      var hitLine=hitPick.zone.spot+' with '+hitPitch+' ('+hitText+')';
-      var countLine=hitCountPattern();
+      var whiffLine=capFirstText(whiffPick.zone.spot+' with '+whiffPitch+' ('+whiffRate+')');
+      var hitLine=capFirstText(hitPick.zone.spot+' with '+hitPitch+' ('+hitText+')');
+      var countLine=capFirstText(hitCountPattern());
       return {
         dot:hitPick.hits>=3?'#f87171':'#FFB81C',
         label:'WHIFF/HIT',
@@ -2017,6 +2018,15 @@ Zane Skansi,Kitchener Panthers`;
       ? (s.BB_pct!=null?s.BB_pct/100:(pa>0?bb/pa:0))
       : (iblBB(iblB)!=null&&iblPA(iblB)>0?iblBB(iblB)/iblPA(iblB):(pbp&&pbp.BB_pct!=null?pbp.BB_pct/100:(pa>0?bb/pa:0)));
     var ssPct=pbp&&pbp.WHIFF_pct!=null?pbp.WHIFF_pct/100:(sc.length>=5?ssN/sc.length:0);
+    var fpSwingPct=(function(){
+      var raw=selSeason==='2026'
+        ? (s.FP_Swing_pct!=null?s.FP_Swing_pct:(s.first_pitch_swing_pct!=null?s.first_pitch_swing_pct:null))
+        : (pbp&&pbp.FP_Swing_pct!=null?pbp.FP_Swing_pct:(s.FP_Swing_pct!=null?s.FP_Swing_pct:null));
+      if(raw!=null){ raw=Number(raw); return raw>1?raw/100:raw; }
+      var fp=sc.filter(function(p){return String(p.count||'').replace(/^'/,'')==='0-0';});
+      if(fp.length>=5)return fp.filter(reportIsSwingOutcome).length/fp.length;
+      return null;
+    })();
 
     // BB/K: 2026 from summary BB_K field; 2025 from IBL History or pbp_batters
     var _bbkVal=null;
@@ -2053,6 +2063,9 @@ Zane Skansi,Kitchener Panthers`;
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
        color:pspa!=null?(pspa>=4.0?'#34d399':pspa>=3.5?'#FFB81C':'#f87171'):'#555',
        note:_pspaNote},
+      {label:'FPSW%',sub:'First pitch swing',val:fpSwingPct!=null?f1(fpSwingPct*100)+'%':'—',
+       color:fpSwingPct!=null?(fpSwingPct>=0.45?'#f87171':fpSwingPct>=0.30?'#FFB81C':'#34d399'):'#555',
+       note:fpSwingPct!=null?(fpSwingPct>=0.45?'Aggressive on first pitch — expand carefully after strike one':fpSwingPct>=0.30?'Will swing early in select spots':'Takes first pitch often — steal strike one') : ''},
       {label:'K',sub:'Strikeouts',val:_batKCount!=null?String(Math.round(_batKCount)):'—',
        color:_batKCount!=null?(_batKCount>=30?'#34d399':_batKCount>=15?'#FFB81C':'#f87171'):'#555',
        note:_batKCount!=null?(_batKCount>=30?'High K total — put-away pitch works':_batKCount>=15?'Moderate K vulnerability':'Rarely strikes out'):'' },
@@ -2372,6 +2385,7 @@ Zane Skansi,Kitchener Panthers`;
         var keys=Object.keys(by).sort(function(a,b){return by[b]-by[a];});
         return keys[0]||'pitches';
       }
+      function capFirstText(txt){txt=String(txt||'');return txt?txt.charAt(0).toUpperCase()+txt.slice(1):txt;}
       function bestCountPattern(){
         var patterns=buildPitchCountTendencyRows(scP).rows;
         if(patterns.length){
@@ -2407,11 +2421,11 @@ Zane Skansi,Kitchener Panthers`;
         ? 'Damage: '+damagePick.zone.spot+' BAA '+f3(damagePick.baa)+' with '+damagePick.pitch+'.'
         : 'Damage: not enough BAA sample by zone.';
       var countNote=countLine?(' Count: '+countLine+'.'):' Count: no strong count pattern.';
-      var freqText=usagePick.pitch+' to '+usagePick.zone.spot.toLowerCase()+' '+f1(usagePick.usage*100)+'%';
+      var freqText=capFirstText(usagePick.pitch+' to '+usagePick.zone.spot.toLowerCase()+' '+f1(usagePick.usage*100)+'%');
       var damageText=damagePick&&damagePick.baa!=null
-        ? damagePick.zone.spot+' BAA '+f3(damagePick.baa)+' with '+damagePick.pitch
-        : 'not enough BAA sample by zone';
-      var countText=countLine||'no strong count pattern';
+        ? capFirstText(damagePick.zone.spot+' BAA '+f3(damagePick.baa)+' with '+damagePick.pitch)
+        : 'Not enough BAA sample by zone';
+      var countText=capFirstText(countLine||'no strong count pattern');
       var dot=(damagePick&&damagePick.baa!=null&&damagePick.baa>=0.300)?'#34d399':'#FFB81C';
       return {
         dot:dot,
