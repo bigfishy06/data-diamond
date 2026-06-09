@@ -1919,14 +1919,6 @@ Zane Skansi,Kitchener Panthers`;
         return Object.keys(by).sort(function(a,b){return by[b]-by[a];})[0]||'pitches';
       }
       function capFirstText(txt){txt=String(txt||'');return txt?txt.charAt(0).toUpperCase()+txt.slice(1):txt;}
-      function hitCountPattern(){
-        var by={};
-        scB.filter(function(p){return _HITS_B.includes(p.outcome)&&p.count;}).forEach(function(p){
-          var c=String(p.count||'').replace(/^'/,'');by[c]=(by[c]||0)+1;
-        });
-        var keys=Object.keys(by).sort(function(a,b){return by[b]-by[a];});
-        return keys.length?keys[0]+' ('+by[keys[0]]+' hit'+(by[keys[0]]!==1?'s':'')+')':'no clear hit count';
-      }
       var zoneRows=[
         {label:'Left Side',fn:leftFn,spot:'left side of the zone',region:{h:'left',v:'all'}},
         {label:'Right Side',fn:rightFn,spot:'right side of the zone',region:{h:'right',v:'all'}},
@@ -1953,18 +1945,16 @@ Zane Skansi,Kitchener Panthers`;
       var hitPitch=topPitchType(hitPick.pts,function(p){return _HITS_B.includes(p.outcome);});
       var whiffLine=capFirstText(whiffPick.zone.spot+' with '+whiffPitch+' ('+whiffRate+')');
       var hitLine=capFirstText(hitPick.zone.spot+' with '+hitPitch+' ('+hitText+')');
-      var countLine=capFirstText(hitCountPattern());
       return {
         dot:hitPick.hits>=3?'#f87171':'#FFB81C',
         label:'WHIFF/HIT',
         val:whiffRate,
         spot:primaryPick.zone.spot,
         region:primaryPick.zone.region,
-        note:'Whiff: '+whiffLine+'. Hits: '+hitLine+'. Count: '+countLine+'.',
+        note:'Whiff: '+whiffLine+'. Hits: '+hitLine+'.',
         lines:[
           {label:'Whiff',text:whiffLine,color:'#34d399'},
-          {label:'Hits',text:hitLine,color:'#f87171'},
-          {label:'Count',text:countLine,color:'#FFB81C'}
+          {label:'Hits',text:hitLine,color:'#f87171'}
         ]
       };
     })();

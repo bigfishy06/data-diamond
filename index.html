@@ -1848,7 +1848,6 @@ Zane Skansi,Kitchener Panthers`;
           ];
           function capFirst(txt){txt=String(txt||'');return txt?txt.charAt(0).toUpperCase()+txt.slice(1):txt;}
           function topPitch(pts,outcomeFn){var c={};pts.forEach(function(p){if(outcomeFn&&!outcomeFn(p))return;var t=gpPitchTypeName(p);if(t!=='Unknown')c[t]=(c[t]||0)+1;});return Object.keys(c).sort(function(a,b){return c[b]-c[a];})[0]||'pitches';}
-          function hitCount(){var c={};scXY.filter(function(p){return _H.includes(p.outcome)&&p.count;}).forEach(function(p){var k=String(p.count||'').replace(/^'/,'');c[k]=(c[k]||0)+1;});var keys=Object.keys(c).sort(function(a,b){return c[b]-c[a];});return keys.length?keys[0]+' '+c[keys[0]]+' hit'+(c[keys[0]]!==1?'s':''):'no clear hit count';}
           var rows=zones.map(function(zc){
             var pts=scXY.filter(zc.fn),sw=pts.filter(gpIsSwingOutcome).length,wh=pts.filter(gpIsWhiffOutcome).length,h=pts.filter(function(p){return _H.includes(p.outcome);}).length;
             return {spot:zc.spot,pts:pts,sw:sw,wh:wh,h:h,baa:zbaB(pts)};
@@ -1858,7 +1857,7 @@ Zane Skansi,Kitchener Panthers`;
           var hit=rows.slice().sort(function(a,b){return b.h-a.h||((b.baa||0)-(a.baa||0));})[0];
           var whRate=wh.sw?f1(wh.wh/wh.sw*100)+'%':'--';
           var hitInfo=hit.h+' hit'+(hit.h!==1?'s':'')+(hit.baa!=null?' / BAA '+f3(hit.baa):'');
-          return 'Whiff: '+capFirst(wh.spot+' with '+topPitch(wh.pts,gpIsWhiffOutcome)+' ('+whRate+')')+'. Hits: '+capFirst(hit.spot+' with '+topPitch(hit.pts,function(p){return _H.includes(p.outcome);})+' ('+hitInfo+')')+'. Count: '+capFirst(hitCount());
+          return 'Whiff: '+capFirst(wh.spot+' with '+topPitch(wh.pts,gpIsWhiffOutcome)+' ('+whRate+')')+'. Hits: '+capFirst(hit.spot+' with '+topPitch(hit.pts,function(p){return _H.includes(p.outcome);})+' ('+hitInfo+')');
         })();
 
         var whiffSpot=(function(){
