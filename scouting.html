@@ -1946,6 +1946,7 @@ Zane Skansi,Kitchener Panthers`;
       if(!zoneRows.length)return batterFallback(false);
       var whiffPick=zoneRows.slice().sort(function(a,b){return b.whiffs-a.whiffs||((b.swings?b.whiffs/b.swings:0)-(a.swings?a.whiffs/a.swings:0));})[0];
       var hitPick=zoneRows.slice().sort(function(a,b){return b.hits-a.hits||((b.baa||0)-(a.baa||0));})[0];
+      var primaryPick=whiffPick.whiffs>0?whiffPick:hitPick;
       var whiffRate=whiffPick.swings?f1(whiffPick.whiffs/whiffPick.swings*100)+'%':'--';
       var hitText=hitPick.hits+' hit'+(hitPick.hits!==1?'s':'')+(hitPick.baa!=null?' / BAA '+f3(hitPick.baa):'');
       var whiffPitch=topPitchType(whiffPick.pts,reportIsWhiffOutcome);
@@ -1957,8 +1958,8 @@ Zane Skansi,Kitchener Panthers`;
         dot:hitPick.hits>=3?'#f87171':'#FFB81C',
         label:'WHIFF/HIT',
         val:whiffRate,
-        spot:(whiffPick.zone.spot+' / '+hitPick.zone.spot),
-        region:(hitPick.hits>0?hitPick.zone.region:whiffPick.zone.region),
+        spot:primaryPick.zone.spot,
+        region:primaryPick.zone.region,
         note:'Whiff: '+whiffLine+'. Hits: '+hitLine+'. Count: '+countLine+'.',
         lines:[
           {label:'Whiff',text:whiffLine,color:'#34d399'},
@@ -2431,7 +2432,7 @@ Zane Skansi,Kitchener Panthers`;
         dot:dot,
         label:(damagePick&&damagePick.baa!=null?'BAA':'USAGE'),
         val:(damagePick&&damagePick.baa!=null?f3(damagePick.baa):f1(usagePick.usage*100)+'%'),
-        spot:(mainPick.pitch+' / '+mainPick.zone.spot),
+        spot:(mainPick.pitch+' '+mainPick.zone.spot),
         region:mainPick.zone.region,
         note:mostLine+' '+damageLine+countNote,
         lines:[
