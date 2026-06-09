@@ -1949,13 +1949,21 @@ Zane Skansi,Kitchener Panthers`;
       var hitText=hitPick.hits+' hit'+(hitPick.hits!==1?'s':'')+(hitPick.baa!=null?' / BAA '+f3(hitPick.baa):'');
       var whiffPitch=topPitchType(whiffPick.pts,reportIsWhiffOutcome);
       var hitPitch=topPitchType(hitPick.pts,function(p){return _HITS_B.includes(p.outcome);});
+      var whiffLine=whiffPick.zone.spot+' with '+whiffPitch+' ('+whiffRate+')';
+      var hitLine=hitPick.zone.spot+' with '+hitPitch+' ('+hitText+')';
+      var countLine=hitCountPattern();
       return {
         dot:hitPick.hits>=3?'#f87171':'#FFB81C',
         label:'WHIFF/HIT',
         val:whiffRate,
         spot:(whiffPick.zone.spot+' / '+hitPick.zone.spot),
         region:(hitPick.hits>0?hitPick.zone.region:whiffPick.zone.region),
-        note:'Whiff: '+whiffPick.zone.spot+' with '+whiffPitch+' ('+whiffRate+'). Hits: '+hitPick.zone.spot+' with '+hitPitch+' ('+hitText+'). Count: '+hitCountPattern()+'.'
+        note:'Whiff: '+whiffLine+'. Hits: '+hitLine+'. Count: '+countLine+'.',
+        lines:[
+          {label:'Whiff',text:whiffLine,color:'#34d399'},
+          {label:'Hits',text:hitLine,color:'#f87171'},
+          {label:'Count',text:countLine,color:'#FFB81C'}
+        ]
       };
     })();
 
@@ -1963,7 +1971,7 @@ Zane Skansi,Kitchener Panthers`;
     var _aDr=parseInt(_approachResult.dot.slice(1,3),16)||96;
     var _aDg=parseInt(_approachResult.dot.slice(3,5),16)||165;
     var _aDb=parseInt(_approachResult.dot.slice(5,7),16)||250;
-    var _aBoxH=38;
+    var _aBoxH=_approachResult.lines?42:38;
     d.setFillColor(245,247,251);d.rect(ML,y,CPW,_aBoxH,'F');
     d.setDrawColor(_aDr,_aDg,_aDb);d.setLineWidth(0.45);d.rect(ML,y,CPW,_aBoxH,'S');
     d.setFillColor(_aDr,_aDg,_aDb);d.rect(ML,y,2.4,_aBoxH,'F');
@@ -1975,13 +1983,25 @@ Zane Skansi,Kitchener Panthers`;
     var _aAction=_approachResult.region?('Attack: '+_aSpotDisp):(_aSpotDisp||_approachResult.label);
     var _aTextW=_approachResult.region?CPW-46:CPW-14;
     d.text(_aAction,_aTextX,y+10.5,{maxWidth:_aTextW});
-    d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
-    var _aNoteDisp=_approachResult.note;
-    var _aNwds=_aNoteDisp.split(' '),_aNln='',_aNlns=[];
-    _aNwds.forEach(function(w){var t=_aNln?_aNln+' '+w:w;if(d.getTextWidth(t)>_aTextW){_aNlns.push(_aNln);_aNln=w;}else _aNln=t;});
-    if(_aNln)_aNlns.push(_aNln);
-    _aNlns.slice(0,3).forEach(function(l,li){d.text(l,_aTextX,y+18+li*5);});
-    if(_approachResult.region&&_approachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_aDr,_aDg,_aDb);d.text('Evidence: '+_approachResult.label+' '+_approachResult.val,_aTextX,y+34,{maxWidth:_aTextW});}
+    if(_approachResult.lines){
+      _approachResult.lines.forEach(function(row,ri){
+        var ry=y+17+ri*7.1;
+        var rr=parseInt(row.color.slice(1,3),16)||96,rg=parseInt(row.color.slice(3,5),16)||165,rb=parseInt(row.color.slice(5,7),16)||250;
+        d.setFillColor(rr,rg,rb);d.rect(_aTextX,ry-4.4,17,5.2,'F');
+        d.setFont('helvetica','bold');d.setFontSize(5.2);d.setTextColor(255,255,255);
+        d.text(row.label.toUpperCase(),_aTextX+8.5,ry-0.8,{align:'center'});
+        d.setFont('helvetica','normal');d.setFontSize(6.2);st(d,CO.light);
+        d.text(row.text,_aTextX+20,ry-0.8,{maxWidth:_aTextW-21});
+      });
+    } else {
+      d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
+      var _aNoteDisp=_approachResult.note;
+      var _aNwds=_aNoteDisp.split(' '),_aNln='',_aNlns=[];
+      _aNwds.forEach(function(w){var t=_aNln?_aNln+' '+w:w;if(d.getTextWidth(t)>_aTextW){_aNlns.push(_aNln);_aNln=w;}else _aNln=t;});
+      if(_aNln)_aNlns.push(_aNln);
+      _aNlns.slice(0,3).forEach(function(l,li){d.text(l,_aTextX,y+18+li*5);});
+      if(_approachResult.region&&_approachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_aDr,_aDg,_aDb);d.text('Evidence: '+_approachResult.label+' '+_approachResult.val,_aTextX,y+34,{maxWidth:_aTextW});}
+    }
     y+=_aBoxH+4;
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
@@ -2387,6 +2407,11 @@ Zane Skansi,Kitchener Panthers`;
         ? 'Damage: '+damagePick.zone.spot+' BAA '+f3(damagePick.baa)+' with '+damagePick.pitch+'.'
         : 'Damage: not enough BAA sample by zone.';
       var countNote=countLine?(' Count: '+countLine+'.'):' Count: no strong count pattern.';
+      var freqText=usagePick.pitch+' to '+usagePick.zone.spot.toLowerCase()+' '+f1(usagePick.usage*100)+'%';
+      var damageText=damagePick&&damagePick.baa!=null
+        ? damagePick.zone.spot+' BAA '+f3(damagePick.baa)+' with '+damagePick.pitch
+        : 'not enough BAA sample by zone';
+      var countText=countLine||'no strong count pattern';
       var dot=(damagePick&&damagePick.baa!=null&&damagePick.baa>=0.300)?'#34d399':'#FFB81C';
       return {
         dot:dot,
@@ -2394,7 +2419,12 @@ Zane Skansi,Kitchener Panthers`;
         val:(damagePick&&damagePick.baa!=null?f3(damagePick.baa):f1(usagePick.usage*100)+'%'),
         spot:(mainPick.pitch+' / '+mainPick.zone.spot),
         region:mainPick.zone.region,
-        note:mostLine+' '+damageLine+countNote
+        note:mostLine+' '+damageLine+countNote,
+        lines:[
+          {label:'Frequency',text:freqText,color:'#60a5fa'},
+          {label:'Damage',text:damageText,color:'#f87171'},
+          {label:'Count',text:countText,color:'#FFB81C'}
+        ]
       };
     })();
 
@@ -2402,7 +2432,7 @@ Zane Skansi,Kitchener Panthers`;
     var _paDr=parseInt(_pitApproachResult.dot.slice(1,3),16)||96;
     var _paDg=parseInt(_pitApproachResult.dot.slice(3,5),16)||165;
     var _paDb=parseInt(_pitApproachResult.dot.slice(5,7),16)||250;
-    var _paBoxH=38;
+    var _paBoxH=_pitApproachResult.lines?42:38;
     d.setFillColor(245,247,251);d.rect(ML,y,CPW,_paBoxH,'F');
     d.setDrawColor(_paDr,_paDg,_paDb);d.setLineWidth(0.45);d.rect(ML,y,CPW,_paBoxH,'S');
     d.setFillColor(_paDr,_paDg,_paDb);d.rect(ML,y,2.4,_paBoxH,'F');
@@ -2414,13 +2444,25 @@ Zane Skansi,Kitchener Panthers`;
     var _paAction=_pitApproachResult.region?('Attack: '+_paSpotDisp):(_paSpotDisp||_pitApproachResult.label);
     var _paTextW=_pitApproachResult.region?CPW-46:CPW-14;
     d.text(_paAction,_paTextX,y+10.5,{maxWidth:_paTextW});
-    d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
-    var _paNoteDisp=_pitApproachResult.note;
-    var _paNwds=_paNoteDisp.split(' '),_paNln='',_paNlns=[];
-    _paNwds.forEach(function(w){var t=_paNln?_paNln+' '+w:w;if(d.getTextWidth(t)>_paTextW){_paNlns.push(_paNln);_paNln=w;}else _paNln=t;});
-    if(_paNln)_paNlns.push(_paNln);
-    _paNlns.slice(0,3).forEach(function(l,li){d.text(l,_paTextX,y+18+li*5);});
-    if(_pitApproachResult.region&&_pitApproachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_paDr,_paDg,_paDb);d.text('Evidence: '+_pitApproachResult.label+' '+_pitApproachResult.val,_paTextX,y+34,{maxWidth:_paTextW});}
+    if(_pitApproachResult.lines){
+      _pitApproachResult.lines.forEach(function(row,ri){
+        var ry=y+17+ri*7.1;
+        var rr=parseInt(row.color.slice(1,3),16)||96,rg=parseInt(row.color.slice(3,5),16)||165,rb=parseInt(row.color.slice(5,7),16)||250;
+        d.setFillColor(rr,rg,rb);d.rect(_paTextX,ry-4.4,21,5.2,'F');
+        d.setFont('helvetica','bold');d.setFontSize(4.9);d.setTextColor(255,255,255);
+        d.text(row.label.toUpperCase().slice(0,9),_paTextX+10.5,ry-0.8,{align:'center'});
+        d.setFont('helvetica','normal');d.setFontSize(6.2);st(d,CO.light);
+        d.text(row.text,_paTextX+24,ry-0.8,{maxWidth:_paTextW-25});
+      });
+    } else {
+      d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
+      var _paNoteDisp=_pitApproachResult.note;
+      var _paNwds=_paNoteDisp.split(' '),_paNln='',_paNlns=[];
+      _paNwds.forEach(function(w){var t=_paNln?_paNln+' '+w:w;if(d.getTextWidth(t)>_paTextW){_paNlns.push(_paNln);_paNln=w;}else _paNln=t;});
+      if(_paNln)_paNlns.push(_paNln);
+      _paNlns.slice(0,3).forEach(function(l,li){d.text(l,_paTextX,y+18+li*5);});
+      if(_pitApproachResult.region&&_pitApproachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_paDr,_paDg,_paDb);d.text('Evidence: '+_pitApproachResult.label+' '+_pitApproachResult.val,_paTextX,y+34,{maxWidth:_paTextW});}
+    }
     y+=_paBoxH+4;
     var locTot=sc.filter(hasPitchLocation).length;
     var znPct=locTot>0?inZ/locTot:0;

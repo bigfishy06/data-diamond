@@ -1943,9 +1943,26 @@ Zane Skansi,Kitchener Panthers`;
         var hmW2=hmH2*0.87;
         var hmX=ML+CPW-hmW2-3;
         var attackText = approachText==='Not enough data' ? 'Attack: not enough data' : 'Attack: '+approachText;
-        topTxt(attackText, ML+3, attackY+Math.min(attackH-1.3,5.0), CPW-hmW2-10, noteFs, attackText==='Attack: not enough data'?'normal':'bold', attackText==='Attack: not enough data'?CO.dim:CO.white, 'left');
-        if(pitchTypeRows.length&&attackH>=10){
-          var ptX=ML+3,ptY=attackY+6.5,ptW=CPW-hmW2-10,ptRowH=Math.min(4.7,Math.max(3.8,(attackH-7.0)/3));
+        var attackW=CPW-hmW2-10;
+        if(approachText!=='Not enough data'&&attackH>=12){
+          var pieces=approachText.split('. ').map(function(x){return x.replace(/\.$/,'');}).filter(Boolean).slice(0,3);
+          d.setFont('helvetica','bold');d.setFontSize(labelFs);st(d,CO.gold);
+          d.text('ATTACK',ML+3,attackY+3.8);
+          pieces.forEach(function(piece,pi){
+            var parts=piece.split(': ');
+            var lab=(parts[0]||'').toUpperCase(), body=parts.slice(1).join(': ')||piece;
+            var ry=attackY+7.7+pi*Math.min(4.6,Math.max(3.8,(attackH-8)/3));
+            var c=lab==='WHIFF'?[52,211,153]:lab==='HITS'?[248,113,113]:[255,184,28];
+            d.setFillColor(c[0],c[1],c[2]);d.rect(ML+3,ry-3.1,13,3.8,'F');
+            d.setFont('helvetica','bold');d.setFontSize(Math.max(4.4,labelFs-0.4));d.setTextColor(255,255,255);
+            d.text(lab.slice(0,5),ML+9.5,ry-0.55,{align:'center'});
+            topTxt(body,ML+18,ry-0.55,attackW-15,Math.max(4.7,noteFs-0.5),'normal',CO.white,'left');
+          });
+        } else {
+          topTxt(attackText, ML+3, attackY+Math.min(attackH-1.3,5.0), attackW, noteFs, attackText==='Attack: not enough data'?'normal':'bold', attackText==='Attack: not enough data'?CO.dim:CO.white, 'left');
+        }
+        if(pitchTypeRows.length&&attackH>=16){
+          var ptX=ML+3,ptY=attackY+Math.min(attackH-6.2,21),ptW=attackW,ptRowH=Math.min(4.2,Math.max(3.5,(blockBottom-ptY-0.8)/3));
           var ptCols=[ptW*0.34,ptW*0.13,ptW*0.17,ptW*0.17,ptW*0.095,ptW*0.095];
           var tx2=ptX;
           sf(d,CO.navy3);d.rect(ptX,ptY,ptW,ptRowH,'F');
@@ -2246,7 +2263,7 @@ Zane Skansi,Kitchener Panthers`;
         })();
         var attackSummary=(function(){
           var loc=sc.filter(function(s){return s.x!=null&&s.y!=null&&!isNaN(Number(s.x))&&!isNaN(Number(s.y));});
-          if(!loc.length)return 'Attack: not enough location data';
+          if(!loc.length)return {fallback:'Attack: not enough location data'};
           var INP=['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
           var HIT=['Single','Double','Triple','Home Run'], KOUT=['Strikeout Swinging','Strikeout Looking'];
           function baa(pts){var ab=pts.filter(function(p){return INP.concat(KOUT).includes(p.outcome);}).length;var h=pts.filter(function(p){return HIT.includes(p.outcome);}).length;return ab>=4?h/ab:null;}
@@ -2261,11 +2278,18 @@ Zane Skansi,Kitchener Panthers`;
             {spot:'left side',fn:function(p){return p.x>0.33;}},
             {spot:'right side',fn:function(p){return p.x<-0.33;}}
           ].map(function(z){var pts=loc.filter(z.fn);return{spot:z.spot,pts:pts,use:pts.length/loc.length,baa:baa(pts),pitch:topPitch(pts)};}).filter(function(z){return z.pts.length>=4;});
-          if(!zones.length)return 'Attack: not enough zone sample';
+          if(!zones.length)return {fallback:'Attack: not enough zone sample'};
           var most=zones.slice().sort(function(a,b){return b.use-a.use;})[0];
           var dmg=zones.filter(function(z){return z.baa!=null;}).sort(function(a,b){return b.baa-a.baa||b.use-a.use;})[0]||most;
           var countTxt=tendInfo.compact?(' Count '+tendInfo.compact.split('  ')[0]+'.'):' Count no strong pattern.';
-          return 'Attack: Frequency '+most.pitch+' '+most.spot+' '+f1(most.use*100)+'%. Damage '+dmg.spot+' BAA '+(dmg.baa!=null?f3(dmg.baa):'--')+'.'+countTxt;
+          return {
+            fallback:'Attack: Frequency '+most.pitch+' '+most.spot+' '+f1(most.use*100)+'%. Damage '+dmg.spot+' BAA '+(dmg.baa!=null?f3(dmg.baa):'--')+'.'+countTxt,
+            rows:[
+              {label:'Freq',text:most.pitch+' '+most.spot+' '+f1(most.use*100)+'%',color:[96,165,250]},
+              {label:'Dmg',text:dmg.spot+' BAA '+(dmg.baa!=null?f3(dmg.baa):'--'),color:[248,113,113]},
+              {label:'Count',text:tendInfo.compact?tendInfo.compact.split('  ')[0]:'no strong pattern',color:[255,184,28]}
+            ]
+          };
         })();
 
         // HAND: derive from the selected season scatter first. 2026 handedness lives in
@@ -2347,7 +2371,19 @@ Zane Skansi,Kitchener Panthers`;
         });
 
         var leftInfoW=CPW-mapsW-10;
-        pitText(attackSummary, ML+3, mapY+Math.min(pitMapH-1.3,5.1), leftInfoW, pitBodyFs, 'bold', CO.white, 'left');
+        if(attackSummary.rows&&pitMapH>=12){
+          d.setFont('helvetica','bold');d.setFontSize(pitLabelFs);st(d,CO.gold);
+          d.text('ATTACK',ML+3,mapY+3.9);
+          attackSummary.rows.forEach(function(row,ri){
+            var ry=mapY+7.8+ri*Math.min(4.7,Math.max(3.9,(pitMapH-8.2)/3));
+            d.setFillColor(row.color[0],row.color[1],row.color[2]);d.rect(ML+3,ry-3.2,15,3.9,'F');
+            d.setFont('helvetica','bold');d.setFontSize(Math.max(4.3,pitLabelFs-0.4));d.setTextColor(255,255,255);
+            d.text(row.label.toUpperCase(),ML+10.5,ry-0.55,{align:'center'});
+            pitText(row.text,ML+20,ry-0.55,leftInfoW-17,Math.max(4.8,pitBodyFs-0.8),'normal',CO.white,'left');
+          });
+        } else {
+          pitText(attackSummary.fallback, ML+3, mapY+Math.min(pitMapH-1.3,5.1), leftInfoW, pitBodyFs, 'bold', CO.white, 'left');
+        }
         if(tendInfo.rows.length){
           var tableRows=pitMapH>=15?tendInfo.rows:tendInfo.rows.slice(0,3);
           var tableX=ML+3,tableY=mapY+7.1,tableW=Math.min(82,leftInfoW),rowH=Math.min(5.3,Math.max(4.0,(pitMapH-8.2)/(tableRows.length+1)));
