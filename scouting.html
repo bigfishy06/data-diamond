@@ -1830,7 +1830,7 @@ Zane Skansi,Kitchener Panthers`;
   }
 
   function addCharts(d,sc,y,perspective){
-    perspective=perspective||'BATTER';
+    perspective=perspective||'PITCHER';
     var iw=58,ih=66,gap=(CPW-iw*3)/2;
     d.addImage(mkScatter(sc,perspective),'PNG',ML,y,iw,ih);
     d.addImage(mkGrid(sc,perspective),'PNG',ML+iw+gap,y,iw,ih);
@@ -1896,7 +1896,7 @@ Zane Skansi,Kitchener Panthers`;
         var bbRate=pa>0?(selSeason==='2025'&&iblBB(iblB)!=null?iblBB(iblB)/pa:(s.BB_pct!=null?s.BB_pct/100:bb/pa)):null;
         var opts=[];
         if(opsNum!=null) opts.push({score:Math.abs(opsNum-0.720),dot:opsNum>=0.800?'#f87171':(opsNum<=0.620?'#34d399':'#FFB81C'),spot:'OPS '+f3(opsNum),label:'OPS',val:f3(opsNum),note:opsNum>=0.800?'Producing at a dangerous OPS level. Avoid free mistakes over the plate.':'OPS has been manageable. Pitchers can challenge with a clear plan.'});
-        if(avgNum!=null) opts.push({score:Math.abs(avgNum-0.250),dot:avgNum>=0.300?'#f87171':(avgNum<=0.220?'#34d399':'#FFB81C'),spot:'AVG '+f3(avgNum),label:'AVG',val:f3(avgNum),note:avgNum>=0.300?'Treat him as a contact threat. Avoid free mistakes over the plate.':'Batting average suggests pitchers can challenge him in the zone.'});
+        if(avgNum!=null) opts.push({score:Math.abs(avgNum-0.250),dot:avgNum>=0.300?'#f87171':(avgNum<=0.220?'#34d399':'#FFB81C'),spot:'BAA '+f3(avgNum),label:'BAA',val:f3(avgNum),note:avgNum>=0.300?'BAA is elevated. Avoid free mistakes over the plate.':'BAA has been manageable. Pitchers can challenge him with a clear plan.'});
         if(kRate!=null) opts.push({score:Math.abs(kRate-0.20),dot:kRate>=0.26?'#34d399':(kRate<=0.13?'#f87171':'#FFB81C'),spot:'K% '+f1(kRate*100)+'%',label:'K%',val:f1(kRate*100)+'%',note:kRate>=0.26?'Strikeout rate is the clearest attack point. Finish him when ahead.':'Low strikeout rate says he puts the ball in play. Prioritize weak contact.'});
         if(bbRate!=null) opts.push({score:Math.abs(bbRate-0.08),dot:bbRate>=0.13?'#f87171':(bbRate<=0.04?'#34d399':'#FFB81C'),spot:'BB% '+f1(bbRate*100)+'%',label:'BB%',val:f1(bbRate*100)+'%',note:bbRate>=0.13?'Walk rate is the warning. Throw strikes and avoid nibbling.':'Low walk rate gives pitchers room to expand carefully.'});
         opts.sort(function(a,b){return b.score-a.score;});
@@ -1913,53 +1913,50 @@ Zane Skansi,Kitchener Panthers`;
       var lowFn=function(p){return p.y<0.33;};
       var oozFn=xyOutOfZone;
 
-      var candidates=[];
-      function addAttack(label,val,pct,note,score,spot,region,combo){
-        if(val!=null&&pct!=null&&score>=0.55)candidates.push({label:label,val:val,pct:pct,note:note,score:score,spot:spot,region:region,combo:!!combo});
+      function topPitchType(pts,outcomeFn){
+        var by={};
+        pts.forEach(function(p){if(outcomeFn&&!outcomeFn(p))return;var t=reportPitchTypeName(p);if(t!=='Unknown')by[t]=(by[t]||0)+1;});
+        return Object.keys(by).sort(function(a,b){return by[b]-by[a];})[0]||'pitches';
       }
-
-      [{label:'Left Side',fn:leftFn,spot:'left side of the zone',region:{h:'left',v:'all'}},
-       {label:'Right Side',fn:rightFn,spot:'right side of the zone',region:{h:'right',v:'all'}},
-       {label:'Top of Zone',fn:highFn,spot:'top of the zone',region:{h:'all',v:'top'}},
-       {label:'Bottom of Zone',fn:lowFn,spot:'bottom of the zone',region:{h:'all',v:'bottom'}}
-      ].forEach(function(zc){
-        var pts=scB.filter(zc.fn);
-        var myW=_zwB(pts), lgW=_lgArrB(zc.fn,_zwB);
-        var myBA=_zbaB(pts), lgBA=_lgArrB(zc.fn,_zbaB);
-        var wPct=_pctRankB(myW,lgW), baPct=_pctRankB(myBA,lgBA);
-        var missType=reportBestPitchType(scB,zc.fn,reportIsWhiffOutcome);
-        var weakType=reportBestPitchType(scB,zc.fn,function(p){return _IN_PLAY_B.concat(_KS_B).includes(p.outcome)&&!_HITS_B.includes(p.outcome);});
-        if(myW!=null) addAttack(zc.label+' WHIFF%', f1(myW*100)+'%', wPct,
-          'Pitchers should attack '+zc.spot+' with '+(missType||'the best swing-and-miss pitch')+' because the whiff rate there is '+f1(myW*100)+'%.', wPct, zc.spot+(missType?' with '+missType:''), zc.region, false);
-        if(myBA!=null) addAttack(zc.label+' AVG', f3(myBA), baPct,
-          'Pitchers should attack '+zc.spot+' with '+(weakType||'the best contact-management pitch')+' because the batting average there is '+f3(myBA)+'.', 1-baPct, zc.spot+(weakType?' with '+weakType:''), zc.region, false);
-      });
-
-      var pitchTypes=['Fastball','Offspeed'].filter(function(t){return scB.some(function(p){return reportPitchTypeName(p)===t;});});
-      pitchTypes.forEach(function(pt){
-        [{label:'Left Top',spot:'left-top corner',region:{h:'left',v:'top'},fn:function(p){return leftFn(p)&&highFn(p);}},
-         {label:'Left Bottom',spot:'left-bottom corner',region:{h:'left',v:'bottom'},fn:function(p){return leftFn(p)&&lowFn(p);}},
-         {label:'Right Top',spot:'right-top corner',region:{h:'right',v:'top'},fn:function(p){return rightFn(p)&&highFn(p);}},
-         {label:'Right Bottom',spot:'right-bottom corner',region:{h:'right',v:'bottom'},fn:function(p){return rightFn(p)&&lowFn(p);}}
-        ].forEach(function(cz){
-          var fn=function(p){return reportPitchTypeName(p)===pt&&cz.fn(p);};
-          var cpts=scB.filter(fn); if(cpts.length<5)return;
-          var cW=_zwB(cpts), cBA=_zbaB(cpts);
-          var lcW=_lgArrB(fn,_zwB), lcBA=_lgArrB(fn,_zbaB);
-          var cWPct=_pctRankB(cW,lcW), cBAPct=_pctRankB(cBA,lcBA);
-          var ptName=pt;
-          if(cW!=null) addAttack(ptName+' - '+cz.label+' WHIFF%', f1(cW*100)+'%', cWPct,
-            'Pitchers should attack '+cz.spot+' with '+ptName+' because the whiff rate in that split is '+f1(cW*100)+'%.', cWPct, cz.spot+' with '+ptName, cz.region, true);
-          if(cBA!=null) addAttack(ptName+' - '+cz.label+' AVG', f3(cBA), cBAPct,
-            'Pitchers should attack '+cz.spot+' with '+ptName+' because the batting average in that split is '+f3(cBA)+'.', 1-cBAPct, cz.spot+' with '+ptName, cz.region, true);
+      function hitCountPattern(){
+        var by={};
+        scB.filter(function(p){return _HITS_B.includes(p.outcome)&&p.count;}).forEach(function(p){
+          var c=String(p.count||'').replace(/^'/,'');by[c]=(by[c]||0)+1;
         });
-      });
-
-      if(!candidates.length) return batterFallback(false);
-      candidates.sort(function(a,b){return (b.combo?1:0)-(a.combo?1:0)||b.score-a.score;});
-      var best=candidates[0];
-      var dot=best.score>=0.75?'#34d399':'#FFB81C';
-      return {dot:dot,label:best.label,val:best.val,spot:best.spot,region:best.region,note:best.note};
+        var keys=Object.keys(by).sort(function(a,b){return by[b]-by[a];});
+        return keys.length?keys[0]+' ('+by[keys[0]]+' hit'+(by[keys[0]]!==1?'s':'')+')':'no clear hit count';
+      }
+      var zoneRows=[
+        {label:'Left Side',fn:leftFn,spot:'left side of the zone',region:{h:'left',v:'all'}},
+        {label:'Right Side',fn:rightFn,spot:'right side of the zone',region:{h:'right',v:'all'}},
+        {label:'Top of Zone',fn:highFn,spot:'top of the zone',region:{h:'all',v:'top'}},
+        {label:'Bottom of Zone',fn:lowFn,spot:'bottom of the zone',region:{h:'all',v:'bottom'}},
+        {label:'Left Top',fn:function(p){return leftFn(p)&&highFn(p);},spot:'left-top corner',region:{h:'left',v:'top'}},
+        {label:'Left Bottom',fn:function(p){return leftFn(p)&&lowFn(p);},spot:'left-bottom corner',region:{h:'left',v:'bottom'}},
+        {label:'Right Top',fn:function(p){return rightFn(p)&&highFn(p);},spot:'right-top corner',region:{h:'right',v:'top'}},
+        {label:'Right Bottom',fn:function(p){return rightFn(p)&&lowFn(p);},spot:'right-bottom corner',region:{h:'right',v:'bottom'}}
+      ].map(function(z){
+        var pts=scB.filter(z.fn);
+        var swings=pts.filter(reportIsSwingOutcome).length;
+        var whiffs=pts.filter(reportIsWhiffOutcome).length;
+        var hits=pts.filter(function(p){return _HITS_B.includes(p.outcome);}).length;
+        return {zone:z,pts:pts,swings:swings,whiffs:whiffs,hits:hits,baa:_zbaB(pts)};
+      }).filter(function(z){return z.pts.length>=3;});
+      if(!zoneRows.length)return batterFallback(false);
+      var whiffPick=zoneRows.slice().sort(function(a,b){return b.whiffs-a.whiffs||((b.swings?b.whiffs/b.swings:0)-(a.swings?a.whiffs/a.swings:0));})[0];
+      var hitPick=zoneRows.slice().sort(function(a,b){return b.hits-a.hits||((b.baa||0)-(a.baa||0));})[0];
+      var whiffRate=whiffPick.swings?f1(whiffPick.whiffs/whiffPick.swings*100)+'%':'--';
+      var hitText=hitPick.hits+' hit'+(hitPick.hits!==1?'s':'')+(hitPick.baa!=null?' / BAA '+f3(hitPick.baa):'');
+      var whiffPitch=topPitchType(whiffPick.pts,reportIsWhiffOutcome);
+      var hitPitch=topPitchType(hitPick.pts,function(p){return _HITS_B.includes(p.outcome);});
+      return {
+        dot:hitPick.hits>=3?'#f87171':'#FFB81C',
+        label:'WHIFF/HIT',
+        val:whiffRate,
+        spot:(whiffPick.zone.spot+' / '+hitPick.zone.spot),
+        region:(hitPick.hits>0?hitPick.zone.region:whiffPick.zone.region),
+        note:'Whiff: '+whiffPick.zone.spot+' with '+whiffPitch+' ('+whiffRate+'). Hits: '+hitPick.zone.spot+' with '+hitPitch+' ('+hitText+'). Count: '+hitCountPattern()+'.'
+      };
     })();
 
     // Draw approach card with strike-zone target.
@@ -1975,7 +1972,7 @@ Zane Skansi,Kitchener Panthers`;
     else{_aTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_aDr,_aDg,_aDb);d.text(_approachResult.fallbackLabel||'STAT FALLBACK',_aTextX,y+6.5);}
     d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
     var _aSpotDisp=_approachResult.spot||'';
-    var _aAction=_approachResult.region?('Go to: '+_aSpotDisp):(_aSpotDisp||_approachResult.label);
+    var _aAction=_approachResult.region?('Attack: '+_aSpotDisp):(_aSpotDisp||_approachResult.label);
     var _aTextW=_approachResult.region?CPW-46:CPW-14;
     d.text(_aAction,_aTextX,y+10.5,{maxWidth:_aTextW});
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
@@ -2349,38 +2346,56 @@ Zane Skansi,Kitchener Panthers`;
         {label:'Left Side',spot:'Left Side',region:{h:'right',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x>0.33;}},
         {label:'Right Side',spot:'Right Side',region:{h:'left',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x<-0.33;}}
       ];
-      var candidates=[];
-      function addAttack(label,val,pct,note,score,spot,region,combo){
-        if(val!=null&&pct!=null&&score>=0.55)candidates.push({label:label,val:val,pct:pct,note:note,score:score,spot:spot,region:region,combo:!!combo});
+      function zonePitchTypeSummary(pts){
+        var by={};
+        pts.forEach(function(p){var t=reportPitchTypeName(p);if(t!=='Unknown')by[t]=(by[t]||0)+1;});
+        var keys=Object.keys(by).sort(function(a,b){return by[b]-by[a];});
+        return keys[0]||'pitches';
       }
-
-      PZONES.forEach(function(pz){
-        var pts=scP.filter(pz.fn); if(pts.length<5)return;
-        var myBA=_zbaP(pts), lgBA=_lgArrP(pz.fn,_zbaP);
-        var baPct=_pctRankP(myBA,lgBA);
-        var dmgType=reportBestPitchType(scP,pz.fn,function(p){return ['Single','Double','Triple','Home Run'].includes(p.outcome);});
-        if(myBA!=null&&myBA>=0.250) addAttack(pz.label+' AVG AGNST', f3(myBA), baPct,
-          'Batters should look for '+(dmgType||'mistakes')+' in the '+pz.spot.toLowerCase()+' because the batting average there is '+f3(myBA)+'.', baPct, pz.spot+(dmgType?' with '+dmgType:''), pz.region, false);
-      });
-
-      var pitchTypesP=['Fastball','Offspeed'].filter(function(t){return scP.some(function(p){return reportPitchTypeName(p)===t;});});
-      pitchTypesP.forEach(function(pt){
-        PZONES.forEach(function(pz){
-          var fn=function(p){return reportPitchTypeName(p)===pt&&pz.fn(p);};
-          var cpts=scP.filter(fn); if(cpts.length<5)return;
-          var cBA=_zbaP(cpts), lcBA=_lgArrP(fn,_zbaP);
-          var cBAPct=_pctRankP(cBA,lcBA);
-          var ptName=pt;
-          if(cBA!=null&&cBA>=0.250) addAttack(ptName+' - '+pz.label+' AVG AGNST', f3(cBA), cBAPct,
-            'Batters should look for '+ptName+' in the '+pz.spot.toLowerCase()+' because the batting average in that split is '+f3(cBA)+'.', cBAPct, pz.spot+' with '+ptName, pz.region, true);
-        });
-      });
-
-      if(!candidates.length) return pitcherFallback(false);
-      candidates.sort(function(a,b){return (b.combo?1:0)-(a.combo?1:0)||b.score-a.score;});
-      var best=candidates[0];
-      var dot=best.score>=0.75?'#34d399':'#FFB81C';
-      return {dot:dot,label:best.label,val:best.val,spot:best.spot,region:best.region,note:best.note};
+      function bestCountPattern(){
+        var patterns=buildPitchCountTendencyRows(scP).rows;
+        if(patterns.length){
+          var top=patterns.slice(1).filter(function(r){return r[r.length-1]&&r[r.length-1]!=='0';})[0]||patterns[0];
+          if(top){
+            var types=buildPitchCountTendencyRows(scP).types;
+            var bestIdx=0,bestVal=-1;
+            types.forEach(function(t,i){
+              var raw=String(top[i+1]||'0').replace('%','');
+              var val=parseFloat(raw);
+              if(!isNaN(val)&&val>bestVal){bestVal=val;bestIdx=i;}
+            });
+            if(types[bestIdx]&&bestVal>=0)return top[0]+': '+types[bestIdx]+' '+f1(bestVal)+'%';
+          }
+        }
+        return '';
+      }
+      var zoneSummaries=PZONES.map(function(pz){
+        var pts=scP.filter(pz.fn);
+        if(pts.length<5)return null;
+        var pitch=zonePitchTypeSummary(pts);
+        var usage=pts.length/scP.length;
+        var baa=_zbaP(pts);
+        return {zone:pz,pitch:pitch,usage:usage,baa:baa,pts:pts};
+      }).filter(Boolean);
+      if(!zoneSummaries.length)return pitcherFallback(false);
+      var usagePick=zoneSummaries.slice().sort(function(a,b){return b.usage-a.usage;})[0];
+      var damagePick=zoneSummaries.filter(function(z){return z.baa!=null;}).sort(function(a,b){return b.baa-a.baa||b.usage-a.usage;})[0]||usagePick;
+      var mainPick=(damagePick&&damagePick.baa!=null&&damagePick.baa>=0.250)?damagePick:usagePick;
+      var countLine=bestCountPattern();
+      var mostLine='Frequency: '+usagePick.pitch+' to '+usagePick.zone.spot.toLowerCase()+' '+f1(usagePick.usage*100)+'%.';
+      var damageLine=damagePick&&damagePick.baa!=null
+        ? 'Damage: '+damagePick.zone.spot+' BAA '+f3(damagePick.baa)+' with '+damagePick.pitch+'.'
+        : 'Damage: not enough BAA sample by zone.';
+      var countNote=countLine?(' Count: '+countLine+'.'):' Count: no strong count pattern.';
+      var dot=(damagePick&&damagePick.baa!=null&&damagePick.baa>=0.300)?'#34d399':'#FFB81C';
+      return {
+        dot:dot,
+        label:(damagePick&&damagePick.baa!=null?'BAA':'USAGE'),
+        val:(damagePick&&damagePick.baa!=null?f3(damagePick.baa):f1(usagePick.usage*100)+'%'),
+        spot:(mainPick.pitch+' / '+mainPick.zone.spot),
+        region:mainPick.zone.region,
+        note:mostLine+' '+damageLine+countNote
+      };
     })();
 
     // Draw approach card with strike-zone target.
@@ -2396,7 +2411,7 @@ Zane Skansi,Kitchener Panthers`;
     else{_paTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_paDr,_paDg,_paDb);d.text(_pitApproachResult.fallbackLabel||'STAT FALLBACK',_paTextX,y+6.5);}
     d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
     var _paSpotDisp=_pitApproachResult.spot||'';
-    var _paAction=_pitApproachResult.region?('Look for: '+_paSpotDisp):(_paSpotDisp||_pitApproachResult.label);
+    var _paAction=_pitApproachResult.region?('Attack: '+_paSpotDisp):(_paSpotDisp||_pitApproachResult.label);
     var _paTextW=_pitApproachResult.region?CPW-46:CPW-14;
     d.text(_paAction,_paTextX,y+10.5,{maxWidth:_paTextW});
     d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
