@@ -1837,14 +1837,14 @@ Zane Skansi,Kitchener Panthers`;
           function lgArr(fn,mfn){var a=[];(DATA.pitches||[]).forEach(function(bp){var pts=(bp.scatter||[]).filter(function(p){return p.x!=null&&p.y!=null&&fn(p);});var v=mfn(pts);if(v!=null)a.push(v);});return a;}
           function pctRank(val,arr){if(!arr.length||val==null)return null;var below=arr.filter(function(v){return v<val;}).length;var eq=arr.filter(function(v){return v===val;}).length;return(below+eq*0.5)/arr.length;}
           var zones=[
-            {fn:function(p){return p.x<-0.1;},          spot:'Inside part of zone'},
-            {fn:function(p){return p.x>0.1;},           spot:'Away part of zone'},
+            {fn:function(p){return p.x<-0.1;},          spot:'Left side of zone'},
+            {fn:function(p){return p.x>0.1;},           spot:'Right side of zone'},
             {fn:function(p){return p.y>0.66;},          spot:'High in zone'},
             {fn:function(p){return p.y<0.33;},          spot:'Low in zone'},
-            {fn:function(p){return p.x<-0.1&&p.y>0.66;},spot:'High inside in zone'},
-            {fn:function(p){return p.x>0.1&&p.y>0.66;}, spot:'High away in zone'},
-            {fn:function(p){return p.x<-0.1&&p.y<0.33;},spot:'Low inside in zone'},
-            {fn:function(p){return p.x>0.1&&p.y<0.33;}, spot:'Low away in zone'}
+            {fn:function(p){return p.x<-0.1&&p.y>0.66;},spot:'High left in zone'},
+            {fn:function(p){return p.x>0.1&&p.y>0.66;}, spot:'High right in zone'},
+            {fn:function(p){return p.x<-0.1&&p.y<0.33;},spot:'Low left in zone'},
+            {fn:function(p){return p.x>0.1&&p.y<0.33;}, spot:'Low right in zone'}
           ];
           function capFirst(txt){txt=String(txt||'');return txt?txt.charAt(0).toUpperCase()+txt.slice(1):txt;}
           function topPitch(pts,outcomeFn){var c={};pts.forEach(function(p){if(outcomeFn&&!outcomeFn(p))return;var t=gpPitchTypeName(p);if(t!=='Unknown')c[t]=(c[t]||0)+1;});return Object.keys(c).sort(function(a,b){return c[b]-c[a];})[0]||'pitches';}
@@ -1863,14 +1863,14 @@ Zane Skansi,Kitchener Panthers`;
         var whiffSpot=(function(){
           if(!whiffPts.length)return'No whiffs';
           var zones=[
-            {fn:function(p){return p.x<-0.1&&p.y>0.66;},spot:'Up/in'},
-            {fn:function(p){return p.x>0.1&&p.y>0.66;}, spot:'Up/away'},
-            {fn:function(p){return p.x<-0.1&&p.y<0.33;},spot:'Down/in'},
-            {fn:function(p){return p.x>0.1&&p.y<0.33;}, spot:'Down/away'},
-            {fn:function(p){return p.x<-0.1;},          spot:'Inside'},
-            {fn:function(p){return p.x>0.1;},           spot:'Away'},
-            {fn:function(p){return p.y>0.66;},          spot:'Up'},
-            {fn:function(p){return p.y<0.33;},          spot:'Down'}
+            {fn:function(p){return p.x<-0.1&&p.y>0.66;},spot:'High left in zone'},
+            {fn:function(p){return p.x>0.1&&p.y>0.66;}, spot:'High right in zone'},
+            {fn:function(p){return p.x<-0.1&&p.y<0.33;},spot:'Low left in zone'},
+            {fn:function(p){return p.x>0.1&&p.y<0.33;}, spot:'Low right in zone'},
+            {fn:function(p){return p.x<-0.1;},          spot:'Left side of zone'},
+            {fn:function(p){return p.x>0.1;},           spot:'Right side of zone'},
+            {fn:function(p){return p.y>0.66;},          spot:'High in zone'},
+            {fn:function(p){return p.y<0.33;},          spot:'Low in zone'}
           ];
           var best='Mixed', bestN=0;
           zones.forEach(function(z){var n=whiffPts.filter(z.fn).length;if(n>bestN){bestN=n;best=z.spot;var bt=gpBestPitchType(whiffPts,z.fn);if(bt)best+=' with '+bt;}});

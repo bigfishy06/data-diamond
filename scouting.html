@@ -2361,14 +2361,14 @@ Zane Skansi,Kitchener Panthers`;
         // Zone is displayed FROM A BATTER'S POV: drawAttackZone flips h left<->right,
         // so pitcher's right (x>0.33) appears on the BATTER'S LEFT side of the displayed zone.
         // Labels and spots use batter-facing language to match what is highlighted on screen.
-        {label:'Up Left Corner',spot:'Up Left Corner',region:{h:'right',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66&&p.x>0.33;}},
-        {label:'Up Right Corner',spot:'Up Right Corner',region:{h:'left',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66&&p.x<-0.33;}},
-        {label:'Low Left Corner',spot:'Low Left Corner',region:{h:'right',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33&&p.x>0.33;}},
-        {label:'Low Right Corner',spot:'Low Right Corner',region:{h:'left',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33&&p.x<-0.33;}},
-        {label:'Up in Zone',spot:'Up in Zone',region:{h:'all',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66;}},
-        {label:'Low in Zone',spot:'Low in Zone',region:{h:'all',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33;}},
-        {label:'Left Side',spot:'Left Side',region:{h:'right',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x>0.33;}},
-        {label:'Right Side',spot:'Right Side',region:{h:'left',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x<-0.33;}}
+        {label:'High Left In Zone',spot:'High left in zone',region:{h:'right',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66&&p.x>0.33;}},
+        {label:'High Right In Zone',spot:'High right in zone',region:{h:'left',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66&&p.x<-0.33;}},
+        {label:'Low Left In Zone',spot:'Low left in zone',region:{h:'right',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33&&p.x>0.33;}},
+        {label:'Low Right In Zone',spot:'Low right in zone',region:{h:'left',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33&&p.x<-0.33;}},
+        {label:'High In Zone',spot:'High in zone',region:{h:'all',v:'top'},fn:function(p){return inZoneFnP(p)&&p.y>0.66;}},
+        {label:'Low In Zone',spot:'Low in zone',region:{h:'all',v:'bottom'},fn:function(p){return inZoneFnP(p)&&p.y<0.33;}},
+        {label:'Left Side Of Zone',spot:'Left side of zone',region:{h:'right',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x>0.33;}},
+        {label:'Right Side Of Zone',spot:'Right side of zone',region:{h:'left',v:'all'},fn:function(p){return inZoneFnP(p)&&p.x<-0.33;}}
       ];
       function zonePitchTypeSummary(pts){
         var by={};
