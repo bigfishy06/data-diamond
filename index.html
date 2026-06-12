@@ -1450,16 +1450,12 @@ Zane Skansi,Kitchener Panthers`;
         var k = gpNorm(row.player);
         if (knownPitchers.has(k) && !seenK.has(k)) { seenK.add(k); playerNames.push(row.player); }
       });
-      // Build set of all roster player names (any team) to exclude cross-team bleed
-      var rosterNamesP = new Set();
-      GP_ROSTER_2025.forEach(function(row){ rosterNamesP.add(gpNorm(row.player)); });
-
-      // Inactive: pitchers in data whose 2025 team matches but aren't on current roster at all
+      // Add every pitcher in data whose team matches the selected opponent.
       pitchersArr.forEach(function(p) {
         if (!p.pitcher || !p.pitcher_team) return;
         var pt = resolveTeam(p.pitcher_team);
         var k = gpNorm(p.pitcher);
-        if (pt && pt.name === oppName && !seenK.has(k) && !rosterNamesP.has(k)) {
+        if (pt && pt.name === oppName && !seenK.has(k)) {
           seenK.add(k); playerNames.push(p.pitcher);
         }
       });
@@ -1467,9 +1463,20 @@ Zane Skansi,Kitchener Panthers`;
         if (!p.pitcher || !p.pitcher_team) return;
         var pt = resolveTeam(p.pitcher_team);
         var k = gpNorm(p.pitcher);
-        if (pt && pt.name === oppName && !seenK.has(k) && !rosterNamesP.has(k)) {
+        if (pt && pt.name === oppName && !seenK.has(k)) {
           seenK.add(k); playerNames.push(p.pitcher);
         }
+      });
+      pitchesData.forEach(function(bp) {
+        if (!bp.scatter) return;
+        bp.scatter.forEach(function(s) {
+          if (!s.pitcher || !s.pitcher_team) return;
+          var pt = resolveTeam(s.pitcher_team);
+          var k = gpNorm(s.pitcher);
+          if (pt && pt.name === oppName && !seenK.has(k)) {
+            seenK.add(k); playerNames.push(s.pitcher);
+          }
+        });
       });
       playerNames.sort(function(a,b){ return a.localeCompare(b); });
     } else {
@@ -1495,16 +1502,27 @@ Zane Skansi,Kitchener Panthers`;
         if (!seenB[pk]) return; // must already be roster-confirmed
         if ((p.AB||0) > (seenB[pk].AB||0)) seenB[pk] = p;
       });
-      // Build set of all roster player names (any team) to exclude from inactive
-      var rosterNames = new Set();
-      GP_ROSTER_2025.forEach(function(row){ rosterNames.add(gpNorm(row.player)); });
+      // Add every batter in data whose team matches the selected opponent.
+      summaryData.forEach(function(p) {
+        if (!p.batter || !(p.batter_team || p.team)) return;
+        var t = resolveTeam(p.batter_team || p.team);
+        var k = gpNorm(p.batter);
+        if (t && t.name === oppName && !seenB[k])
+          seenB[k] = { batter: p.batter, AB: p.AB || 0 };
+      });
+      pitchesData.forEach(function(bp) {
+        if (!bp.batter) return;
+        var t = resolveTeam(bp.batter_team || bp.team);
+        var k = gpNorm(bp.batter);
+        if (t && t.name === oppName && !seenB[k])
+          seenB[k] = { batter: bp.batter, AB: 0 };
+      });
 
-      // Inactive: batters in pbp whose 2025 team matches, not on current roster at all
       pbpBattersArr.forEach(function(p) {
         if (!p.batter || !p.batter_team) return;
         var t = resolveTeam(p.batter_team);
         var k = gpNorm(p.batter);
-        if (t && t.name === oppName && !seenB[k] && !rosterNames.has(k))
+        if (t && t.name === oppName && !seenB[k])
           seenB[k] = { batter: p.batter, AB: 0 };
       });
       playerNames = Object.keys(seenB).sort(function(a,b){ return (seenB[b].AB||0)-(seenB[a].AB||0); }).map(function(k){ return seenB[k].batter; });
@@ -1536,7 +1554,7 @@ Zane Skansi,Kitchener Panthers`;
         'onmouseover="this.style.background=\'rgba(255,184,28,0.06)\'" onmouseout="this.style.background=\'\'">' +
         '<input type="checkbox" value="' + name.replace(/"/g,'&quot;') + '" data-key="' + gpNorm(name).replace(/"/g,'&quot;') + '"' + (checked ? ' checked' : '') +
           ' style="accent-color:#FFB81C;width:13px;height:13px;cursor:pointer;flex-shrink:0">' +
-        '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:' + (checked ? '#fff' : 'rgba(255,255,255,0.45)') + '">' + nameHtml + '</span>' +
+        '<span style="font-family:\'DM Mono\',monospace;font-size:11px;line-height:1.25;overflow-wrap:anywhere;color:' + (checked ? '#fff' : 'rgba(255,255,255,0.45)') + '">' + nameHtml + '</span>' +
         '</label>';
     }
 
@@ -1555,7 +1573,7 @@ Zane Skansi,Kitchener Panthers`;
           '<button onclick="this.closest(\'.gp-year-picker\').classList.remove(\'open\');this.closest(\'.gp-year-picker\').style.cssText=\'\';this.closest(\'.gp-year-picker\').innerHTML=\'\'" ' +
             'style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:14px;line-height:1;padding:0">x</button>' +
         '</div>' +
-        '<div id="' + selectId + '" style="max-height:220px;overflow-y:auto;padding:4px 0">';
+        '<div id="' + selectId + '" style="max-height:min(420px,60vh);overflow-y:auto;padding:4px 0">';
 
     if (activePlayers.length) {
       if (inactivePlayers.length) html += renderDivider('ACTIVE ROSTER');
@@ -1577,7 +1595,7 @@ Zane Skansi,Kitchener Panthers`;
         '</div>' +
       '</div>';
 
-    picker.style.cssText = 'display:block;border:1px solid rgba(255,184,28,0.2);border-radius:3px;overflow:hidden;margin-top:-6px;background:rgba(13,20,32,0.9)';
+    picker.style.cssText = 'display:block;border:1px solid rgba(255,184,28,0.2);border-radius:3px;overflow:hidden;margin-top:-6px;background:rgba(13,20,32,0.96);box-shadow:0 12px 28px rgba(0,0,0,0.35);z-index:20';
     picker.innerHTML = html;
     picker.classList.add('open');
   }
