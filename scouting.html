@@ -1626,33 +1626,16 @@ Zane Skansi,Kitchener Panthers`;
     ctx.fillText("FROM A "+perspective+"'S POV",(cpx(-1)+cpx(1))/2,cpy(1)-4);ctx.restore();
     return c.toDataURL('image/png');
   }
+  var BATTER_SILHOUETTE_IMG=new Image();
+  BATTER_SILHOUETTE_IMG.src='batter-pov-silhouette.png';
   function mkBatterSilhouette(hand){
-    var W=180,H=260,c=document.createElement('canvas');c.width=W;c.height=H;
+    var W=515,H=1425,c=document.createElement('canvas');c.width=W;c.height=H;
     var ctx=c.getContext('2d');
     ctx.clearRect(0,0,W,H);
-    var mirror=hand==='R';
-    function x(v){return mirror?W-v:v;}
+    if(!BATTER_SILHOUETTE_IMG.complete||!BATTER_SILHOUETTE_IMG.naturalWidth)return c.toDataURL('image/png');
     ctx.save();
-    ctx.lineCap='round';ctx.lineJoin='round';
-    ctx.strokeStyle='rgba(45,48,54,0.55)';ctx.lineWidth=8;
-    ctx.beginPath();ctx.moveTo(x(52),54);ctx.lineTo(x(96),98);ctx.stroke();
-    ctx.strokeStyle='rgba(15,17,22,0.96)';ctx.fillStyle='rgba(15,17,22,0.96)';
-    ctx.beginPath();ctx.arc(x(86),62,16,0,Math.PI*2);ctx.fill();
-    ctx.lineWidth=18;
-    ctx.beginPath();ctx.moveTo(x(86),82);ctx.lineTo(x(76),126);ctx.lineTo(x(88),162);ctx.stroke();
-    ctx.lineWidth=12;
-    ctx.beginPath();ctx.moveTo(x(76),96);ctx.lineTo(x(48),112);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(x(82),94);ctx.lineTo(x(112),112);ctx.stroke();
-    ctx.lineWidth=14;
-    ctx.beginPath();ctx.moveTo(x(86),160);ctx.lineTo(x(58),218);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(x(91),160);ctx.lineTo(x(124),218);ctx.stroke();
-    ctx.fillRect(x(40)-18,218,36,8);
-    ctx.fillRect(x(126)-20,218,40,8);
-    ctx.strokeStyle='rgba(20,23,30,0.90)';ctx.lineWidth=4;
-    ctx.beginPath();ctx.moveTo(x(116),238);ctx.lineTo(x(154),231);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(x(62),238);ctx.lineTo(x(26),231);ctx.stroke();
-    ctx.strokeStyle='rgba(20,23,30,0.22)';ctx.lineWidth=2;
-    ctx.beginPath();ctx.moveTo(x(66),232);ctx.lineTo(x(114),232);ctx.stroke();
+    if(hand==='L'){ctx.translate(W,0);ctx.scale(-1,1);}
+    ctx.drawImage(BATTER_SILHOUETTE_IMG,0,0,W,H);
     ctx.restore();
     return c.toDataURL('image/png');
   }
@@ -2635,7 +2618,7 @@ Zane Skansi,Kitchener Panthers`;
     var ihIdeal=Math.round(iw*heatAspect);
     var drawSplitHeat=heatAvail>=28;
     var ih=Math.max(24,Math.min(ihIdeal,Math.round(heatAvail)));
-    var batterW=Math.min(18,Math.max(11,iw*0.19)),batterGap=2;
+    var batterW=Math.min(24,Math.max(13,iw*0.24)),batterGap=2;
     var heatW=Math.min(iw-batterW-batterGap,ih/heatAspect),heatH=heatW*heatAspect;
     if(PH-y < splitsOverhead+10){drawSplitHeat=false;}
     if(PH-y>=splitsOverhead+10){
@@ -2653,7 +2636,7 @@ Zane Skansi,Kitchener Panthers`;
         if(!sd2.subXY.length)return;
         var groupW=heatW+batterGap+batterW;
         var groupX=ML+i*(iw+gap)+(iw-groupW)/2;
-        var batterH=Math.min(heatH*0.82,batterW*260/180);
+        var batterH=Math.min(heatH*0.95,batterW*1425/515);
         var batterY=y+heatH-batterH+1;
         var heatX=sd2.hand==='L'?groupX+batterW+batterGap:groupX;
         var batterX=sd2.hand==='L'?groupX:groupX+heatW+batterGap;
