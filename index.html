@@ -839,6 +839,18 @@
     ctx.strokeStyle='rgba(255,184,28,0.9)';ctx.lineWidth=2.5;ctx.strokeRect(zLeft,py3(1),zRight-zLeft,py3(0)-py3(1));
     return c.toDataURL('image/png');
   }
+  var BATTER_SILHOUETTE_IMGS={R:new Image(),L:new Image()};
+  BATTER_SILHOUETTE_IMGS.R.src='batter-pov-silhouette-rhh.png';
+  BATTER_SILHOUETTE_IMGS.L.src='batter-pov-silhouette-lhh.png';
+  function mkBatterSilhouette(hand){
+    var img=BATTER_SILHOUETTE_IMGS[hand]||BATTER_SILHOUETTE_IMGS.R;
+    var W=118,H=206,c=document.createElement('canvas');c.width=W;c.height=H;
+    var ctx=c.getContext('2d');
+    ctx.clearRect(0,0,W,H);
+    if(!img.complete||!img.naturalWidth)return c.toDataURL('image/png');
+    ctx.drawImage(img,0,0,W,H);
+    return c.toDataURL('image/png');
+  }
   function addCharts(d,sc,y){
     var gap=8;
     var chartW=(CPW-gap)/2,chartH=68;
@@ -2425,10 +2437,31 @@ Zane Skansi,Kitchener Panthers`;
           d.text('VS LHH', mapX+1, nameY+pitNameH+4.2);
           d.text('VS RHH', mapX+mapW+gap+1, nameY+pitNameH+4.2);
           if(imgH>=4){
-            var imgSize=Math.min(mapW,imgH);
-            var imgOffsetX=(mapW-imgSize)/2;
-            d.addImage(mkHeat(lhhPts,'BATTER'),'PNG', mapX+imgOffsetX, imgY, imgSize, imgSize);
-            d.addImage(mkHeat(rhhPts,'BATTER'),'PNG', mapX+mapW+gap+imgOffsetX, imgY, imgSize, imgSize);
+            function drawSummaryHeatWithBatter(hand, heatPts, groupX){
+              var batW=Math.min(6,Math.max(3,mapW*0.22));
+              var batGap=0.8;
+              var heatSize=Math.min(imgH,mapW-batW-batGap);
+              if(heatSize<4){
+                heatSize=Math.min(mapW,imgH);
+                d.addImage(mkHeat(heatPts,'BATTER'),'PNG', groupX+(mapW-heatSize)/2, imgY, heatSize, heatSize);
+                return;
+              }
+              var batH=Math.min(imgH,batW*206/118);
+              var heatY=imgY+(imgH-heatSize)/2;
+              var batY=imgY+imgH-batH;
+              var heatX, batX;
+              if(hand==='L'){
+                heatX=groupX;
+                batX=groupX+heatSize+batGap;
+              }else{
+                batX=groupX;
+                heatX=groupX+batW+batGap;
+              }
+              d.addImage(mkHeat(heatPts,'BATTER'),'PNG', heatX, heatY, heatSize, heatSize);
+              d.addImage(mkBatterSilhouette(hand),'PNG', batX, batY, batW, batH);
+            }
+            drawSummaryHeatWithBatter('L',lhhPts,mapX);
+            drawSummaryHeatWithBatter('R',rhhPts,mapX+mapW+gap);
           }
         }
 
