@@ -2624,9 +2624,22 @@ Zane Skansi,Kitchener Panthers`;
       y+=19;
     }
 
+    var tendencyRows = buildPitchCountSideFastballRows(sc);
+    var drewTendencyTable = false;
+    if(tendencyRows.length){
+      var tendNeed = 8 + tendencyRows.length * 7.2 + 10;
+      if(PH-y >= tendNeed + 36){
+        y+=3;
+        y=drawSec(d,'Pitch Tendencies by Count',y);
+        y=drawPitchTendencyByCountTable(d,tendencyRows,y);
+        y+=1;
+        drewTendencyTable = true;
+      }
+    }
+
     // Pitch Arsenal
     var sT=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];});
-    if(sT.length){
+    if(sT.length && (!drewTendencyTable || PH-y >= 88)){
       y+=3;
       y=drawSec(d,'Pitch Arsenal — What He Throws and How Effective Each Pitch Is',y);
       var atH=['PITCH TYPE','USAGE %','STRIKE %','BALL %','WHIFF %'];
@@ -2665,7 +2678,7 @@ Zane Skansi,Kitchener Panthers`;
     }
 
     var tendency = { rows: buildPitchCountSideFastballRows(sc) };
-    if(tendency.rows.length){
+    if(false && tendency.rows.length){
       var tendNeed = 8 + tendency.rows.length * 7.2 + 10;
       if(PH-y >= tendNeed + 58){
         y=drawSec(d,'Pitch Tendencies by Count',y);
