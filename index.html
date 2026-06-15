@@ -2417,21 +2417,25 @@ Zane Skansi,Kitchener Panthers`;
           var tableY=mapY+6.0;
           var rowH=Math.min(4.5,Math.max(3.7,(pitMapH-8.4)/Math.max(2,tendInfo.rows.length+1)));
           var sitW=Math.max(17,tendTableW-40), pitchW=24, useW=tendTableW-sitW-pitchW;
-          d.setFillColor(12,23,38);d.rect(tendX,tableY,tendTableW,rowH,'F');
-          d.setFont('helvetica','bold');d.setFontSize(Math.max(3.9,pitLabelFs-0.7));st(d,CO.dim);
+          d.setFillColor(224,229,236);d.rect(tendX,tableY,tendTableW,rowH,'F');
+          sd(d,[185,195,208]);d.setLineWidth(0.08);d.rect(tendX,tableY,tendTableW,rowH);
+          d.setFont('helvetica','bold');d.setFontSize(Math.max(3.9,pitLabelFs-0.7));st(d,CO.navy);
           d.text('SIT',tendX+1.2,tableY+rowH-1.2);
           d.text('PITCH',tendX+sitW+1,tableY+rowH-1.2);
           d.text('%',tendX+sitW+pitchW+useW-1.2,tableY+rowH-1.2,{align:'right'});
           if(tendInfo.rows.length){
             tendInfo.rows.slice(0,3).forEach(function(r,ti){
               var yy=tableY+rowH*(ti+1);
-              d.setFillColor(ti%2===0?18:22,ti%2===0?34:40,ti%2===0?55:65);d.rect(tendX,yy,tendTableW,rowH,'F');
-              pitText(r[0],tendX+1.2,yy+rowH-1.2,sitW-1.5,Math.max(4.2,pitBodyFs-1.1),'bold',CO.white,'left');
-              pitText(r[1],tendX+sitW+1,yy+rowH-1.2,pitchW-1.5,Math.max(4.2,pitBodyFs-1.1),'normal',CO.white,'left');
-              pitText(r[2],tendX+sitW+pitchW,yy+rowH-1.2,useW-1.2,Math.max(4.2,pitBodyFs-1.1),'bold',[74,222,128],'right');
+              d.setFillColor(ti%2===0?247:239,ti%2===0?249:243,ti%2===0?252:248);d.rect(tendX,yy,tendTableW,rowH,'F');
+              sd(d,[210,218,228]);d.setLineWidth(0.06);d.line(tendX,yy,tendX+tendTableW,yy);
+              pitText(r[0],tendX+1.2,yy+rowH-1.2,sitW-1.5,Math.max(4.2,pitBodyFs-1.1),'bold',CO.navy,'left');
+              pitText(r[1],tendX+sitW+1,yy+rowH-1.2,pitchW-1.5,Math.max(4.2,pitBodyFs-1.1),'normal',CO.navy,'left');
+              pitText(r[2],tendX+sitW+pitchW,yy+rowH-1.2,useW-1.2,Math.max(4.2,pitBodyFs-1.1),'bold',[22,163,74],'right');
             });
           }else{
-            pitText('No 70%+',tendX+1.2,tableY+rowH*2-1.2,tendTableW-2,Math.max(4.2,pitBodyFs-1.0),'normal',CO.dim,'left');
+            d.setFillColor(247,249,252);d.rect(tendX,tableY+rowH,tendTableW,rowH,'F');
+            sd(d,[210,218,228]);d.setLineWidth(0.06);d.line(tendX,tableY+rowH,tendX+tendTableW,tableY+rowH);
+            pitText('No 70%+',tendX+1.2,tableY+rowH*2-1.2,tendTableW-2,Math.max(4.2,pitBodyFs-1.0),'normal',[78,91,112],'left');
           }
         } else {
           pitText(attackSummary.fallback, ML+3, mapY+Math.min(pitMapH-1.3,5.1), leftInfoW, pitBodyFs, 'bold', CO.white, 'left');
