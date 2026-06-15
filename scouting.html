@@ -1222,6 +1222,48 @@ Zane Skansi,Kitchener Panthers`;
     });
     return { types: typeSet, rows: rows };
   }
+  function reportCleanCount(c) {
+    return String(c || '').replace(/^'/, '');
+  }
+  function reportHasRisp(s) {
+    var v = s && s.runners;
+    if (v == null || v === '' || String(v).toLowerCase() === 'none') return false;
+    var r = String(v).replace(/\D/g, '');
+    if (!r || Number(r) === 0) return false;
+    r = r.padStart(3, '0');
+    return r.charAt(1) === '1' || r.charAt(2) === '1';
+  }
+  function reportFastballPctForSide(points, side) {
+    var subset = (points || []).filter(function(s) {
+      return s.batter_side === side && reportPitchTypeBucket(s) !== 'Unknown';
+    });
+    var n = subset.length;
+    var fb = subset.filter(function(s) { return reportPitchTypeBucket(s) === 'Fastball'; }).length;
+    return { n:n, pct:n ? fb / n * 100 : null };
+  }
+  function buildPitchCountSideFastballRows(points) {
+    points = points || [];
+    var groups = [
+      { label:'Overall Non-RISP', test:function(s){ return !reportHasRisp(s); } },
+      { label:'Overall RISP', test:function(s){ return reportHasRisp(s); } },
+      { label:'0-0', test:function(s){ return reportCleanCount(s.count) === '0-0'; } },
+      { label:'0-1', test:function(s){ return reportCleanCount(s.count) === '0-1'; } },
+      { label:'1-0', test:function(s){ return reportCleanCount(s.count) === '1-0'; } },
+      { label:'1-1', test:function(s){ return reportCleanCount(s.count) === '1-1'; } },
+      { label:'Hitters (2-0, 2-1, 3-1)', test:function(s){ return ['2-0','2-1','3-1'].includes(reportCleanCount(s.count)); } },
+      { label:'3-2', test:function(s){ return reportCleanCount(s.count) === '3-2'; } },
+      { label:'2 strikes (not full)', test:function(s){ var c=reportCleanCount(s.count).split('-'); return c.length===2 && c[1] === '2' && reportCleanCount(s.count) !== '3-2'; } }
+    ];
+    var rows = groups.map(function(grp) {
+      var subset = points.filter(grp.test);
+      var r = reportFastballPctForSide(subset, 'R');
+      var l = reportFastballPctForSide(subset, 'L');
+      return { label:grp.label, rN:r.n, rPct:r.pct, lN:l.n, lPct:l.pct };
+    }).filter(function(row) {
+      return row.rN || row.lN || row.label.indexOf('RISP') >= 0;
+    });
+    return rows;
+  }
 
   // Derive handedness from scatter using same logic as main.js deriveHand()
   function scoutDeriveHand(scatter, field) {
@@ -1545,6 +1587,51 @@ Zane Skansi,Kitchener Panthers`;
       });
     });
     sd(d,CO.navy3);d.setLineWidth(0.4);d.rect(ML,y,tw,hh+rows.length*rh,'S');
+    return y+hh+rows.length*rh+3;
+  }
+  function drawPitchTendencyByCountTable(d, rows, y) {
+    var colW=[86,47,47], tw=colW.reduce(function(a,b){return a+b;},0);
+    var x=ML+(CPW-tw)/2, hh=8, rh=7.2;
+    function pctText(v){ return v==null ? '-' : f1(v)+'%'; }
+    function pctHighlight(v){ return v!=null && v>=70; }
+    function drawCellText(txt,cx,cy,w,bold,color,align){
+      d.setFont('helvetica',bold?'bold':'normal');d.setFontSize(6.3);
+      if(color)d.setTextColor(color[0],color[1],color[2]);else st(d,CO.dim);
+      d.text(String(txt),cx+(align==='left'?2:w/2),cy,{align:align||'center'});
+    }
+    sf(d,CO.navy3);d.rect(x,y,tw,hh,'F');
+    sd(d,CO.navy3);d.setLineWidth(0.25);d.rect(x,y,tw,hh,'S');
+    var headers=['SITUATION','RHH Fast%','LHH Fast%'], cx=x;
+    headers.forEach(function(h,i){
+      d.setFont('helvetica','bold');d.setFontSize(5.8);st(d,CO.gold);
+      d.text(h,cx+colW[i]/2,y+5.3,{align:'center'});
+      cx+=colW[i];
+    });
+    rows.forEach(function(row,ri){
+      var ry=y+hh+ri*rh, cx2=x;
+      sf(d,ri%2===0?CO.navy:CO.navy2);d.rect(x,ry,tw,rh,'F');
+      sf(d,CO.navy3);d.rect(cx2,ry,colW[0],rh,'F');
+      drawCellText(row.label,cx2,ry+4.8,colW[0],true,CO.white,'left');cx2+=colW[0];
+      if(pctHighlight(row.rPct)){
+        d.setFillColor(row.rPct>=80?130:157,row.rPct>=80?232:238,row.rPct>=80?132:158);
+        d.rect(cx2,ry+0.3,colW[1],rh-0.6,'F');
+        drawCellText(pctText(row.rPct),cx2,ry+4.8,colW[1],true,[15,25,20]);
+      } else {
+        drawCellText(pctText(row.rPct),cx2,ry+4.8,colW[1],false,CO.dim);
+      }
+      cx2+=colW[1];
+      if(pctHighlight(row.lPct)){
+        d.setFillColor(row.lPct>=80?130:157,row.lPct>=80?232:238,row.lPct>=80?132:158);
+        d.rect(cx2,ry+0.3,colW[2],rh-0.6,'F');
+        drawCellText(pctText(row.lPct),cx2,ry+4.8,colW[2],true,[15,25,20]);
+      } else {
+        drawCellText(pctText(row.lPct),cx2,ry+4.8,colW[2],false,CO.dim);
+      }
+      cx2+=colW[2];
+      sd(d,CO.navy3);d.setLineWidth(0.18);
+      var gx=x;for(var gi=0;gi<colW.length;gi++){d.rect(gx,ry,colW[gi],rh,'S');gx+=colW[gi];}
+    });
+    sd(d,CO.navy3);d.setLineWidth(0.35);d.rect(x,y,tw,hh+rows.length*rh,'S');
     return y+hh+rows.length*rh+3;
   }
   function drawFoot(d,name,role){
@@ -2577,18 +2664,14 @@ Zane Skansi,Kitchener Panthers`;
       y=ar+2;
     }
 
-    var tendency = buildPitchCountTendencyRows(sc);
+    var tendency = { rows: buildPitchCountSideFastballRows(sc) };
     if(tendency.rows.length){
-      var tendNeed = 8 + tendency.rows.length * 7 + 10;
+      var tendNeed = 8 + tendency.rows.length * 7.2 + 10;
       if(PH-y >= tendNeed + 58){
         y=drawSec(d,'Pitch Tendencies by Count',y);
-        var tendHeaders = ['SITUATION'].concat(tendency.types).concat(['#']);
-        var tendW = [58].concat(tendency.types.map(function(){return 32;})).concat([18]);
-        var _oldML=ML;ML=_oldML+(CPW-tendW.reduce(function(a,b){return a+b;},0))/2;
-        y=drawTbl(d,tendHeaders,tendency.rows,tendW,y,[1,2]);
-        ML=_oldML;
+        y=drawPitchTendencyByCountTable(d,tendency.rows,y);
         y+=1;
-      } else if(PH-y >= 16){
+      } else if(false && PH-y >= 16){
         function _tval(row,label){var idx=tendency.types.indexOf(label);return idx>=0?row[idx+1]:'—';}
         var tendLine=tendency.rows.slice(1,4).map(function(r){
           var lbl=r[0]==='Early Count'?'Early':r[0]==='Pitcher Ahead'?'Ahead':'Behind';
