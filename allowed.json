@@ -61,11 +61,6 @@
       "player": "Brandon Deans"
     },
     {
-      "email": "carsonburns10@gmail.com",
-      "role": "position_player",
-      "player": "Carson Burns"
-    },
-    {
       "email": "morroconner@gmail.com",
       "role": "position_player",
       "player": "Conner Morro"
@@ -111,19 +106,9 @@
       "player": "Ryan Dos Santos"
     },
     {
-      "email": "marcoscas2017@gmail.com",
-      "role": "position_player",
-      "player": "Marcos Castillo"
-    },
-    {
       "email": "luca.boscarino11@gmail.com",
       "role": "catcher",
       "player": "Luca Boscarino"
-    },
-    {
-      "email": "dustinrichardson54@gmail.com",
-      "role": "position_player",
-      "player": "Dustin Richardson"
     },
     {
       "email": "lirianoelvin@gmail.com",
@@ -144,11 +129,6 @@
       "email": "liamdevine31@gmail.com",
       "role": "admin",
       "player": "Liam Devine"
-    },
-    {
-      "email": "drew@arcware.net",
-      "role": "position_player",
-      "player": "Drew Donaldson"
     },
     {
       "email": "ny.alfred.vega@gmail.com",
