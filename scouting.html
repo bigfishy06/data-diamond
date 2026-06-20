@@ -1591,11 +1591,12 @@ Zane Skansi,Kitchener Panthers`;
   }
   function drawPitchTendencyByCountTable(d, rows, y) {
     var colW=[86,47,47], tw=colW.reduce(function(a,b){return a+b;},0);
-    var x=ML+(CPW-tw)/2, hh=8, rh=7.2;
+    // Compact rows leave room for the pitcher split heat maps on the same page.
+    var x=ML+(CPW-tw)/2, hh=6.5, rh=5.2;
     function pctText(v){ return v==null ? '-' : f1(v)+'%'; }
     function pctHighlight(v){ return v!=null && v>=70; }
     function drawCellText(txt,cx,cy,w,bold,color,align){
-      d.setFont('helvetica',bold?'bold':'normal');d.setFontSize(6.3);
+      d.setFont('helvetica',bold?'bold':'normal');d.setFontSize(5.5);
       if(color)d.setTextColor(color[0],color[1],color[2]);else st(d,CO.dim);
       d.text(String(txt),cx+(align==='left'?2:w/2),cy,{align:align||'center'});
     }
@@ -1603,29 +1604,29 @@ Zane Skansi,Kitchener Panthers`;
     sd(d,CO.navy3);d.setLineWidth(0.25);d.rect(x,y,tw,hh,'S');
     var headers=['SITUATION','RHH Fast%','LHH Fast%'], cx=x;
     headers.forEach(function(h,i){
-      d.setFont('helvetica','bold');d.setFontSize(5.8);st(d,CO.gold);
-      d.text(h,cx+colW[i]/2,y+5.3,{align:'center'});
+      d.setFont('helvetica','bold');d.setFontSize(5.3);st(d,CO.gold);
+      d.text(h,cx+colW[i]/2,y+4.4,{align:'center'});
       cx+=colW[i];
     });
     rows.forEach(function(row,ri){
       var ry=y+hh+ri*rh, cx2=x;
       sf(d,ri%2===0?CO.navy:CO.navy2);d.rect(x,ry,tw,rh,'F');
       sf(d,CO.navy3);d.rect(cx2,ry,colW[0],rh,'F');
-      drawCellText(row.label,cx2,ry+4.8,colW[0],true,CO.white,'left');cx2+=colW[0];
+      drawCellText(row.label,cx2,ry+3.6,colW[0],true,CO.white,'left');cx2+=colW[0];
       if(pctHighlight(row.rPct)){
         d.setFillColor(row.rPct>=80?130:157,row.rPct>=80?232:238,row.rPct>=80?132:158);
         d.rect(cx2,ry+0.3,colW[1],rh-0.6,'F');
-        drawCellText(pctText(row.rPct),cx2,ry+4.8,colW[1],true,[15,25,20]);
+        drawCellText(pctText(row.rPct),cx2,ry+3.6,colW[1],true,[15,25,20]);
       } else {
-        drawCellText(pctText(row.rPct),cx2,ry+4.8,colW[1],false,CO.dim);
+        drawCellText(pctText(row.rPct),cx2,ry+3.6,colW[1],false,CO.dim);
       }
       cx2+=colW[1];
       if(pctHighlight(row.lPct)){
         d.setFillColor(row.lPct>=80?130:157,row.lPct>=80?232:238,row.lPct>=80?132:158);
         d.rect(cx2,ry+0.3,colW[2],rh-0.6,'F');
-        drawCellText(pctText(row.lPct),cx2,ry+4.8,colW[2],true,[15,25,20]);
+        drawCellText(pctText(row.lPct),cx2,ry+3.6,colW[2],true,[15,25,20]);
       } else {
-        drawCellText(pctText(row.lPct),cx2,ry+4.8,colW[2],false,CO.dim);
+        drawCellText(pctText(row.lPct),cx2,ry+3.6,colW[2],false,CO.dim);
       }
       cx2+=colW[2];
       sd(d,CO.navy3);d.setLineWidth(0.18);
@@ -2536,27 +2537,27 @@ Zane Skansi,Kitchener Panthers`;
     var _paDr=parseInt(_pitApproachResult.dot.slice(1,3),16)||96;
     var _paDg=parseInt(_pitApproachResult.dot.slice(3,5),16)||165;
     var _paDb=parseInt(_pitApproachResult.dot.slice(5,7),16)||250;
-    var _paBoxH=_pitApproachResult.lines?42:38;
+    var _paBoxH=_pitApproachResult.lines?34:32;
     d.setFillColor(245,247,251);d.rect(ML,y,CPW,_paBoxH,'F');
     d.setDrawColor(_paDr,_paDg,_paDb);d.setLineWidth(0.45);d.rect(ML,y,CPW,_paBoxH,'S');
     d.setFillColor(_paDr,_paDg,_paDb);d.rect(ML,y,2.4,_paBoxH,'F');
-    var _paTextX=ML+40;
-    if(_pitApproachResult.region){drawAttackZone(d,ML+6,y+5,28,28,_pitApproachResult.region,_pitApproachResult.dot,'BATTER',true);}
+    var _paTextX=ML+34;
+    if(_pitApproachResult.region){drawAttackZone(d,ML+6,y+5,23,23,_pitApproachResult.region,_pitApproachResult.dot,'BATTER',true);}
     else{_paTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_paDr,_paDg,_paDb);d.text(_pitApproachResult.fallbackLabel||'STAT FALLBACK',_paTextX,y+6.5);}
     d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
     var _paSpotDisp=_pitApproachResult.spot||'';
     var _paAction=_pitApproachResult.region?('Attack: '+_paSpotDisp):(_paSpotDisp||_pitApproachResult.label);
-    var _paTextW=_pitApproachResult.region?CPW-46:CPW-14;
+    var _paTextW=_pitApproachResult.region?CPW-40:CPW-14;
     d.text(_paAction,_paTextX,y+10.5,{maxWidth:_paTextW});
     if(_pitApproachResult.lines){
       _pitApproachResult.lines.forEach(function(row,ri){
-        var ry=y+17+ri*7.1;
+        var ry=y+16+ri*5.6;
         var rr=parseInt(row.color.slice(1,3),16)||96,rg=parseInt(row.color.slice(3,5),16)||165,rb=parseInt(row.color.slice(5,7),16)||250;
-        d.setFillColor(rr,rg,rb);d.rect(_paTextX,ry-4.4,21,5.2,'F');
-        d.setFont('helvetica','bold');d.setFontSize(4.9);d.setTextColor(255,255,255);
-        d.text(row.label.toUpperCase().slice(0,9),_paTextX+10.5,ry-0.8,{align:'center'});
-        d.setFont('helvetica','normal');d.setFontSize(6.2);st(d,CO.light);
-        d.text(row.text,_paTextX+24,ry-0.8,{maxWidth:_paTextW-25});
+        d.setFillColor(rr,rg,rb);d.rect(_paTextX,ry-4,19,4.7,'F');
+        d.setFont('helvetica','bold');d.setFontSize(4.5);d.setTextColor(255,255,255);
+        d.text(row.label.toUpperCase().slice(0,9),_paTextX+9.5,ry-0.9,{align:'center'});
+        d.setFont('helvetica','normal');d.setFontSize(5.8);st(d,CO.light);
+        d.text(row.text,_paTextX+22,ry-0.9,{maxWidth:_paTextW-23});
       });
     } else {
       d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
@@ -2706,13 +2707,13 @@ Zane Skansi,Kitchener Panthers`;
       return{hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(hasPitchLocation)};
     });
     var iw=CPW/2-4,gap=8;
-    // Overhead: gap(3) + drawSec(7) + titles(4); stat table removed so heat maps can stay larger.
+    // Use the remaining one-page space for compact split heat maps.
     var splitsOverhead=14;
-    var heatAvail=PH-12-8-y-splitsOverhead;
     var heatAspect=414/360;
+    var heatAvail=PH-12-8-y-splitsOverhead;
     var ihIdeal=Math.round(iw*heatAspect);
-    var drawSplitHeat=heatAvail>=28;
-    var ih=Math.max(24,Math.min(ihIdeal,Math.round(heatAvail)));
+    var drawSplitHeat=heatAvail>=16;
+    var ih=Math.max(16,Math.min(ihIdeal,Math.round(heatAvail)));
     var batterW=Math.min(24,Math.max(13,iw*0.24)),batterGap=2;
     var heatW=Math.min(iw-batterW-batterGap,ih/heatAspect),heatH=heatW*heatAspect;
     if(PH-y < splitsOverhead+10){drawSplitHeat=false;}
@@ -2739,15 +2740,7 @@ Zane Skansi,Kitchener Panthers`;
         d.addImage(mkHeat(sd2.subXY,'BATTER'),'PNG',heatX,y,heatW,heatH);
       });
       y+=heatH+4;
-    } else {
-      d.setFont('helvetica','normal');d.setFontSize(5);st(d,CO.dim);
-      d.text('Heat maps omitted to keep this report on one page.',ML,y+4);
-      y+=7;
     }
-    } else if(PH-y>=10){
-      d.setFont('helvetica','normal');d.setFontSize(5);st(d,CO.dim);
-      d.text('Splits omitted to keep this report on one page.',ML,y+4);
-      y+=7;
     }
     drawFoot(d,player.name,'PITCHER');
     d.save('scouting_'+player.name.replace(/ /g,'_')+'_pitcher.pdf');
