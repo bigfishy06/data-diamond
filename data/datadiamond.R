@@ -268,11 +268,11 @@ pitcher_stats <- pitches %>%
     fp_strikes        = sum(is_fp_strike),
     two_strike_pa     = sum(is_two_strike_count & is_pa),
     putaways          = sum(is_putaway),
-    batted_balls      = sum(is_batted),
-    gb                = sum(contact_type == "GB", na.rm = TRUE),
-    fb                = sum(contact_type == "FB", na.rm = TRUE),
-    ld                = sum(contact_type == "LD", na.rm = TRUE),
-    po                = sum(contact_type == "PO", na.rm = TRUE),
+    batted_balls      = sum(is_batted & contact_type %in% c("GB", "FB", "LD", "PO"), na.rm = TRUE),
+    gb                = sum(is_batted & contact_type == "GB", na.rm = TRUE),
+    fb                = sum(is_batted & contact_type == "FB", na.rm = TRUE),
+    ld                = sum(is_batted & contact_type == "LD", na.rm = TRUE),
+    po                = sum(is_batted & contact_type == "PO", na.rm = TRUE),
     avg_time_to_plate = round(mean(time_to_plate, na.rm = TRUE), 2),
     .groups = "drop"
   ) %>%
