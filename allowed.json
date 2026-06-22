@@ -6,11 +6,6 @@
       "player": "Christian Meagher-Sturgeon"
     },
     {
-      "email": "Agilbert2701@gmail.com",
-      "role": "position_player",
-      "player": "Antony Gilbert"
-    },
-    {
       "email": "gugliettisean@gmail.com",
       "role": "admin",
       "player": "Sean Guglietti"
@@ -51,9 +46,74 @@
       "player": "Damon Topolie"
     },
     {
+      "email": "macleoje@pdsbnet.ca",
+      "role": "admin",
+      "player": "Jeff MacLeod"
+    },
+    {
+      "email": "iamcoachdonny@gmail.com",
+      "role": "admin",
+      "player": "Donny Fell"
+    },
+    {
+      "email": "liamdevine31@gmail.com",
+      "role": "admin",
+      "player": "Liam Devine"
+    },
+    {
+      "email": "jkennedypitching@gmail.com",
+      "role": "admin",
+      "player": "Jared Kennedy"
+    },
+    {
+      "email": "aidanluciansinclair@gmail.com",
+      "role": "admin",
+      "player": "Aidan Sinclair"
+    },
+    {
+      "email": "spencermacinnis@gmail.com",
+      "role": "admin",
+      "player": "Spencer MacInnis"
+    },
+    {
+      "email": "dh2chen@uwaterloo.ca",
+      "role": "admin",
+      "player": "David Chen"
+    },
+    {
+      "email": "neumannjonah@gmail.com",
+      "role": "admin",
+      "player": "Jonah Neumann"
+    },
+    {
+      "email": "adfoster@unc.edu",
+      "role": "admin",
+      "player": "Adam Foster"
+    },
+    {
+      "email": "yscott2400@gmail.com",
+      "role": "admin",
+      "player": "Scott Young"
+    },
+    {
+      "email": "owenkotler1@gmail.com",
+      "role": "admin",
+      "player": "Owen Kotler"
+    },
+    {
       "email": "mattyward10.01@gmail.com",
       "role": "catcher",
       "player": "Matthew Ward"
+    },
+    {
+      "email": "luca.boscarino11@gmail.com",
+      "role": "catcher",
+      "player": "Luca Boscarino"
+    },
+    {
+      "email": "Agilbert2701@gmail.com",
+      "role": "position_player",
+      "player": "Antony Gilbert"
     },
     {
       "email": "andyleader27@gmail.com",
@@ -81,11 +141,6 @@
       "player": "Garrett Takamatsu"
     },
     {
-      "email": "macleoje@pdsbnet.ca",
-      "role": "admin",
-      "player": "Jeff MacLeod"
-    },
-    {
       "email": "jdsalmonwilliams@gmail.com",
       "role": "position_player",
       "player": "J.D. Williams"
@@ -111,11 +166,6 @@
       "player": "Ryan Dos Santos"
     },
     {
-      "email": "luca.boscarino11@gmail.com",
-      "role": "catcher",
-      "player": "Luca Boscarino"
-    },
-    {
       "email": "lirianoelvin@gmail.com",
       "role": "position_player",
       "player": "Elvin Liriano"
@@ -126,24 +176,9 @@
       "player": "Kyle Thomas"
     },
     {
-      "email": "iamcoachdonny@gmail.com",
-      "role": "admin",
-      "player": "Donny Fell"
-    },
-    {
-      "email": "liamdevine31@gmail.com",
-      "role": "admin",
-      "player": "Liam Devine"
-    },
-    {
       "email": "ny.alfred.vega@gmail.com",
       "role": "position_player",
       "player": "Alfred Vega"
-    },
-    {
-      "email": "jkennedypitching@gmail.com",
-      "role": "admin",
-      "player": "Jared Kennedy"
     },
     {
       "email": "liamrawilson@gmail.com",
