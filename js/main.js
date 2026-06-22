@@ -781,6 +781,37 @@ var STRIKE_OUTCOMES = [
 function isStrikeOutcome(s) {
   return s && STRIKE_OUTCOMES.includes(s.outcome);
 }
+var PITCH_LEVEL_OUTCOMES = ['Ball','Called Strike','Swinging Strike','Foul','Pickoff',''];
+var NON_AB_OUTCOMES = [
+  'Walk','Intentional Walk','Hit By Pitch',
+  'Sacrifice Fly','Sac Fly Double Play',
+  'Sacrifice Bunt','Sac Bunt Double Play',
+  'Catcher Interference','Caught Stealing',
+  'Truncated Out','Batter Interference','Additional Out'
+];
+function isPlateAppearanceEnding(s) {
+  return s && !PITCH_LEVEL_OUTCOMES.includes(s.outcome || '');
+}
+function isAtBatEnding(s) {
+  return isPlateAppearanceEnding(s) && !NON_AB_OUTCOMES.includes(s.outcome);
+}
+function canonicalTeamName(raw) {
+  var team = resolveTeam(raw);
+  return team ? team.name : String(raw || '').replace(/\s+/g, ' ').trim();
+}
+function gameOpponentName(s, role) {
+  return canonicalTeamName(role === 'pitcher' ? s.batter_team : (s.pitcher_team || s.team));
+}
+function gameGroupKey(s, role) {
+  var date = String(s && s.date || '').slice(0, 10);
+  return date ? date + '|' + gameOpponentName(s, role) : '';
+}
+function gameDateFromKey(key) {
+  return String(key || '').split('|')[0];
+}
+function gameDomKey(key) {
+  return String(key || '').replace(/[^a-zA-Z0-9]/g, '');
+}
 function pctPartsFromCounts(counts) {
   var total = counts.reduce(function(a, b) { return a + (Number(b) || 0); }, 0);
   if (!total) return counts.map(function() { return '--'; });
@@ -934,67 +965,67 @@ function navigate(url) { window.location.href = getBase() + url; }
 function getPbpBatter(name) {
   // No pbp for 2026 - returns null, callers fall back to summary/scatter
   if (_activeSeason === 'year:2026') return null;
-  return DATA.pbpBatters.find(function(p) { return p.batter === name; }) || null;
+  return findByPlayerName(DATA.pbpBatters, 'batter', name);
 }
 function getPbpPitcher(name) {
   if (_activeSeason === 'year:2026') return null;
-  return DATA.pbpPitchers.find(function(p) { return p.pitcher === name; }) || null;
+  return findByPlayerName(DATA.pbpPitchers, 'pitcher', name);
 }
 function _iblForYear(name, field) {
   // Return the iblHistory entry for the active season year
   var yr = _activeSeason.replace('year:', '');
-  var entries = DATA.iblHistory[name] || [];
+  var entries = getIblRowsForPlayer(name);
   var match = entries.find(function(s){ return (s.season||'').indexOf(yr) !== -1; });
   if (!match) match = entries[0]; // fallback to most recent
   return (match && match[field] != null) ? match[field] : null;
 }
 function getSeasonERA(name) {
   var yr = _activeSeason.replace('year:','');
-  var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(yr) !== -1; });
+  var entries = getIblRowsForPlayer(name).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(yr) !== -1; });
   return entries.length && entries[0].ERA != null ? entries[0].ERA : null;
 }
 function getSeasonIP(name) {
   var yr = _activeSeason.replace('year:','');
-  var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(yr) !== -1; });
+  var entries = getIblRowsForPlayer(name).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(yr) !== -1; });
   return entries.length && entries[0].IP != null ? entries[0].IP : null;
 }
 function getSeasonWHIP(name) {
   var yr = _activeSeason.replace('year:','');
-  var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(yr) !== -1; });
+  var entries = getIblRowsForPlayer(name).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(yr) !== -1; });
   return entries.length && entries[0].WHIP != null ? entries[0].WHIP : null;
 }
 function getSeasonHR(name) {
   var yr = _activeSeason.replace('year:','');
-  var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
+  var entries = getIblRowsForPlayer(name).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   return entries.length && entries[0].HR != null ? entries[0].HR : null;
 }
 function getSeasonRBI(name) {
   var yr = _activeSeason.replace('year:','');
-  var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
+  var entries = getIblRowsForPlayer(name).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   return entries.length && entries[0].RBI != null ? entries[0].RBI : null;
 }
 function getSeasonAVG(name) {
   var yr = _activeSeason.replace('year:','');
-  var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
+  var entries = getIblRowsForPlayer(name).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   return entries.length && entries[0].AVG != null ? entries[0].AVG : null;
 }
 function getSeasonOBP(name) {
   var yr = _activeSeason.replace('year:','');
-  var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
+  var entries = getIblRowsForPlayer(name).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   return entries.length && entries[0].OBP != null ? entries[0].OBP : null;
 }
 function getSeasonSLG(name) {
   var yr = _activeSeason.replace('year:','');
-  var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
+  var entries = getIblRowsForPlayer(name).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   return entries.length && entries[0].SLG != null ? entries[0].SLG : null;
 }
 function getSeasonOPS(name) {
   var yr = _activeSeason.replace('year:','');
-  var entries = (DATA.iblHistory[name] || []).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
+  var entries = getIblRowsForPlayer(name).filter(function(s){ return s.AB > 0 && (s.season||'').indexOf(yr) !== -1; });
   return entries.length && entries[0].OPS != null ? entries[0].OPS : null;
 }
 function getPitcherDataRow(name) {
-  return DATA.pitchers.find(function(p) { return p.pitcher === name; }) || null;
+  return findByPlayerName(DATA.pitchers, 'pitcher', name);
 }
 function getPitcherScatterHits(name, row) {
   var k = normPlayerName(name);
@@ -1026,10 +1057,50 @@ function getPitcherWhipFromData(name) {
 }
 function getPitchPlayer(name) {
   var k = normPlayerName(name);
-  return DATA.pitches.find(function(p) { return normPlayerName(p.batter) === k; }) || null;
+  var rows = DATA.pitches.filter(function(p) { return normPlayerName(p.batter) === k; });
+  if (!rows.length) return null;
+  return {
+    batter: canonicalPlayerName(name),
+    team: canonicalTeamName(rows[0].team),
+    bats: rows.map(function(r){ return r.bats; }).find(Boolean) || null,
+    pitches_seen: rows.reduce(function(n,r){ return n + Number(r.pitches_seen || 0); }, 0),
+    scatter: rows.reduce(function(all,r){ return all.concat(r.scatter || []); }, [])
+  };
 }
 function getSummaryPlayer(name) {
-  return DATA.summary.find(function(p) { return p.batter === name; }) || null;
+  var k = normPlayerName(name);
+  var rows = DATA.summary.filter(function(p) { return normPlayerName(p.batter) === k; });
+  if (!rows.length) return null;
+  if (rows.length === 1) return rows[0];
+  var out = Object.assign({}, rows[0]);
+  var counts = ['PA','AB','H','1B','2B','3B','HR','BB','IBB','HBP','K','K_L','K_S','DTS','DTS_L','DTS_S',
+    'Groundout','DP','TP','Popout','Flyout','Lineout','SF','SF_DP','SacB','SacB_DP','CI','BI','Error',
+    'Pickoff','CS','Truncated','Additional_Out','pitches_seen','swinging_k','called_k','ooz_pitches','chase_pitches'];
+  counts.forEach(function(field) {
+    out[field] = rows.reduce(function(total,row){ return total + Number(row[field] || 0); }, 0);
+  });
+  out.batter = canonicalPlayerName(name);
+  out.batter_team = canonicalTeamName(rows[0].batter_team);
+  out.AVG = out.AB ? out.H / out.AB : 0;
+  out.SLG = out.AB ? (out['1B'] + 2*out['2B'] + 3*out['3B'] + 4*out.HR) / out.AB : 0;
+  var obpDen = out.AB + out.BB + out.HBP + out.SF;
+  out.OBP = obpDen ? (out.H + out.BB + out.HBP) / obpDen : 0;
+  out.OPS = out.OBP + out.SLG;
+  out.K_pct = out.PA ? (out.K + out.DTS) / out.PA * 100 : 0;
+  out.BB_pct = out.PA ? out.BB / out.PA * 100 : 0;
+  out.ISO = out.SLG - out.AVG;
+  var babipDen = out.AB - out.K - out.HR + out.SF;
+  out.BABIP = babipDen > 0 ? (out.H - out.HR) / babipDen : null;
+  out.PS_PA = out.PA ? out.pitches_seen / out.PA : null;
+  ['wOBA','SWING_pct','WHIFF_pct','CONTACT_pct','FP_SWING_pct','Pull_pct','Str_pct','Oppo_pct',
+   'GB_pct','FB_pct','LO_pct','PO_pct'].forEach(function(field) {
+    var weighted = rows.filter(function(row){ return row[field] != null; });
+    var totalWeight = weighted.reduce(function(n,row){ return n + Number(row.pitches_seen || row.PA || 0); }, 0);
+    if (totalWeight) out[field] = weighted.reduce(function(n,row){
+      return n + Number(row[field]) * Number(row.pitches_seen || row.PA || 0);
+    }, 0) / totalWeight;
+  });
+  return out;
 }
 function getPitcherScatter(name) {
   var pts = [];
@@ -3618,7 +3689,7 @@ function buildPbpBatterLeague() {
             swing:[], whiff:[], contact:[], fpSwing:[], gb:[], fb:[], lo:[], po:[] };
   var rows = DATA.pbpBatters.length ? DATA.pbpBatters : DATA.summary;
   rows.forEach(function(p) {
-    if (!p.AB || p.AB < 5) return;
+    if ((p.PA || 0) < 20) return;
     if (p.AVG   != null) o.avg.push(p.AVG);
     if (p.OBP   != null) o.obp.push(p.OBP);
     if (p.SLG   != null) o.slg.push(p.SLG);
@@ -3653,7 +3724,7 @@ function buildPbpPitcherLeague() {
   });
   var rows = DATA.pbpPitchers.length ? DATA.pbpPitchers : DATA.pitchers;
   rows.forEach(function(p) {
-    if ((p.BF != null && p.BF < 5) || (p.BF == null && !(p.IP > 0))) return;
+    if ((p.BF != null && p.BF < 20) || (p.BF == null && !(p.IP >= 5))) return;
     // ERA already built from iblHistory above
     if (p.WHIP != null) {
       o.whip.push(p.WHIP);
@@ -4017,7 +4088,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
                   swing:[],whiff:[],contact:[],k:[],bb:[],bbk:[],pspa:[],fpSwing:[],
                   pull:[],oppo:[],str:[],zone:[],gb:[],fb:[],lo:[],po:[] };
         DATA.summary.forEach(function(p) {
-          if (!((p.PA || 0) > 0 || (p.AB || 0) > 0)) return;
+          if ((p.PA || 0) < 20) return;
           if (p.AVG !=null) o.avg.push(p.AVG);
           if (p.OBP !=null) o.obp.push(p.OBP);
           if (p.SLG !=null) o.slg.push(p.SLG);
@@ -4273,7 +4344,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       var fpSw2  = fp.filter(isSwingOutcome).length;
       var twoK   = scIn.filter(function(s){ var c=(s.count||'').replace(/^'/,''); return c.endsWith('-2') && ['Strikeout Swinging','Strikeout Looking','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error'].includes(s.outcome); });
       var twoKK  = twoK.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
-      var pd     = DATA.pitchers.find(function(p){ return p.pitcher === name; }) || {};
+      var pd     = getPitcherDataRow(name) || {};
+      var bf     = scIn.filter(isPlateAppearanceEnding).length;
       var _cbYr  = _activeSeason.replace('year:', '');
       var iblSP  = (DATA.iblHistory[name]||[]).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(_cbYr) !== -1; });
       if (!iblSP.length) iblSP = (DATA.iblHistory[name]||[]).filter(function(s){ return s.IP > 0; });
@@ -4300,8 +4372,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
           { lbl: 'SWING%',   val: tot>0          ? fmt1(swings/tot*100)+'%':'-', pct: tot>0         ? lp(swings/tot,    lgP.swing)   : 0, good: true },
           { lbl: 'WHIFF%',   val: swings>0       ? fmt1(swStr/swings*100)+'%':'-', pct: swings>0    ? lp(swStr/swings,  lgP.whiff)   : 0, good: true },
           { lbl: 'CONTACT%', val: swings>0       ? fmt1((swings-swStr)/swings*100)+'%':'-', pct: swings>0 ? 1-lp((swings-swStr)/swings, lgP.contact) : 0, good: true },
-          { lbl: 'K%',       val: tot>0          ? fmt1(ks/tot*100)+'%'   :'-', pct: tot>0          ? lp(ks/tot,        lgP.k)       : 0, good: true },
-          { lbl: 'BB%',      val: tot>0          ? fmt1(bbs/tot*100)+'%'  :'-', pct: tot>0          ? 1-lp(bbs/tot,     lgP.bb)      : 0, good: true },
+          { lbl: 'K%',       val: bf>0           ? fmt1(ks/bf*100)+'%'    :'-', pct: bf>0           ? lp(ks/bf,         lgP.k)       : 0, good: true },
+          { lbl: 'BB%',      val: bf>0           ? fmt1(bbs/bf*100)+'%'   :'-', pct: bf>0           ? 1-lp(bbs/bf,      lgP.bb)      : 0, good: true },
           { lbl: 'E+A%',     val: pd.EA_pct!=null? fmt1(pd.EA_pct)+'%'   :'-', pct: lp(pd.EA_pct,  lgP.ea),  good: true },
           { lbl: 'K/BB',     val: pd.K_BB!=null  ? fmt2(pd.K_BB)         :'-', pct: lp(pd.K_BB,    lgP.kbb), good: true },
           // Contact type
@@ -4363,8 +4435,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         {lbl:'PUTAWAY%', val:dp.PUTAWAY_pct!=null?fmt1(dp.PUTAWAY_pct)+'%':null,      pct:lpP(dp.PUTAWAY_pct,lgPpbp.putaway),                    good:true},
         {lbl:'GB%',      val:dp.GB_pct!=null?fmt1(dp.GB_pct)+'%':null,               pct:lpP(dp.GB_pct,lgPpbp.gb),                              good:true},
         {lbl:'FB%',      val:dp.FB_pct!=null?fmt1(dp.FB_pct)+'%':null,               pct:dp.FB_pct!=null?1-lpP(dp.FB_pct,lgPpbp.fb):null,       good:true},
-        {lbl:'LO%',      val:dp.LO_pct!=null?fmt1(dp.LO_pct)+'%':null,               pct:lpP(dp.LO_pct,lgPpbp.lo),                              good:true},
-        {lbl:'PU%',      val:dp.PO_pct!=null?fmt1(dp.PO_pct)+'%':null,               pct:dp.PO_pct!=null?1-lpP(dp.PO_pct,lgPpbp.po):null,       good:true},
+        {lbl:'LO%',      val:dp.LO_pct!=null?fmt1(dp.LO_pct)+'%':null,               pct:dp.LO_pct!=null?1-lpP(dp.LO_pct,lgPpbp.lo):null,       good:true},
+        {lbl:'PU%',      val:dp.PO_pct!=null?fmt1(dp.PO_pct)+'%':null,               pct:lpP(dp.PO_pct,lgPpbp.po),                              good:true},
       ].filter(function(b){return b.val!=null&&b.pct!=null;});
 
     } else {
@@ -4397,8 +4469,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
           {lbl:'PUTAWAY%', val:dp25.PUTAWAY_pct!=null?fmt1(dp25.PUTAWAY_pct)+'%':null, pct:lpP(dp25.PUTAWAY_pct,lgPpbp.putaway),                           good:true},
           {lbl:'GB%',      val:dp25.GB_pct!=null?fmt1(dp25.GB_pct)+'%':null,          pct:lpP(dp25.GB_pct,lgPpbp.gb),                                     good:true},
           {lbl:'FB%',      val:dp25.FB_pct!=null?fmt1(dp25.FB_pct)+'%':null,          pct:dp25.FB_pct!=null?1-lpP(dp25.FB_pct,lgPpbp.fb):null,             good:true},
-          {lbl:'LO%',      val:dp25.LO_pct!=null?fmt1(dp25.LO_pct)+'%':null,          pct:lpP(dp25.LO_pct,lgPpbp.lo),                                     good:true},
-          {lbl:'PU%',      val:dp25.PO_pct!=null?fmt1(dp25.PO_pct)+'%':null,          pct:dp25.PO_pct!=null?1-lpP(dp25.PO_pct,lgPpbp.po):null,             good:true},
+          {lbl:'LO%',      val:dp25.LO_pct!=null?fmt1(dp25.LO_pct)+'%':null,          pct:dp25.LO_pct!=null?1-lpP(dp25.LO_pct,lgPpbp.lo):null,             good:true},
+          {lbl:'PU%',      val:dp25.PO_pct!=null?fmt1(dp25.PO_pct)+'%':null,          pct:lpP(dp25.PO_pct,lgPpbp.po),                                     good:true},
         ].filter(function(b){return b.val!=null&&b.pct!=null;});
       } else if (m.bars.length) {
         // Scatter-only fallback (no PBP): use calcBars result, but IBL for ERA/IP/WHIP
@@ -4440,7 +4512,10 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       return '<div class="empty-state"><div class="empty-state-icon">\ud83d\udcca</div><h3>No data available</h3></div>';
     }
 
-    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats', (tot || 0) + ' batters faced', allBars, 80, null, null);
+    var percentileBf = (getPitcherDataRow(name) || {}).BF;
+    var html = buildFilteredCard('pct-pitcher', 'Percentile Stats',
+      (percentileBf != null ? percentileBf + ' batters faced' : (tot || 0) + ' pitches'),
+      allBars, 80, null, null);
 
     // Wire season dropdown - updates pitch count subtitle and re-renders bars
     setTimeout(function() {
@@ -4514,13 +4589,15 @@ function renderGameLog(name, pitch) {
     return '<div class="empty-state"><div class="empty-state-icon">&#128203;</div><h3>No game data available</h3></div>';
   }
 
-  // Group by date
+  // Group by date and opponent so same-day games remain separate.
   var gameMap = {};
   sc.forEach(function(s) {
-    var dt = (s.date || '').slice(0, 10); if (!dt) return;
-    if (!gameMap[dt]) gameMap[dt] = []; gameMap[dt].push(s);
+    var gameKey = gameGroupKey(s, 'pitcher'); if (!gameKey) return;
+    if (!gameMap[gameKey]) gameMap[gameKey] = []; gameMap[gameKey].push(s);
   });
-  var gameDates = Object.keys(gameMap).sort();
+  var gameDates = Object.keys(gameMap).sort(function(a,b) {
+    return gameDateFromKey(a).localeCompare(gameDateFromKey(b));
+  });
 
   var pitchTypeMode = PITCH_TYPE_DISPLAY_MODE;
 
@@ -4551,8 +4628,10 @@ function renderGameLog(name, pitch) {
     function buildRows() {
       tbody.innerHTML = '';
       var today = new Date(); today.setHours(0,0,0,0);
-      gameDates.slice().reverse().forEach(function(dt, revIdx) {
-        var gsc = gameMap[dt], gTot = gsc.length;
+      gameDates.slice().reverse().forEach(function(gameKey, revIdx) {
+        var dt = gameDateFromKey(gameKey);
+        var gsc = gameMap[gameKey];
+        var gTot = gsc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
         var gStr = gsc.filter(isStrikeOutcome).length;
         var gSwS = gsc.filter(isWhiffOutcome).length;
         var gFo  = gsc.filter(function(s){return s.outcome==='Foul';}).length;
@@ -4564,29 +4643,27 @@ function renderGameLog(name, pitch) {
             isStrikeOutcome(s);
         }).length;
 
-        // Opponent: try batter_team on any pitch in this game, resolve to abbreviation
+        // Opponent is part of the game key.
         var oppLabel = '--';
-        for (var pi=0; pi<gsc.length; pi++) {
-          var bt = gsc[pi].batter_team;
-          if (bt && bt.trim()) {
-            var resolved = resolveTeam(bt);
-            oppLabel = resolved ? resolved.abbreviation : bt.trim().slice(0,3).toUpperCase();
-            break;
-          }
-        }
+        var opponentName = gameKey.split('|').slice(1).join('|');
+        var resolved = resolveTeam(opponentName);
+        if (opponentName) oppLabel = resolved ? resolved.abbreviation : opponentName.slice(0,3).toUpperCase();
 
-        // Rest = days since game date to TODAY (not prior game)
+        // Rest = days since the previous outing.
         var gameDate = new Date(dt + 'T12:00:00');
-        var restDays = Math.floor((today - gameDate) / 86400000);
-        var restStr = restDays === 0 ? 'Today' : restDays === 1 ? '1d' : restDays + 'd';
+        var chronologicalIndex = gameDates.indexOf(gameKey);
+        var previousKey = chronologicalIndex > 0 ? gameDates[chronologicalIndex - 1] : null;
+        var previousDate = previousKey ? new Date(gameDateFromKey(previousKey) + 'T12:00:00') : null;
+        var restDays = previousDate ? Math.round((gameDate - previousDate) / 86400000) : null;
+        var restStr = restDays == null ? '--' : restDays + 'd';
 
         var dObj = new Date(dt+'T12:00:00');
         var dateLabel = dObj.toLocaleDateString('en-CA',{month:'short',day:'numeric'}).toUpperCase();
-        var isOpen = dt === expandedDate;
+        var isOpen = gameKey === expandedDate;
 
         var summaryRow = document.createElement('tr');
         summaryRow.style.cssText = 'cursor:pointer;' + (isOpen ? 'background:rgba(255,184,28,0.06);' : '');
-        summaryRow.dataset.date = dt;
+        summaryRow.dataset.date = gameKey;
         summaryRow.innerHTML =
           '<td style="padding-left:12px;color:rgba(255,184,28,0.7);font-size:14px">' + (isOpen ? 'v' : '>') + '</td>' +
           '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:11px">' + dateLabel + '</td>' +
@@ -4600,27 +4677,27 @@ function renderGameLog(name, pitch) {
 
         // Detail row
         var detailRow = document.createElement('tr');
-        detailRow.id = 'gl-detail-' + dt.replace(/-/g,'');
+        detailRow.id = 'gl-detail-' + gameDomKey(gameKey);
         detailRow.style.display = isOpen ? '' : 'none';
         var detailCell = document.createElement('td');
         detailCell.colSpan = 11;
         detailCell.style.cssText = 'padding:0;background:rgba(10,14,30,0.6);border-top:none';
-        detailCell.innerHTML = buildGameDetail(dt, gsc, typeColorMap);
+        detailCell.innerHTML = buildGameDetail(gameKey, gsc, typeColorMap);
         detailRow.appendChild(detailCell);
         tbody.appendChild(detailRow);
 
         summaryRow.addEventListener('click', function() {
-          var wasOpen = expandedDate === dt;
-          expandedDate = wasOpen ? null : dt;
+          var wasOpen = expandedDate === gameKey;
+          expandedDate = wasOpen ? null : gameKey;
           buildRows();
           if (!wasOpen) {
             // Draw canvas after DOM update
-            setTimeout(function() { drawGameCanvas(dt, gsc, typeColorMap); }, 30);
+            setTimeout(function() { drawGameCanvas(gameKey, gsc, typeColorMap); }, 30);
           }
         });
 
         if (isOpen) {
-          setTimeout(function() { drawGameCanvas(dt, gsc, typeColorMap); }, 60);
+          setTimeout(function() { drawGameCanvas(gameKey, gsc, typeColorMap); }, 60);
         }
       });
     }
@@ -4650,7 +4727,7 @@ function renderGameLog(name, pitch) {
         '<button class="gl-hand-btn" data-hand="L" data-dt="'+dt+'" style="'+glBtnStyle(false)+'">LHB</button>' +
       '</div>';
 
-      var canvasId = 'gl-canvas-' + dt.replace(/-/g,'');
+      var canvasId = 'gl-canvas-' + gameDomKey(dt);
       var viewToggle =
         '<div style="display:flex;gap:6px;margin-bottom:12px">' +
           '<button class="gl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Scatter</button>' +
@@ -4669,12 +4746,12 @@ function renderGameLog(name, pitch) {
           '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">By Pitch Type</div>' +
           '<table class="stat-table" style="margin-bottom:20px"><thead><tr>' +
           '<th style="text-align:left">Type</th><th>#</th><th>%</th><th>STR%</th><th>WHIFF%</th><th>Chase%</th>' +
-          '</tr></thead><tbody id="gl-detail-type-rows-'+dt.replace(/-/g,'')+'">' +
+          '</tr></thead><tbody id="gl-detail-type-rows-'+gameDomKey(dt)+'">' +
           buildPitcherDetailRows(gsc, tcMap) +
           '</tbody></table>' +
           // PA-level outcomes
           '<div style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Outcomes</div>' +
-          '<div id="gl-detail-outcomes-'+dt.replace(/-/g,'')+'">' + buildOutcomeList(gsc) + '</div>' +
+          '<div id="gl-detail-outcomes-'+gameDomKey(dt)+'">' + buildOutcomeList(gsc) + '</div>' +
         '</div>' +
       '</div>' +
       '</div>';
@@ -4714,7 +4791,7 @@ function renderGameLog(name, pitch) {
     }
 
     function updatePitcherGameDetail(dt, points, tcMap) {
-      var key = dt.replace(/-/g,'');
+      var key = gameDomKey(dt);
       var rows = document.getElementById('gl-detail-type-rows-' + key);
       if (rows) rows.innerHTML = buildPitcherDetailRows(points, tcMap);
       var outcomes = document.getElementById('gl-detail-outcomes-' + key);
@@ -4739,7 +4816,7 @@ function renderGameLog(name, pitch) {
     var glViewMode = {};   // keyed by dt
 
     function drawGameCanvas(dt, gsc, tcMap) {
-      var canvasId = 'gl-canvas-' + dt.replace(/-/g,'');
+      var canvasId = 'gl-canvas-' + gameDomKey(dt);
       var canvas = document.getElementById(canvasId);
       if (!canvas) return;
       var allPts = gsc.filter(function(s) { return hasPitchLocation(s) && shouldDisplayPitchType(s, pitchTypeMode); });
@@ -4890,13 +4967,15 @@ function renderBatterGameLog(name, pitch) {
 
   if (!sc.length) return '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-title">Game Log</span></div><div style="padding:20px;color:rgba(255,255,255,0.4);font-family:var(--font-mono);font-size:12px">No pitch data available.</div></div>';
 
-  // Group by date
+  // Group by date and opponent so same-day games remain separate.
   var gameMap = {};
   sc.forEach(function(s) {
-    var dt = (s.date || '').slice(0, 10); if (!dt) return;
-    if (!gameMap[dt]) gameMap[dt] = []; gameMap[dt].push(s);
+    var gameKey = gameGroupKey(s, 'batter'); if (!gameKey) return;
+    if (!gameMap[gameKey]) gameMap[gameKey] = []; gameMap[gameKey].push(s);
   });
-  var gameDates = Object.keys(gameMap).sort();
+  var gameDates = Object.keys(gameMap).sort(function(a,b) {
+    return gameDateFromKey(a).localeCompare(gameDateFromKey(b));
+  });
 
   return '<div class="stat-card">' +
     '<div class="stat-card-header"><span class="stat-card-title">Game Log</span>' +
@@ -4918,10 +4997,12 @@ function initBatterGameLog(name, pitch) {
 
   var gameMap = {};
   sc.forEach(function(s) {
-    var dt = (s.date || '').slice(0, 10); if (!dt) return;
-    if (!gameMap[dt]) gameMap[dt] = []; gameMap[dt].push(s);
+    var gameKey = gameGroupKey(s, 'batter'); if (!gameKey) return;
+    if (!gameMap[gameKey]) gameMap[gameKey] = []; gameMap[gameKey].push(s);
   });
-  var gameDates = Object.keys(gameMap).sort();
+  var gameDates = Object.keys(gameMap).sort(function(a,b) {
+    return gameDateFromKey(a).localeCompare(gameDateFromKey(b));
+  });
 
   // Heatmap modes
   var HM_MODES = [
@@ -4946,14 +5027,14 @@ function initBatterGameLog(name, pitch) {
   function buildBglRows() {
     tbody.innerHTML = '';
     var today = new Date(); today.setHours(0,0,0,0);
-    gameDates.slice().reverse().forEach(function(dt) {
-      var gsc = gameMap[dt], gTot = gsc.length;
-      // PA = pitches that start a new count (0-0) roughly = PAs faced, or count unique at-bats
-      var paSet = {}; gsc.forEach(function(s){ var ab=s.at_bat_id||s.ab_id||(s.batter+'_'+dt+'_'+(s.count||'')); paSet[ab]=1; });
-      var paCount = Object.keys(paSet).length || gsc.filter(function(s){ return (s.count||'').replace(/^'/,'')===('0-0'); }).length;
+    gameDates.slice().reverse().forEach(function(gameKey) {
+      var dt = gameDateFromKey(gameKey);
+      var gsc = gameMap[gameKey], gTot = gsc.filter(function(s){ return s.outcome && s.outcome !== ''; }).length;
+      // One terminal outcome represents one completed plate appearance.
+      var paCount = gsc.filter(isPlateAppearanceEnding).length;
       // Hits and AB for AVG
       var hits = gsc.filter(function(s){ return HIT_OUTCOMES.includes(s.outcome); }).length;
-      var ab   = gsc.filter(function(s){ return CONTACT_OUTCOMES.concat(['Strikeout Swinging','Strikeout Looking']).includes(s.outcome); }).length;
+      var ab   = gsc.filter(isAtBatEnding).length;
       var avgStr = ab>0 ? (hits/ab).toFixed(3).replace('0.','.') : '--';
       // Whiff%
       var swings = gsc.filter(isSwingOutcome).length;
@@ -4963,16 +5044,15 @@ function initBatterGameLog(name, pitch) {
       var ooz = gsc.filter(OOZ);
       var chaseSwings = ooz.filter(isChaseSwing).length;
       var chaseStr = ooz.length>=3 ? fmt1(chaseSwings/ooz.length*100)+'%' : '--';
-      // Opponent
+      // Opponent is part of the game key.
       var oppLabel = '--';
-      for (var pi=0; pi<gsc.length; pi++) {
-        var bt = gsc[pi].pitcher_team || gsc[pi].team;
-        if (bt && bt.trim()) { var res=resolveTeam(bt); oppLabel=res?res.abbreviation:bt.trim().slice(0,3).toUpperCase(); break; }
-      }
+      var opponentName = gameKey.split('|').slice(1).join('|');
+      var res = resolveTeam(opponentName);
+      if (opponentName) oppLabel = res ? res.abbreviation : opponentName.slice(0,3).toUpperCase();
       var gameDate = new Date(dt+'T12:00:00');
       var restDays = Math.floor((today-gameDate)/86400000);
       var dateLabel = gameDate.toLocaleDateString('en-CA',{month:'short',day:'numeric'}).toUpperCase();
-      var isOpen = dt===expandedDate;
+      var isOpen = gameKey===expandedDate;
 
       var summaryRow = document.createElement('tr');
       summaryRow.style.cssText = 'cursor:pointer;'+(isOpen?'background:rgba(255,184,28,0.06);':'');
@@ -4986,22 +5066,22 @@ function initBatterGameLog(name, pitch) {
 
       // Detail row with heatmaps
       var detailRow = document.createElement('tr');
-      detailRow.id = 'bgl-detail-'+dt.replace(/-/g,'');
+      detailRow.id = 'bgl-detail-'+gameDomKey(gameKey);
       detailRow.style.display = isOpen ? '' : 'none';
       var detailCell = document.createElement('td');
       detailCell.colSpan = 8;
       detailCell.style.cssText = 'padding:0;background:rgba(10,14,30,0.6);border-top:none';
-      detailCell.innerHTML = buildBatterDetail(dt, gsc);
+      detailCell.innerHTML = buildBatterDetail(gameKey, gsc);
       detailRow.appendChild(detailCell);
       tbody.appendChild(detailRow);
 
       summaryRow.addEventListener('click', function() {
-        var wasOpen = expandedDate === dt;
-        expandedDate = wasOpen ? null : dt;
+        var wasOpen = expandedDate === gameKey;
+        expandedDate = wasOpen ? null : gameKey;
         buildBglRows();
-        if (!wasOpen) setTimeout(function(){ drawAllHeatmaps(dt, gsc); }, 30);
+        if (!wasOpen) setTimeout(function(){ drawAllHeatmaps(gameKey, gsc); }, 30);
       });
-      if (isOpen) setTimeout(function(){ drawAllHeatmaps(dt, gsc); }, 60);
+      if (isOpen) setTimeout(function(){ drawAllHeatmaps(gameKey, gsc); }, 60);
     });
   }
 
@@ -5052,7 +5132,7 @@ function initBatterGameLog(name, pitch) {
       '<button class="bgl-view-btn active zone-filter-btn" data-view="scatter" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px;margin-right:6px">Scatter</button>' +
       '<button class="bgl-view-btn zone-filter-btn" data-view="heatmap" data-dt="'+dt+'" style="font-size:10px;padding:4px 12px">Heat Map</button>';
 
-    var canvasId = 'bgl-hm-'+dt.replace(/-/g,'');
+    var canvasId = 'bgl-hm-'+gameDomKey(dt);
 
     var OOZ_FN = xyOutOfZone;
     var SWING_OUTS2 = ['Swinging Strike','Foul','Strikeout Swinging','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Error','Sacrifice Fly'];
@@ -5172,7 +5252,7 @@ function initBatterGameLog(name, pitch) {
   }
 
   function drawBatterCanvas(dt, gsc, mode, view) {
-    var canvasId = 'bgl-hm-'+dt.replace(/-/g,'');
+    var canvasId = 'bgl-hm-'+gameDomKey(dt);
     var canvas = document.getElementById(canvasId);
     if (!canvas) return;
 

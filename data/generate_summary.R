@@ -3,7 +3,24 @@ library(jsonlite)
 
 # ── Load pitch data ────────────────────────────────────────────────────────────
 pitches <- read.csv("C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/pitches_clean.csv",
-                    stringsAsFactors = FALSE)
+                    stringsAsFactors = FALSE,
+                    header = FALSE,
+                    col.names = c(
+                      "Inning", "Outs", "Balls", "Strikes", "Count", "Date",
+                      "Batter_Team", "Pitcher_Team", "Unknown_1", "Unknown_2",
+                      "Batter", "Pitcher", "Batter_Side", "Pitcher_Side",
+                      "Pitch_Type", "Outcome", "Contact_Quality", "Spray_Chart",
+                      "Runners", "Pitch_Location_X", "Pitch_Location_Y"
+                    ))
+pitches <- pitches %>%
+  mutate(
+    Batter = trimws(gsub("\\s+", " ", Batter)),
+    Pitcher = trimws(gsub("\\s+", " ", Pitcher)),
+    Batter_Team = ifelse(grepl("^Chatham-Kent", trimws(Batter_Team)),
+                         "Chatham-Kent Barnstormers", trimws(Batter_Team)),
+    Pitcher_Team = ifelse(grepl("^Chatham-Kent", trimws(Pitcher_Team)),
+                          "Chatham-Kent Barnstormers", trimws(Pitcher_Team))
+  )
 
 # ── Classify each pitch outcome ───────────────────────────────────────────────
 pitches <- pitches %>%
@@ -23,13 +40,13 @@ pitches <- pitches %>%
     is_sb           = Outcome == "Sacrifice Bunt",
     is_ci           = Outcome == "Catcher's Interference",
     # AB excludes: BB, IBB, HBP, SF, SB, CI
-    is_ab           = !(Outcome %in% c("Walk", "Intentional Walk", "Hit By Pitch",
+    is_ab           = Outcome != "" & !(Outcome %in% c("Walk", "Intentional Walk", "Hit By Pitch",
                                         "Sacrifice Fly", "Sacrifice Bunt",
                                         "Catcher's Interference",
                                         "Ball", "Called Strike", "Swinging Strike",
                                         "Foul", "Pickoff")),
     # Plate appearance = final outcome of PA (exclude mid-PA pitches)
-    is_pa           = !(Outcome %in% c("Ball", "Called Strike", "Swinging Strike",
+    is_pa           = Outcome != "" & !(Outcome %in% c("Ball", "Called Strike", "Swinging Strike",
                                         "Foul", "Pickoff"))
   )
 

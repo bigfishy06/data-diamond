@@ -18,9 +18,18 @@ pitches$pitch_x       <- suppressWarnings(as.numeric(pitches$pitch_x))
 pitches$pitch_y       <- suppressWarnings(as.numeric(pitches$pitch_y))
 pitches$time_to_plate <- suppressWarnings(as.numeric(pitches$time_to_plate))
 pitches <- pitches %>% filter(trimws(batter) != "")
+pitches <- pitches %>%
+  mutate(
+    batter = trimws(gsub("\\s+", " ", batter)),
+    pitcher = trimws(gsub("\\s+", " ", pitcher)),
+    batter_team = ifelse(grepl("^Chatham-Kent", trimws(batter_team)),
+                         "Chatham-Kent Barnstormers", trimws(batter_team)),
+    pitcher_team = ifelse(grepl("^Chatham-Kent", trimws(pitcher_team)),
+                          "Chatham-Kent Barnstormers", trimws(pitcher_team))
+  )
 
 # ── Outcome reference vectors ──────────────────────────────────────────────────
-PITCH_LEVEL <- c("Ball", "Called Strike", "Swinging Strike", "Foul", "Pickoff")
+PITCH_LEVEL <- c("", "Ball", "Called Strike", "Swinging Strike", "Foul", "Pickoff")
 
 NON_AB_PA_OUTCOMES <- c(
   "Walk", "Intentional Walk", "Hit By Pitch",
@@ -90,7 +99,12 @@ pitches <- pitches %>%
     is_fp_strike   = is_first_pitch &
                      outcome %in% c("Called Strike", "Swinging Strike", "Foul",
                                     "Strikeout Swinging", "Strikeout Looking",
-                                    "Dropped Third Strike Swinging", "Dropped Third Strike Looking"),
+                                    "Dropped Third Strike Swinging", "Dropped Third Strike Looking",
+                                    "Single", "Double", "Triple", "Home Run",
+                                    "Groundout", "Flyout", "Popout", "Lineout",
+                                    "Double Play", "Triple Play", "Error", "Truncated Out",
+                                    "Sacrifice Fly", "Sac Fly Double Play",
+                                    "Sacrifice Bunt", "Sac Bunt Double Play"),
 
     # Two-strike putaway
     is_two_strike_count = grepl("-2$", gsub("^'", "", count)),
@@ -241,7 +255,12 @@ pitcher_stats <- pitches %>%
     strikes           = sum(outcome %in% c(
                           "Called Strike", "Swinging Strike", "Foul",
                           "Strikeout Looking", "Strikeout Swinging",
-                          "Dropped Third Strike Looking", "Dropped Third Strike Swinging"
+                          "Dropped Third Strike Looking", "Dropped Third Strike Swinging",
+                          "Single", "Double", "Triple", "Home Run",
+                          "Groundout", "Flyout", "Popout", "Lineout",
+                          "Double Play", "Triple Play", "Error", "Truncated Out",
+                          "Sacrifice Fly", "Sac Fly Double Play",
+                          "Sacrifice Bunt", "Sac Bunt Double Play"
                         )),
     swings            = sum(is_swing),
     whiffs            = sum(is_whiff),

@@ -17,9 +17,18 @@ pitches$pitch_x       <- suppressWarnings(as.numeric(pitches$pitch_x))
 pitches$pitch_y       <- suppressWarnings(as.numeric(pitches$pitch_y))
 pitches$time_to_plate <- suppressWarnings(as.numeric(pitches$time_to_plate))
 pitches <- pitches %>% filter(trimws(batter) != "")
+pitches <- pitches %>%
+  mutate(
+    batter = trimws(gsub("\\s+", " ", batter)),
+    pitcher = trimws(gsub("\\s+", " ", pitcher)),
+    batter_team = ifelse(grepl("^Chatham-Kent", trimws(batter_team)),
+                         "Chatham-Kent Barnstormers", trimws(batter_team)),
+    pitcher_team = ifelse(grepl("^Chatham-Kent", trimws(pitcher_team)),
+                          "Chatham-Kent Barnstormers", trimws(pitcher_team))
+  )
 
 # ── Outcome reference vectors ──────────────────────────────────────────────────
-PITCH_OUTCOMES <- c("Ball", "Called Strike", "Swinging Strike", "Foul", "Pickoff")
+PITCH_OUTCOMES <- c("", "Ball", "Called Strike", "Swinging Strike", "Foul", "Pickoff")
 
 NON_AB_PA_OUTCOMES <- c(
   "Walk", "Intentional Walk", "Hit By Pitch",
