@@ -2665,7 +2665,8 @@ Zane Skansi,Kitchener Panthers`;
 
     var tendencyRows = buildPitchCountSidePitchRows(sc);
     var drewTendencyTable = false;
-    if(tendencyRows.length){
+    var hideGuelphPitcherTendencies = team && team.name === 'Guelph Royals';
+    if(!hideGuelphPitcherTendencies && tendencyRows.length){
       var tendNeed = 8 + tendencyRows.length * 7.2 + 10;
       if(PH-y >= tendNeed + 36){
         y+=3;
@@ -2678,7 +2679,11 @@ Zane Skansi,Kitchener Panthers`;
 
     // Pitch Arsenal
     var sT=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];});
-    if(sT.length && (!drewTendencyTable || PH-y >= 88)){
+    var arsenalUsageParts=reportPctParts(sT.map(function(e){return e[1];}));
+    var arsenalUsageByType={};
+    sT.forEach(function(e,ei){ arsenalUsageByType[e[0]]=arsenalUsageParts[ei]; });
+    var displayST=(team&&team.name==='Guelph Royals')?sT.filter(function(e){return e[0]!=='Offspeed';}):sT;
+    if(displayST.length && (!drewTendencyTable || PH-y >= 88)){
       y+=3;
       y=drawSec(d,'Pitch Arsenal — What He Throws and How Effective Each Pitch Is',y);
       var atH=['PITCH TYPE','USAGE %','STRIKE %','BALL %','WHIFF %'];
@@ -2692,14 +2697,13 @@ Zane Skansi,Kitchener Panthers`;
         d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);d.text(atL[i],ax+atW[i]/2,y+7.5,{align:'center'});
         ax+=atW[i];
       });
-      var usageParts=reportPctParts(sT.map(function(e){return e[1];}));
-      var atR=sT.map(function(e,ei){
+      var atR=displayST.map(function(e,ei){
         var t=e[0],cnt=e[1],tp=sc.filter(function(s){return reportPitchTypeBucket(s)===t;});
         var ts=tp.filter(reportIsStrikeOutcome).length;
         var tb=tp.filter(function(s){return s.outcome==='Ball';}).length;
         var tSwings=tp.filter(reportIsSwingOutcome).length;
         var tWhiff=tp.filter(reportIsWhiffOutcome).length;
-        return[t,usageParts[ei],f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%',tSwings>0?f1(tWhiff/tSwings*100)+'%':'—'];
+        return[t,arsenalUsageByType[t],f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%',tSwings>0?f1(tWhiff/tSwings*100)+'%':'—'];
       });
       var ar=y+9;
       atR.forEach(function(row,ri){
