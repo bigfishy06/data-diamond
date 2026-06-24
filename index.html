@@ -924,14 +924,14 @@
       Array(ph.length).fill(CPW/ph.length),y,[8,10]);
     y+=2;
     var tc2={};
-    sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
+    sc.forEach(function(s){var t=gpPitchTypeBucket(s);tc2[t]=(tc2[t]||0)+1;});
     var sT=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];});
     if(sT.length){
       y=drawSec(d,'Pitch Arsenal',y);
       var atH=['TYPE','COUNT','USAGE%','K','HIT','STR%','BALL%'],atW=[38,16,18,12,12,18,18];
       var usageParts=gpPctParts(sT.map(function(e){return e[1];}));
       var atR=sT.map(function(e,ei){
-        var t=e[0],cnt=e[1],tp=sc.filter(function(s){return(s.pitch_type||s.type||'Unknown')===t;});
+        var t=e[0],cnt=e[1],tp=sc.filter(function(s){return gpPitchTypeBucket(s)===t;});
         var tk=tp.filter(function(s){return s.outcome==='Strikeout Swinging'||s.outcome==='Strikeout Looking';}).length;
         var th=tp.filter(function(s){return['Single','Double','Triple','Home Run'].includes(s.outcome);}).length;
         var ts=tp.filter(gpIsStrikeOutcome).length;
@@ -2264,7 +2264,7 @@ Zane Skansi,Kitchener Panthers`;
 
         // Arsenal: always from scatter x/y data (both years)
         var tc2={};
-        sc.forEach(function(s){var t=s.pitch_type||s.type||'Unknown';tc2[t]=(tc2[t]||0)+1;});
+        sc.forEach(function(s){var t=gpPitchTypeBucket(s);tc2[t]=(tc2[t]||0)+1;});
         var arsenal=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];}).slice(0,3);
         var arsenalPct=gpPctParts(arsenal.map(function(e){return e[1];}));
         arsenal=arsenal.map(function(e,i){return e[0].slice(0,4)+' '+arsenalPct[i];}).join('  ')||'--';
