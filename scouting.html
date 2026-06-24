@@ -1632,6 +1632,7 @@ Zane Skansi,Kitchener Panthers`;
     // Compact rows leave room for the pitcher split heat maps on the same page.
     var x=ML+(CPW-tw)/2, hh=6.5, rh=5.2;
     function fastballText(pct){ return pct==null ? '-' : f1(pct)+'%'; }
+    function fastballHighlight(pct){ return pct!=null && pct>70; }
     function drawCellText(txt,cx,cy,w,bold,color,align){
       d.setFont('helvetica',bold?'bold':'normal');d.setFontSize(String(txt).length>12?4.8:5.5);
       if(color)d.setTextColor(color[0],color[1],color[2]);else st(d,CO.dim);
@@ -1650,9 +1651,21 @@ Zane Skansi,Kitchener Panthers`;
       sf(d,ri%2===0?CO.navy:CO.navy2);d.rect(x,ry,tw,rh,'F');
       sf(d,CO.navy3);d.rect(cx2,ry,colW[0],rh,'F');
       drawCellText(row.label,cx2,ry+3.6,colW[0],true,CO.white,'left');cx2+=colW[0];
-      drawCellText(fastballText(row.rPct),cx2,ry+3.6,colW[1],false,CO.dim);
+      if(fastballHighlight(row.rPct)){
+        d.setFillColor(row.rPct>=80?130:157,row.rPct>=80?232:238,row.rPct>=80?132:158);
+        d.rect(cx2,ry+0.3,colW[1],rh-0.6,'F');
+        drawCellText(fastballText(row.rPct),cx2,ry+3.6,colW[1],true,[15,25,20]);
+      } else {
+        drawCellText(fastballText(row.rPct),cx2,ry+3.6,colW[1],false,CO.dim);
+      }
       cx2+=colW[1];
-      drawCellText(fastballText(row.lPct),cx2,ry+3.6,colW[2],false,CO.dim);
+      if(fastballHighlight(row.lPct)){
+        d.setFillColor(row.lPct>=80?130:157,row.lPct>=80?232:238,row.lPct>=80?132:158);
+        d.rect(cx2,ry+0.3,colW[2],rh-0.6,'F');
+        drawCellText(fastballText(row.lPct),cx2,ry+3.6,colW[2],true,[15,25,20]);
+      } else {
+        drawCellText(fastballText(row.lPct),cx2,ry+3.6,colW[2],false,CO.dim);
+      }
       cx2+=colW[2];
       sd(d,CO.navy3);d.setLineWidth(0.18);
       var gx=x;for(var gi=0;gi<colW.length;gi++){d.rect(gx,ry,colW[gi],rh,'S');gx+=colW[gi];}
