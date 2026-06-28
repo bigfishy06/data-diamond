@@ -1,6 +1,42 @@
 library(dplyr)
 library(jsonlite)
 
+write_xlsx_workbook <- function(sheets, path) {
+  if (requireNamespace("openxlsx", quietly = TRUE)) {
+    wb <- openxlsx::createWorkbook()
+    header_style <- openxlsx::createStyle(textDecoration = "bold")
+
+    for (sheet_name in names(sheets)) {
+      openxlsx::addWorksheet(wb, sheet_name)
+      openxlsx::writeDataTable(wb, sheet_name, sheets[[sheet_name]])
+      openxlsx::addStyle(
+        wb, sheet_name, header_style,
+        rows = 1, cols = seq_along(sheets[[sheet_name]]),
+        gridExpand = TRUE
+      )
+      openxlsx::freezePane(wb, sheet_name, firstRow = TRUE)
+      openxlsx::setColWidths(wb, sheet_name, cols = seq_along(sheets[[sheet_name]]), widths = "auto")
+    }
+
+    openxlsx::saveWorkbook(wb, path, overwrite = TRUE)
+  } else if (requireNamespace("writexl", quietly = TRUE)) {
+    writexl::write_xlsx(sheets, path)
+  } else {
+    stop("Install either the openxlsx or writexl R package to export summary2026.xlsx.")
+  }
+}
+
+add_league_average_row <- function(df) {
+  avg_row <- df[0, , drop = FALSE]
+  avg_row[1, ] <- NA
+  avg_row[1, 2] <- "League Average:"
+
+  stat_cols <- names(df)[vapply(df, is.numeric, logical(1))]
+  avg_row[1, stat_cols] <- lapply(df[stat_cols], function(x) round(mean(x, na.rm = TRUE), 1))
+
+  bind_rows(df, avg_row)
+}
+
 # ── Load ───────────────────────────────────────────────────────────────────────
 pitches_raw <- read.csv("C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/datadiamond2026.csv",
                          header = TRUE,
@@ -102,6 +138,21 @@ pitches <- pitches %>%
                                     "Dropped Third Strike Swinging"),
     is_first_pitch = gsub("^'", "", count) == "0-0",
     is_fp_swing    = is_first_pitch & is_swing,
+    is_fp_strike   = is_first_pitch & outcome %in% c(
+      "Called Strike", "Swinging Strike", "Foul",
+      "Strikeout Swinging", "Strikeout Looking",
+      "Dropped Third Strike Swinging", "Dropped Third Strike Looking",
+      "Single", "Double", "Triple", "Home Run",
+      "Groundout", "Flyout", "Popout", "Lineout",
+      "Double Play", "Triple Play", "Error", "Truncated Out",
+      "Sacrifice Fly", "Sac Fly Double Play",
+      "Sacrifice Bunt", "Sac Bunt Double Play"
+    ),
+    is_two_strike_count = grepl("-2$", gsub("^'", "", count)),
+    is_putaway          = is_two_strike_count & is_pa & is_k,
+    in_zone             = !is.na(pitch_x) & !is.na(pitch_y) &
+      pitch_x >= -1 & pitch_x <= 1 &
+      pitch_y >= 0  & pitch_y <= 1,
 
     # ── Spray direction ───────────────────────────────────────────────────────
     is_batted  = outcome %in% c(
@@ -110,6 +161,17 @@ pitches <- pitches %>%
       "Double Play", "Triple Play", "Error",
       "Sacrifice Fly", "Sac Fly Double Play",
       "Sacrifice Bunt", "Sac Bunt Double Play"
+    ),
+    contact_type = case_when(
+      contact_quality == "Ground Ball"                                             ~ "GB",
+      contact_quality == "Fly Ball"                                                ~ "FB",
+      contact_quality == "Line Drive"                                              ~ "LD",
+      contact_quality == "Pop Up"                                                  ~ "PO",
+      outcome %in% c("Groundout", "Double Play", "Triple Play")                    ~ "GB",
+      outcome %in% c("Flyout", "Home Run", "Sacrifice Fly", "Sac Fly Double Play") ~ "FB",
+      outcome == "Lineout"                                                         ~ "LD",
+      outcome == "Popout"                                                          ~ "PO",
+      TRUE                                                                         ~ NA_character_
     ),
     spray_pull = is_batted & trimws(spray_chart) == "Pull",
     spray_str  = is_batted & trimws(spray_chart) == "Straightaway",
@@ -252,6 +314,113 @@ zone_stats <- pitches %>%
   )
 
 # ── Join & export ──────────────────────────────────────────────────────────────
+strike_outcomes <- c(
+  "Called Strike", "Swinging Strike", "Foul",
+  "Strikeout Looking", "Strikeout Swinging",
+  "Dropped Third Strike Looking", "Dropped Third Strike Swinging",
+  "Single", "Double", "Triple", "Home Run",
+  "Groundout", "Flyout", "Popout", "Lineout",
+  "Double Play", "Triple Play", "Error", "Truncated Out",
+  "Sacrifice Fly", "Sac Fly Double Play",
+  "Sacrifice Bunt", "Sac Bunt Double Play"
+)
+
+batter_xlsx <- pitches %>%
+  mutate(has_location = !is.na(pitch_x) & !is.na(pitch_y)) %>%
+  group_by(batter, batter_team) %>%
+  summarise(
+    PA               = sum(is_pa),
+    BB               = sum(is_bb),
+    swings           = sum(is_swing),
+    whiffs           = sum(is_whiff),
+    in_zone_pitches  = sum(has_location & in_zone),
+    in_zone_swings   = sum(has_location & in_zone & is_swing),
+    out_zone_pitches = sum(has_location & !in_zone),
+    out_zone_swings  = sum(has_location & !in_zone & is_swing),
+    batted_balls     = sum(is_batted & contact_type %in% c("GB", "FB", "LD", "PO"), na.rm = TRUE),
+    gb               = sum(is_batted & contact_type == "GB", na.rm = TRUE),
+    fb               = sum(is_batted & contact_type == "FB", na.rm = TRUE),
+    pull_balls       = sum(spray_pull),
+    str_balls        = sum(spray_str),
+    oppo_balls       = sum(spray_oppo),
+    .groups          = "drop"
+  ) %>%
+  mutate(
+    `In-Zone Swing %`  = ifelse(in_zone_pitches > 0, round(in_zone_swings / in_zone_pitches * 100, 1), NA),
+    `Out-Zone Swing %` = ifelse(out_zone_pitches > 0, round(out_zone_swings / out_zone_pitches * 100, 1), NA),
+    `In-Out Swing %`   = round(`In-Zone Swing %` - `Out-Zone Swing %`, 1),
+    `Chase %`          = `Out-Zone Swing %`,
+    `Whiff %`          = ifelse(swings > 0, round(whiffs / swings * 100, 1), NA),
+    `BB %`             = ifelse(PA > 0, round(BB / PA * 100, 1), NA),
+    `GB %`             = ifelse(batted_balls > 0, round(gb / batted_balls * 100, 1), NA),
+    `FB %`             = ifelse(batted_balls > 0, round(fb / batted_balls * 100, 1), NA),
+    spray_total        = pull_balls + str_balls + oppo_balls,
+    `Pull %`           = ifelse(spray_total > 0, round(pull_balls / spray_total * 100, 1), NA)
+  ) %>%
+  transmute(
+    Batter = batter,
+    Team = batter_team,
+    `In-Zone Swing %`,
+    `Out-Zone Swing %`,
+    `In-Out Swing %`,
+    `Chase %`,
+    `Whiff %`,
+    `BB %`,
+    `GB %`,
+    `FB %`,
+    `Pull %`
+  ) %>%
+  arrange(Team, Batter)
+
+pitcher_xlsx <- pitches %>%
+  mutate(has_location = !is.na(pitch_x) & !is.na(pitch_y)) %>%
+  group_by(pitcher, pitcher_team) %>%
+  summarise(
+    BF               = sum(is_pa),
+    total_pitches    = sum(outcome != "" & !is.na(outcome)),
+    K                = sum(is_k),
+    BB               = sum(is_bb),
+    HR               = sum(is_hr),
+    strikes          = sum(outcome %in% strike_outcomes),
+    swings           = sum(is_swing),
+    whiffs           = sum(is_whiff),
+    fp_pitches       = sum(is_first_pitch),
+    fp_strikes       = sum(is_fp_strike),
+    two_strike_pa    = sum(is_two_strike_count & is_pa),
+    putaways         = sum(is_putaway),
+    out_zone_pitches = sum(has_location & !in_zone),
+    chase_pitches    = sum(has_location & !in_zone & is_swing),
+    batted_balls     = sum(is_batted & contact_type %in% c("GB", "FB", "LD", "PO"), na.rm = TRUE),
+    gb               = sum(is_batted & contact_type == "GB", na.rm = TRUE),
+    .groups          = "drop"
+  ) %>%
+  mutate(
+    K_pct       = ifelse(BF > 0, round(K / BF * 100, 1), NA),
+    `FPS %`     = ifelse(fp_pitches > 0, round(fp_strikes / fp_pitches * 100, 1), NA),
+    `Strike %`  = ifelse(total_pitches > 0, round(strikes / total_pitches * 100, 1), NA),
+    `Chase %`   = ifelse(out_zone_pitches > 0, round(chase_pitches / out_zone_pitches * 100, 1), NA),
+    `Putaway %` = ifelse(two_strike_pa > 0, round(putaways / two_strike_pa * 100, 1), NA),
+    `BB %`      = ifelse(BF > 0, round(BB / BF * 100, 1), NA),
+    `GB %`      = ifelse(batted_balls > 0, round(gb / batted_balls * 100, 1), NA),
+    `HR %`      = ifelse(BF > 0, round(HR / BF * 100, 1), NA),
+    `Whiff %`   = ifelse(swings > 0, round(whiffs / swings * 100, 1), NA),
+    `K-BB`      = round(K_pct - `BB %`, 1)
+  ) %>%
+  transmute(
+    Pitcher = pitcher,
+    Team = pitcher_team,
+    `FPS %`,
+    `Strike %`,
+    `Chase %`,
+    `Putaway %`,
+    `BB %`,
+    `GB %`,
+    `HR %`,
+    `Whiff %`,
+    `K-BB`
+  ) %>%
+  arrange(Team, Pitcher)
+
 final <- summary_stats %>%
   left_join(pitch_mix,  by = "batter") %>%
   left_join(zone_stats, by = "batter")
@@ -260,6 +429,15 @@ write_json(final,
            "C:/Users/chris/OneDrive/Documents/summary2026.json",
            auto_unbox = TRUE, pretty = TRUE, na = "null")
 
+write_xlsx_workbook(
+  list(
+    Batters = add_league_average_row(batter_xlsx),
+    Pitchers = add_league_average_row(pitcher_xlsx)
+  ),
+  "C:/Users/chris/OneDrive/Documents/summary2026.xlsx"
+)
+
 cat("Done! summary2026.json written with", nrow(final), "players\n")
+cat("Done! summary2026.xlsx written with", nrow(batter_xlsx), "batters and", nrow(pitcher_xlsx), "pitchers\n")
 cat("New batter columns: ISO, BABIP, wOBA, Swing_pct, Whiff_pct, FP_Swing_pct, Pull_pct, Str_pct, Oppo_pct, Chase_pct\n")
 cat("Columns:", paste(names(final), collapse = ", "), "\n")
