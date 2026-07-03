@@ -1525,7 +1525,7 @@ Zane Skansi,Kitchener Panthers`;
         if (t && t.name === oppName && !seenB[k])
           seenB[k] = { batter: p.batter, AB: 0 };
       });
-      playerNames = Object.keys(seenB).sort(function(a,b){ return (seenB[b].AB||0)-(seenB[a].AB||0); }).map(function(k){ return seenB[k].batter; });
+      playerNames = Object.keys(seenB).map(function(k){ return seenB[k].batter; }).sort(function(a,b){ return a.localeCompare(b); });
     }
 
     // Restore data after gathering names - actual PDF gen will swap again
