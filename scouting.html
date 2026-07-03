@@ -1157,12 +1157,16 @@ Zane Skansi,Kitchener Panthers`;
     return reportPitchTypeBucket(s);
   }
   function buildBatterPitchTypeRows(points) {
-    var pts=(points||[]).filter(function(p){return reportPitchTypeName(p)!=='Unknown';});
+    function batterPitchTypeGroup(p){
+      var t=reportPitchTypeName(p);
+      return (t==='Fastball'||t==='Sinker'||t==='Cutter')?'Fastball':'Offspeed';
+    }
+    var pts=(points||[]);
     var total=pts.length;
     if(!total)return [];
     var by={};
-    pts.forEach(function(p){var t=reportPitchTypeName(p);(by[t]=by[t]||[]).push(p);});
-    var keys=Object.keys(by);
+    pts.forEach(function(p){var t=batterPitchTypeGroup(p);(by[t]=by[t]||[]).push(p);});
+    var keys=Object.keys(by).sort(function(a,b){return (a==='Fastball'?0:1)-(b==='Fastball'?0:1);});
     var usageParts=reportPctParts(keys.map(function(t){return by[t].length;}));
     return keys.map(function(t,ti){
       var arr=by[t],sw=arr.filter(reportIsSwingOutcome);
@@ -1171,7 +1175,7 @@ Zane Skansi,Kitchener Panthers`;
       var k=arr.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';}).length;
       var bb=arr.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length;
       return [t,usageParts[ti],sw.length?f1(xp(wh,sw.length))+'%':'—',oz.length?f1(xp(ch,oz.length))+'%':'—',f1(xp(k,arr.length))+'%',f1(xp(bb,arr.length))+'%',arr.length];
-    }).sort(function(a,b){return b[6]-a[6];}).map(function(r){return r.slice(0,6);});
+    }).map(function(r){return r.slice(0,6);});
   }
   function reportBestPitchType(points, filterFn, outcomeFn) {
     var counts={};
