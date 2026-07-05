@@ -442,12 +442,12 @@
       "Fastball": 67.3,
       "Offspeed": 32.7
     },
-    "zone_pct": 41.1,
+    "zone_pct": 42.6,
     "swinging_k": 6,
     "called_k": 4,
-    "ooz_pitches": 66,
-    "chase_pitches": 23,
-    "Chase_pct": 34.8
+    "ooz_pitches": 62,
+    "chase_pitches": 20,
+    "Chase_pct": 32.3
   },
   {
     "batter": "Angel Guerrero",
@@ -569,12 +569,12 @@
       "Fastball": 54.9,
       "Offspeed": 45.1
     },
-    "zone_pct": 45.1,
+    "zone_pct": 47.1,
     "swinging_k": 3,
     "called_k": 2,
-    "ooz_pitches": 62,
-    "chase_pitches": 29,
-    "Chase_pct": 46.8
+    "ooz_pitches": 55,
+    "chase_pitches": 24,
+    "Chase_pct": 43.6
   },
   {
     "batter": "Ashton Patterson",
@@ -632,12 +632,12 @@
       "Fastball": 60.2,
       "Offspeed": 39.8
     },
-    "zone_pct": 38.5,
+    "zone_pct": 40,
     "swinging_k": 7,
     "called_k": 5,
-    "ooz_pitches": 80,
-    "chase_pitches": 14,
-    "Chase_pct": 17.5
+    "ooz_pitches": 72,
+    "chase_pitches": 12,
+    "Chase_pct": 16.7
   },
   {
     "batter": "Austin Gurney",
@@ -2689,12 +2689,12 @@
       "Fastball": 47.5,
       "Offspeed": 52.5
     },
-    "zone_pct": 38.8,
+    "zone_pct": 46.8,
     "swinging_k": 6,
     "called_k": 2,
-    "ooz_pitches": 49,
-    "chase_pitches": 25,
-    "Chase_pct": 51
+    "ooz_pitches": 33,
+    "chase_pitches": 16,
+    "Chase_pct": 48.5
   },
   {
     "batter": "Cooper Tomkinson",
@@ -3209,12 +3209,12 @@
       "Fastball": 55.7,
       "Offspeed": 44.3
     },
-    "zone_pct": 41.1,
+    "zone_pct": 43.8,
     "swinging_k": 22,
     "called_k": 0,
-    "ooz_pitches": 119,
-    "chase_pitches": 38,
-    "Chase_pct": 31.9
+    "ooz_pitches": 104,
+    "chase_pitches": 33,
+    "Chase_pct": 31.7
   },
   {
     "batter": "Dennis Dei Baning",
@@ -4042,12 +4042,12 @@
       "Fastball": 54.9,
       "Offspeed": 45.1
     },
-    "zone_pct": 34.4,
+    "zone_pct": 36.1,
     "swinging_k": 6,
     "called_k": 2,
-    "ooz_pitches": 101,
-    "chase_pitches": 25,
-    "Chase_pct": 24.8
+    "ooz_pitches": 94,
+    "chase_pitches": 21,
+    "Chase_pct": 22.3
   },
   {
     "batter": "Gianfranco Morello",
@@ -4362,12 +4362,12 @@
       "Fastball": 55.4,
       "Offspeed": 44.6
     },
-    "zone_pct": 41.6,
+    "zone_pct": 46.4,
     "swinging_k": 7,
     "called_k": 1,
-    "ooz_pitches": 59,
-    "chase_pitches": 17,
-    "Chase_pct": 28.8
+    "ooz_pitches": 45,
+    "chase_pitches": 8,
+    "Chase_pct": 17.8
   },
   {
     "batter": "JJ Dutton",
@@ -4880,12 +4880,12 @@
       "Fastball": 62.9,
       "Offspeed": 37.1
     },
-    "zone_pct": 45.8,
+    "zone_pct": 47.1,
     "swinging_k": 9,
     "called_k": 0,
-    "ooz_pitches": 32,
-    "chase_pitches": 17,
-    "Chase_pct": 53.1
+    "ooz_pitches": 27,
+    "chase_pitches": 14,
+    "Chase_pct": 51.9
   },
   {
     "batter": "Jarrett Burney",
@@ -6301,12 +6301,12 @@
       "Offspeed": 39.5,
       "Slider": 2
     },
-    "zone_pct": 28.4,
+    "zone_pct": 31,
     "swinging_k": 7,
     "called_k": 4,
-    "ooz_pitches": 101,
-    "chase_pitches": 38,
-    "Chase_pct": 37.6
+    "ooz_pitches": 89,
+    "chase_pitches": 32,
+    "Chase_pct": 36
   },
   {
     "batter": "Marcos Castillo",
@@ -6561,12 +6561,12 @@
       "Offspeed": 35.7,
       "Slider": 0.7
     },
-    "zone_pct": 31.4,
+    "zone_pct": 32.8,
     "swinging_k": 12,
     "called_k": 10,
-    "ooz_pitches": 177,
-    "chase_pitches": 32,
-    "Chase_pct": 18.1
+    "ooz_pitches": 160,
+    "chase_pitches": 27,
+    "Chase_pct": 16.9
   },
   {
     "batter": "Matt Brandt",
@@ -6757,12 +6757,12 @@
       "Fastball": 59.3,
       "Offspeed": 40.7
     },
-    "zone_pct": 46.4,
+    "zone_pct": 49.3,
     "swinging_k": 18,
     "called_k": 3,
-    "ooz_pitches": 90,
-    "chase_pitches": 23,
-    "Chase_pct": 25.6
+    "ooz_pitches": 77,
+    "chase_pitches": 20,
+    "Chase_pct": 26
   },
   {
     "batter": "Miguel Hiraldo",
@@ -6820,12 +6820,12 @@
       "Fastball": 53.8,
       "Offspeed": 46.2
     },
-    "zone_pct": 40.6,
+    "zone_pct": 43.4,
     "swinging_k": 14,
     "called_k": 6,
-    "ooz_pitches": 95,
-    "chase_pitches": 47,
-    "Chase_pct": 49.5
+    "ooz_pitches": 82,
+    "chase_pitches": 39,
+    "Chase_pct": 47.6
   },
   {
     "batter": "Mike Cecchetto",
@@ -7340,12 +7340,12 @@
       "Slider": 1.9,
       "Splitter": 0.5
     },
-    "zone_pct": 34.2,
+    "zone_pct": 35.3,
     "swinging_k": 15,
     "called_k": 3,
-    "ooz_pitches": 129,
-    "chase_pitches": 50,
-    "Chase_pct": 38.8
+    "ooz_pitches": 119,
+    "chase_pitches": 43,
+    "Chase_pct": 36.1
   },
   {
     "batter": "Rafael Gross",
@@ -7406,12 +7406,12 @@
       "Offspeed": 50,
       "Slider": 0.6
     },
-    "zone_pct": 36.6,
+    "zone_pct": 38.1,
     "swinging_k": 22,
     "called_k": 4,
-    "ooz_pitches": 90,
-    "chase_pitches": 31,
-    "Chase_pct": 34.4
+    "ooz_pitches": 83,
+    "chase_pitches": 27,
+    "Chase_pct": 32.5
   },
   {
     "batter": "Reyny Reyes",
@@ -7729,12 +7729,12 @@
       "Fastball": 61.8,
       "Offspeed": 38.2
     },
-    "zone_pct": 41.9,
+    "zone_pct": 42.5,
     "swinging_k": 20,
     "called_k": 6,
-    "ooz_pitches": 126,
-    "chase_pitches": 20,
-    "Chase_pct": 15.9
+    "ooz_pitches": 123,
+    "chase_pitches": 19,
+    "Chase_pct": 15.4
   },
   {
     "batter": "Ryan Potrecz",
@@ -8445,12 +8445,12 @@
       "Fastball": 54.3,
       "Offspeed": 45.7
     },
-    "zone_pct": 44.6,
+    "zone_pct": 53.6,
     "swinging_k": 8,
     "called_k": 4,
-    "ooz_pitches": 51,
-    "chase_pitches": 20,
-    "Chase_pct": 39.2
+    "ooz_pitches": 32,
+    "chase_pitches": 9,
+    "Chase_pct": 28.1
   },
   {
     "batter": "Trent Lenihan",
@@ -8959,12 +8959,12 @@
       "Fastball": 56.6,
       "Offspeed": 43.4
     },
-    "zone_pct": 44.1,
+    "zone_pct": 46.8,
     "swinging_k": 10,
     "called_k": 6,
-    "ooz_pitches": 76,
-    "chase_pitches": 26,
-    "Chase_pct": 34.2
+    "ooz_pitches": 67,
+    "chase_pitches": 21,
+    "Chase_pct": 31.3
   },
   {
     "batter": "Walker Hultgren",
@@ -9412,12 +9412,12 @@
       "Offspeed": 37.6,
       "Slider": 0.5
     },
-    "zone_pct": 34.7,
+    "zone_pct": 38.6,
     "swinging_k": 22,
     "called_k": 4,
-    "ooz_pitches": 126,
-    "chase_pitches": 49,
-    "Chase_pct": 38.9
+    "ooz_pitches": 105,
+    "chase_pitches": 37,
+    "Chase_pct": 35.2
   },
   {
     "batter": "Yosvani Penalver",
@@ -9478,12 +9478,12 @@
       "Offspeed": 41.3,
       "Slider": 1.3
     },
-    "zone_pct": 38.1,
+    "zone_pct": 41.5,
     "swinging_k": 7,
     "called_k": 5,
-    "ooz_pitches": 133,
-    "chase_pitches": 36,
-    "Chase_pct": 27.1
+    "ooz_pitches": 114,
+    "chase_pitches": 28,
+    "Chase_pct": 24.6
   },
   {
     "batter": "Yunior Ibarra",
@@ -9542,11 +9542,11 @@
       "Fastball": 62.6,
       "Offspeed": 36.2
     },
-    "zone_pct": 31.5,
+    "zone_pct": 32.7,
     "swinging_k": 6,
     "called_k": 2,
-    "ooz_pitches": 115,
-    "chase_pitches": 29,
+    "ooz_pitches": 107,
+    "chase_pitches": 27,
     "Chase_pct": 25.2
   },
   {
@@ -9674,11 +9674,11 @@
       "Offspeed": 38.7,
       "Slider": 1.6
     },
-    "zone_pct": 39.3,
+    "zone_pct": 41.3,
     "swinging_k": 9,
     "called_k": 11,
-    "ooz_pitches": 102,
-    "chase_pitches": 29,
-    "Chase_pct": 28.4
+    "ooz_pitches": 91,
+    "chase_pitches": 21,
+    "Chase_pct": 23.1
   }
 ]
