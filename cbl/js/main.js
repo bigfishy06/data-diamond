@@ -3,7 +3,11 @@
    Powered by summary.json + pitches.json
 ================================================ */
 
-function getBase() { return '/'; }
+function getBase() {
+  const path = window.location.pathname;
+  const folder = path.endsWith('/') ? path : path.slice(0, path.lastIndexOf('/') + 1);
+  return folder || '/';
+}
 
 // -- GOOGLE AUTH -----------------------------------
 const AUTH = {
