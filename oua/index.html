@@ -3,737 +3,810 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data Diamond - Brock Badgers Baseball</title>
-  <meta name="description" content="Data Diamond Brock Badgers baseball analytics page for OUA coverage." />
+  <title>Data Diamond - Brock OUA App</title>
+  <meta name="description" content="Data Diamond Brock Badgers OUA baseball analytics app display." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --black: #050505;
-      --black-2: #111;
-      --black-3: #1b1b1b;
+      --bg: #08090b;
+      --app: #101216;
+      --panel: #151820;
+      --panel-2: #1b1f29;
+      --field: #0d0f14;
+      --line: #2a2f3a;
+      --line-2: #3a414f;
       --red: #ce1126;
-      --red-bright: #f02b3e;
-      --silver: #c9cdd4;
-      --white: #fff;
-      --muted: #9da2ac;
-      --line: rgba(255,255,255,0.12);
-      --red-line: rgba(206,17,38,0.42);
-      --display: "Bebas Neue", Impact, sans-serif;
+      --red-soft: rgba(206, 17, 38, 0.14);
+      --red-line: rgba(206, 17, 38, 0.5);
+      --text: #f5f6f8;
+      --muted: #9aa3af;
+      --faint: #6f7885;
+      --green: #37c978;
+      --yellow: #f0b429;
+      --blue: #62a8ff;
       --mono: "DM Mono", Consolas, monospace;
       --body: "Inter", system-ui, sans-serif;
+      --radius: 6px;
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       min-height: 100vh;
-      background: var(--black);
-      color: var(--white);
+      background: var(--bg);
+      color: var(--text);
       font-family: var(--body);
-      line-height: 1.5;
+      font-size: 14px;
+      line-height: 1.45;
     }
 
     a { color: inherit; }
-    .wrap { width: min(1220px, calc(100% - 40px)); margin: 0 auto; }
+    button, select, input { font: inherit; }
 
-    .scoreboard {
-      border-bottom: 1px solid var(--red-line);
-      background: #0a0a0a;
-      color: var(--silver);
-      font-family: var(--mono);
-      font-size: 12px;
-      text-transform: uppercase;
-    }
-
-    .scoreboard-inner {
-      min-height: 44px;
+    .topbar {
+      height: 58px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .scoreboard-inner::-webkit-scrollbar { display: none; }
-    .score-title { color: var(--white); font-weight: 500; white-space: nowrap; }
-    .score-list { display: flex; gap: 10px; white-space: nowrap; }
-    .score-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-left: 1px solid var(--line);
-      padding-left: 10px;
-    }
-
-    .score-item strong { color: var(--red-bright); font-weight: 500; }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(5,5,5,0.92);
+      padding: 0 18px;
       border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(16px);
-    }
-
-    .header-inner {
-      min-height: 74px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 22px;
+      background: #050608;
     }
 
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 11px;
       text-decoration: none;
       min-width: fit-content;
     }
 
     .diamond {
-      width: 38px;
+      width: 30px;
       aspect-ratio: 1;
+      position: relative;
       display: grid;
       place-items: center;
       transform: rotate(45deg);
       border: 2px solid var(--red);
-      background: linear-gradient(135deg, rgba(206,17,38,0.26), rgba(255,255,255,0.04));
-      box-shadow: 0 0 24px rgba(206,17,38,0.42);
+      background: #151515;
+      box-shadow: 0 0 18px rgba(206,17,38,0.3);
     }
 
     .diamond::before {
       content: "";
-      width: 17px;
+      width: 14px;
       aspect-ratio: 1;
-      border: 1px solid var(--silver);
-      background: rgba(206,17,38,0.16);
+      border: 1px solid #c9cdd4;
+      background: var(--red-soft);
     }
 
     .diamond::after {
       content: "";
       position: absolute;
-      width: 7px;
+      width: 6px;
       aspect-ratio: 1;
       border-radius: 50%;
-      background: var(--red-bright);
+      background: var(--red);
     }
 
-    .brand-text {
-      font-family: var(--display);
-      font-size: 30px;
-      letter-spacing: 1.5px;
+    .brand-title {
+      display: grid;
+      gap: 1px;
       line-height: 1;
     }
 
-    .brand-text em { color: var(--red-bright); font-style: normal; }
-
-    .main-nav {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .main-nav a, .button, .sport-nav a {
-      min-height: 38px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      padding: 0 13px;
-      font-family: var(--mono);
-      font-size: 12px;
-      text-transform: uppercase;
-      text-decoration: none;
+    .brand-title strong {
+      font-size: 17px;
       letter-spacing: 0;
     }
 
-    .main-nav a {
-      color: var(--silver);
-      border: 1px solid transparent;
-    }
-
-    .main-nav a:hover, .main-nav a.active {
-      color: var(--white);
-      border-color: var(--red-line);
-      background: rgba(206,17,38,0.14);
-    }
-
-    .sport-nav {
-      background: var(--red);
-      color: var(--white);
-    }
-
-    .sport-nav-inner {
-      min-height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .sport-name {
-      font-family: var(--display);
-      font-size: 30px;
-      letter-spacing: 1px;
-      line-height: 1;
-    }
-
-    .sport-links {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .sport-nav a {
-      color: var(--white);
-      background: rgba(0,0,0,0.16);
-      border: 1px solid rgba(255,255,255,0.16);
-    }
-
-    .sport-nav a:hover { background: rgba(0,0,0,0.28); }
-
-    .hero {
-      min-height: 470px;
-      display: grid;
-      align-items: end;
-      border-bottom: 1px solid var(--line);
-      background:
-        linear-gradient(90deg, rgba(5,5,5,0.98), rgba(5,5,5,0.78) 54%, rgba(5,5,5,0.55)),
-        url("../cbl/batter-pov-silhouette-rhh.png") right 9% center / min(42vw, 390px) auto no-repeat,
-        linear-gradient(135deg, #080808, #24060b 58%, #151515);
-    }
-
-    .hero-inner { padding: 70px 0 46px; }
-    .crumb {
-      margin: 0 0 14px;
+    .brand-title span {
+      color: var(--muted);
       font-family: var(--mono);
-      font-size: 12px;
-      color: var(--silver);
+      font-size: 11px;
       text-transform: uppercase;
     }
 
-    h1, h2, h3 { margin: 0; font-family: var(--display); letter-spacing: 0; }
-    h1 {
-      font-size: clamp(66px, 12vw, 138px);
-      line-height: 0.86;
-      max-width: 820px;
-    }
-
-    h1 span { color: var(--red-bright); }
-
-    .hero-copy {
-      max-width: 640px;
-      margin: 20px 0 0;
-      color: var(--silver);
-      font-size: 19px;
-    }
-
-    .hero-actions {
+    .top-actions {
       display: flex;
-      gap: 12px;
+      align-items: center;
+      gap: 8px;
       flex-wrap: wrap;
-      margin-top: 28px;
+      justify-content: flex-end;
     }
+
+    .chip, .nav-link {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0 10px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-decoration: none;
+      text-transform: uppercase;
+      background: var(--field);
+    }
+
+    .chip.live { color: var(--text); border-color: var(--red-line); background: var(--red-soft); }
+    .nav-link:hover { color: var(--text); border-color: var(--line-2); }
+
+    .app-shell {
+      min-height: calc(100vh - 58px);
+      display: grid;
+      grid-template-columns: 278px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--line);
+      background: #0b0d11;
+      padding: 16px;
+      overflow: auto;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 14px;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .control-group {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 17px;
+    }
+
+    label {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    select, input[type="text"] {
+      width: 100%;
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0 10px;
+      background: var(--field);
+      color: var(--text);
+      outline: none;
+    }
+
+    select:focus, input:focus { border-color: var(--red-line); }
+
+    .checks {
+      display: grid;
+      gap: 7px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--field);
+    }
+
+    .checks label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 13px;
+      text-transform: none;
+    }
+
+    .range {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input[type="range"] { accent-color: var(--red); width: 100%; }
+    .range output { color: var(--muted); font-family: var(--mono); font-size: 12px; }
 
     .button {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       border: 1px solid var(--red);
+      border-radius: var(--radius);
+      padding: 0 12px;
       background: var(--red);
-      color: var(--white);
-      font-weight: 800;
+      color: white;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .button.secondary {
       border-color: var(--line);
-      background: rgba(255,255,255,0.06);
+      background: var(--field);
+      color: var(--text);
     }
 
-    .section {
-      padding: 54px 0;
-      border-bottom: 1px solid var(--line);
-      background: var(--black);
-    }
-
-    .section.alt { background: #0d0d0d; }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 22px;
-      margin-bottom: 18px;
-      border-bottom: 3px solid var(--red);
-      padding-bottom: 10px;
-    }
-
-    h2 {
-      font-size: clamp(38px, 5vw, 58px);
-      line-height: 0.9;
-    }
-
-    .section-head a {
-      color: var(--silver);
-      font-family: var(--mono);
-      font-size: 12px;
-      text-transform: uppercase;
-      text-decoration: none;
-    }
-
-    .story-layout {
+    .button-row {
       display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.8fr);
-      gap: 18px;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 4px;
     }
 
-    .lead-story, .headline, .schedule-card, .stat-card, .feature-card, .social-card {
-      border: 1px solid var(--line);
-      background: var(--black-2);
-    }
-
-    .lead-story {
-      min-height: 370px;
-      display: grid;
-      align-content: end;
-      padding: 26px;
-      border-radius: 6px;
+    .content {
+      min-width: 0;
       background:
-        linear-gradient(180deg, rgba(5,5,5,0.18), rgba(5,5,5,0.92)),
-        url("../cbl/batter-pov-silhouette-lhh.png") center / 360px auto no-repeat,
-        linear-gradient(135deg, #191919, #340811);
-    }
-
-    .kicker {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--red-bright);
-      text-transform: uppercase;
-    }
-
-    .lead-story h3 {
-      margin-top: 8px;
-      font-size: clamp(42px, 6vw, 68px);
-      line-height: 0.88;
-      max-width: 680px;
-    }
-
-    .lead-story p, .headline p, .schedule-card p, .feature-card p, .social-card p {
-      margin: 10px 0 0;
-      color: var(--muted);
-    }
-
-    .headline-stack {
-      display: grid;
-      gap: 12px;
-    }
-
-    .headline {
-      min-height: 112px;
+        linear-gradient(180deg, rgba(206,17,38,0.08), transparent 210px),
+        var(--app);
       padding: 16px;
-      border-radius: 6px;
+      overflow: hidden;
     }
 
-    .headline h3 {
-      margin-top: 6px;
-      font-size: 28px;
-      line-height: 0.95;
+    .page-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
     }
 
-    .split {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
-      gap: 18px;
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0;
     }
 
-    .schedule-card { border-radius: 6px; overflow: hidden; }
-    .game-row {
-      min-height: 78px;
-      display: grid;
-      grid-template-columns: 90px 1fr auto;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 16px;
+    .subhead {
+      margin: 4px 0 0;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
       border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
     }
 
-    .game-row:last-child { border-bottom: 0; }
-    .date-box {
-      display: grid;
-      place-items: center;
-      min-height: 50px;
-      border-radius: 4px;
-      background: var(--red);
+    .tab {
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0 12px;
+      background: var(--field);
+      color: var(--muted);
       font-family: var(--mono);
       font-size: 12px;
-      text-transform: uppercase;
+      cursor: pointer;
     }
 
-    .game-row strong { display: block; }
-    .game-row span { color: var(--muted); font-size: 13px; }
-    .tag {
+    .tab.active {
+      border-color: var(--red-line);
+      background: var(--red-soft);
+      color: var(--text);
+    }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .panel, .kpi {
       border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 5px 9px;
-      color: var(--silver);
+      border-radius: var(--radius);
+      background: rgba(21,24,32,0.96);
+    }
+
+    .kpi {
+      min-height: 94px;
+      padding: 13px;
+    }
+
+    .kpi span {
+      color: var(--muted);
       font-family: var(--mono);
       font-size: 11px;
       text-transform: uppercase;
+    }
+
+    .kpi strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .kpi p {
+      margin: 8px 0 0;
+      color: var(--faint);
+      font-size: 12px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(330px, 0.85fr);
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .panel-head {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 13px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-title {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .panel-note {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .panel-body { padding: 13px; }
+
+    .chart {
+      height: 285px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 10px;
+    }
+
+    .axis-y {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      color: var(--faint);
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 4px 0 22px;
+    }
+
+    .plot {
+      position: relative;
+      min-width: 0;
+      border-left: 1px solid var(--line-2);
+      border-bottom: 1px solid var(--line-2);
+      background:
+        linear-gradient(to bottom, transparent 24%, var(--line) 25%, transparent 26%, transparent 49%, var(--line) 50%, transparent 51%, transparent 74%, var(--line) 75%, transparent 76%),
+        linear-gradient(to right, transparent 19%, var(--line) 20%, transparent 21%, transparent 39%, var(--line) 40%, transparent 41%, transparent 59%, var(--line) 60%, transparent 61%, transparent 79%, var(--line) 80%, transparent 81%);
+    }
+
+    .bar {
+      position: absolute;
+      bottom: 0;
+      width: 9%;
+      border-radius: 3px 3px 0 0;
+      background: linear-gradient(180deg, var(--red-bright), var(--red));
+    }
+
+    .line-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .legend i {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      margin-right: 5px;
+      vertical-align: -1px;
+      background: var(--red);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 9px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
       white-space: nowrap;
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .stat-card {
-      min-height: 135px;
-      padding: 18px;
-      border-radius: 6px;
-    }
-
-    .stat-card span {
+    th:first-child, td:first-child { text-align: left; }
+    th {
+      color: var(--muted);
       font-family: var(--mono);
       font-size: 11px;
-      color: var(--muted);
+      font-weight: 500;
       text-transform: uppercase;
+      background: var(--panel-2);
     }
 
-    .stat-card strong {
-      display: block;
-      margin-top: 12px;
-      font-family: var(--display);
-      font-size: 48px;
-      line-height: 0.9;
-      color: var(--red-bright);
+    tr:last-child td { border-bottom: 0; }
+    .name-cell { font-weight: 700; color: var(--text); }
+    .pos { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+    .good { color: var(--green); }
+    .warn { color: var(--yellow); }
+
+    .zone {
+      width: min(330px, 100%);
+      aspect-ratio: 1;
+      margin: 0 auto;
+      position: relative;
+      border: 1px solid var(--line-2);
+      background:
+        linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 33.333% 33.333%,
+        linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 33.333% 33.333%,
+        var(--field);
     }
 
-    .feature-grid {
+    .zone::before {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border: 2px solid var(--red);
+    }
+
+    .dot {
+      position: absolute;
+      width: 9px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--red-bright);
+      box-shadow: 0 0 0 3px rgba(206,17,38,0.18);
+    }
+
+    .report-list {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+      gap: 10px;
     }
 
-    .feature-card, .social-card {
-      min-height: 210px;
+    .report-item {
       display: grid;
-      align-content: space-between;
-      gap: 18px;
-      padding: 18px;
-      border-radius: 6px;
-    }
-
-    .feature-card h3, .social-card h3 {
-      font-size: 36px;
-      line-height: 0.92;
-    }
-
-    .feature-card .button {
-      width: fit-content;
-      min-height: 34px;
-      padding: 0 12px;
-      font-size: 11px;
-    }
-
-    .social-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .sponsor-row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: 1fr auto;
       gap: 12px;
-    }
-
-    .sponsor {
-      min-height: 74px;
-      display: grid;
-      place-items: center;
+      align-items: center;
+      padding: 12px;
       border: 1px solid var(--line);
-      border-radius: 6px;
-      background: var(--black-2);
-      color: var(--muted);
-      font-family: var(--mono);
-      font-size: 12px;
-      text-transform: uppercase;
-      text-align: center;
+      border-radius: var(--radius);
+      background: var(--field);
     }
 
-    .footer {
-      padding: 30px 0;
-      background: #030303;
-      color: var(--muted);
-      font-family: var(--mono);
-      font-size: 12px;
+    .report-item strong { display: block; }
+    .report-item span { color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 1020px) {
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 16px;
+      }
+      .control-group { margin-bottom: 0; }
+      .kpi-grid, .grid-2, .grid-3 { grid-template-columns: 1fr 1fr; }
     }
 
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 900px) {
-      .header-inner { align-items: flex-start; flex-direction: column; padding: 16px 0; }
-      .main-nav { justify-content: flex-start; }
-      .hero { background-position: right -90px top 70px, center; }
-      .story-layout, .split, .feature-grid, .social-strip, .sponsor-row { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .game-row { grid-template-columns: 76px 1fr; }
-      .game-row .tag { grid-column: 2; width: fit-content; }
-    }
-
-    @media (max-width: 560px) {
-      .wrap { width: min(100% - 28px, 1220px); }
-      .sport-nav-inner { align-items: flex-start; flex-direction: column; padding: 12px 0; }
-      .stats-grid { grid-template-columns: 1fr; }
-      .scoreboard-inner { align-items: flex-start; flex-direction: column; padding: 10px 0; }
-      .score-list { flex-direction: column; gap: 6px; }
-      .score-item { border-left: 0; padding-left: 0; }
+    @media (max-width: 700px) {
+      .topbar { height: auto; min-height: 58px; align-items: flex-start; flex-direction: column; padding: 12px; }
+      .top-actions { justify-content: flex-start; }
+      .sidebar, .kpi-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .content { padding: 12px; }
+      .page-head { flex-direction: column; }
+      .chart { height: 230px; }
+      .panel { overflow-x: auto; }
     }
   </style>
 </head>
 <body>
-  <aside class="scoreboard" aria-label="Scoreboard">
-    <div class="wrap scoreboard-inner">
-      <span class="score-title">Scoreboard</span>
-      <div class="score-list">
-        <span class="score-item">Sep 4 <strong>BRO</strong> vs Western 7:00 PM</span>
-        <span class="score-item">Sep 11 <strong>BRO</strong> at Waterloo 1:00 PM</span>
-        <span class="score-item">Sep 18 <strong>BRO</strong> vs Toronto 3:00 PM</span>
-      </div>
-    </div>
-  </aside>
-
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="../" aria-label="Data Diamond home">
-        <span class="diamond" aria-hidden="true"></span>
-        <span class="brand-text">Data<em>Diamond</em></span>
-      </a>
-      <nav class="main-nav" aria-label="Main navigation">
-        <a class="active" href="./">Baseball</a>
-        <a href="#schedule">Schedule</a>
-        <a href="#roster">Roster</a>
-        <a href="#news">News</a>
-        <a href="#analytics">Analytics</a>
-        <a href="../cbl/">CBL</a>
-      </nav>
+  <header class="topbar">
+    <a class="brand" href="../" aria-label="Data Diamond home">
+      <span class="diamond" aria-hidden="true"></span>
+      <span class="brand-title">
+        <strong>Data Diamond</strong>
+        <span>Brock Badgers OUA</span>
+      </span>
+    </a>
+    <div class="top-actions">
+      <span class="chip live">Shiny display</span>
+      <span class="chip">2026 season</span>
+      <a class="nav-link" href="../">Portfolio</a>
+      <a class="nav-link" href="../cbl/">CBL</a>
     </div>
   </header>
 
-  <nav class="sport-nav" aria-label="Sport navigation">
-    <div class="wrap sport-nav-inner">
-      <span class="sport-name">Brock Badgers Baseball</span>
-      <div class="sport-links">
-        <a href="#schedule">Schedule</a>
-        <a href="#roster">Roster</a>
-        <a href="#coaches">Coaches</a>
-        <a href="#news">News</a>
-        <a href="#scouting">Scouting</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Filters">
+      <div class="control-group">
+        <h2>Controls</h2>
+        <label for="season">Season</label>
+        <select id="season">
+          <option>2026 OUA</option>
+          <option>2025 OUA</option>
+        </select>
       </div>
-    </div>
-  </nav>
-
-  <main>
-    <section class="hero">
-      <div class="wrap hero-inner">
-        <p class="crumb">OUA / Brock Badgers / Data Diamond</p>
-        <h1>Baseball <span>Analytics</span></h1>
-        <p class="hero-copy">A Brock-themed Data Diamond page for OUA baseball coverage, built like an athletics team page with schedule, stories, roster signals, and scouting tools.</p>
-        <div class="hero-actions">
-          <a class="button" href="#analytics">View Dashboard</a>
-          <a class="button secondary" href="#scouting">Scouting Room</a>
+      <div class="control-group">
+        <label for="view">Dataset</label>
+        <select id="view">
+          <option>Team Summary</option>
+          <option>Batters</option>
+          <option>Pitchers</option>
+          <option>Opponent Prep</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="player">Search Player</label>
+        <input id="player" type="text" value="" placeholder="Name, role, handedness" />
+      </div>
+      <div class="control-group">
+        <label>Role</label>
+        <div class="checks">
+          <label><input type="checkbox" checked /> Batters</label>
+          <label><input type="checkbox" checked /> Pitchers</label>
+          <label><input type="checkbox" /> Two-way</label>
         </div>
       </div>
-    </section>
-
-    <section class="section" id="news">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Stories</h2>
-          <a href="#features">More Headlines</a>
-        </div>
-        <div class="story-layout">
-          <article class="lead-story">
-            <span class="kicker">Feature</span>
-            <h3>Badgers Open OUA Prep With Data-First Identity</h3>
-            <p>Pitch planning, opponent tendencies, and player development notes now live in one Brock-styled Data Diamond hub.</p>
-          </article>
-          <div class="headline-stack">
-            <article class="headline">
-              <span class="kicker">Baseball</span>
-              <h3>Run prevention board highlights staff depth</h3>
-              <p>ERA, strike-throwing, and ground-ball trends at a glance.</p>
-            </article>
-            <article class="headline">
-              <span class="kicker">Scouting</span>
-              <h3>Opponent prep cards built for series week</h3>
-              <p>Matchups, pressure points, and late-game notes.</p>
-            </article>
-            <article class="headline">
-              <span class="kicker">Players</span>
-              <h3>Roster view tracks roles and development focus</h3>
-              <p>Hitters, pitchers, defenders, and two-way contributors.</p>
-            </article>
-          </div>
+      <div class="control-group">
+        <label for="pa">Min PA / BF</label>
+        <div class="range">
+          <input id="pa" type="range" min="0" max="80" value="25" />
+          <output id="paOut">25</output>
         </div>
       </div>
-    </section>
+      <div class="control-group">
+        <label for="split">Split</label>
+        <select id="split">
+          <option>Overall</option>
+          <option>Vs RHP</option>
+          <option>Vs LHP</option>
+          <option>Last 10 Games</option>
+        </select>
+      </div>
+      <div class="button-row">
+        <button class="button" type="button">Apply</button>
+        <button class="button secondary" type="button">Reset</button>
+      </div>
+    </aside>
 
-    <section class="section alt" id="schedule">
-      <div class="wrap split">
+    <main class="content">
+      <div class="page-head">
         <div>
-          <div class="section-head">
-            <h2>Schedule</h2>
-            <a href="#news">View Stories</a>
-          </div>
-          <div class="schedule-card">
-            <div class="game-row">
-              <span class="date-box">Sep 4</span>
-              <div>
-                <strong>Western Mustangs at Brock Badgers</strong>
-                <span>George Taylor Field / 7:00 PM</span>
+          <h1>Brock Baseball Analytics</h1>
+          <p class="subhead">A Brock-colored Data Diamond app display for OUA stats, player evaluation, and scouting reports. Static now, structured to become a Shiny front end later.</p>
+        </div>
+        <span class="chip">Updated Jul 10, 2026</span>
+      </div>
+
+      <nav class="tabs" aria-label="Dashboard views">
+        <button class="tab active" type="button" data-tab="overview">Overview</button>
+        <button class="tab" type="button" data-tab="batting">Batting</button>
+        <button class="tab" type="button" data-tab="pitching">Pitching</button>
+        <button class="tab" type="button" data-tab="scouting">Scouting</button>
+      </nav>
+
+      <section class="view active" id="overview">
+        <div class="kpi-grid">
+          <article class="kpi"><span>Projected Record</span><strong>12-6</strong><p>Conference target</p></article>
+          <article class="kpi"><span>Run Differential</span><strong class="good">+34</strong><p>Model estimate</p></article>
+          <article class="kpi"><span>Team OPS</span><strong>.812</strong><p>Filtered hitters</p></article>
+          <article class="kpi"><span>Staff ERA</span><strong>3.41</strong><p>Qualified arms</p></article>
+        </div>
+        <div class="grid-2">
+          <article class="panel">
+            <div class="panel-head">
+              <span class="panel-title">Runs Created By Game</span>
+              <span class="panel-note">Brock offense</span>
+            </div>
+            <div class="panel-body">
+              <div class="chart" aria-label="Runs created bar chart">
+                <div class="axis-y"><span>10</span><span>8</span><span>6</span><span>4</span><span>2</span><span>0</span></div>
+                <div class="plot">
+                  <span class="bar" style="left:4%;height:42%"></span>
+                  <span class="bar" style="left:17%;height:66%"></span>
+                  <span class="bar" style="left:30%;height:58%"></span>
+                  <span class="bar" style="left:43%;height:74%"></span>
+                  <span class="bar" style="left:56%;height:49%"></span>
+                  <span class="bar" style="left:69%;height:84%"></span>
+                  <span class="bar" style="left:82%;height:71%"></span>
+                </div>
               </div>
-              <span class="tag">Home</span>
+              <div class="legend"><span><i></i> Runs created</span><span><i style="background:var(--green)"></i> Win threshold</span></div>
             </div>
-            <div class="game-row">
-              <span class="date-box">Sep 11</span>
-              <div>
-                <strong>Brock Badgers at Waterloo Warriors</strong>
-                <span>Waterloo, ON / 1:00 PM</span>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <span class="panel-title">Upcoming Matchups</span>
+              <span class="panel-note">Game prep</span>
+            </div>
+            <div class="panel-body">
+              <table>
+                <thead><tr><th>Date</th><th>Opponent</th><th>Site</th><th>Focus</th></tr></thead>
+                <tbody>
+                  <tr><td>Sep 4</td><td class="name-cell">Western</td><td>Home</td><td>FB damage</td></tr>
+                  <tr><td>Sep 11</td><td class="name-cell">Waterloo</td><td>Away</td><td>Run game</td></tr>
+                  <tr><td>Sep 18</td><td class="name-cell">Toronto</td><td>Home</td><td>LHH pockets</td></tr>
+                  <tr><td>Sep 25</td><td class="name-cell">Guelph</td><td>Away</td><td>Late innings</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="batting">
+        <div class="kpi-grid">
+          <article class="kpi"><span>wRC+</span><strong>118</strong><p>Team indexed</p></article>
+          <article class="kpi"><span>BB%</span><strong class="good">11.8</strong><p>Plate discipline</p></article>
+          <article class="kpi"><span>K%</span><strong>18.6</strong><p>Contact pressure</p></article>
+          <article class="kpi"><span>ISO</span><strong>.176</strong><p>Extra-base power</p></article>
+        </div>
+        <div class="grid-2">
+          <article class="panel">
+            <div class="panel-head"><span class="panel-title">Batter Leaderboard</span><span class="panel-note">Min 25 PA</span></div>
+            <div class="panel-body">
+              <table>
+                <thead><tr><th>Player</th><th>Pos</th><th>OPS</th><th>wRC+</th><th>BB%</th><th>K%</th></tr></thead>
+                <tbody>
+                  <tr><td class="name-cell">Middle Order 1</td><td class="pos">1B</td><td>.947</td><td class="good">142</td><td>13.4</td><td>16.2</td></tr>
+                  <tr><td class="name-cell">Table Setter</td><td class="pos">CF</td><td>.884</td><td>128</td><td>12.1</td><td>14.9</td></tr>
+                  <tr><td class="name-cell">Gap Bat</td><td class="pos">2B</td><td>.831</td><td>119</td><td>9.8</td><td>17.7</td></tr>
+                  <tr><td class="name-cell">Corner Power</td><td class="pos">RF</td><td>.802</td><td>112</td><td>8.5</td><td>21.3</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><span class="panel-title">Swing Zone</span><span class="panel-note">Called + whiff risk</span></div>
+            <div class="panel-body">
+              <div class="zone">
+                <span class="dot" style="left:28%;top:24%"></span>
+                <span class="dot" style="left:49%;top:31%"></span>
+                <span class="dot" style="left:62%;top:42%"></span>
+                <span class="dot" style="left:38%;top:55%"></span>
+                <span class="dot" style="left:70%;top:67%"></span>
+                <span class="dot" style="left:21%;top:72%"></span>
               </div>
-              <span class="tag">Away</span>
+              <div class="legend"><span><i></i> Chase/whiff hotspot</span><span><i style="background:var(--blue)"></i> Attack zone</span></div>
             </div>
-            <div class="game-row">
-              <span class="date-box">Sep 18</span>
-              <div>
-                <strong>Toronto Varsity Blues at Brock Badgers</strong>
-                <span>George Taylor Field / 3:00 PM</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="pitching">
+        <div class="kpi-grid">
+          <article class="kpi"><span>K-BB%</span><strong class="good">18.9</strong><p>Staff command</p></article>
+          <article class="kpi"><span>WHIP</span><strong>1.18</strong><p>Traffic control</p></article>
+          <article class="kpi"><span>GB%</span><strong>48.7</strong><p>Contact profile</p></article>
+          <article class="kpi"><span>First Pitch Strike</span><strong>63%</strong><p>Count leverage</p></article>
+        </div>
+        <div class="grid-2">
+          <article class="panel">
+            <div class="panel-head"><span class="panel-title">Pitcher Board</span><span class="panel-note">Qualified BF</span></div>
+            <div class="panel-body">
+              <table>
+                <thead><tr><th>Pitcher</th><th>Role</th><th>ERA</th><th>K%</th><th>BB%</th><th>GB%</th></tr></thead>
+                <tbody>
+                  <tr><td class="name-cell">Friday Arm</td><td class="pos">SP</td><td class="good">2.18</td><td>27.4</td><td>6.2</td><td>49.0</td></tr>
+                  <tr><td class="name-cell">Power Relief</td><td class="pos">RP</td><td>2.76</td><td class="good">31.1</td><td>9.4</td><td>41.7</td></tr>
+                  <tr><td class="name-cell">Left Matchup</td><td class="pos">LHP</td><td>3.12</td><td>24.8</td><td>7.8</td><td>52.3</td></tr>
+                  <tr><td class="name-cell">Bulk Arm</td><td class="pos">RHP</td><td>3.68</td><td>21.6</td><td>8.1</td><td>46.2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><span class="panel-title">Pitch Mix Trend</span><span class="panel-note">Last 7 games</span></div>
+            <div class="panel-body">
+              <div class="chart">
+                <div class="axis-y"><span>60</span><span>48</span><span>36</span><span>24</span><span>12</span><span>0</span></div>
+                <div class="plot">
+                  <svg class="line-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <polyline points="4,58 18,53 32,49 46,44 60,39 74,37 88,33" fill="none" stroke="#f02b3e" stroke-width="2.4" />
+                    <polyline points="4,72 18,68 32,61 46,65 60,56 74,52 88,50" fill="none" stroke="#62a8ff" stroke-width="2.2" />
+                    <polyline points="4,82 18,76 32,80 46,73 60,70 74,66 88,63" fill="none" stroke="#37c978" stroke-width="2.2" />
+                  </svg>
+                </div>
               </div>
-              <span class="tag">Home</span>
+              <div class="legend"><span><i></i> Fastball</span><span><i style="background:var(--blue)"></i> Slider</span><span><i style="background:var(--green)"></i> Changeup</span></div>
             </div>
-          </div>
+          </article>
         </div>
-        <div id="analytics">
-          <div class="section-head">
-            <h2>Stats</h2>
-            <a href="#scouting">Reports</a>
-          </div>
-          <div class="stats-grid">
-            <article class="stat-card">
-              <span>Projected Record</span>
-              <strong>12-6</strong>
-            </article>
-            <article class="stat-card">
-              <span>Team OPS</span>
-              <strong>.812</strong>
-            </article>
-            <article class="stat-card">
-              <span>Staff ERA</span>
-              <strong>3.41</strong>
-            </article>
-            <article class="stat-card">
-              <span>Def Runs</span>
-              <strong>+18</strong>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" id="features">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Features</h2>
-          <a href="#scouting">Scouting Tools</a>
+      <section class="view" id="scouting">
+        <div class="grid-3">
+          <article class="panel">
+            <div class="panel-head"><span class="panel-title">Report Queue</span><span class="panel-note">Exports</span></div>
+            <div class="panel-body report-list">
+              <div class="report-item"><div><strong>Western series pack</strong><span>Opponent hitters, starter notes, bullpen usage</span></div><button class="button secondary">Open</button></div>
+              <div class="report-item"><div><strong>Friday starter sheet</strong><span>Pitch mix, zones, chase map</span></div><button class="button secondary">Open</button></div>
+              <div class="report-item"><div><strong>Batter development notes</strong><span>Approach changes and contact profile</span></div><button class="button secondary">Open</button></div>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><span class="panel-title">Opponent Tendencies</span><span class="panel-note">Western</span></div>
+            <div class="panel-body">
+              <table>
+                <thead><tr><th>Situation</th><th>Rate</th><th>Note</th></tr></thead>
+                <tbody>
+                  <tr><td>Steal attempt</td><td class="warn">18%</td><td>High</td></tr>
+                  <tr><td>First pitch swing</td><td>31%</td><td>Avg</td></tr>
+                  <tr><td>Bunt shown</td><td>7%</td><td>Low</td></tr>
+                  <tr><td>Pull air contact</td><td class="good">42%</td><td>Shift</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><span class="panel-title">Coach Notes</span><span class="panel-note">Game 1</span></div>
+            <div class="panel-body">
+              <div class="report-list">
+                <div class="report-item"><div><strong>Pitching</strong><span>Get ahead with fastball early, expand slider below zone with two strikes.</span></div></div>
+                <div class="report-item"><div><strong>Offense</strong><span>Middle-away approach first time through. Attack mistakes up.</span></div></div>
+                <div class="report-item"><div><strong>Defense</strong><span>Corner in with runner on third, middle at double-play depth.</span></div></div>
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="feature-grid">
-          <article class="feature-card" id="roster">
-            <div>
-              <span class="kicker">Roster</span>
-              <h3>Player Profiles</h3>
-              <p>Role cards for hitters, pitchers, defenders, and development priorities.</p>
-            </div>
-            <a class="button secondary" href="#analytics">Open Board</a>
-          </article>
-          <article class="feature-card" id="coaches">
-            <div>
-              <span class="kicker">Coaches</span>
-              <h3>Staff Notes</h3>
-              <p>Practice focus, game plan themes, and position-group summaries.</p>
-            </div>
-            <a class="button secondary" href="#schedule">Prep Games</a>
-          </article>
-          <article class="feature-card" id="scouting">
-            <div>
-              <span class="kicker">Scouting</span>
-              <h3>Report Room</h3>
-              <p>Opponent reports, player sheets, and coach packs built for PDF exports.</p>
-            </div>
-            <a class="button" href="#news">Build Report</a>
-          </article>
-        </div>
-      </div>
-    </section>
+      </section>
+    </main>
+  </div>
 
-    <section class="section alt">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Photos, Videos, And Social</h2>
-          <a href="../">Data Diamond</a>
-        </div>
-        <div class="social-strip">
-          <article class="social-card">
-            <div>
-              <span class="kicker">Media</span>
-              <h3>Game Visuals</h3>
-              <p>Space for action photos, player cards, and matchup graphics.</p>
-            </div>
-          </article>
-          <article class="social-card">
-            <div>
-              <span class="kicker">Social</span>
-              <h3>Badgers Feed</h3>
-              <p>Updates, links, and weekly analytics notes can be surfaced here.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
+  <script>
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((item) => item.classList.remove("active"));
+        document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab).classList.add("active");
+      });
+    });
 
-    <section class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Awards And Sponsors</h2>
-          <a href="../">Portfolio Home</a>
-        </div>
-        <div class="sponsor-row">
-          <div class="sponsor">OUA</div>
-          <div class="sponsor">Brock Baseball</div>
-          <div class="sponsor">Data Diamond</div>
-          <div class="sponsor">Badgers Analytics</div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="wrap footer-inner">
-      <span>Data Diamond / Brock Badgers Baseball</span>
-      <span>data-diamond.ca/oua</span>
-    </div>
-  </footer>
+    const pa = document.getElementById("pa");
+    const paOut = document.getElementById("paOut");
+    pa.addEventListener("input", () => {
+      paOut.textContent = pa.value;
+    });
+  </script>
 </body>
 </html>
