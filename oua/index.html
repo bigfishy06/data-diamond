@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Diamond - OUA</title>
+  <meta name="description" content="Data Diamond OUA extension for Ontario University Athletics baseball analytics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #101217;
+      --panel: #171b22;
+      --line: rgba(255,255,255,0.11);
+      --gold: #ffb81c;
+      --mint: #7bdcb5;
+      --ink: #f7f2e8;
+      --muted: #a8adba;
+      --display: "Bebas Neue", Impact, sans-serif;
+      --mono: "DM Mono", Consolas, monospace;
+      --body: "Inter", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(115deg, rgba(16,18,23,0.96), rgba(16,18,23,0.82)),
+        url("../cbl/batter-pov-silhouette-lhh.png") right 9% center / min(42vw, 340px) auto no-repeat,
+        #101217;
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.5;
+    }
+
+    .shell { width: min(980px, calc(100% - 40px)); margin: 0 auto; }
+    header {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    a { color: inherit; }
+    .brand, nav a, .button {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .brand {
+      gap: 10px;
+      font-family: var(--display);
+      font-size: 26px;
+      letter-spacing: 2px;
+    }
+
+    .brand em { color: var(--gold); font-style: normal; }
+    nav { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    nav a, .button {
+      min-height: 38px;
+      justify-content: center;
+      border-radius: 6px;
+      padding: 0 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    nav a:hover { background: rgba(255,255,255,0.05); color: var(--ink); }
+    main { min-height: calc(100vh - 68px); display: grid; align-items: center; padding: 56px 0; }
+    .eyebrow { margin: 0 0 14px; font-family: var(--mono); color: var(--mint); text-transform: uppercase; }
+    h1 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(72px, 16vw, 160px);
+      line-height: 0.86;
+      letter-spacing: 0;
+    }
+
+    h1 span { color: var(--gold); }
+    p { max-width: 620px; color: var(--muted); font-size: 19px; }
+    .panel {
+      max-width: 720px;
+      margin-top: 28px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(23, 27, 34, 0.82);
+    }
+
+    .panel strong { display: block; margin-bottom: 8px; color: var(--ink); }
+    .button {
+      margin-top: 28px;
+      background: var(--gold);
+      color: var(--bg);
+      font-weight: 700;
+    }
+
+    @media (max-width: 720px) {
+      header { align-items: flex-start; flex-direction: column; padding: 16px 0; }
+      nav { justify-content: flex-start; }
+      body { background-position: right -70px top 90px, center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="../">Data<em>Diamond</em></a>
+      <nav aria-label="Primary">
+        <a href="../">Home</a>
+        <a href="../cbl/">CBL</a>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <p class="eyebrow">Extension space</p>
+        <h1>OUA <span>Baseball</span></h1>
+        <p>Ontario University Athletics is ready as a Data Diamond extension. This page can become the home for conference dashboards, team pages, and player reports.</p>
+        <div class="panel">
+          <strong>Planned build</strong>
+          <span>Conference leaders, team pages, player profiles, pitching dashboards, scouting exports, and recruiting-ready reports.</span>
+        </div>
+        <a class="button" href="../">Back to Portfolio</a>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
