@@ -128,7 +128,7 @@
         var email   = (payload.email || "").toLowerCase().trim();
 
         // Fetch allowed list from server then validate
-        fetch("/allowed.json?_=" + Date.now())
+        fetch("allowed.json?_=" + Date.now())
           .then(function(r) { return r.json(); })
           .then(function(data) {
             var users = data.users || [];
