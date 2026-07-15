@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>League Stats — Data Diamond</title>
+  <link rel="stylesheet" href="css/style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body class="teams-page">
+
+      <header class="site-header brock-header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="index.html">
+          <img class="brock-logo" src="brock-badgers-logo.png" alt="Brock Badgers">
+          <span class="brock-wordmark"><small>BROCK UNIVERSITY ATHLETICS</small><strong>BADGERS <em>BASEBALL</em></strong></span>
+        </a>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html"   class="nav-link">Dashboard</a>
+        <a href="league.html"   class="nav-link active">Team Stats</a>
+        <a href="players.html" class="nav-link">Player Stats</a>
+        <a href="scouting.html" class="nav-link">Opponent Scouting</a>
+      </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- TEAM SELECT or TEAM DETAIL (JS decides) -->
+  <div id="page-content"></div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="logo">
+          <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none">
+            <svg class="logo-diamond" viewBox="0 0 40 40" fill="none" style="width:24px;height:24px">
+              <polygon points="20,2 38,20 20,38 2,20" stroke="#FFB81C" stroke-width="2.5" fill="none"/>
+              <circle cx="20" cy="20" r="3" fill="#FFB81C"/>
+            </svg>
+            <span class="logo-text" style="font-size:16px">Data<em>Diamond</em></span>
+          </a>
+        </div>
+        <p class="footer-note">Not affiliated with CBL</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
