@@ -47,7 +47,7 @@
   </script>
   <script>
     const selectBeforeSplits=selectPlayer;
-    function pitchGroup(type){const t=(type||'').toLowerCase();if(t.includes('fast')||t.includes('sinker')||t.includes('cutter'))return'FB';if(t.includes('slider')||t.includes('curve')||t.includes('slurve')||t.includes('break'))return'BB';return'OS'}
+    function pitchGroup(type){const t=(type||'').toLowerCase();if(t.includes('fastball')||t.includes('cutter')||t.includes('sinker'))return'FB';if(t.includes('slider')||t.includes('curve')||t.includes('slurve')||t.includes('breaking'))return'BB';return'OS'}
     function selectedPoints(){return safePoints(state.current||{})}
     function cleanCount(p){return String(p.count||'').replace(/^'/,'')}
     function tendencyRows(){return[['Overall Non-RISP',p=>!String(p.runners||'0').match(/[2-3]/)],['Overall RISP',p=>String(p.runners||'').match(/[2-3]/)],['0-0',p=>cleanCount(p)==='0-0'],['0-1',p=>cleanCount(p)==='0-1'],['1-0',p=>cleanCount(p)==='1-0'],['1-1',p=>cleanCount(p)==='1-1'],['Hitters (2-0, 2-1, 3-1)',p=>['2-0','2-1','3-1'].includes(cleanCount(p))],['3-2',p=>cleanCount(p)==='3-2'],['2 strikes (not full)',p=>['0-2','1-2','2-2'].includes(cleanCount(p))]]}
