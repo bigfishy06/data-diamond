@@ -64,5 +64,9 @@
     function setRoleZone(){const batter=activeRole()==='batter';document.body.classList.toggle('is-batter',batter);$('pitcherHandFilter').style.display=batter?'block':'none';$('resultFilter').style.display=batter?'none':'block';$('zoneTitle').textContent=batter?'Whiff heat map':'Strike zone';$('zoneSubtitle').textContent=batter?'Whiffs by pitcher handedness and pitch type':'Filter a player’s tracked pitch locations';if(batter)$('mapMode').value='whiff';updateFilters()}
     $('pitcherHandFilter').addEventListener('change',updateFilters);$('mapMode').addEventListener('change',updateFilters);document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(setRoleZone,0)));setTimeout(setRoleZone,600);
   </script>
+  <script>
+    function refreshProfileContext(){const batter=activeRole()==='batter',p=state.current;if(!p)return;document.querySelector('.profile .eyebrow').textContent=batter?'BATTER PROFILE · BROCK BASEBALL':'PITCHER PROFILE · BROCK BASEBALL';$('playerLabel').textContent=batter?'BATTER PROFILE':'PITCHER PROFILE';$('meta').textContent=batter?`${p.pitcher_team||'Brock Badgers'} · Bats ${p.throws||'—'} · ${n(p.total_pitches).toLocaleString()} pitches seen`:`${p.pitcher_team||'Brock Badgers'} · Throws ${p.throws||'—'} · Last game ${p.last_game_date||'not available'}`}
+    document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshProfileContext,0)));$('player').addEventListener('change',()=>setTimeout(refreshProfileContext,0));setTimeout(refreshProfileContext,650);
+  </script>
 </body>
 </html>
