@@ -86,7 +86,7 @@
     document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshTtpMeter,0)));$('player').addEventListener('change',()=>setTimeout(refreshTtpMeter,0));setTimeout(refreshTtpMeter,950);
   </script>
   <script>
-    (function(){const meter=$('ttpMeter'),usageCard=meter.closest('.card'),ttpCard=document.createElement('article');ttpCard.className='card';ttpCard.id='ttpCard';usageCard.parentNode.insertBefore(ttpCard,usageCard);ttpCard.appendChild(meter)})();
+    (function(){const meter=$('ttpMeter'),usageCard=meter.closest('.card'),ttpCard=document.createElement('article');ttpCard.className='card';ttpCard.id='ttpCard';ttpCard.innerHTML='<div class="card-head"><h2>Average Time to Plate</h2></div>';usageCard.parentNode.insertBefore(ttpCard,usageCard);ttpCard.appendChild(meter);meter.querySelector('label').style.display='none'})();
   </script>
   <script>
     function refreshTtpCard(){const p=state.current,visible=activeRole()==='pitcher'&&Number(p?.avg_time_to_plate)>0;$('ttpCard').style.display=visible?'block':'none'}document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshTtpCard,0)));$('player').addEventListener('change',()=>setTimeout(refreshTtpCard,0));setTimeout(refreshTtpCard,1000);
