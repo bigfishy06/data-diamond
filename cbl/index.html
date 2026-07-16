@@ -1592,7 +1592,7 @@ Zane Skansi,Kitchener Panthers`;
     var container = document.getElementById(selectId);
     if (!container) return;
     var selected = [];
-    container.querySelectorAll('input[type=checkbox]:checked').forEach(function(cb) { selected.push(cb.dataset.key || gpNorm(cb.value)); });
+    container.querySelectorAll('input[type=checkbox]:checked').forEach(function(cb) { selected.push(cb.value); });
     if (!selected.length) { alert('Please select at least one player.'); return; }
 
     // Close the picker
@@ -1662,13 +1662,38 @@ Zane Skansi,Kitchener Panthers`;
       var _rosterAll = new Set();
       GP_ROSTER_2025.forEach(function(row){ _rosterAll.add(gpNorm(row.player)); });
       _sum.forEach(function(p) {
-        var t = resolveTeam(p.batter_team);
+        var t = resolveTeam(p.batter_team || p.team);
         if (!t || t.name !== oppName) return;
         var k = gpNorm(p.batter);
         if (!_seenBat.has(k) && !_rosterAll.has(k)) { _seenBat.add(k); batterNames.push(p.batter); }
       });
 
+      // Keep the PDF roster in sync with the selector. Some players (including
+      // players without a summary row yet) exist only in pitch-by-pitch data.
+      var _pdfPitches = (DATA.pitches && Array.isArray(DATA.pitches)) ? DATA.pitches : [];
+      var _pdfPbpBatters = (DATA.pbpBatters && Array.isArray(DATA.pbpBatters)) ? DATA.pbpBatters : [];
+      _pdfPitches.forEach(function(p) {
+        if (!p || !p.batter) return;
+        var t = resolveTeam(p.batter_team || p.team);
+        var k = gpNorm(p.batter);
+        if (t && t.name === oppName && !_seenBat.has(k)) {
+          _seenBat.add(k); batterNames.push(p.batter);
+        }
+      });
+      _pdfPbpBatters.forEach(function(p) {
+        if (!p || !p.batter || !p.batter_team) return;
+        var t = resolveTeam(p.batter_team);
+        var k = gpNorm(p.batter);
+        if (t && t.name === oppName && !_seenBat.has(k)) {
+          _seenBat.add(k); batterNames.push(p.batter);
+        }
+      });
+
       if (selectedNames && selectedNames.length) {
+        selectedNames.forEach(function(name) {
+          var k = gpNorm(name);
+          if (!_seenBat.has(k)) { _seenBat.add(k); batterNames.push(name); }
+        });
         var selectedKeys = selectedNames.map(function(n){ return gpNorm(n); });
         var selSet = {};
         selectedKeys.forEach(function(k){ selSet[k] = true; });
