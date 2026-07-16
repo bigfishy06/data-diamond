@@ -123,5 +123,6 @@
   <script>
     (async function(){const ordinal=n=>{const mod=n%100;if(mod>=11&&mod<=13)return `${n}th`;return `${n}${({1:'st',2:'nd',3:'rd'}[n%10]||'th')}`};let bbRates;try{bbRates=(await fetch('data/pitchers2026.json').then(r=>r.json())).map(p=>n(p.BB_pct))}catch(e){return}function colorBbPercentile(){if(activeRole()!=='pitcher'||!state.current)return;const value=n(state.current.BB_pct),raw=Math.round(bbRates.reduce((sum,x)=>sum+(x<value?1:x===value?.5:0),0)/Math.max(bbRates.length,1)*100),performance=100-raw,t=Math.min(Math.abs(performance-50)/50,1),target=performance>=50?[22,132,92]:[216,32,50],rgb=target.map(x=>Math.round(255+(x-255)*t)),card=document.querySelectorAll('.metric')[3],badge=card.querySelector('.stat-percentile');card.querySelector('.value').style.color=`rgb(${rgb.join(',')})`;if(badge){badge.classList.remove('is-hidden');badge.textContent=`${ordinal(performance)} pct.`}}['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(colorBbPercentile,50)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(colorBbPercentile,50)));setTimeout(colorBbPercentile,2100)})();
   </script>
+  <style>.metric .value{text-shadow:-1px -1px 0 rgba(23,36,50,.75),1px -1px 0 rgba(23,36,50,.75),-1px 1px 0 rgba(23,36,50,.75),1px 1px 0 rgba(23,36,50,.75)}</style>
 </body>
 </html>
