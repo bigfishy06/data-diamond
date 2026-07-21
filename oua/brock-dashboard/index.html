@@ -174,7 +174,8 @@
   <script>
     (function(){
       const baseDrawZone=drawZone,baseHeatMap=heatMap;
-      const orientForViewer=points=>activeRole()==='pitcher'?points.map(point=>({...point,x:-n(point.x),y:-n(point.y)})):points;
+      // Match the CBL perspective transform: flip horizontal location only; y stays unchanged.
+      const orientForViewer=points=>activeRole()==='pitcher'?points.map(point=>({...point,x:-n(point.x),y:n(point.y)})):points;
       drawZone=(id,points,large=false)=>baseDrawZone(id,orientForViewer(points),large);
       heatMap=points=>baseHeatMap(orientForViewer(points));
       ['player','team','mapMode','resultFilter','typeFilter','pitcherHandFilter'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(updateFilters,0)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(updateFilters,110)));
