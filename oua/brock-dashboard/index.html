@@ -132,6 +132,10 @@
   <style>
     #zone .zone-layout{grid-template-columns:1fr;position:relative;isolation:isolate;min-height:590px}#zone .zone-layout::before{content:'';position:absolute;inset:0;background:url('plate-batters.png') center 48%/min(100%,1080px) auto no-repeat;filter:brightness(0);opacity:.64;pointer-events:none;z-index:4}#zone .zone-layout .zone-svg{position:relative;z-index:1}#zone .zone-layout .legend{position:relative;z-index:5;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}#zoneSubtitle{color:var(--navy);font-size:16px;font-weight:800;letter-spacing:.04em}
   </style>
+  <style>#tendencyBody td.tendency-high{background:#9be99f!important;color:#102746!important;font-weight:800}</style>
+  <script>
+    (function(){const body=$('tendencyBody');function highlight(){body.querySelectorAll('td').forEach(cell=>{const value=parseFloat(cell.textContent);cell.classList.toggle('tendency-high',cell.textContent.includes('%')&&Number.isFinite(value)&&value>70)})}new MutationObserver(highlight).observe(body,{childList:true,subtree:true});['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(highlight,120)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(highlight,120)));document.querySelector('[data-tab="tendency"]').addEventListener('click',()=>setTimeout(highlight,120));setTimeout(highlight,2600)})();
+  </script>
   <style>
     #overviewProfiles{display:grid;grid-template-columns:1fr;gap:18px}.analysis-card,.analysis-card.sequence-card{grid-column:1/-1}.analysis-card .card-head{align-items:flex-start}.analysis-card .card-head span{max-width:210px;text-align:right}.analysis-rank{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ice);color:var(--navy);font-size:11px;font-weight:800}
   </style>
