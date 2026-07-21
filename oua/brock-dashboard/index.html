@@ -171,5 +171,14 @@
       ['mapMode','resultFilter','typeFilter','pitcherHandFilter'].forEach(id=>$(id).addEventListener('change',updateFilters));['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(refreshStrikeZone,100)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshStrikeZone,100)));setTimeout(refreshStrikeZone,2500);
     })();
   </script>
+  <script>
+    (function(){
+      const baseDrawZone=drawZone,baseHeatMap=heatMap;
+      const orientForViewer=points=>activeRole()==='pitcher'?points.map(point=>({...point,x:-n(point.x),y:-n(point.y)})):points;
+      drawZone=(id,points,large=false)=>baseDrawZone(id,orientForViewer(points),large);
+      heatMap=points=>baseHeatMap(orientForViewer(points));
+      ['player','team','mapMode','resultFilter','typeFilter','pitcherHandFilter'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(updateFilters,0)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(updateFilters,110)));
+    })();
+  </script>
 </body>
 </html>
