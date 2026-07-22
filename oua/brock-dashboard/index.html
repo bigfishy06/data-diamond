@@ -232,8 +232,8 @@
           ? `All ${batter?'pitcher':'batter'} handedness`
           : `${batter?(hand==='R'?'RHP':'LHP'):(hand==='R'?'RHH':'LHH')} only`;
         if(!batter){
-          $('tendencyHead').innerHTML='<tr><th>Count situation</th><th>P</th><th>FB</th><th>OS</th></tr>';
-          $('tendencyBody').innerHTML=tendencyRows().map(([label,test])=>{const rows=points.filter(test),total=rows.length,rate=group=>total?pct(rows.filter(point=>pitchGroup(point.pitch_type)===group).length/total*100):'—';return `<tr><td>${label}</td><td>${total||'—'}</td><td>${rate('FB')}</td><td>${rate('OS')}</td></tr>`}).join('');
+          $('tendencyHead').innerHTML='<tr><th>Count situation</th><th>P</th><th>FB</th><th>BB</th><th>OS</th></tr>';
+          $('tendencyBody').innerHTML=tendencyRows().map(([label,test])=>{const rows=points.filter(test),total=rows.length,rate=group=>total?pct(rows.filter(point=>pitchGroup(point.pitch_type)===group).length/total*100):'—';return `<tr><td>${label}</td><td>${total||'—'}</td><td>${rate('FB')}</td><td>${rate('BB')}</td><td>${rate('OS')}</td></tr>`}).join('');
           return;
         }
         $('tendencyHead').innerHTML='<tr><th>Count situation</th><th>Pitches</th><th>Swing%</th><th>Whiff%</th><th>BAA</th></tr>';
