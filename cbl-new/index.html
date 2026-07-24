@@ -573,5 +573,73 @@
       setTimeout(refreshBatterMetricOrder,4800);
     })();
   </script>
+  <script>
+    (function(){
+      const hitResults=new Set(['Single','Double','Triple','Home Run']);
+      const hasLocation=point=>point&&point.x!==null&&point.x!==undefined&&String(point.x).trim()!==''&&point.y!==null&&point.y!==undefined&&String(point.y).trim()!==''&&Number.isFinite(Number(point.x))&&Number.isFinite(Number(point.y));
+      const countValue=point=>String(point.count||'').replace(/^'/,'');
+      const countSituations={
+        Ahead:point=>{const [balls,strikes]=countValue(point).split('-').map(Number);return balls>strikes},
+        Even:point=>{const [balls,strikes]=countValue(point).split('-').map(Number);return balls===strikes},
+        Behind:point=>{const [balls,strikes]=countValue(point).split('-').map(Number);return balls<strikes}
+      };
+      const rate=(part,total)=>total?part/total*100:null;
+      const metrics=rows=>{
+        const swings=rows.filter(point=>swingOutcomes.has(point.outcome)),whiffs=rows.filter(point=>whiffOutcomes.has(point.outcome)),located=rows.filter(hasLocation),outside=located.filter(point=>!point.in_zone),chases=outside.filter(point=>swingOutcomes.has(point.outcome)),pa=rows.filter(isTerminalPa),abs=rows.filter(isOfficialAtBat),hits=abs.filter(point=>hitResults.has(point.outcome)),ks=pa.filter(point=>String(point.outcome).includes('Strikeout')),walks=pa.filter(point=>point.outcome==='Walk');
+        return{swing:rate(swings.length,rows.length),whiff:rate(whiffs.length,swings.length),chase:rate(chases.length,outside.length),baa:abs.length?hits.length/abs.length:null,k:rate(ks.length,pa.length),bb:rate(walks.length,pa.length)};
+      };
+      const parse=value=>{const number=Number(String(value||'').replace('%',''));return Number.isFinite(number)?number:null};
+      const gradeColor=(value,average,higherIsBetter,scale)=>{
+        if(value==null||average==null)return'#123b78';
+        const difference=(value-average)*(higherIsBetter?1:-1),strength=Math.min(Math.abs(difference)/scale,1),target=difference>=0?[22,132,92]:[216,32,50],rgb=target.map(channel=>Math.round(255+(channel-255)*strength));
+        return `rgb(${rgb.join(',')})`;
+      };
+      const paint=(cell,value,average,higherIsBetter,scale)=>{
+        cell.style.color=gradeColor(value,average,higherIsBetter,scale);
+        cell.style.textShadow='-.5px -.5px 0 rgba(23,36,50,.5),.5px .5px 0 rgba(23,36,50,.5)';
+      };
+      let countAverages={},typeAverages={};
+      function colorCountPerformance(){
+        if(activeRole()!=='batter')return;
+        const card=[...document.querySelectorAll('#overviewProfiles .analysis-card')].find(article=>article.querySelector('h2')?.textContent.trim()==='Count Performance');
+        if(!card)return;
+        card.querySelectorAll('tbody tr').forEach(row=>{
+          const cells=row.querySelectorAll('td'),baseline=countAverages[cells[0]?.textContent.trim()];
+          if(!baseline||cells.length<7)return;
+          paint(cells[2],parse(cells[2].textContent),baseline.swing,true,12);
+          paint(cells[3],parse(cells[3].textContent),baseline.whiff,false,12);
+          paint(cells[4],parse(cells[4].textContent),baseline.chase,false,12);
+          paint(cells[5],parse(cells[5].textContent),baseline.baa,true,.08);
+          paint(cells[6],parse(cells[6].textContent),baseline.k,false,12);
+        });
+      }
+      function colorPitchTypeEffectiveness(){
+        if(activeRole()!=='batter')return;
+        const table=$('pitchMix').querySelector('table');
+        if(!table)return;
+        table.querySelectorAll('tbody tr').forEach(row=>{
+          const cells=row.querySelectorAll('td'),baseline=typeAverages[cells[0]?.textContent.trim()];
+          if(!baseline||cells.length<6)return;
+          paint(cells[2],parse(cells[2].textContent),baseline.swing,true,12);
+          paint(cells[3],parse(cells[3].textContent),baseline.whiff,false,12);
+          paint(cells[4],parse(cells[4].textContent),baseline.k,false,12);
+          paint(cells[5],parse(cells[5].textContent),baseline.bb,true,12);
+        });
+      }
+      function applyLeagueColors(){colorCountPerformance();colorPitchTypeEffectiveness()}
+      fetch('data/pitches2026.json').then(response=>response.json()).then(players=>{
+        const league=players.flatMap(player=>Array.isArray(player.scatter)?player.scatter:[]);
+        countAverages=Object.fromEntries(Object.entries(countSituations).map(([label,test])=>[label,metrics(league.filter(test))]));
+        const grouped={};league.forEach(point=>{const type=point.pitch_type||'Unclassified';(grouped[type]??=[]).push(point)});
+        typeAverages=Object.fromEntries(Object.entries(grouped).map(([type,rows])=>[type,metrics(rows)]));
+        applyLeagueColors();
+      }).catch(()=>{});
+      new MutationObserver(()=>setTimeout(applyLeagueColors,0)).observe($('overview'),{childList:true,subtree:true});
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(applyLeagueColors,750)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(applyLeagueColors,750)));
+      document.querySelector('[data-tab="overview"]').addEventListener('click',()=>setTimeout(applyLeagueColors,0));
+      setTimeout(applyLeagueColors,5000);
+    })();
+  </script>
 </body>
 </html>
