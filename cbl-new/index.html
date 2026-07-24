@@ -607,10 +607,7 @@
           const cells=row.querySelectorAll('td'),baseline=countAverages[cells[0]?.textContent.trim()];
           if(!baseline||cells.length<7)return;
           paint(cells[2],parse(cells[2].textContent),baseline.swing,true,12);
-          paint(cells[3],parse(cells[3].textContent),baseline.whiff,false,12);
-          paint(cells[4],parse(cells[4].textContent),baseline.chase,false,12);
-          paint(cells[5],parse(cells[5].textContent),baseline.baa,true,.08);
-          paint(cells[6],parse(cells[6].textContent),baseline.k,false,12);
+          [cells[3],cells[4],cells[5],cells[6]].forEach(cell=>{cell.style.color='';cell.style.textShadow=''});
         });
       }
       function colorPitchTypeEffectiveness(){
