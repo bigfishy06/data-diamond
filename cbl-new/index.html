@@ -694,5 +694,72 @@
       setTimeout(removeRoyalsOffspeedSequences,5600);
     })();
   </script>
+  <style>
+    .date-range-filter{display:grid;grid-template-columns:auto minmax(220px,420px);gap:10px 16px;align-items:center;margin:0 0 14px;padding:12px 14px;background:var(--ice);border:1px solid var(--line)}.date-range-filter>span{color:var(--muted);font-size:10px;font-weight:900;letter-spacing:.1em}.date-range-sliders{display:grid;gap:5px}.date-range-sliders input{width:100%;accent-color:var(--navy)}.date-range-labels{display:flex;justify-content:space-between;color:var(--navy);font-size:11px;font-weight:800}.sequence-filter-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sequence-filter-row .date-range-filter{flex:1;margin-bottom:14px}.sequence-filter-row select{width:auto;min-width:180px;margin-bottom:14px}@media(max-width:650px){.date-range-filter{grid-template-columns:1fr}.sequence-filter-row{display:block}.sequence-filter-row select{width:100%}}
+  </style>
+  <script>
+    (function(){
+      const dateOf=point=>String(point.date||'').trim();
+      const allPitcherPoints=()=>Array.isArray(state.current?.scatter)?state.current.scatter:[];
+      function makeDateControl(id){
+        const node=document.createElement('div');node.className='date-range-filter';node.id=id;
+        node.innerHTML='<span>DATE RANGE</span><div class="date-range-sliders"><input class="date-start" type="range" min="0" max="0" value="0"><input class="date-end" type="range" min="0" max="0" value="0"><div class="date-range-labels"><b class="date-start-label">All dates</b><b class="date-end-label">All dates</b></div></div>';
+        return node;
+      }
+      const effectivenessControl=makeDateControl('effectivenessDateRange');
+      const effectivenessGrid=$('effectivenessGrid');effectivenessGrid.insertBefore(effectivenessControl,effectivenessGrid.firstChild);
+      const tendencyControl=makeDateControl('tendencyDateRange');
+      $('tendency').querySelector('.card').insertBefore(tendencyControl,$('tendency').querySelector('.location-tools'));
+      const sequencingControl=makeDateControl('sequencingDateRange'),sequenceHand=document.createElement('select');
+      sequenceHand.id='sequenceHandFilter';sequenceHand.innerHTML='<option value="all">All batter handedness</option><option value="R">RHH</option><option value="L">LHH</option>';
+      const sequenceRow=document.createElement('div');sequenceRow.className='sequence-filter-row';sequenceRow.append(sequencingControl,sequenceHand);
+      $('pitchSequencingPanel').insertBefore(sequenceRow,$('pitchSequencingPanel').children[1]);
+      const controls=[effectivenessControl,tendencyControl,sequencingControl];
+      function datesForCurrent(){return[...new Set(allPitcherPoints().map(dateOf).filter(Boolean))].sort()}
+      function configure(control,reset=false){
+        const dates=datesForCurrent(),start=control.querySelector('.date-start'),end=control.querySelector('.date-end'),player=$('player').value;
+        if(reset||control.dataset.player!==player){start.min=end.min=0;start.max=end.max=String(Math.max(dates.length-1,0));start.value='0';end.value=String(Math.max(dates.length-1,0));control.dataset.player=player}
+        start.max=end.max=String(Math.max(dates.length-1,0));
+        if(Number(start.value)>Number(end.value)){if(document.activeElement===start)end.value=start.value;else start.value=end.value}
+        control._dates=dates;
+        control.querySelector('.date-start-label').textContent=dates[Number(start.value)]||'All dates';
+        control.querySelector('.date-end-label').textContent=dates[Number(end.value)]||'All dates';
+      }
+      function scoped(control,hand='all'){
+        configure(control);const dates=control._dates||[],start=dates[Number(control.querySelector('.date-start').value)],end=dates[Number(control.querySelector('.date-end').value)];
+        return allPitcherPoints().filter(point=>(!start||dateOf(point)>=start)&&(!end||dateOf(point)<=end)&&(hand==='all'||point.batter_side===hand));
+      }
+      function withScopedPoints(points,callback){const player=state.current;if(!player)return;const original=player.scatter;player.scatter=points;try{callback()}finally{player.scatter=original}}
+      function renderEffectivenessDate(){
+        const pitcher=activeRole()==='pitcher';effectivenessControl.style.display=pitcher?'grid':'none';if(!pitcher)return;
+        withScopedPoints(scoped(effectivenessControl),()=>$('effectivenessHand').dispatchEvent(new Event('change')));
+      }
+      function renderTendencyDate(){
+        const pitcher=activeRole()==='pitcher';tendencyControl.style.display=pitcher?'grid':'none';if(!pitcher)return;
+        withScopedPoints(scoped(tendencyControl),()=>renderTendencies());
+      }
+      const sequenceMetrics=rows=>{const swings=rows.filter(point=>swingOutcomes.has(point.outcome)),whiffs=rows.filter(point=>whiffOutcomes.has(point.outcome)),located=rows.filter(point=>point.x!==null&&point.x!==undefined&&String(point.x).trim()!==''&&point.y!==null&&point.y!==undefined&&String(point.y).trim()!==''),outside=located.filter(point=>!point.in_zone),chases=outside.filter(point=>swingOutcomes.has(point.outcome)),abs=rows.filter(isOfficialAtBat),hits=abs.filter(point=>['Single','Double','Triple','Home Run'].includes(point.outcome));return{strike:rows.length?rows.filter(isPitchStrike).length/rows.length*100:null,whiff:swings.length?whiffs.length/swings.length*100:null,chase:outside.length?chases.length/outside.length*100:null,baa:abs.length?hits.length/abs.length:null}};
+      function renderSequencingDate(){
+        if(!sequenceRow.isConnected){const panel=$('pitchSequencingPanel');panel.insertBefore(sequenceRow,panel.children[1]||null)}
+        const pitcher=activeRole()==='pitcher',royals=String(state.current?.pitcher_team||'').trim().toLowerCase()==='guelph royals';sequenceRow.style.display=pitcher&&royals?'flex':'none';if(!pitcher||!royals)return;
+        const points=scoped(sequencingControl,sequenceHand.value),groups={};
+        for(let index=1;index<points.length;index++){const first=points[index-1],second=points[index];if(!first.pitch_type||!second.pitch_type||first.batter!==second.batter||first.date!==second.date||isTerminalPa(first))continue;if([first.pitch_type,second.pitch_type].some(type=>String(type).trim().toLowerCase()==='offspeed'))continue;const key=`${first.pitch_type} → ${second.pitch_type}`;(groups[key]??=[]).push(second)}
+        const rows=Object.entries(groups).map(([sequence,pitches])=>({sequence,pitches,stats:sequenceMetrics(pitches)})).sort((a,b)=>b.pitches.length-a.pitches.length).slice(0,12);
+        $('pitchSequencingPanel').querySelector('.card-head span').textContent=`${points.length} selected pitches · ranked by usage`;
+        $('pitchSequencingPanel').querySelectorAll('.empty').forEach(node=>node.remove());
+        let table=$('pitchSequencingPanel').querySelector('.table-wrap');if(!table){table=document.createElement('div');table.className='table-wrap';$('pitchSequencingPanel').appendChild(table)}
+        table.innerHTML=`<table class="stat-table"><thead><tr><th>Rank</th><th>Sequence</th><th>Pitches</th><th>Strike%</th><th>Whiff%</th><th>Chase%</th><th>BAA</th></tr></thead><tbody>${rows.map((row,index)=>`<tr><td><span class="analysis-rank">${index+1}</span></td><td>${row.sequence}</td><td>${row.pitches.length}</td><td>${pct(row.stats.strike)}</td><td>${pct(row.stats.whiff)}</td><td>${pct(row.stats.chase)}</td><td>${row.stats.baa==null?'—':dec(row.stats.baa)}</td></tr>`).join('')||'<tr><td colspan="7">No sequences in this date and handedness range.</td></tr>'}</tbody></table>`;
+      }
+      const renderers=new Map([[effectivenessControl,renderEffectivenessDate],[tendencyControl,renderTendencyDate],[sequencingControl,renderSequencingDate]]);
+      controls.forEach(control=>control.querySelectorAll('input').forEach(input=>input.addEventListener('input',()=>{configure(control);clearTimeout(control._timer);control._timer=setTimeout(renderers.get(control),60)})));
+      sequenceHand.addEventListener('change',renderSequencingDate);
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate()},950)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate()},950)));
+      document.querySelector('[data-tab="effectiveness"]').addEventListener('click',()=>setTimeout(renderEffectivenessDate,0));
+      document.querySelector('[data-tab="tendency"]').addEventListener('click',()=>setTimeout(renderTendencyDate,0));
+      document.querySelector('[data-tab="sequencing"]').addEventListener('click',()=>setTimeout(renderSequencingDate,0));
+      setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate()},5800);
+    })();
+  </script>
 </body>
 </html>
