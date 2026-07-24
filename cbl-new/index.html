@@ -297,5 +297,23 @@
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(renderOverviewPitchTypeStatistics,120)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderOverviewPitchTypeStatistics,120)));setTimeout(renderOverviewPitchTypeStatistics,3300);
     })();
   </script>
+  <script>
+    (function(){
+      const sequencingTab=document.querySelector('[data-tab="sequencing"]');
+      const sequencingPane=$('sequencing');
+      const overviewTab=document.querySelector('[data-tab="overview"]');
+      function updateSequencingAccess(){
+        const team=String(state.current?.pitcher_team||'').trim().toLowerCase();
+        const isGuelphRoyal=team==='guelph royals';
+        sequencingTab.hidden=!isGuelphRoyal;
+        sequencingTab.style.display=isGuelphRoyal?'':'none';
+        sequencingPane.hidden=!isGuelphRoyal;
+        if(!isGuelphRoyal&&sequencingTab.classList.contains('active'))overviewTab.click();
+      }
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(updateSequencingAccess,100)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(updateSequencingAccess,100)));
+      setTimeout(updateSequencingAccess,3400);
+    })();
+  </script>
 </body>
 </html>
