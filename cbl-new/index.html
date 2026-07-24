@@ -341,13 +341,9 @@
       ];
       function renderSeasonStats(){
         const batter=activeRole()==='batter';
-        seasonTab.hidden=!batter;
-        seasonTab.style.display=batter?'':'none';
-        seasonPane.hidden=!batter;
-        if(!batter){
-          if(seasonTab.classList.contains('active'))overviewTab.click();
-          return;
-        }
+        seasonTab.hidden=false;
+        seasonTab.style.display='';
+        seasonPane.hidden=false;
         const name=state.current?.pitcher;
         const row=summaries.find(player=>player.batter===name);
         $('seasonStatsNote').textContent=row?`${row.batter_team||'CBL'} · 2026 Canadian Baseball League`:'2026 Canadian Baseball League';
@@ -361,8 +357,44 @@
       });
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(renderSeasonStats,100)));
       document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderSeasonStats,100)));
-      fetch('data/summary2026.json').then(response=>response.json()).then(data=>{summaries=data;renderSeasonStats()}).catch(renderSeasonStats);
-      setTimeout(renderSeasonStats,3500);
+    })();
+  </script>
+  <script>
+    (function(){
+      let iblHistory={};
+      const seasonTab=document.querySelector('[data-tab="season-stats"]');
+      const seasonPane=$('season-stats');
+      const numeric=value=>value!==null&&value!==undefined&&String(value).trim()!==''&&Number.isFinite(Number(value))?Number(value):null;
+      const integer=value=>numeric(value)==null?'—':numeric(value).toLocaleString();
+      const decimal=value=>numeric(value)==null?'—':numeric(value).toFixed(3);
+      const plain=value=>value===null||value===undefined||String(value).trim()===''?'—':String(value);
+      const battingColumns=[
+        ['Season','season',plain],['Team','team',plain],['Pos','pos',plain],['G','G',integer],['AB','AB',integer],['R','R',integer],
+        ['H','H',integer],['2B','2B',integer],['3B','3B',integer],['HR','HR',integer],['RBI','RBI',integer],
+        ['SB','SB',integer],['BB','BB',integer],['SO','SO',integer],['AVG','AVG',decimal],['OBP','OBP',decimal],
+        ['SLG','SLG',decimal],['OPS','OPS',decimal]
+      ];
+      const pitchingColumns=[
+        ['Season','season',plain],['Team','team',plain],['W','W',integer],['L','L',integer],['ERA','ERA',value=>numeric(value)==null?'—':numeric(value).toFixed(2)],
+        ['G','G',integer],['GS','GS',integer],['SV','SV',integer],['IP','IP',plain],['H','HA',integer],['ER','ER',integer],
+        ['BB','BBA',integer],['K','KP',integer],['WP','WP',integer]
+      ];
+      function renderIblSeasonStats(){
+        const batting=activeRole()==='batter',name=$('player').value||state.current?.pitcher,columns=batting?battingColumns:pitchingColumns;
+        const historyRows=Array.isArray(iblHistory[name])?iblHistory[name]:[];
+        const rows=historyRows.filter(row=>batting?numeric(row.AB)>0:numeric(row.IP)>0);
+        seasonTab.hidden=false;
+        seasonTab.style.display='';
+        seasonPane.hidden=false;
+        $('seasonStatsNote').textContent=rows.length?`${rows.length} IBL season${rows.length===1?'':'s'} · ${batting?'Batting':'Pitching'}`:`No ${batting?'batting':'pitching'} history found`;
+        $('seasonStatsHead').innerHTML=`<tr>${columns.map(([label])=>`<th>${label}</th>`).join('')}</tr>`;
+        $('seasonStatsBody').innerHTML=rows.length?rows.map(row=>`<tr>${columns.map(([,key,format])=>`<td>${format(row[key])}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${columns.length}">No IBL season statistics are available for this ${batting?'batter':'pitcher'}.</td></tr>`;
+      }
+      seasonTab.addEventListener('click',()=>setTimeout(renderIblSeasonStats,0));
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(renderIblSeasonStats,120)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderIblSeasonStats,120)));
+      fetch('data/ibl_history.json').then(response=>response.json()).then(data=>{iblHistory=data;renderIblSeasonStats()}).catch(renderIblSeasonStats);
+      renderIblSeasonStats();
     })();
   </script>
 </body>
