@@ -808,5 +808,31 @@
       new MutationObserver(applyGameMetricColors).observe(container,{childList:true});
     })();
   </script>
+  <style>
+    .game-analysis-metric{position:relative}.game-analysis-metric strong{-webkit-text-stroke:.55px #172432;text-shadow:-.45px -.45px 0 #172432,.45px .45px 0 #172432}.game-stat-percentile{position:absolute;right:8px;top:7px;color:var(--muted);font-size:9px;font-weight:900;letter-spacing:.03em}
+  </style>
+  <script>
+    (function(){
+      const container=$('gameAnalysisMetrics'),rate=(a,b)=>b?a/b*100:null,lowerIsBetter=new Set([0,2,3,4]);
+      const ordinal=value=>{const mod=value%100;if(mod>=11&&mod<=13)return`${value}th`;return`${value}${({1:'st',2:'nd',3:'rd'}[value%10]||'th')}`};
+      let distributions=null;
+      function metricSet(points){
+        const located=points.filter(point=>point.x!==null&&point.x!==undefined&&String(point.x).trim()!==''&&point.y!==null&&point.y!==undefined&&String(point.y).trim()!==''),first=points.filter(point=>String(point.count||'').replace(/^'/,'')==='0-0'),zone=located.filter(point=>point.in_zone),outside=located.filter(point=>!point.in_zone),swings=points.filter(point=>swingOutcomes.has(point.outcome)),pa=points.filter(isTerminalPa),batted=points.filter(point=>['Ground Ball','Fly Ball','Line Drive','Pop Up'].includes(point.contact));
+        return[rate(first.filter(point=>swingOutcomes.has(point.outcome)).length,first.length),rate(zone.filter(point=>swingOutcomes.has(point.outcome)).length,zone.length),rate(outside.filter(point=>swingOutcomes.has(point.outcome)).length,outside.length),rate(points.filter(point=>whiffOutcomes.has(point.outcome)).length,swings.length),rate(pa.filter(point=>String(point.outcome).includes('Strikeout')).length,pa.length),rate(pa.filter(point=>point.outcome==='Walk').length,pa.length),rate(batted.filter(point=>point.contact==='Fly Ball').length,batted.length)]
+      }
+      function applyGamePercentiles(){
+        if(!distributions||activeRole()!=='batter')return;
+        [...container.querySelectorAll('.game-analysis-metric')].forEach((card,index)=>{
+          const value=parseFloat(card.querySelector('strong')?.textContent),list=distributions[index].filter(Number.isFinite);
+          let badge=card.querySelector('.game-stat-percentile');if(!badge){badge=document.createElement('span');badge.className='game-stat-percentile';card.appendChild(badge)}
+          if(!Number.isFinite(value)||!list.length){badge.textContent='—';return}
+          const raw=Math.round(list.reduce((sum,item)=>sum+(item<value?1:item===value?.5:0),0)/list.length*100),performance=lowerIsBetter.has(index)?100-raw:raw;
+          badge.textContent=`${ordinal(performance)} pct.`;
+        });
+      }
+      fetch('data/pitches2026.json').then(response=>response.json()).then(players=>{distributions=Array.from({length:7},()=>[]);players.forEach(player=>metricSet(Array.isArray(player.scatter)?player.scatter:[]).forEach((value,index)=>distributions[index].push(value)));applyGamePercentiles()}).catch(()=>{});
+      new MutationObserver(applyGamePercentiles).observe(container,{childList:true});
+    })();
+  </script>
 </body>
 </html>
