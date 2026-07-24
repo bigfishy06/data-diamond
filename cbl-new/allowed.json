@@ -1,0 +1,184 @@
+{
+  "users": [
+    {
+      "email": "christiansturgeon06@gmail.com",
+      "role": "admin",
+      "player": "Christian Meagher-Sturgeon"
+    },
+    {
+      "email": "gugliettisean@gmail.com",
+      "role": "admin",
+      "player": "Sean Guglietti"
+    },
+    {
+      "email": "davisnickel@gmail.com",
+      "role": "admin",
+      "player": "Davis Nickel"
+    },
+    {
+      "email": "colin@shier.ca",
+      "role": "admin",
+      "player": "Colin Shier"
+    },
+    {
+      "email": "colin@gordshier.com",
+      "role": "admin",
+      "player": "Colin Shier"
+    },
+    {
+      "email": "76marcanthony76@gmail.com",
+      "role": "admin",
+      "player": "Marc-Anthony Armenio"
+    },
+    {
+      "email": "eakinryan13@gmail.com",
+      "role": "admin",
+      "player": "Ryan Eakin"
+    },
+    {
+      "email": "Mcgwbab42@gmail.com",
+      "role": "admin",
+      "player": "McGowan Weddig"
+    },
+    {
+      "email": "damontopolie@gmail.com",
+      "role": "admin",
+      "player": "Damon Topolie"
+    },
+    {
+      "email": "jeffmacleod14@gmail.com",
+      "role": "admin",
+      "player": "Jeff MacLeod"
+    },
+    {
+      "email": "iamcoachdonny@gmail.com",
+      "role": "admin",
+      "player": "Donny Fell"
+    },
+    {
+      "email": "liamdevine31@gmail.com",
+      "role": "admin",
+      "player": "Liam Devine"
+    },
+    {
+      "email": "jkennedypitching@gmail.com",
+      "role": "admin",
+      "player": "Jared Kennedy"
+    },
+    {
+      "email": "aidanluciansinclair@gmail.com",
+      "role": "admin",
+      "player": "Aidan Sinclair"
+    },
+    {
+      "email": "spencermacinnis@gmail.com",
+      "role": "admin",
+      "player": "Spencer MacInnis"
+    },
+    {
+      "email": "dh2chen2004@gmail.com",
+      "role": "admin",
+      "player": "David Chen"
+    },
+    {
+      "email": "neumannjonah@gmail.com",
+      "role": "admin",
+      "player": "Jonah Neumann"
+    },
+    {
+      "email": "adfoster@unc.edu",
+      "role": "admin",
+      "player": "Adam Foster"
+    },
+    {
+      "email": "yscott2400@gmail.com",
+      "role": "admin",
+      "player": "Scott Young"
+    },
+    {
+      "email": "owenkotler1@gmail.com",
+      "role": "admin",
+      "player": "Owen Kotler"
+    },
+    {
+      "email": "mattyward10.01@gmail.com",
+      "role": "catcher",
+      "player": "Matthew Ward"
+    },
+    {
+      "email": "luca.boscarino11@gmail.com",
+      "role": "catcher",
+      "player": "Luca Boscarino"
+    },
+    {
+      "email": "Agilbert2701@gmail.com",
+      "role": "position_player",
+      "player": "Antony Gilbert"
+    },
+    {
+      "email": "andyleader27@gmail.com",
+      "role": "position_player",
+      "player": "Andy Leader"
+    },
+    {
+      "email": "bdeans9191@gmail.com",
+      "role": "position_player",
+      "player": "Brandon Deans"
+    },
+    {
+      "email": "morroconner@gmail.com",
+      "role": "position_player",
+      "player": "Conner Morro"
+    },
+    {
+      "email": "franktorres305@gmail.com",
+      "role": "position_player",
+      "player": "Franklin Torres"
+    },
+    {
+      "email": "garrett.takamatsu41@gmail.com",
+      "role": "position_player",
+      "player": "Garrett Takamatsu"
+    },
+    {
+      "email": "jdsalmonwilliams@gmail.com",
+      "role": "position_player",
+      "player": "J.D. Williams"
+    },
+    {
+      "email": "jacob.8kush@gmail.com",
+      "role": "position_player",
+      "player": "Jacob Kush"
+    },
+    {
+      "email": "k.kush319@gmail.com",
+      "role": "position_player",
+      "player": "Kyle Kush"
+    },
+    {
+      "email": "marekdeska33@gmail.com",
+      "role": "position_player",
+      "player": "Marek Deska"
+    },
+    {
+      "email": "ryanbsantos4@gmail.com",
+      "role": "position_player",
+      "player": "Ryan Dos Santos"
+    },
+    {
+      "email": "lirianoelvin@gmail.com",
+      "role": "position_player",
+      "player": "Elvin Liriano"
+    },
+    {
+      "email": "kyle.thomas2234@gmail.com",
+      "role": "position_player",
+      "player": "Kyle Thomas"
+    },
+    {
+      "email": "liamrawilson@gmail.com",
+      "role": "position_player",
+      "player": "Liam Wilson"
+    }
+  ]
+}
