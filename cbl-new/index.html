@@ -655,5 +655,20 @@
       setTimeout(fixPitchUsageBars,5200);
     })();
   </script>
+  <script>
+    (function(){
+      function updateOverviewSequencingAccess(){
+        const canView=activeRole()==='pitcher'&&String(state.current?.pitcher_team||'').trim().toLowerCase()==='guelph royals';
+        document.querySelectorAll('#overviewProfiles .analysis-card').forEach(card=>{
+          if(card.querySelector('h2')?.textContent.trim()==='Pitch Sequencing')card.style.display=canView?'':'none';
+        });
+      }
+      new MutationObserver(updateOverviewSequencingAccess).observe($('overviewProfiles'),{childList:true,subtree:true});
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(updateOverviewSequencingAccess,850)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(updateOverviewSequencingAccess,850)));
+      document.querySelector('[data-tab="overview"]').addEventListener('click',()=>setTimeout(updateOverviewSequencingAccess,0));
+      setTimeout(updateOverviewSequencingAccess,5400);
+    })();
+  </script>
 </body>
 </html>
