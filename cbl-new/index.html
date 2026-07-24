@@ -522,5 +522,38 @@
       setTimeout(renderBatterGameAnalysis,4300);
     })();
   </script>
+  <script>
+    (function(){
+      const hasLocation=point=>point&&point.x!==null&&point.x!==undefined&&String(point.x).trim()!==''&&point.y!==null&&point.y!==undefined&&String(point.y).trim()!==''&&Number.isFinite(Number(point.x))&&Number.isFinite(Number(point.y));
+      const onlyLocated=points=>(Array.isArray(points)?points:[]).filter(hasLocation);
+
+      // Statistics use every tracked pitch. Location filtering belongs only to charts.
+      safePoints=player=>Array.isArray(player?.scatter)?player.scatter:[];
+
+      const drawAllTrackedZone=drawZone,heatAllTrackedZone=heatMap,renderAllTrackedOverviewMap=renderOverviewWhiffMap;
+      drawZone=(id,points,large=false)=>drawAllTrackedZone(id,onlyLocated(points),large);
+      heatMap=points=>heatAllTrackedZone(onlyLocated(points));
+      renderOverviewWhiffMap=function(){
+        const player=state.current;
+        if(!player||!Array.isArray(player.scatter)){renderAllTrackedOverviewMap();return}
+        const all=player.scatter;
+        player.scatter=onlyLocated(all);
+        try{renderAllTrackedOverviewMap()}finally{player.scatter=all}
+      };
+
+      function refreshFullSample(){
+        if(!state.current)return;
+        refreshActiveMetrics();
+        refreshBatterMetricOrder();
+        updateMix(state.current);
+        renderTendencies();
+        renderGameLogs();
+        renderOverviewWhiffMap();
+      }
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(refreshFullSample,650)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshFullSample,650)));
+      setTimeout(refreshFullSample,4600);
+    })();
+  </script>
 </body>
 </html>
