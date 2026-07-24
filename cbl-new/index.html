@@ -410,8 +410,8 @@
         return null;
       }
       function royalsUsageRows(rows){
-        const buckets=['FB','BB','OS'],mapped=rows.filter(row=>royalsPitchGroup(row.pitch_type)),total=mapped.length;
-        return buckets.map(bucket=>{const count=mapped.filter(row=>royalsPitchGroup(row.pitch_type)===bucket).length,usage=total?count/total*100:0;return `<div class="pitch-row"><span>${bucket}</span><div class="bar"><span style="width:${usage}%"></span></div><strong>${usage.toFixed(1)}%</strong></div>`}).join('');
+        const buckets=['FB','BB','OS'],colors={FB:'#123b78',BB:'#f0b323',OS:'#2786a9'},mapped=rows.filter(row=>royalsPitchGroup(row.pitch_type)),total=mapped.length;
+        return buckets.map(bucket=>{const count=mapped.filter(row=>royalsPitchGroup(row.pitch_type)===bucket).length,usage=total?count/total*100:0;return `<div class="pitch-row"><span>${bucket}</span><div class="bar"><span style="width:${usage}%;background:${colors[bucket]}"></span></div><strong>${usage.toFixed(1)}%</strong></div>`}).join('');
       }
       updateMix=function(player){
         if(!isRoyalsPitcher()){baseUpdateMix(player);return}
