@@ -222,16 +222,6 @@
   </script>
   <script>
     (function(){
-      const baseDrawZone=drawZone,baseHeatMap=heatMap;
-      // Match the CBL perspective transform: flip horizontal location only; y stays unchanged.
-      const orientForViewer=points=>activeRole()==='pitcher'?points.map(point=>({...point,x:-n(point.x),y:n(point.y)})):points;
-      drawZone=(id,points,large=false)=>baseDrawZone(id,orientForViewer(points),large);
-      heatMap=points=>baseHeatMap(orientForViewer(points));
-      ['player','team','mapMode','resultFilter','typeFilter','pitcherHandFilter'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(updateFilters,0)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(updateFilters,110)));
-    })();
-  </script>
-  <script>
-    (function(){
       function moveEffectivenessCards(){const grid=$('effectivenessGrid'),source=$('pitchTypeStatsCard'),id='effectivenessPitchTypeCard';$('effectivenessTtpCard')?.remove();if(!source)return;let copy=$(id);if(!copy){copy=document.createElement('article');copy.className='card';copy.id=id;grid.appendChild(copy)}copy.style.display=source.style.display;copy.innerHTML=source.innerHTML;copy.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'))}
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(moveEffectivenessCards,120)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(moveEffectivenessCards,120)));setTimeout(moveEffectivenessCards,2600);
     })();
