@@ -376,8 +376,8 @@
       ];
       const pitchingColumns=[
         ['Season','season',plain],['Team','team',plain],['W','W',integer],['L','L',integer],['ERA','ERA',value=>numeric(value)==null?'—':numeric(value).toFixed(2)],
-        ['G','G',integer],['GS','GS',integer],['SV','SV',integer],['IP','IP',plain],['H','HA',integer],['ER','ER',integer],
-        ['BB','BBA',integer],['K','KP',integer],['WP','WP',integer]
+        ['GS','GS',integer],['SV','SV',integer],['IP','IP',plain],['H','HA',integer],['ER','ER',integer],
+        ['BB','BBA',integer],['K','KP',integer]
       ];
       function renderIblSeasonStats(){
         const batting=activeRole()==='batter',name=$('player').value||state.current?.pitcher,columns=batting?battingColumns:pitchingColumns;
