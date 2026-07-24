@@ -433,5 +433,34 @@
       setTimeout(()=>{updateMix(state.current);renderTendencies()},3700);
     })();
   </script>
+  <script>
+    (function(){
+      const previousRenderTendencies=renderTendencies;
+      const bucket=type=>{
+        const key=String(type||'').toLowerCase().replace(/[\s-]+/g,'');
+        if(['fastball','sinker','cutter'].includes(key))return'FB';
+        if(['breakingball','slider','curveball','sweeper','slurve'].includes(key))return'BB';
+        if(['offspeed','changeup','splitter','knuckleball'].includes(key))return'OS';
+        return null;
+      };
+      renderTendencies=function(){
+        const royals=activeRole()==='pitcher'&&String(state.current?.pitcher_team||'').trim().toLowerCase()==='guelph royals';
+        if(!royals){previousRenderTendencies();return}
+        const hand=$('tendencyHandFilter').value,groups=['FB','BB','OS'];
+        const points=selectedPoints().filter(point=>hand==='all'||point.batter_side===hand);
+        $('tendencyHead').innerHTML='<tr><th>Count situation</th><th>P</th><th>FB</th><th>BB</th><th>OS</th></tr>';
+        $('tendencyBody').innerHTML=tendencyRows().map(([label,test])=>{
+          const rows=points.filter(test),mapped=rows.filter(row=>bucket(row.pitch_type)),total=mapped.length;
+          const rates=groups.map(group=>total?`${(mapped.filter(row=>bucket(row.pitch_type)===group).length/total*100).toFixed(1)}%`:'—');
+          return `<tr><td>${label}</td><td>${rows.length||'—'}</td>${rates.map(rate=>`<td>${rate}</td>`).join('')}</tr>`;
+        }).join('');
+      };
+      $('tendencyHandFilter').addEventListener('change',()=>setTimeout(renderTendencies,0));
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(renderTendencies,500)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderTendencies,500)));
+      document.querySelector('[data-tab="tendency"]').addEventListener('click',()=>setTimeout(renderTendencies,0));
+      setTimeout(renderTendencies,3900);
+    })();
+  </script>
 </body>
 </html>
