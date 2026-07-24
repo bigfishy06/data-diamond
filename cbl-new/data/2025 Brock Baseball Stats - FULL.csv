@@ -1,0 +1,753 @@
+Half Inning,Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec) with Man on First,Batter,Pitcher,Batter_Side,Pitcher_Side,Pitch_Type,Outcome,Quality of Contact,Spray Chart,Runners,Pitch_Location_X,Pitch_Location_Y
+Top 1,1,0,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Charlie Hughes,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.272729676,0.766696947
+Top 1,1,1,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Curveball,Called Strike,,,0,-0.501578885,0.276392727
+Top 1,1,1,0,1,'0-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Curveball,Swinging Strike,,,0,1.29868852,0.123172658
+Top 1,1,1,0,2,'0-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Fastball,Foul,,,0,0.563095387,0.345341758
+Top 1,1,1,0,2,'0-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Curveball,Single,Line Drive,Straightaway,0,0.234014248,0.843306981
+Top 1,1,1,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,1.15,Ashton Abols,Charlie Hughes,R,R,Fastball,Swinging Strike,,,100,-0.153140033,0.889273001
+Top 1,1,1,0,1,'0-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,1.18,Ashton Abols,Charlie Hughes,R,R,Fastball,Foul,,,100,0.156583392,0.383646775
+Top 1,1,1,0,2,'0-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,1.21,Ashton Abols,Charlie Hughes,R,R,Fastball,Strikeout Swinging,,,100,-0.404790315,0.835645977
+Top 1,1,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,1.23,Davis Llewellyn,Charlie Hughes,L,R,Fastball,Ball,,,100,-1.430749159,0.850967984
+Top 1,1,2,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Charlie Hughes,L,R,Fastball,Single,Line Drive,Straightaway,100,-0.772586882,0.927578019
+Top 1,1,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Curveball,Ball,,,110,-0.637082884,1.111442101
+Top 1,1,2,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Fastball,Swinging Strike,,,110,0.059794822,0.812662967
+Top 1,1,2,1,1,'1-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Fastball,Foul,,,110,0.659883957,0.245748713
+Top 1,1,2,1,2,'1-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Fastball,Single,Ground Ball,Opposite Field,110,0.640526243,0.812662967
+Top 1,1,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Fastball,Flyout,Fly Ball,Opposite Field,111,0.214656534,0.544527847
+Bottom 1,1,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Breaking Ball,Called Strike,,,0,-0.579009741,0.215104699
+Bottom 1,1,0,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Fastball,Foul,,,0,-0.753229168,0.30703674
+Bottom 1,1,0,0,2,'0-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Breaking Ball,Ball,,,0,-0.695156026,-0.658249692
+Bottom 1,1,0,1,2,'1-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Breaking Ball,Ball,,,0,1.39547709,0.827984974
+Bottom 1,1,0,2,2,'2-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Fastball,Foul,,,0,-0.249928603,0.192121689
+Bottom 1,1,0,2,2,'2-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Offspeed,Groundout,Ground Ball,Pull,0,-0.482221171,0.146155668
+Bottom 1,1,1,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Called Strike,,,0,-0.114424605,0.429612795
+Bottom 1,1,1,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Breaking Ball,Ball,,,0,-1.411391445,0.215104699
+Bottom 1,1,1,1,1,'1-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Offspeed,Ball,,,0,-0.249928603,-0.175606476
+Bottom 1,1,1,2,1,'2-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Offspeed,Called Strike,,,0,-0.695156026,0.690086912
+Bottom 1,1,1,2,2,'2-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Breaking Ball,Foul,,,0,0.679241671,0.207443696
+Bottom 1,1,1,2,2,'2-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Strikeout Looking,,,0,-0.056351462,0.153816672
+Bottom 1,1,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Offspeed,Called Strike,,,0,-0.598367455,0.621137881
+Bottom 1,1,2,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Foul,,,0,0.214656534,-0.076013431
+Bottom 1,1,2,0,2,'0-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Strikeout Swinging,,,0,0.040437108,0.896934005
+Top 2,2,0,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Charlie Hughes,R,R,Fastball,Called Strike,,,0,0.408233674,0.659442898
+Top 2,2,0,0,1,'0-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Charlie Hughes,R,R,Curveball,Called Strike,,,0,-0.733871454,0.276392727
+Top 2,2,0,0,2,'0-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Charlie Hughes,R,R,Curveball,Strikeout Swinging,,,0,0.117867964,0.215104699
+Top 2,2,1,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Charlie Hughes,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.214656534,0.720730926
+Top 2,2,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Charlie Hughes,R,R,Curveball,Ball,,,0,0.253371962,0.950561029
+Top 2,2,2,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Charlie Hughes,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.272729676,0.644120892
+Bottom 2,2,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Fastball,Ball,,,0,0.582453101,-0.290521528
+Bottom 2,2,0,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Fastball,Ball,,,0,-1.140383448,0.79734096
+Bottom 2,2,0,2,0,'2-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Fastball,Foul,,,0,0.253371962,0.184460686
+Bottom 2,2,0,2,1,'2-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Offspeed,Flyout,Fly Ball,Opposite Field,0,0.369518246,0.667103902
+Bottom 2,2,1,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Ball,,,0,-0.656440598,-0.298182531
+Bottom 2,2,1,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Fastball,Double,Line Drive,Pull,0,0.311445104,0.107850651
+Bottom 2,2,1,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Fastball,Ball,,,10,0.834103383,-0.198589486
+Bottom 2,2,1,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Offspeed,Foul,,,10,-0.695156026,0.713069922
+Bottom 2,2,1,1,1,'1-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Offspeed,Foul,,,10,-0.598367455,0.337680754
+Bottom 2,2,1,1,2,'1-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Fastball,Foul,,,10,0.524379959,0.812662967
+Bottom 2,2,1,1,2,'1-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Breaking Ball,Single,Line Drive,Straightaway,10,0.369518246,0.429612795
+Bottom 2,2,1,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Fastball,Foul,,,10,0.466306817,0.30703674
+Bottom 2,2,1,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Fastball,Foul,,,10,-0.153140033,0.353002761
+Bottom 2,2,1,0,2,'0-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Strikeout Swinging,,,10,0.311445104,-0.106657445
+Bottom 2,2,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Breaking Ball,Ball,,,10,0.563095387,0.75137494
+Bottom 2,2,2,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Breaking Ball,Ball,,,10,-0.71451374,-0.420758586
+Bottom 2,2,2,2,0,'2-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Breaking Ball,Ball,,,10,0.969607381,-0.328826545
+Bottom 2,2,2,3,0,'3-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Fastball,Walk,,,1,1.337403948,0.881611998
+Bottom 2,2,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Fastball,Ball,,,101,-1.411391445,1.134425111
+Bottom 2,2,2,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Fastball,Called Strike,,,101,-0.753229168,0.697747916
+Bottom 2,2,2,1,1,'1-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Fastball,Double,Line Drive,Opposite Field,101,-0.540294313,0.628798885
+Bottom 2,2,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Fastball,Called Strike,,,11,-1.121025734,0.827984974
+Bottom 2,2,2,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Offspeed,Flyout,Fly Ball,Opposite Field,11,-1.353318303,0.03890162
+Top 3,3,0,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Charlie Hughes,R,R,Fastball,Foul,,,0,-0.288644031,0.52920584
+Top 3,3,0,0,1,'0-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Charlie Hughes,R,R,Curveball,Single,Line Drive,Straightaway,0,-0.017636034,0.850967984
+Top 3,3,0,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Fastball,Groundout,Ground Ball,Opposite Field,100,-0.71451374,0.674764905
+Top 3,3,1,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Ball,,,10,-0.346717173,1.096120094
+Top 3,3,1,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Ball,,,10,-0.850017738,1.134425111
+Top 3,3,1,2,0,'2-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Ball,,,10,-0.733871454,1.088459091
+Top 3,3,1,3,0,'3-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Called Strike,,,10,0.253371962,0.628798885
+Top 3,3,1,3,1,'3-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Swinging Strike,,,10,-0.269286317,0.79734096
+Top 3,3,1,3,2,'3-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Walk,,,1,0.29208739,1.088459091
+Top 3,3,1,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Charlie Hughes,L,R,Fastball,Ball,,,101,-1.314602875,0.927578019
+Top 3,3,1,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Charlie Hughes,L,R,Fastball,Ball,,,101,-1.217814305,1.157408122
+Top 3,3,1,2,0,'2-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Charlie Hughes,L,R,Fastball,Ball,,,101,-0.656440598,1.134425111
+Top 3,3,1,3,0,'3-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Charlie Hughes,L,R,Fastball,Called Strike,,,101,0.717957099,0.375985771
+Top 3,3,1,3,1,'3-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Charlie Hughes,L,R,Fastball,Groundout,Ground Ball,Pull,101,0.137225678,0.55218885
+Top 3,3,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Curveball,Foul,,,100,-0.269286317,0.398968782
+Top 3,3,2,0,1,'0-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,1.28,Lucas Bateman,Charlie Hughes,R,R,Fastball,Ball,,,100,-0.482221171,1.096120094
+Top 3,3,2,1,1,'1-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Curveball,Double,Line Drive,Straightaway,100,0.311445104,0.276392727
+Top 3,3,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Curveball,Ball,,,10,-0.71451374,1.157408122
+Top 3,3,2,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Changeup,Ball,,,10,1.008322809,-0.091335438
+Top 3,3,2,2,0,'2-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Fastball,Groundout,Ground Ball,Straightaway,10,0.466306817,0.360663764
+Bottom 3,3,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Offspeed,Ball,,,0,-0.946806308,-0.520351631
+Bottom 3,3,0,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Ball,,,0,-1.546895443,0.973544039
+Bottom 3,3,0,2,0,'2-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Breaking Ball,Called Strike,,,0,-0.675798312,0.674764905
+Bottom 3,3,0,2,1,'2-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Foul,,,0,-0.288644031,0.873950995
+Bottom 3,3,0,2,2,'2-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Offspeed,Ball,,,0,-0.791944596,-0.321165541
+Bottom 3,3,0,3,2,'3-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Breaking Ball,Foul,,,0,-1.217814305,0.107850651
+Bottom 3,3,0,3,2,'3-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Walk,,,0,1.472907946,0.28405373
+Bottom 3,3,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,1.04,Jaden Leeder,Gavin McLean,R,R,Fastball,Ball,,,100,-1.19845659,0.682425909
+Bottom 3,3,0,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,1.07,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Ball,,,100,0.505022245,-0.313504538
+Bottom 3,3,0,2,0,'2-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Offspeed,Ball,,,10,-1.217814305,0.766696947
+Bottom 3,3,0,3,0,'3-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Called Strike,,,10,0.543737673,0.230426706
+Bottom 3,3,0,3,1,'3-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Walk,,,10,1.821346799,-0.0070644
+Bottom 3,3,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Fastball,Called Strike,,,110,0.814745669,0.421951792
+Bottom 3,3,0,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Breaking Ball,Ball,,,110,-1.372676017,-0.0070644
+Bottom 3,3,0,1,1,'1-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Breaking Ball,Ball,,,1,-1.237172019,0.460256809
+Bottom 3,3,0,2,1,'2-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Fastball,Single,Ground Ball,Straightaway,1,0.524379959,0.368324768
+Bottom 3,3,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,1.03,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Ball,,,100,0.776030241,-0.367131562
+Bottom 3,3,0,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Called Strike,,,100,-0.191855461,0.644120892
+Bottom 3,3,0,1,1,'1-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Ball,,,100,0.524379959,-0.290521528
+Bottom 3,3,0,2,1,'2-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Fastball,Swinging Strike,,,100,0.156583392,-0.076013431
+Bottom 3,3,0,2,2,'2-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Ball,,,100,1.182542236,-0.305843534
+Bottom 3,3,0,3,2,'3-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Fastball,Strikeout Swinging,,,100,-0.71451374,-0.167945473
+Bottom 3,3,1,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Fastball,Double,Line Drive,Pull,100,-0.230570889,0.253409716
+Bottom 3,3,1,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Ball,,,11,1.376119376,-0.374792565
+Bottom 3,3,1,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Called Strike,,,1,-0.579009741,0.659442898
+Bottom 3,3,1,1,1,'1-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,1,0.485664531,-0.2292335
+Bottom 3,3,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Fastball,Ball,,,1,-0.869375452,-0.244555507
+Bottom 3,3,2,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Breaking Ball,Ball,,,1,-0.366074887,-0.175606476
+Bottom 3,3,2,2,0,'2-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Fastball,Foul,,,1,-0.036993748,0.184460686
+Bottom 3,3,2,2,1,'2-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Breaking Ball,Called Strike,,,1,0.29208739,0.567510857
+Bottom 3,3,2,2,2,'2-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Breaking Ball,Strikeout Looking,,,1,0.892176525,-0.106657445
+Top 4,4,0,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Charlie Hughes,R,R,Fastball,Flyout,Fly Ball,Pull,0,-0.540294313,0.299375737
+Top 4,4,1,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Charlie Hughes,R,R,Fastball,Ball,,,0,0.38887596,1.119103104
+Top 4,4,1,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Charlie Hughes,R,R,Curveball,Flyout,Fly Ball,Straightaway,0,-0.133782319,0.636459888
+Top 4,4,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Charlie Hughes,R,R,Fastball,Swinging Strike,,,0,0.175941106,0.444934802
+Top 4,4,2,0,1,'0-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Charlie Hughes,R,R,Fastball,Ball,,,0,1.589054231,0.858628988
+Top 4,4,2,1,1,'1-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Charlie Hughes,R,R,Fastball,Swinging Strike,,,0,0.485664531,0.904595008
+Top 4,4,2,1,2,'1-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Charlie Hughes,R,R,Curveball,Strikeout Swinging,,,0,0.892176525,-0.328826545
+Bottom 4,4,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Breaking Ball,Single,Fly Ball,Straightaway,100,-0.579009741,0.245748713
+Bottom 4,4,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Fastball,Sacrifice Bunt,Ground Ball,Opposite Field,10,-0.617725169,0.544527847
+Bottom 4,4,1,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Foul,,,10,0.466306817,-0.175606476
+Bottom 4,4,1,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Ball,,,10,-0.114424605,1.119103104
+Bottom 4,4,1,1,1,'1-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Foul,,,1,-0.133782319,-0.098996442
+Bottom 4,4,1,1,2,'1-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Ball,,,1,1.627769659,0.28405373
+Bottom 4,4,1,2,2,'2-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Breaking Ball,Strikeout Looking,,,1,-0.733871454,0.291714734
+Bottom 4,4,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Called Strike,,,1,0.427591388,0.100189648
+Bottom 4,4,2,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Foul,,,1,-0.288644031,-0.213911493
+Bottom 4,4,2,0,2,'0-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Strikeout Swinging,,,1,-0.617725169,0.674764905
+Top 5,5,0,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Charlie Hughes,R,R,Fastball,Popout,Pop Up,Opposite Field,0,-0.366074887,0.858628988
+Top 5,5,1,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Fastball,Ball,,,0,-0.675798312,1.119103104
+Top 5,5,1,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Curveball,Called Strike,,,0,-0.482221171,0.130833661
+Top 5,5,1,1,1,'1-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Fastball,Called Strike,,,0,-0.656440598,0.667103902
+Top 5,5,1,1,2,'1-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Curveball,Groundout,Ground Ball,Opposite Field,0,-0.172497747,-0.152623466
+Top 5,5,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Curveball,Called Strike,,,0,-0.346717173,0.345341758
+Top 5,5,2,0,1,'0-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Foul,,,0,-0.385432601,0.613476878
+Top 5,5,2,0,2,'0-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Ball,,,0,0.505022245,1.111442101
+Top 5,5,2,1,2,'1-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Curveball,Ball,,,0,-0.172497747,-0.244555507
+Top 5,5,2,2,2,'2-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Single,Ground Ball,Straightaway,0,0.408233674,0.705408919
+Top 5,5,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,1.18,Davis Llewellyn,Charlie Hughes,R,R,Fastball,Popout,Pop Up,Pull,100,-0.230570889,0.789679957
+Bottom 5,5,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Breaking Ball,Called Strike,,,0,-0.133782319,0.50622283
+Bottom 5,5,0,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Breaking Ball,Foul,,,0,-0.133782319,0.820323971
+Bottom 5,5,0,0,2,'0-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Gavin McLean,R,R,Breaking Ball,Single,Ground Ball,Pull,0,0.175941106,0.490900823
+Bottom 5,5,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Fastball,Called Strike,,,100,-0.675798312,0.713069922
+Bottom 5,5,0,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,1.04,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Groundout,Ground Ball,Pull,100,-0.327359459,-0.144962462
+Bottom 5,5,1,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Fastball,Foul,,,100,0.137225678,0.598154871
+Bottom 5,5,1,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Fastball,Ball,,,100,-1.295245161,0.314697744
+Bottom 5,5,1,1,1,'1-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Breaking Ball,Ball,,,100,-0.269286317,-0.25221651
+Bottom 5,5,1,2,1,'2-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Fastball,Groundout,Ground Ball,Pull,100,0.505022245,0.215104699
+Bottom 5,5,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Fastball,Ball,,,100,-0.288644031,1.149747118
+Bottom 5,5,2,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,,Truncated Out,,,100,,
+Top 6,6,0,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Fastball,Ball,,,0,0.137225678,-0.160284469
+Top 6,6,0,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Fastball,Called Strike,,,0,0.311445104,0.460256809
+Top 6,6,0,1,1,'1-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Fastball,Ball,,,0,-0.559652027,1.279984177
+Top 6,6,0,2,1,'2-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Fastball,Ball,,,0,-0.501578885,1.096120094
+Top 6,6,0,3,1,'3-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Fastball,Foul,,,0,0.040437108,0.820323971
+Top 6,6,0,3,2,'3-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Charlie Hughes,R,R,Fastball,Popout,Pop Up,Straightaway,0,0.408233674,0.827984974
+Top 6,6,1,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Curveball,Ball,,,0,0.601810815,-0.213911493
+Top 6,6,1,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Fastball,Popout,Pop Up,Pull,0,-0.133782319,0.77435795
+Top 6,6,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Charlie Hughes,R,R,Fastball,Ball,,,0,0.756672527,0.77435795
+Top 6,6,2,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Charlie Hughes,R,R,Fastball,Called Strike,,,0,-0.288644031,0.958222032
+Top 6,6,2,1,1,'1-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Charlie Hughes,R,R,Curveball,Ball,,,0,1.647127373,-0.336487548
+Top 6,6,2,2,1,'2-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Charlie Hughes,R,R,Fastball,Foul,,,0,0.175941106,0.559849854
+Top 6,6,2,2,2,'2-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Charlie Hughes,R,R,Fastball,Ball,,,0,0.117867964,1.211035146
+Top 6,6,2,3,2,'3-2,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Charlie Hughes,R,R,Fastball,Single,Ground Ball,Pull,0,0.582453101,0.498561826
+Top 6,6,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Charlie Hughes,R,R,Fastball,Ball,,,0,1.550338802,0.812662967
+Top 6,6,2,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Charlie Hughes,R,R,Fastball,Ball,,,0,-0.153140033,1.126764108
+Top 6,6,2,2,0,'2-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Charlie Hughes,R,R,Fastball,Swinging Strike,,,0,0.00172168,1.073137084
+Top 6,6,2,2,1,'2-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Charlie Hughes,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.272729676,0.52920584
+Bottom 6,6,0,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Called Strike,,,0,0.330802818,0.490900823
+Bottom 6,6,0,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Swinging Strike,,,0,-0.211213175,-0.236894503
+Bottom 6,6,0,0,2,'0-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Fastball,Ball,,,0,-0.308001745,1.111442101
+Bottom 6,6,0,1,2,'1-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Fastball,Foul,,,0,-0.656440598,0.375985771
+Bottom 6,6,0,1,2,'1-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Fastball,Strikeout Looking,,,0,0.679241671,0.169138679
+Bottom 6,6,1,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Breaking Ball,Called Strike,,,0,-0.172497747,0.55218885
+Bottom 6,6,1,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Fastball,Swinging Strike,,,0,0.446949103,0.659442898
+Bottom 6,6,1,0,2,'0-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Fastball,Foul,,,0,-0.617725169,0.559849854
+Bottom 6,6,1,0,2,'0-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Gavin McLean,R,R,Fastball,Strikeout Looking,,,0,0.737314813,-0.137301459
+Bottom 6,6,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Fastball,Ball,,,0,0.524379959,-0.198589486
+Bottom 6,6,2,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Offspeed,Ball,,,0,-1.411391445,0.146155668
+Bottom 6,6,2,2,0,'2-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Fastball,Called Strike,,,0,-0.598367455,0.79734096
+Bottom 6,6,2,2,1,'2-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Offspeed,Ball,,,0,-0.695156026,-0.313504538
+Bottom 6,6,2,3,1,'3-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Fastball,Walk,,,0,1.10511138,-0.213911493
+Bottom 6,6,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Fastball,Ball,,,100,-1.19845659,0.850967984
+Bottom 6,6,2,1,0,'1-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Fastball,Ball,,,100,-1.121025734,0.621137881
+Bottom 6,6,2,2,0,'2-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Breaking Ball,Ball,,,10,-0.346717173,-0.259877514
+Bottom 6,6,2,3,0,'3-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Gavin McLean,L,R,Breaking Ball,Walk,,,10,-0.017636034,-0.290521528
+Bottom 6,6,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Called Strike,,,110,-0.114424605,-0.060691424
+Bottom 6,6,2,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Gavin McLean,L,R,Fastball,Single,Line Drive,Straightaway,110,0.427591388,0.513883833
+Bottom 6,6,2,0,0,'0-0,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Called Strike,,,10,0.892176525,0.77435795
+Bottom 6,6,2,0,1,'0-1,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Swinging Strike,,,10,-0.540294313,0.444934802
+Bottom 6,6,2,0,2,'0-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Foul,,,10,-0.617725169,0.207443696
+Bottom 6,6,2,0,2,'0-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Ball,,,10,1.530981088,0.207443696
+Bottom 6,6,2,1,2,'1-2,2025-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Strikeout Looking,,,10,0.659883957,0.176799682
+Top 7,7,0,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Charlie Hughes,R,R,Fastball,Called Strike,,,0,0.505022245,0.467917813
+Top 7,7,0,0,1,'0-1,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Charlie Hughes,R,R,Fastball,Single,Ground Ball,Pull,0,0.19529882,0.253409716
+Top 7,7,0,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Charlie Hughes,R,R,Fastball,Flyout,Fly Ball,Straightaway,100,0.350160532,0.827984974
+Top 7,7,1,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Fastball,Ball,,,100,-1.295245161,0.697747916
+Top 7,7,1,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Charlie Hughes,R,R,Fastball,Flyout,Line Drive,Straightaway,100,0.234014248,0.544527847
+Top 7,7,2,0,0,'0-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Ball,,,100,-0.036993748,1.165069125
+Top 7,7,2,1,0,'1-0,2025-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Charlie Hughes,R,R,Fastball,Flyout,Fly Ball,Straightaway,100,0.175941106,0.444934802
+Top 1,1,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Ryan Facchini,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.234014248,0.421951792
+Top 1,1,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Slider,Called Strike,,,0,-0.172497747,0.467917813
+Top 1,1,1,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Fastball,Foul,,,0,-0.482221171,0.682425909
+Top 1,1,1,0,2,'0-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Slider,Home Run,Fly Ball,Pull,0,-0.191855461,0.559849854
+Top 1,1,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Ryan Facchini,R,R,Fastball,Ball,,,0,-0.288644031,1.119103104
+Top 1,1,1,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Ryan Facchini,R,R,Cutter,Error,Ground Ball,Pull,0,-0.482221171,0.353002761
+Top 1,1,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Fastball,Called Strike,,,100,-0.71451374,0.590493868
+Top 1,1,1,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Fastball,Ball,,,100,1.569696516,0.567510857
+Top 1,1,1,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Fastball,Ball,,,100,-1.333960589,0.291714734
+Top 1,1,1,2,1,'2-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Fastball,Ball,,,100,-1.392033731,0.858628988
+Top 1,1,1,3,1,'3-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Fastball,Foul,,,100,0.214656534,0.720730926
+Top 1,1,1,3,2,'3-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Cutter,Single,Line Drive,Straightaway,100,-0.482221171,0.268731723
+Top 1,1,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Ryan Facchini,R,R,Cutter,Called Strike,,,110,-0.772586882,0.713069922
+Top 1,1,1,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Ryan Facchini,R,R,Cutter,Ball,,,110,0.930891953,-0.336487548
+Top 1,1,1,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Ryan Facchini,R,R,Fastball,Popout,Pop Up,Straightaway,11,-0.230570889,0.667103902
+Top 1,1,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Ryan Facchini,R,R,Fastball,Groundout,Ground Ball,Straightaway,11,0.427591388,0.429612795
+Bottom 1,1,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Liam Conlin,L,R,Fastball,Called Strike,,,0,0.601810815,0.245748713
+Bottom 1,1,0,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Liam Conlin,L,R,Offspeed,Foul,,,0,-0.424148029,-0.175606476
+Bottom 1,1,0,0,2,'0-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Liam Conlin,L,R,Fastball,Ball,,,0,-1.217814305,0.644120892
+Bottom 1,1,0,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Liam Conlin,L,R,Fastball,Ball,,,0,-0.637082884,-0.321165541
+Bottom 1,1,0,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Liam Conlin,L,R,Fastball,Error,Ground Ball,Pull,0,-0.443505743,0.544527847
+Bottom 1,1,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.33,Reid Lunney,Liam Conlin,L,R,Fastball,Ball,,,100,-1.333960589,0.046562624
+Bottom 1,1,0,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Liam Conlin,L,R,Fastball,Called Strike,,,100,-0.71451374,0.713069922
+Bottom 1,1,0,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Liam Conlin,L,R,Fastball,Ball,,,10,-1.527537729,0.337680754
+Bottom 1,1,0,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Liam Conlin,L,R,Fastball,Flyout,Fly Ball,Opposite Field,10,-0.598367455,0.268731723
+Bottom 1,1,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Liam Conlin,R,R,Fastball,Foul,,,10,-0.791944596,0.337680754
+Bottom 1,1,1,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Liam Conlin,R,R,Breaking Ball,Ball,,,10,0.311445104,-0.267538517
+Bottom 1,1,1,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Liam Conlin,R,R,Breaking Ball,Ball,,,1,1.511623374,-0.137301459
+Bottom 1,1,1,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Liam Conlin,R,R,Fastball,Single,Line Drive,Opposite Field,1,-0.385432601,-0.2292335
+Bottom 1,1,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.07,Cole Carpenter,Liam Conlin,R,R,Breaking Ball,Ball,,,100,-0.501578885,-0.550995644
+Bottom 1,1,1,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Liam Conlin,R,R,Fastball,Popout,Pop Up,Opposite Field,100,0.272729676,0.521544837
+Bottom 1,1,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.28,Flynn Matheson,Liam Conlin,R,R,Fastball,Called Strike,,,100,-0.71451374,0.820323971
+Bottom 1,1,2,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.18,Flynn Matheson,Liam Conlin,R,R,Breaking Ball,Called Strike,,,100,0.659883957,-0.060691424
+Bottom 1,1,2,0,2,'0-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Liam Conlin,R,R,Breaking Ball,Ball,,,100,1.627769659,-0.344148552
+Bottom 1,1,2,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Liam Conlin,R,R,Fastball,Foul,,,10,-0.830660024,0.805001964
+Bottom 1,1,2,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Liam Conlin,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,10,0.737314813,0.651781895
+Top 2,2,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Cutter,Called Strike,,,0,0.427591388,0.406629785
+Top 2,2,0,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Slider,Ball,,,0,-0.346717173,1.073137084
+Top 2,2,0,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Cutter,Swinging Strike,,,0,0.272729676,0.743713936
+Top 2,2,0,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Fastball,Foul,,,0,1.221257664,0.697747916
+Top 2,2,0,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Slider,Ball,,,0,-0.385432601,-0.436080593
+Top 2,2,0,2,2,'2-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Cutter,Strikeout Swinging,,,0,0.737314813,-0.160284469
+Top 2,2,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Ryan Facchini,R,R,Fastball,Ball,,,0,-1.00487945,-0.221572497
+Top 2,2,1,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Ryan Facchini,R,R,Fastball,Ball,,,0,-1.062952592,-0.382453569
+Top 2,2,1,2,0,'2-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Ryan Facchini,R,R,Cutter,Lineout,Line Drive,Opposite Field,0,0.717957099,0.444934802
+Top 2,2,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Cutter,Ball,,,0,-0.462863457,-0.244555507
+Top 2,2,2,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Fastball,Ball,,,0,-1.082310306,-0.305843534
+Top 2,2,2,2,0,'2-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Fastball,Ball,,,0,-1.450106873,0.100189648
+Top 2,2,2,3,0,'3-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Cutter,Called Strike,,,0,-0.637082884,0.644120892
+Top 2,2,2,3,1,'3-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Cutter,Swinging Strike,,,0,-0.366074887,0.429612795
+Top 2,2,2,3,2,'3-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Cutter,Foul,,,0,0.369518246,-0.160284469
+Top 2,2,2,3,2,'3-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Fastball,Foul,,,0,-0.211213175,0.337680754
+Top 2,2,2,3,2,'3-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Slider,Walk,,,0,-0.598367455,-0.290521528
+Top 2,2,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,1.21,John Banks,Ryan Facchini,R,R,Fastball,Ball,,,100,0.679241671,1.226357153
+Top 2,2,2,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Ryan Facchini,R,R,Fastball,Swinging Strike,,,10,0.524379959,0.850967984
+Top 2,2,2,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Ryan Facchini,R,R,Fastball,Popout,Pop Up,Opposite Field,10,-0.269286317,0.621137881
+Bottom 2,2,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Liam Conlin,R,R,Breaking Ball,Swinging Strike,,,0,0.234014248,0.299375737
+Bottom 2,2,0,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Liam Conlin,R,R,Breaking Ball,Ball,,,0,0.311445104,-0.382453569
+Bottom 2,2,0,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Liam Conlin,R,R,Breaking Ball,Single,Line Drive,Pull,0,-0.211213175,0.667103902
+Bottom 2,2,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.32,Gavin Taylor,Liam Conlin,R,R,Fastball,Foul,,,100,-0.637082884,0.820323971
+Bottom 2,2,0,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Liam Conlin,R,R,Fastball,Ball,,,100,-1.488822301,-0.25221651
+Bottom 2,2,0,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Liam Conlin,R,R,Breaking Ball,Ball,,,10,1.472907946,0.031240617
+Bottom 2,2,0,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Liam Conlin,R,R,Fastball,Ball,,,10,-1.140383448,0.276392727
+Bottom 2,2,0,3,1,'3-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Liam Conlin,R,R,Fastball,Foul,,,10,-0.346717173,0.444934802
+Bottom 2,2,0,3,2,'3-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Liam Conlin,R,R,Fastball,Hit By Pitch,,,10,-1.663041727,1.011849056
+Bottom 2,2,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Liam Conlin,L,R,Breaking Ball,Foul,,,110,0.38887596,0.406629785
+Bottom 2,2,0,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Liam Conlin,L,R,Fastball,Ball,,,110,-1.19845659,0.199782692
+Bottom 2,2,0,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Liam Conlin,L,R,Fastball,Swinging Strike,,,110,-0.733871454,0.697747916
+Bottom 2,2,0,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Liam Conlin,L,R,Fastball,Ball,,,110,-0.637082884,1.226357153
+Bottom 2,2,0,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Liam Conlin,L,R,Offspeed,Strikeout Swinging,,,110,-0.675798312,0.176799682
+Bottom 2,2,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.34,Adam Geddes,Liam Conlin,L,R,Breaking Ball,Called Strike,,,100,0.543737673,0.161477675
+Bottom 2,2,1,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Liam Conlin,L,R,Offspeed,Swinging Strike,,,100,-1.488822301,-0.114318449
+Bottom 2,2,1,0,2,'0-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Liam Conlin,L,R,Offspeed,Single,Line Drive,Pull,1,0.253371962,0.245748713
+Bottom 2,2,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.34,Caleb Feuerstake,Liam Conlin,L,R,Breaking Ball,Called Strike,,,100,-1.217814305,0.199782692
+Bottom 2,2,1,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Liam Conlin,L,R,Breaking Ball,Ball,,,10,0.679241671,-0.336487548
+Bottom 2,2,1,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Liam Conlin,L,R,Fastball,Called Strike,,,10,-0.695156026,0.084867641
+Bottom 2,2,1,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Liam Conlin,L,R,Breaking Ball,Strikeout Looking,,,1,-0.753229168,0.483239819
+Bottom 2,2,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Liam Conlin,L,R,Fastball,Called Strike,,,1,0.00172168,0.28405373
+Bottom 2,2,2,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Liam Conlin,L,R,Fastball,Called Strike,,,1,-0.520936599,0.054223627
+Bottom 2,2,2,0,2,'0-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Liam Conlin,L,R,Fastball,Foul,,,1,-0.249928603,0.835645977
+Bottom 2,2,2,0,2,'0-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Liam Conlin,L,R,Fastball,Ball,,,1,-0.675798312,1.257001166
+Bottom 2,2,2,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Liam Conlin,L,R,Fastball,Strikeout Swinging,,,1,-0.520936599,1.06547608
+Top 3,3,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Slider,Called Strike,,,0,-0.191855461,0.52920584
+Top 3,3,0,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Cutter,Foul,,,0,0.505022245,-0.152623466
+Top 3,3,0,0,2,'0-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Fastball,Foul,,,0,-0.695156026,0.598154871
+Top 3,3,0,0,2,'0-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Cutter,Ball,,,0,1.511623374,0.084867641
+Top 3,3,0,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Fastball,Foul,,,0,-0.172497747,0.215104699
+Top 3,3,0,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Cutter,Popout,Pop Up,Straightaway,0,-0.559652027,0.383646775
+Top 3,3,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Ryan Facchini,R,R,Cutter,Single,Pop Up,Opposite Field,0,-0.772586882,0.176799682
+Top 3,3,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,1.23,Davis Llewellyn,Ryan Facchini,L,R,Fastball,Ball,,,100,-0.443505743,1.080798087
+Top 3,3,1,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Changeup,Called Strike,,,100,-0.695156026,0.138494665
+Top 3,3,1,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Fastball,Ball,,,100,0.137225678,1.073137084
+Top 3,3,1,2,1,'2-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Cutter,Foul,,,100,-0.230570889,0.483239819
+Top 3,3,1,2,2,'2-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Changeup,Ball,,,100,-1.333960589,0.850967984
+Top 3,3,1,3,2,'3-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Cutter,Double,Fly Ball,Pull,100,-0.288644031,0.820323971
+Top 3,3,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Ryan Facchini,R,R,Fastball,Swinging Strike,,,11,-0.559652027,0.467917813
+Top 3,3,1,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Ryan Facchini,R,R,Fastball,Ball,,,11,-0.733871454,-0.144962462
+Top 3,3,1,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Ryan Facchini,R,R,Fastball,Single,Ground Ball,Straightaway,11,0.29208739,0.812662967
+Top 3,3,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Ryan Facchini,R,R,Fastball,Ball,,,100,0.717957099,0.23808771
+Top 3,3,1,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Ryan Facchini,R,R,Fastball,Popout,Pop Up,Opposite Field,10,-0.249928603,0.958222032
+Top 3,3,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Cutter,Called Strike,,,10,0.446949103,0.146155668
+Top 3,3,2,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Cutter,Ball,,,10,0.408233674,-0.305843534
+Top 3,3,2,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Cutter,Swinging Strike,,,10,-0.482221171,0.651781895
+Top 3,3,2,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Cutter,Ball,,,10,0.234014248,-0.2292335
+Top 3,3,2,2,2,'2-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Cutter,Ball,,,10,0.698599385,1.088459091
+Top 3,3,2,3,2,'3-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Cutter,Foul,,,10,0.640526243,0.743713936
+Top 3,3,2,3,2,'3-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,Ryan Facchini,R,R,Fastball,Hit By Pitch,,,10,-1.430749159,0.79734096
+Top 3,3,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Ryan Facchini,R,R,Cutter,Called Strike,,,110,-0.637082884,1.073137084
+Top 3,3,2,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Ryan Facchini,R,R,Cutter,Foul,,,110,-0.617725169,0.437273799
+Top 3,3,2,0,2,'0-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Ryan Facchini,R,R,Cutter,Strikeout Swinging,,,110,0.698599385,-0.20625049
+Bottom 3,3,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Liam Conlin,R,R,Fastball,Ball,,,0,-0.617725169,-0.282860524
+Bottom 3,3,0,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Liam Conlin,R,R,Fastball,Foul,,,0,-0.249928603,0.52920584
+Bottom 3,3,0,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Liam Conlin,R,R,Breaking Ball,Ball,,,0,1.318046234,0.782018953
+Bottom 3,3,0,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Liam Conlin,R,R,Fastball,Swinging Strike,,,0,-0.191855461,0.291714734
+Bottom 3,3,0,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Liam Conlin,R,R,Fastball,Strikeout Swinging,,,0,0.543737673,0.651781895
+Bottom 3,3,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Liam Conlin,R,R,Breaking Ball,Called Strike,,,0,0.19529882,0.736052933
+Bottom 3,3,1,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Liam Conlin,R,R,Fastball,Ball,,,0,1.39547709,0.667103902
+Bottom 3,3,1,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Liam Conlin,R,R,Fastball,Foul,,,0,-0.675798312,0.353002761
+Bottom 3,3,1,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Liam Conlin,R,R,Breaking Ball,Ball,,,0,1.027680524,-0.321165541
+Bottom 3,3,1,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Liam Conlin,R,R,Fastball,Flyout,Fly Ball,Pull,0,-0.559652027,0.28405373
+Bottom 3,3,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Liam Conlin,R,R,Breaking Ball,Swinging Strike,,,0,0.582453101,-0.167945473
+Bottom 3,3,2,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Liam Conlin,R,R,Fastball,Foul,,,0,0.601810815,0.291714734
+Bottom 3,3,2,0,2,'0-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Liam Conlin,R,R,Breaking Ball,Ball,,,0,-0.462863457,1.103781098
+Bottom 3,3,2,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Liam Conlin,R,R,Breaking Ball,Ball,,,0,-0.056351462,1.073137084
+Bottom 3,3,2,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Liam Conlin,R,R,Fastball,Foul,,,0,0.369518246,0.391307778
+Bottom 3,3,2,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Liam Conlin,R,R,Breaking Ball,Foul,,,0,0.640526243,0.759035943
+Bottom 3,3,2,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Liam Conlin,R,R,Fastball,Strikeout Looking,,,0,0.717957099,0.368324768
+Top 4,4,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Cutter,Ball,,,0,0.040437108,-0.321165541
+Top 4,4,0,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Fastball,Ball,,,0,-1.179098876,-0.305843534
+Top 4,4,0,2,0,'2-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Cutter,Foul,,,0,0.253371962,0.291714734
+Top 4,4,0,2,1,'2-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Cutter,Ball,,,0,-0.366074887,1.103781098
+Top 4,4,0,3,1,'3-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Ryan Facchini,R,R,Cutter,Walk,,,0,1.956850797,0.483239819
+Top 4,4,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Ryan Facchini,R,R,Fastball,Sacrifice Bunt,Ground Ball,Pull,100,-0.424148029,0.429612795
+Top 4,4,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Fastball,Ball,,,10,-0.036993748,1.111442101
+Top 4,4,1,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Ryan Facchini,R,R,Cutter,Single,Fly Ball,Pull,10,-0.269286317,0.123172658
+Top 4,4,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Ryan Facchini,R,R,Fastball,Foul,,,101,-0.443505743,-0.221572497
+Top 4,4,1,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Ryan Facchini,R,R,Cutter,Swinging Strike,,,101,-0.520936599,-0.114318449
+Top 4,4,1,0,2,'0-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Ryan Facchini,R,R,Slider,Ball,,,101,0.756672527,-0.083674435
+Top 4,4,1,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Ryan Facchini,R,R,Cutter,Strikeout Looking,,,11,-0.617725169,0.720730926
+Top 4,4,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Ryan Facchini,L,R,Cutter,Single,Ground Ball,Pull,11,-0.559652027,0.291714734
+Top 4,4,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Ryan Facchini,R,R,Fastball,Called Strike,,,100,-0.772586882,0.414290789
+Top 4,4,2,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Ryan Facchini,R,R,Cutter,Ball,,,100,-1.19845659,0.613476878
+Top 4,4,2,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Ryan Facchini,R,R,Cutter,Foul,,,100,-0.540294313,-0.060691424
+Top 4,4,2,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Ryan Facchini,R,R,Slider,Popout,Pop Up,Straightaway,100,-0.133782319,0.843306981
+Bottom 4,4,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Liam Conlin,R,R,Breaking Ball,Swinging Strike,,,0,-1.179098876,0.421951792
+Bottom 4,4,0,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Liam Conlin,R,R,Breaking Ball,Ball,,,0,0.079152536,-0.344148552
+Bottom 4,4,0,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Liam Conlin,R,R,Breaking Ball,Ball,,,0,0.756672527,-0.321165541
+Bottom 4,4,0,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Liam Conlin,R,R,Fastball,Double,Line Drive,Straightaway,0,0.19529882,0.460256809
+Bottom 4,4,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Liam Conlin,R,R,Fastball,Single,Fly Ball,Pull,10,-0.133782319,0.789679957
+Bottom 4,4,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Liam Conlin,L,R,Fastball,Sacrifice Bunt,,,110,-0.249928603,0.406629785
+Bottom 4,4,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Liam Conlin,L,R,Fastball,Ball,,,11,-0.753229168,-0.313504538
+Bottom 4,4,1,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Liam Conlin,L,R,Fastball,Single,Ground Ball,Straightaway,11,-0.346717173,0.559849854
+Bottom 4,4,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Nathan Mazer,L,L,Fastball,Ball,,,100,-1.411391445,0.276392727
+Bottom 4,4,1,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Nathan Mazer,L,L,Fastball,Ball,,,10,-1.488822301,-0.267538517
+Bottom 4,4,1,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Nathan Mazer,L,L,Fastball,Ball,,,10,0.09851025,1.203374142
+Bottom 4,4,1,3,0,'3-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Nathan Mazer,L,L,Fastball,Walk,,,10,-0.791944596,-0.459063603
+Bottom 4,4,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Nathan Mazer,L,L,Breaking Ball,Called Strike,,,101,0.079152536,0.866289991
+Bottom 4,4,1,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Nathan Mazer,L,L,Fastball,Ball,,,101,-1.721114869,-0.083674435
+Bottom 4,4,1,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Nathan Mazer,L,L,Breaking Ball,Ball,,,11,0.543737673,1.088459091
+Bottom 4,4,1,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Nathan Mazer,L,L,Fastball,Ball,,,11,-0.772586882,0.192121689
+Bottom 4,4,1,3,1,'3-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Nathan Mazer,L,L,Fastball,Walk,,,11,-1.275887447,-0.175606476
+Bottom 4,4,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Nathan Mazer,R,L,Breaking Ball,Called Strike,,,111,0.137225678,0.475578816
+Bottom 4,4,1,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Nathan Mazer,R,L,Breaking Ball,Called Strike,,,111,-0.249928603,1.073137084
+Bottom 4,4,1,0,2,'0-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Nathan Mazer,R,L,Breaking Ball,Ball,,,111,1.337403948,0.398968782
+Bottom 4,4,1,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Nathan Mazer,R,L,Fastball,Strikeout Swinging,,,111,-0.617725169,-0.2292335
+Bottom 4,4,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Nathan Mazer,R,L,Fastball,Hit By Pitch,,,111,-1.604968585,0.199782692
+Bottom 4,4,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Nathan Mazer,R,L,Breaking Ball,Ball,,,111,1.608411945,0.988866046
+Bottom 4,4,2,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Nathan Mazer,R,L,Breaking Ball,Ball,,,111,1.995566225,0.981205043
+Bottom 4,4,2,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Nathan Mazer,R,L,Fastball,Foul,,,111,0.408233674,0.23808771
+Bottom 4,4,2,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Nathan Mazer,R,L,Breaking Ball,Ball,,,111,1.763273657,0.927578019
+Bottom 4,4,2,3,1,'3-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Nathan Mazer,R,L,Fastball,Double,Line Drive,Straightaway,111,0.19529882,0.30703674
+Bottom 4,4,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Benjamin Rae,R,R,Breaking Ball,Ball,,,10,0.988965095,-0.351809555
+Bottom 4,4,2,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Benjamin Rae,R,R,Fastball,Swinging Strike,,,10,-0.211213175,0.467917813
+Bottom 4,4,2,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Benjamin Rae,R,R,Breaking Ball,Ball,,,10,1.240615378,-0.305843534
+Bottom 4,4,2,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Benjamin Rae,R,R,Breaking Ball,Popout,Pop Up,Opposite Field,10,-0.269286317,0.30703674
+Top 5,5,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Brady Campbell,R,R,Fastball,Ball,,,0,-0.520936599,-0.436080593
+Top 5,5,0,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Brady Campbell,R,R,Fastball,Ball,,,0,-0.404790315,1.126764108
+Top 5,5,0,2,0,'2-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,Brady Campbell,R,R,Fastball,Single,Ground Ball,Pull,0,-0.327359459,0.452595806
+Top 5,5,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,1.27,Brady Hall,Brady Campbell,R,R,Fastball,Foul,,,100,0.253371962,0.176799682
+Top 5,5,0,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,1.18,Brady Hall,Brady Campbell,R,R,Fastball,Called Strike,,,100,-0.675798312,0.092528644
+Top 5,5,0,0,2,'0-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,1.19,Brady Hall,Brady Campbell,R,R,Fastball,Hit By Pitch,,,100,-1.488822301,0.873950995
+Top 5,5,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Brady Campbell,R,R,Fastball,Foul,,,110,0.234014248,0.927578019
+Top 5,5,0,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Brady Campbell,R,R,Curveball,Called Strike,,,110,-0.114424605,0.322358747
+Top 5,5,0,0,2,'0-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Brady Campbell,R,R,Fastball,Ball,,,110,-1.295245161,0.360663764
+Top 5,5,0,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,Brady Campbell,R,R,Curveball,Error,Ground Ball,Opposite Field,110,0.640526243,0.207443696
+Top 5,5,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Brady Campbell,R,R,Fastball,Foul,,,111,-0.249928603,0.406629785
+Top 5,5,0,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Brady Campbell,R,R,Fastball,Ball,,,111,1.182542236,0.345341758
+Top 5,5,0,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Brady Campbell,R,R,Fastball,Foul,,,111,0.38887596,0.169138679
+Top 5,5,0,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Brady Campbell,R,R,Fastball,Ball,,,111,0.446949103,1.295306183
+Top 5,5,0,2,2,'2-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Brady Campbell,R,R,Curveball,Groundout,Ground Ball,Pull,111,0.059794822,0.153816672
+Top 5,5,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Brady Campbell,R,R,Fastball,Swinging Strike,,,11,0.485664531,0.651781895
+Top 5,5,1,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Brady Campbell,R,R,Fastball,Groundout,Ground Ball,Opposite Field,11,0.427591388,0.827984974
+Top 5,5,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Brady Campbell,R,R,Curveball,Called Strike,,,1,-0.617725169,0.368324768
+Top 5,5,2,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Brady Campbell,R,R,Curveball,Foul,,,1,0.330802818,0.391307778
+Top 5,5,2,0,2,'0-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Brady Campbell,R,R,Fastball,Strikeout Swinging,,,1,0.601810815,0.375985771
+Bottom 5,5,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Benjamin Rae,R,R,Fastball,Ball,,,0,0.3667,-0.162091873
+Bottom 5,5,0,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Benjamin Rae,R,R,Fastball,Ball,,,0,0.1075,-0.337944876
+Bottom 5,5,0,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Benjamin Rae,R,R,Fastball,Called Strike,,,0,0.4963,0.321503887
+Bottom 5,5,0,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Benjamin Rae,R,R,Breaking Ball,Foul,,,0,-0.392385714,0.783118021
+Bottom 5,5,0,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Benjamin Rae,R,R,Breaking Ball,Ball,,,0,1.162814286,-0.389235336
+Bottom 5,5,0,3,2,'3-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Benjamin Rae,R,R,Fastball,Single,Ground Ball,Pull,0,-0.355357143,0.409430389
+Bottom 5,5,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.13,Liam Riley,Benjamin Rae,R,R,Fastball,Ball,,,100,-1.392157143,0.805099647
+Bottom 5,5,0,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.17,Liam Riley,Benjamin Rae,R,R,Fastball,Called Strike,,,100,0.514814286,0.196941343
+Bottom 5,5,0,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Liam Riley,Benjamin Rae,R,R,Fastball,Called Strike,,,100,0.699957143,0.336158304
+Bottom 5,5,0,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Liam Riley,Benjamin Rae,R,R,Breaking Ball,Ball,,,10,1.866357143,0.761136396
+Bottom 5,5,0,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Liam Riley,Benjamin Rae,R,R,Fastball,Strikeout Swinging,,,10,-0.059128571,0.570628975
+Bottom 5,5,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Benjamin Rae,L,R,Fastball,Ball,,,10,-1.595814286,0.174959717
+Bottom 5,5,1,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Benjamin Rae,L,R,Fastball,Ball,,,10,-0.1517,1.120169611
+Bottom 5,5,1,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Benjamin Rae,L,R,Fastball,Foul,,,10,-0.059128571,0.526665724
+Bottom 5,5,1,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Benjamin Rae,L,R,Breaking Ball,Single,Ground Ball,Pull,10,-0.2813,0.702518728
+Bottom 5,5,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,,Benjamin Rae,L,R,,Additional Out,,,0,,
+Bottom 5,5,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Benjamin Rae,L,R,Offspeed,Ball,,,0,-1.503242857,0.372794346
+Bottom 5,5,2,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Benjamin Rae,L,R,Fastball,Ball,,,0,1.570128571,0.109014841
+Bottom 5,5,2,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Benjamin Rae,L,R,Offspeed,Swinging Strike,,,0,0.181557143,0.512011307
+Bottom 5,5,2,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Benjamin Rae,L,R,Breaking Ball,Ball,,,0,-0.559014286,1.134824028
+Bottom 5,5,2,3,1,'3-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Caleb Feuerstake,Benjamin Rae,L,R,Fastball,Walk,,,0,-1.3181,0.152978092
+Bottom 5,5,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Benjamin Rae,L,R,Fastball,Called Strike,,,100,0.385214286,0.240904594
+Bottom 5,5,2,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Benjamin Rae,L,R,Breaking Ball,Ball,,,10,-1.299585714,0.1603053
+Bottom 5,5,2,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Benjamin Rae,L,R,Fastball,Ball,,,10,0.070471429,1.105515194
+Bottom 5,5,2,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Benjamin Rae,L,R,Fastball,Double,Line Drive,Opposite Field,10,-0.559014286,0.284867845
+Bottom 5,5,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Benjamin Rae,R,R,Breaking Ball,Ball,,,10,1.699728571,-0.213382332
+Bottom 5,5,2,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Benjamin Rae,R,R,Breaking Ball,Ball,,,10,1.162814286,-0.41854417
+Bottom 5,5,2,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Benjamin Rae,R,R,Fastball,Ball,,,10,-0.059128571,1.259386572
+Bottom 5,5,2,3,0,'3-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Benjamin Rae,R,R,Fastball,Called Strike,,,10,0.422242857,0.079706007
+Bottom 5,5,2,3,1,'3-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Benjamin Rae,R,R,Fastball,Called Strike,,,10,0.736985714,0.834408481
+Bottom 5,5,2,3,2,'3-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Benjamin Rae,R,R,Fastball,Walk,,,10,1.366471429,0.893026148
+Bottom 5,5,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,21,R,R,Breaking Ball,Called Strike,,,110,0.311157143,0.416757597
+Bottom 5,5,2,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,21,R,R,Breaking Ball,Ball,,,110,0.792528571,-0.315963251
+Bottom 5,5,2,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,21,R,R,Breaking Ball,Ball,,,110,-1.521757143,0.021088339
+Bottom 5,5,2,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,21,R,R,Fastball,Ball,,,110,-1.410671429,0.636573852
+Bottom 5,5,2,3,1,'3-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,21,R,R,Breaking Ball,Walk,,,110,0.977671429,-0.477161838
+Bottom 5,5,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,21,R,R,Fastball,Ball,,,111,1.755271429,-0.008220495
+Bottom 5,5,2,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,21,R,R,Fastball,Single,Line Drive,Straightaway,111,-0.133185714,0.819754064
+Bottom 5,5,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,21,R,R,Breaking Ball,Ball,,,101,0.459271429,-0.213382332
+Bottom 5,5,2,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,21,R,R,Fastball,Ball,,,101,0.181557143,-0.118128622
+Bottom 5,5,2,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,21,R,R,Fastball,Called Strike,,,101,0.459271429,0.167632509
+Bottom 5,5,2,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,21,R,R,Fastball,Ball,,,101,-1.225528571,1.134824028
+Bottom 5,5,2,3,1,'3-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,21,R,R,Fastball,Called Strike,,,101,0.163042857,0.123669258
+Bottom 5,5,2,3,2,'3-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,21,R,R,Fastball,Single,Line Drive,Pull,101,-0.373871429,0.731827562
+Bottom 5,5,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,21,R,R,Fastball,Swinging Strike,,,110,-0.262785714,0.695191519
+Bottom 5,5,2,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,21,R,R,Breaking Ball,Hit By Pitch,,,110,-1.632842857,0.314176678
+Bottom 5,5,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Liam Riley,21,R,R,Fastball,Ball,,,111,-0.114671429,-0.381908127
+Bottom 5,5,2,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Liam Riley,21,R,R,Fastball,Groundout,Ground Ball,Pull,111,-0.2813,0.915007774
+Top 6,6,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Brady Campbell,R,R,Fastball,Ball,,,0,1.384985714,0.717173145
+Top 6,6,0,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Brady Campbell,R,R,Fastball,Ball,,,0,-1.558785714,0.438739223
+Top 6,6,0,2,0,'2-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Brady Campbell,R,R,Curveball,Ball,,,0,0.588871429,-0.279327209
+Top 6,6,0,3,0,'3-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Brady Campbell,R,R,Fastball,Called Strike,,,0,-0.225757143,0.226250177
+Top 6,6,0,3,1,'3-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Brady Campbell,R,R,Fastball,Called Strike,,,0,0.3667,0.863717315
+Top 6,6,0,3,2,'3-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Brady Campbell,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.551842857,0.233577385
+Top 6,6,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,RJ Moniz,L,L,Fastball,Single,Ground Ball,Opposite Field,0,0.329671429,0.54864735
+Top 6,6,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,RJ Moniz,R,L,Fastball,Foul,,,100,-0.1517,0.577956184
+Top 6,6,1,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,1.14,Lucas Bateman,RJ Moniz,R,L,Curveball,Ball,,,100,1.440528571,0.292195053
+Top 6,6,1,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,1.06,Lucas Bateman,RJ Moniz,R,L,Fastball,Double,Pop Up,Opposite Field,100,-0.447928571,0.21159576
+Top 6,6,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,1.02,Jack Larmer,RJ Moniz,R,L,Fastball,Called Strike,,,11,-0.503471429,0.350812721
+Top 6,6,1,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,RJ Moniz,R,L,Fastball,Ball,,,11,1.5331,1.12749682
+Top 6,6,1,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,RJ Moniz,R,L,Curveball,Swinging Strike,,,11,-0.225757143,0.123669258
+Top 6,6,1,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,RJ Moniz,R,L,Fastball,Ball,,,11,-1.503242857,-0.118128622
+Top 6,6,1,2,2,'2-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,RJ Moniz,R,L,Curveball,Ball,,,11,-0.6701,-0.337944876
+Top 6,6,1,3,2,'3-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Larmer,RJ Moniz,R,L,Fastball,Walk,,,11,0.088985714,-0.330617668
+Top 6,6,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,RJ Moniz,R,L,Fastball,Called Strike,,,111,-0.484957143,0.878371731
+Top 6,6,1,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brady Hall,RJ Moniz,R,L,Fastball,Groundout,Ground Ball,Opposite Field,111,-0.596042857,0.468048057
+Top 6,6,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,RJ Moniz,R,L,Fastball,Ball,,,11,0.644414286,-0.140110247
+Top 6,6,2,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,RJ Moniz,R,L,Fastball,Foul,,,11,-0.096157143,0.709845936
+Top 6,6,2,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,RJ Moniz,R,L,Curveball,Ball,,,11,0.774014286,1.149478445
+Top 6,6,2,2,1,'2-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,RJ Moniz,R,L,Fastball,Ball,,,11,-0.466442857,-0.330617668
+Top 6,6,2,3,1,'3-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Peter Dineen,RJ Moniz,R,L,Fastball,Single,Ground Ball,Straightaway,11,0.255614286,0.424084806
+Top 6,6,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,RJ Moniz,R,L,Fastball,Swinging Strike,,,101,0.4963,0.30684947
+Top 6,6,2,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,,,,,,Truncated Out,,,0,,
+Bottom 6,6,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Kyle Tamaki,L,R,Fastball,Ball,,,0,-0.5405,-0.184073498
+Bottom 6,6,0,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Kyle Tamaki,L,R,Fastball,Ball,,,0,-0.466442857,1.252059364
+Bottom 6,6,0,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Kyle Tamaki,L,R,Breaking Ball,Ball,,,0,1.773785714,-0.037529329
+Bottom 6,6,0,3,0,'3-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Kyle Tamaki,L,R,Fastball,Called Strike,,,0,0.255614286,0.680537103
+Bottom 6,6,0,3,1,'3-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Kyle Tamaki,L,R,Fastball,Ball,,,0,-0.262785714,1.112842403
+Bottom 6,6,0,4,1,'4-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Kyle Tamaki,L,R,Fastball,Walk,,,0,-1.373642857,0.717173145
+Bottom 6,6,0,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,0.98,Tobey Drennan,Kyle Tamaki,R,R,Breaking Ball,Ball,,,100,1.310928571,-0.381908127
+Bottom 6,6,0,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.05,Tobey Drennan,Kyle Tamaki,R,R,Fastball,Ball,,,100,1.570128571,0.218922968
+Bottom 6,6,0,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Tobey Drennan,Kyle Tamaki,R,R,,Caught Stealing,,,10,,
+Bottom 6,6,1,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Tobey Drennan,Kyle Tamaki,R,R,Fastball,Triple,Fly Ball,Straightaway,0,0.4963,0.856390106
+Bottom 6,6,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Kyle Tamaki,L,R,Breaking Ball,Ball,,,1,-0.4109,1.142151237
+Bottom 6,6,1,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Kyle Tamaki,L,R,Fastball,Ball,,,1,-1.484728571,1.046897527
+Bottom 6,6,1,2,0,'2-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Kyle Tamaki,L,R,Fastball,Ball,,,1,-0.762671429,-0.411216961
+Bottom 6,6,1,3,0,'3-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Kyle Tamaki,L,R,Fastball,Called Strike,,,1,-0.596042857,0.775790813
+Bottom 6,6,1,3,1,'3-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Reid Lunney,Kyle Tamaki,L,R,Breaking Ball,Walk,,,1,0.681442857,-0.330617668
+Bottom 6,6,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Bryson Kraan,R,R,Fastball,Ball,,,101,0.866585714,1.12749682
+Bottom 6,6,1,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Bryson Kraan,R,R,Fastball,Swinging Strike,,,101,0.274128571,0.358139929
+Bottom 6,6,1,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Bryson Kraan,R,R,Fastball,Ball,,,101,1.477557143,-0.059510954
+Bottom 6,6,1,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Bryson Kraan,R,R,Fastball,Called Strike,,,101,0.6259,0.827081272
+Bottom 6,6,1,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Bryson Kraan,R,R,Breaking Ball,Foul,,,101,-0.355357143,0.365467138
+Bottom 6,6,1,2,2,'2-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Bryson Kraan,R,R,Breaking Ball,Ball,,,101,0.1075,0.944316608
+Bottom 6,6,1,3,2,'3-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Bryson Kraan,R,R,Breaking Ball,Walk,,,101,0.329671429,-0.374580919
+Bottom 6,6,1,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Bryson Kraan,R,R,Fastball,Ball,,,111,-0.133185714,-0.235363958
+Bottom 6,6,1,1,0,'1-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Bryson Kraan,R,R,Fastball,Called Strike,,,111,0.607385714,0.365467138
+Bottom 6,6,1,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Bryson Kraan,R,R,Fastball,Called Strike,,,111,0.829557143,0.45339364
+Bottom 6,6,1,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Cole Carpenter,Bryson Kraan,R,R,Breaking Ball,Flyout,Fly Ball,Opposite Field,111,0.4963,0.336158304
+Bottom 6,6,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Bryson Kraan,R,R,Breaking Ball,Called Strike,,,1,-0.133185714,0.687864311
+Bottom 6,6,2,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Bryson Kraan,R,R,Breaking Ball,Ball,,,1,-1.281071429,0.856390106
+Bottom 6,6,2,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Bryson Kraan,R,R,Fastball,Ball,,,1,0.477785714,-0.323290459
+Bottom 6,6,2,2,1,'2-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Bryson Kraan,R,R,Breaking Ball,Single,Fly Ball,Pull,1,-0.207242857,0.292195053
+Bottom 6,6,2,0,0,'0-0,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Bryson Kraan,R,R,Breaking Ball,Foul,,,100,-0.040614286,0.240904594
+Bottom 6,6,2,0,1,'0-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Bryson Kraan,R,R,Breaking Ball,Ball,,,100,-0.614557143,-0.374580919
+Bottom 6,6,2,1,1,'1-1,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,1.64,Nolan Phelan,Bryson Kraan,R,R,Fastball,Swinging Strike,,,100,-0.336842857,0.343485512
+Bottom 6,6,2,1,2,'1-2,2025-09-01,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Bryson Kraan,R,R,Breaking Ball,Flyout,Fly Ball,Straightaway,100,0.422242857,0.248231802
+Top 7,7,0,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Dante Cifala,R,R,Fastball,Swinging Strike,,,0,-0.559014286,0.915007774
+Top 7,7,0,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Dante Cifala,R,R,Fastball,Called Strike,,,0,0.644414286,0.621919435
+Top 7,7,0,0,2,'0-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Dante Cifala,R,R,Slurve,Ball,,,0,1.644185714,-0.059510954
+Top 7,7,0,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Dante Cifala,R,R,Fastball,Foul,,,0,-0.447928571,0.490029682
+Top 7,7,0,1,2,'1-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Dante Cifala,R,R,Slurve,Strikeout Swinging,,,0,-0.207242857,0.658555477
+Top 7,7,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,John Banks,Dante Cifala,R,R,Fastball,Single,Ground Ball,Pull,0,0.163042857,0.468048057
+Top 7,7,1,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,1.36,Jack Symington,Dante Cifala,R,R,Slurve,Ball,,,100,1.236871429,-0.36725371
+Top 7,7,1,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Dante Cifala,R,R,Fastball,Swinging Strike,,,10,0.4963,0.321503887
+Top 7,7,1,1,1,'1-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Symington,Dante Cifala,R,R,Fastball,Groundout,Ground Ball,Straightaway,10,0.311157143,0.387448763
+Top 7,7,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Dante Cifala,R,R,Fastball,Swinging Strike,,,1,0.4963,0.152978092
+Top 7,7,2,0,1,'0-1,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Dante Cifala,R,R,Fastball,Called Strike,,,1,0.533328571,0.651228269
+Top 7,7,2,0,2,'0-2,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Ashton Abols,Dante Cifala,R,R,Fastball,Double,Fly Ball,Pull,1,0.014928571,0.856390106
+Top 7,7,2,0,0,'0-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Dante Cifala,L,R,Slurve,Ball,,,10,1.6627,0.204268551
+Top 7,7,2,1,0,'1-0,2025-09-01,Wilfrid Laurier Golden Hawks,Brock Badgers,,Davis Llewellyn,Dante Cifala,,,Slurve,Groundout,Ground Ball,Pull,10,-0.521985714,-0.118128622
+Top 1,1,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Fastball,Called Strike,,,0,0.38887596,0.827984974
+Top 1,1,0,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Fastball,Ball,,,0,1.356761662,0.866289991
+Top 1,1,0,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Fastball,Called Strike,,,0,0.079152536,0.942900026
+Top 1,1,0,1,2,'1-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Offspeed,Ball,,,0,0.38887596,1.119103104
+Top 1,1,0,2,2,'2-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.756672527,0.75137494
+Top 1,1,1,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Reid Lunney,Daniel Meron,L,R,Fastball,Single,Line Drive,Straightaway,0,-0.211213175,0.805001964
+Top 1,1,1,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,1.13,Jaden Leeder,Daniel Meron,R,R,Fastball,Called Strike,,,100,0.311445104,0.690086912
+Top 1,1,1,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Daniel Meron,R,R,Fastball,Ball,,,100,0.29208739,-0.190928483
+Top 1,1,1,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Daniel Meron,R,R,Fastball,Flyout,Fly Ball,Opposite Field,10,0.38887596,0.406629785
+Top 1,1,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Cole Carpenter,Daniel Meron,R,R,Breaking Ball,Called Strike,,,1,0.38887596,-0.336487548
+Top 1,1,2,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Cole Carpenter,Daniel Meron,R,R,Fastball,Popout,Pop Up,Opposite Field,1,0.29208739,0.904595008
+Bottom 1,1,0,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Called Strike,,,0,-0.675798312,0.705408919
+Bottom 1,1,0,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Ball,,,0,0.717957099,0.276392727
+Bottom 1,1,0,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Curveball,Groundout,Ground Ball,Straightaway,0,-0.114424605,0.820323971
+Bottom 1,1,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Jack Tiessen,L,R,Fastball,Called Strike,,,0,0.582453101,0.184460686
+Bottom 1,1,1,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Jack Tiessen,L,R,Curveball,Swinging Strike,,,0,0.19529882,-0.4514026
+Bottom 1,1,1,0,2,'0-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Jack Tiessen,L,R,Fastball,Strikeout Looking,,,0,0.679241671,0.827984974
+Bottom 1,1,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Curveball,Ball,,,0,1.666485087,-0.190928483
+Bottom 1,1,2,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Fastball,Swinging Strike,,,0,0.408233674,-0.2292335
+Bottom 1,1,2,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Changeup,Ball,,,0,0.717957099,-0.367131562
+Bottom 1,1,2,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Fastball,Called Strike,,,0,0.505022245,0.26107072
+Bottom 1,1,2,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Fastball,Foul,,,0,-0.249928603,0.789679957
+Bottom 1,1,2,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Changeup,Ball,,,0,-1.024237164,-0.367131562
+Bottom 1,1,2,3,2,'3-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Curveball,Popout,Pop Up,Straightaway,0,0.311445104,0.169138679
+Top 2,2,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Breaking Ball,Ball,,,0,1.453550232,0.184460686
+Top 2,2,0,1,0,'1-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Fastball,Foul,,,0,-0.617725169,0.26107072
+Top 2,2,0,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Breaking Ball,Foul,,,0,0.09851025,0.054223627
+Top 2,2,0,1,2,'1-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Breaking Ball,Ball,,,0,1.20189995,-0.374792565
+Top 2,2,0,2,2,'2-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Fastball,Strikeout Looking,,,0,0.446949103,0.575171861
+Top 2,2,1,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Fastball,Foul,,,0,0.234014248,0.253409716
+Top 2,2,1,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Breaking Ball,Foul,,,0,0.582453101,0.23808771
+Top 2,2,1,0,2,'0-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Fastball,Strikeout Swinging,,,0,0.640526243,1.149747118
+Top 2,2,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Daniel Meron,R,R,Fastball,Called Strike,,,0,0.234014248,0.421951792
+Top 2,2,2,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Daniel Meron,R,R,Breaking Ball,Ball,,,0,0.834103383,-0.359470558
+Top 2,2,2,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Daniel Meron,R,R,Fastball,Error,Ground Ball,Straightaway,0,-0.869375452,0.743713936
+Top 2,2,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Called Strike,,,100,-1.333960589,0.30703674
+Top 2,2,2,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Swinging Strike,,,100,0.234014248,0.590493868
+Top 2,2,2,0,2,'0-2,2025-09-07,Brock Badgers,Guelph Gryphons,1.07,Brady Campbell,Daniel Meron,R,R,Fastball,Ball,,,100,0.853461097,0.176799682
+Top 2,2,2,1,2,'1-2,2025-09-07,Brock Badgers,Guelph Gryphons,1.04,Brady Campbell,Daniel Meron,R,R,Breaking Ball,Ball,,,100,1.20189995,-0.344148552
+Top 2,2,2,2,2,'2-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Groundout,Ground Ball,Pull,100,0.38887596,0.299375737
+Bottom 2,2,0,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Fastball,Ball,,,0,0.29208739,-0.550995644
+Bottom 2,2,0,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Fastball,Ball,,,0,1.434192518,0.743713936
+Bottom 2,2,0,2,0,'2-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Curveball,Foul,,,0,-0.598367455,0.789679957
+Bottom 2,2,0,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Changeup,Called Strike,,,0,0.408233674,0.421951792
+Bottom 2,2,0,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Changeup,Ball,,,0,-0.211213175,-0.382453569
+Bottom 2,2,0,3,2,'3-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Fastball,Strikeout Looking,,,0,0.679241671,0.153816672
+Bottom 2,2,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Curveball,Ball,,,0,-1.237172019,0.169138679
+Bottom 2,2,1,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Fastball,Foul,,,0,-0.230570889,0.345341758
+Bottom 2,2,1,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Changeup,Ball,,,0,-1.237172019,0.054223627
+Bottom 2,2,1,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Fastball,Called Strike,,,0,0.175941106,0.736052933
+Bottom 2,2,1,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Fastball,Single,Line Drive,Pull,0,0.427591388,0.28405373
+Bottom 2,2,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,1.38,Noah Cantwell,Jack Tiessen,R,R,Fastball,Ball,,,100,0.427591388,-0.121979452
+Bottom 2,2,1,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,1.43,Noah Cantwell,Jack Tiessen,R,R,Fastball,Double,Line Drive,Pull,100,-0.288644031,0.728391929
+Bottom 2,2,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Curveball,Ball,,,10,-1.372676017,0.345341758
+Bottom 2,2,1,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Fastball,Ball,,,10,0.911534239,-0.236894503
+Bottom 2,2,1,2,0,'2-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Fastball,Swinging Strike,,,10,0.311445104,0.598154871
+Bottom 2,2,1,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Fastball,Foul,,,10,-0.269286317,0.965883036
+Bottom 2,2,1,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Curveball,Foul,,,10,0.698599385,-0.198589486
+Bottom 2,2,1,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Curveball,Groundout,Ground Ball,Straightaway,10,0.408233674,0.222765703
+Bottom 2,2,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Swinging Strike,,,1,-0.036993748,0.513883833
+Bottom 2,2,2,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Ball,,,1,1.530981088,-0.328826545
+Bottom 2,2,2,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Ball,,,0,-0.482221171,1.157408122
+Bottom 2,2,2,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Curveball,Called Strike,,,0,-0.385432601,0.360663764
+Bottom 2,2,2,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Curveball,Ball,,,0,1.569696516,-0.2292335
+Bottom 2,2,2,3,2,'3-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Walk,,,0,-1.411391445,0.866289991
+Bottom 2,2,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Foul,,,100,0.059794822,0.192121689
+Bottom 2,2,2,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Foul,,,100,0.350160532,0.850967984
+Bottom 2,2,2,0,2,'0-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Curveball,Ball,,,100,1.705200515,-0.413097582
+Bottom 2,2,2,1,2,'1-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Single,Ground Ball,Straightaway,10,-0.172497747,0.50622283
+Bottom 2,2,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Ball,,,100,-0.017636034,1.165069125
+Bottom 2,2,2,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Ball,,,100,1.530981088,0.176799682
+Bottom 2,2,2,2,0,'2-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Groundout,Ground Ball,Pull,100,-0.211213175,0.207443696
+Top 3,3,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Fastball,Flyout,Fly Ball,Pull,0,0.29208739,0.353002761
+Top 3,3,1,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Offspeed,Ball,,,0,0.524379959,1.119103104
+Top 3,3,1,1,0,'1-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Fastball,Single,Ground Ball,Opposite Field,0,0.485664531,0.728391929
+Top 3,3,1,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,1.15,Reid Lunney,Daniel Meron,L,R,Fastball,Ball,,,100,1.29868852,0.965883036
+Top 3,3,1,1,0,'1-0,2025-09-07,Brock Badgers,Guelph Gryphons,1.1,Reid Lunney,Daniel Meron,L,R,Fastball,Foul,,,100,0.350160532,0.483239819
+Top 3,3,1,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,1.04,Reid Lunney,Daniel Meron,L,R,Fastball,Double,Line Drive,Straightaway,100,0.021079394,0.75137494
+Top 3,3,1,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Daniel Meron,R,R,Fastball,Called Strike,,,10,0.737314813,0.276392727
+Top 3,3,1,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Daniel Meron,R,R,Breaking Ball,Ball,,,10,1.434192518,0.299375737
+Top 3,3,1,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Daniel Meron,R,R,Fastball,Groundout,Ground Ball,Pull,10,-0.172497747,0.843306981
+Top 3,3,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Cole Carpenter,Daniel Meron,R,R,Fastball,Called Strike,,,1,0.272729676,0.736052933
+Top 3,3,2,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Cole Carpenter,Daniel Meron,R,R,Breaking Ball,Flyout,Fly Ball,Opposite Field,1,0.446949103,0.337680754
+Bottom 3,3,0,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Jack Tiessen,L,R,Fastball,Groundout,Ground Ball,Pull,0,-0.462863457,0.299375737
+Bottom 3,3,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Curveball,Called Strike,,,0,0.543737673,0.659442898
+Bottom 3,3,1,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Curveball,Called Strike,,,0,0.659883957,0.084867641
+Bottom 3,3,1,0,2,'0-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Curveball,Ball,,,0,0.621168529,-0.390114572
+Bottom 3,3,1,1,2,'1-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Fastball,Ball,,,0,-1.450106873,0.759035943
+Bottom 3,3,1,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Curveball,Ball,,,0,-0.482221171,-0.328826545
+Bottom 3,3,1,3,2,'3-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Fastball,Foul,,,0,0.156583392,0.77435795
+Bottom 3,3,1,3,2,'3-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Jack Tiessen,R,R,Curveball,Walk,,,0,-0.191855461,-0.420758586
+Bottom 3,3,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,1.45,Sawyer Whitaker,Jack Tiessen,L,R,Fastball,Ball,,,100,-0.850017738,0.322358747
+Bottom 3,3,1,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Fastball,Ball,,,100,1.453550232,0.161477675
+Bottom 3,3,1,2,0,'2-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Fastball,Called Strike,,,100,0.19529882,0.138494665
+Bottom 3,3,1,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Fastball,Foul,,,10,-0.385432601,0.475578816
+Bottom 3,3,1,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Curveball,Strikeout Swinging,,,10,-1.237172019,-0.213911493
+Bottom 3,3,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Fastball,Ball,,,10,1.259973092,0.215104699
+Bottom 3,3,2,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Changeup,Foul,,,10,-0.482221171,0.835645977
+Bottom 3,3,2,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Curveball,Ball,,,10,0.853461097,-0.282860524
+Bottom 3,3,2,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Fastball,Foul,,,10,0.621168529,0.299375737
+Bottom 3,3,2,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Changeup,Strikeout Swinging,,,10,-0.327359459,-0.25221651
+Top 4,4,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Fastball,Foul,,,0,0.369518246,0.605815874
+Top 4,4,0,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Breaking Ball,Foul,,,0,0.776030241,-0.175606476
+Top 4,4,0,0,2,'0-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Breaking Ball,Foul,,,0,-0.036993748,0.199782692
+Top 4,4,0,0,2,'0-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Breaking Ball,Foul,,,0,0.795387955,0.169138679
+Top 4,4,0,0,2,'0-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Fastball,Ball,,,0,-1.024237164,1.188052135
+Top 4,4,0,1,2,'1-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Breaking Ball,Ball,,,0,0.834103383,-0.367131562
+Top 4,4,0,2,2,'2-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Fastball,Strikeout Looking,,,0,0.717957099,-0.060691424
+Top 4,4,1,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Breaking Ball,Ball,,,0,0.988965095,-0.290521528
+Top 4,4,1,1,0,'1-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Fastball,Called Strike,,,0,0.543737673,0.138494665
+Top 4,4,1,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.253371962,0.674764905
+Top 4,4,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Single,Line Drive,Opposite Field,0,0.524379959,0.30703674
+Top 4,4,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,,,,,,Truncated Out,,,0,,
+Bottom 4,4,0,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Cantwell,Jack Tiessen,R,R,Curveball,Foul,,,0,-0.249928603,0.429612795
+Bottom 4,4,0,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Cantwell,Jack Tiessen,R,R,Curveball,Flyout,Fly Ball,Straightaway,0,0.00172168,0.789679957
+Bottom 4,4,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,L,R,Fastball,Single,Pop Up,Pull,0,-0.308001745,0.850967984
+Bottom 4,4,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Ball,,,100,-0.675798312,0.697747916
+Bottom 4,4,1,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Changeup,Ball,,,100,-0.695156026,1.134425111
+Bottom 4,4,1,2,0,'2-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Changeup,Ball,,,100,-1.508180015,0.30703674
+Bottom 4,4,1,3,0,'3-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Called Strike,,,100,0.621168529,0.766696947
+Bottom 4,4,1,3,1,'3-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Single,Ground Ball,Straightaway,100,0.563095387,0.138494665
+Bottom 4,4,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Ball,,,110,1.976208511,-0.198589486
+Bottom 4,4,1,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Called Strike,,,110,0.659883957,0.605815874
+Bottom 4,4,1,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Curveball,Ball,,,110,0.776030241,-0.436080593
+Bottom 4,4,1,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Foul,,,110,0.892176525,0.521544837
+Bottom 4,4,1,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Curveball,Ball,,,110,1.124469094,0.26107072
+Bottom 4,4,1,3,2,'3-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Strikeout Swinging,,,110,-0.366074887,0.927578019
+Bottom 4,4,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Triple,Line Drive,Pull,110,0.272729676,0.322358747
+Bottom 4,4,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Jack Tiessen,L,R,Fastball,Ball,,,1,-1.663041727,0.590493868
+Bottom 4,4,2,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Jack Tiessen,L,R,Fastball,Ball,,,1,0.659883957,0.697747916
+Bottom 4,4,2,2,0,'2-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Jack Tiessen,L,R,Fastball,Ball,,,1,0.582453101,-0.321165541
+Bottom 4,4,2,3,0,'3-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Jack Tiessen,L,R,Fastball,Walk,,,1,-0.501578885,-0.167945473
+Bottom 4,4,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Jack Tiessen,L,R,Fastball,Groundout,Ground Ball,Pull,101,0.485664531,0.444934802
+Top 5,5,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Daniel Meron,R,R,Fastball,Called Strike,,,0,0.563095387,0.812662967
+Top 5,5,0,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Daniel Meron,R,R,Fastball,Called Strike,,,0,0.601810815,0.521544837
+Top 5,5,0,0,2,'0-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Daniel Meron,R,R,Fastball,Ball,,,0,-1.392033731,0.904595008
+Top 5,5,0,1,2,'1-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Daniel Meron,R,R,Fastball,Ball,,,0,1.705200515,0.736052933
+Top 5,5,0,2,2,'2-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Daniel Meron,R,R,Fastball,Ball,,,0,-0.346717173,-0.351809555
+Top 5,5,0,3,2,'3-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Daniel Meron,R,R,Fastball,Walk,,,0,-0.191855461,-0.2292335
+Top 5,5,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Fastball,Called Strike,,,100,-0.249928603,0.544527847
+Top 5,5,0,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Fastball,Single,Ground Ball,Pull,100,-0.288644031,0.644120892
+Top 5,5,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Fastball,Swinging Strike,,,110,-0.482221171,-0.144962462
+Top 5,5,0,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Fastball,Ball,,,110,0.543737673,1.088459091
+Top 5,5,0,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Offspeed,Ball,,,110,0.621168529,-0.091335438
+Top 5,5,0,2,1,'2-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Fastball,Ball,,,110,1.124469094,0.820323971
+Top 5,5,0,3,1,'3-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Daniel Meron,L,R,Fastball,Walk,,,110,-0.501578885,1.157408122
+Top 5,5,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Reid Lunney,Daniel Meron,L,R,Offspeed,Called Strike,,,111,0.330802818,0.146155668
+Top 5,5,0,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Reid Lunney,Daniel Meron,L,R,Fastball,Ball,,,111,-0.540294313,1.073137084
+Top 5,5,0,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Reid Lunney,Daniel Meron,L,R,Offspeed,Called Strike,,,111,0.621168529,0.130833661
+Top 5,5,0,1,2,'1-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Reid Lunney,Daniel Meron,L,R,Fastball,Foul,,,111,-0.675798312,0.79734096
+Top 5,5,0,1,2,'1-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Reid Lunney,Daniel Meron,L,R,Offspeed,Hit By Pitch,,,111,1.976208511,0.054223627
+Top 5,5,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Daniel Meron,R,R,Fastball,Error,Ground Ball,Straightaway,111,-0.346717173,0.207443696
+Top 5,5,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Cole Carpenter,Daniel Meron,R,R,Fastball,Swinging Strike,,,111,-1.275887447,0.184460686
+Top 5,5,0,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Cole Carpenter,Daniel Meron,R,R,Fastball,Sacrifice Fly,Fly Ball,Straightaway,111,-0.133782319,0.881611998
+Top 5,5,1,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Fastball,Groundout,Ground Ball,Straightaway,101,-0.153140033,0.28405373
+Top 5,5,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Fastball,Foul,,,10,0.466306817,0.406629785
+Top 5,5,2,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Breaking Ball,Ball,,,10,1.705200515,-0.298182531
+Top 5,5,2,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Fastball,Foul,,,10,-0.288644031,0.26107072
+Top 5,5,2,1,2,'1-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Fastball,Error,Ground Ball,Straightaway,10,-0.211213175,0.138494665
+Top 5,5,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Foul,,,100,-0.598367455,0.383646775
+Top 5,5,2,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Breaking Ball,Ball,,,100,1.627769659,-0.190928483
+Top 5,5,2,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Ball,,,100,1.143826808,-0.336487548
+Top 5,5,2,2,1,'2-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Popout,Pop Up,Opposite Field,100,-0.656440598,0.590493868
+Bottom 5,5,0,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,RJ Moniz,L,L,Curveball,Called Strike,,,0,0.311445104,0.23808771
+Bottom 5,5,0,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,RJ Moniz,L,L,Curveball,Called Strike,,,0,0.311445104,0.805001964
+Bottom 5,5,0,0,2,'0-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,RJ Moniz,L,L,Curveball,Ball,,,0,-1.527537729,-0.152623466
+Bottom 5,5,0,1,2,'1-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,RJ Moniz,L,L,Fastball,Ball,,,0,-1.488822301,-0.382453569
+Bottom 5,5,0,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,RJ Moniz,L,L,Curveball,Strikeout Looking,,,0,-0.695156026,0.398968782
+Bottom 5,5,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,RJ Moniz,L,L,Fastball,Ball,,,0,-1.024237164,-0.244555507
+Bottom 5,5,1,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,RJ Moniz,L,L,Fastball,Foul,,,0,0.253371962,0.575171861
+Bottom 5,5,1,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,RJ Moniz,L,L,Curveball,Ball,,,0,-1.81790344,-0.144962462
+Bottom 5,5,1,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,RJ Moniz,L,L,Fastball,Ball,,,0,0.175941106,-0.359470558
+Bottom 5,5,1,3,1,'3-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,RJ Moniz,L,L,Curveball,Hit By Pitch,,,0,1.918135369,0.988866046
+Bottom 5,5,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,1.01,Noah Cantwell,RJ Moniz,R,L,Fastball,Ball,,,100,-0.656440598,-0.47438561
+Bottom 5,5,1,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,1.03,Noah Cantwell,RJ Moniz,R,L,Curveball,Ball,,,100,-1.604968585,-0.321165541
+Bottom 5,5,1,2,0,'2-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Cantwell,RJ Moniz,R,L,Fastball,Ball,,,10,1.647127373,1.096120094
+Bottom 5,5,1,3,0,'3-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Cantwell,RJ Moniz,R,L,Fastball,Walk,,,10,-1.159741162,-0.313504538
+Bottom 5,5,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Cohen,R,R,Fastball,Foul,,,110,0.175941106,0.360663764
+Bottom 5,5,1,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Cohen,R,R,Fastball,Ball,,,110,1.569696516,-0.321165541
+Bottom 5,5,1,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Cohen,R,R,Fastball,Ball,,,110,1.085753666,-0.25221651
+Bottom 5,5,1,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Cohen,R,R,Fastball,Ball,,,110,-0.482221171,1.111442101
+Bottom 5,5,1,3,1,'3-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Cohen,R,R,Fastball,Walk,,,110,0.853461097,-0.344148552
+Bottom 5,5,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Cohen,R,R,Fastball,Called Strike,,,111,0.09851025,0.873950995
+Bottom 5,5,1,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Cohen,R,R,Fastball,Ball,,,111,0.427591388,-0.49736862
+Bottom 5,5,1,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Cohen,R,R,Fastball,Foul,,,111,-0.637082884,0.575171861
+Bottom 5,5,1,1,2,'1-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Cohen,R,R,Slider,Foul,,,111,0.717957099,0.299375737
+Bottom 5,5,1,1,2,'1-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Cohen,R,R,Slider,Ball,,,111,1.550338802,-0.4514026
+Bottom 5,5,1,2,2,'2-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Chang,Dante Cifala,R,R,Fastball,Single,Ground Ball,Pull,11,0.330802818,0.421951792
+Bottom 5,5,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Dante Cifala,R,R,Fastball,Foul,,,100,-0.559652027,0.789679957
+Bottom 5,5,1,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,1.22,Jaylen Wood,Dante Cifala,R,R,Slurve,Ball,,,100,0.853461097,-0.390114572
+Bottom 5,5,1,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Dante Cifala,R,R,Slurve,Ball,,,100,-0.520936599,-0.328826545
+Bottom 5,5,1,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Dante Cifala,R,R,Fastball,Ball,,,10,-1.159741162,-0.305843534
+Bottom 5,5,1,3,1,'3-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Dante Cifala,R,R,Fastball,Groundout,Ground Ball,Straightaway,10,0.446949103,0.299375737
+Bottom 5,5,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Dante Cifala,R,R,Fastball,Called Strike,,,1,0.253371962,0.805001964
+Bottom 5,5,2,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Dante Cifala,R,R,Slurve,Called Strike,,,1,-0.017636034,0.414290789
+Bottom 5,5,2,0,2,'0-2,2025-09-07,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Dante Cifala,R,R,Slurve,Dropped Third Strike Swinging,,,1,0.446949103,-0.213911493
+Bottom 5,5,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Dante Cifala,L,R,Fastball,Foul,,,100,-0.695156026,-0.167945473
+Bottom 5,5,2,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Dante Cifala,L,R,Fastball,Flyout,Fly Ball,Straightaway,100,0.408233674,0.23808771
+Top 6,6,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Landon Hutar,R,R,Fastball,Ball,,,0,1.511623374,0.26107072
+Top 6,6,0,1,0,'1-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Landon Hutar,R,R,Fastball,Ball,,,0,1.085753666,-0.344148552
+Top 6,6,0,2,0,'2-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Brayden Sowrey,Landon Hutar,R,R,Breaking Ball,Popout,Pop Up,Opposite Field,0,0.19529882,0.812662967
+Top 6,6,1,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Adam Geddes,Landon Hutar,L,R,Fastball,Ball,,,0,-0.230570889,1.203374142
+Top 6,6,1,1,0,'1-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Adam Geddes,Landon Hutar,L,R,Fastball,Swinging Strike,,,0,0.601810815,0.054223627
+Top 6,6,1,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Adam Geddes,Landon Hutar,L,R,Fastball,Swinging Strike,,,0,0.19529882,0.215104699
+Top 6,6,1,1,2,'1-2,2025-09-07,Brock Badgers,Guelph Gryphons,,Adam Geddes,Landon Hutar,L,R,Fastball,Groundout,Ground Ball,Pull,0,-0.482221171,0.636459888
+Top 6,6,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Landon Hutar,L,R,Fastball,Ball,,,0,0.466306817,1.080798087
+Top 6,6,2,1,0,'1-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Landon Hutar,L,R,Fastball,Ball,,,0,-1.217814305,0.850967984
+Top 6,6,2,2,0,'2-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Landon Hutar,L,R,Fastball,Ball,,,0,-0.695156026,1.119103104
+Top 6,6,2,3,0,'3-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Landon Hutar,L,R,Fastball,Called Strike,,,0,0.040437108,0.375985771
+Top 6,6,2,3,1,'3-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Caleb Feuerstake,Landon Hutar,L,R,Fastball,Walk,,,0,-1.314602875,0.728391929
+Top 6,6,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,1.22,Reid Lunney,Landon Hutar,L,R,Fastball,Ball,,,100,-0.346717173,0.965883036
+Top 6,6,2,1,0,'1-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Reid Lunney,Landon Hutar,L,R,Offspeed,Ball,,,10,1.453550232,0.690086912
+Top 6,6,2,2,0,'2-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Reid Lunney,Landon Hutar,L,R,Offspeed,Single,Ground Ball,Pull,10,0.543737673,0.736052933
+Top 6,6,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Landon Hutar,R,R,Fastball,Ball,,,100,-1.140383448,1.149747118
+Top 6,6,2,1,0,'1-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Landon Hutar,R,R,Fastball,Lineout,Line Drive,Pull,100,-0.230570889,0.467917813
+Bottom 6,6,0,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Dante Cifala,R,R,Fastball,Ball,,,0,0.505022245,-0.221572497
+Bottom 6,6,0,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Dante Cifala,R,R,Fastball,Ball,,,0,-0.733871454,-0.114318449
+Bottom 6,6,0,2,0,'2-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Dante Cifala,R,R,Fastball,Called Strike,,,0,0.621168529,0.253409716
+Bottom 6,6,0,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Evan Ogston,Dante Cifala,R,R,Fastball,Single,Line Drive,Opposite Field,0,-0.211213175,0.299375737
+Bottom 6,6,0,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,1.11,Sawyer Whitaker,Dante Cifala,L,R,Fastball,Called Strike,,,100,-0.791944596,0.460256809
+Bottom 6,6,0,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Dante Cifala,L,R,Slurve,Ball,,,100,-0.346717173,0.889273001
+Bottom 6,6,0,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Dante Cifala,L,R,Slurve,Ball,,,10,-0.753229168,0.161477675
+Bottom 6,6,0,2,1,'2-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Dante Cifala,L,R,Fastball,Single,Fly Ball,Opposite Field,10,0.330802818,0.138494665
+Bottom 6,6,0,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Dante Cifala,L,R,Fastball,Ball,,,101,-0.424148029,-0.336487548
+Bottom 6,6,0,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Jack Gillis,Dante Cifala,L,R,Fastball,Sacrifice Fly,Fly Ball,Pull,11,0.659883957,0.138494665
+Bottom 6,6,1,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Cantwell,Dante Cifala,R,R,Fastball,Foul,,,1,0.214656534,0.805001964
+Bottom 6,6,1,0,1,'0-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Noah Cantwell,Dante Cifala,R,R,Slurve,Lineout,Line Drive,Pull,1,-0.036993748,0.406629785
+Bottom 6,6,2,0,0,'0-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Alexander Pieper,Dante Cifala,R,R,Slurve,Ball,,,1,0.814745669,-0.367131562
+Bottom 6,6,2,1,0,'1-0,2025-09-07,Guelph Gryphons,Brock Badgers,,Alexander Pieper,Dante Cifala,R,R,Fastball,Swinging Strike,,,1,-0.424148029,0.153816672
+Bottom 6,6,2,1,1,'1-1,2025-09-07,Guelph Gryphons,Brock Badgers,,Alexander Pieper,Dante Cifala,R,R,Fastball,Popout,Pop Up,Opposite Field,1,0.621168529,0.559849854
+Top 7,7,0,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Cole Carpenter,Landon Hutar,R,R,Fastball,Foul,,,0,0.485664531,0.245748713
+Top 7,7,0,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Cole Carpenter,Landon Hutar,R,R,Breaking Ball,Ball,,,0,1.49226566,0.299375737
+Top 7,7,0,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Cole Carpenter,Landon Hutar,R,R,Fastball,Groundout,Ground Ball,Pull,0,-0.520936599,0.598154871
+Top 7,7,1,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Landon Hutar,R,R,Fastball,Popout,Pop Up,Opposite Field,0,-0.191855461,0.889273001
+Top 7,7,2,0,0,'0-0,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Landon Hutar,R,R,Fastball,Called Strike,,,0,-0.308001745,0.398968782
+Top 7,7,2,0,1,'0-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Landon Hutar,R,R,Breaking Ball,Ball,,,0,1.666485087,-0.20625049
+Top 7,7,2,1,1,'1-1,2025-09-07,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Landon Hutar,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.582453101,0.398968782
