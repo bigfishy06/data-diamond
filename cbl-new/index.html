@@ -770,5 +770,18 @@
       setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate()},5800);
     })();
   </script>
+  <script>
+    (function(){
+      const tools=$('effectivenessTools'),grid=$('effectivenessGrid');
+      function placeEffectivenessFilters(){
+        const card=$('effectivenessPitchTypeCard'),head=card?.querySelector('.card-head');
+        if(card&&head&&tools.parentElement!==card)head.after(tools);
+      }
+      new MutationObserver(placeEffectivenessFilters).observe(grid,{childList:true,subtree:true});
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(placeEffectivenessFilters,300)));
+      document.querySelector('[data-tab="effectiveness"]').addEventListener('click',()=>setTimeout(placeEffectivenessFilters,0));
+      setTimeout(placeEffectivenessFilters,5900);
+    })();
+  </script>
 </body>
 </html>
