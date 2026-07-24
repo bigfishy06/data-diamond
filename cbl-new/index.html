@@ -638,5 +638,22 @@
       setTimeout(applyLeagueColors,5000);
     })();
   </script>
+  <script>
+    (function(){
+      const bucketColors={FB:'#123b78',BB:'#f0b323',OS:'#2786a9'};
+      function fixPitchUsageBars(){
+        if(activeRole()!=='pitcher')return;
+        $('pitchMix').querySelectorAll('.pitch-row').forEach(row=>{
+          const bucket=row.children[0]?.textContent.trim(),fill=row.querySelector('.bar span');
+          if(fill&&bucketColors[bucket])fill.style.setProperty('background',bucketColors[bucket],'important');
+        });
+      }
+      new MutationObserver(fixPitchUsageBars).observe($('pitchMix'),{childList:true,subtree:true});
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(fixPitchUsageBars,800)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(fixPitchUsageBars,800)));
+      document.querySelector('[data-tab="overview"]').addEventListener('click',()=>setTimeout(fixPitchUsageBars,0));
+      setTimeout(fixPitchUsageBars,5200);
+    })();
+  </script>
 </body>
 </html>
