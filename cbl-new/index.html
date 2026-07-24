@@ -301,15 +301,68 @@
       const overviewTab=document.querySelector('[data-tab="overview"]');
       function updateSequencingAccess(){
         const team=String(state.current?.pitcher_team||'').trim().toLowerCase();
-        const isGuelphRoyal=team==='guelph royals';
-        sequencingTab.hidden=!isGuelphRoyal;
-        sequencingTab.style.display=isGuelphRoyal?'':'none';
-        sequencingPane.hidden=!isGuelphRoyal;
-        if(!isGuelphRoyal&&sequencingTab.classList.contains('active'))overviewTab.click();
+        const canViewSequencing=activeRole()==='pitcher'&&team==='guelph royals';
+        sequencingTab.hidden=!canViewSequencing;
+        sequencingTab.style.display=canViewSequencing?'':'none';
+        sequencingPane.hidden=!canViewSequencing;
+        if(!canViewSequencing&&sequencingTab.classList.contains('active'))overviewTab.click();
       }
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(updateSequencingAccess,100)));
       document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(updateSequencingAccess,100)));
       setTimeout(updateSequencingAccess,3400);
+    })();
+  </script>
+  <script>
+    (function(){
+      const overviewTab=document.querySelector('[data-tab="overview"]');
+      const seasonTab=document.createElement('button');
+      seasonTab.className='tab';
+      seasonTab.dataset.tab='season-stats';
+      seasonTab.type='button';
+      seasonTab.textContent='SEASON STATS';
+      overviewTab.after(seasonTab);
+
+      const seasonPane=document.createElement('section');
+      seasonPane.className='tab-pane';
+      seasonPane.id='season-stats';
+      seasonPane.innerHTML='<article class="card"><div class="card-head"><h2>Season Stats</h2><span id="seasonStatsNote">2026 Canadian Baseball League</span></div><div class="table-wrap"><table class="stat-table"><thead id="seasonStatsHead"></thead><tbody id="seasonStatsBody"></tbody></table></div></article>';
+      $('overview').after(seasonPane);
+
+      let summaries=[];
+      const number=value=>Number.isFinite(Number(value))?Number(value):null;
+      const whole=value=>number(value)==null?'—':number(value).toLocaleString();
+      const average=value=>number(value)==null?'—':number(value).toFixed(3);
+      const percent=value=>number(value)==null?'—':`${number(value).toFixed(1)}%`;
+      const columns=[
+        ['PA','PA',whole],['AB','AB',whole],['H','H',whole],['2B','2B',whole],['3B','3B',whole],
+        ['HR','HR',whole],['BB','BB',whole],['K','K',whole],['AVG','AVG',average],['OBP','OBP',average],
+        ['SLG','SLG',average],['OPS','OPS',average],['ISO','ISO',average],['BABIP','BABIP',average],
+        ['wOBA','wOBA',average],['K%','K_pct',percent],['BB%','BB_pct',percent]
+      ];
+      function renderSeasonStats(){
+        const batter=activeRole()==='batter';
+        seasonTab.hidden=!batter;
+        seasonTab.style.display=batter?'':'none';
+        seasonPane.hidden=!batter;
+        if(!batter){
+          if(seasonTab.classList.contains('active'))overviewTab.click();
+          return;
+        }
+        const name=state.current?.pitcher;
+        const row=summaries.find(player=>player.batter===name);
+        $('seasonStatsNote').textContent=row?`${row.batter_team||'CBL'} · 2026 Canadian Baseball League`:'2026 Canadian Baseball League';
+        $('seasonStatsHead').innerHTML=`<tr>${columns.map(([label])=>`<th>${label}</th>`).join('')}</tr>`;
+        $('seasonStatsBody').innerHTML=row?`<tr>${columns.map(([,key,format])=>`<td>${format(row[key])}</td>`).join('')}</tr>`:`<tr><td colspan="${columns.length}">No season summary is available for this batter.</td></tr>`;
+      }
+      seasonTab.addEventListener('click',()=>{
+        document.querySelectorAll('.tab').forEach(tab=>tab.classList.toggle('active',tab===seasonTab));
+        document.querySelectorAll('.tab-pane').forEach(pane=>pane.classList.toggle('active',pane===seasonPane));
+        renderSeasonStats();
+      });
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(renderSeasonStats,100)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderSeasonStats,100)));
+      fetch('data/summary2026.json').then(response=>response.json()).then(data=>{summaries=data;renderSeasonStats()}).catch(renderSeasonStats);
+      setTimeout(renderSeasonStats,3500);
     })();
   </script>
 </body>
