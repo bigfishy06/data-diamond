@@ -397,5 +397,41 @@
       renderIblSeasonStats();
     })();
   </script>
+  <script>
+    (function(){
+      const baseUpdateMix=updateMix;
+      const baseRenderTendencies=renderTendencies;
+      const isRoyalsPitcher=()=>activeRole()==='pitcher'&&String(state.current?.pitcher_team||'').trim().toLowerCase()==='guelph royals';
+      function royalsPitchGroup(type){
+        const key=String(type||'').toLowerCase().replace(/[\s-]+/g,'');
+        if(['fastball','sinker','cutter'].includes(key))return'FB';
+        if(['breakingball','slider','curveball','sweeper','slurve'].includes(key))return'BB';
+        if(['offspeed','changeup','splitter','knuckleball'].includes(key))return'OS';
+        return null;
+      }
+      function royalsUsageRows(rows){
+        const buckets=['FB','BB','OS'],mapped=rows.filter(row=>royalsPitchGroup(row.pitch_type)),total=mapped.length;
+        return buckets.map(bucket=>{const count=mapped.filter(row=>royalsPitchGroup(row.pitch_type)===bucket).length,usage=total?count/total*100:0;return `<div class="pitch-row"><span>${bucket}</span><div class="bar"><span style="width:${usage}%"></span></div><strong>${usage.toFixed(1)}%</strong></div>`}).join('');
+      }
+      updateMix=function(player){
+        if(!isRoyalsPitcher()){baseUpdateMix(player);return}
+        const points=selectedPoints(),splitGrid=document.querySelector('#overview .split-grid');
+        splitGrid.style.display='none';
+        $('mixSample').textContent=`${points.length} tracked pitches`;
+        $('splitTitle').textContent='Pitch usage by batter handedness';
+        $('pitchMix').innerHTML=`<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px">${['R','L'].map(hand=>{const rows=points.filter(point=>point.batter_side===hand);return `<div><label>VS. ${hand}HH · ${rows.length} PITCHES</label>${royalsUsageRows(rows)}</div>`}).join('')}</div>`;
+      };
+      renderTendencies=function(){
+        if(!isRoyalsPitcher()){baseRenderTendencies();return}
+        const points=selectedPoints(),buckets=['FB','BB','OS'];
+        const cells=(rows,hand)=>{const handed=rows.filter(row=>row.batter_side===hand),mapped=handed.filter(row=>royalsPitchGroup(row.pitch_type)),total=mapped.length;return `<td>${handed.length||'—'}</td>${buckets.map(bucket=>`<td>${total?`${(mapped.filter(row=>royalsPitchGroup(row.pitch_type)===bucket).length/total*100).toFixed(1)}%`:'—'}</td>`).join('')}`};
+        $('tendencyHead').innerHTML='<tr><th>Count situation</th><th>RHH P</th><th>RHH FB</th><th>RHH BB</th><th>RHH OS</th><th>LHH P</th><th>LHH FB</th><th>LHH BB</th><th>LHH OS</th></tr>';
+        $('tendencyBody').innerHTML=tendencyRows().map(([label,test])=>{const scoped=points.filter(test);return `<tr><td>${label}</td>${cells(scoped,'R')}${cells(scoped,'L')}</tr>`}).join('');
+      };
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(()=>{updateMix(state.current);renderTendencies()},150)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(()=>{updateMix(state.current);renderTendencies()},150)));
+      setTimeout(()=>{updateMix(state.current);renderTendencies()},3700);
+    })();
+  </script>
 </body>
 </html>
