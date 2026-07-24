@@ -785,5 +785,28 @@
       setTimeout(placeEffectivenessFilters,5900);
     })();
   </script>
+  <script>
+    (function(){
+      const container=$('gameAnalysisMetrics'),rate=(a,b)=>b?a/b*100:null;
+      let averages=null;
+      function metricSet(points){
+        const located=points.filter(point=>point.x!==null&&point.x!==undefined&&String(point.x).trim()!==''&&point.y!==null&&point.y!==undefined&&String(point.y).trim()!=='');
+        const first=points.filter(point=>String(point.count||'').replace(/^'/,'')==='0-0'),zone=located.filter(point=>point.in_zone),outside=located.filter(point=>!point.in_zone),swings=points.filter(point=>swingOutcomes.has(point.outcome)),pa=points.filter(isTerminalPa),batted=points.filter(point=>['Ground Ball','Fly Ball','Line Drive','Pop Up'].includes(point.contact));
+        return[rate(first.filter(point=>swingOutcomes.has(point.outcome)).length,first.length),rate(zone.filter(point=>swingOutcomes.has(point.outcome)).length,zone.length),rate(outside.filter(point=>swingOutcomes.has(point.outcome)).length,outside.length),rate(points.filter(point=>whiffOutcomes.has(point.outcome)).length,swings.length),rate(pa.filter(point=>String(point.outcome).includes('Strikeout')).length,pa.length),rate(pa.filter(point=>point.outcome==='Walk').length,pa.length),rate(batted.filter(point=>point.contact==='Fly Ball').length,batted.length)]
+      }
+      function applyGameMetricColors(){
+        if(!averages||activeRole()!=='batter')return;
+        const lowerIsBetter=new Set([0,2,3,4]);
+        [...container.querySelectorAll('.game-analysis-metric')].forEach((card,index)=>{
+          const value=parseFloat(card.querySelector('strong')?.textContent),average=averages[index];
+          if(!Number.isFinite(value)||!Number.isFinite(average))return;
+          const difference=(value-average)*(lowerIsBetter.has(index)?-1:1),strength=Math.min(Math.abs(difference)/(index===6?15:12),1),target=difference>=0?[22,132,92]:[216,32,50],rgb=target.map(channel=>Math.round(255+(channel-255)*strength));
+          card.querySelector('strong').style.color=`rgb(${rgb.join(',')})`;
+        });
+      }
+      fetch('data/pitches2026.json').then(response=>response.json()).then(players=>{averages=metricSet(players.flatMap(player=>Array.isArray(player.scatter)?player.scatter:[]));applyGameMetricColors()}).catch(()=>{});
+      new MutationObserver(applyGameMetricColors).observe(container,{childList:true});
+    })();
+  </script>
 </body>
 </html>
