@@ -682,7 +682,7 @@
             const sequence=row.children[1]?.textContent.trim()||'';
             if(sequence.split('→').some(type=>type.trim().toLowerCase()==='offspeed'))row.remove();
           });
-          [...card.querySelectorAll('tbody tr')].forEach((row,index)=>{const rank=row.querySelector('.analysis-rank');if(rank)rank.textContent=String(index+1)});
+          [...card.querySelectorAll('tbody tr')].forEach((row,index)=>{const rank=row.querySelector('.analysis-rank'),next=String(index+1);if(rank&&rank.textContent!==next)rank.textContent=next});
         });
       }
       const observer=new MutationObserver(removeRoyalsOffspeedSequences);
