@@ -670,5 +670,29 @@
       setTimeout(updateOverviewSequencingAccess,5400);
     })();
   </script>
+  <script>
+    (function(){
+      function removeRoyalsOffspeedSequences(){
+        const royalsPitcher=activeRole()==='pitcher'&&String(state.current?.pitcher_team||'').trim().toLowerCase()==='guelph royals';
+        if(!royalsPitcher)return;
+        const cards=[...document.querySelectorAll('#overviewProfiles .analysis-card, #pitchSequencingPanel')].filter(card=>card.querySelector('h2')?.textContent.trim()==='Pitch Sequencing');
+        cards.forEach(card=>{
+          const rows=[...card.querySelectorAll('tbody tr')];
+          rows.forEach(row=>{
+            const sequence=row.children[1]?.textContent.trim()||'';
+            if(sequence.split('→').some(type=>type.trim().toLowerCase()==='offspeed'))row.remove();
+          });
+          [...card.querySelectorAll('tbody tr')].forEach((row,index)=>{const rank=row.querySelector('.analysis-rank');if(rank)rank.textContent=String(index+1)});
+        });
+      }
+      const observer=new MutationObserver(removeRoyalsOffspeedSequences);
+      observer.observe($('overviewProfiles'),{childList:true,subtree:true});
+      observer.observe($('pitchSequencingPanel'),{childList:true,subtree:true});
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(removeRoyalsOffspeedSequences,900)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(removeRoyalsOffspeedSequences,900)));
+      document.querySelectorAll('[data-tab="overview"],[data-tab="sequencing"]').forEach(tab=>tab.addEventListener('click',()=>setTimeout(removeRoyalsOffspeedSequences,0)));
+      setTimeout(removeRoyalsOffspeedSequences,5600);
+    })();
+  </script>
 </body>
 </html>
