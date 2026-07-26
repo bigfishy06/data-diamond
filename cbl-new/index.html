@@ -811,6 +811,9 @@
   <style>
     .game-analysis-metric{position:relative}.game-analysis-metric strong{-webkit-text-stroke:.55px #172432;text-shadow:-.45px -.45px 0 #172432,.45px .45px 0 #172432}.game-stat-percentile{position:absolute;right:8px;top:7px;color:var(--muted);font-size:9px;font-weight:900;letter-spacing:.03em}
   </style>
+  <style>
+    .tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));width:100%;overflow:visible}.tabs .tab{width:100%;min-width:0;padding:14px 8px;text-align:center}
+  </style>
   <script>
     (function(){
       const container=$('gameAnalysisMetrics'),rate=(a,b)=>b?a/b*100:null,lowerIsBetter=new Set([0,2,3,4]);
