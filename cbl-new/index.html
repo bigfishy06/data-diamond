@@ -117,7 +117,7 @@
     $('pitcherHandFilter').addEventListener('change',updateFilters);$('mapMode').addEventListener('change',updateFilters);document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(setRoleZone,0)));setTimeout(setRoleZone,600);
   </script>
   <script>
-    function refreshProfileContext(){const batter=activeRole()==='batter',p=state.current;if(!p)return;document.querySelector('.profile .eyebrow').textContent=batter?'BATTER PROFILE · GUELPH ROYALS':'PITCHER PROFILE · GUELPH ROYALS';$('playerLabel').textContent=batter?'BATTER PROFILE':'PITCHER PROFILE';$('meta').textContent=batter?`${p.pitcher_team||'Guelph Royals'} · Bats ${p.throws||'—'} · ${n(p.total_pitches).toLocaleString()} pitches seen`:`${p.pitcher_team||'Guelph Royals'} · Throws ${p.throws||'—'}`}
+    function refreshProfileContext(){const batter=activeRole()==='batter',p=state.current;if(!p)return;document.querySelector('.profile .eyebrow').textContent=batter?'BATTER PROFILE · GUELPH ROYALS':'PITCHER PROFILE · GUELPH ROYALS';$('playerLabel').textContent=batter?'BATTER PROFILE':'PITCHER PROFILE';$('meta').textContent=batter?`${p.pitcher_team||'Guelph Royals'} · Bats ${p.throws||'—'}`:`${p.pitcher_team||'Guelph Royals'} · Throws ${p.throws||'—'}`}
     document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshProfileContext,0)));$('player').addEventListener('change',()=>setTimeout(refreshProfileContext,0));setTimeout(refreshProfileContext,650);
   </script>
   <script>
