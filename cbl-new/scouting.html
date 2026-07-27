@@ -2133,7 +2133,7 @@ Zane Skansi,Kitchener Panthers`;
     function batterMetrics(pts,summary){pts=pts||[];var located=pts.filter(hasPitchLocation),inz=located.filter(function(p){return !!p.in_zone;}),outz=located.filter(function(p){return !p.in_zone;}),swings=pts.filter(reportIsSwingOutcome),firstPitches=pts.filter(function(p){return String(p.count||'').replace(/^'/,'')==='0-0';}),first=firstPitches.length?firstPitches.filter(reportIsSwingOutcome).length/firstPitches.length*100:null;return{fps:first,iz:inz.length?inz.filter(reportIsSwingOutcome).length/inz.length*100:null,chase:outz.length?outz.filter(reportIsSwingOutcome).length/outz.length*100:null,whiff:swings.length?swings.filter(reportIsWhiffOutcome).length/swings.length*100:null};}
     var bm=batterMetrics(allSc,s),batterLeague=(DATA.pitches||[]).map(function(bp){var bs=(DATA.summary||[]).find(function(row){return normRosterName(row.batter||row.player)===normRosterName(bp.batter);})||{};return batterMetrics(bp.scatter||[],bs);});
     y=drawPercentileBoxes(d,[
-      {label:'FPS%',display:bm.fps==null?'—':f1(bm.fps)+'%',pct:reportPercentile(bm.fps,batterLeague.map(function(m){return m.fps;}),false)},
+      {label:'FP SWING%',display:bm.fps==null?'—':f1(bm.fps)+'%',pct:reportPercentile(bm.fps,batterLeague.map(function(m){return m.fps;}),false)},
       {label:'IN-ZONE SWING%',display:bm.iz==null?'—':f1(bm.iz)+'%',pct:reportPercentile(bm.iz,batterLeague.map(function(m){return m.iz;}),true)},
       {label:'CHASE%',display:bm.chase==null?'—':f1(bm.chase)+'%',pct:reportPercentile(bm.chase,batterLeague.map(function(m){return m.chase;}),false)},
       {label:'WHIFF%',display:bm.whiff==null?'—':f1(bm.whiff)+'%',pct:reportPercentile(bm.whiff,batterLeague.map(function(m){return m.whiff;}),false)}
@@ -2299,7 +2299,7 @@ Zane Skansi,Kitchener Panthers`;
       {label:'PS/PA',sub:'Pitches per plate app',val:pspa!=null?f1(pspa):'—',
        color:pspa!=null?(pspa>=4.0?'#34d399':pspa>=3.5?'#FFB81C':'#f87171'):'#555',
        note:_pspaNote},
-      {label:'FPSW%',sub:'First pitch swing',val:fpSwingPct!=null?f1(fpSwingPct*100)+'%':'—',
+      {label:'FP SWING%',sub:'First pitch swing',val:fpSwingPct!=null?f1(fpSwingPct*100)+'%':'—',
        color:fpSwingPct!=null?(fpSwingPct>=0.45?'#f87171':fpSwingPct>=0.30?'#FFB81C':'#34d399'):'#555',
        note:fpSwingPct!=null?(fpSwingPct>=0.45?'Aggressive on first pitch — expand carefully after strike one':fpSwingPct>=0.30?'Will swing early in select spots':'Takes first pitch often — steal strike one') : ''},
       {label:'K',sub:'Strikeouts',val:_batKCount!=null?String(Math.round(_batKCount)):'—',
@@ -2494,7 +2494,7 @@ Zane Skansi,Kitchener Panthers`;
     var splitLeague={L:[[],[],[],[],[]],R:[[],[],[],[],[]]};
     (DATA.pitches||[]).forEach(function(bp){['L','R'].forEach(function(side){batterHandSplitMetrics(bp.scatter||[],side).forEach(function(value,metric){if(value!=null&&isFinite(value))splitLeague[side][metric].push(value);});});});
     var splitDirections=[false,true,false,false,false];
-    var splitRows=['L','R'].map(function(side){var metrics=batterHandSplitMetrics(allSc,side);return[{text:'vs. '+side+'HP'}].concat(metrics.map(function(value,metric){return{text:value==null?'—':f1(value)+'%',pct:reportPercentile(value,splitLeague[side][metric],splitDirections[metric])};}));});
+    var splitRows=['L','R'].map(function(side){var metrics=batterHandSplitMetrics(allSc,side);return[{text:'vs. '+side+'HP'}].concat(metrics.map(function(value,metric){return{text:value==null?'—':f1(value)+'%',neutral:metric===0,pct:metric===0?null:reportPercentile(value,splitLeague[side][metric],splitDirections[metric])};}));});
     if(PH-y<42){d.addPage();drawBg(d);y=MT+8;}
     y=drawSec(d,'Splits',y);
     y=drawBatterRateTable(['MATCHUP','FP SWING%','I-Z SWING%','CHASE%','WHIFF%','K%'],[36,30,30,30,30,30],splitRows,y);
@@ -3543,7 +3543,7 @@ Zane Skansi,Kitchener Panthers`;
       d.setTextColor(22,32,50);d.text(st.hand,margin+132,y+4.7);
       if(role==='batter'){
         var bm=batterSummaryMetrics(sc),bvals=[
-          ['FPSW%',bm.fpsw,reportPercentile(bm.fpsw,batterLeague.fpsw,true)],
+          ['FP SWING%',bm.fpsw,reportPercentile(bm.fpsw,batterLeague.fpsw,true),'#000000'],
           ['I-Z SWING%',bm.iz,reportPercentile(bm.iz,batterLeague.iz,true)],
           ['CHASE%',bm.chase,reportPercentile(bm.chase,batterLeague.chase,false)],
           ['WHIFF%',bm.whiff,reportPercentile(bm.whiff,batterLeague.whiff,false)],
