@@ -2201,6 +2201,7 @@ Zane Skansi,Kitchener Panthers`;
     y+=_aBoxH+4;
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
+    if(false){
     y=drawSec(d,'Plate Discipline',y);
     var pspa=selSeason==='2026'
       ? (s.pitches_seen&&pa>0?s.pitches_seen/pa:null)
@@ -2288,13 +2289,14 @@ Zane Skansi,Kitchener Panthers`;
       lns.slice(0,1).forEach(function(l){d.text(l,hx+dW2/2,y+24,{align:'center'});});
     });
     y+=dH2+5;
+    }
 
     var _locSc=allSc.filter(hasPitchLocation);
     var _whiffPts=_locSc.filter(reportIsWhiffOutcome);
     var _pitchRows=buildBatterPitchTypeRows(allSc).slice(0,5);
     if(_pitchRows.length){
-      y=drawSec(d,'Batter Performance by Pitch Type',y);
-      y=drawTbl(d,['PITCH TYPE','%','WHIFF%','CHASE%','K%','BB%'],_pitchRows,[48,22,30,30,22,22],y,[1,2,3,4,5]);
+      y=drawSec(d,'Pitch Type Performance',y);
+      y=drawTbl(d,['PITCH TYPE','USAGE%','WHIFF%','CHASE%','K%','BB%'],_pitchRows,[48,22,30,30,22,22],y,[1,2,3,4,5]);
     }
 
     // ── Two donuts: Spray Direction (left) + Batted Ball Profile (right) ──
