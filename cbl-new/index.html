@@ -886,5 +886,100 @@
       setTimeout(updateScoutingContext,6000);
     })();
   </script>
+  <style>
+    .control-bar.has-entity-mode{grid-template-columns:150px 150px minmax(260px,1fr) minmax(280px,360px)}
+    .control-bar.has-entity-mode .view-switch{grid-column:1/-1;justify-self:start}
+    body.team-mode #playerFilterWrap{display:none}
+    body.team-mode .profile .monogram{background:var(--navy2)}
+    body.team-mode [data-tab="scouting-report"]{display:none}
+    @media(max-width:900px){.control-bar.has-entity-mode{grid-template-columns:1fr 1fr}.control-bar.has-entity-mode .view-switch{grid-column:1/-1}}
+    @media(max-width:560px){.control-bar.has-entity-mode{grid-template-columns:1fr}}
+  </style>
+  <script>
+    (function(){
+      const teamSelect=$('team'),playerSelect=$('player'),controlBar=document.querySelector('.control-bar');
+      const playerWrap=playerSelect.parentElement;
+      playerWrap.id='playerFilterWrap';
+      const modeWrap=document.createElement('div');
+      modeWrap.id='entityModeWrap';
+      modeWrap.innerHTML='<label for="entityMode">VIEW</label><select id="entityMode"><option value="players">Players</option><option value="team">Team</option></select>';
+      controlBar.insertBefore(modeWrap,teamSelect.parentElement);
+      controlBar.classList.add('has-entity-mode');
+      const modeSelect=$('entityMode');
+      const aggregateRate=(part,total)=>total?part/total*100:null;
+      const weighted=(players,key,weightKey)=>{
+        let value=0,weight=0;
+        players.forEach(player=>{const w=n(player[weightKey])||1,v=Number(player[key]);if(Number.isFinite(v)){value+=v*w;weight+=w}});
+        return weight?value/weight:null;
+      };
+      function buildTeamAggregate(players){
+        const role=activeRole(),teamName=teamSelect.value==='all'?'All CBL Teams':teamSelect.value;
+        const points=players.flatMap(player=>Array.isArray(player.scatter)?player.scatter:[]);
+        const swings=points.filter(point=>swingOutcomes.has(point.outcome));
+        const whiffs=points.filter(point=>whiffOutcomes.has(point.outcome));
+        const first=points.filter(point=>String(point.count||'').replace(/^'/,'')==='0-0');
+        const located=points.filter(hasZoneLocation);
+        const outside=located.filter(point=>!point.in_zone);
+        const pa=points.filter(isTerminalPa);
+        const strikeouts=pa.filter(point=>String(point.outcome||'').includes('Strikeout'));
+        const walks=pa.filter(point=>point.outcome==='Walk'||point.outcome==='Intentional Walk');
+        const abs=points.filter(isOfficialAtBat);
+        const hits=abs.filter(point=>['Single','Double','Triple','Home Run'].includes(point.outcome));
+        const strikes=points.filter(isPitchStrike);
+        const firstStrikes=first.filter(isPitchStrike);
+        const firstSwings=first.filter(point=>swingOutcomes.has(point.outcome));
+        const chases=outside.filter(point=>swingOutcomes.has(point.outcome));
+        const teamObject={
+          __teamAggregate:true,pitcher:teamName,pitcher_team:teamName,throws:'—',
+          total_pitches:points.length,scatter:points,IP:players.reduce((sum,player)=>sum+n(player.IP),0),
+          K_pct:aggregateRate(strikeouts.length,pa.length),BB_pct:aggregateRate(walks.length,pa.length),
+          Whiff_pct:aggregateRate(whiffs.length,swings.length),STR_pct:aggregateRate(strikes.length,points.length),
+          FPS_pct:aggregateRate(firstStrikes.length,first.length),Putaway_pct:aggregateRate(strikeouts.length,points.filter(point=>String(point.count||'').replace(/^'/,'').endsWith('-2')).length),
+          BAA:abs.length?hits.length/abs.length:null
+        };
+        teamObject.K_BB=n(teamObject.K_pct)-n(teamObject.BB_pct);
+        if(role==='batter'){
+          teamObject.K_pct=weighted(players,'K_pct','IP');
+          teamObject.BB_pct=weighted(players,'BB_pct','IP');
+          teamObject.Whiff_pct=aggregateRate(walks.length,pa.length);
+          teamObject.STR_pct=aggregateRate(chases.length,outside.length);
+          teamObject.FPS_pct=aggregateRate(firstSwings.length,first.length);
+          teamObject.Putaway_pct=teamObject.STR_pct;
+          teamObject.K_BB=aggregateRate(strikeouts.length,pa.length)-aggregateRate(walks.length,pa.length);
+        }
+        return teamObject;
+      }
+      function renderTeamMode(){
+        const teamMode=modeSelect.value==='team';
+        document.body.classList.toggle('team-mode',teamMode);
+        playerWrap.style.display=teamMode?'none':'';
+        if(!teamMode)return;
+        const roster=state.players.filter(player=>!player.__teamAggregate);
+        if(!roster.length)return;
+        const aggregate=buildTeamAggregate(roster);
+        state.players=[aggregate].concat(roster);
+        selectPlayer(aggregate.pitcher);
+        state.players=roster;
+        state.current=aggregate;
+        const teamLabel=teamSelect.value==='all'?'CBL LEAGUE':'TEAM';
+        document.querySelector('.profile .eyebrow').textContent=`${activeRole()==='pitcher'?'PITCHING':'BATTING'} ${teamLabel} PROFILE · 2026`;
+        $('name').textContent=aggregate.pitcher;
+        $('meta').textContent=`${roster.length} ${activeRole()==='pitcher'?'pitchers':'batters'} · ${pointsLabel(aggregate.scatter.length)}`;
+        $('initials').classList.remove('has-headshot');
+        $('initials').innerHTML='';
+        $('initials').textContent=teamSelect.value==='all'?'CBL':initials(teamSelect.value);
+      }
+      function pointsLabel(count){return`${count.toLocaleString()} tracked pitches`}
+      modeSelect.addEventListener('change',()=>{
+        if(modeSelect.value==='players'){
+          document.body.classList.remove('team-mode');
+          playerWrap.style.display='';
+          if(playerSelect.options.length)selectPlayer(playerSelect.value);
+        }else renderTeamMode();
+      });
+      teamSelect.addEventListener('change',()=>setTimeout(renderTeamMode,80));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderTeamMode,120)));
+    })();
+  </script>
 </body>
 </html>
