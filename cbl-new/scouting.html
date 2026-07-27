@@ -2468,8 +2468,8 @@ Zane Skansi,Kitchener Panthers`;
     y=drawSec(d,'Count Performance',y);
     y=drawBatterRateTable(['SITUATION','PITCHES','SWING%','WHIFF%','CHASE%','BAA'],[42,24,30,30,30,30],countTableRows,y);
     function twoStrikeTypeMetrics(points){
-      var rows=(points||[]).filter(function(p){return reportCleanCount(p.count).endsWith('-2')&&includePitchTypeStatistic(p.pitch_type||'Unclassified');}),groups={};
-      rows.forEach(function(p){var type=p.pitch_type||'Unclassified';if(!groups[type])groups[type]=[];groups[type].push(p);});
+      var rows=(points||[]).filter(function(p){return reportCleanCount(p.count).endsWith('-2')&&reportPitchTypeName(p)!=='Unknown';}),groups={};
+      rows.forEach(function(p){var type=reportPitchTypeName(p);if(!groups[type])groups[type]=[];groups[type].push(p);});
       return Object.keys(groups).map(function(type){
         var pitches=groups[type],swings=pitches.filter(reportIsSwingOutcome),whiffs=pitches.filter(reportIsWhiffOutcome),outside=pitches.filter(function(p){return hasPitchLocation(p)&&!p.in_zone;}),chases=outside.filter(reportIsSwingOutcome);
         return{type:type,pitches:pitches.length,usage:rows.length?pitches.length/rows.length*100:null,swing:pitches.length?swings.length/pitches.length*100:null,whiff:swings.length?whiffs.length/swings.length*100:null,chase:outside.length?chases.length/outside.length*100:null};
