@@ -197,7 +197,13 @@ batter_hands <- pitches %>%
   )
 
 pitches_json <- pitches_json %>%
-  left_join(batter_hands, by = "batter")
+  left_join(batter_hands, by = "batter") %>%
+  mutate(
+    bats = case_when(
+      batter == "AJ Karosas" ~ "R",
+      TRUE ~ bats
+    )
+  )
 
 # ── Innings pitched per pitcher ────────────────────────────────────────────────
 ip_per_game <- pitches %>%
