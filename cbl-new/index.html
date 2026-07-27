@@ -918,7 +918,7 @@
         const swings=points.filter(point=>swingOutcomes.has(point.outcome));
         const whiffs=points.filter(point=>whiffOutcomes.has(point.outcome));
         const first=points.filter(point=>String(point.count||'').replace(/^'/,'')==='0-0');
-        const located=points.filter(hasZoneLocation);
+        const located=points.filter(point=>point.x!==null&&point.x!==undefined&&String(point.x).trim()!==''&&point.y!==null&&point.y!==undefined&&String(point.y).trim()!=='');
         const outside=located.filter(point=>!point.in_zone);
         const pa=points.filter(isTerminalPa);
         const strikeouts=pa.filter(point=>String(point.outcome||'').includes('Strikeout'));
