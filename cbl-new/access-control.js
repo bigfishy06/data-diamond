@@ -15,6 +15,7 @@
   if (!user.role || user.role === "admin") return;
 
   var sources = { pitcher: [], batter: [] };
+  var uiSources = { pitcher: [], batter: [] };
   var ownTeam = "Guelph Royals";
   var enforcing = false;
 
@@ -72,6 +73,20 @@
       var allowed = roleSource(role).filter(function (player) {
         return canView(player, role);
       });
+      var allowedNames = new Set(allowed.map(function (player) {
+        return norm(nameOf(player));
+      }));
+
+      // The dashboard converts batter records into its pitcher-shaped view model.
+      // Preserve those rendered records (including pitch locations) rather than
+      // replacing them with the raw summary rows used for permission checks.
+      var currentUiPlayers = Array.isArray(state.players) ? state.players : [];
+      if (currentUiPlayers.length > uiSources[role].length) {
+        uiSources[role] = currentUiPlayers.slice();
+      }
+      var permittedUiPlayers = uiSources[role].filter(function (player) {
+        return allowedNames.has(norm(nameOf(player)));
+      });
       var teamNames = Array.from(new Set(allowed.map(teamOf).filter(Boolean))).sort();
       var priorTeam = teamSelect.value;
       var teamOptions = [{ value: "all", label: "All teams" }].concat(teamNames.map(function (team) {
@@ -82,7 +97,7 @@
         teamSelect.value = "all";
       }
 
-      var scoped = allowed.filter(function (player) {
+      var scoped = permittedUiPlayers.filter(function (player) {
         return teamSelect.value === "all" || teamOf(player) === teamSelect.value;
       });
       var priorPlayer = playerSelect.value;
