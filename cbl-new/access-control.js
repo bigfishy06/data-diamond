@@ -112,7 +112,14 @@
       if (scoped.length) {
         var selected = scoped.some(function (player) {
           return nameOf(player) === priorPlayer;
-        }) ? priorPlayer : nameOf(scoped[0]);
+        }) ? priorPlayer : "";
+        if (!selected && user.role === "position_player") {
+          var selfProfile = scoped.find(function (player) {
+            return norm(nameOf(player)) === norm(user.player);
+          });
+          if (selfProfile) selected = nameOf(selfProfile);
+        }
+        if (!selected) selected = nameOf(scoped[0]);
         playerSelect.value = selected;
         if (!state.current || nameOf(state.current) !== selected || !canView(state.current, role)) {
           selectPlayer(selected);
@@ -154,6 +161,16 @@
         setTimeout(enforceAccess, 0);
       });
     });
+    if (user.role === "position_player") {
+      var selfIsBatter = sources.batter.some(function (player) {
+        return norm(nameOf(player)) === norm(user.player);
+      });
+      var preferredRole = selfIsBatter ? "batter" : "pitcher";
+      var preferredButton = document.querySelector('[data-role="' + preferredRole + '"]');
+      if (preferredButton && !preferredButton.classList.contains("active")) {
+        preferredButton.click();
+      }
+    }
     enforceAccess();
   }).catch(function (error) {
     console.error("Could not apply player access controls.", error);
