@@ -968,8 +968,19 @@
         $('initials').classList.remove('has-headshot');
         $('initials').innerHTML='';
         $('initials').textContent=teamSelect.value==='all'?'CBL':initials(teamSelect.value);
+        setTimeout(normalizeLeagueHeadlinePercentiles,120);
+        setTimeout(normalizeLeagueHeadlinePercentiles,900);
       }
       function pointsLabel(count){return`${count.toLocaleString()} tracked pitches`}
+      function normalizeLeagueHeadlinePercentiles(){
+        if(modeSelect.value!=='team'||teamSelect.value!=='all')return;
+        [...document.querySelectorAll('.metrics .metric')].slice(0,4).forEach(card=>{
+          card.classList.remove('stat-green','stat-red');
+          const value=card.querySelector('.value'),badge=card.querySelector('.stat-percentile');
+          if(value)value.style.color='rgb(255,255,255)';
+          if(badge){badge.classList.remove('is-hidden');badge.textContent='50th pct.'}
+        });
+      }
       modeSelect.addEventListener('change',()=>{
         if(modeSelect.value==='players'){
           document.body.classList.remove('team-mode');
