@@ -2786,7 +2786,6 @@ Zane Skansi,Kitchener Panthers`;
       y+=3;
       y=drawSec(d,'Pitch Effectiveness',y);
       var atH=['PITCH TYPE','USAGE %','FP USAGE %','STRIKE %','WHIFF %','CHASE %','K%'];
-      var atL=['Pitch group','Season mix','First-pitch mix','Strike rate','Miss rate','Out-of-zone swing','K rate by PA'];
       var atW=[38,24,24,24,24,24,24];
       function effectivenessByType(points,type){
         var allFirst=points.filter(function(p){return reportCleanCount(p.count)==='0-0';});
@@ -2811,12 +2810,11 @@ Zane Skansi,Kitchener Panthers`;
           Object.keys(m).forEach(function(key){if(m[key]!=null&&isFinite(m[key]))effectivenessLeague[type][key].push(m[key]);});
         });
       });
-      sf(d,CO.navy2);d.rect(ML,y,CPW,9,'F');
-      sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+9,ML+CPW,y+9);
+      sf(d,CO.navy2);d.rect(ML,y,CPW,8,'F');
+      sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+8,ML+CPW,y+8);
       var ax=ML;
       atH.forEach(function(h,i){
-        d.setFont('helvetica','bold');d.setFontSize(5.5);st(d,CO.gold);d.text(h,ax+atW[i]/2,y+3.5,{align:'center'});
-        d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);d.text(atL[i],ax+atW[i]/2,y+7.5,{align:'center'});
+        d.setFont('helvetica','bold');d.setFontSize(6.4);st(d,CO.gold);d.text(h,ax+atW[i]/2,y+5.2,{align:'center'});
         ax+=atW[i];
       });
       var displayedTotal=displayST.reduce(function(sum,e){return sum+e[1];},0);
@@ -2824,25 +2822,25 @@ Zane Skansi,Kitchener Panthers`;
         var t=e[0],m=effectivenessByType(sc,t),league=effectivenessLeague[t]||{fp:[],strike:[],whiff:[],chase:[],k:[]};
         return {type:t,usage:displayedTotal?e[1]/displayedTotal*100:null,values:['fp','strike','whiff','chase','k'].map(function(key){return{raw:m[key],text:m[key]==null?'—':f1(m[key])+'%',pct:reportPercentile(m[key],league[key],true)};})};
       });
-      var ar=y+9;
+      var ar=y+8;
       atR.forEach(function(row,ri){
-        sf(d,ri%2===0?CO.navy3:CO.navy2);d.rect(ML,ar,CPW,7,'F');
+        sf(d,ri%2===0?CO.navy3:CO.navy2);d.rect(ML,ar,CPW,10,'F');
         var bx2=ML;
-        d.setFont('helvetica','bold');d.setFontSize(6.5);st(d,CO.white);
-        d.text(row.type,bx2+atW[0]/2,ar+4.5,{align:'center'});bx2+=atW[0];
+        d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.white);
+        d.text(row.type,bx2+atW[0]/2,ar+6.4,{align:'center'});bx2+=atW[0];
         var usageText=row.usage==null?'—':f1(row.usage)+'%';
-        d.setFont('helvetica','bold');d.setFontSize(7);d.setTextColor(0,0,0);
-        [[-.16,0],[.16,0],[0,-.16],[0,.16]].forEach(function(o){d.text(usageText,bx2+atW[1]/2+o[0],ar+4.5+o[1],{align:'center'});});
-        d.setTextColor(255,255,255);d.text(usageText,bx2+atW[1]/2,ar+4.5,{align:'center'});bx2+=atW[1];
+        d.setFont('helvetica','bold');d.setFontSize(9.5);d.setTextColor(0,0,0);
+        [[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(usageText,bx2+atW[1]/2+o[0],ar+6.6+o[1],{align:'center'});});
+        d.setTextColor(255,255,255);d.text(usageText,bx2+atW[1]/2,ar+6.6,{align:'center'});bx2+=atW[1];
         row.values.forEach(function(v,vi){
           var c=hx(reportMetricColor(v.pct));
-          d.setFont('helvetica','bold');d.setFontSize(7);d.setTextColor(0,0,0);
-          [[-.16,0],[.16,0],[0,-.16],[0,.16]].forEach(function(o){d.text(v.text,bx2+atW[vi+2]/2+o[0],ar+4.5+o[1],{align:'center'});});
-          d.setTextColor(c[0],c[1],c[2]);d.text(v.text,bx2+atW[vi+2]/2,ar+4.5,{align:'center'});bx2+=atW[vi+2];
+          d.setFont('helvetica','bold');d.setFontSize(9.5);d.setTextColor(0,0,0);
+          [[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(v.text,bx2+atW[vi+2]/2+o[0],ar+6.6+o[1],{align:'center'});});
+          d.setTextColor(c[0],c[1],c[2]);d.text(v.text,bx2+atW[vi+2]/2,ar+6.6,{align:'center'});bx2+=atW[vi+2];
         });
-        ar+=7;
+        ar+=10;
       });
-      sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(ML,y+9,CPW,atR.length*7,'S');
+      sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(ML,y+8,CPW,atR.length*10,'S');
       y=ar+2;
     }
 
