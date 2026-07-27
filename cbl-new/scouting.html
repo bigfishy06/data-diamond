@@ -3395,7 +3395,21 @@ Zane Skansi,Kitchener Panthers`;
       var cacheKey=type+'|'+key;if(compactLeague[cacheKey])return compactLeague[cacheKey];
       return compactLeague[cacheKey]=(DATA.pitchers||[]).map(function(p){return compactEffectiveness(p.scatter||[],type)[key]}).filter(function(v){return v!=null&&isFinite(v)});
     }
-    var perPage=7;
+    function compactCountTendencies(points){
+      function clean(p){return String(p.count||'').replace(/[^0-9-]/g,'')}
+      var groups=[
+        ['FIRST PITCH',function(p){return clean(p)==='0-0'}],
+        ['PITCHER AHEAD',function(p){return ['0-1','0-2','1-2'].includes(clean(p))}],
+        ['PITCHER BEHIND',function(p){return ['1-0','2-0','3-0','2-1','3-1'].includes(clean(p))}]
+      ];
+      return groups.map(function(group){
+        var rows=(points||[]).filter(group[1]),types={};
+        rows.forEach(function(p){var type=reportPitchTypeBucket(p);if(type!=='Unknown')types[type]=(types[type]||0)+1});
+        var top=Object.keys(types).sort(function(a,b){return types[b]-types[a]})[0]||'-';
+        return [group[0],rows.length,top,rows.length&&top!=='-'?types[top]/rows.length*100:null];
+      });
+    }
+    var perPage=6;
     players.forEach(function(p,index){
       if(index%perPage===0){
         if(index){d.addPage();d.setFillColor(255,255,255);d.rect(0,0,pw,ph,'F');d.setFillColor(31,55,105);d.rect(0,0,pw,1.5,'F');d.rect(0,ph-1.5,pw,1.5,'F')}
@@ -3418,6 +3432,14 @@ Zane Skansi,Kitchener Panthers`;
         d.setTextColor(vc[0],vc[1],vc[2]);d.text(String(v[1]),statX+i*statW,y+19);
       });
       if(role==='pitcher'){
+        var ctRows=compactCountTendencies(sc),cx=margin+4,cw=[34,12,39,19];
+        d.setFont('helvetica','bold');d.setFontSize(4.8);d.setTextColor(gold[0],gold[1],gold[2]);d.text('COUNT TENDENCIES',cx,y+24.8);
+        d.setFillColor(224,229,235);d.rect(cx-1,y+26,104,3.5,'F');
+        ['COUNT','P','PITCH TYPE','USE'].forEach(function(label,i){d.setFontSize(4.1);d.setTextColor(22,43,82);d.text(label,cx+cw[i]/2,y+28.5,{align:'center'});cx+=cw[i]});
+        ctRows.forEach(function(row,ri){
+          var ry=y+29.5+ri*3.6;d.setFillColor(ri%2?250:242,ri%2?250:244,ri%2?250:247);d.rect(margin+3,ry,104,3.6,'F');cx=margin+4;
+          [row[0],String(row[1]),row[2],row[3]==null?'-':Number(row[3]).toFixed(1)+'%'].forEach(function(value,i){d.setFont('helvetica',i===0||i===2?'bold':'normal');d.setFontSize(4.3);d.setTextColor(22,32,50);d.text(value,cx+cw[i]/2,ry+2.5,{align:'center',maxWidth:cw[i]-1});cx+=cw[i]});
+        });
       }else{
         d.setFontSize(5.5);d.setTextColor(gold[0],gold[1],gold[2]);d.text('PLAN',margin+4,y+22);
         d.setFontSize(5.8);d.setTextColor(22,32,50);d.text('ATTACK  '+attack(sc,'A'),margin+4,y+27,{maxWidth:105});d.text('Use pitch mix and location to avoid damage zones.',margin+4,y+32,{maxWidth:105})
