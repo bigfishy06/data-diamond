@@ -119,7 +119,7 @@
   <script>
     function validHand(value,allowSwitch){const hand=String(value||'').trim().toUpperCase();return(allowSwitch?['R','L','S']:['R','L']).includes(hand)?hand:''}
     function trackedHand(player,field,allowSwitch){const counts={R:0,L:0,S:0};safePoints(player||{}).forEach(point=>{const hand=validHand(point[field],true);if(hand)counts[hand]++});if(allowSwitch&&counts.S>0)return'S';return['R','L'].sort((a,b)=>counts[b]-counts[a])[0]&&Math.max(counts.R,counts.L)>0?['R','L'].sort((a,b)=>counts[b]-counts[a])[0]:''}
-    const BAT_HAND_OVERRIDES={'aj karosas':'L','anderson feliz':'S','roberto caro':'S'};
+    const BAT_HAND_OVERRIDES={'aj karosas':'R','anderson feliz':'S','roberto caro':'S'};
     function profileHand(player,batter){const override=batter?BAT_HAND_OVERRIDES[String(player&&player.name||'').trim().toLowerCase()]:'';return override||validHand(player&&player.throws,batter)||trackedHand(player,batter?'batter_side':'pitcher_side',batter)||'—'}
     function refreshProfileContext(){const batter=activeRole()==='batter',p=state.current;if(!p)return;document.querySelector('.profile .eyebrow').textContent=batter?'BATTER PROFILE · GUELPH ROYALS':'PITCHER PROFILE · GUELPH ROYALS';$('playerLabel').textContent=batter?'BATTER PROFILE':'PITCHER PROFILE';$('meta').textContent=batter?`${p.pitcher_team||'Guelph Royals'} · Bats ${profileHand(p,true)}`:`${p.pitcher_team||'Guelph Royals'} · Throws ${profileHand(p,false)}`}
     document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshProfileContext,0)));$('player').addEventListener('change',()=>setTimeout(refreshProfileContext,0));setTimeout(refreshProfileContext,650);
