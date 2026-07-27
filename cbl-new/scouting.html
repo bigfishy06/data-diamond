@@ -750,16 +750,36 @@ Zane Skansi,Kitchener Panthers`;
   function scoutingAccess() {
     return (typeof AUTH !== 'undefined' && AUTH.getUser) ? AUTH.getUser() : (function(){ try { return JSON.parse(localStorage.getItem('dd_user') || '{}'); } catch(e) { return {}; } })();
   }
+  function scoutingNorm(value) {
+    return String(value || '').trim().toLowerCase();
+  }
+  function scoutingUserTeam() {
+    var u = scoutingAccess(), own = scoutingNorm(u.player), match;
+    if (typeof DATA !== 'undefined') {
+      match = (DATA.pitchers || []).find(function(p){ return scoutingNorm(p.pitcher) === own; });
+      if (match && match.pitcher_team) return match.pitcher_team;
+      match = (DATA.summary || []).find(function(p){ return scoutingNorm(p.batter || p.player) === own; });
+      if (match && (match.batter_team || match.team)) return match.batter_team || match.team;
+    }
+    match = SCOUTING_ROSTER_2025.find(function(row){ return scoutingNorm(row.player) === own; });
+    return match && match.team ? match.team : 'Guelph Royals';
+  }
   function canScoutTeam(teamName) {
     var u = scoutingAccess();
     if (!u.role || u.role === 'admin') return true;
-    return !(teamName||'').toLowerCase().includes('guelph') && (teamName||'').toLowerCase() !== 'gue';
+    if (u.role === 'position_player') return true;
+    if (u.role === 'catcher') return scoutingNorm(teamName) === scoutingNorm(scoutingUserTeam());
+    return false;
   }
-  function canScoutPlayer(playerName) {
+  function canScoutPlayer(playerName, playerType, playerTeamName) {
     var u = scoutingAccess();
     if (!u.role || u.role === 'admin') return true;
-    if (u.player && playerName.toLowerCase().trim() === u.player.toLowerCase().trim()) return true;
-    return true; // individual player access is handled at team level
+    var isSelf = scoutingNorm(playerName) === scoutingNorm(u.player);
+    var isTeammate = scoutingNorm(playerTeamName) === scoutingNorm(scoutingUserTeam());
+    if (isSelf) return true;
+    if (u.role === 'position_player') return !isTeammate;
+    if (u.role === 'catcher') return isTeammate && playerType === 'pitcher';
+    return false;
   }
 
   function buildTeamPicker() {
@@ -1443,6 +1463,8 @@ Zane Skansi,Kitchener Panthers`;
     }
     players = players.filter(function(p) { return !p.season || p.season === selSeason; });
     inactivePlayers = inactivePlayers.filter(function(p) { return !p.season || p.season === selSeason; });
+    players = players.filter(function(p) { return canScoutPlayer(p.name, selType, team.name); });
+    inactivePlayers = inactivePlayers.filter(function(p) { return canScoutPlayer(p.name, selType, team.name); });
 
     if (!players.length && !inactivePlayers.length) {
       section.innerHTML = '<div class="scout-empty">' +
@@ -3226,6 +3248,11 @@ Zane Skansi,Kitchener Panthers`;
     var requested = normRosterName(params.get('player'));
     var player = players.find(function(item){ return normRosterName(item.name) === requested; });
     if (!player) return false;
+    if (!canScoutPlayer(player.name, selType, team.name)) {
+      autoReportHandled = true;
+      if(window.parent!==window)window.parent.postMessage({type:'cbl-scouting-generated',ok:false,player:player.name},window.location.origin);
+      return true;
+    }
     autoReportHandled = true;
     renderPlayerList();
     showToast('Generating full-season report for ' + player.name + '…', '#1e3c78');
@@ -3260,6 +3287,7 @@ Zane Skansi,Kitchener Panthers`;
     var players=selSeason==='2025'
       ?getRosterReportPlayers2025(selTeam,selType)
       :(selType==='pitcher'?getTeamPitcherReports2026(selTeam):getTeamBatterReports2026(selTeam));
+    players=(players||[]).filter(function(player){return canScoutPlayer(player.name,selType,team.name);});
     players=(players||[]).sort(function(a,b){return a.name.localeCompare(b.name);});
     if(!players.length)return false;
     autoTeamReportHandled=true;
@@ -3623,6 +3651,7 @@ Zane Skansi,Kitchener Panthers`;
     var players=selSeason==='2025'
       ?getRosterReportPlayers2025(selTeam,selType)
       :(selType==='pitcher'?getTeamPitcherReports2026(selTeam):getTeamBatterReports2026(selTeam));
+    players=(players||[]).filter(function(player){return canScoutPlayer(player.name,selType,team.name);});
     var selected=[];
     try{selected=JSON.parse(params.get('players')||'[]').map(normRosterName);}catch(error){}
     if(selected.length)players=(players||[]).filter(function(player){return selected.includes(normRosterName(player.name));});
