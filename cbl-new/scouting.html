@@ -803,6 +803,7 @@ Zane Skansi,Kitchener Panthers`;
   function resolveTeam(val) {
     if (!val) return null;
     var v = String(val).trim().toLowerCase();
+    if (v.indexOf('branford red sox') !== -1) v = v.replace('branford red sox','brantford red sox');
     return TEAMS_SC.find(function(t) {
       return t.id === v ||
              t.abbr.toLowerCase() === v ||
@@ -3139,7 +3140,11 @@ Zane Skansi,Kitchener Panthers`;
   var autoReportAttempts = 0;
   var autoReportTimer = setInterval(function(){
     autoReportAttempts += 1;
-    if (autoGenerateRequestedReport() || autoReportAttempts > 40) clearInterval(autoReportTimer);
+    if (autoGenerateRequestedReport()) clearInterval(autoReportTimer);
+    else if (autoReportAttempts > 40) {
+      clearInterval(autoReportTimer);
+      if(window.parent!==window)window.parent.postMessage({type:'cbl-scouting-generated',ok:false,player:new URLSearchParams(window.location.search).get('player')||'player'},window.location.origin);
+    }
   }, 250);
   </script>
 </body>
