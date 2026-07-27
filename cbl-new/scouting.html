@@ -3058,6 +3058,49 @@ Zane Skansi,Kitchener Panthers`;
       window.print();
     }
   }
+
+  var autoReportHandled = false;
+  function autoGenerateRequestedReport() {
+    if (autoReportHandled) return true;
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('generate') !== '1' || !params.get('player')) return true;
+    if (typeof DATA === 'undefined' || !DATA.summary || !DATA.summary.length) return false;
+    var team = resolveTeam(params.get('team'));
+    if (!team) return false;
+    selSeason = params.get('season') || '2026';
+    selType = params.get('type') === 'pitcher' ? 'pitcher' : 'batter';
+    selTeam = team.id;
+    if (typeof swapSeasonData === 'function') swapSeasonData('year:' + selSeason);
+    document.getElementById('btn-season-2025').classList.toggle('active', selSeason === '2025');
+    document.getElementById('btn-season-2026').classList.toggle('active', selSeason !== '2025');
+    document.getElementById('btn-batter').classList.toggle('active', selType === 'batter');
+    document.getElementById('btn-pitcher').classList.toggle('active', selType === 'pitcher');
+    var players = selSeason === '2025'
+      ? getRosterReportPlayers2025(selTeam, selType)
+      : (selType === 'pitcher' ? getTeamPitcherReports2026(selTeam) : getTeamBatterReports2026(selTeam));
+    var requested = normRosterName(params.get('player'));
+    var player = players.find(function(item){ return normRosterName(item.name) === requested; });
+    if (!player) return false;
+    autoReportHandled = true;
+    renderPlayerList();
+    showToast('Generating full-season report for ' + player.name + '…', '#1e3c78');
+    setTimeout(function(){
+      try {
+        if (selType === 'pitcher') genPitcherPDF(player, team);
+        else genBatterPDF(player, team);
+        showToast('Downloaded: ' + player.name, '#34d399');
+      } catch (error) {
+        console.error(error);
+        showToast('Error generating report', '#f87171');
+      }
+    }, 350);
+    return true;
+  }
+  var autoReportAttempts = 0;
+  var autoReportTimer = setInterval(function(){
+    autoReportAttempts += 1;
+    if (autoGenerateRequestedReport() || autoReportAttempts > 40) clearInterval(autoReportTimer);
+  }, 250);
   </script>
 </body>
 </html>
