@@ -145,7 +145,13 @@
               role:    match.role   || "admin",
               player:  match.player || null
             }));
-            setTimeout(function(){ window.location.replace("index.html"); }, 100);
+            var returnTo = localStorage.getItem("dd_return_to");
+            if (returnTo && /^\/cbl-new\/(?:index\.html)?$/.test(returnTo)) {
+              localStorage.removeItem("dd_return_to");
+            } else {
+              returnTo = "index.html";
+            }
+            setTimeout(function(){ window.location.replace(returnTo); }, 100);
           })
           .catch(function() {
             document.getElementById("login-error").textContent =
