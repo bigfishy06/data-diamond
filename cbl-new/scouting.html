@@ -2069,8 +2069,9 @@ Zane Skansi,Kitchener Panthers`;
     return y+ih+8;
   }
 
-  function genBatterPDF(player,team){
-    var d=new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),s=player.summary||{};
+  function genBatterPDF(player,team,teamDoc,appendPage){
+    var d=teamDoc||new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),s=player.summary||{};
+    if(teamDoc&&appendPage)d.addPage();
     function normName(n){return normRosterName(n);}
     var _pitchObj=player.pitch||getPitchPlayer(player.name);
     var allSc=_pitchObj&&_pitchObj.scatter?_pitchObj.scatter:[];
@@ -2550,12 +2551,14 @@ Zane Skansi,Kitchener Panthers`;
       y+=5+chartH+shiftBoxH+4;
     }
 
-    d.save('scouting_'+player.name.replace(/ /g,'_')+'_batter.pdf');
+    if(!teamDoc)d.save('scouting_'+player.name.replace(/ /g,'_')+'_batter.pdf');
+    return d;
   }
 
-  function genPitcherPDF(player,team){
+  function genPitcherPDF(player,team,teamDoc,appendPage){
     function normName(n){return normRosterName(n);}
-    var d=new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),sc=player.scatter||[];
+    var d=teamDoc||new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),sc=player.scatter||[];
+    if(teamDoc&&appendPage)d.addPage();
     var scTot=sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
     var pd26=selSeason==='2026'?(DATA.pitchers.find(function(p){return normName(p.pitcher)===normName(player.name);})||{}):null;
     // Fall back to pd.total_pitches for no-x/y pitchers so rate stats compute correctly
@@ -2978,7 +2981,8 @@ Zane Skansi,Kitchener Panthers`;
       y+=heatH+4;
     }
     }
-    d.save('scouting_'+player.name.replace(/ /g,'_')+'_pitcher.pdf');
+    if(!teamDoc)d.save('scouting_'+player.name.replace(/ /g,'_')+'_pitcher.pdf');
+    return d;
   }
 
   // Fielder Cheat Sheet — compact table showing all batters on selected team
@@ -3229,6 +3233,45 @@ Zane Skansi,Kitchener Panthers`;
     }, 350);
     return true;
   }
+  var autoTeamReportHandled=false;
+  function autoGenerateRequestedTeamReport(){
+    if(autoTeamReportHandled)return true;
+    var params=new URLSearchParams(window.location.search);
+    if(params.get('generateTeam')!=='1'||!params.get('team'))return true;
+    if(typeof DATA==='undefined'||!DATA.summary||!DATA.summary.length)return false;
+    var team=resolveTeam(params.get('team'));
+    if(!team)return false;
+    selSeason=params.get('season')||'2026';
+    selType=params.get('type')==='pitcher'?'pitcher':'batter';
+    selTeam=team.id;
+    if(typeof swapSeasonData==='function')swapSeasonData('year:'+selSeason);
+    var players=selSeason==='2025'
+      ?getRosterReportPlayers2025(selTeam,selType)
+      :(selType==='pitcher'?getTeamPitcherReports2026(selTeam):getTeamBatterReports2026(selTeam));
+    players=(players||[]).sort(function(a,b){return a.name.localeCompare(b.name);});
+    if(!players.length)return false;
+    autoTeamReportHandled=true;
+    showToast('Generating '+team.name+' '+selType+' team reportâ€¦','#1e3c78');
+    (async function(){
+      try{
+        var doc=new jsPDFLib.jsPDF({unit:'mm',format:'a4'});
+        for(var i=0;i<players.length;i++){
+          await loadReportHeadshot(players[i].name,team);
+          if(selType==='pitcher')genPitcherPDF(players[i],team,doc,i>0);
+          else genBatterPDF(players[i],team,doc,i>0);
+        }
+        var safeTeam=team.name.replace(/[^a-z0-9]+/gi,'_').replace(/^_+|_+$/g,'');
+        doc.save('scouting_'+safeTeam+'_'+selType+'_team.pdf');
+        showToast('Downloaded: '+team.name+' team report','#34d399');
+        if(window.parent!==window)window.parent.postMessage({type:'cbl-team-scouting-generated',ok:true,team:team.name,role:selType},window.location.origin);
+      }catch(error){
+        console.error(error);
+        showToast('Error generating team report','#f87171');
+        if(window.parent!==window)window.parent.postMessage({type:'cbl-team-scouting-generated',ok:false,team:team.name,role:selType},window.location.origin);
+      }
+    })();
+    return true;
+  }
   var autoReportAttempts = 0;
   var autoReportTimer = setInterval(function(){
     autoReportAttempts += 1;
@@ -3238,6 +3281,16 @@ Zane Skansi,Kitchener Panthers`;
       if(window.parent!==window)window.parent.postMessage({type:'cbl-scouting-generated',ok:false,player:new URLSearchParams(window.location.search).get('player')||'player'},window.location.origin);
     }
   }, 250);
+  var autoTeamReportAttempts=0;
+  var autoTeamReportTimer=setInterval(function(){
+    autoTeamReportAttempts+=1;
+    if(autoGenerateRequestedTeamReport())clearInterval(autoTeamReportTimer);
+    else if(autoTeamReportAttempts>40){
+      clearInterval(autoTeamReportTimer);
+      var p=new URLSearchParams(window.location.search);
+      if(window.parent!==window)window.parent.postMessage({type:'cbl-team-scouting-generated',ok:false,team:p.get('team')||'team',role:p.get('type')||'players'},window.location.origin);
+    }
+  },250);
   </script>
 </body>
 </html>
