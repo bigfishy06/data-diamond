@@ -2318,8 +2318,10 @@ Zane Skansi,Kitchener Panthers`;
       var strikeouts=pas.filter(function(p){return _KS_B.includes(p.outcome);});
       return[group.label,String(rows.length),rows.length?f1(swings.length/rows.length*100)+'%':'—',swings.length?f1(whiffs.length/swings.length*100)+'%':'—',outside.length?f1(chases.length/outside.length*100)+'%':'—',abs.length?f3(hits.length/abs.length):'—',pas.length?f1(strikeouts.length/pas.length*100)+'%':'—'];
     });
-    y=drawSec(d,'Count Performance',y);
-    y=drawTbl(d,['SITUATION','PITCHES','SWING%','WHIFF%','CHASE%','BAA','K% (PA)'],countPerformance,[38,22,25,25,25,25,26],y,[2]);
+    if(false){
+      y=drawSec(d,'Count Performance',y);
+      y=drawTbl(d,['SITUATION','PITCHES','SWING%','WHIFF%','CHASE%','BAA','K% (PA)'],countPerformance,[38,22,25,25,25,25,26],y,[2]);
+    }
 
     // ── Two donuts: Spray Direction (left) + Batted Ball Profile (right) ──
     var _pitchObj2=player.pitch||getPitchPlayer(player.name)||(function(){ var po=getPitchPlayerForRoster(player.name); return po&&po.scatter&&po.scatter.length?po:null; })();
@@ -2408,6 +2410,8 @@ Zane Skansi,Kitchener Panthers`;
       y=drawSec(d,'Pitch Type Performance',y);
       y=drawTbl(d,['PITCH TYPE','USAGE%','WHIFF%','CHASE%','K%','BB%'],_pitchRows,[48,22,30,30,22,22],y,[1,2,3,4,5]);
     }
+    y=drawSec(d,'Count Performance',y);
+    y=drawTbl(d,['SITUATION','PITCHES','SWING%','WHIFF%','CHASE%','BAA','K% (PA)'],countPerformance,[38,22,25,25,25,25,26],y,[2]);
     if(false&&(hasSpray||hasBip)){
       // Each chart occupies half the content width
       // Layout: side-by-side if both present, centred single if only one
