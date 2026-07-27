@@ -2172,7 +2172,6 @@ Zane Skansi,Kitchener Panthers`;
       if(!zoneRows.length)return batterFallback(false);
       var whiffPick=zoneRows.slice().sort(function(a,b){return b.whiffs-a.whiffs||((b.swings?b.whiffs/b.swings:0)-(a.swings?a.whiffs/a.swings:0));})[0];
       var hitPick=zoneRows.slice().sort(function(a,b){return b.hits-a.hits||((b.baa||0)-(a.baa||0));})[0];
-      var primaryPick=whiffPick.whiffs>0?whiffPick:hitPick;
       var whiffRate=whiffPick.swings?f1(whiffPick.whiffs/whiffPick.swings*100)+'%':'--';
       var hitText=hitPick.hits+' hit'+(hitPick.hits!==1?'s':'')+(hitPick.baa!=null?' / BAA '+f3(hitPick.baa):'');
       var whiffPitch=topPitchType(whiffPick.pts,reportIsWhiffOutcome);
@@ -2180,54 +2179,25 @@ Zane Skansi,Kitchener Panthers`;
       var whiffLine=capFirstText(whiffPick.zone.spot+' with '+whiffPitch+' ('+whiffRate+')');
       var hitLine=capFirstText(hitPick.zone.spot+' with '+hitPitch+' ('+hitText+')');
       return {
-        dot:hitPick.hits>=3?'#f87171':'#FFB81C',
-        label:'WHIFF/HIT',
-        val:whiffRate,
-        spot:primaryPick.zone.spot,
-        region:primaryPick.zone.region,
-        note:'Whiff: '+whiffLine+'. Hits: '+hitLine+'.',
-        lines:[
-          {label:'Whiff',text:whiffLine,color:'#34d399'},
-          {label:'Hits',text:hitLine,color:'#f87171'}
-        ]
+        attack:{dot:'#34d399',spot:whiffPitch+' - '+whiffPick.zone.spot,region:whiffPick.zone.region},
+        watch:{dot:'#f87171',spot:hitPitch+' - '+hitPick.zone.spot,region:hitPick.zone.region}
       };
     })();
 
-    // Draw approach card with strike-zone target.
-    var _aDr=parseInt(_approachResult.dot.slice(1,3),16)||96;
-    var _aDg=parseInt(_approachResult.dot.slice(3,5),16)||165;
-    var _aDb=parseInt(_approachResult.dot.slice(5,7),16)||250;
-    var _aBoxH=_approachResult.lines?42:38;
-    d.setFillColor(245,247,251);d.rect(ML,y,CPW,_aBoxH,'F');
-    d.setDrawColor(_aDr,_aDg,_aDb);d.setLineWidth(0.45);d.rect(ML,y,CPW,_aBoxH,'S');
-    d.setFillColor(_aDr,_aDg,_aDb);d.rect(ML,y,2.4,_aBoxH,'F');
-    var _aTextX=ML+40;
-    if(_approachResult.region){drawAttackZone(d,ML+6,y+5,28,28,_approachResult.region,_approachResult.dot,'PITCHER',true);}
-    else{_aTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_aDr,_aDg,_aDb);d.text(_approachResult.fallbackLabel||'STAT FALLBACK',_aTextX,y+6.5);}
-    d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
-    var _aSpotDisp=_approachResult.spot||'';
-    var _aAction=_approachResult.region?('Attack: '+_aSpotDisp):(_aSpotDisp||_approachResult.label);
-    var _aTextW=_approachResult.region?CPW-46:CPW-14;
-    d.text(_aAction,_aTextX,y+10.5,{maxWidth:_aTextW});
-    if(_approachResult.lines){
-      _approachResult.lines.forEach(function(row,ri){
-        var ry=y+17+ri*7.1;
-        var rr=parseInt(row.color.slice(1,3),16)||96,rg=parseInt(row.color.slice(3,5),16)||165,rb=parseInt(row.color.slice(5,7),16)||250;
-        d.setFillColor(rr,rg,rb);d.rect(_aTextX,ry-4.4,17,5.2,'F');
-        d.setFont('helvetica','bold');d.setFontSize(5.2);d.setTextColor(255,255,255);
-        d.text(row.label.toUpperCase(),_aTextX+8.5,ry-0.8,{align:'center'});
-        d.setFont('helvetica','normal');d.setFontSize(6.2);st(d,CO.light);
-        d.text(row.text,_aTextX+20,ry-0.8,{maxWidth:_aTextW-21});
-      });
-    } else {
-      d.setFont('helvetica','normal');d.setFontSize(6.5);st(d,CO.light);
-      var _aNoteDisp=_approachResult.note;
-      var _aNwds=_aNoteDisp.split(' '),_aNln='',_aNlns=[];
-      _aNwds.forEach(function(w){var t=_aNln?_aNln+' '+w:w;if(d.getTextWidth(t)>_aTextW){_aNlns.push(_aNln);_aNln=w;}else _aNln=t;});
-      if(_aNln)_aNlns.push(_aNln);
-      _aNlns.slice(0,3).forEach(function(l,li){d.text(l,_aTextX,y+18+li*5);});
-      if(_approachResult.region&&_approachResult.val){d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(_aDr,_aDg,_aDb);d.text('Evidence: '+_approachResult.label+' '+_approachResult.val,_aTextX,y+34,{maxWidth:_aTextW});}
-    }
+    // Draw separate Attack and Watch Out strike-zone cards.
+    if(!_approachResult.attack)_approachResult={attack:{dot:'#34d399',spot:_approachResult.spot||'Limited data',region:_approachResult.region},watch:{dot:'#f87171',spot:'Limited data',region:null}};
+    var _aBoxH=32,_aGap=4,_aW=(CPW-_aGap)/2;
+    [{key:'attack',label:'ATTACK',color:'#34d399'},{key:'watch',label:'WATCH OUT',color:'#f87171'}].forEach(function(item,index){
+      var result=_approachResult[item.key],x=ML+index*(_aW+_aGap),c=hx(item.color);
+      d.setFillColor(245,247,251);d.rect(x,y,_aW,_aBoxH,'F');
+      d.setDrawColor(c[0],c[1],c[2]);d.setLineWidth(.45);d.rect(x,y,_aW,_aBoxH,'S');
+      d.setFillColor(c[0],c[1],c[2]);d.rect(x,y,2.2,_aBoxH,'F');
+      d.setFont('helvetica','bold');d.setFontSize(8);d.setTextColor(c[0],c[1],c[2]);d.text(item.label,x+5,y+6);
+      var textX=x+34;
+      if(result.region)drawAttackZone(d,x+5,y+8,24,20,result.region,item.color,'PITCHER',true);
+      else textX=x+5;
+      d.setFont('helvetica','bold');d.setFontSize(8.5);st(d,CO.white);d.text(result.spot,textX,y+18,{maxWidth:_aW-(textX-x)-4});
+    });
     y+=_aBoxH+4;
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
