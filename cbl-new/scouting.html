@@ -2171,16 +2171,23 @@ Zane Skansi,Kitchener Panthers`;
       }).filter(function(z){return z.pts.length>=3;});
       if(!zoneRows.length)return batterFallback(false);
       var whiffPick=zoneRows.slice().sort(function(a,b){return b.whiffs-a.whiffs||((b.swings?b.whiffs/b.swings:0)-(a.swings?a.whiffs/a.swings:0));})[0];
-      var hitPick=zoneRows.slice().sort(function(a,b){return b.hits-a.hits||((b.baa||0)-(a.baa||0));})[0];
+      var whiffPitch=topPitchType(whiffPick.pts,reportIsWhiffOutcome);
+      var hitCandidates=zoneRows.slice().sort(function(a,b){return b.hits-a.hits||((b.baa||0)-(a.baa||0));});
+      var hitPick=hitCandidates.find(function(candidate){
+        var candidatePitch=topPitchType(candidate.pts,function(p){return _HITS_B.includes(p.outcome);});
+        return candidate.zone.label!==whiffPick.zone.label||candidatePitch!==whiffPitch;
+      })||hitCandidates[0];
       var whiffRate=whiffPick.swings?f1(whiffPick.whiffs/whiffPick.swings*100)+'%':'--';
       var hitText=hitPick.hits+' hit'+(hitPick.hits!==1?'s':'')+(hitPick.baa!=null?' / BAA '+f3(hitPick.baa):'');
-      var whiffPitch=topPitchType(whiffPick.pts,reportIsWhiffOutcome);
       var hitPitch=topPitchType(hitPick.pts,function(p){return _HITS_B.includes(p.outcome);});
       var whiffLine=capFirstText(whiffPick.zone.spot+' with '+whiffPitch+' ('+whiffRate+')');
       var hitLine=capFirstText(hitPick.zone.spot+' with '+hitPitch+' ('+hitText+')');
+      var duplicateApproach=hitPick.zone.label===whiffPick.zone.label&&hitPitch===whiffPitch;
       return {
         attack:{dot:'#34d399',spot:whiffPitch+' - '+whiffPick.zone.spot,region:whiffPick.zone.region},
-        watch:{dot:'#f87171',spot:hitPitch+' - '+hitPick.zone.spot,region:hitPick.zone.region}
+        watch:duplicateApproach
+          ? {dot:'#f87171',spot:'No distinct watch-out sample',region:null}
+          : {dot:'#f87171',spot:hitPitch+' - '+hitPick.zone.spot,region:hitPick.zone.region}
       };
     })();
 
