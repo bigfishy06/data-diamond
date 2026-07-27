@@ -3299,16 +3299,16 @@ Zane Skansi,Kitchener Panthers`;
         ?[['PLAYER',50],['HAND',14],['PITCHES',19],['STRIKE%',20],['WHIFF%',20],['K%',17],['BB%',17],['BAA',25]]
         :[['PLAYER',46],['BATS',13],['PA',16],['AVG',18],['OBP',18],['SLG',18],['OPS',18],['K%',18],['BB%',17]];
       function rate(a,b){return b?a/b*100:null}
-      function fmtPct(v){return v==null||!isFinite(v)?'â€”':Number(v).toFixed(1)+'%'}
-      function fmtDec(v){return v==null||!isFinite(v)?'â€”':Number(v).toFixed(3).replace(/^0/,'')}
+      function fmtPct(v){return v==null||!isFinite(v)?'-':Number(v).toFixed(1)+'%'}
+      function fmtDec(v){return v==null||!isFinite(v)?'-':Number(v).toFixed(3).replace(/^0/,'')}
       function rowFor(player){
         if(selType==='batter'){
           var s=player.summary||{},pa=Number(s.PA)||0;
-          return[player.name,getBatterHand(player.name)||'â€”',String(pa||'â€”'),fmtDec(s.AVG),fmtDec(s.OBP),fmtDec(s.SLG),fmtDec(s.OPS),fmtPct(pa?Number(s.K||0)/pa*100:null),fmtPct(pa?Number(s.BB||0)/pa*100:null)];
+          return[player.name,getBatterHand(player.name)||'-',String(pa||'-'),fmtDec(s.AVG),fmtDec(s.OBP),fmtDec(s.SLG),fmtDec(s.OPS),fmtPct(pa?Number(s.K||0)/pa*100:null),fmtPct(pa?Number(s.BB||0)/pa*100:null)];
         }
         var inPlay=['Single','Double','Triple','Home Run','Ground Out','Fly Out','Line Out','Pop Out','Field Error','Fielders Choice','Sacrifice Fly','Sacrifice Bunt'],strikeout=['Strikeout Swinging','Strikeout Looking'],hitResults=['Single','Double','Triple','Home Run'];
         var sc=player.scatter||[],sw=sc.filter(reportIsSwingOutcome),wh=sc.filter(reportIsWhiffOutcome),paRows=sc.filter(function(p){return inPlay.concat(strikeout).includes(p.outcome)||p.outcome==='Walk'||p.outcome==='Intentional Walk';}),ks=paRows.filter(function(p){return strikeout.includes(p.outcome);}),bbs=paRows.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}),abs=sc.filter(function(p){return inPlay.concat(strikeout).includes(p.outcome);}),hits=sc.filter(function(p){return hitResults.includes(p.outcome);}),pd=(DATA.pitchers||[]).find(function(p){return normRosterName(p.pitcher)===normRosterName(player.name);})||{};
-        return[player.name,getPitcherHand(player.name)||pd.throws||'â€”',String(sc.length||pd.total_pitches||'â€”'),fmtPct(sc.length?sc.filter(reportIsStrikeOutcome).length/sc.length*100:pd.STR_pct),fmtPct(sw.length?wh.length/sw.length*100:pd.Whiff_pct),fmtPct(paRows.length?ks.length/paRows.length*100:pd.K_pct),fmtPct(paRows.length?bbs.length/paRows.length*100:pd.BB_pct),fmtDec(abs.length?hits.length/abs.length:pd.BAA)];
+        return[player.name,getPitcherHand(player.name)||pd.throws||'-',String(sc.length||pd.total_pitches||'-'),fmtPct(sc.length?sc.filter(reportIsStrikeOutcome).length/sc.length*100:pd.STR_pct),fmtPct(sw.length?wh.length/sw.length*100:pd.Whiff_pct),fmtPct(paRows.length?ks.length/paRows.length*100:pd.K_pct),fmtPct(paRows.length?bbs.length/paRows.length*100:pd.BB_pct),fmtDec(abs.length?hits.length/abs.length:pd.BAA)];
       }
       function pageHeader(pageNo){
         d.setFillColor(tc[0],tc[1],tc[2]);d.rect(0,0,pw,28,'F');
