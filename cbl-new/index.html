@@ -975,5 +975,15 @@
     })();
   </script>
   <script src="access-control.js?v=3"></script>
+  <script>
+    (function defaultToBatters(){
+      var attempts=0,timer=setInterval(function(){
+        var batterButton=document.querySelector('[data-role="batter"]');
+        if(!batterButton||++attempts>100){clearInterval(timer);return}
+        if(batterButton.classList.contains('active')){clearInterval(timer);return}
+        if(!batterButton.disabled&&getComputedStyle(batterButton).display!=='none')batterButton.click();
+      },50);
+    })();
+  </script>
 </body>
 </html>
