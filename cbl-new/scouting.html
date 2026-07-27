@@ -1442,6 +1442,7 @@ Zane Skansi,Kitchener Panthers`;
 
   // Get batter handedness: scatter batter_side -> IBL history
   function getBatterHand(playerName) {
+    if (String(playerName || '').trim().toLowerCase() === 'aj karosas') return 'L';
     var pitchObj = getPitchPlayer(playerName) || getPitchPlayerForRoster(playerName);
     var scatter = pitchObj ? pitchObj.scatter : [];
     var fromScatter = scoutDeriveHand(scatter, 'batter_side');
