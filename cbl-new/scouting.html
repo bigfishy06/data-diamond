@@ -2394,14 +2394,15 @@ Zane Skansi,Kitchener Panthers`;
       d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(32,42,120);d.text('SHIFT ANALYSIS',ML+5,y+6);
       d.setFont('helvetica','bold');d.setFontSize(7.5);d.setTextColor(shc[0],shc[1],shc[2]);
       d.text(shiftRec==='NONE'?'NO SHIFT':'SHIFT: '+shiftRec,ML+CPW-5,y+6,{align:'right'});
-      var shiftLineX=ML+18,shiftLineY=y+14,shiftLineW=CPW-36;
-      d.setDrawColor(130,140,160);d.setLineWidth(.6);d.line(shiftLineX,shiftLineY,shiftLineX+shiftLineW,shiftLineY);
-      rankedShift.forEach(function(outcome,index){
-        var ox=shiftLineX+shiftLineW*(index/2),oc=hx(outcome.color);
-        d.setFillColor(oc[0],oc[1],oc[2]);d.circle(ox,shiftLineY,2,'F');
-        d.setFont('helvetica','bold');d.setFontSize(5.8);d.setTextColor(oc[0],oc[1],oc[2]);
-        d.text(outcome.label+' '+f1(outcome.rate)+'%',ox,shiftLineY-3.5,{align:'center'});
+      var shiftLineX=ML+5,shiftLineY=y+10,shiftLineW=CPW-10,shiftLineH=6,shiftOffset=0;
+      rankedShift.forEach(function(outcome){
+        var segmentW=shiftLineW*outcome.rate/100,oc=hx(outcome.color),segmentX=shiftLineX+shiftOffset;
+        d.setFillColor(oc[0],oc[1],oc[2]);d.rect(segmentX,shiftLineY,segmentW,shiftLineH,'F');
+        d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(255,255,255);
+        d.text(outcome.label+' '+f1(outcome.rate)+'%',segmentX+segmentW/2,shiftLineY+4.1,{align:'center'});
+        shiftOffset+=segmentW;
       });
+      d.setDrawColor(80,90,110);d.setLineWidth(.3);d.rect(shiftLineX,shiftLineY,shiftLineW,shiftLineH,'S');
       y+=24;
     }
     if(hasSpray||hasBip){
