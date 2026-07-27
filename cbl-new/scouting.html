@@ -3303,6 +3303,8 @@ Zane Skansi,Kitchener Panthers`;
       Object.keys(batterLeague).forEach(function(key){if(m[key]!=null&&isFinite(m[key]))batterLeague[key].push(m[key])});
     });
     function batterSummaryCountMetrics(points,groupIndex){
+      var inPlay=['Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'];
+      var strikeouts=['Strikeout Swinging','Strikeout Looking'],hitsList=['Single','Double','Triple','Home Run'];
       var tests=[
         function(p){var c=reportCleanCount(p.count).split('-').map(Number);return c.length===2&&c[0]>c[1]},
         function(p){var c=reportCleanCount(p.count).split('-').map(Number);return c.length===2&&c[0]===c[1]},
@@ -3310,7 +3312,7 @@ Zane Skansi,Kitchener Panthers`;
       ];
       var rows=(points||[]).filter(tests[groupIndex]),swings=rows.filter(reportIsSwingOutcome),whiffs=rows.filter(reportIsWhiffOutcome);
       var outside=rows.filter(function(p){return hasPitchLocation(p)&&!p.in_zone}),chases=outside.filter(reportIsSwingOutcome);
-      var abs=rows.filter(function(p){return _IN_PLAY_B.concat(_KS_B).includes(p.outcome)}),hits=rows.filter(function(p){return _HITS_B.includes(p.outcome)});
+      var abs=rows.filter(function(p){return inPlay.concat(strikeouts).includes(p.outcome)}),hits=rows.filter(function(p){return hitsList.includes(p.outcome)});
       return {
         pitches:rows.length,
         swing:rows.length?swings.length/rows.length*100:null,
