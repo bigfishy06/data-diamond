@@ -2301,7 +2301,7 @@ Zane Skansi,Kitchener Panthers`;
     var _locSc=allSc.filter(hasPitchLocation);
     var _whiffPts=_locSc.filter(reportIsWhiffOutcome);
     var _pitchRows=buildBatterPitchTypeRows(allSc).slice(0,5);
-    if(_pitchRows.length){
+    if(false&&_pitchRows.length){
       y=drawSec(d,'Pitch Type Performance',y);
       y=drawTbl(d,['PITCH TYPE','USAGE%','WHIFF%','CHASE%','K%','BB%'],_pitchRows,[48,22,30,30,22,22],y,[1,2,3,4,5]);
     }
@@ -2372,7 +2372,7 @@ Zane Skansi,Kitchener Panthers`;
     }
 
     var hasSpray=spTot2>=(hasSprayPcts?1:3);
-    if((hasSpray||hasBip)&&PH-8-y-4<88){d.addPage();drawBg(d);y=MT+8;}
+    if((hasSpray||_pitchRows.length)&&PH-8-y-4<58){d.addPage();drawBg(d);y=MT+8;}
     if(hasSpray){
       var pullRate=pullC2/spTot2*100,straightRate=strC3/spTot2*100,oppoRate=oppC2/spTot2*100;
       var dominantShift=[
@@ -2391,9 +2391,8 @@ Zane Skansi,Kitchener Panthers`;
       d.setFillColor(245,247,251);d.rect(ML,y,CPW,20,'F');
       d.setFillColor(shc[0],shc[1],shc[2]);d.rect(ML,y,CPW,2.2,'F');
       d.setDrawColor(shc[0],shc[1],shc[2]);d.setLineWidth(.35);d.rect(ML,y,CPW,20,'S');
-      d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(32,42,120);d.text('SHIFT ANALYSIS',ML+5,y+6);
       d.setFont('helvetica','bold');d.setFontSize(7.5);d.setTextColor(shc[0],shc[1],shc[2]);
-      d.text(shiftRec==='NONE'?'NO SHIFT':'SHIFT: '+shiftRec,ML+CPW-5,y+6,{align:'right'});
+      d.text(shiftRec==='NONE'?'NO SHIFT':'SHIFT: '+shiftRec,ML+CPW/2,y+6,{align:'center'});
       var shiftLineX=ML+5,shiftLineY=y+10,shiftLineW=CPW-10,shiftLineH=6,shiftOffset=0;
       rankedShift.forEach(function(outcome){
         var segmentW=shiftLineW*outcome.rate/100,oc=hx(outcome.color),segmentX=shiftLineX+shiftOffset;
@@ -2405,7 +2404,11 @@ Zane Skansi,Kitchener Panthers`;
       d.setDrawColor(80,90,110);d.setLineWidth(.3);d.rect(shiftLineX,shiftLineY,shiftLineW,shiftLineH,'S');
       y+=24;
     }
-    if(hasSpray||hasBip){
+    if(_pitchRows.length){
+      y=drawSec(d,'Pitch Type Performance',y);
+      y=drawTbl(d,['PITCH TYPE','USAGE%','WHIFF%','CHASE%','K%','BB%'],_pitchRows,[48,22,30,30,22,22],y,[1,2,3,4,5]);
+    }
+    if(false&&(hasSpray||hasBip)){
       // Each chart occupies half the content width
       // Layout: side-by-side if both present, centred single if only one
       var bothCharts=hasSpray&&hasBip;
