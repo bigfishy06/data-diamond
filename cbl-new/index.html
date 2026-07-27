@@ -891,5 +891,45 @@
       setTimeout(updateScoutingContext,6000);
     })();
   </script>
+  <style>
+    .team-report-picker{display:none;margin-top:12px;border:1px solid var(--line);background:#fff}.team-report-picker.open{display:block}.team-report-picker-head,.team-report-picker-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:var(--ice)}.team-report-picker-head strong{color:var(--navy);font-size:12px}.team-report-picker-actions{display:flex;gap:10px}.team-report-picker-actions button{border:0;background:none;color:var(--navy);font:800 10px Inter,Arial,sans-serif;cursor:pointer}.team-report-roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));max-height:300px;overflow:auto;padding:8px}.team-report-roster label{display:flex;align-items:center;gap:8px;margin:0;padding:8px;color:var(--ink);font-size:12px;letter-spacing:0;cursor:pointer}.team-report-roster input{accent-color:var(--navy)}.team-report-picker-foot{justify-content:flex-end}.team-report-picker-foot span{margin-right:auto;color:var(--muted);font-size:11px}
+  </style>
+  <script>
+    (function(){
+      const oldTeamButton=$('createTeamScoutingReport'),teamButton=oldTeamButton.cloneNode(true);
+      oldTeamButton.replaceWith(teamButton);
+      const picker=document.createElement('div');
+      picker.className='team-report-picker';
+      picker.innerHTML='<div class="team-report-picker-head"><strong id="teamReportPickerTitle">TEAM SUMMARY</strong><div class="team-report-picker-actions"><button type="button" data-team-select="all">Select all</button><button type="button" data-team-select="none">Clear</button></div></div><div class="team-report-roster" id="teamReportRoster"></div><div class="team-report-picker-foot"><span id="teamReportSelectionCount"></span><button type="button" class="scout-primary" id="runTeamSummaryReport">Generate Summary PDF</button></div>';
+      document.querySelector('.scouting-generator-note').after(picker);
+      const updateCount=()=>{const checked=picker.querySelectorAll('input:checked').length,total=picker.querySelectorAll('input').length;$('teamReportSelectionCount').textContent=`${checked} of ${total} players selected`;$('runTeamSummaryReport').disabled=!checked};
+      async function loadRoster(){
+        const player=state.current;if(!player||!player.pitcher_team)return;
+        picker.classList.toggle('open');if(!picker.classList.contains('open'))return;
+        const role=activeRole(),source=await fetch(role==='pitcher'?'data/pitchers2026.json':'data/summary2026.json').then(response=>response.json());
+        const names=[...new Set(source.filter(row=>(role==='pitcher'?row.pitcher_team:row.batter_team)===player.pitcher_team).map(row=>role==='pitcher'?row.pitcher:row.batter).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+        $('teamReportPickerTitle').textContent=`${player.pitcher_team.toUpperCase()} · ${role==='pitcher'?'PITCHERS':'BATTERS'}`;
+        $('teamReportRoster').innerHTML=names.map(name=>`<label><input type="checkbox" value="${name.replace(/"/g,'&quot;')}" checked><span>${name}</span></label>`).join('');
+        updateCount();
+      }
+      teamButton.addEventListener('click',()=>loadRoster().catch(()=>{$('scoutingReportPlayer').textContent='Could not load the team roster.'}));
+      picker.addEventListener('change',updateCount);
+      picker.querySelectorAll('[data-team-select]').forEach(button=>button.addEventListener('click',()=>{picker.querySelectorAll('input').forEach(input=>input.checked=button.dataset.teamSelect==='all');updateCount()}));
+      $('runTeamSummaryReport').addEventListener('click',()=>{
+        const player=state.current,selected=[...picker.querySelectorAll('input:checked')].map(input=>input.value);if(!player||!selected.length)return;
+        const runButton=$('runTeamSummaryReport');runButton.disabled=true;runButton.textContent='Generating Summary…';
+        $('scoutingReportPlayer').textContent=`Creating ${player.pitcher_team} ${activeRole()} summary PDF…`;
+        const params=new URLSearchParams({season:'2026',team:player.pitcher_team,type:activeRole(),generateTeamSummary:'1',players:JSON.stringify(selected),nonce:String(Date.now())});
+        let frame=$('teamScoutingReportSummaryFrame');if(!frame){frame=document.createElement('iframe');frame.id='teamScoutingReportSummaryFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`;
+      });
+      window.addEventListener('message',event=>{
+        if(event.origin!==window.location.origin||event.data?.type!=='cbl-team-summary-generated')return;
+        const runButton=$('runTeamSummaryReport');runButton.disabled=false;runButton.textContent='Generate Summary PDF';
+        $('scoutingReportPlayer').textContent=event.data.ok?`${event.data.team} ${event.data.role} summary report downloaded.`:`Could not generate ${event.data.team} summary report.`;
+      });
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>picker.classList.remove('open')));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>picker.classList.remove('open')));
+    })();
+  </script>
 </body>
 </html>
