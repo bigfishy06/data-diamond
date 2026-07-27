@@ -2446,6 +2446,25 @@ Zane Skansi,Kitchener Panthers`;
     y=drawSec(d,'Count Performance',y);
     var countTableRows=countPerformance.map(function(row,group){var directions=[true,false,false,true];return[{text:row[0]},{text:row[1],neutral:true}].concat([2,3,4,5].map(function(column,metric){var value=parseFloat(row[column]);return{text:row[column],pct:reportPercentile(value,countLeague[group][metric],directions[metric])};}));});
     y=drawBatterRateTable(['SITUATION','PITCHES','SWING%','WHIFF%','CHASE%','BAA'],[42,24,30,30,30,30],countTableRows,y);
+    function batterHandSplitMetrics(points,side){
+      var rows=(points||[]).filter(function(p){return p.pitcher_side===side;});
+      var first=rows.filter(function(p){return reportCleanCount(p.count)==='0-0';}),inZone=rows.filter(function(p){return hasPitchLocation(p)&&p.in_zone;}),outside=rows.filter(function(p){return hasPitchLocation(p)&&!p.in_zone;}),swings=rows.filter(reportIsSwingOutcome);
+      var pas=rows.filter(function(p){return _IN_PLAY_B.concat(_KS_B).includes(p.outcome)||p.outcome==='Walk'||p.outcome==='Intentional Walk';}),strikeouts=pas.filter(function(p){return _KS_B.includes(p.outcome);});
+      return[
+        first.length?first.filter(reportIsSwingOutcome).length/first.length*100:null,
+        inZone.length?inZone.filter(reportIsSwingOutcome).length/inZone.length*100:null,
+        outside.length?outside.filter(reportIsSwingOutcome).length/outside.length*100:null,
+        swings.length?rows.filter(reportIsWhiffOutcome).length/swings.length*100:null,
+        pas.length?strikeouts.length/pas.length*100:null
+      ];
+    }
+    var splitLeague={L:[[],[],[],[],[]],R:[[],[],[],[],[]]};
+    (DATA.pitches||[]).forEach(function(bp){['L','R'].forEach(function(side){batterHandSplitMetrics(bp.scatter||[],side).forEach(function(value,metric){if(value!=null&&isFinite(value))splitLeague[side][metric].push(value);});});});
+    var splitDirections=[false,true,false,false,false];
+    var splitRows=['L','R'].map(function(side){var metrics=batterHandSplitMetrics(allSc,side);return[{text:'vs. '+side+'HP'}].concat(metrics.map(function(value,metric){return{text:value==null?'—':f1(value)+'%',pct:reportPercentile(value,splitLeague[side][metric],splitDirections[metric])};}));});
+    if(PH-y<42){d.addPage();drawBg(d);y=MT+8;}
+    y=drawSec(d,'Splits',y);
+    y=drawBatterRateTable(['MATCHUP','FP SWING%','I-Z SWING%','CHASE%','WHIFF%','K%'],[36,30,30,30,30,30],splitRows,y);
     if(false&&(hasSpray||hasBip)){
       // Each chart occupies half the content width
       // Layout: side-by-side if both present, centred single if only one
