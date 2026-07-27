@@ -3372,6 +3372,26 @@ Zane Skansi,Kitchener Panthers`;
         countBest?countBest.key+': '+countBest.pitch+' '+pct(countBest.share*100):'No strong count tendency'
       ];
     }
+    function compactEffectiveness(points,type){
+      var tp=(points||[]).filter(function(p){return reportPitchTypeBucket(p)===type});
+      var allFirst=(points||[]).filter(function(p){return String(p.count||'').replace(/^'/,'')==='0-0'});
+      var first=tp.filter(function(p){return String(p.count||'').replace(/^'/,'')==='0-0'});
+      var swings=tp.filter(reportIsSwingOutcome),outside=tp.filter(function(p){return hasPitchLocation(p)&&!p.in_zone});
+      var pa=tp.filter(function(p){return ['Strikeout Swinging','Strikeout Looking','Walk','Intentional Walk','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(p.outcome)});
+      return {
+        usage:(points||[]).length?tp.length/(points||[]).length*100:null,
+        fp:allFirst.length?first.length/allFirst.length*100:null,
+        strike:tp.length?tp.filter(reportIsStrikeOutcome).length/tp.length*100:null,
+        whiff:swings.length?tp.filter(reportIsWhiffOutcome).length/swings.length*100:null,
+        chase:outside.length?outside.filter(reportIsSwingOutcome).length/outside.length*100:null,
+        k:pa.length?pa.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking'}).length/pa.length*100:null
+      };
+    }
+    var compactLeague={};
+    function compactLeagueValues(type,key){
+      var cacheKey=type+'|'+key;if(compactLeague[cacheKey])return compactLeague[cacheKey];
+      return compactLeague[cacheKey]=(DATA.pitchers||[]).map(function(p){return compactEffectiveness(p.scatter||[],type)[key]}).filter(function(v){return v!=null&&isFinite(v)});
+    }
     var perPage=5;
     players.forEach(function(p,index){
       if(index%perPage===0){
@@ -3394,12 +3414,26 @@ Zane Skansi,Kitchener Panthers`;
         d.setTextColor(0,0,0);[[-.18,0],[.18,0],[0,-.18],[0,.18]].forEach(function(o){d.text(String(v[1]),statX+i*statW+o[0],y+15+o[1])});
         d.setTextColor(vc[0],vc[1],vc[2]);d.text(String(v[1]),statX+i*statW,y+15);
       });
-      d.setFontSize(5.5);d.setTextColor(gold[0],gold[1],gold[2]);d.text(role==='pitcher'?'ATTACK':'PLAN',margin+4,y+22);
-      d.setFontSize(5.8);d.setTextColor(22,32,50);
       if(role==='pitcher'){
-        var attackRows=pitcherAttackRows(sc);
-        [[96,165,250,'FREQ',attackRows[0]],[248,113,113,'DMG',attackRows[1]],[255,184,28,'COUNT',attackRows[2]]].forEach(function(a,i){var ay=y+27+i*5;d.setFillColor(a[0],a[1],a[2]);d.rect(margin+4,ay-3.4,15,4,'F');d.setFont('helvetica','bold');d.setTextColor(255,255,255);d.text(a[3],margin+11.5,ay-.7,{align:'center'});d.setFont('helvetica','normal');d.setTextColor(22,32,50);d.text(a[4],margin+21,ay-.7,{maxWidth:87})})
-      }else{d.text('ATTACK  '+attack(sc,'A'),margin+4,y+27,{maxWidth:105});d.text('Use pitch mix and location to avoid damage zones.',margin+4,y+32,{maxWidth:105})}
+        d.setFont('helvetica','bold');d.setFontSize(5.5);d.setTextColor(gold[0],gold[1],gold[2]);d.text('PITCH EFFECTIVENESS',margin+4,y+21.5);
+        var eh=['PITCH','USE','FP','STR','WHF','CHS','K'],ew=[26,15.5,15.5,15.5,15.5,15.5,15.5],ex=margin+4;
+        d.setFillColor(224,229,235);d.rect(ex-1,y+23,119,5,'F');
+        eh.forEach(function(label,i){d.setFontSize(4.8);d.setTextColor(22,43,82);d.text(label,ex+ew[i]/2,y+26.4,{align:'center'});ex+=ew[i]});
+        var typeCounts={};sc.forEach(function(p){var type=reportPitchTypeBucket(p);if(type!=='Unknown')typeCounts[type]=(typeCounts[type]||0)+1});
+        Object.keys(typeCounts).sort(function(a,b){return typeCounts[b]-typeCounts[a]}).slice(0,3).forEach(function(type,ri){
+          var m=compactEffectiveness(sc,type),vals=[m.usage,m.fp,m.strike,m.whiff,m.chase,m.k],keys=['usage','fp','strike','whiff','chase','k'];
+          var ry=y+28+ri*6.2;d.setFillColor(ri%2?250:242,ri%2?250:244,ri%2?250:247);d.rect(margin+3,ry,119,6.2,'F');ex=margin+4;
+          d.setFont('helvetica','bold');d.setFontSize(5.5);d.setTextColor(22,32,50);d.text(type,ex+1,ry+4,{maxWidth:ew[0]-2});ex+=ew[0];
+          vals.forEach(function(value,vi){
+            var text=value==null?'-':Number(value).toFixed(1)+'%',metricPct=vi===0?null:reportPercentile(value,compactLeagueValues(type,keys[vi]),true),color=vi===0?[22,32,50]:hx(reportMetricColor(metricPct));
+            d.setFontSize(5.3);d.setTextColor(0,0,0);[[-.12,0],[.12,0],[0,-.12],[0,.12]].forEach(function(o){d.text(text,ex+ew[vi+1]/2+o[0],ry+4+o[1],{align:'center'})});
+            d.setTextColor(color[0],color[1],color[2]);d.text(text,ex+ew[vi+1]/2,ry+4,{align:'center'});ex+=ew[vi+1];
+          });
+        });
+      }else{
+        d.setFontSize(5.5);d.setTextColor(gold[0],gold[1],gold[2]);d.text('PLAN',margin+4,y+22);
+        d.setFontSize(5.8);d.setTextColor(22,32,50);d.text('ATTACK  '+attack(sc,'A'),margin+4,y+27,{maxWidth:105});d.text('Use pitch mix and location to avoid damage zones.',margin+4,y+32,{maxWidth:105})
+      }
       var key=role==='pitcher'?'batter_side':'pitcher_side',l=sc.filter(function(x){return side(x,key)==='L'}),r=sc.filter(function(x){return side(x,key)==='R'});
       d.setFontSize(5.5);d.setTextColor(gold[0],gold[1],gold[2]);d.text('VS LHH',mapX,y+5);d.text('VS RHH',mapX+mapSize+mapGap,y+5);
       d.addImage(mkHeat(l,'BATTER','dark'),'PNG',mapX,y+7,mapSize,mapSize);d.addImage(mkHeat(r,'BATTER','dark'),'PNG',mapX+mapSize+mapGap,y+7,mapSize,mapSize);
