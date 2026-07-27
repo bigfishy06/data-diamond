@@ -3298,14 +3298,16 @@ Zane Skansi,Kitchener Panthers`;
         var pd=(DATA.pitchers||[]).find(function(x){return normRosterName(x.pitcher)===normRosterName(p.name)})||{};
         var first=sc.filter(function(x){return Number(x.balls)===0&&Number(x.strikes)===0});
         var history=getIblRowsByName(p.name)||[],ibl=history.find(function(x){return String(x.season||'').indexOf(String(season))===0&&Number(x.IP)>0})||history.find(function(x){return Number(x.IP)>0})||{};
-        var whip=Number(pd.IP)>0&&(pd.H_allowed!=null||pd.BB!=null)?(Number(pd.H_allowed||0)+Number(pd.BB||0))/Number(pd.IP):null;
+        var whip=p.whip!=null?Number(p.whip):(Number(pd.IP)>0&&(pd.H_allowed!=null||pd.BB!=null)?(Number(pd.H_allowed||0)+Number(pd.BB||0))/Number(pd.IP):null);
+        var fpsValue=first.length?first.filter(reportIsStrikeOutcome).length/first.length*100:(p.fps_pct!=null?p.fps_pct:pd.FPS_pct);
+        var ttpValue=p.avg_ttp!=null?p.avg_ttp:pd.avg_time_to_plate;
         var hand=getPitcherHand(p.name)||pd.throws||((sc.find(function(x){return x.pitcher_side})||{}).pitcher_side)||ibl.throws||'-';
         return {hand:String(hand).charAt(0).toUpperCase(),values:[
           ['ERA',ibl.ERA!=null?Number(ibl.ERA).toFixed(2):'-'],['WHIP',whip!=null?whip.toFixed(2):'-'],
           ['K',pd.K!=null?String(Math.round(pd.K)):String(ks.length)],['BB',pd.BB!=null?String(Math.round(pd.BB)):String(bb.length)],
-          ['FPS%',pct(first.length?first.filter(reportIsStrikeOutcome).length/first.length*100:pd.FPS_pct)],
+          ['FPS%',pct(fpsValue)],
           ['STR%',pct(sc.length?sc.filter(reportIsStrikeOutcome).length/sc.length*100:pd.STR_pct)],
-          ['TTP',pd.avg_time_to_plate?Number(pd.avg_time_to_plate).toFixed(2)+'s':'-']]};
+          ['TTP',ttpValue!=null?Number(ttpValue).toFixed(2)+'s':'-']]};
       }
       var s=p.summary||{},firstB=sc.filter(function(x){return Number(x.balls)===0&&Number(x.strikes)===0});
       return {hand:getBatterHand(p.name)||'-',values:[
