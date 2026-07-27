@@ -150,7 +150,7 @@
     function trackedHand(player,field,allowSwitch){const counts={R:0,L:0,S:0};safePoints(player||{}).forEach(point=>{const hand=validHand(point[field],true);if(hand)counts[hand]++});if(allowSwitch&&counts.S>0)return'S';return['R','L'].sort((a,b)=>counts[b]-counts[a])[0]&&Math.max(counts.R,counts.L)>0?['R','L'].sort((a,b)=>counts[b]-counts[a])[0]:''}
     const BAT_HAND_OVERRIDES={'aj karosas':'L','anderson feliz':'S','roberto caro':'S'};
     function profileHand(player,batter){const playerName=String(player&&(player.pitcher||player.name)||'').trim().toLowerCase(),override=batter?BAT_HAND_OVERRIDES[playerName]:'';return override||validHand(player&&player.throws,batter)||trackedHand(player,batter?'batter_side':'pitcher_side',batter)||'—'}
-    function refreshProfileContext(){const batter=activeRole()==='batter',p=state.current;if(!p)return;document.querySelector('.profile .eyebrow').textContent=batter?'BATTER PROFILE · GUELPH ROYALS':'PITCHER PROFILE · GUELPH ROYALS';$('playerLabel').textContent=batter?'BATTER PROFILE':'PITCHER PROFILE';$('meta').textContent=batter?`${p.pitcher_team||'Guelph Royals'} · Bats ${profileHand(p,true)}`:`${p.pitcher_team||'Guelph Royals'} · Throws ${profileHand(p,false)}`}
+    function refreshProfileContext(){const batter=activeRole()==='batter',p=state.current;if(!p)return;document.querySelector('.profile .eyebrow').textContent=batter?'BATTER PROFILE':'PITCHER PROFILE';$('playerLabel').textContent=batter?'BATTER PROFILE':'PITCHER PROFILE';$('meta').textContent=batter?`${p.pitcher_team||'Guelph Royals'} · Bats ${profileHand(p,true)}`:`${p.pitcher_team||'Guelph Royals'} · Throws ${profileHand(p,false)}`}
     document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshProfileContext,0)));$('player').addEventListener('change',()=>setTimeout(refreshProfileContext,0));setTimeout(refreshProfileContext,650);
   </script>
   <script>
@@ -977,6 +977,7 @@
   <script src="access-control.js?v=3"></script>
   <script>
     (function defaultToBatters(){
+      var profileHeading=document.querySelector('.profile .eyebrow');if(profileHeading)profileHeading.textContent='BATTER PROFILE';
       var attempts=0,timer=setInterval(function(){
         var batterButton=document.querySelector('[data-role="batter"]');
         if(!batterButton||++attempts>100){clearInterval(timer);return}
