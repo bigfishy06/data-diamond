@@ -2408,22 +2408,23 @@ Zane Skansi,Kitchener Panthers`;
       y+=24;
     }
     function drawBatterRateTable(headers,widths,rows,tableY){
-      sf(d,CO.navy2);d.rect(ML,tableY,CPW,8,'F');
+      var headerH=9,rowH=10.5;
+      sf(d,CO.navy2);d.rect(ML,tableY,CPW,headerH,'F');
       var tx=ML;
-      headers.forEach(function(header,index){d.setFont('helvetica','bold');d.setFontSize(6.2);st(d,CO.gold);d.text(header,tx+widths[index]/2,tableY+5.2,{align:'center'});tx+=widths[index];});
-      var rowY=tableY+8;
+      headers.forEach(function(header,index){d.setFont('helvetica','bold');d.setFontSize(6.2);st(d,CO.gold);d.text(header,tx+widths[index]/2,tableY+5.8,{align:'center'});tx+=widths[index];});
+      var rowY=tableY+headerH;
       rows.forEach(function(row,rowIndex){
-        d.setFillColor(rowIndex%2?244:255,rowIndex%2?246:255,rowIndex%2?251:255);d.rect(ML,rowY,CPW,10,'F');
+        d.setFillColor(rowIndex%2?244:255,rowIndex%2?246:255,rowIndex%2?251:255);d.rect(ML,rowY,CPW,rowH,'F');
         var cellX=ML;
         row.forEach(function(cell,index){
-          if(index===0||cell.label){d.setFont('helvetica','bold');d.setFontSize(7.5);d.setTextColor(32,42,120);d.text(String(cell.text),cellX+widths[index]/2,rowY+6.5,{align:'center'});}
-          else if(cell.neutral){d.setFont('helvetica','bold');d.setFontSize(9.5);d.setTextColor(10,14,22);d.text(String(cell.text),cellX+widths[index]/2,rowY+6.7,{align:'center'});}
-          else{var cc=hx(reportMetricColor(cell.pct));d.setFont('helvetica','bold');d.setFontSize(9.5);d.setTextColor(0,0,0);[[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(String(cell.text),cellX+widths[index]/2+o[0],rowY+6.7+o[1],{align:'center'});});d.setTextColor(cc[0],cc[1],cc[2]);d.text(String(cell.text),cellX+widths[index]/2,rowY+6.7,{align:'center'});}
+          if(index===0||cell.label){d.setFont('helvetica','bold');d.setFontSize(7.5);d.setTextColor(32,42,120);d.text(String(cell.text),cellX+widths[index]/2,rowY+6.8,{align:'center'});}
+          else if(cell.neutral){d.setFont('helvetica','bold');d.setFontSize(9.5);d.setTextColor(10,14,22);d.text(String(cell.text),cellX+widths[index]/2,rowY+7,{align:'center'});}
+          else{var cc=hx(reportMetricColor(cell.pct));d.setFont('helvetica','bold');d.setFontSize(9.5);d.setTextColor(0,0,0);[[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(String(cell.text),cellX+widths[index]/2+o[0],rowY+7+o[1],{align:'center'});});d.setTextColor(cc[0],cc[1],cc[2]);d.text(String(cell.text),cellX+widths[index]/2,rowY+7,{align:'center'});}
           cellX+=widths[index];
         });
-        rowY+=10;
+        rowY+=rowH;
       });
-      d.setDrawColor(207,213,226);d.setLineWidth(.3);d.rect(ML,tableY,CPW,8+rows.length*10,'S');
+      d.setDrawColor(207,213,226);d.setLineWidth(.3);d.rect(ML,tableY,CPW,headerH+rows.length*rowH,'S');
       return rowY+3;
     }
     var pitchTypeLeague={};
@@ -2467,23 +2468,6 @@ Zane Skansi,Kitchener Panthers`;
     if(PH-y<45){d.addPage();drawBg(d);y=MT+8;}
     y=drawSec(d,'Count Performance',y);
     y=drawBatterRateTable(['SITUATION','PITCHES','SWING%','WHIFF%','CHASE%','BAA'],[42,24,30,30,30,30],countTableRows,y);
-    function twoStrikeTypeMetrics(points){
-      var rows=(points||[]).filter(function(p){return reportCleanCount(p.count).endsWith('-2')&&reportPitchTypeName(p)!=='Unknown';}),groups={};
-      rows.forEach(function(p){var type=reportPitchTypeName(p);if(!groups[type])groups[type]=[];groups[type].push(p);});
-      return Object.keys(groups).map(function(type){
-        var pitches=groups[type],swings=pitches.filter(reportIsSwingOutcome),whiffs=pitches.filter(reportIsWhiffOutcome),outside=pitches.filter(function(p){return hasPitchLocation(p)&&!p.in_zone;}),chases=outside.filter(reportIsSwingOutcome);
-        return{type:type,pitches:pitches.length,usage:rows.length?pitches.length/rows.length*100:null,swing:pitches.length?swings.length/pitches.length*100:null,whiff:swings.length?whiffs.length/swings.length*100:null,chase:outside.length?chases.length/outside.length*100:null};
-      }).sort(function(a,b){return b.pitches-a.pitches;});
-    }
-    var twoStrikeLeague={};
-    (DATA.pitches||[]).forEach(function(bp){twoStrikeTypeMetrics(bp.scatter||[]).forEach(function(row){if(!twoStrikeLeague[row.type])twoStrikeLeague[row.type]=[[],[],[]];[row.swing,row.whiff,row.chase].forEach(function(value,metric){if(value!=null&&isFinite(value))twoStrikeLeague[row.type][metric].push(value);});});});
-    var twoStrikeRows=twoStrikeTypeMetrics(allSc).map(function(row,index){
-      var league=twoStrikeLeague[row.type]||[[],[],[]],values=[row.swing,row.whiff,row.chase];
-      return[{text:String(index+1)},{text:row.type,label:true},{text:row.usage==null?'â€”':f1(row.usage)+'%',neutral:true}].concat(values.map(function(value,metric){return{text:value==null?'â€”':f1(value)+'%',pct:reportPercentile(value,league[metric],false)};}));
-    });
-    if(PH-y<35+twoStrikeRows.length*10){d.addPage();drawBg(d);y=MT+8;}
-    y=drawSec(d,'2 Strike Profile',y);
-    y=drawBatterRateTable(['RANK','PITCH TYPE','USAGE%','SWING%','WHIFF%','CHASE%'],[18,42,30,32,32,32],twoStrikeRows,y);
     if(false&&(hasSpray||hasBip)){
       // Each chart occupies half the content width
       // Layout: side-by-side if both present, centred single if only one
