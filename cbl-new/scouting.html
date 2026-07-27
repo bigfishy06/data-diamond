@@ -1630,12 +1630,6 @@ Zane Skansi,Kitchener Panthers`;
     }
     d.setFont('helvetica','normal');d.setFontSize(8);d.setTextColor(222,226,249);
     d.text(role+'  •  '+team.name+'  •  CBL '+selSeason,ML+31,MT+21);
-    // Logo — top right
-    var logoSize=17,ly=MT+14.5,lx=ML+CPW-11;
-    drawLogoImg(d,lx,ly,logoSize);
-    d.setFont('helvetica','bold');d.setFontSize(5.5);d.setTextColor(222,226,249);
-    d.text('GUELPH ROYALS',lx-logoSize/2-2,MT+10,{align:'right'});
-    d.text('PLAYER INTELLIGENCE',lx-logoSize/2-2,MT+16,{align:'right'});
   }
   function drawBoxes(d,stats,y){
     var bw=CPW/stats.length;
@@ -2785,18 +2779,38 @@ Zane Skansi,Kitchener Panthers`;
       }
     }
 
-    // Pitch Arsenal
+    // Pitch Effectiveness
     var sT=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];});
-    var arsenalUsageParts=reportPctParts(sT.map(function(e){return e[1];}));
-    var arsenalUsageByType={};
-    sT.forEach(function(e,ei){ arsenalUsageByType[e[0]]=arsenalUsageParts[ei]; });
     var displayST=(team&&team.name==='Guelph Royals')?sT.filter(function(e){return e[0]!=='Offspeed';}):sT;
     if(displayST.length && (!drewTendencyTable || PH-y >= 88)){
       y+=3;
-      y=drawSec(d,'Pitch Arsenal — What He Throws and How Effective Each Pitch Is',y);
-      var atH=['PITCH TYPE','USAGE %','STRIKE %','BALL %','WHIFF %'];
-      var atL=['Name of pitch','% of known pitches','Strike rate','Ball rate','Miss rate on swings'];
-      var atW=[50,28,28,28,28];
+      y=drawSec(d,'Pitch Effectiveness',y);
+      var atH=['PITCH TYPE','FP USAGE %','STRIKE %','WHIFF %','CHASE %','K%'];
+      var atL=['Pitch group','First-pitch mix','Strike rate','Miss rate','Out-of-zone swing','K rate by PA'];
+      var atW=[42,28,28,28,28,28];
+      function effectivenessByType(points,type){
+        var allFirst=points.filter(function(p){return reportCleanCount(p.count)==='0-0';});
+        var tp=points.filter(function(p){return reportPitchTypeBucket(p)===type;});
+        var first=tp.filter(function(p){return reportCleanCount(p.count)==='0-0';});
+        var swings=tp.filter(reportIsSwingOutcome),outside=tp.filter(function(p){return hasPitchLocation(p)&&!p.in_zone;});
+        var pa=tp.filter(function(p){return ['Strikeout Swinging','Strikeout Looking','Walk','Intentional Walk','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(p.outcome);});
+        return {
+          fp:allFirst.length?first.length/allFirst.length*100:null,
+          strike:tp.length?tp.filter(reportIsStrikeOutcome).length/tp.length*100:null,
+          whiff:swings.length?tp.filter(reportIsWhiffOutcome).length/swings.length*100:null,
+          chase:outside.length?outside.filter(reportIsSwingOutcome).length/outside.length*100:null,
+          k:pa.length?pa.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';}).length/pa.length*100:null
+        };
+      }
+      var effectivenessLeague={};
+      (DATA.pitchers||[]).forEach(function(p){
+        var pts=p.scatter||[];
+        Object.keys(tc2).forEach(function(type){
+          var m=effectivenessByType(pts,type);
+          if(!effectivenessLeague[type])effectivenessLeague[type]={fp:[],strike:[],whiff:[],chase:[],k:[]};
+          Object.keys(m).forEach(function(key){if(m[key]!=null&&isFinite(m[key]))effectivenessLeague[type][key].push(m[key]);});
+        });
+      });
       sf(d,CO.navy2);d.rect(ML,y,CPW,9,'F');
       sd(d,CO.gold);d.setLineWidth(0.3);d.line(ML,y+9,ML+CPW,y+9);
       var ax=ML;
@@ -2805,22 +2819,20 @@ Zane Skansi,Kitchener Panthers`;
         d.setFont('helvetica','normal');d.setFontSize(4);st(d,CO.dim);d.text(atL[i],ax+atW[i]/2,y+7.5,{align:'center'});
         ax+=atW[i];
       });
-      var atR=displayST.map(function(e,ei){
-        var t=e[0],cnt=e[1],tp=sc.filter(function(s){return reportPitchTypeBucket(s)===t;});
-        var ts=tp.filter(reportIsStrikeOutcome).length;
-        var tb=tp.filter(function(s){return s.outcome==='Ball';}).length;
-        var tSwings=tp.filter(reportIsSwingOutcome).length;
-        var tWhiff=tp.filter(reportIsWhiffOutcome).length;
-        return[t,arsenalUsageByType[t],f1(xp(ts,cnt))+'%',f1(xp(tb,cnt))+'%',tSwings>0?f1(tWhiff/tSwings*100)+'%':'—'];
+      var atR=displayST.map(function(e){
+        var t=e[0],m=effectivenessByType(sc,t),league=effectivenessLeague[t]||{fp:[],strike:[],whiff:[],chase:[],k:[]};
+        return {type:t,values:['fp','strike','whiff','chase','k'].map(function(key){return{raw:m[key],text:m[key]==null?'—':f1(m[key])+'%',pct:reportPercentile(m[key],league[key],true)};})};
       });
       var ar=y+9;
       atR.forEach(function(row,ri){
         sf(d,ri%2===0?CO.navy3:CO.navy2);d.rect(ML,ar,CPW,7,'F');
         var bx2=ML;
-        row.forEach(function(v,vi){
-          d.setFont('helvetica',vi<=1?'bold':'normal');d.setFontSize(vi===0?6.5:7);
-          st(d,vi===0?CO.white:vi===1?CO.gold:CO.dim);
-          d.text(v,bx2+atW[vi]/2,ar+4.5,{align:'center'});bx2+=atW[vi];
+        d.setFont('helvetica','bold');d.setFontSize(6.5);st(d,CO.white);
+        d.text(row.type,bx2+atW[0]/2,ar+4.5,{align:'center'});bx2+=atW[0];
+        row.values.forEach(function(v,vi){
+          var c=hx(reportMetricColor(v.pct));
+          d.setFont('helvetica','bold');d.setFontSize(7);d.setTextColor(c[0],c[1],c[2]);
+          d.text(v.text,bx2+atW[vi+1]/2,ar+4.5,{align:'center'});bx2+=atW[vi+1];
         });
         ar+=7;
       });
