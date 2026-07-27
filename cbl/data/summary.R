@@ -29,14 +29,25 @@ pitches <- pitches %>%
 
 # ── Outcome reference vectors ──────────────────────────────────────────────────
 PITCH_OUTCOMES <- c("", "Ball", "Called Strike", "Swinging Strike", "Foul", "Pickoff")
+PA_END_OUTCOMES <- c(
+  "Single", "Double", "Triple", "Home Run",
+  "Groundout", "Ground Out", "Flyout", "Fly Out", "Popout", "Pop Out",
+  "Lineout", "Line Out", "Double Play", "Triple Play", "Error", "Field Error",
+  "Fielders Choice", "Fielder's Choice",
+  "Strikeout Looking", "Strikeout Swinging",
+  "Dropped Third Strike Looking", "Dropped Third Strike Swinging",
+  "Walk", "Intentional Walk", "Hit By Pitch",
+  "Sacrifice Fly", "Sac Fly Double Play",
+  "Sacrifice Bunt", "Sac Bunt Double Play",
+  "Catcher Interference", "Batter Interference"
+)
 
 NON_AB_PA_OUTCOMES <- c(
   "Walk", "Intentional Walk", "Hit By Pitch",
   "Sacrifice Fly", "Sac Fly Double Play",
   "Sacrifice Bunt", "Sac Bunt Double Play",
   "Catcher Interference",
-  "Caught Stealing", "Truncated Out",
-  "Batter Interference", "Additional Out"
+  "Caught Stealing", "Truncated Out", "Additional Out"
 )
 
 # ── wOBA weights (standard linear weights) ────────────────────────────────────
@@ -81,7 +92,7 @@ pitches <- pitches %>%
     is_cs         = outcome == "Caught Stealing",
     is_truncated  = outcome == "Truncated Out",
     is_add_out    = outcome == "Additional Out",
-    is_pa         = !(outcome %in% PITCH_OUTCOMES),
+    is_pa         = outcome %in% PA_END_OUTCOMES,
     is_ab         = !(outcome %in% c(PITCH_OUTCOMES, NON_AB_PA_OUTCOMES)),
     is_productive_out = outcome %in% c("Groundout", "Flyout", "Lineout",
                                        "Popout", "Double Play", "Triple Play"),

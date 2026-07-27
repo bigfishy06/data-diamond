@@ -509,6 +509,55 @@ function normalizeDataDiamondPitcherRow(p) {
   if (p.LO_pct == null && p.LD_pct != null) p.LO_pct = p.LD_pct;
   if (p.pitches == null && p.total_pitches != null) p.pitches = p.total_pitches;
 }
+function reconcileMlbRates(summaryRows, pitchRows, pitcherRows) {
+  var batterScatter = {};
+  var pitcherScatter = {};
+  (pitchRows || []).forEach(function(bp) {
+    var bk = normPlayerName(bp.batter);
+    if (!batterScatter[bk]) batterScatter[bk] = [];
+    batterScatter[bk] = batterScatter[bk].concat(bp.scatter || []);
+    (bp.scatter || []).forEach(function(s) {
+      var pk = normPlayerName(s.pitcher);
+      if (!pk) return;
+      if (!pitcherScatter[pk]) pitcherScatter[pk] = [];
+      pitcherScatter[pk].push(s);
+    });
+  });
+  (summaryRows || []).forEach(function(p) {
+    var sc = batterScatter[normPlayerName(p.batter)] || [];
+    if (!sc.length) return;
+    var pa = sc.filter(isPlateAppearanceEnding).length;
+    var ab = sc.filter(isAtBatEnding).length;
+    var k = sc.filter(function(s){ return ['Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking'].includes(s.outcome); }).length;
+    var bb = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+    p.PA = pa;
+    p.AB = ab;
+    p.K_pct = pa > 0 ? k / pa * 100 : null;
+    p.BB_pct = pa > 0 ? bb / pa * 100 : null;
+    p.PS_PA = pa > 0 ? sc.length / pa : null;
+    if (ab > 0 && p.H != null) {
+      p.AVG = Number(p.H) / ab;
+      p.SLG = ((Number(p['1B']) || 0) + 2*(Number(p['2B']) || 0) + 3*(Number(p['3B']) || 0) + 4*(Number(p.HR) || 0)) / ab;
+      p.ISO = p.SLG - p.AVG;
+      var sf = Number(p.SF) || 0;
+      var obpDen = ab + bb + (Number(p.HBP) || 0) + sf;
+      p.OBP = obpDen > 0 ? (Number(p.H) + bb + (Number(p.HBP) || 0)) / obpDen : null;
+      p.OPS = p.OBP != null ? p.OBP + p.SLG : null;
+      var babipDen = ab - k - (Number(p.HR) || 0) + sf;
+      p.BABIP = babipDen > 0 ? (Number(p.H) - (Number(p.HR) || 0)) / babipDen : null;
+    }
+  });
+  (pitcherRows || []).forEach(function(p) {
+    var sc = pitcherScatter[normPlayerName(p.pitcher)] || [];
+    if (!sc.length) return;
+    var bf = sc.filter(isPlateAppearanceEnding).length;
+    var k = sc.filter(function(s){ return ['Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking'].includes(s.outcome); }).length;
+    var bb = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+    p.BF = bf;
+    p.K_pct = bf > 0 ? k / bf * 100 : null;
+    p.BB_pct = bf > 0 ? bb / bf * 100 : null;
+  });
+}
 
 // -- Data store - all years kept separately, never merged ---------------------
 let DATA = {
@@ -677,6 +726,8 @@ async function loadAll() {
     DATA.pitchers.forEach(normalizeDataDiamondPitcherRow);
     DATA.summary2026.forEach(normalizeDataDiamondBatterRow);
     DATA.pitchers2026.forEach(normalizeDataDiamondPitcherRow);
+    reconcileMlbRates(DATA.summary, DATA.pitches, DATA.pitchers);
+    reconcileMlbRates(DATA.summary2026, DATA.pitches2026, DATA.pitchers2026);
 
     // Store 2025 originals so swapSeasonData can restore them
     DATA._summary25     = DATA.summary;
@@ -778,7 +829,7 @@ var STRIKE_OUTCOMES = [
   'Dropped Third Strike Swinging', 'Dropped Third Strike Looking',
   'Single', 'Double', 'Triple', 'Home Run',
   'Groundout', 'Flyout', 'Popout', 'Lineout',
-  'Double Play', 'Triple Play', 'Error', 'Truncated Out',
+  'Double Play', 'Triple Play', 'Error',
   'Sacrifice Fly', 'Sac Fly Double Play',
   'Sacrifice Bunt', 'Sac Bunt Double Play'
 ];
@@ -786,18 +837,37 @@ function isStrikeOutcome(s) {
   return s && STRIKE_OUTCOMES.includes(s.outcome);
 }
 var PITCH_LEVEL_OUTCOMES = ['Ball','Called Strike','Swinging Strike','Foul','Pickoff',''];
+var PA_END_OUTCOMES = [
+  'Single','Double','Triple','Home Run',
+  'Groundout','Ground Out','Flyout','Fly Out','Popout','Pop Out','Lineout','Line Out',
+  'Double Play','Triple Play','Error','Field Error','Fielders Choice',"Fielder's Choice",
+  'Strikeout Swinging','Strikeout Looking',
+  'Dropped Third Strike Swinging','Dropped Third Strike Looking',
+  'Walk','Intentional Walk','Hit By Pitch',
+  'Sacrifice Fly','Sac Fly Double Play',
+  'Sacrifice Bunt','Sac Bunt Double Play',
+  'Catcher Interference','Batter Interference'
+];
 var NON_AB_OUTCOMES = [
   'Walk','Intentional Walk','Hit By Pitch',
   'Sacrifice Fly','Sac Fly Double Play',
   'Sacrifice Bunt','Sac Bunt Double Play',
-  'Catcher Interference','Caught Stealing',
-  'Truncated Out','Batter Interference','Additional Out'
+  'Catcher Interference'
 ];
 function isPlateAppearanceEnding(s) {
-  return s && !PITCH_LEVEL_OUTCOMES.includes(s.outcome || '');
+  return !!(s && PA_END_OUTCOMES.includes(s.outcome || ''));
 }
 function isAtBatEnding(s) {
   return isPlateAppearanceEnding(s) && !NON_AB_OUTCOMES.includes(s.outcome);
+}
+function inningsAsDecimal(v) {
+  var n = Number(v);
+  if (!isFinite(n) || n < 0) return 0;
+  var whole = Math.floor(n + 1e-9);
+  var frac = n - whole;
+  if (Math.abs(frac - 0.1) < 0.015 || Math.abs(frac - 0.3) < 0.05) return whole + 1 / 3;
+  if (Math.abs(frac - 0.2) < 0.015 || Math.abs(frac - 0.7) < 0.05) return whole + 2 / 3;
+  return n;
 }
 function canonicalTeamName(raw) {
   var team = resolveTeam(raw);
@@ -1050,7 +1120,7 @@ function getPitcherScatterHits(name, row) {
 function getPitcherWhipFromData(name) {
   var pd = getPitcherDataRow(name);
   if (pd && pd.WHIP != null && !isNaN(pd.WHIP)) return pd.WHIP;
-  var ip = pd && pd.IP != null ? parseFloat(pd.IP) : null;
+  var ip = pd && pd.IP != null ? inningsAsDecimal(pd.IP) : null;
   if (!(ip > 0)) return null;
   var bb = pd && pd.BB != null ? Number(pd.BB) : 0;
   // Prefer H_allowed from pitchers2026 (counts all hits, not just x/y ones)
@@ -1470,7 +1540,7 @@ function renderPitchingLeaderboards(container) {
         if (['Single','Double','Triple','Home Run'].includes(s.outcome)) h++;
       });
     });
-    const whip = pd.IP > 0 ? (bb + h) / pd.IP : null;
+    const whip = inningsAsDecimal(pd.IP) > 0 ? (bb + h) / inningsAsDecimal(pd.IP) : null;
     return Object.assign({}, pd, { ERA: era, WHIP: whip });
   });
 
@@ -1784,7 +1854,7 @@ function renderTeamGrid(content) {
     DATA.pitches2026.forEach(function(bp) {
       (bp.scatter || []).forEach(function(s) {
         if (!s.pitcher) return;
-        if (!scMap[s.pitcher]) scMap[s.pitcher] = { bb:0, h:0, tot:0, swings:0, whiffs:0, outs:0, gb:0, fb:0, ld:0, po:0 };
+        if (!scMap[s.pitcher]) scMap[s.pitcher] = { bb:0, h:0, tot:0, swings:0, whiffs:0, twoStrikePA:0, putaways:0, gb:0, fb:0, ld:0, po:0 };
         var m = scMap[s.pitcher];
         m.tot++;
         var o = s.outcome || '';
@@ -1796,8 +1866,12 @@ function renderTeamGrid(content) {
         var isSwing  = isInPlay || o === 'Swinging Strike' || o === 'Foul' || o === 'Strikeout Swinging';
         if (isSwing) m.swings++;
         if (isWhiffOutcome(s)) m.whiffs++;
-        // Two-strike putaway: Strikeout Swinging on 2-strike counts (approximate via outcome)
-        if (o === 'Strikeout Swinging' || o === 'Strikeout Looking') m.outs++;
+        var count = String(s.count || '').replace(/^'/, '');
+        if (count.endsWith('-2') && isPlateAppearanceEnding(s)) {
+          m.twoStrikePA++;
+          if (o === 'Strikeout Swinging' || o === 'Strikeout Looking' ||
+              o === 'Dropped Third Strike Swinging' || o === 'Dropped Third Strike Looking') m.putaways++;
+        }
         // Contact type (batted balls)
         if (isInPlay) {
           var c = s.contact || '';
@@ -1816,7 +1890,8 @@ function renderTeamGrid(content) {
       // Fall back to scatter hits when H_allowed absent. Show null if neither available.
       var _whipH  = pd.H_allowed != null ? pd.H_allowed : (m.tot ? m.h : null);
       var _whipBB = pd.BB        != null ? pd.BB        : (m.tot ? m.bb : 0);
-      var whip    = (pd.IP > 0 && _whipH !== null) ? (_whipBB + _whipH) / pd.IP : null;
+      var decimalIP = inningsAsDecimal(pd.IP);
+      var whip    = (decimalIP > 0 && _whipH !== null) ? (_whipBB + _whipH) / decimalIP : null;
       var swingPct = m.tot   > 0 ? m.swings / m.tot   * 100 : null;
       var whiffPct = m.swings > 0 ? m.whiffs / m.swings * 100 : null;
       var bip     = m.gb + m.fb + m.ld + m.po;
@@ -1824,8 +1899,7 @@ function renderTeamGrid(content) {
       var fbPct   = bip > 0 ? m.fb / bip * 100 : null;
       var ldPct   = bip > 0 ? m.ld / bip * 100 : null;
       var poPct   = bip > 0 ? m.po / bip * 100 : null;
-      // Putaway%: Ks as % of total pitches (proxy for two-strike dominance)
-      var putawayPct = m.tot > 0 ? m.outs / m.tot * 100 : null;
+      var putawayPct = m.twoStrikePA > 0 ? m.putaways / m.twoStrikePA * 100 : null;
       // ERA from iblHistory Summer 2026 entry (IP > 0, season contains '2026')
       var iblEntry = (DATA.iblHistory[pd.pitcher] || []).find(function(s) {
         return s.IP > 0 && (s.season || '').indexOf('2026') !== -1;
@@ -1833,6 +1907,7 @@ function renderTeamGrid(content) {
       var era = iblEntry && iblEntry.ERA != null ? iblEntry.ERA : null;
       return Object.assign({}, pd, {
         WHIP:    whip,
+        Putaway_pct: pd.Putaway_pct != null ? pd.Putaway_pct : putawayPct,
         ERA:     era,
         _team:   teamObj ? teamObj.abbreviation : '-',
         _teamId: teamObj ? teamObj.id           : null
@@ -2205,24 +2280,28 @@ function renderTeamDetail(teamId, content) {
       // Aggregate from same roster as players page (pbp preferred, pd fallback)
       var pitchWithData = teamPitchers.filter(function(p){ return p.K_pct != null || p.STR_pct != null; });
       const totPitches = teamPitchers.reduce(function(s,p){ return s+(p.total_pitches||0); },0);
-      const totIP      = teamPitchers.reduce(function(s,p){ return s+(p.IP||0); },0);
-      const avgSTR = pitchWithData.length > 0
-        ? pitchWithData.reduce(function(s,p){ return s+(p.STR_pct||0); },0) / pitchWithData.length : null;
-      const avgK   = pitchWithData.length > 0
-        ? pitchWithData.reduce(function(s,p){ return s+(p.K_pct||0); },0) / pitchWithData.length : null;
-      const avgBB  = pitchWithData.length > 0
-        ? pitchWithData.reduce(function(s,p){ return s+(p.BB_pct||0); },0) / pitchWithData.length : null;
-      const avgEA  = pitchWithData.length > 0
-        ? pitchWithData.filter(function(p){ return p.EA_pct!=null; }).reduce(function(s,p){ return s+(p.EA_pct||0); },0) /
-          (pitchWithData.filter(function(p){ return p.EA_pct!=null; }).length||1) : null;
+      const totIP      = teamPitchers.reduce(function(s,p){ return s+inningsAsDecimal(p.IP||0); },0);
+      const totStrikes = teamPitchers.reduce(function(s,p){ return s+(p.strikes||0); },0);
+      const totBF      = teamPitchers.reduce(function(s,p){ return s+(p.BF||0); },0);
+      const totK       = teamPitchers.reduce(function(s,p){ return s+(p.K||0); },0);
+      const totBB      = teamPitchers.reduce(function(s,p){ return s+(p.BB||0); },0);
+      const totEA      = teamPitchers.reduce(function(s,p){ return s+(p.EA||0); },0);
+      const avgSTR = totPitches > 0 ? totStrikes / totPitches * 100 : null;
+      const avgK   = totBF > 0 ? totK / totBF * 100 : null;
+      const avgBB  = totBF > 0 ? totBB / totBF * 100 : null;
+      const avgEA  = totBF > 0 ? totEA / totBF * 100 : null;
 
       // ERA from ibl_history
-      var eraSum = 0, eraCount = 0;
+      var earnedRuns = 0, eraIP = 0;
       teamPitchers.forEach(function(pd) {
         const ibl = (DATA.iblHistory[pd.pitcher] || []).filter(function(s){ return s.IP > 0; });
-        if (ibl.length && ibl[0].ERA != null) { eraSum += ibl[0].ERA; eraCount++; }
+        if (ibl.length && ibl[0].ERA != null) {
+          var ipDec = inningsAsDecimal(ibl[0].IP);
+          earnedRuns += Number(ibl[0].ERA) * ipDec / 9;
+          eraIP += ipDec;
+        }
       });
-      const teamERA = eraCount > 0 ? eraSum / eraCount : null;
+      const teamERA = eraIP > 0 ? earnedRuns * 9 / eraIP : null;
 
       const summaryHTML =
         '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:24px">' +
@@ -2980,8 +3059,8 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     if (!d && (!sum || !sum.AVG) && sc.length >= 5) {
       var cPA=0,cAB=0,cH=0,c1B=0,c2B=0,c3B=0,cHR=0,cBB=0,cHBP=0,cK=0,cSF=0;
       var cSwing=0,cWhiff=0,cPitches=sc.length;
-      var NON_AB_OUT=['Walk','Intentional Walk','Hit By Pitch','Sacrifice Fly','Sacrifice Bunt','Catcher Interference'];
-      var PA_END=['Single','Double','Triple','Home Run','Groundout','Flyout','Lineout','Popout','Double Play','Triple Play','Sacrifice Fly','Sacrifice Bunt','Error','Walk','Intentional Walk','Hit By Pitch','Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking','Truncated Out','Pickoff','Caught Stealing','Additional Out','Batter Interference','Catcher Interference'];
+      var NON_AB_OUT=NON_AB_OUTCOMES;
+      var PA_END=PA_END_OUTCOMES;
       // Group into PAs
       var cPAs=[],cCur=null;
       sc.forEach(function(p){
@@ -3251,6 +3330,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
     var tot  = scTot > 0 ? scTot : (pd.total_pitches != null ? pd.total_pitches : 0);
     var ks   = sc.filter(function(s){ return s.outcome === 'Strikeout Swinging' || s.outcome === 'Strikeout Looking'; }).length;
     var bbs  = sc.filter(function(s){ return s.outcome === 'Walk' || s.outcome === 'Intentional Walk'; }).length;
+    var bf   = sc.filter(isPlateAppearanceEnding).length;
     var str  = sc.filter(isStrikeOutcome).length;
     var swS  = sc.filter(isWhiffOutcome).length;
     var ipO  = sc.filter(function(s){ return IN_PLAY.includes(s.outcome); }).length;
@@ -3268,10 +3348,10 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
                            : (pbpPO.SWING_pct != null ? pbpPO.SWING_pct / 100 : (tot > 0    ? swings / tot : null));
     var myWhiff = _is26pit ? (pd.WHIFF_pct != null ? pd.WHIFF_pct / 100 : (swings > 0 ? swS / swings : null))
                            : (pbpPO.WHIFF_pct != null ? pbpPO.WHIFF_pct / 100 : (swings > 0 ? swS / swings : null));
-    var myK     = _is26pit ? (pd.K_pct     != null ? pd.K_pct     / 100 : (tot > 0 ? ks / tot     : null))
-                           : (pbpPO.K_pct     != null ? pbpPO.K_pct     / 100 : (tot > 0    ? ks / tot     : (pd.K_pct   != null ? pd.K_pct   / 100 : null)));
-    var myBB    = _is26pit ? (pd.BB_pct     != null ? pd.BB_pct     / 100 : (tot > 0 ? bbs / tot    : null))
-                           : (pbpPO.BB_pct    != null ? pbpPO.BB_pct    / 100 : (tot > 0    ? bbs / tot    : (pd.BB_pct  != null ? pd.BB_pct  / 100 : null)));
+    var myK     = _is26pit ? (pd.K_pct     != null ? pd.K_pct     / 100 : (bf > 0 ? ks / bf     : null))
+                           : (pbpPO.K_pct     != null ? pbpPO.K_pct     / 100 : (bf > 0 ? ks / bf : (pd.K_pct != null ? pd.K_pct / 100 : null)));
+    var myBB    = _is26pit ? (pd.BB_pct     != null ? pd.BB_pct     / 100 : (bf > 0 ? bbs / bf    : null))
+                           : (pbpPO.BB_pct    != null ? pbpPO.BB_pct    / 100 : (bf > 0 ? bbs / bf : (pd.BB_pct != null ? pd.BB_pct / 100 : null)));
     var myEA    = _is26pit ? (pd.EA_pct     != null ? pd.EA_pct     : null)
                            : (pbpPO.EA_pct    != null ? pbpPO.EA_pct    : (pd.EA_pct  != null ? pd.EA_pct : null));
     var myKBB   = _is26pit ? (pd.K_BB       != null ? pd.K_BB       : null)
@@ -3279,7 +3359,7 @@ function renderOverview(name, type, sum, pitch, playerInfo, seasonFilter) {
 
     var era    = getSeasonERA(name); // always from iblHistory
     var whip   = _is26pit ? getPitcherWhipFromData(name)
-                          : (pbpPO.WHIP != null ? pbpPO.WHIP : (pd.WHIP != null ? pd.WHIP : (pd.IP > 0 ? (bbs + pdH) / pd.IP : null)));
+                          : (pbpPO.WHIP != null ? pbpPO.WHIP : (pd.WHIP != null ? pd.WHIP : (inningsAsDecimal(pd.IP) > 0 ? (bbs + pdH) / inningsAsDecimal(pd.IP) : null)));
     var baAgst = _is26pit ? (pd.BA_against != null ? pd.BA_against : null) : (pbpPO.BA_against != null ? pbpPO.BA_against : (function(){
       var ab=sc.filter(function(s){return IN_PLAY.concat(KS).includes(s.outcome);}).length;
       var h=sc.filter(function(s){return HITS.includes(s.outcome);}).length;
@@ -4007,8 +4087,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
         o.swing.push(tot2 > 0 ? swings2/tot2 : 0);
         o.whiff.push(swings2 > 0 ? sw2/swings2 : 0);
         o.contact.push(swings2 > 0 ? (swings2-sw2)/swings2 : 0);
-        o.k.push(tot2 > 0 ? ks2/tot2 : 0);
-        o.bb.push(tot2 > 0 ? bbs2/tot2 : 0);
+        o.k.push(pa2 > 0 ? ks2/pa2 : 0);
+        o.bb.push(pa2 > 0 ? bbs2/pa2 : 0);
         if (ks2 > 0) o.bbk.push(bbs2/ks2);
         o.pspa.push(tot2 / pa2);
         if (inZ2.length > 0) o.izSwing.push(izSw2/inZ2.length);
@@ -4043,8 +4123,8 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
 
     var mySwing     = totPitches > 0   ? swings/totPitches               : null;
     var myWhiff     = swings > 0       ? swStr/swings                    : null;
-    var myK         = totPitches > 0   ? ks/totPitches                   : null;
-    var myBB        = totPitches > 0   ? bbs/totPitches                  : null;
+    var myK         = pa > 0           ? ks/pa                           : null;
+    var myBB        = pa > 0           ? bbs/pa                          : null;
     var myPspa      = pa > 0           ? psPerPA                         : null;
     var myIzSwing   = inZonePts.length ? inZoneSwings/inZonePts.length   : null;
     var myIzContact = inZoneSwings > 0 ? inZoneContact/inZoneSwings      : null;
@@ -4354,7 +4434,7 @@ function renderPercentileStats(name, type, sum, pitch, seasonFilter) {
       var iblSP  = (DATA.iblHistory[name]||[]).filter(function(s){ return s.IP > 0 && (s.season||'').indexOf(_cbYr) !== -1; });
       if (!iblSP.length) iblSP = (DATA.iblHistory[name]||[]).filter(function(s){ return s.IP > 0; });
       var era    = iblSP.length && iblSP[0].ERA != null ? iblSP[0].ERA : null;
-      var whip   = pd.IP > 0 ? (bbs + hits) / pd.IP : null;
+      var whip   = inningsAsDecimal(pd.IP) > 0 ? (bbs + hits) / inningsAsDecimal(pd.IP) : null;
       var baAgst = abF >= 5 ? hits / abF : null;
       var bNumP  = hits - hrs; var bDenP = abF - ks - hrs;
       var babip  = bDenP >= 5 ? bNumP / bDenP : null;

@@ -32,13 +32,25 @@ pitches <- pitches %>%
 
 # ── Outcome reference vectors ──────────────────────────────────────────────────
 PITCH_LEVEL <- c("", "Ball", "Called Strike", "Swinging Strike", "Foul", "Pickoff")
+PA_END_OUTCOMES <- c(
+  "Single", "Double", "Triple", "Home Run",
+  "Groundout", "Ground Out", "Flyout", "Fly Out", "Popout", "Pop Out",
+  "Lineout", "Line Out", "Double Play", "Triple Play", "Error", "Field Error",
+  "Fielders Choice", "Fielder's Choice",
+  "Strikeout Looking", "Strikeout Swinging",
+  "Dropped Third Strike Looking", "Dropped Third Strike Swinging",
+  "Walk", "Intentional Walk", "Hit By Pitch",
+  "Sacrifice Fly", "Sac Fly Double Play",
+  "Sacrifice Bunt", "Sac Bunt Double Play",
+  "Catcher Interference", "Batter Interference"
+)
 
 NON_AB_PA_OUTCOMES <- c(
   "Walk", "Intentional Walk", "Hit By Pitch",
   "Sacrifice Fly", "Sac Fly Double Play",
   "Sacrifice Bunt", "Sac Bunt Double Play",
   "Catcher Interference", "Caught Stealing",
-  "Truncated Out", "Batter Interference", "Additional Out"
+  "Truncated Out", "Additional Out"
 )
 
 # ── Classify outcomes ──────────────────────────────────────────────────────────
@@ -79,7 +91,7 @@ pitches <- pitches %>%
     is_k          = outcome %in% c("Strikeout Looking", "Strikeout Swinging",
                                    "Dropped Third Strike Looking", "Dropped Third Strike Swinging"),
     is_sf         = outcome %in% c("Sacrifice Fly", "Sac Fly Double Play"),
-    is_pa         = !(outcome %in% PITCH_LEVEL),
+    is_pa         = outcome %in% PA_END_OUTCOMES,
     is_ab         = !(outcome %in% c(PITCH_LEVEL, NON_AB_PA_OUTCOMES)),
     
     # Swing = any pitch batter offered at (contact or miss)
@@ -104,7 +116,7 @@ pitches <- pitches %>%
                      "Dropped Third Strike Swinging", "Dropped Third Strike Looking",
                      "Single", "Double", "Triple", "Home Run",
                      "Groundout", "Flyout", "Popout", "Lineout",
-                     "Double Play", "Triple Play", "Error", "Truncated Out",
+                     "Double Play", "Triple Play", "Error",
                      "Sacrifice Fly", "Sac Fly Double Play",
                      "Sacrifice Bunt", "Sac Bunt Double Play"),
     
@@ -209,7 +221,7 @@ ip_per_game <- pitches %>%
 
 ip_totals <- ip_per_game %>%
   group_by(pitcher) %>%
-  summarise(IP = round(sum(ip), 1), .groups = "drop")
+  summarise(IP = sum(ip), .groups = "drop")
 
 # ── Early and Ahead counts ─────────────────────────────────────────────────────
 pitches <- pitches %>%
@@ -222,7 +234,7 @@ ahead_pas <- pitches %>%
   summarise(achieved_ahead = any(clean_count %in% c("0-2", "1-2")), .groups = "drop") %>%
   filter(achieved_ahead)
 
-pa_final <- pitches %>% filter(!(outcome %in% c(PITCH_LEVEL, "")))
+pa_final <- pitches %>% filter(is_pa)
 
 pa_summary <- pa_final %>%
   mutate(
@@ -278,7 +290,7 @@ pitcher_stats <- pitches %>%
       "Dropped Third Strike Looking", "Dropped Third Strike Swinging",
       "Single", "Double", "Triple", "Home Run",
       "Groundout", "Flyout", "Popout", "Lineout",
-      "Double Play", "Triple Play", "Error", "Truncated Out",
+      "Double Play", "Triple Play", "Error",
       "Sacrifice Fly", "Sac Fly Double Play",
       "Sacrifice Bunt", "Sac Bunt Double Play"
     )),
