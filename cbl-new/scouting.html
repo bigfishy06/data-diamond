@@ -1594,7 +1594,19 @@ Zane Skansi,Kitchener Panthers`;
       function next(i){
         if(i>=sources.length){resolve(null);return;}
         var img=new Image();
-        img.onload=function(){var size=360,c=document.createElement('canvas'),ctx=c.getContext('2d');c.width=size;c.height=size;var scale=Math.max(size/img.naturalWidth,size/img.naturalHeight),w=img.naturalWidth*scale,h=img.naturalHeight*scale;ctx.drawImage(img,(size-w)/2,(size-h)/2,w,h);reportHeadshotData=c.toDataURL('image/png');resolve(reportHeadshotData);};
+        img.onload=function(){
+          var size=360,c=document.createElement('canvas'),ctx=c.getContext('2d');
+          c.width=size;c.height=size;
+          ctx.clearRect(0,0,size,size);
+          ctx.save();ctx.beginPath();ctx.arc(size/2,size/2,size/2-5,0,Math.PI*2);ctx.clip();
+          ctx.fillStyle='#ffffff';ctx.fillRect(0,0,size,size);
+          var scale=Math.max(size/img.naturalWidth,size/img.naturalHeight),w=img.naturalWidth*scale,h=img.naturalHeight*scale;
+          var cropY=(size-h)*.34;
+          ctx.drawImage(img,(size-w)/2,cropY,w,h);
+          ctx.restore();
+          ctx.beginPath();ctx.arc(size/2,size/2,size/2-5,0,Math.PI*2);ctx.lineWidth=10;ctx.strokeStyle='#cfd5f2';ctx.stroke();
+          reportHeadshotData=c.toDataURL('image/png');resolve(reportHeadshotData);
+        };
         img.onerror=function(){next(i+1);};img.src=sources[i];
       } next(0);
     });
@@ -1605,7 +1617,7 @@ Zane Skansi,Kitchener Panthers`;
     d.setFillColor(53,71,163);d.roundedRect(ML,MT,4,29,2,2,'F');
     var hx0=ML+16,hy0=MT+14.5,hr=10.5;
     d.setFillColor(255,255,255);d.circle(hx0,hy0,hr,'F');
-    if(reportHeadshotData){d.addImage(reportHeadshotData,'PNG',hx0-hr+.8,hy0-hr+.8,(hr-.8)*2,(hr-.8)*2);d.setDrawColor(207,213,242);d.setLineWidth(.7);d.circle(hx0,hy0,hr,'S');}
+    if(reportHeadshotData){d.addImage(reportHeadshotData,'PNG',hx0-hr,hy0-hr,hr*2,hr*2);d.setDrawColor(207,213,242);d.setLineWidth(.7);d.circle(hx0,hy0,hr,'S');}
     else{d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(32,42,120);d.text(team.abbr,hx0,hy0+3.5,{align:'center'});}
     // Player name & handedness & role
     d.setFont('helvetica','bold');d.setFontSize(15);d.setTextColor(255,255,255);
@@ -1644,7 +1656,7 @@ Zane Skansi,Kitchener Panthers`;
   function reportMetricColor(p){return p==null?'#ffffff':p>=67?'#72c2aa':p<=33?'#ef8f96':'#ffffff';}
   function drawPercentileBoxes(d,stats,y){
     var bw=CPW/stats.length;
-    stats.forEach(function(s,i){var x=ML+i*bw,c=hx(reportMetricColor(s.pct));d.setFillColor(255,255,255);d.rect(x+.7,y,bw-1.4,19,'F');d.setDrawColor(217,222,237);d.setLineWidth(.35);d.rect(x+.7,y,bw-1.4,19,'S');d.setFillColor(i===1?112:32,i===1?132:42,i===1?207:120);d.rect(x+.7,y,bw-1.4,1.4,'F');d.setFont('helvetica','bold');d.setFontSize(6.2);st(d,CO.dim);d.text(s.label,x+3,y+5.5);d.setFontSize(5.7);d.text(reportOrdinal(s.pct),x+bw-3,y+5.5,{align:'right'});d.setFontSize(13);d.setTextColor(24,34,54);[[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(s.display,x+3+o[0],y+14+o[1]);});d.setTextColor(c[0],c[1],c[2]);d.text(s.display,x+3,y+14);});
+    stats.forEach(function(s,i){var x=ML+i*bw,c=hx(reportMetricColor(s.pct));d.setFillColor(255,255,255);d.rect(x+.7,y,bw-1.4,19,'F');d.setDrawColor(207,213,226);d.setLineWidth(.45);d.rect(x+.7,y,bw-1.4,19,'S');d.setFillColor(i===1?112:32,i===1?132:42,i===1?207:120);d.rect(x+.7,y,bw-1.4,1.4,'F');d.setFont('helvetica','bold');d.setFontSize(6.2);st(d,CO.dim);d.text(s.label,x+3,y+5.5);d.setFontSize(5.7);d.text(reportOrdinal(s.pct),x+bw-3,y+5.5,{align:'right'});d.setFontSize(13);d.setTextColor(24,34,54);[[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(s.display,x+3+o[0],y+14+o[1]);});d.setTextColor(c[0],c[1],c[2]);d.text(s.display,x+3,y+14);});
     return y+21;
   }
   function drawSec(d,text,y){
