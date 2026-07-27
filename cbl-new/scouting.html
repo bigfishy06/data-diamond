@@ -2574,9 +2574,10 @@ Zane Skansi,Kitchener Panthers`;
     function _pctRankP(val,arr){ if(!arr.length||val==null)return null; var below=arr.filter(function(v){return v<val;}).length; var equal=arr.filter(function(v){return v===val;}).length; return (below+equal*0.5)/arr.length; }
     function _extremityP(pct){ return pct==null?0:Math.abs(pct-0.5)*2; }
 
-    var _pitApproachResult=(function(){
-      var scP=sc.filter(hasPitchLocation);
+    function buildPitcherHandApproach(hand){
+      var scP=sc.filter(function(p){return hasPitchLocation(p)&&p.batter_side===hand;});
       function pitcherFallback(noPlots){
+        if(hand)return {dot:'#60a5fa',label:'DATA',val:'',spot:'Limited '+(hand==='L'?'LHH':'RHH')+' location sample',region:null,note:''};
         var baaNum=selSeason==='2026'?(pd26&&pd26.BAA!=null?parseFloat(pd26.BAA):null):(pbpP2&&pbpP2.BA_against!=null?parseFloat(pbpP2.BA_against):(player.baa!=null?parseFloat(player.baa):null));
         var whipNum=selSeason==='2026'?(pd26&&pd26.IP>0?(function(){var _h=pd26.H_allowed!=null?pd26.H_allowed:hits;var _bb=pd26.BB!=null?pd26.BB:bbs;return (_bb+_h)/pd26.IP;})():null):(pbpP2&&pbpP2.WHIP!=null?parseFloat(pbpP2.WHIP):(player.whip!=null?parseFloat(player.whip):null));
         var opts=[];
@@ -2636,16 +2637,18 @@ Zane Skansi,Kitchener Panthers`;
       }
       var zoneSummaries=PZONES.map(function(pz){
         var pts=scP.filter(pz.fn);
-        if(pts.length<5)return null;
+        if(pts.length<3)return null;
         var pitch=zonePitchTypeSummary(pts);
         var usage=pts.length/scP.length;
-        var baa=_zbaP(pts);
+        var ab=pts.filter(function(p){return _IN_PLAY_P.concat(_KS_P).includes(p.outcome);}).length;
+        var h=pts.filter(function(p){return _HITS_P.includes(p.outcome);}).length;
+        var baa=ab>=3?h/ab:null;
         return {zone:pz,pitch:pitch,usage:usage,baa:baa,pts:pts};
       }).filter(Boolean);
       if(!zoneSummaries.length)return pitcherFallback(false);
       var usagePick=zoneSummaries.slice().sort(function(a,b){return b.usage-a.usage;})[0];
       var damagePick=zoneSummaries.filter(function(z){return z.baa!=null;}).sort(function(a,b){return b.baa-a.baa||b.usage-a.usage;})[0]||usagePick;
-      var mainPick=(damagePick&&damagePick.baa!=null&&damagePick.baa>=0.250)?damagePick:usagePick;
+      var mainPick=(damagePick&&damagePick.baa!=null)?damagePick:usagePick;
       var countLine=bestCountPattern();
       var mostLine='Frequency: '+usagePick.pitch+' to '+usagePick.zone.spot.toLowerCase()+' '+f1(usagePick.usage*100)+'%.';
       var damageLine=damagePick&&damagePick.baa!=null
@@ -2671,24 +2674,25 @@ Zane Skansi,Kitchener Panthers`;
           {label:'Count',text:countText,color:'#FFB81C'}
         ]
       };
-    })();
+    }
+    var _pitApproachResults=[{hand:'L',label:'LHH'},{hand:'R',label:'RHH'}].map(function(side){side.result=buildPitcherHandApproach(side.hand);return side;});
 
-    // Draw approach card with strike-zone target.
-    var _paDr=parseInt(_pitApproachResult.dot.slice(1,3),16)||96;
-    var _paDg=parseInt(_pitApproachResult.dot.slice(3,5),16)||165;
-    var _paDb=parseInt(_pitApproachResult.dot.slice(5,7),16)||250;
-    var _paBoxH=32;
-    d.setFillColor(245,247,251);d.rect(ML,y,CPW,_paBoxH,'F');
-    d.setDrawColor(_paDr,_paDg,_paDb);d.setLineWidth(0.45);d.rect(ML,y,CPW,_paBoxH,'S');
-    d.setFillColor(_paDr,_paDg,_paDb);d.rect(ML,y,2.4,_paBoxH,'F');
-    var _paTextX=ML+34;
-    if(_pitApproachResult.region){drawAttackZone(d,ML+6,y+5,23,23,_pitApproachResult.region,_pitApproachResult.dot,'BATTER',true);}
-    else{_paTextX=ML+6;d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(_paDr,_paDg,_paDb);d.text(_pitApproachResult.fallbackLabel||'STAT FALLBACK',_paTextX,y+6.5);}
-    d.setFont('helvetica','bold');d.setFontSize(10.5);st(d,CO.white);
-    var _paSpotDisp=_pitApproachResult.spot||'';
-    var _paAction=_pitApproachResult.region?('Attack: '+_paSpotDisp):(_paSpotDisp||_pitApproachResult.label);
-    var _paTextW=_pitApproachResult.region?CPW-40:CPW-14;
-    d.text(_paAction,_paTextX,y+17.5,{maxWidth:_paTextW});
+    // Draw handedness-specific approach cards with strike-zone targets.
+    var _paBoxH=30,_paGap=4,_paW=(CPW-_paGap)/2;
+    _pitApproachResults.forEach(function(side,index){
+      var result=side.result,x=ML+index*(_paW+_paGap);
+      var cr=parseInt(result.dot.slice(1,3),16)||96,cg=parseInt(result.dot.slice(3,5),16)||165,cb=parseInt(result.dot.slice(5,7),16)||250;
+      d.setFillColor(245,247,251);d.rect(x,y,_paW,_paBoxH,'F');
+      d.setDrawColor(cr,cg,cb);d.setLineWidth(.45);d.rect(x,y,_paW,_paBoxH,'S');
+      d.setFillColor(cr,cg,cb);d.rect(x,y,2.2,_paBoxH,'F');
+      d.setFont('helvetica','bold');d.setFontSize(6.3);d.setTextColor(cr,cg,cb);d.text('ATTACK VS. '+side.label,x+5,y+5.5);
+      var textX=x+31;
+      if(result.region)drawAttackZone(d,x+5,y+7.5,21,19,result.region,result.dot,'BATTER',true);
+      else textX=x+5;
+      d.setFont('helvetica','bold');d.setFontSize(8.5);st(d,CO.white);
+      var action=result.region?result.spot:(result.spot||result.label);
+      d.text(action,textX,y+17,{maxWidth:_paW-(textX-x)-4});
+    });
     y+=_paBoxH+4;
     var locTot=sc.filter(hasPitchLocation).length;
     var znPct=locTot>0?inZ/locTot:0;
