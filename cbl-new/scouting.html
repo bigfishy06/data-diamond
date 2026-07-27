@@ -3432,13 +3432,16 @@ Zane Skansi,Kitchener Panthers`;
         d.setTextColor(vc[0],vc[1],vc[2]);d.text(String(v[1]),statX+i*statW,y+19);
       });
       if(role==='pitcher'){
-        var ctRows=compactCountTendencies(sc),cx=margin+4,cw=[45,48,26];
+        var ctRows=compactCountTendencies(sc),cx=margin+4,cw=[43,44,32];
         d.setFont('helvetica','bold');d.setFontSize(5.2);d.setTextColor(gold[0],gold[1],gold[2]);d.text('COUNT TENDENCIES',cx,y+24.8);
         d.setFillColor(224,229,235);d.rect(cx-1,y+26,119,3.7,'F');
         ['COUNT','PITCH TYPE','USE'].forEach(function(label,i){d.setFontSize(4.6);d.setTextColor(22,43,82);d.text(label,cx+cw[i]/2,y+28.7,{align:'center'});cx+=cw[i]});
         ctRows.forEach(function(row,ri){
           var ry=y+29.7+ri*3.9;d.setFillColor(ri%2?250:242,ri%2?250:244,ri%2?250:247);d.rect(margin+3,ry,119,3.9,'F');cx=margin+4;
-          [row[0],row[2],row[3]==null?'-':Number(row[3]).toFixed(1)+'%'].forEach(function(value,i){d.setFont('helvetica',i<2?'bold':'normal');d.setFontSize(5);d.setTextColor(22,32,50);d.text(value,cx+cw[i]/2,ry+2.8,{align:'center',maxWidth:cw[i]-1});cx+=cw[i]});
+          [row[0],row[2],row[3]==null?'-':Number(row[3]).toFixed(1)+'%'].forEach(function(value,i){
+            d.setFont('helvetica','bold');d.setFontSize(i===2?7.2:5.3);d.setTextColor(22,32,50);
+            d.text(value,cx+cw[i]/2,ry+2.8,{align:'center',maxWidth:cw[i]-1});cx+=cw[i];
+          });
         });
       }else{
         d.setFontSize(5.5);d.setTextColor(gold[0],gold[1],gold[2]);d.text('PLAN',margin+4,y+22);
