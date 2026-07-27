@@ -3279,6 +3279,12 @@ Zane Skansi,Kitchener Panthers`;
     function pct(v){return v==null||!isFinite(v)?'-':Number(v).toFixed(1)+'%'}
     function dec(v){return v==null||!isFinite(v)?'-':Number(v).toFixed(3)}
     function side(p,key){var v=String(p[key]||p.batter_side||p.pitcher_side||'').toUpperCase();return v.charAt(0)}
+    var pitcherLeague={fps:[],strike:[],whiff:[],k:[],bb:[]};
+    (DATA.pitchers||[]).forEach(function(p){
+      [['fps',p.FPS_pct],['strike',p.STR_pct],['whiff',p.Whiff_pct],['k',p.K_pct],['bb',p.BB_pct]].forEach(function(entry){
+        var value=Number(entry[1]);if(isFinite(value))pitcherLeague[entry[0]].push(value);
+      });
+    });
     function header(){
       d.setFillColor(255,255,255);d.rect(0,0,pw,ph,'F');
       d.setFillColor(31,55,105);d.rect(0,0,pw,1.5,'F');d.rect(0,ph-1.5,pw,1.5,'F');
@@ -3301,13 +3307,17 @@ Zane Skansi,Kitchener Panthers`;
         var whip=p.whip!=null?Number(p.whip):(Number(pd.IP)>0&&(pd.H_allowed!=null||pd.BB!=null)?(Number(pd.H_allowed||0)+Number(pd.BB||0))/Number(pd.IP):null);
         var fpsValue=first.length?first.filter(reportIsStrikeOutcome).length/first.length*100:(p.fps_pct!=null?p.fps_pct:pd.FPS_pct);
         var ttpValue=p.avg_ttp!=null?p.avg_ttp:pd.avg_time_to_plate;
+        var strikeValue=sc.length?sc.filter(reportIsStrikeOutcome).length/sc.length*100:pd.STR_pct;
+        var whiffValue=sw.length?wh.length/sw.length*100:pd.Whiff_pct;
+        var kValue=pa.length?ks.length/pa.length*100:pd.K_pct;
+        var bbValue=pa.length?bb.length/pa.length*100:pd.BB_pct;
         var hand=getPitcherHand(p.name)||pd.throws||((sc.find(function(x){return x.pitcher_side})||{}).pitcher_side)||ibl.throws||'-';
         return {hand:String(hand).charAt(0).toUpperCase(),values:[
-          ['ERA',ibl.ERA!=null?Number(ibl.ERA).toFixed(2):'-'],['WHIP',whip!=null?whip.toFixed(2):'-'],
-          ['K',pd.K!=null?String(Math.round(pd.K)):String(ks.length)],['BB',pd.BB!=null?String(Math.round(pd.BB)):String(bb.length)],
-          ['FPS%',pct(fpsValue)],
-          ['STR%',pct(sc.length?sc.filter(reportIsStrikeOutcome).length/sc.length*100:pd.STR_pct)],
-          ['TTP',ttpValue!=null?Number(ttpValue).toFixed(2)+'s':'-']]};
+          ['FPS%',pct(fpsValue),reportPercentile(fpsValue,pitcherLeague.fps,true)],
+          ['STRIKE%',pct(strikeValue),reportPercentile(strikeValue,pitcherLeague.strike,true)],
+          ['WHIFF%',pct(whiffValue),reportPercentile(whiffValue,pitcherLeague.whiff,true)],
+          ['K%',pct(kValue),reportPercentile(kValue,pitcherLeague.k,true)],
+          ['BB%',pct(bbValue),reportPercentile(bbValue,pitcherLeague.bb,false)]]};
       }
       var s=p.summary||{},firstB=sc.filter(function(x){return Number(x.balls)===0&&Number(x.strikes)===0});
       return {hand:getBatterHand(p.name)||'-',values:[
@@ -3375,8 +3385,15 @@ Zane Skansi,Kitchener Panthers`;
       d.setFont('helvetica','bold');d.setFontSize(8);d.setTextColor(22,32,50);d.text(p.name,margin+4,y+5);
       d.setFontSize(6);d.setTextColor(gold[0],gold[1],gold[2]);d.text(role==='pitcher'?'THROWS':'BATS',margin+105,y+4.7);
       d.setTextColor(22,32,50);d.text(st.hand,margin+132,y+4.7);
-      var statX=margin+4,statW=17;
-      st.values.forEach(function(v,i){d.setDrawColor(45,58,78);d.setLineWidth(.15);d.rect(statX+i*statW-1,y+7,statW,10,'S');d.setFontSize(5.2);d.setTextColor(gold[0],gold[1],gold[2]);d.text(v[0],statX+i*statW,y+10.5);d.setFontSize(6.5);d.setTextColor(22,32,50);d.text(String(v[1]),statX+i*statW,y+15)});
+      var statX=margin+4,statW=role==='pitcher'?23.8:17;
+      st.values.forEach(function(v,i){
+        d.setDrawColor(45,58,78);d.setLineWidth(.15);d.rect(statX+i*statW-1,y+7,statW,10,'S');
+        d.setFontSize(5.2);d.setTextColor(gold[0],gold[1],gold[2]);d.text(v[0],statX+i*statW,y+10.5);
+        d.setFont('helvetica','bold');d.setFontSize(7.2);
+        var vc=hx(reportMetricColor(v[2]));
+        d.setTextColor(0,0,0);[[-.18,0],[.18,0],[0,-.18],[0,.18]].forEach(function(o){d.text(String(v[1]),statX+i*statW+o[0],y+15+o[1])});
+        d.setTextColor(vc[0],vc[1],vc[2]);d.text(String(v[1]),statX+i*statW,y+15);
+      });
       d.setFontSize(5.5);d.setTextColor(gold[0],gold[1],gold[2]);d.text(role==='pitcher'?'ATTACK':'PLAN',margin+4,y+22);
       d.setFontSize(5.8);d.setTextColor(22,32,50);
       if(role==='pitcher'){
