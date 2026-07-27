@@ -3312,7 +3312,7 @@ Zane Skansi,Kitchener Panthers`;
         var kValue=pa.length?ks.length/pa.length*100:pd.K_pct;
         var bbValue=pa.length?bb.length/pa.length*100:pd.BB_pct;
         var hand=getPitcherHand(p.name)||pd.throws||((sc.find(function(x){return x.pitcher_side})||{}).pitcher_side)||ibl.throws||'-';
-        var ttpNumber=Number(ttpValue),ttpColor=!isFinite(ttpNumber)?'#ffffff':ttpNumber<=1.13?'#72c2aa':ttpNumber>=1.37?'#ef8f96':'#ffffff';
+        var ttpNumber=Number(ttpValue),ttpColor=!isFinite(ttpNumber)?'#ffffff':ttpNumber<1.30?'#72c2aa':ttpNumber>1.40?'#ef8f96':'#ffffff';
         return {hand:String(hand).charAt(0).toUpperCase(),values:[
           ['FPS%',pct(fpsValue),reportPercentile(fpsValue,pitcherLeague.fps,true)],
           ['STRIKE%',pct(strikeValue),reportPercentile(strikeValue,pitcherLeague.strike,true)],
