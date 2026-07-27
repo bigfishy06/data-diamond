@@ -3285,6 +3285,23 @@ Zane Skansi,Kitchener Panthers`;
         var value=Number(entry[1]);if(isFinite(value))pitcherLeague[entry[0]].push(value);
       });
     });
+    function batterSummaryMetrics(points){
+      var pts=points||[],first=pts.filter(function(p){return String(p.count||'').replace(/^'/,'')==='0-0'}),inside=pts.filter(function(p){return hasPitchLocation(p)&&p.in_zone}),outside=pts.filter(function(p){return hasPitchLocation(p)&&!p.in_zone}),swings=pts.filter(reportIsSwingOutcome);
+      var pa=pts.filter(function(p){return ['Strikeout Swinging','Strikeout Looking','Walk','Intentional Walk','Single','Double','Triple','Home Run','Groundout','Flyout','Popout','Lineout','Double Play','Triple Play','Error','Truncated Out','Sacrifice Fly','Sacrifice Bunt'].includes(p.outcome)});
+      return {
+        fpsw:first.length?first.filter(reportIsSwingOutcome).length/first.length*100:null,
+        iz:inside.length?inside.filter(reportIsSwingOutcome).length/inside.length*100:null,
+        chase:outside.length?outside.filter(reportIsSwingOutcome).length/outside.length*100:null,
+        whiff:swings.length?pts.filter(reportIsWhiffOutcome).length/swings.length*100:null,
+        k:pa.length?pa.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking'}).length/pa.length*100:null,
+        bb:pa.length?pa.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk'}).length/pa.length*100:null
+      };
+    }
+    var batterLeague={fpsw:[],iz:[],chase:[],whiff:[],k:[],bb:[]};
+    (DATA.pitches||[]).forEach(function(p){
+      var m=batterSummaryMetrics(p.scatter||[]);
+      Object.keys(batterLeague).forEach(function(key){if(m[key]!=null&&isFinite(m[key]))batterLeague[key].push(m[key])});
+    });
     function header(){
       d.setFillColor(255,255,255);d.rect(0,0,pw,ph,'F');
       d.setFillColor(31,55,105);d.rect(0,0,pw,1.5,'F');d.rect(0,ph-1.5,pw,1.5,'F');
@@ -3442,19 +3459,21 @@ Zane Skansi,Kitchener Panthers`;
       d.setFontSize(6);d.setTextColor(gold[0],gold[1],gold[2]);d.text(role==='pitcher'?'THROWS':'BATS',margin+105,y+4.7);
       d.setTextColor(22,32,50);d.text(st.hand,margin+132,y+4.7);
       if(role==='batter'){
-        var sum=p.summary||{},swings=sc.filter(reportIsSwingOutcome),whiffs=sc.filter(reportIsWhiffOutcome);
-        var outside=sc.filter(function(x){return hasPitchLocation(x)&&!x.in_zone}),chases=outside.filter(reportIsSwingOutcome);
-        var firstP=sc.filter(function(x){return String(x.count||'').replace(/^'/,'')==='0-0'}),firstSw=firstP.filter(reportIsSwingOutcome);
-        var batted=sc.filter(function(x){return x.spray}),sprayCounts={Pull:0,Straightaway:0,'Opposite Field':0};
-        batted.forEach(function(x){var s=String(x.spray||'').toLowerCase();if(s.indexOf('pull')>=0)sprayCounts.Pull++;else if(s.indexOf('oppo')>=0)sprayCounts['Opposite Field']++;else sprayCounts.Straightaway++});
-        var sprayTotal=Object.values(sprayCounts).reduce(function(a,b){return a+b},0),pull=sprayTotal?sprayCounts.Pull/sprayTotal*100:0,straight=sprayTotal?sprayCounts.Straightaway/sprayTotal*100:0,oppo=sprayTotal?sprayCounts['Opposite Field']/sprayTotal*100:0;
-        var shift=pull>40?'PULL':oppo>40?'OPPO':straight>40?'STRAIGHT':'None';
-        var bvals=[['BA',sum.AVG!=null?dec(sum.AVG):'-'],['OPS',sum.OPS!=null?dec(sum.OPS):'-'],['Pull %',pct(pull)],['Str %',pct(straight)],['Oppo %',pct(oppo)],['SHIFT',shift],['FPSW %',pct(firstP.length?firstSw.length/firstP.length*100:null)],['Whiff',pct(swings.length?whiffs.length/swings.length*100:null)],['Chase',pct(outside.length?chases.length/outside.length*100:null)]];
-        var bx=margin+4,bw=[15,17,18,18,18,18,18,18,18];
-        bvals.forEach(function(v,i){d.setDrawColor(45,58,78);d.setLineWidth(.15);d.rect(bx-1,y+7,bw[i],10,'S');d.setFont('helvetica','bold');d.setFontSize(5);d.setTextColor(22,43,82);d.text(v[0],bx,y+10.5);d.setFontSize(i===5?6.2:7);var bc=i===5?(shift==='PULL'?[248,90,100]:shift==='OPPO'?[96,165,250]:shift==='STRAIGHT'?[245,160,10]:[22,32,50]):[22,32,50];d.setTextColor(bc[0],bc[1],bc[2]);d.text(String(v[1]),bx,y+15);bx+=bw[i]});
-        var attackB=batterSummaryAttack(sc),ay=y+24;
-        d.setFont('helvetica','bold');d.setFontSize(5);d.setTextColor(22,43,82);d.text('ATTACK',margin+4,y+21.5);
-        [[52,211,153,'WHIFF',attackB[0]],[248,113,113,'HITS',attackB[1]]].forEach(function(a,i){d.setFillColor(a[0],a[1],a[2]);d.rect(margin+4,ay+i*5-3.4,15,4,'F');d.setTextColor(255,255,255);d.setFontSize(4.6);d.text(a[3],margin+11.5,ay+i*5-.7,{align:'center'});d.setTextColor(22,32,50);d.setFont('helvetica','normal');d.setFontSize(5.3);d.text(a[4],margin+21,ay+i*5-.7,{maxWidth:105})});
+        var bm=batterSummaryMetrics(sc),bvals=[
+          ['FPSW%',bm.fpsw,reportPercentile(bm.fpsw,batterLeague.fpsw,true)],
+          ['I-Z SWING%',bm.iz,reportPercentile(bm.iz,batterLeague.iz,true)],
+          ['CHASE%',bm.chase,reportPercentile(bm.chase,batterLeague.chase,false)],
+          ['WHIFF%',bm.whiff,reportPercentile(bm.whiff,batterLeague.whiff,false)],
+          ['K%',bm.k,reportPercentile(bm.k,batterLeague.k,false)],
+          ['BB%',bm.bb,reportPercentile(bm.bb,batterLeague.bb,true)]
+        ],bx=margin+4,bw=19.83;
+        bvals.forEach(function(v,i){
+          d.setDrawColor(45,58,78);d.setLineWidth(.15);d.rect(bx-1,y+7,bw,15,'S');
+          d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(22,43,82);d.text(v[0],bx,y+11);
+          var text=v[1]==null?'-':Number(v[1]).toFixed(1)+'%',bc=hx(reportMetricColor(v[2]));
+          d.setFontSize(10);d.setTextColor(0,0,0);[[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(text,bx+o[0],y+19+o[1])});
+          d.setTextColor(bc[0],bc[1],bc[2]);d.text(text,bx,y+19);bx+=bw;
+        });
         var whiffMap=sc.filter(reportIsWhiffOutcome),bMapX=pw-margin-mapSize-2;
         d.setFont('helvetica','bold');d.setFontSize(5.5);d.setTextColor(22,43,82);d.text('WHIFF MAP',bMapX,y+5);
         d.addImage(mkHeat(whiffMap,'BATTER','dark'),'PNG',bMapX,y+7,mapSize,mapSize);
