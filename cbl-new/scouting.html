@@ -2232,7 +2232,7 @@ Zane Skansi,Kitchener Panthers`;
       d.setFillColor(245,247,251);d.rect(x,y,_aW,_aBoxH,'F');
       d.setDrawColor(c[0],c[1],c[2]);d.setLineWidth(.45);d.rect(x,y,_aW,_aBoxH,'S');
       d.setFillColor(c[0],c[1],c[2]);d.rect(x,y,2.2,_aBoxH,'F');
-      d.setFont('helvetica','bold');d.setFontSize(8);d.setTextColor(c[0],c[1],c[2]);d.text(item.label,x+5,y+6);
+      d.setFont('helvetica','bold');d.setFontSize(8);d.setTextColor(c[0],c[1],c[2]);d.text(item.label+' - PITCHER POV',x+5,y+6);
       var textX=x+34;
       if(result.region)drawAttackZone(d,x+5,y+8,24,20,result.region,item.color,'PITCHER',true);
       else textX=x+5;
@@ -2813,7 +2813,7 @@ Zane Skansi,Kitchener Panthers`;
       d.setFillColor(245,247,251);d.rect(x,y,_paW,_paBoxH,'F');
       d.setDrawColor(cr,cg,cb);d.setLineWidth(.45);d.rect(x,y,_paW,_paBoxH,'S');
       d.setFillColor(cr,cg,cb);d.rect(x,y,2.2,_paBoxH,'F');
-      d.setFont('helvetica','bold');d.setFontSize(6.3);d.setTextColor(cr,cg,cb);d.text('ATTACK VS. '+side.label,x+5,y+5.5);
+      d.setFont('helvetica','bold');d.setFontSize(6.3);d.setTextColor(cr,cg,cb);d.text('ATTACK VS. '+side.label+' - BATTER POV',x+5,y+5.5);
       var textX=x+31;
       if(result.region)drawAttackZone(d,x+5,y+7.5,21,19,result.region,result.dot,'BATTER',true);
       else textX=x+5;
@@ -2996,7 +2996,7 @@ Zane Skansi,Kitchener Panthers`;
       if(!sd2.sub.length)return;
       var xOff=ML+i*(iw+gap);
       d.setFont('helvetica','bold');d.setFontSize(7);st(d,CO.gold);
-      d.text('vs. '+(sd2.hand==='R'?'RIGHT-HANDED (RHH)':'LEFT-HANDED (LHH)'),xOff+iw/2,y,{align:'center'});
+      d.text('vs. '+(sd2.hand==='R'?'RIGHT-HANDED (RHH)':'LEFT-HANDED (LHH)')+' - BATTER POV',xOff+iw/2,y,{align:'center'});
     });
     y+=4;
     if(drawSplitHeat){
@@ -3599,8 +3599,8 @@ Zane Skansi,Kitchener Panthers`;
           });
         });
         var whiffMap=sc.filter(reportIsWhiffOutcome),bMapSize=24,bMapX=pw-margin-bMapSize-2;
-        d.setFont('helvetica','bold');d.setFontSize(5.5);d.setTextColor(22,43,82);d.text('WHIFF MAP',bMapX,y+5);
-        d.addImage(mkHeat(whiffMap,'BATTER','dark'),'PNG',bMapX,y+7,bMapSize,bMapSize);
+        d.setFont('helvetica','bold');d.setFontSize(4.5);d.setTextColor(22,43,82);d.text('WHIFF MAP - PITCHER POV',bMapX+bMapSize/2,y+5,{align:'center'});
+        d.addImage(mkHeat(whiffMap,'PITCHER','dark'),'PNG',bMapX,y+7,bMapSize,bMapSize);
         return;
       }
       var statX=margin+4,statW=role==='pitcher'?19.83:17;
@@ -3629,7 +3629,7 @@ Zane Skansi,Kitchener Panthers`;
         d.setFontSize(5.8);d.setTextColor(22,32,50);d.text('ATTACK  '+attack(sc,'A'),margin+4,y+27,{maxWidth:105});d.text('Use pitch mix and location to avoid damage zones.',margin+4,y+32,{maxWidth:105})
       }
       var key=role==='pitcher'?'batter_side':'pitcher_side',l=sc.filter(function(x){return side(x,key)==='L'}),r=sc.filter(function(x){return side(x,key)==='R'});
-      d.setFontSize(5.5);d.setTextColor(gold[0],gold[1],gold[2]);d.text('VS LHH',mapX,y+5);d.text('VS RHH',mapX+mapSize+mapGap,y+5);
+      d.setFontSize(4.5);d.setTextColor(gold[0],gold[1],gold[2]);d.text('VS LHH - BATTER POV',mapX+mapSize/2,y+5,{align:'center'});d.text('VS RHH - BATTER POV',mapX+mapSize+mapGap+mapSize/2,y+5,{align:'center'});
       d.addImage(mkHeat(l,'BATTER','dark'),'PNG',mapX,y+7,mapSize,mapSize);d.addImage(mkHeat(r,'BATTER','dark'),'PNG',mapX+mapSize+mapGap,y+7,mapSize,mapSize);
     });
     var safeTeam=team.name.replace(/[^a-z0-9]+/gi,'_').replace(/^_+|_+$/g,'');
