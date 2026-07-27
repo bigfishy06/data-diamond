@@ -778,11 +778,11 @@
       $('pitchSequencingPanel').insertBefore(sequenceRow,$('pitchSequencingPanel').children[1]);
       const controls=[effectivenessControl,tendencyControl,sequencingControl];
       function datesForCurrent(){return[...new Set(allPitcherPoints().map(dateOf).filter(Boolean))].sort()}
-      function configure(control,reset=false){
+      function configure(control,reset=false,changedInput=null){
         const dates=datesForCurrent(),start=control.querySelector('.date-start'),end=control.querySelector('.date-end'),player=$('player').value;
         if(reset||control.dataset.player!==player){start.min=end.min=0;start.max=end.max=String(Math.max(dates.length-1,0));start.value='0';end.value=String(Math.max(dates.length-1,0));control.dataset.player=player}
         start.max=end.max=String(Math.max(dates.length-1,0));
-        if(Number(start.value)>Number(end.value)){if(document.activeElement===start)end.value=start.value;else start.value=end.value}
+        if(Number(start.value)>Number(end.value)){if(changedInput===start)end.value=start.value;else if(changedInput===end)start.value=end.value;else end.value=start.value}
         control._dates=dates;
         control.querySelector('.date-start-label').textContent=dates[Number(start.value)]||'All dates';
         control.querySelector('.date-end-label').textContent=dates[Number(end.value)]||'All dates';
@@ -813,7 +813,11 @@
         table.innerHTML=`<table class="stat-table"><thead><tr><th>Rank</th><th>Sequence</th><th>Pitches</th><th>Strike%</th><th>Whiff%</th><th>Chase%</th><th>BAA</th></tr></thead><tbody>${rows.map((row,index)=>`<tr><td><span class="analysis-rank">${index+1}</span></td><td>${row.sequence}</td><td>${row.pitches.length}</td><td>${pct(row.stats.strike)}</td><td>${pct(row.stats.whiff)}</td><td>${pct(row.stats.chase)}</td><td>${row.stats.baa==null?'—':dec(row.stats.baa)}</td></tr>`).join('')||'<tr><td colspan="7">No sequences in this date and handedness range.</td></tr>'}</tbody></table>`;
       }
       const renderers=new Map([[effectivenessControl,renderEffectivenessDate],[tendencyControl,renderTendencyDate],[sequencingControl,renderSequencingDate]]);
-      controls.forEach(control=>control.querySelectorAll('input').forEach(input=>input.addEventListener('input',()=>{configure(control);clearTimeout(control._timer);control._timer=setTimeout(renderers.get(control),60)})));
+      controls.forEach(control=>control.querySelectorAll('input').forEach(input=>{
+        const apply=()=>{configure(control,false,input);renderers.get(control)()};
+        input.addEventListener('input',apply);
+        input.addEventListener('change',apply);
+      }));
       sequenceHand.addEventListener('change',renderSequencingDate);
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate()},950)));
       document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate()},950)));
