@@ -1585,24 +1585,39 @@ Zane Skansi,Kitchener Panthers`;
     d.addImage(can.toDataURL('image/png'),'PNG',lx-size/2,ly-size/2,size,size);
   }
 
+  var reportHeadshotData = null;
+  function reportSlug(value){return String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+  function loadReportHeadshot(name,team){
+    reportHeadshotData=null;
+    var base='headshots/'+reportSlug(team.name)+'-'+reportSlug(name),sources=[base+'.jpg',base+'.png',base+'.webp'];
+    return new Promise(function(resolve){
+      function next(i){
+        if(i>=sources.length){resolve(null);return;}
+        var img=new Image();
+        img.onload=function(){var size=360,c=document.createElement('canvas'),ctx=c.getContext('2d');c.width=size;c.height=size;var scale=Math.max(size/img.naturalWidth,size/img.naturalHeight),w=img.naturalWidth*scale,h=img.naturalHeight*scale;ctx.drawImage(img,(size-w)/2,(size-h)/2,w,h);reportHeadshotData=c.toDataURL('image/png');resolve(reportHeadshotData);};
+        img.onerror=function(){next(i+1);};img.src=sources[i];
+      } next(0);
+    });
+  }
   function drawHdr(d,name,role,team,hand){
     var tc=hx(team.color==='#888888'?'#334466':team.color);
     d.setFillColor(32,42,120);d.roundedRect(ML,MT,CPW,29,3,3,'F');
     d.setFillColor(53,71,163);d.roundedRect(ML,MT,4,29,2,2,'F');
-    // Team abbr
-    d.setFont('helvetica','bold');d.setFontSize(20);d.setTextColor(255,255,255);
-    d.text(team.abbr,ML+10,MT+17);
+    var hx0=ML+16,hy0=MT+14.5,hr=10.5;
+    d.setFillColor(255,255,255);d.circle(hx0,hy0,hr,'F');
+    if(reportHeadshotData){d.addImage(reportHeadshotData,'PNG',hx0-hr+.8,hy0-hr+.8,(hr-.8)*2,(hr-.8)*2);d.setDrawColor(207,213,242);d.setLineWidth(.7);d.circle(hx0,hy0,hr,'S');}
+    else{d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(32,42,120);d.text(team.abbr,hx0,hy0+3.5,{align:'center'});}
     // Player name & handedness & role
     d.setFont('helvetica','bold');d.setFontSize(15);d.setTextColor(255,255,255);
-    d.text(name.toUpperCase(),ML+38,MT+12);
+    d.text(name.toUpperCase(),ML+31,MT+12);
     if(hand){
       var nameW=d.getTextWidth(name.toUpperCase());
       var handPrefix=role==='PITCHER'?'Throws ':'Bats ';
       d.setFont('helvetica','bold');d.setFontSize(7.5);d.setTextColor(207,213,242);
-      d.text(handPrefix+hand,ML+40+nameW,MT+12.5);
+      d.text(handPrefix+hand,ML+33+nameW,MT+12.5);
     }
     d.setFont('helvetica','normal');d.setFontSize(8);d.setTextColor(222,226,249);
-    d.text(role+'  •  '+team.name+'  •  CBL '+selSeason,ML+38,MT+21);
+    d.text(role+'  •  '+team.name+'  •  CBL '+selSeason,ML+31,MT+21);
     // Logo — top right
     var logoSize=17,ly=MT+14.5,lx=ML+CPW-11;
     drawLogoImg(d,lx,ly,logoSize);
@@ -1623,6 +1638,14 @@ Zane Skansi,Kitchener Panthers`;
       d.text(s[0],x+bw/2,y+14,{align:'center'});
     });
     return y+19;
+  }
+  function reportOrdinal(n){if(n==null||!isFinite(n))return '';n=Math.max(1,Math.min(99,Math.round(n)));var m=n%100,s=(m>=11&&m<=13)?'th':({1:'st',2:'nd',3:'rd'}[n%10]||'th');return n+s+' pct.';}
+  function reportPercentile(value,values,higher){values=(values||[]).filter(function(v){return v!=null&&isFinite(v);});if(value==null||!isFinite(value)||!values.length)return null;var below=values.filter(function(v){return v<value;}).length,equal=values.filter(function(v){return v===value;}).length,p=(below+equal*.5)/values.length*100;return higher?p:100-p;}
+  function reportMetricColor(p){return p==null?'#ffffff':p>=67?'#72c2aa':p<=33?'#ef8f96':'#ffffff';}
+  function drawPercentileBoxes(d,stats,y){
+    var bw=CPW/stats.length;
+    stats.forEach(function(s,i){var x=ML+i*bw,c=hx(reportMetricColor(s.pct));d.setFillColor(255,255,255);d.rect(x+.7,y,bw-1.4,19,'F');d.setDrawColor(217,222,237);d.setLineWidth(.35);d.rect(x+.7,y,bw-1.4,19,'S');d.setFillColor(i===1?112:32,i===1?132:42,i===1?207:120);d.rect(x+.7,y,bw-1.4,1.4,'F');d.setFont('helvetica','bold');d.setFontSize(6.2);st(d,CO.dim);d.text(s.label,x+3,y+5.5);d.setFontSize(5.7);d.text(reportOrdinal(s.pct),x+bw-3,y+5.5,{align:'right'});d.setFontSize(13);d.setTextColor(24,34,54);[[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(s.display,x+3+o[0],y+14+o[1]);});d.setTextColor(c[0],c[1],c[2]);d.text(s.display,x+3,y+14);});
+    return y+21;
   }
   function drawSec(d,text,y){
     d.setFont('helvetica','bold');d.setFontSize(7.5);st(d,CO.gold);
@@ -2067,7 +2090,14 @@ Zane Skansi,Kitchener Panthers`;
     var opsVal2=iblB&&iblB.OPS!=null?f3(iblB.OPS):(s.OPS!=null?f3(s.OPS):'—');
     var _iblSB=_iblAll.find(function(r){return (r.season||'').indexOf(selSeason)!==-1&&r.SB!=null;})||_iblAll.find(function(r){return r.SB!=null;})||null;
     var sbVal=_iblSB?fN(_iblSB.SB):(s.SB!=null?fN(s.SB):(s.stolen_bases!=null?fN(s.stolen_bases):'—'));
-    y=drawBoxes(d,[['BA',avgVal2],['OPS',opsVal2],['HR',hrVal],['RBI',rbiVal],['SB',sbVal]],y);
+    function batterMetrics(pts,summary){pts=pts||[];var located=pts.filter(hasPitchLocation),inz=located.filter(function(p){return !!p.in_zone;}),outz=located.filter(function(p){return !p.in_zone;}),swings=pts.filter(reportIsSwingOutcome),firstPitches=pts.filter(function(p){return String(p.count||'').replace(/^'/,'')==='0-0';}),first=firstPitches.length?firstPitches.filter(reportIsSwingOutcome).length/firstPitches.length*100:null;return{fps:first,iz:inz.length?inz.filter(reportIsSwingOutcome).length/inz.length*100:null,chase:outz.length?outz.filter(reportIsSwingOutcome).length/outz.length*100:null,whiff:swings.length?swings.filter(reportIsWhiffOutcome).length/swings.length*100:null};}
+    var bm=batterMetrics(allSc,s),batterLeague=(DATA.pitches||[]).map(function(bp){var bs=(DATA.summary||[]).find(function(row){return normRosterName(row.batter||row.player)===normRosterName(bp.batter);})||{};return batterMetrics(bp.scatter||[],bs);});
+    y=drawPercentileBoxes(d,[
+      {label:'FPS%',display:bm.fps==null?'—':f1(bm.fps)+'%',pct:reportPercentile(bm.fps,batterLeague.map(function(m){return m.fps;}),false)},
+      {label:'IN-ZONE SWING%',display:bm.iz==null?'—':f1(bm.iz)+'%',pct:reportPercentile(bm.iz,batterLeague.map(function(m){return m.iz;}),true)},
+      {label:'CHASE%',display:bm.chase==null?'—':f1(bm.chase)+'%',pct:reportPercentile(bm.chase,batterLeague.map(function(m){return m.chase;}),false)},
+      {label:'WHIFF%',display:bm.whiff==null?'—':f1(bm.whiff)+'%',pct:reportPercentile(bm.whiff,batterLeague.map(function(m){return m.whiff;}),false)}
+    ],y);
     y+=4;
 
     // Approach - x and y plotted pitch data only.
@@ -2505,7 +2535,14 @@ Zane Skansi,Kitchener Panthers`;
       : (pd26&&pd26.BB!=null ? pd26.BB : bbs);
     var _pitKDisp  = _pitKCount!=null ? String(Math.round(_pitKCount)) : '—';
     var _pitBBDisp = _pitBBCount!=null ? String(Math.round(_pitBBCount)) : '—';
-    y=drawBoxes(d,[['ERA',eraVal],['WHIP',whipVal],['FPS%',fpsVal],['STRIKE%',strVal],['K',_pitKDisp],['BB',_pitBBDisp]],y);
+    var pitcherMetricRows=(DATA.pitchers||[]).filter(function(row){return row&&row.total_pitches>=20;});
+    var pStrike=pd26&&pd26.STR_pct!=null?+pd26.STR_pct:(tot?str/tot*100:null),pWhiff=pd26&&pd26.Whiff_pct!=null?+pd26.Whiff_pct:(sc.filter(reportIsSwingOutcome).length?swS/sc.filter(reportIsSwingOutcome).length*100:null),pK=pd26&&pd26.K_pct!=null?+pd26.K_pct:(tot?ks/tot*100:null),pBB=pd26&&pd26.BB_pct!=null?+pd26.BB_pct:(tot?bbs/tot*100:null);
+    y=drawPercentileBoxes(d,[
+      {label:'STRIKE%',display:pStrike==null?'—':f1(pStrike)+'%',pct:reportPercentile(pStrike,pitcherMetricRows.map(function(r){return +r.STR_pct;}),true)},
+      {label:'WHIFF%',display:pWhiff==null?'—':f1(pWhiff)+'%',pct:reportPercentile(pWhiff,pitcherMetricRows.map(function(r){return +r.Whiff_pct;}),true)},
+      {label:'K%',display:pK==null?'—':f1(pK)+'%',pct:reportPercentile(pK,pitcherMetricRows.map(function(r){return +r.K_pct;}),true)},
+      {label:'BB%',display:pBB==null?'—':f1(pBB)+'%',pct:reportPercentile(pBB,pitcherMetricRows.map(function(r){return +r.BB_pct;}),false)}
+    ],y);
     y+=2;
 
     var kPct2=selSeason==='2026'
@@ -3085,14 +3122,18 @@ Zane Skansi,Kitchener Panthers`;
     renderPlayerList();
     showToast('Generating full-season report for ' + player.name + '…', '#1e3c78');
     setTimeout(function(){
+      loadReportHeadshot(player.name,team).then(function(){
       try {
         if (selType === 'pitcher') genPitcherPDF(player, team);
         else genBatterPDF(player, team);
         showToast('Downloaded: ' + player.name, '#34d399');
+        if(window.parent!==window)window.parent.postMessage({type:'cbl-scouting-generated',ok:true,player:player.name},window.location.origin);
       } catch (error) {
         console.error(error);
         showToast('Error generating report', '#f87171');
+        if(window.parent!==window)window.parent.postMessage({type:'cbl-scouting-generated',ok:false,player:player.name},window.location.origin);
       }
+      });
     }, 350);
     return true;
   }
