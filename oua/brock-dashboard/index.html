@@ -1003,6 +1003,22 @@
       const data = await fetch('data/onu-season-stats.json').then(response => response.json()).catch(() => null);
       if (!data?.tables) return;
       const text = value => value == null || value === '' ? '—' : String(value).replace(/<[^>]*>/g, '').trim();
+      const wholeSeasonStats = new Set(['GP','PA','AB','H','HR','RBI','BB','SO','SB','CS','GS','W','L','SV','SVO','R','ER']);
+      const battingRates = new Set(['AVG','OBP','SLG','OPS']);
+      const pitchingRates = new Set(['ERA','WHIP','FIP']);
+      function formatSeasonValue(column, value){
+        const cleaned = text(value);
+        if (cleaned === '—') return cleaned;
+        const numeric = Number(cleaned.replace(/,/g, ''));
+        if (!Number.isFinite(numeric)) return cleaned;
+        if (wholeSeasonStats.has(column)) return numeric.toLocaleString();
+        // MLB convention: AVG/OBP/SLG/OPS use three decimals without a leading zero.
+        if (battingRates.has(column)) return numeric.toFixed(3).replace(/^0(?=\.)/, '');
+        // Pitching rate stats are conventionally displayed to two decimals.
+        if (pitchingRates.has(column)) return numeric.toFixed(2);
+        // IP is intentionally left untouched because baseball innings use x.1/x.2 notation.
+        return cleaned;
+      }
       function renderOnuSeasonStats(){
         const name = $('player')?.value || state.current?.pitcher;
         const type = activeRole() === 'batter' ? 'Batting' : 'Pitching';
@@ -1017,7 +1033,7 @@
         $('seasonStatsNote').textContent = rows.length ? `ONuBaseball · ${rows.length} season${rows.length === 1 ? '' : 's'}` : 'No ONuBaseball season history found';
         $('seasonStatsHead').innerHTML = `<tr>${indexes.map(item => `<th>${item.column}</th>`).join('')}</tr>`;
         $('seasonStatsBody').innerHTML = rows.length
-          ? rows.map(entry => `<tr>${indexes.map(item => `<td>${text(entry.row[item.index])}</td>`).join('')}</tr>`).join('')
+          ? rows.map(entry => `<tr>${indexes.map(item => `<td>${formatSeasonValue(item.column, entry.row[item.index])}</td>`).join('')}</tr>`).join('')
           : `<tr><td colspan="${indexes.length}">No published ONuBaseball ${type.toLowerCase()} statistics are available for this player.</td></tr>`;
       }
       document.querySelectorAll('[data-tab="season-stats"], [data-role], #player, #team').forEach(element => element.addEventListener('click', () => setTimeout(renderOnuSeasonStats, 120)));
