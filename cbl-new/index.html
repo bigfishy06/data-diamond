@@ -1012,5 +1012,29 @@
       const average=rows=>rows[0].map((_,index)=>rows.reduce((total,row)=>total+(Number.isFinite(row[index])?row[index]:0),0)/Math.max(rows.filter(row=>Number.isFinite(row[index])).length,1));
       try{const [batters,pitchers]=await Promise.all([fetch('data/pitches2026.json').then(r=>r.json()),fetch('data/pitchers2026.json').then(r=>r.json())]);const batterAverage=average([batterMetrics(batters.flatMap(player=>Array.isArray(player.scatter)?player.scatter:[]))]),pitcherAverage=average([pitcherMetrics(pitchers.flatMap(player=>pitcherUsagePoints(player)))]);function color(){const batter=activeRole()==='batter',baseline=batter?batterAverage:pitcherAverage,lower=batter?new Set([0,2,3,4]):new Set([5,6]);[...container.querySelectorAll('.game-analysis-metric')].forEach((card,index)=>{const value=parseFloat(card.querySelector('strong')?.textContent),base=baseline[index];if(!Number.isFinite(value)||!Number.isFinite(base))return;const diff=(value-base)*(lower.has(index)?-1:1),strength=Math.min(Math.abs(diff)/(index===6?15:12),1),target=diff>=0?[22,132,92]:[216,32,50],rgb=target.map(channel=>Math.round(255+(channel-255)*strength));card.querySelector('strong').style.setProperty('color',`rgb(${rgb.join(',')})`,'important')})}new MutationObserver(color).observe(container,{childList:true});color()}catch(error){}})();
   </script>
+  <script>
+    (async function(){
+      const lookup=new Map();
+      const text=await fetch('data/wrc-plus-2026.csv').then(response=>response.text()).catch(()=>null);
+      if(!text)return;
+      text.trim().split(/\r?\n/).slice(1).forEach(line=>{
+        const columns=line.split(',');
+        lookup.set(String(columns[0]||'').trim().replace(/\s+/g,' '),columns.at(-1));
+      });
+      function refreshWrcPlus(){
+        if(activeRole()!=='batter'||!state.current)return;
+        const labels=document.querySelectorAll('.metric .label'),values=document.querySelectorAll('.metric .value'),hints=document.querySelectorAll('.metric .hint');
+        const name=String(state.current.pitcher||'').trim().replace(/\s+/g,' ');
+        labels[0].textContent='wRC+';
+        values[0].textContent=lookup.get(name)??'—';
+        hints[0].textContent='Park-adjusted run creation';
+      }
+      const baseRefresh=refreshBatterMetricOrder;
+      refreshBatterMetricOrder=function(){baseRefresh();refreshWrcPlus()};
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(refreshWrcPlus,120)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshWrcPlus,120)));
+      setTimeout(refreshWrcPlus,2200);setTimeout(refreshWrcPlus,5500);
+    })();
+  </script>
 </body>
 </html>
