@@ -1007,6 +1007,34 @@
       const wholeSeasonStats = new Set(['GP','PA','AB','H','HR','RBI','BB','SO','SB','CS','GS','W','L','SV','SVO','R','ER']);
       const battingRates = new Set(['AVG','OBP','SLG','OPS']);
       const pitchingRates = new Set(['ERA','WHIP','FIP']);
+      const valueAt = (row, columns, column) => {
+        const index = columns.indexOf(column);
+        const value = index < 0 ? NaN : Number(String(row[index] ?? '').replace(/,/g, ''));
+        return Number.isFinite(value) ? value : NaN;
+      };
+      // ONuBaseball publishes OBP and SLG, but not the complete inputs for an
+      // official wOBA/wRC+ calculation. This league-relative estimate weights
+      // on-base ability more heavily than slugging and uses each table's own
+      // PA- and AB-weighted OUA averages. It is intentionally labelled "est.".
+      function estimatedWrcPlus(entry){
+        const { columns, row, table } = entry;
+        const pa = valueAt(row, columns, 'PA');
+        const obp = valueAt(row, columns, 'OBP');
+        const slg = valueAt(row, columns, 'SLG');
+        if (!(pa > 0) || !Number.isFinite(obp) || !Number.isFinite(slg)) return null;
+        let leaguePa = 0, leagueAb = 0, weightedObp = 0, weightedSlg = 0;
+        table.rows.forEach(leagueRow => {
+          const rowPa = valueAt(leagueRow, columns, 'PA');
+          const rowAb = valueAt(leagueRow, columns, 'AB');
+          const rowObp = valueAt(leagueRow, columns, 'OBP');
+          const rowSlg = valueAt(leagueRow, columns, 'SLG');
+          if (rowPa > 0 && Number.isFinite(rowObp)) { leaguePa += rowPa; weightedObp += rowPa * rowObp; }
+          if (rowAb > 0 && Number.isFinite(rowSlg)) { leagueAb += rowAb; weightedSlg += rowAb * rowSlg; }
+        });
+        const leagueOffense = leaguePa > 0 && leagueAb > 0 ? 1.8 * (weightedObp / leaguePa) + (weightedSlg / leagueAb) : NaN;
+        const playerOffense = 1.8 * obp + slg;
+        return leagueOffense > 0 ? Math.round((playerOffense / leagueOffense) * 100) : null;
+      }
       function formatSeasonValue(column, value){
         const cleaned = text(value);
         if (cleaned === '—') return cleaned;
@@ -1024,7 +1052,7 @@
         const name = $('player')?.value || state.current?.pitcher;
         const type = activeRole() === 'batter' ? 'Batting' : 'Pitching';
         const tables = data.tables.filter(table => table.type === type);
-        const rows = tables.flatMap(table => table.rows.map(row => ({columns: table.columns, row})))
+        const rows = tables.flatMap(table => table.rows.map(row => ({columns: table.columns, row, table})))
           .filter(entry => text(entry.row[2]).toLowerCase() === String(name || '').toLowerCase())
           .sort((a, b) => {
             const seasonA = Number.parseInt(text(a.row[1]), 10) || 0;
@@ -1038,10 +1066,11 @@
           : ['Season','Team','GP','GS','W','L','SV','IP','H','ER','BB','SO','ERA','WHIP']);
         const omit = new Set(['Crest','Number','Name']);
         const indexes = columns.map((column,index) => ({column,index})).filter(item => !omit.has(item.column));
-        $('seasonStatsNote').textContent = rows.length ? `ONuBaseball · ${rows.length} season${rows.length === 1 ? '' : 's'}` : 'No ONuBaseball season history found';
+        if (type === 'Batting') indexes.push({column:'wRC+ (est.)', index:null});
+        $('seasonStatsNote').textContent = rows.length ? `ONuBaseball · ${rows.length} season${rows.length === 1 ? '' : 's'} · wRC+ estimated from published OBP/SLG` : 'No ONuBaseball season history found';
         $('seasonStatsHead').innerHTML = `<tr>${indexes.map(item => `<th>${item.column}</th>`).join('')}</tr>`;
         $('seasonStatsBody').innerHTML = rows.length
-          ? rows.map(entry => `<tr>${indexes.map(item => `<td>${formatSeasonValue(item.column, entry.row[item.index])}</td>`).join('')}</tr>`).join('')
+          ? rows.map(entry => `<tr>${indexes.map(item => item.column === 'wRC+ (est.)' ? `<td>${estimatedWrcPlus(entry) ?? '—'}</td>` : `<td>${formatSeasonValue(item.column, entry.row[item.index])}</td>`).join('')}</tr>`).join('')
           : `<tr><td colspan="${indexes.length}">No published ONuBaseball ${type.toLowerCase()} statistics are available for this player.</td></tr>`;
       }
       document.querySelectorAll('[data-tab="season-stats"], [data-role], #player, #team').forEach(element => element.addEventListener('click', () => setTimeout(renderOnuSeasonStats, 120)));
