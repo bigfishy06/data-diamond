@@ -7,7 +7,10 @@
     (function () {
       try {
         var user = JSON.parse(localStorage.getItem("dd_user") || "null");
-        if (user && user.email) return;
+        if (user && user.email) {
+          window.location.replace("/cbl-new/index.html");
+          return;
+        }
       } catch (e) {}
       localStorage.setItem("dd_return_to", "/");
       window.location.replace("/login.html");
