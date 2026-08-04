@@ -72,126 +72,15 @@ datatable_form <- function(column_count) {
   )
 }
 
-# Use Chromote's managed headless-shell instead of the installed Chrome. The
-# installed browser is exiting immediately on this Windows machine; the managed
-# binary runs in its own profile and is downloaded only on the first run.
-tryCatch(
-  local_chrome_version(
-    "latest-stable",
-    binary = "chrome-headless-shell",
-    quiet = FALSE
-  ),
-  error = function(error) {
-    stop(
-      "Chromote could not download or prepare Chrome for Testing. ",
-      "Check your internet connection and run the script again. Original error: ",
-      error$message,
-      call. = FALSE
-    )
-  }
-)
-
-# Always create an isolated Chrome process. ChromoteSession$new() normally
-# reuses Chromote's default browser; after a failed run that default may point
-# to a target that has already been closed.
-chrome_paths <- c(
-  Sys.getenv("CHROMOTE_CHROME", unset = ""),
-  "C:/Program Files/Google/Chrome/Application/chrome.exe"
-)
-chrome_path <- chrome_paths[file.exists(chrome_paths)][1]
-if (is.na(chrome_path) || !nzchar(chrome_path)) {
-  stop(
-    "Chrome or Edge was not found. Set CHROMOTE_CHROME to the full path of chrome.exe, then run this script again.",
-    call. = FALSE
-  )
-}
-
-# chrome-headless-shell is the dedicated legacy headless binary. It must use
-# the matching "old" headless flag; forcing "new" makes it exit before the
-# local DevTools WebSocket can attach.
-options(chromote.timeout = 60, chromote.headless = "old")
-browser <- tryCatch(
-  Chromote$new(browser = Chrome$new(path = chrome_path)),
-  error = function(error) {
-    stop(
-      "Chromote could not start Chrome. Close any old Chromote Chrome windows, ",
-      "restart R, and run this script again. Original error: ", error$message,
-      call. = FALSE
-    )
-  }
-)
-
-session <- tryCatch(
-  browser$new_session(width = 1440, height = 1000),
-  error = function(error) {
-    try(browser$close(wait = FALSE), silent = TRUE)
-    stop("Chromote could not open a browser tab. Original error: ", error$message, call. = FALSE)
-  }
-)
-
-if (!session$is_active()) {
-  stop(
-    "Chromote opened a tab but it immediately closed. Restart R, close any Chrome windows ",
-    "started by Chromote, and run the script again.",
-    call. = FALSE
-  )
-}
-
-payloads <- character()
-cancel_ws_capture <- NULL
-
-attach_ws_capture <- function() {
-  cancel_ws_capture <<- session$Network$webSocketFrameReceived(
-    callback_ = function(event) {
-      payloads <<- c(payloads, decode_ws_payload(event))
-    }
-  )
-}
-
-# Chrome may detach the debugging session during startup while leaving the tab
-# open. Reattach to that same target and restore the WebSocket listener rather
-# than failing the import with `self$check_active()`.
-ensure_active_session <- function() {
-  if (session$is_active()) return(invisible(NULL))
-
-  session <<- tryCatch(
-    session$respawn(),
-    error = function(error) {
-      stop(
-        "Chrome closed the ONuBaseball tab before it could be controlled. ",
-        "Close Chrome, restart R, and run the script once more. Original error: ",
-        error$message,
-        call. = FALSE
-      )
-    }
-  )
-  attach_ws_capture()
-  invisible(NULL)
-}
-
-attach_ws_capture()
-
-on.exit({
-  if (exists("cancel_ws_capture", inherits = FALSE) && is.function(cancel_ws_capture)) {
-    try(cancel_ws_capture(), silent = TRUE)
-  }
-  if (exists("session", inherits = FALSE) && session$is_active()) {
-    try(session$close(wait_ = FALSE), silent = TRUE)
-  }
-  if (exists("browser", inherits = FALSE) && browser$is_active()) {
-    try(browser$close(wait = FALSE), silent = TRUE)
-  }
-}, add = TRUE)
-
-# go_to() waits for a dependable page load; Page$navigate() plus Sys.sleep()
-# can miss the Shiny connection that carries the DataTables endpoint.
-ensure_active_session()
+# Browser setup has been verified with the installed Chrome. Do not subscribe
+# to Network/WebSocket DevTools events here: that callback is what detaches
+# the session on this Windows setup. The table is read directly from the page.
+options(chromote.timeout = 60, chromote.headless = "new")
+session <- ChromoteSession$new(width = 1440, height = 1000)
 session$go_to(site)
 Sys.sleep(3)
-ensure_active_session()
 
 evaluate <- function(expression, await = FALSE) {
-  ensure_active_session()
   result <- session$Runtime$evaluate(
     expression = expression,
     awaitPromise = await,
@@ -201,7 +90,6 @@ evaluate <- function(expression, await = FALSE) {
 }
 
 activate_table <- function(season, stat_type) {
-  payloads <<- character()
   javascript <- sprintf(
     paste0(
       "Shiny.setInputValue('.clientdata_output_stats_hidden', false, {priority:'event'});",
@@ -215,27 +103,28 @@ activate_table <- function(season, stat_type) {
     toJSON(stat_type, auto_unbox = TRUE), toJSON(season, auto_unbox = TRUE)
   )
   evaluate(javascript)
-  for (attempt in seq_len(12)) {
-    Sys.sleep(0.5)
-    details <- table_details(payloads)
-    if (!is.null(details)) return(details)
+  for (attempt in seq_len(20)) {
+    Sys.sleep(0.75)
+    rendered <- evaluate(
+      paste0(
+        "(() => {",
+        "const table = document.querySelector('#stats table') || document.querySelector('table[id^=\\\"stats\\\"]');",
+        "if (!table || !window.jQuery || !jQuery.fn.DataTable.isDataTable(table)) return null;",
+        "const api = jQuery(table).DataTable();",
+        "if (api.page.len() !== 10000) { api.page.len(10000).draw(false); return null; }",
+        "const columns = api.columns().header().toArray().map(x => x.textContent.trim());",
+        "const rows = api.rows({search:'applied'}).data().toArray().map(row => Array.from(row, cell => String(cell).replace(/<[^>]*>/g, '').trim()));",
+        "return JSON.stringify({columns: columns, rows: rows});",
+        "})()"
+      )
+    )
+    if (is.null(rendered) || !nzchar(rendered)) next
+    parsed <- fromJSON(rendered, simplifyVector = FALSE)
+    if (length(parsed$columns) && length(parsed$rows)) {
+      return(list(columns = parsed$columns, rows = parsed$rows))
+    }
   }
   NULL
-}
-
-fetch_rows <- function(endpoint, columns) {
-  request_body <- datatable_form(length(columns))
-  javascript <- sprintf(
-    paste0(
-      "fetch(%s,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},body:%s})",
-      ".then(response=>response.text())"
-    ),
-    toJSON(endpoint, auto_unbox = TRUE), toJSON(request_body, auto_unbox = TRUE)
-  )
-  response <- evaluate(javascript, await = TRUE)
-  parsed <- fromJSON(response, simplifyVector = FALSE)
-  if (!is.null(parsed$error)) stop(parsed$error)
-  parsed$data %||% list()
 }
 
 tables <- list()
@@ -245,7 +134,7 @@ for (season in seasons) {
   for (stat_type in stat_types) {
     details <- activate_table(season, stat_type)
     if (is.null(details)) next
-    rows <- fetch_rows(details$endpoint, details$columns)
+    rows <- details$rows
     # The source returns the prior valid table for unavailable selections.
     if (length(rows) && as.character(rows[[1]][[2]]) != season) next
     tables[[length(tables) + 1L]] <- list(
