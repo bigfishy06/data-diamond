@@ -18,30 +18,31 @@
     #overview .dashboard-grid{grid-template-columns:1fr}body.is-batter #overview .dashboard-grid>article:nth-child(2){display:block}#overview .zone-layout{grid-template-columns:1fr}#overview .zone-svg{max-width:640px;margin:0 auto;display:block}#overview .zone-layout .legend{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}.ttp-meter>div:first-child{justify-content:center}.ttp-meter>div:first-child strong{display:block;text-align:center}.metric .hint,.profile .sample{display:none}
   .royal-mark{height:82px;width:82px;border:3px solid #d82032;border-radius:50%;display:grid;place-items:center;color:#d82032;font-size:28px;font-weight:900;letter-spacing:-.05em;box-shadow:inset 0 0 0 4px #102746,0 0 0 1px rgba(255,255,255,.25)}@media(max-width:560px){.royal-mark{width:64px;height:64px;font-size:22px}}</style>
   <style>
-    :root{--navy:#202a78;--navy2:#3446a3;--gold:#ffffff;--ice:#eef1fb;--paper:#f4f6fb;--ink:#161b3f;--muted:#66708d;--line:#d9deed}
-    body{background:linear-gradient(180deg,#eef1f9 0,#f8f9fc 240px);font-family:Inter,"Segoe UI",Arial,sans-serif;font-stretch:normal;line-height:1.4}
-    .site-header{background:linear-gradient(120deg,#151c58 0%,#202a78 55%,#3547a3 100%);border-bottom:5px solid #fff;box-shadow:0 8px 28px rgba(22,27,63,.18)}
-    .header-inner{min-height:126px}
-    .logo{width:auto;height:104px;aspect-ratio:396/473;object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 5px 8px rgba(0,0,0,.24))}
-    .wordmark small{color:#d9ddff;font-size:11px}
-    .wordmark strong{font-size:31px;font-weight:900;letter-spacing:.055em}
-    .wordmark em{color:#fff}
-    .header-note{border-left:1px solid rgba(255,255,255,.35);padding-left:22px;letter-spacing:.07em}
-    .header-note b{font-size:12px;letter-spacing:.16em}
-    .scouting-link{display:inline-block;margin-top:8px;color:#202a78;background:#fff;border-radius:3px;padding:6px 10px;text-decoration:none;font-size:10px;font-weight:900;letter-spacing:.11em}
-    .scouting-link:hover{background:#dfe3ff}
-    .control-bar{background:#fff;border:1px solid var(--line);border-top:4px solid var(--navy);padding:18px;border-radius:4px;box-shadow:0 8px 24px rgba(32,42,120,.07)}
-    .profile{padding-left:4px}
-    .profile .eyebrow{color:var(--navy2)}
-    .profile h1{letter-spacing:-.02em}
+    /* Brock Badgers visual system: navy foundation, red accents, clean field-report layout. */
+    :root{--navy:#102746;--navy2:#193a64;--gold:#d82032;--ice:#eef3f8;--paper:#f7f9fb;--ink:#172432;--muted:#657486;--line:#dce4ec}
+    body{background:var(--paper);font-family:Inter,Arial,sans-serif;line-height:1.4}
+    .site-header{background:var(--navy);border-bottom:5px solid var(--gold);box-shadow:none}
+    .header-inner{min-height:110px}
+    .logo{width:104px;height:90px;aspect-ratio:auto;object-fit:contain;flex:0 0 auto;filter:none}
+    .wordmark small{color:#c4d2df;font-size:10px}
+    .wordmark strong{font-size:28px;font-weight:800;letter-spacing:.06em}
+    .wordmark em{color:#ff5868}
+    .header-note{border-left:0;padding-left:0;letter-spacing:0}
+    .header-note b{font-size:13px;letter-spacing:0}
+    .scouting-link{display:inline-block;margin-top:8px;color:#fff;background:var(--navy);border-radius:3px;padding:6px 10px;text-decoration:none;font-size:10px;font-weight:900;letter-spacing:.11em}
+    .scouting-link:hover{background:var(--navy2)}
+    .control-bar{background:transparent;border:0;border-bottom:1px solid var(--line);padding:0 0 22px;border-radius:0;box-shadow:none}
+    .profile{padding-left:0}
+    .profile .eyebrow{color:var(--gold)}
+    .profile h1{letter-spacing:-.04em}
     .monogram{background:var(--navy);border-color:#fff}
-    .tabs{gap:0;background:#fff;border:1px solid var(--line);overflow-x:auto}
-    .tab{white-space:nowrap;padding:14px 17px}
-    .tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
-    .card,.metric{box-shadow:0 7px 20px rgba(32,42,120,.055)}
-    .metric.red{border-top-color:#7382ce}
-    .badgers-ribbon{background:#fff;color:var(--navy);font-size:11px;font-weight:900;letter-spacing:.22em;text-align:center;padding:7px 16px}
-    @media(max-width:560px){.header-inner{min-height:104px}.logo{width:auto;height:78px}.wordmark strong{font-size:21px}.badgers-ribbon{font-size:9px}}
+    .tabs{gap:23px;background:transparent;border:0;border-bottom:1px solid var(--line);overflow-x:auto}
+    .tab{white-space:nowrap;padding:12px 1px}
+    .tab.active{background:transparent;border-color:var(--gold);color:var(--navy)}
+    .card,.metric{box-shadow:none}
+    .metric.red{border-top-color:var(--gold)}
+    .badgers-ribbon{display:none}
+    @media(max-width:560px){.header-inner{min-height:90px}.logo{width:75px;height:70px}.wordmark strong{font-size:22px}}
   </style>
   <script>
     function includePitchTypeStatistic(type){
