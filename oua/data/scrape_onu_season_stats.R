@@ -72,21 +72,49 @@ datatable_form <- function(column_count) {
   )
 }
 
-browser <- Chromote$new()
-session <- browser$new_session()
+# Use ChromoteSession's supported constructor and loader.  Creating a
+# Chromote object and manually enabling Network caused Chrome 0.5+ to close
+# the fresh target on some Windows installations before the first command.
+# Event domains are enabled automatically when a callback is registered.
+session <- tryCatch(
+  ChromoteSession$new(width = 1440, height = 1000),
+  error = function(error) {
+    stop(
+      "Chromote could not open a Chrome tab. Close any old Chromote Chrome windows, ",
+      "restart R, and run this script again. Original error: ", error$message,
+      call. = FALSE
+    )
+  }
+)
+
+if (!session$is_active()) {
+  stop(
+    "Chromote opened a tab but it immediately closed. Restart R, close any Chrome windows ",
+    "started by Chromote, and run the script again.",
+    call. = FALSE
+  )
+}
+
 payloads <- character()
-session$Network$enable()
-session$Network$webSocketFrameReceived(function(event) {
-  payloads <<- c(payloads, decode_ws_payload(event))
-})
+cancel_ws_capture <- session$Network$webSocketFrameReceived(
+  callback_ = function(event) {
+    payloads <<- c(payloads, decode_ws_payload(event))
+  }
+)
 
 on.exit({
-  session$close()
-  browser$close()
+  if (exists("cancel_ws_capture", inherits = FALSE) && is.function(cancel_ws_capture)) {
+    cancel_ws_capture()
+  }
+  if (exists("session", inherits = FALSE) && session$is_active()) {
+    session$close()
+  }
 }, add = TRUE)
 
-session$Page$navigate(site)
-Sys.sleep(8)
+# go_to() waits for a dependable page load; Page$navigate() plus Sys.sleep()
+# can miss the Shiny connection that carries the DataTables endpoint.
+session$go_to(site)
+Sys.sleep(3)
 
 evaluate <- function(expression, await = FALSE) {
   result <- session$Runtime$evaluate(
