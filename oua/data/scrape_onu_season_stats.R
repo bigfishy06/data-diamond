@@ -106,7 +106,10 @@ if (is.na(chrome_path) || !nzchar(chrome_path)) {
   )
 }
 
-options(chromote.timeout = 30, chromote.headless = "new")
+# chrome-headless-shell is the dedicated legacy headless binary. It must use
+# the matching "old" headless flag; forcing "new" makes it exit before the
+# local DevTools WebSocket can attach.
+options(chromote.timeout = 60, chromote.headless = "old")
 browser <- tryCatch(
   Chromote$new(browser = Chrome$new(path = chrome_path)),
   error = function(error) {
