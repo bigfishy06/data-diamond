@@ -96,6 +96,26 @@ wOBA_2B  <- 1.247
 wOBA_3B  <- 1.578
 wOBA_HR  <- 2.031
 
+# wRC+ refresh settings -------------------------------------------------------
+# These season constants let the dashboard recalculate player wRC+ whenever
+# this script is run with a new datadiamond2026.csv upload.  Update the park
+# factors and league runs/PA only when the season's park-factor study is
+# refreshed; player results themselves are always calculated from the current
+# upload below.
+WRC_WOBA_SCALE <- 1.15
+WRC_LEAGUE_R_PER_PA <- 0.120
+WRC_PARK_FACTORS <- c(
+  "Barrie Baycats" = 90.2,
+  "Brantford Red Sox" = 107.6,
+  "Chatham-Kent Barnstormers" = 106.9,
+  "Guelph Royals" = 79.1,
+  "Hamilton Cardinals" = 74.7,
+  "Kitchener Panthers" = 135.1,
+  "London Majors" = 71.5,
+  "Toronto Maple Leafs" = 134.7,
+  "Welland Jackfish" = 99.3
+)
+
 # ── Classify outcomes ──────────────────────────────────────────────────────────
 pitches <- pitches %>%
   mutate(
@@ -278,6 +298,63 @@ summary_stats <- pitches %>%
   ) %>%
   select(-wOBA_num, -wOBA_den, -swings, -whiffs, -fp_pitches, -fp_swings,
          -batted_balls, -pull_balls, -str_balls, -oppo_balls, -spray_total)
+
+# â”€â”€ Current-season wRC+ export â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# Keep this beside the main summary calculation rather than as a separate
+# spreadsheet.  That prevents a stale wRC+ file when a newer pitch upload is
+# transformed for the dashboard.
+wrc_woba_numerator <- sum(
+  wOBA_BB  * (summary_stats$BB - summary_stats$IBB) +
+    wOBA_HBP * summary_stats$HBP +
+    wOBA_1B  * summary_stats$`1B` +
+    wOBA_2B  * summary_stats$`2B` +
+    wOBA_3B  * summary_stats$`3B` +
+    wOBA_HR  * summary_stats$HR,
+  na.rm = TRUE
+)
+wrc_woba_denominator <- sum(
+  summary_stats$AB + summary_stats$BB - summary_stats$IBB +
+    summary_stats$SF + summary_stats$HBP,
+  na.rm = TRUE
+)
+wrc_league_woba <- ifelse(wrc_woba_denominator > 0,
+                           wrc_woba_numerator / wrc_woba_denominator,
+                           NA_real_)
+
+wrc_plus_export <- summary_stats %>%
+  mutate(
+    Park_Factor = unname(WRC_PARK_FACTORS[batter_team]),
+    Park_Factor = ifelse(is.na(Park_Factor), 100, Park_Factor),
+    # A one-half park adjustment is used because a club plays roughly half of
+    # its schedule in its home environment.  Positive factors are hitter
+    # friendly and are adjusted downward; pitcher-friendly parks are adjusted
+    # upward, following the standard wRC+ direction.
+    park_adjustment = ((Park_Factor / 100) - 1) * WRC_LEAGUE_R_PER_PA * 0.5,
+    wRAA = ifelse(
+      is.finite(wOBA) & PA > 0,
+      ((wOBA - wrc_league_woba) / WRC_WOBA_SCALE) * PA,
+      NA_real_
+    ),
+    wRC_plus = ifelse(
+      PA > 0 & is.finite(wRAA),
+      round(((wRAA / PA + WRC_LEAGUE_R_PER_PA - park_adjustment) /
+               WRC_LEAGUE_R_PER_PA) * 100),
+      NA_real_
+    )
+  ) %>%
+  transmute(
+    Batter = batter,
+    Team = batter_team,
+    PA, AB, BB, IBB, HBP, `1B`, `2B`, `3B`, HR, SF, SacB,
+    wOBA = round(wOBA, 3),
+    Park_Factor = round(Park_Factor, 1),
+    wRC_plus = wRC_plus
+  ) %>%
+  arrange(Team, Batter)
+
+wrc_dashboard_path <-
+  "C:/Users/chris/Downloads/Guelph Training Files/data-diamond/cbl-new/data/wrc-plus-2026.csv"
+write.csv(wrc_plus_export, wrc_dashboard_path, row.names = FALSE, na = "")
 
 # ── Pitch mix ──────────────────────────────────────────────────────────────────
 pitch_mix <- pitches %>%
