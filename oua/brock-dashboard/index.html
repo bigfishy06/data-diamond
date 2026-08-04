@@ -1024,7 +1024,14 @@
         const type = activeRole() === 'batter' ? 'Batting' : 'Pitching';
         const tables = data.tables.filter(table => table.type === type);
         const rows = tables.flatMap(table => table.rows.map(row => ({columns: table.columns, row})))
-          .filter(entry => text(entry.row[2]).toLowerCase() === String(name || '').toLowerCase());
+          .filter(entry => text(entry.row[2]).toLowerCase() === String(name || '').toLowerCase())
+          .sort((a, b) => {
+            const seasonA = Number.parseInt(text(a.row[1]), 10) || 0;
+            const seasonB = Number.parseInt(text(b.row[1]), 10) || 0;
+            if (seasonA !== seasonB) return seasonB - seasonA;
+            // Regular season first, then the associated postseason event.
+            return text(a.row[1]).localeCompare(text(b.row[1]));
+          });
         const columns = rows[0]?.columns || (type === 'Batting'
           ? ['Season','Team','GP','PA','AB','H','HR','RBI','BB','SO','AVG','OBP','SLG','OPS','SB','CS']
           : ['Season','Team','GP','GS','W','L','SV','IP','H','ER','BB','SO','ERA','WHIP']);
