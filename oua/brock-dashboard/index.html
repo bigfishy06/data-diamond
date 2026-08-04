@@ -1055,36 +1055,51 @@
         const parsed = Number.parseFloat(value);
         return Number.isFinite(parsed) ? parsed : 0;
       };
-      let batting = [];
+      let seasonRows = [];
       try {
-        batting = await fetch('data/summary2026.json').then(response => response.json());
+        const source = await fetch('data/onu-season-stats.json').then(response => response.json());
+        seasonRows = (source.tables || [])
+          .filter(table => table.type === 'Batting' && /^\d{4}$/.test(String(table.season || '')))
+          .flatMap(table => (table.rows || []).map(values => {
+            const row = Object.fromEntries((table.columns || []).map((column, index) => [column, values[index]]));
+            row.season = Number.parseInt(row.Season || table.season, 10);
+            return row;
+          }))
+          .filter(row => number(row.PA) > 0 && number(row.AB) > 0);
       } catch (error) {
         return;
       }
-      const qualified = batting.filter(row => number(row.PA) > 0 && number(row.AB) > 0);
-      const sum = selector => qualified.reduce((total, row) => total + selector(row), 0);
-      const leagueObp = sum(row => number(row.H) + number(row.BB) + number(row.HBP)) /
-        Math.max(sum(row => number(row.AB) + number(row.BB) + number(row.HBP) + number(row.SF)), 1);
-      const leagueSlg = sum(row => number(row['1B']) + 2 * number(row['2B']) + 3 * number(row['3B']) + 4 * number(row.HR)) /
-        Math.max(sum(row => number(row.AB)), 1);
-      const byBatter = new Map(batting.map(row => [String(row.batter || '').trim().toLowerCase(), row]));
+      const byBatter = new Map();
+      seasonRows.sort((a, b) => b.season - a.season).forEach(row => {
+        const key = String(row.Name || '').trim().toLowerCase();
+        if (key && !byBatter.has(key)) byBatter.set(key, row);
+      });
+      const leagueRates = new Map();
+      function leagueFor(season) {
+        if (leagueRates.has(season)) return leagueRates.get(season);
+        const rows = seasonRows.filter(row => row.season === season);
+        const obp = rows.reduce((total, row) => total + number(row.OBP) * number(row.PA), 0) /
+          Math.max(rows.reduce((total, row) => total + number(row.PA), 0), 1);
+        const slg = rows.reduce((total, row) => total + number(row.SLG) * number(row.AB), 0) /
+          Math.max(rows.reduce((total, row) => total + number(row.AB), 0), 1);
+        const rates = {obp, slg};
+        leagueRates.set(season, rates);
+        return rates;
+      }
       const opsPlus = row => {
-        const obp = row ? (number(row.H) + number(row.BB) + number(row.HBP)) /
-          (number(row.AB) + number(row.BB) + number(row.HBP) + number(row.SF)) : NaN;
-        const slg = row ? (number(row['1B']) + 2 * number(row['2B']) + 3 * number(row['3B']) + 4 * number(row.HR)) /
-          number(row.AB) : NaN;
-        return Number.isFinite(obp) && Number.isFinite(slg) && leagueObp > 0 && leagueSlg > 0
-          ? Math.round(100 * (obp / leagueObp + slg / leagueSlg - 1)) : null;
+        const league = row ? leagueFor(row.season) : null;
+        return row && league && league.obp > 0 && league.slg > 0
+          ? Math.round(100 * (number(row.OBP) / league.obp + number(row.SLG) / league.slg - 1)) : null;
       };
-      const opsPlusValues = qualified.map(opsPlus).filter(Number.isFinite);
       const ordinal = value => {
         const lastTwo = value % 100;
         if (lastTwo >= 11 && lastTwo <= 13) return `${value}th`;
         return `${value}${({1: 'st', 2: 'nd', 3: 'rd'}[value % 10] || 'th')}`;
       };
 
-      function applyOpsPlusPercentile(value) {
+      function applyOpsPlusPercentile(value, season) {
         const card = document.querySelectorAll('.metric')[0];
+        const opsPlusValues = seasonRows.filter(row => row.season === season).map(opsPlus).filter(Number.isFinite);
         if (!card || !Number.isFinite(value) || !opsPlusValues.length) return;
         let badge = card.querySelector('.stat-percentile');
         if (!badge) {
@@ -1120,7 +1135,7 @@
         const zone = located.filter(point => point.in_zone);
         const outside = located.filter(point => !point.in_zone);
         const swings = points.filter(swing);
-        hints[0].textContent = 'League-normalized OPS';
+        hints[0].textContent = player ? `${player.season} OUA season` : 'OUA season stats';
         labels[1].textContent = 'IN-ZONE SWING%';
         labels[2].textContent = 'CHASE%';
         labels[3].textContent = 'WHIFF%';
@@ -1130,7 +1145,7 @@
         hints[1].textContent = 'Pitches in zone';
         hints[2].textContent = 'Pitches out of zone';
         hints[3].textContent = 'On swings';
-        applyOpsPlusPercentile(playerOpsPlus);
+        applyOpsPlusPercentile(playerOpsPlus, player?.season);
       }
 
       // Other dashboard refreshes call this shared function, so make OPS+ the persistent batter-card order.
