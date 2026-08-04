@@ -1068,6 +1068,39 @@
       const leagueSlg = sum(row => number(row['1B']) + 2 * number(row['2B']) + 3 * number(row['3B']) + 4 * number(row.HR)) /
         Math.max(sum(row => number(row.AB)), 1);
       const byBatter = new Map(batting.map(row => [String(row.batter || '').trim().toLowerCase(), row]));
+      const opsPlus = row => {
+        const obp = row ? (number(row.H) + number(row.BB) + number(row.HBP)) /
+          (number(row.AB) + number(row.BB) + number(row.HBP) + number(row.SF)) : NaN;
+        const slg = row ? (number(row['1B']) + 2 * number(row['2B']) + 3 * number(row['3B']) + 4 * number(row.HR)) /
+          number(row.AB) : NaN;
+        return Number.isFinite(obp) && Number.isFinite(slg) && leagueObp > 0 && leagueSlg > 0
+          ? Math.round(100 * (obp / leagueObp + slg / leagueSlg - 1)) : null;
+      };
+      const opsPlusValues = qualified.map(opsPlus).filter(Number.isFinite);
+      const ordinal = value => {
+        const lastTwo = value % 100;
+        if (lastTwo >= 11 && lastTwo <= 13) return `${value}th`;
+        return `${value}${({1: 'st', 2: 'nd', 3: 'rd'}[value % 10] || 'th')}`;
+      };
+
+      function applyOpsPlusPercentile(value) {
+        const card = document.querySelectorAll('.metric')[0];
+        if (!card || !Number.isFinite(value) || !opsPlusValues.length) return;
+        let badge = card.querySelector('.stat-percentile');
+        if (!badge) {
+          badge = document.createElement('span');
+          badge.className = 'stat-percentile';
+          card.appendChild(badge);
+        }
+        const percentile = Math.round(opsPlusValues.reduce((total, item) => total + (item < value ? 1 : item === value ? 0.5 : 0), 0) / opsPlusValues.length * 100);
+        const strength = Math.min(Math.abs(percentile - 50) / 50, 1);
+        const target = percentile >= 50 ? [22, 132, 92] : [216, 32, 50];
+        const color = target.map(channel => Math.round(255 + (channel - 255) * strength));
+        card.querySelector('.value').style.setProperty('color', `rgb(${color.join(',')})`, 'important');
+        card.style.setProperty('border-top-color', `rgb(${color.join(',')})`, 'important');
+        badge.classList.remove('is-hidden');
+        badge.textContent = `${ordinal(percentile)} pct.`;
+      }
 
       function refreshOpsPlus() {
         if (activeRole() !== 'batter' || !state.current) return;
@@ -1078,13 +1111,8 @@
         if (!labels[0] || !values[0]) return;
 
         labels[0].textContent = 'OPS+';
-        const obp = player ? (number(player.H) + number(player.BB) + number(player.HBP)) /
-          (number(player.AB) + number(player.BB) + number(player.HBP) + number(player.SF)) : 0;
-        const slg = player ? (number(player['1B']) + 2 * number(player['2B']) + 3 * number(player['3B']) + 4 * number(player.HR)) /
-          number(player.AB) : 0;
-        values[0].textContent = player && Number.isFinite(obp) && Number.isFinite(slg) && leagueObp > 0 && leagueSlg > 0
-          ? String(Math.round(100 * (obp / leagueObp + slg / leagueSlg - 1)))
-          : '—';
+        const playerOpsPlus = opsPlus(player);
+        values[0].textContent = Number.isFinite(playerOpsPlus) ? String(playerOpsPlus) : '—';
         const points = safePoints(state.current);
         const swing = point => swingOutcomes.has(point.outcome);
         const whiff = point => whiffOutcomes.has(point.outcome);
@@ -1102,12 +1130,13 @@
         hints[1].textContent = 'Pitches in zone';
         hints[2].textContent = 'Pitches out of zone';
         hints[3].textContent = 'On swings';
+        applyOpsPlusPercentile(playerOpsPlus);
       }
 
       // Other dashboard refreshes call this shared function, so make OPS+ the persistent batter-card order.
       refreshBatterMetricOrder = refreshOpsPlus;
-      ['player', 'team'].forEach(id => $(id).addEventListener('change', () => setTimeout(refreshOpsPlus, 80)));
-      document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => setTimeout(refreshOpsPlus, 80)));
+      ['player', 'team'].forEach(id => $(id).addEventListener('change', () => setTimeout(refreshOpsPlus, 120)));
+      document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => setTimeout(refreshOpsPlus, 120)));
       setTimeout(refreshOpsPlus, 2200);
       setTimeout(refreshOpsPlus, 5200);
     })();
