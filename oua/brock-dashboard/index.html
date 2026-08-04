@@ -193,7 +193,7 @@
     document.querySelector('[data-tab="results"]')?.remove();$('results')?.remove();
   </script>
   <script>
-    function refreshBatterMetricOrder(){const p=state.current;if(!p||activeRole()!=='batter')return;const pts=safePoints(p),swings=pts.filter(x=>swingOutcomes.has(x.outcome)),first=pts.filter(x=>String(x.count||'').replace(/^'/,'')==='0-0'),firstSwings=first.filter(x=>swingOutcomes.has(x.outcome)),zone=pts.filter(x=>x.in_zone),zoneSwings=zone.filter(x=>swingOutcomes.has(x.outcome)),out=pts.filter(x=>!x.in_zone),outSwings=out.filter(x=>swingOutcomes.has(x.outcome)),whiffs=pts.filter(x=>whiffOutcomes.has(x.outcome)),labels=document.querySelectorAll('.metric .label'),values=document.querySelectorAll('.metric .value');labels[0].textContent='FPS%';labels[1].textContent='IN-ZONE SWING%';labels[2].textContent='CHASE%';labels[3].textContent='WHIFF%';values[0].textContent=pct(first.length?firstSwings.length/first.length*100:null);values[1].textContent=pct(zone.length?zoneSwings.length/zone.length*100:null);values[2].textContent=pct(out.length?outSwings.length/out.length*100:null);values[3].textContent=pct(swings.length?whiffs.length/swings.length*100:null)}
+    function refreshBatterMetricOrder(){const p=state.current;if(!p||activeRole()!=='batter')return;const pts=safePoints(p),swings=pts.filter(x=>swingOutcomes.has(x.outcome)),zone=pts.filter(x=>x.in_zone),zoneSwings=zone.filter(x=>swingOutcomes.has(x.outcome)),out=pts.filter(x=>!x.in_zone),outSwings=out.filter(x=>swingOutcomes.has(x.outcome)),whiffs=pts.filter(x=>whiffOutcomes.has(x.outcome)),labels=document.querySelectorAll('.metric .label'),values=document.querySelectorAll('.metric .value');labels[0].textContent='OPS+';labels[1].textContent='IN-ZONE SWING%';labels[2].textContent='CHASE%';labels[3].textContent='WHIFF%';values[1].textContent=pct(zone.length?zoneSwings.length/zone.length*100:null);values[2].textContent=pct(out.length?outSwings.length/out.length*100:null);values[3].textContent=pct(swings.length?whiffs.length/swings.length*100:null)}
     ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(refreshBatterMetricOrder,0)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshBatterMetricOrder,0)));setTimeout(refreshBatterMetricOrder,1100);
   </script>
   <script>
@@ -630,8 +630,7 @@
         const player=state.current;
         if(!player||activeRole()!=='batter')return;
         const all=safePoints(player),located=all.filter(hasZoneLocation),swings=all.filter(point=>swingOutcomes.has(point.outcome)),first=all.filter(point=>String(point.count||'').replace(/^'/,'')==='0-0'),firstSwings=first.filter(point=>swingOutcomes.has(point.outcome)),zone=located.filter(point=>point.in_zone),zoneSwings=zone.filter(point=>swingOutcomes.has(point.outcome)),outside=located.filter(point=>!point.in_zone),chases=outside.filter(point=>swingOutcomes.has(point.outcome)),whiffs=all.filter(point=>whiffOutcomes.has(point.outcome)),labels=document.querySelectorAll('.metric .label'),values=document.querySelectorAll('.metric .value');
-        labels[0].textContent='FPS%';labels[1].textContent='IN-ZONE SWING%';labels[2].textContent='CHASE%';labels[3].textContent='WHIFF%';
-        values[0].textContent=pct(first.length?firstSwings.length/first.length*100:null);
+        labels[0].textContent='OPS+';labels[1].textContent='IN-ZONE SWING%';labels[2].textContent='CHASE%';labels[3].textContent='WHIFF%';
         values[1].textContent=pct(zone.length?zoneSwings.length/zone.length*100:null);
         values[2].textContent=pct(outside.length?chases.length/outside.length*100:null);
         values[3].textContent=pct(swings.length?whiffs.length/swings.length*100:null);
