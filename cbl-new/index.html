@@ -995,6 +995,15 @@
   </style>
   <style>.game-analysis-metric{border-top:1px solid var(--line)!important}.game-analysis-metric .game-stat-percentile{display:none!important}</style>
   <script>
+    (function(){
+      const neutralizeProfileBorders=()=>document.querySelectorAll('.metrics > .metric').forEach(card=>card.style.setProperty('border-top','1px solid var(--line)','important'));
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(neutralizeProfileBorders,100)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(neutralizeProfileBorders,100)));
+      setTimeout(neutralizeProfileBorders,2500);
+      setTimeout(neutralizeProfileBorders,5500);
+    })();
+  </script>
+  <script>
     (async function(){
       const container=$('gameAnalysisMetrics'),rate=(a,b)=>b?a/b*100:null;
       const swing=point=>swingOutcomes.has(point.outcome),whiff=point=>whiffOutcomes.has(point.outcome);
