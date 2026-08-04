@@ -1098,15 +1098,19 @@
 
       function applyOpsPlusPercentile(value, season) {
         const card = document.querySelectorAll('.metric')[0];
-        const opsPlusValues = seasonRows.filter(row => row.season === season).map(opsPlus).filter(Number.isFinite);
-        if (!card || !Number.isFinite(value) || !opsPlusValues.length) return;
+        const comparisonPool = seasonRows.filter(row => row.season === season && Number.isFinite(opsPlus(row)));
+        const totalPa = comparisonPool.reduce((total, row) => total + number(row.PA), 0);
+        if (!card || !Number.isFinite(value) || !comparisonPool.length || !totalPa) return;
         let badge = card.querySelector('.stat-percentile');
         if (!badge) {
           badge = document.createElement('span');
           badge.className = 'stat-percentile';
           card.appendChild(badge);
         }
-        const percentile = Math.round(opsPlusValues.reduce((total, item) => total + (item < value ? 1 : item === value ? 0.5 : 0), 0) / opsPlusValues.length * 100);
+        const percentile = Math.round(comparisonPool.reduce((total, row) => {
+          const item = opsPlus(row);
+          return total + (item < value ? number(row.PA) : item === value ? number(row.PA) * 0.5 : 0);
+        }, 0) / totalPa * 100);
         const strength = Math.min(Math.abs(percentile - 50) / 50, 1);
         const target = percentile >= 50 ? [22, 132, 92] : [216, 32, 50];
         const color = target.map(channel => Math.round(255 + (channel - 255) * strength));
