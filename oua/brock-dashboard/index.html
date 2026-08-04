@@ -998,5 +998,32 @@
       },50);
     })();
   </script>
+  <script>
+    (async function(){
+      const data = await fetch('data/onu-season-stats.json').then(response => response.json()).catch(() => null);
+      if (!data?.tables) return;
+      const text = value => value == null || value === '' ? '—' : String(value).replace(/<[^>]*>/g, '').trim();
+      function renderOnuSeasonStats(){
+        const name = $('player')?.value || state.current?.pitcher;
+        const type = activeRole() === 'batter' ? 'Batting' : 'Pitching';
+        const tables = data.tables.filter(table => table.type === type);
+        const rows = tables.flatMap(table => table.rows.map(row => ({columns: table.columns, row})))
+          .filter(entry => text(entry.row[2]).toLowerCase() === String(name || '').toLowerCase());
+        const columns = rows[0]?.columns || (type === 'Batting'
+          ? ['Season','Team','GP','PA','AB','H','HR','RBI','BB','SO','AVG','OBP','SLG','OPS','SB','CS']
+          : ['Season','Team','GP','GS','W','L','SV','IP','H','ER','BB','SO','ERA','WHIP']);
+        const omit = new Set(['Crest','Number','Name']);
+        const indexes = columns.map((column,index) => ({column,index})).filter(item => !omit.has(item.column));
+        $('seasonStatsNote').textContent = rows.length ? `ONuBaseball · ${rows.length} season${rows.length === 1 ? '' : 's'}` : 'No ONuBaseball season history found';
+        $('seasonStatsHead').innerHTML = `<tr>${indexes.map(item => `<th>${item.column}</th>`).join('')}</tr>`;
+        $('seasonStatsBody').innerHTML = rows.length
+          ? rows.map(entry => `<tr>${indexes.map(item => `<td>${text(entry.row[item.index])}</td>`).join('')}</tr>`).join('')
+          : `<tr><td colspan="${indexes.length}">No published ONuBaseball ${type.toLowerCase()} statistics are available for this player.</td></tr>`;
+      }
+      document.querySelectorAll('[data-tab="season-stats"], [data-role], #player, #team').forEach(element => element.addEventListener('click', () => setTimeout(renderOnuSeasonStats, 120)));
+      document.querySelectorAll('#player, #team').forEach(element => element.addEventListener('change', () => setTimeout(renderOnuSeasonStats, 120)));
+      setTimeout(renderOnuSeasonStats, 1800);
+    })();
+  </script>
 </body>
 </html>
