@@ -501,6 +501,36 @@
     { id:'wel', abbr:'WEL', name:'Welland Jackfish',           color:'#00703C' }
   ];
 
+  // Keep the individual batter reports on the same current wRC+ source as
+  // the player dashboard.  The record is keyed independently here because
+  // the scouting reports load before the legacy data script finishes.
+  var WRC_PLUS_RECORDS = [];
+  var WRC_PLUS_BY_BATTER = {};
+  function wrcPlayerKey(name) { return String(name || '').trim().replace(/\s+/g, ' ').toLowerCase(); }
+  function parseSimpleCsvLine(line) {
+    return line.split(',').map(function(value) {
+      return value.trim().replace(/^"(.*)"$/, '$1').replace(/""/g, '"');
+    });
+  }
+  function wrcRecordFor(name) { return WRC_PLUS_BY_BATTER[wrcPlayerKey(name)] || null; }
+  function wrcPercentile(record) {
+    if (!record || !WRC_PLUS_RECORDS.length) return null;
+    var totalPA = WRC_PLUS_RECORDS.reduce(function(total, row) { return total + row.pa; }, 0);
+    if (!totalPA) return null;
+    return WRC_PLUS_RECORDS.reduce(function(total, row) {
+      return total + (row.value < record.value ? row.pa : (row.value === record.value ? row.pa * .5 : 0));
+    }, 0) / totalPA * 100;
+  }
+  fetch('data/wrc-plus-2026.csv').then(function(response) { return response.text(); }).then(function(text) {
+    text.trim().split(/\r?\n/).slice(1).forEach(function(line) {
+      var columns = parseSimpleCsvLine(line);
+      var record = { pa: Number(columns[2]) || 0, value: Number(columns[columns.length - 1]) };
+      if (!columns[0] || !isFinite(record.value) || record.pa <= 0) return;
+      WRC_PLUS_RECORDS.push(record);
+      WRC_PLUS_BY_BATTER[wrcPlayerKey(columns[0])] = record;
+    });
+  }).catch(function() {});
+
   const SCOUTING_ROSTER_2025_CSV = `Player,Team
 Adam Odd,Barrie Baycats
 Adam Thuss,London Majors
@@ -1703,7 +1733,7 @@ Zane Skansi,Kitchener Panthers`;
   function reportMetricColor(p){return p==null?'#ffffff':p>=67?'#72c2aa':p<=33?'#ef8f96':'#ffffff';}
   function drawPercentileBoxes(d,stats,y){
     var bw=CPW/stats.length;
-    stats.forEach(function(s,i){var x=ML+i*bw,c=hx(s.neutral?'#000000':reportMetricColor(s.pct));d.setFillColor(255,255,255);d.rect(x+.7,y,bw-1.4,19,'F');d.setDrawColor(207,213,226);d.setLineWidth(.45);d.rect(x+.7,y,bw-1.4,19,'S');d.setFillColor(i===1?112:32,i===1?132:42,i===1?207:120);d.rect(x+.7,y,bw-1.4,1.4,'F');d.setFont('helvetica','bold');d.setFontSize(6.2);st(d,CO.dim);d.text(s.label,x+3,y+5.5);d.setFontSize(5.7);d.text(reportOrdinal(s.pct),x+bw-3,y+5.5,{align:'right'});d.setFontSize(13);if(!s.neutral){d.setTextColor(24,34,54);[[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(s.display,x+3+o[0],y+14+o[1]);});}d.setTextColor(c[0],c[1],c[2]);d.text(s.display,x+3,y+14);});
+    stats.forEach(function(s,i){var x=ML+i*bw,c=hx(s.neutral?'#000000':reportMetricColor(s.pct));d.setFillColor(255,255,255);d.rect(x+.7,y,bw-1.4,19,'F');d.setDrawColor(207,213,226);d.setLineWidth(.45);d.rect(x+.7,y,bw-1.4,19,'S');d.setFont('helvetica','bold');d.setFontSize(6.2);st(d,CO.dim);d.text(s.label,x+3,y+5.5);d.setFontSize(5.7);d.text(reportOrdinal(s.pct),x+bw-3,y+5.5,{align:'right'});d.setFontSize(13);if(!s.neutral){d.setTextColor(24,34,54);[[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(s.display,x+3+o[0],y+14+o[1]);});}d.setTextColor(c[0],c[1],c[2]);d.text(s.display,x+3,y+14);});
     return y+21;
   }
   function drawSec(d,text,y){
@@ -2156,8 +2186,9 @@ Zane Skansi,Kitchener Panthers`;
     var sbVal=_iblSB?fN(_iblSB.SB):(s.SB!=null?fN(s.SB):(s.stolen_bases!=null?fN(s.stolen_bases):'—'));
     function batterMetrics(pts,summary){pts=pts||[];var located=pts.filter(hasPitchLocation),inz=located.filter(function(p){return !!p.in_zone;}),outz=located.filter(function(p){return !p.in_zone;}),swings=pts.filter(reportIsSwingOutcome),firstPitches=pts.filter(function(p){return String(p.count||'').replace(/^'/,'')==='0-0';}),first=firstPitches.length?firstPitches.filter(reportIsSwingOutcome).length/firstPitches.length*100:null;return{fps:first,iz:inz.length?inz.filter(reportIsSwingOutcome).length/inz.length*100:null,chase:outz.length?outz.filter(reportIsSwingOutcome).length/outz.length*100:null,whiff:swings.length?swings.filter(reportIsWhiffOutcome).length/swings.length*100:null};}
     var bm=batterMetrics(allSc,s),batterLeague=(DATA.pitches||[]).map(function(bp){var bs=(DATA.summary||[]).find(function(row){return normRosterName(row.batter||row.player)===normRosterName(bp.batter);})||{};return batterMetrics(bp.scatter||[],bs);});
+    var wrcRecord = selSeason === '2026' ? wrcRecordFor(player.name) : null;
     y=drawPercentileBoxes(d,[
-      {label:'FP SWING%',display:bm.fps==null?'—':f1(bm.fps)+'%',pct:reportPercentile(bm.fps,batterLeague.map(function(m){return m.fps;}),false),neutral:true},
+      {label:'wRC+',display:wrcRecord ? String(wrcRecord.value) : '—',pct:wrcPercentile(wrcRecord)},
       {label:'IN-ZONE SWING%',display:bm.iz==null?'—':f1(bm.iz)+'%',pct:reportPercentile(bm.iz,batterLeague.map(function(m){return m.iz;}),true)},
       {label:'CHASE%',display:bm.chase==null?'—':f1(bm.chase)+'%',pct:reportPercentile(bm.chase,batterLeague.map(function(m){return m.chase;}),false)},
       {label:'WHIFF%',display:bm.whiff==null?'—':f1(bm.whiff)+'%',pct:reportPercentile(bm.whiff,batterLeague.map(function(m){return m.whiff;}),false)}
