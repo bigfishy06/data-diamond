@@ -1115,7 +1115,6 @@
         const target = percentile >= 50 ? [22, 132, 92] : [216, 32, 50];
         const color = target.map(channel => Math.round(255 + (channel - 255) * strength));
         card.querySelector('.value').style.setProperty('color', `rgb(${color.join(',')})`, 'important');
-        card.style.setProperty('border-top-color', `rgb(${color.join(',')})`, 'important');
         badge.classList.remove('is-hidden');
         badge.textContent = `${ordinal(percentile)} pct.`;
       }
@@ -1159,5 +1158,12 @@
       setTimeout(refreshOpsPlus, 5200);
     })();
   </script>
+  <style>
+    /* Keep the four profile cards neutral; performance colour stays on the number only. */
+    .metrics .metric,
+    .metrics .metric.red,
+    .metrics .metric.stat-green,
+    .metrics .metric.stat-red { border-top:1px solid var(--line) !important; }
+  </style>
 </body>
 </html>
