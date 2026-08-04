@@ -117,11 +117,38 @@ if (!session$is_active()) {
 }
 
 payloads <- character()
-cancel_ws_capture <- session$Network$webSocketFrameReceived(
-  callback_ = function(event) {
-    payloads <<- c(payloads, decode_ws_payload(event))
-  }
-)
+cancel_ws_capture <- NULL
+
+attach_ws_capture <- function() {
+  cancel_ws_capture <<- session$Network$webSocketFrameReceived(
+    callback_ = function(event) {
+      payloads <<- c(payloads, decode_ws_payload(event))
+    }
+  )
+}
+
+# Chrome may detach the debugging session during startup while leaving the tab
+# open. Reattach to that same target and restore the WebSocket listener rather
+# than failing the import with `self$check_active()`.
+ensure_active_session <- function() {
+  if (session$is_active()) return(invisible(NULL))
+
+  session <<- tryCatch(
+    session$respawn(),
+    error = function(error) {
+      stop(
+        "Chrome closed the ONuBaseball tab before it could be controlled. ",
+        "Close Chrome, restart R, and run the script once more. Original error: ",
+        error$message,
+        call. = FALSE
+      )
+    }
+  )
+  attach_ws_capture()
+  invisible(NULL)
+}
+
+attach_ws_capture()
 
 on.exit({
   if (exists("cancel_ws_capture", inherits = FALSE) && is.function(cancel_ws_capture)) {
@@ -137,10 +164,13 @@ on.exit({
 
 # go_to() waits for a dependable page load; Page$navigate() plus Sys.sleep()
 # can miss the Shiny connection that carries the DataTables endpoint.
+ensure_active_session()
 session$go_to(site)
 Sys.sleep(3)
+ensure_active_session()
 
 evaluate <- function(expression, await = FALSE) {
+  ensure_active_session()
   result <- session$Runtime$evaluate(
     expression = expression,
     awaitPromise = await,
