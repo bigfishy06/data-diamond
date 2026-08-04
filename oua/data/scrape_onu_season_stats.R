@@ -77,10 +77,16 @@ datatable_form <- function(column_count) {
 # the session on this Windows setup. The table is read directly from the page.
 options(chromote.timeout = 60, chromote.headless = "new")
 session <- ChromoteSession$new(width = 1440, height = 1000)
-# ONuBaseball is a persistent Shiny app. go_to() waits for the Page load event
-# to be disabled again, but the app maintains connections after it renders.
-# Navigate directly and give Shiny time to initialise instead.
-session$Page$navigate(site)
+# ONuBaseball is a persistent Shiny app. Its DevTools Page.navigate command
+# can time out even though the page is reachable, so navigate through the
+# already-active JavaScript runtime instead.
+session$Runtime$evaluate(
+  expression = sprintf(
+    "setTimeout(() => window.location.assign(%s), 0); 'navigation scheduled'",
+    toJSON(site, auto_unbox = TRUE)
+  ),
+  returnByValue = TRUE
+)
 Sys.sleep(8)
 
 evaluate <- function(expression, await = FALSE) {
