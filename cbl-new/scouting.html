@@ -2502,7 +2502,7 @@ Zane Skansi,Kitchener Panthers`;
         d.text(info.rec==='NONE'?'NO SHIFT':'SHIFT: '+info.rec,cardX+shiftCardW/2,y+10.5,{align:'center'});
         var lineX=cardX+3,lineY=y+14,lineW=shiftCardW-6,lineH=6,lineOffset=0;
         if(info.total){
-          info.outcomes.forEach(function(outcome){
+          info.outcomes.slice().sort(function(a,b){return b.rate-a.rate;}).forEach(function(outcome){
             var segmentW=lineW*outcome.rate/100,oc=hx(outcome.color),segmentX=lineX+lineOffset;
             d.setFillColor(oc[0],oc[1],oc[2]);d.rect(segmentX,lineY,segmentW,lineH,'F');
             if(segmentW>=14){d.setFont('helvetica','bold');d.setFontSize(4.3);d.setTextColor(255,255,255);d.text(outcome.label+' '+f1(outcome.rate)+'%',segmentX+segmentW/2,lineY+4.1,{align:'center'});}
@@ -3635,18 +3635,24 @@ Zane Skansi,Kitchener Panthers`;
           ['K%',bm.k,reportPercentile(bm.k,batterLeague.k,false)],
           ['BB%',bm.bb,reportPercentile(bm.bb,batterLeague.bb,true)]
         ];
-        var sprayRows=sc.filter(function(p){return p.spray}),sprayCounts={Pull:0,Straightaway:0,'Opposite Field':0};
-        sprayRows.forEach(function(p){if(Object.prototype.hasOwnProperty.call(sprayCounts,p.spray))sprayCounts[p.spray]++});
-        var shiftKey=Object.keys(sprayCounts).sort(function(a,b){return sprayCounts[b]-sprayCounts[a]})[0],shiftRate=sprayRows.length?sprayCounts[shiftKey]/sprayRows.length*100:0;
-        var shiftText=sprayRows.length>=5&&shiftRate>=40?(shiftKey==='Opposite Field'?'OPPO':shiftKey==='Straightaway'?'STRAIGHT':'PULL'):'NONE';
-        var shiftColor=shiftText==='PULL'?'#ef8f96':shiftText==='OPPO'?'#60a5fa':shiftText==='STRAIGHT'?'#f5a00a':'#ffffff';
-        bvals.push(['SHIFT',shiftText,null,shiftColor]);
-        var bx=margin+4,bw=22.6;
+        function summaryShiftGroup(point){var type=reportPitchTypeBucket(point);return type==='Fastball'||type==='Sinker'||type==='Cutter'?'FB':'OS'}
+        function summaryShift(group){
+          var rows=sc.filter(function(point){return point.spray&&summaryShiftGroup(point)===group}),counts={Pull:0,Straightaway:0,'Opposite Field':0};
+          rows.forEach(function(point){if(Object.prototype.hasOwnProperty.call(counts,point.spray))counts[point.spray]++});
+          var total=counts.Pull+counts.Straightaway+counts['Opposite Field'];
+          var key=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a]})[0],rate=total?counts[key]/total*100:0;
+          var recommendation=total>=5&&rate>=40?(key==='Opposite Field'?'OPPO':key==='Straightaway'?'STRAIGHT':'PULL'):'NONE';
+          return{text:recommendation,color:recommendation==='PULL'?'#ef8f96':recommendation==='OPPO'?'#60a5fa':recommendation==='STRAIGHT'?'#f5a00a':'#ffffff'};
+        }
+        var fbShift=summaryShift('FB'),osShift=summaryShift('OS');
+        bvals.push(['SHIFT vs FB',fbShift.text,null,fbShift.color,true]);
+        bvals.push(['SHIFT vs OS',osShift.text,null,osShift.color,true]);
+        var bx=margin+4,bw=158.2/bvals.length;
         bvals.forEach(function(v,i){
           d.setDrawColor(45,58,78);d.setLineWidth(.15);d.rect(bx-1,y+7,bw,15,'S');
-          d.setFont('helvetica','bold');d.setFontSize(5.8);d.setTextColor(22,43,82);d.text(v[0],bx,y+11);
-          var text=i===bvals.length-1?String(v[1]):v[1]==null?'-':Number(v[1]).toFixed(1)+'%',bc=hx(v[3]||reportMetricColor(v[2]));
-          d.setFontSize(i===bvals.length-1?9.2:11.2);if(i!==0){d.setTextColor(0,0,0);[[-.24,0],[.24,0],[0,-.24],[0,.24]].forEach(function(o){d.text(text,bx+o[0],y+19+o[1])});}
+          d.setFont('helvetica','bold');d.setFontSize(v[4]?4.7:5.5);d.setTextColor(22,43,82);d.text(v[0],bx,y+11);
+          var text=v[4]?String(v[1]):v[1]==null?'-':Number(v[1]).toFixed(1)+'%',bc=hx(v[3]||reportMetricColor(v[2]));
+          d.setFontSize(v[4]?8:10.2);if(i!==0){d.setTextColor(0,0,0);[[-.24,0],[.24,0],[0,-.24],[0,.24]].forEach(function(o){d.text(text,bx+o[0],y+19+o[1])});}
           d.setTextColor(bc[0],bc[1],bc[2]);d.text(text,bx,y+19);bx+=bw;
         });
         var countRows=['AHEAD','EVEN','BEHIND'].map(function(label,group){
