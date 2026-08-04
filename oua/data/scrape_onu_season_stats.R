@@ -72,13 +72,31 @@ datatable_form <- function(column_count) {
   )
 }
 
+# Use Chromote's managed headless-shell instead of the installed Chrome. The
+# installed browser is exiting immediately on this Windows machine; the managed
+# binary runs in its own profile and is downloaded only on the first run.
+tryCatch(
+  local_chrome_version(
+    "latest-stable",
+    binary = "chrome-headless-shell",
+    quiet = FALSE
+  ),
+  error = function(error) {
+    stop(
+      "Chromote could not download or prepare Chrome for Testing. ",
+      "Check your internet connection and run the script again. Original error: ",
+      error$message,
+      call. = FALSE
+    )
+  }
+)
+
 # Always create an isolated Chrome process. ChromoteSession$new() normally
 # reuses Chromote's default browser; after a failed run that default may point
 # to a target that has already been closed.
 chrome_paths <- c(
   Sys.getenv("CHROMOTE_CHROME", unset = ""),
-  "C:/Program Files/Google/Chrome/Application/chrome.exe",
-  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+  "C:/Program Files/Google/Chrome/Application/chrome.exe"
 )
 chrome_path <- chrome_paths[file.exists(chrome_paths)][1]
 if (is.na(chrome_path) || !nzchar(chrome_path)) {
