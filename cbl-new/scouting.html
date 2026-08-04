@@ -2466,35 +2466,56 @@ Zane Skansi,Kitchener Panthers`;
     if((hasSpray||_pitchRows.length)&&PH-8-y-4<65){d.addPage();drawBg(d);y=MT+8;}
     if(hasSpray){
       y=drawSec(d,'Shift',y);
-      var pullRate=pullC2/spTot2*100,straightRate=strC3/spTot2*100,oppoRate=oppC2/spTot2*100;
-      var dominantShift=[
-        {label:'PULL',rate:pullRate,color:'#f87171'},
-        {label:'STRAIGHT',rate:straightRate,color:'#FFB81C'},
-        {label:'OPPO',rate:oppoRate,color:'#60a5fa'}
-      ].sort(function(a,b){return b.rate-a.rate;})[0];
-      var shiftRec=spTot2>=5&&dominantShift.rate>=40?dominantShift.label:'NONE';
-      var shiftColor=shiftRec==='NONE'?'#888888':dominantShift.color;
-      var shc=hx(shiftColor);
-      var rankedShift=[
-        {label:'PULL',rate:pullRate,color:'#f87171'},
-        {label:'STRAIGHT',rate:straightRate,color:'#FFB81C'},
-        {label:'OPPO',rate:oppoRate,color:'#60a5fa'}
-      ].sort(function(a,b){return a.rate-b.rate;});
-      d.setFillColor(245,247,251);d.rect(ML,y,CPW,20,'F');
-      d.setFillColor(shc[0],shc[1],shc[2]);d.rect(ML,y,CPW,2.2,'F');
-      d.setDrawColor(shc[0],shc[1],shc[2]);d.setLineWidth(.35);d.rect(ML,y,CPW,20,'S');
-      d.setFont('helvetica','bold');d.setFontSize(7.5);d.setTextColor(shc[0],shc[1],shc[2]);
-      d.text(shiftRec==='NONE'?'NO SHIFT':'SHIFT: '+shiftRec,ML+CPW/2,y+6,{align:'center'});
-      var shiftLineX=ML+5,shiftLineY=y+10,shiftLineW=CPW-10,shiftLineH=6,shiftOffset=0;
-      rankedShift.forEach(function(outcome){
-        var segmentW=shiftLineW*outcome.rate/100,oc=hx(outcome.color),segmentX=shiftLineX+shiftOffset;
-        d.setFillColor(oc[0],oc[1],oc[2]);d.rect(segmentX,shiftLineY,segmentW,shiftLineH,'F');
-        d.setFont('helvetica','bold');d.setFontSize(5.3);d.setTextColor(255,255,255);
-        d.text(outcome.label+' '+f1(outcome.rate)+'%',segmentX+segmentW/2,shiftLineY+4.1,{align:'center'});
-        shiftOffset+=segmentW;
+      function batterShiftPitchGroup(p){
+        var type=reportPitchTypeBucket(p);
+        if(type==='Fastball'||type==='Sinker'||type==='Cutter')return'FB';
+        return'OS';
+      }
+      function batterShiftData(group){
+        var rows=allSc2.filter(function(p){return p.spray&&batterShiftPitchGroup(p)===group;});
+        var counts={PULL:0,STRAIGHT:0,OPPO:0};
+        rows.forEach(function(p){
+          if(p.spray==='Pull')counts.PULL++;
+          else if(p.spray==='Straightaway')counts.STRAIGHT++;
+          else if(p.spray==='Opposite Field')counts.OPPO++;
+        });
+        var total=counts.PULL+counts.STRAIGHT+counts.OPPO;
+        var outcomes=[
+          {label:'PULL',rate:total?counts.PULL/total*100:0,color:'#f87171'},
+          {label:'STRAIGHT',rate:total?counts.STRAIGHT/total*100:0,color:'#FFB81C'},
+          {label:'OPPO',rate:total?counts.OPPO/total*100:0,color:'#60a5fa'}
+        ];
+        var dominant=outcomes.slice().sort(function(a,b){return b.rate-a.rate;})[0];
+        return{total:total,outcomes:outcomes,rec:total>=5&&dominant.rate>=40?dominant.label:'NONE',dominant:dominant};
+      }
+      var shiftGroups=[{label:'VS FB',data:batterShiftData('FB')},{label:'VS OS',data:batterShiftData('OS')}];
+      var shiftGap=5,shiftCardW=(CPW-shiftGap)/2,shiftCardH=27;
+      shiftGroups.forEach(function(group,index){
+        var cardX=ML+index*(shiftCardW+shiftGap),info=group.data;
+        var shiftColor=info.rec==='NONE'?'#888888':info.dominant.color,shc=hx(shiftColor);
+        d.setFillColor(245,247,251);d.rect(cardX,y,shiftCardW,shiftCardH,'F');
+        d.setFillColor(shc[0],shc[1],shc[2]);d.rect(cardX,y,shiftCardW,2.2,'F');
+        d.setDrawColor(shc[0],shc[1],shc[2]);d.setLineWidth(.35);d.rect(cardX,y,shiftCardW,shiftCardH,'S');
+        d.setFont('helvetica','bold');d.setFontSize(6.3);d.setTextColor(32,42,120);
+        d.text(group.label+'  (BIP '+info.total+')',cardX+shiftCardW/2,y+6,{align:'center'});
+        d.setFontSize(7.5);d.setTextColor(shc[0],shc[1],shc[2]);
+        d.text(info.rec==='NONE'?'NO SHIFT':'SHIFT: '+info.rec,cardX+shiftCardW/2,y+10.5,{align:'center'});
+        var lineX=cardX+3,lineY=y+14,lineW=shiftCardW-6,lineH=6,lineOffset=0;
+        if(info.total){
+          info.outcomes.forEach(function(outcome){
+            var segmentW=lineW*outcome.rate/100,oc=hx(outcome.color),segmentX=lineX+lineOffset;
+            d.setFillColor(oc[0],oc[1],oc[2]);d.rect(segmentX,lineY,segmentW,lineH,'F');
+            if(segmentW>=14){d.setFont('helvetica','bold');d.setFontSize(4.3);d.setTextColor(255,255,255);d.text(outcome.label+' '+f1(outcome.rate)+'%',segmentX+segmentW/2,lineY+4.1,{align:'center'});}
+            lineOffset+=segmentW;
+          });
+          d.setDrawColor(80,90,110);d.setLineWidth(.3);d.rect(lineX,lineY,lineW,lineH,'S');
+          d.setFont('helvetica','bold');d.setFontSize(4.6);d.setTextColor(65,73,88);
+          d.text('PULL '+f1(info.outcomes[0].rate)+'%   STR '+f1(info.outcomes[1].rate)+'%   OPPO '+f1(info.outcomes[2].rate)+'%',cardX+shiftCardW/2,y+24.2,{align:'center'});
+        }else{
+          d.setFont('helvetica','normal');d.setFontSize(5.3);d.setTextColor(110,118,132);d.text('No spray data',cardX+shiftCardW/2,lineY+4,{align:'center'});
+        }
       });
-      d.setDrawColor(80,90,110);d.setLineWidth(.3);d.rect(shiftLineX,shiftLineY,shiftLineW,shiftLineH,'S');
-      y+=24;
+      y+=shiftCardH+4;
     }
     function drawBatterRateTable(headers,widths,rows,tableY){
       var headerH=9,rowH=10.5;
