@@ -1049,5 +1049,53 @@
       setTimeout(renderOnuSeasonStats, 1800);
     })();
   </script>
+  <script>
+    /* MLB OPS+ formula: 100 × (OBP / league OBP + SLG / league SLG − 1). */
+    (async function () {
+      const number = value => {
+        const parsed = Number.parseFloat(value);
+        return Number.isFinite(parsed) ? parsed : 0;
+      };
+      let batting = [];
+      try {
+        batting = await fetch('data/summary2026.json').then(response => response.json());
+      } catch (error) {
+        return;
+      }
+      const qualified = batting.filter(row => number(row.PA) > 0 && number(row.AB) > 0);
+      const sum = selector => qualified.reduce((total, row) => total + selector(row), 0);
+      const leagueObp = sum(row => number(row.H) + number(row.BB) + number(row.HBP)) /
+        Math.max(sum(row => number(row.AB) + number(row.BB) + number(row.HBP) + number(row.SF)), 1);
+      const leagueSlg = sum(row => number(row['1B']) + 2 * number(row['2B']) + 3 * number(row['3B']) + 4 * number(row.HR)) /
+        Math.max(sum(row => number(row.AB)), 1);
+      const byBatter = new Map(batting.map(row => [String(row.batter || '').trim().toLowerCase(), row]));
+
+      function refreshOpsPlus() {
+        if (activeRole() !== 'batter' || !state.current) return;
+        const player = byBatter.get(String(state.current.pitcher || '').trim().toLowerCase());
+        const labels = document.querySelectorAll('.metric .label');
+        const values = document.querySelectorAll('.metric .value');
+        const hints = document.querySelectorAll('.metric .hint');
+        if (!labels[0] || !values[0]) return;
+
+        labels[0].textContent = 'OPS+';
+        const obp = player ? (number(player.H) + number(player.BB) + number(player.HBP)) /
+          (number(player.AB) + number(player.BB) + number(player.HBP) + number(player.SF)) : 0;
+        const slg = player ? (number(player['1B']) + 2 * number(player['2B']) + 3 * number(player['3B']) + 4 * number(player.HR)) /
+          number(player.AB) : 0;
+        values[0].textContent = player && Number.isFinite(obp) && Number.isFinite(slg) && leagueObp > 0 && leagueSlg > 0
+          ? String(Math.round(100 * (obp / leagueObp + slg / leagueSlg - 1)))
+          : '—';
+        hints[0].textContent = 'League-normalized OPS';
+        labels[1].textContent = 'IN-ZONE SWING%';
+        labels[2].textContent = 'CHASE%';
+        labels[3].textContent = 'WHIFF%';
+      }
+
+      ['player', 'team'].forEach(id => $(id).addEventListener('change', () => setTimeout(refreshOpsPlus, 80)));
+      document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => setTimeout(refreshOpsPlus, 80)));
+      setTimeout(refreshOpsPlus, 2200);
+    })();
+  </script>
 </body>
 </html>
