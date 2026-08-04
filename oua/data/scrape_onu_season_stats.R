@@ -72,18 +72,39 @@ datatable_form <- function(column_count) {
   )
 }
 
-# Use ChromoteSession's supported constructor and loader.  Creating a
-# Chromote object and manually enabling Network caused Chrome 0.5+ to close
-# the fresh target on some Windows installations before the first command.
-# Event domains are enabled automatically when a callback is registered.
-session <- tryCatch(
-  ChromoteSession$new(width = 1440, height = 1000),
+# Always create an isolated Chrome process. ChromoteSession$new() normally
+# reuses Chromote's default browser; after a failed run that default may point
+# to a target that has already been closed.
+chrome_paths <- c(
+  Sys.getenv("CHROMOTE_CHROME", unset = ""),
+  "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+)
+chrome_path <- chrome_paths[file.exists(chrome_paths)][1]
+if (is.na(chrome_path) || !nzchar(chrome_path)) {
+  stop(
+    "Chrome or Edge was not found. Set CHROMOTE_CHROME to the full path of chrome.exe, then run this script again.",
+    call. = FALSE
+  )
+}
+
+options(chromote.timeout = 30, chromote.headless = "new")
+browser <- tryCatch(
+  Chromote$new(browser = Chrome$new(path = chrome_path)),
   error = function(error) {
     stop(
-      "Chromote could not open a Chrome tab. Close any old Chromote Chrome windows, ",
+      "Chromote could not start Chrome. Close any old Chromote Chrome windows, ",
       "restart R, and run this script again. Original error: ", error$message,
       call. = FALSE
     )
+  }
+)
+
+session <- tryCatch(
+  browser$new_session(width = 1440, height = 1000),
+  error = function(error) {
+    try(browser$close(wait = FALSE), silent = TRUE)
+    stop("Chromote could not open a browser tab. Original error: ", error$message, call. = FALSE)
   }
 )
 
@@ -104,10 +125,13 @@ cancel_ws_capture <- session$Network$webSocketFrameReceived(
 
 on.exit({
   if (exists("cancel_ws_capture", inherits = FALSE) && is.function(cancel_ws_capture)) {
-    cancel_ws_capture()
+    try(cancel_ws_capture(), silent = TRUE)
   }
   if (exists("session", inherits = FALSE) && session$is_active()) {
-    session$close()
+    try(session$close(wait_ = FALSE), silent = TRUE)
+  }
+  if (exists("browser", inherits = FALSE) && browser$is_active()) {
+    try(browser$close(wait = FALSE), silent = TRUE)
   }
 }, add = TRUE)
 
