@@ -354,7 +354,7 @@ wrc_plus_export <- summary_stats %>%
 
 wrc_dashboard_path <-
   "C:/Users/chris/Downloads/Guelph Training Files/data-diamond/cbl-new/data/wrc-plus-2026.csv"
-write.csv(wrc_plus_export, wrc_dashboard_path, row.names = FALSE, na = "")
+write.csv(wrc_plus_export, wrc_dashboard_path, row.names = FALSE, quote = FALSE, na = "")
 
 # ── Pitch mix ──────────────────────────────────────────────────────────────────
 pitch_mix <- pitches %>%
