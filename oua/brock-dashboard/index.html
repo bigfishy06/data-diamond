@@ -1086,15 +1086,31 @@
         values[0].textContent = player && Number.isFinite(obp) && Number.isFinite(slg) && leagueObp > 0 && leagueSlg > 0
           ? String(Math.round(100 * (obp / leagueObp + slg / leagueSlg - 1)))
           : '—';
+        const points = safePoints(state.current);
+        const swing = point => swingOutcomes.has(point.outcome);
+        const whiff = point => whiffOutcomes.has(point.outcome);
+        const located = points.filter(point => point && Number.isFinite(Number(point.x)) && Number.isFinite(Number(point.y)));
+        const zone = located.filter(point => point.in_zone);
+        const outside = located.filter(point => !point.in_zone);
+        const swings = points.filter(swing);
         hints[0].textContent = 'League-normalized OPS';
         labels[1].textContent = 'IN-ZONE SWING%';
         labels[2].textContent = 'CHASE%';
         labels[3].textContent = 'WHIFF%';
+        values[1].textContent = pct(zone.length ? zone.filter(swing).length / zone.length * 100 : null);
+        values[2].textContent = pct(outside.length ? outside.filter(swing).length / outside.length * 100 : null);
+        values[3].textContent = pct(swings.length ? points.filter(whiff).length / swings.length * 100 : null);
+        hints[1].textContent = 'Pitches in zone';
+        hints[2].textContent = 'Pitches out of zone';
+        hints[3].textContent = 'On swings';
       }
 
+      // Other dashboard refreshes call this shared function, so make OPS+ the persistent batter-card order.
+      refreshBatterMetricOrder = refreshOpsPlus;
       ['player', 'team'].forEach(id => $(id).addEventListener('change', () => setTimeout(refreshOpsPlus, 80)));
       document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => setTimeout(refreshOpsPlus, 80)));
       setTimeout(refreshOpsPlus, 2200);
+      setTimeout(refreshOpsPlus, 5200);
     })();
   </script>
 </body>
