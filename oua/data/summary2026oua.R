@@ -38,18 +38,35 @@ add_league_average_row <- function(df) {
 }
 
 # ── Load ───────────────────────────────────────────────────────────────────────
-pitches_raw <- read.csv("C:/Users/chris/Downloads/Guelph Training Files/data-diamond/oua/datadiamond2026oua.csv",
-                         header = TRUE,
-                         stringsAsFactors = FALSE)
+expected_columns <- c("inning", "outs", "balls", "strikes", "count",
+                      "date", "batter_team", "pitcher_team",
+                      "time_to_plate", "batter", "pitcher",
+                      "batter_side", "pitcher_side", "pitch_type",
+                      "outcome", "contact_quality", "spray_chart",
+                      "runners", "pitch_x", "pitch_y")
 
-pitches <- as.data.frame(pitches_raw)
-colnames(pitches) <- c("inning", "outs", "balls", "strikes", "count",
-                       "date", "batter_team", "pitcher_team",
-                       "time_to_plate",
-                       "batter", "pitcher",
-                       "batter_side", "pitcher_side", "pitch_type",
-                       "outcome", "contact_quality", "spray_chart",
-                       "runners", "pitch_x", "pitch_y")
+# The TrackMan export pads each row with empty columns. Read only the first
+# 20 fields, which are the complete pitch-data schema, before using dplyr.
+read_oua_pitches <- function(path) {
+  lines <- readLines(path, warn = FALSE)
+  if (length(lines) < 2) stop("The OUA CSV does not contain any pitch rows.")
+  trim_to_schema <- function(line) {
+    commas <- gregexpr(",", line, fixed = TRUE)[[1]]
+    if (length(commas) >= 20) substr(line, 1, commas[20] - 1) else line
+  }
+  raw <- read.csv(text = vapply(lines[-1], trim_to_schema, character(1)),
+                  header = FALSE, stringsAsFactors = FALSE, fill = TRUE,
+                  check.names = FALSE)
+  if (ncol(raw) < length(expected_columns)) {
+    stop("The OUA CSV has fewer than 20 pitch-data columns.")
+  }
+  raw[, seq_along(expected_columns), drop = FALSE]
+}
+
+pitches <- as.data.frame(read_oua_pitches(
+  "C:/Users/chris/Downloads/Guelph Training Files/data-diamond/oua/datadiamond2026oua.csv"
+))
+colnames(pitches) <- expected_columns
 
 pitches$pitch_x       <- suppressWarnings(as.numeric(pitches$pitch_x))
 pitches$pitch_y       <- suppressWarnings(as.numeric(pitches$pitch_y))
