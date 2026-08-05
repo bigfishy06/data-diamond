@@ -521,7 +521,7 @@
       return total + (row.value < record.value ? row.pa : (row.value === record.value ? row.pa * .5 : 0));
     }, 0) / totalPA * 100;
   }
-  fetch('data/wrc-plus-2026.csv').then(function(response) { return response.text(); }).then(function(text) {
+  fetch('data/wrc-plus-current-2026.csv').then(function(response) { return response.text(); }).then(function(text) {
     text.trim().split(/\r?\n/).slice(1).forEach(function(line) {
       var columns = parseSimpleCsvLine(line);
       var record = { pa: Number(columns[2]) || 0, value: Number(columns[columns.length - 1]) };

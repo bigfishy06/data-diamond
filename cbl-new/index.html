@@ -1015,7 +1015,7 @@
   <script>
     (async function(){
       const lookup=new Map(),ordinal=value=>{const mod=value%100;if(mod>=11&&mod<=13)return`${value}th`;return`${value}${({1:'st',2:'nd',3:'rd'}[value%10]||'th')}`};
-      const text=await fetch('data/wrc-plus-2026.csv').then(response=>response.text()).catch(()=>null);
+      const text=await fetch('data/wrc-plus-current-2026.csv').then(response=>response.text()).catch(()=>null);
       if(!text)return;
       text.trim().split(/\r?\n/).slice(1).forEach(line=>{
         // The refresh script writes a valid CSV.  Trim its optional quotes so

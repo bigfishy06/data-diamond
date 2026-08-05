@@ -1,5 +1,6 @@
 library(dplyr)
 library(jsonlite)
+source("C:/Users/chris/Downloads/Guelph Training Files/data-diamond/cbl/data/cbl_woba_weights.R")
 
 write_xlsx_workbook <- function(sheets, path) {
   if (requireNamespace("openxlsx", quietly = TRUE)) {
@@ -62,10 +63,30 @@ pitches <- pitches %>%
     batter_team = ifelse(grepl("^Chatham-Kent", trimws(batter_team)),
                          "Chatham-Kent Barnstormers", trimws(batter_team)),
     pitcher_team = ifelse(grepl("^Chatham-Kent", trimws(pitcher_team)),
-                          "Chatham-Kent Barnstormers", trimws(pitcher_team))
+                          "Chatham-Kent Barnstormers", trimws(pitcher_team)),
+    batter_team_stint = batter_team
   )
 
 # ── Outcome reference vectors ──────────────────────────────────────────────────
+# Players who are traded must have one full-season batting line. Determine each
+# batter's newest club from the most recent dated row (source order breaks ties),
+# then assign every pitch from earlier stints to that current club before any
+# batter-level grouping or export.
+current_batter_teams <- pitches %>%
+  mutate(
+    .game_date = coalesce(suppressWarnings(as.Date(date)), as.Date("1900-01-01")),
+    .source_row = row_number()
+  ) %>%
+  filter(batter_team != "") %>%
+  arrange(batter, .game_date, .source_row) %>%
+  group_by(batter) %>%
+  summarise(current_batter_team = last(batter_team), .groups = "drop")
+
+pitches <- pitches %>%
+  left_join(current_batter_teams, by = "batter") %>%
+  mutate(batter_team = coalesce(current_batter_team, batter_team)) %>%
+  select(-current_batter_team)
+
 PITCH_OUTCOMES <- c("", "Ball", "Called Strike", "Swinging Strike", "Foul", "Pickoff")
 PA_END_OUTCOMES <- c(
   "Single", "Double", "Triple", "Home Run",
@@ -89,6 +110,7 @@ NON_AB_PA_OUTCOMES <- c(
 )
 
 # ── wOBA weights (standard linear weights) ────────────────────────────────────
+# Standard fallback values; validated CBL values replace these later.
 wOBA_BB  <- 0.690
 wOBA_HBP <- 0.720
 wOBA_1B  <- 0.880
@@ -96,15 +118,12 @@ wOBA_2B  <- 1.247
 wOBA_3B  <- 1.578
 wOBA_HR  <- 2.031
 
-# wRC+ refresh settings -------------------------------------------------------
-# These season constants let the dashboard recalculate player wRC+ whenever
-# this script is run with a new datadiamond2026.csv upload.  Update the park
-# factors and league runs/PA only when the season's park-factor study is
-# refreshed; player results themselves are always calculated from the current
-# upload below.
+# wRC+ fallback settings ------------------------------------------------------
+# The live values are refreshed from the official CBL game feed below. These
+# constants are used only when cbl.ca is temporarily unavailable.
 WRC_WOBA_SCALE <- 1.15
-WRC_LEAGUE_R_PER_PA <- 0.120
-WRC_PARK_FACTORS <- c(
+WRC_FALLBACK_LEAGUE_R_PER_PA <- 0.120
+WRC_FALLBACK_PARK_FACTORS <- c(
   "Barrie Baycats" = 90.2,
   "Brantford Red Sox" = 107.6,
   "Chatham-Kent Barnstormers" = 106.9,
@@ -115,6 +134,8 @@ WRC_PARK_FACTORS <- c(
   "Toronto Maple Leafs" = 134.7,
   "Welland Jackfish" = 99.3
 )
+WRC_LEAGUE_R_PER_PA <- WRC_FALLBACK_LEAGUE_R_PER_PA
+WRC_PARK_FACTORS <- WRC_FALLBACK_PARK_FACTORS
 
 # ── Classify outcomes ──────────────────────────────────────────────────────────
 pitches <- pitches %>%
@@ -303,6 +324,148 @@ summary_stats <- pitches %>%
 # Keep this beside the main summary calculation rather than as a separate
 # spreadsheet.  That prevents a stale wRC+ file when a newer pitch upload is
 # transformed for the dashboard.
+# Refresh the league run environment and one-year park factors from official
+# finalized CBL games. Only games through the latest pitch-upload date are used,
+# so the numerator (runs) and denominator (PA) cover the same portion of the
+# season. Park factor compares total run scoring in a club's home games with
+# total run scoring in its road games; 100 is neutral.
+WRC_CBL_FEED_URL <- paste0(
+  "https://cbl.ca/api/stats-api/feed/game-packages",
+  "?seasonYear=2026&limit=500"
+)
+WRC_ENVIRONMENT_SOURCE <- "fallback"
+WRC_GAMES_USED <- 0L
+WRC_LEAGUE_RUNS <- NA_real_
+cbl_games <- data.frame()
+
+tryCatch({
+  cbl_feed <- jsonlite::fromJSON(WRC_CBL_FEED_URL, simplifyVector = FALSE)
+  cbl_games <- bind_rows(lapply(cbl_feed$games, function(item) {
+    data.frame(
+      game_id = as.character(if (!is.null(item$game$id)) item$game$id else item$game$publicGameId),
+      game_date = as.Date(item$game$date),
+      home_team = as.character(item$competition$homeTeam$name),
+      away_team = as.character(item$competition$awayTeam$name),
+      home_runs = as.numeric(item$competition$homeTeam$score),
+      away_runs = as.numeric(item$competition$awayTeam$score),
+      stringsAsFactors = FALSE
+    )
+  })) %>%
+    distinct(game_id, .keep_all = TRUE)
+
+  latest_pitch_date <- max(as.Date(pitches$date[pitches$date != ""]), na.rm = TRUE)
+  cbl_games <- cbl_games %>%
+    filter(
+      !is.na(game_date), game_date <= latest_pitch_date,
+      is.finite(home_runs), is.finite(away_runs),
+      home_team != "", away_team != ""
+    )
+
+  league_pa <- sum(summary_stats$PA, na.rm = TRUE)
+  league_runs <- sum(cbl_games$home_runs + cbl_games$away_runs, na.rm = TRUE)
+  if (nrow(cbl_games) == 0 || league_pa <= 0 || league_runs <= 0) {
+    stop("Official CBL feed did not return a usable run environment")
+  }
+
+  live_park_factors <- setNames(vapply(
+    sort(unique(c(cbl_games$home_team, cbl_games$away_team))),
+    function(team_name) {
+      home_games <- cbl_games %>% filter(home_team == team_name)
+      road_games <- cbl_games %>% filter(away_team == team_name)
+      if (nrow(home_games) < 5 || nrow(road_games) < 5) return(100)
+      home_environment <- mean(home_games$home_runs + home_games$away_runs)
+      road_environment <- mean(road_games$home_runs + road_games$away_runs)
+      if (!is.finite(road_environment) || road_environment <= 0) return(100)
+      round(100 * home_environment / road_environment, 1)
+    },
+    numeric(1)
+  ), sort(unique(c(cbl_games$home_team, cbl_games$away_team))))
+
+  WRC_LEAGUE_R_PER_PA <- league_runs / league_pa
+  WRC_PARK_FACTORS <- live_park_factors
+  WRC_ENVIRONMENT_SOURCE <- WRC_CBL_FEED_URL
+  WRC_GAMES_USED <- nrow(cbl_games)
+  WRC_LEAGUE_RUNS <- league_runs
+}, error = function(error) {
+  warning("Using fallback wRC+ environment: ", conditionMessage(error))
+})
+
+WRC_WEIGHT_SOURCE <- "standard fallback weights"
+WRC_VALIDATED_GAMES <- 0L
+WRC_VALIDATED_PA <- 0L
+custom_woba <- NULL
+tryCatch({
+  if (!nrow(cbl_games)) stop("Official CBL games are unavailable for weight validation")
+  custom_woba <- derive_cbl_woba_weights(pitches, cbl_games)
+  wOBA_BB <- unname(custom_woba$weights[["BB"]])
+  wOBA_HBP <- unname(custom_woba$weights[["HBP"]])
+  wOBA_1B <- unname(custom_woba$weights[["1B"]])
+  wOBA_2B <- unname(custom_woba$weights[["2B"]])
+  wOBA_3B <- unname(custom_woba$weights[["3B"]])
+  wOBA_HR <- unname(custom_woba$weights[["HR"]])
+  WRC_WOBA_SCALE <- custom_woba$scale
+  WRC_WEIGHT_SOURCE <- "DataDiamond transitions validated against official CBL scores"
+  WRC_VALIDATED_GAMES <- custom_woba$validated_games
+  WRC_VALIDATED_PA <- custom_woba$validated_pa
+}, error = function(error) {
+  warning("Using standard fallback wOBA weights: ", conditionMessage(error))
+})
+
+if (!is.null(custom_woba)) {
+  wrc_weight_export <- custom_woba$event_table %>%
+    transmute(
+      Event = .event,
+      Raw_Run_Value = raw_run_value,
+      Above_Out_Run_Value = above_out,
+      Event_Count = event_count,
+      wOBA_Weight = ifelse(Event == "OUT", 0, unname(custom_woba$weights[Event])),
+      wOBA_Scale = custom_woba$scale,
+      Validated_Games = custom_woba$validated_games,
+      Validated_PA = custom_woba$validated_pa
+    )
+  write.csv(
+    wrc_weight_export,
+    "C:/Users/chris/Downloads/Guelph Training Files/data-diamond/cbl-new/data/wrc-weights-2026.csv",
+    row.names = FALSE, quote = FALSE, na = ""
+  )
+  write.csv(
+    custom_woba$state_table,
+    "C:/Users/chris/Downloads/Guelph Training Files/data-diamond/cbl-new/data/run-expectancy-2026.csv",
+    row.names = FALSE, quote = FALSE, na = ""
+  )
+}
+
+# summary_stats was assembled before the live validation step so it could supply
+# league PA. Recalculate player wOBA now with the selected custom/fallback weights.
+summary_stats <- summary_stats %>%
+  mutate(
+    .woba_num = (wOBA_BB * (BB - IBB)) + (wOBA_HBP * HBP) +
+      (wOBA_1B * `1B`) + (wOBA_2B * `2B`) + (wOBA_3B * `3B`) + (wOBA_HR * HR),
+    .woba_den = AB + BB - IBB + SF + HBP,
+    wOBA = ifelse(.woba_den > 0, round(.woba_num / .woba_den, 3), NA)
+  ) %>%
+  select(-.woba_num, -.woba_den)
+
+wrc_environment_export <- data.frame(
+  Team = names(WRC_PARK_FACTORS),
+  Park_Factor = as.numeric(WRC_PARK_FACTORS),
+  Games_Used = WRC_GAMES_USED,
+  League_Runs = WRC_LEAGUE_RUNS,
+  League_PA = sum(summary_stats$PA, na.rm = TRUE),
+  League_R_per_PA = WRC_LEAGUE_R_PER_PA,
+  wOBA_Scale = WRC_WOBA_SCALE,
+  Weight_Source = WRC_WEIGHT_SOURCE,
+  Validated_Games = WRC_VALIDATED_GAMES,
+  Validated_PA = WRC_VALIDATED_PA,
+  Source = WRC_ENVIRONMENT_SOURCE,
+  stringsAsFactors = FALSE
+)
+write.csv(
+  wrc_environment_export,
+  "C:/Users/chris/Downloads/Guelph Training Files/data-diamond/cbl-new/data/wrc-environment-2026.csv",
+  row.names = FALSE, quote = FALSE, na = ""
+)
+
 wrc_woba_numerator <- sum(
   wOBA_BB  * (summary_stats$BB - summary_stats$IBB) +
     wOBA_HBP * summary_stats$HBP +
@@ -321,9 +484,26 @@ wrc_league_woba <- ifelse(wrc_woba_denominator > 0,
                            wrc_woba_numerator / wrc_woba_denominator,
                            NA_real_)
 
-wrc_plus_export <- summary_stats %>%
+# A traded player's park adjustment follows where his PA actually occurred,
+# while the exported team remains his newest team.
+player_park_factors <- pitches %>%
+  filter(is_pa) %>%
+  count(batter, batter_team_stint, name = "stint_pa") %>%
   mutate(
-    Park_Factor = unname(WRC_PARK_FACTORS[batter_team]),
+    stint_park_factor = unname(WRC_PARK_FACTORS[batter_team_stint]),
+    stint_park_factor = ifelse(is.na(stint_park_factor), 100, stint_park_factor)
+  ) %>%
+  group_by(batter) %>%
+  summarise(
+    weighted_park_factor = weighted.mean(stint_park_factor, stint_pa),
+    .groups = "drop"
+  )
+
+wrc_plus_export <- summary_stats %>%
+  left_join(player_park_factors, by = "batter") %>%
+  mutate(
+    Park_Factor = weighted_park_factor,
+    Park_Factor = ifelse(is.na(Park_Factor), unname(WRC_PARK_FACTORS[batter_team]), Park_Factor),
     Park_Factor = ifelse(is.na(Park_Factor), 100, Park_Factor),
     # A one-half park adjustment is used because a club plays roughly half of
     # its schedule in its home environment.  Positive factors are hitter
@@ -353,7 +533,7 @@ wrc_plus_export <- summary_stats %>%
   arrange(Team, Batter)
 
 wrc_dashboard_path <-
-  "C:/Users/chris/Downloads/Guelph Training Files/data-diamond/cbl-new/data/wrc-plus-2026.csv"
+  "C:/Users/chris/Downloads/Guelph Training Files/data-diamond/cbl-new/data/wrc-plus-current-2026.csv"
 write.csv(wrc_plus_export, wrc_dashboard_path, row.names = FALSE, quote = FALSE, na = "")
 
 # ── Pitch mix ──────────────────────────────────────────────────────────────────
@@ -527,5 +707,7 @@ write_xlsx_workbook(
 
 cat("Done! summary2026.json written with", nrow(final), "players\n")
 cat("Done! summary2026.xlsx written with", nrow(batter_xlsx), "batters and", nrow(pitcher_xlsx), "pitchers\n")
+cat("wRC+ environment:", WRC_GAMES_USED, "official games,", round(WRC_LEAGUE_R_PER_PA, 4), "R/PA\n")
+cat("wOBA weights:", WRC_WEIGHT_SOURCE, "-", WRC_VALIDATED_GAMES, "validated games and", WRC_VALIDATED_PA, "PA\n")
 cat("New batter columns: ISO, BABIP, wOBA, Swing_pct, Whiff_pct, FP_Swing_pct, Pull_pct, Str_pct, Oppo_pct, Chase_pct\n")
 cat("Columns:", paste(names(final), collapse = ", "), "\n")

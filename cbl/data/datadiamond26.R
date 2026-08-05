@@ -27,10 +27,28 @@ pitches <- pitches %>%
     batter_team = ifelse(grepl("^Chatham-Kent", trimws(batter_team)),
                          "Chatham-Kent Barnstormers", trimws(batter_team)),
     pitcher_team = ifelse(grepl("^Chatham-Kent", trimws(pitcher_team)),
-                          "Chatham-Kent Barnstormers", trimws(pitcher_team))
+                          "Chatham-Kent Barnstormers", trimws(pitcher_team)),
+    batter_team_stint = batter_team
   )
 
 # ── Outcome reference vectors ──────────────────────────────────────────────────
+# Merge traded batters into a single full-season player record assigned to the
+# newest team in the feed. Source order breaks ties between rows on the same day.
+current_batter_teams <- pitches %>%
+  mutate(
+    .game_date = coalesce(suppressWarnings(as.Date(date)), as.Date("1900-01-01")),
+    .source_row = row_number()
+  ) %>%
+  filter(batter_team != "") %>%
+  arrange(batter, .game_date, .source_row) %>%
+  group_by(batter) %>%
+  summarise(current_batter_team = last(batter_team), .groups = "drop")
+
+pitches <- pitches %>%
+  left_join(current_batter_teams, by = "batter") %>%
+  mutate(batter_team = coalesce(current_batter_team, batter_team)) %>%
+  select(-current_batter_team)
+
 PITCH_LEVEL <- c("", "Ball", "Called Strike", "Swinging Strike", "Foul", "Pickoff")
 PA_END_OUTCOMES <- c(
   "Single", "Double", "Triple", "Home Run",
