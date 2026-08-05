@@ -2195,13 +2195,50 @@ Zane Skansi,Kitchener Panthers`;
     ],y);
     y+=4;
 
-    // Approach - x and y plotted pitch data only.
-    y=drawSec(d,'Approach',y);
+    // Pitch-type and quadrant performance, displayed from the pitcher's POV.
+    y=drawSec(d,'FB / OS Performance by Location (Pitcher POV)',y);
 
     // ── shared metric helpers ─────────────────────────────────────────────
     var _IN_PLAY_B=['Single','Double','Triple','Home Run','Groundout','Ground Out','Flyout','Fly Out','Popout','Pop Out','Lineout','Line Out','Double Play','Triple Play','Error','Field Error','Fielders Choice',"Fielder's Choice"];
     var _HITS_B=['Single','Double','Triple','Home Run'];
     var _KS_B=['Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking'];
+    var _quadRowsB=[];
+    var _quadDefsB=[
+      {label:'Up & Left',fn:function(p){return p.y>=0.5&&p.x<0;}},
+      {label:'Up & Right',fn:function(p){return p.y>=0.5&&p.x>=0;}},
+      {label:'Down & Left',fn:function(p){return p.y<0.5&&p.x<0;}},
+      {label:'Down & Right',fn:function(p){return p.y<0.5&&p.x>=0;}}
+    ];
+    function _pitchGroupB(p){var t=reportPitchTypeName(p);return (t==='Fastball'||t==='Sinker'||t==='Cutter')?'Fastballs':'Offspeed';}
+    function _rateTextB(n,den){return den>0?f1(n/den*100)+'%':'—';}
+    function _opsTextB(pts){
+      var ends=pts.filter(reportIsPlateAppearance),ab=ends.filter(reportIsAtBat).length;
+      var h=ends.filter(function(p){return _HITS_B.includes(p.outcome);}).length;
+      var bb=ends.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length;
+      var hbp=ends.filter(function(p){return p.outcome==='Hit By Pitch'||p.outcome==='Hit by Pitch';}).length;
+      var sf=ends.filter(function(p){return p.outcome==='Sacrifice Fly'||p.outcome==='Sac Fly Double Play';}).length;
+      var tb=ends.reduce(function(sum,p){return sum+(p.outcome==='Single'?1:p.outcome==='Double'?2:p.outcome==='Triple'?3:p.outcome==='Home Run'?4:0);},0),obpDen=ab+bb+hbp+sf;
+      return ab>0&&obpDen>0?f3((h+bb+hbp)/obpDen+tb/ab):'—';
+    }
+    ['Fastballs','Offspeed'].forEach(function(group){_quadDefsB.forEach(function(q){
+      var pts=allSc.filter(function(p){return hasPitchLocation(p)&&_pitchGroupB(p)===group&&q.fn(p);});
+      var swings=pts.filter(reportIsSwingOutcome),firstPitch=pts.filter(function(p){return reportCleanCount(p.count)==='0-0';});
+      var chasePitches=pts.filter(xyOutOfZone);
+      _quadRowsB.push([group,q.label,_rateTextB(firstPitch.filter(reportIsSwingOutcome).length,firstPitch.length),_rateTextB(swings.length,pts.length),_rateTextB(swings.filter(reportIsWhiffOutcome).length,swings.length),_rateTextB(chasePitches.filter(reportIsSwingOutcome).length,chasePitches.length),_opsTextB(pts)]);
+    });});
+    var _qtX=ML,_qtWidths=[25,36,27,24,24,26,24],_qtHeaders=['TYPE','LOCATION','FP SWING%','SWING%','WHIFF%','CHASE%','OPS'];
+    var _qtHeadH=8,_qtRowH=6.6,_qtTableH=_qtHeadH+_quadRowsB.length*_qtRowH;
+    d.setFillColor(13,25,44);d.rect(_qtX,y,CPW,_qtHeadH,'F');
+    var _qx=_qtX;
+    _qtHeaders.forEach(function(label,i){d.setFont('helvetica','bold');d.setFontSize(6.4);d.setTextColor(255,255,255);d.text(label,_qx+_qtWidths[i]/2,y+5.2,{align:'center'});_qx+=_qtWidths[i];});
+    _quadRowsB.forEach(function(row,ri){var ry=y+_qtHeadH+ri*_qtRowH,rx=_qtX;
+      d.setFillColor(ri%2?247:238,ri%2?249:243,ri%2?252:248);d.rect(_qtX,ry,CPW,_qtRowH,'F');
+      row.forEach(function(value,ci){d.setFont('helvetica',ci<2?'bold':'normal');d.setFontSize(ci===1?7:7.3);d.setTextColor(20,31,48);d.text(String(value),rx+(ci<2?2:_qtWidths[ci]/2),ry+4.5,ci<2?{}:{align:'center'});rx+=_qtWidths[ci];});
+    });
+    d.setDrawColor(196,204,216);d.setLineWidth(.25);d.rect(_qtX,y,CPW,_qtTableH,'S');
+    y+=_qtTableH+4;
+
+    if(false){
     function _zwB(pts){ var sw=pts.filter(reportIsSwingOutcome).length; var wh=pts.filter(reportIsWhiffOutcome).length; return sw>=5?wh/sw:null; }
     function _zbaB(pts){ var ab=pts.filter(function(p){return _IN_PLAY_B.concat(_KS_B).includes(p.outcome);}).length; var h=pts.filter(function(p){return _HITS_B.includes(p.outcome);}).length; return ab>=5?h/ab:null; }
     // lgArr iterates ALL pitches in DATA (both years share same scatter store)
@@ -2295,6 +2332,7 @@ Zane Skansi,Kitchener Panthers`;
       d.setFont('helvetica','bold');d.setFontSize(8.5);st(d,CO.white);d.text(result.spot,textX,y+18,{maxWidth:_aW-(textX-x)-4});
     });
     y+=_aBoxH+4;
+    }
 
     // ── Plate Discipline — pitcher-style highlight cards ──────────────────
     if(false){
