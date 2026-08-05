@@ -2196,7 +2196,7 @@ Zane Skansi,Kitchener Panthers`;
     y+=4;
 
     // Pitch-type and quadrant performance, displayed from the pitcher's POV.
-    if(PH-y<100){d.addPage();drawBg(d);y=MT+8;}
+    if(PH-y<105){d.addPage();drawBg(d);y=MT+8;}
     y=drawSec(d,'Performance by Location (Pitcher POV)',y);
 
     // ── shared metric helpers ─────────────────────────────────────────────
@@ -2227,8 +2227,23 @@ Zane Skansi,Kitchener Panthers`;
       var chasePitches=pts.filter(xyOutOfZone);
       _quadRowsB.push([group,q.label,_rateTextB(firstPitch.filter(reportIsSwingOutcome).length,firstPitch.length),_rateTextB(swings.length,pts.length),_rateTextB(swings.filter(reportIsWhiffOutcome).length,swings.length),_rateTextB(chasePitches.filter(reportIsSwingOutcome).length,chasePitches.length),_opsTextB(pts)]);
     });});
+    var _leagueLocationPointsB=[];
+    (DATA.pitches||[]).forEach(function(bp){_leagueLocationPointsB=_leagueLocationPointsB.concat(bp.scatter||[]);});
+    var _quadLeagueB={};
+    ['Fastballs','Offspeed'].forEach(function(group){_quadDefsB.forEach(function(q){
+      var pts=_leagueLocationPointsB.filter(function(p){return hasPitchLocation(p)&&_pitchGroupB(p)===group&&q.fn(p);});
+      var swings=pts.filter(reportIsSwingOutcome),outside=pts.filter(xyOutOfZone),ops=parseFloat(_opsTextB(pts));
+      _quadLeagueB[group+'|'+q.label]=[
+        swings.length?swings.filter(reportIsWhiffOutcome).length/swings.length*100:null,
+        outside.length?outside.filter(reportIsSwingOutcome).length/outside.length*100:null,
+        isFinite(ops)?ops:null
+      ];
+    });});
     var _qtX=ML,_qtWidths=[43,30,28,28,29,28],_qtHeaders=['LOCATION','FP SWING%','SWING%','WHIFF%','CHASE%','OPS'];
     var _qtTitleH=7,_qtHeadH=8,_qtRowH=7.2;
+    d.setFont('helvetica','bold');d.setFontSize(5.7);d.setTextColor(28,125,73);d.text('GREEN = GOOD',_qtX,y+3.2);
+    d.setTextColor(70,78,90);d.text('WHITE = LEAGUE AVG',_qtX+CPW/2,y+3.2,{align:'center'});
+    d.setTextColor(190,38,38);d.text('RED = BAD',_qtX+CPW,y+3.2,{align:'right'});y+=5;
     ['Fastballs','Offspeed'].forEach(function(group,groupIndex){
       var groupRows=_quadRowsB.filter(function(row){return row[0]===group;});
       var tableTop=y,tableH=_qtTitleH+_qtHeadH+groupRows.length*_qtRowH;
@@ -2241,9 +2256,21 @@ Zane Skansi,Kitchener Panthers`;
       var _qx=_qtX;
       _qtHeaders.forEach(function(label,i){d.setFont('helvetica','bold');d.setFontSize(6.5);d.setTextColor(255,255,255);d.text(label,_qx+_qtWidths[i]/2,y+5.2,{align:'center'});_qx+=_qtWidths[i];});
       y+=_qtHeadH;
-      groupRows.forEach(function(row,ri){var rx=_qtX,values=row.slice(1);
+      groupRows.forEach(function(row,ri){var rx=_qtX,values=row.slice(1),league=_quadLeagueB[group+'|'+row[1]]||[];
         d.setFillColor(ri%2?248:237,ri%2?250:243,ri%2?253:249);d.rect(_qtX,y,CPW,_qtRowH,'F');
-        values.forEach(function(value,ci){d.setFont('helvetica',ci===0?'bold':'normal');d.setFontSize(ci===0?7.5:8);d.setTextColor(20,31,48);d.text(String(value),rx+(ci===0?3:_qtWidths[ci]/2),y+4.9,ci===0?{}:{align:'center'});rx+=_qtWidths[ci];});
+        values.forEach(function(value,ci){
+          var metricIndex=ci===3?0:(ci===4?1:(ci===5?2:null)),numeric=parseFloat(value),benchmark=metricIndex==null?null:league[metricIndex],grade=null;
+          if(metricIndex!=null&&isFinite(numeric)&&benchmark!=null&&isFinite(benchmark)){
+            var tolerance=metricIndex===2 ? .05 : 2,performanceDelta=metricIndex===2?numeric-benchmark:benchmark-numeric;
+            grade=performanceDelta>tolerance?'good':(performanceDelta< -tolerance?'bad':'average');
+          }
+          if(metricIndex!=null){
+            if(grade==='good')d.setFillColor(155,233,159);else if(grade==='bad')d.setFillColor(244,166,166);else d.setFillColor(255,255,255);
+            d.rect(rx+.5,y+.45,_qtWidths[ci]-1,_qtRowH-.9,'F');
+          }
+          d.setFont('helvetica','bold');d.setFontSize(ci===0?7.5:(metricIndex!=null?9.4:8));d.setTextColor(8,12,18);
+          d.text(String(value),rx+(ci===0?3:_qtWidths[ci]/2),y+4.9,ci===0?{}:{align:'center'});rx+=_qtWidths[ci];
+        });
         d.setDrawColor(218,223,232);d.setLineWidth(.15);d.line(_qtX,y+_qtRowH,_qtX+CPW,y+_qtRowH);y+=_qtRowH;
       });
       var vx=_qtX;d.setDrawColor(205,212,223);d.setLineWidth(.2);
