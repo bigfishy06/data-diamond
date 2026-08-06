@@ -1803,41 +1803,41 @@ Zane Skansi,Kitchener Panthers`;
   function drawPitchTendencyByCountTable(d, rows, y) {
     var colW=[82,52,52], tw=colW.reduce(function(a,b){return a+b;},0);
     // Compact rows leave room for the pitcher split heat maps on the same page.
-    var x=ML+(CPW-tw)/2, hh=8, rh=6;
+    var x=ML+(CPW-tw)/2, hh=6, rh=4.6;
     function fastballText(pct){ return pct==null ? '-' : f1(pct)+'%'; }
     function fastballHighlight(pct){ return pct!=null && pct>70; }
     function drawCellText(txt,cx,cy,w,bold,color,align){
-      d.setFont('helvetica',bold?'bold':'normal');d.setFontSize(String(txt).length>18?5.2:6.2);
+      d.setFont('helvetica',bold?'bold':'normal');d.setFontSize(String(txt).length>18?4.8:5.6);
       if(color)d.setTextColor(color[0],color[1],color[2]);else st(d,CO.dim);
       d.text(String(txt),cx+(align==='left'?2:w/2),cy,{align:align||'center'});
     }
-    sf(d,CO.navy2);d.rect(x,y,tw,hh,'F');
+    d.setFillColor(31,42,61);d.rect(x,y,tw,hh,'F');
     sd(d,CO.navy3);d.setLineWidth(0.25);d.rect(x,y,tw,hh,'S');
     var headers=['COUNT / SITUATION','FASTBALL vs RHH','FASTBALL vs LHH'], cx=x;
     headers.forEach(function(h,i){
-      d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(255,255,255);
-      d.text(h,cx+colW[i]/2,y+5.3,{align:'center'});
+      d.setFont('helvetica','bold');d.setFontSize(5.4);d.setTextColor(255,255,255);
+      d.text(h,cx+colW[i]/2,y+4.1,{align:'center'});
       cx+=colW[i];
     });
     rows.forEach(function(row,ri){
       var ry=y+hh+ri*rh, cx2=x;
       d.setFillColor(ri%2?248:238,ri%2?250:244,ri%2?253:249);d.rect(x,ry,tw,rh,'F');
       d.setFillColor(226,233,244);d.rect(cx2,ry,colW[0],rh,'F');
-      drawCellText(row.label,cx2,ry+4.1,colW[0],true,[22,43,82],'left');cx2+=colW[0];
+      drawCellText(row.label,cx2,ry+3.2,colW[0],true,[22,43,82],'left');cx2+=colW[0];
       if(fastballHighlight(row.rPct)){
         d.setFillColor(row.rPct>=80?130:157,row.rPct>=80?232:238,row.rPct>=80?132:158);
         d.rect(cx2,ry+0.3,colW[1],rh-0.6,'F');
-        drawCellText(fastballText(row.rPct),cx2,ry+4.1,colW[1],true,[8,12,18]);
+        drawCellText(fastballText(row.rPct),cx2,ry+3.2,colW[1],true,[8,12,18]);
       } else {
-        drawCellText(fastballText(row.rPct),cx2,ry+4.1,colW[1],true,[8,12,18]);
+        drawCellText(fastballText(row.rPct),cx2,ry+3.2,colW[1],true,[8,12,18]);
       }
       cx2+=colW[1];
       if(fastballHighlight(row.lPct)){
         d.setFillColor(row.lPct>=80?130:157,row.lPct>=80?232:238,row.lPct>=80?132:158);
         d.rect(cx2,ry+0.3,colW[2],rh-0.6,'F');
-        drawCellText(fastballText(row.lPct),cx2,ry+4.1,colW[2],true,[8,12,18]);
+        drawCellText(fastballText(row.lPct),cx2,ry+3.2,colW[2],true,[8,12,18]);
       } else {
-        drawCellText(fastballText(row.lPct),cx2,ry+4.1,colW[2],true,[8,12,18]);
+        drawCellText(fastballText(row.lPct),cx2,ry+3.2,colW[2],true,[8,12,18]);
       }
       cx2+=colW[2];
       sd(d,CO.navy3);d.setLineWidth(0.18);
@@ -2829,7 +2829,7 @@ Zane Skansi,Kitchener Panthers`;
     var _pLeaguePts=[];(DATA.pitchers||[]).forEach(function(p){_pLeaguePts=_pLeaguePts.concat(p.scatter||[]);});
     function _pBench(points){var swings=points.filter(reportIsSwingOutcome),outside=points.filter(xyOutOfZone),ops=parseFloat(_pOps(points));return[points.length?points.filter(reportIsStrikeOutcome).length/points.length*100:null,swings.length?points.filter(reportIsWhiffOutcome).length/swings.length*100:null,outside.length?outside.filter(reportIsSwingOutcome).length/outside.length*100:null,isFinite(ops)?ops:null];}
     var _pLeagueBench=_pBench(_pLeaguePts),_pAllLocated=sc.filter(hasPitchLocation).length,_pFirstAll=sc.filter(function(p){return reportCleanCount(p.count)==='0-0';}).length;
-    var _pWidths=[37,25,25,25,25,25,24],_pHeaders=['LOCATION','USAGE%','FP USAGE%','STRIKE%','WHIFF%','CHASE%','OPS'],_pTitleH=6.2,_pHeadH=7,_pRowH=6.2;
+    var _pWidths=[37,25,25,25,25,25,24],_pHeaders=['LOCATION','USAGE%','FP USAGE%','STRIKE%','WHIFF%','CHASE%','OPS'],_pTitleH=5.8,_pHeadH=6.5,_pRowH=5.6;
     ['Fastballs','Offspeed'].forEach(function(group,gi){var top=y,tableH=_pTitleH+_pHeadH+_pQuadDefs.length*_pRowH,bar=gi===0?[32,75,145]:[255,255,255];d.setFillColor(bar[0],bar[1],bar[2]);d.rect(ML,y,CPW,_pTitleH,'F');d.setFont('helvetica','bold');d.setFontSize(8);d.setTextColor(gi?8:255,gi?12:255,gi?18:255);d.text(group.toUpperCase(),ML+3,y+4.4);y+=_pTitleH;d.setFillColor(31,42,61);d.rect(ML,y,CPW,_pHeadH,'F');var hxP=ML;_pHeaders.forEach(function(label,i){d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(255,255,255);d.text(label,hxP+_pWidths[i]/2,y+4.7,{align:'center'});hxP+=_pWidths[i];});y+=_pHeadH;_pQuadDefs.forEach(function(q,ri){var pts=sc.filter(function(p){return hasPitchLocation(p)&&_pGroup(p)===group&&q.fn(p);}),sw=pts.filter(reportIsSwingOutcome),outside=pts.filter(xyOutOfZone),vals=[q.label,_pRate(pts.length,_pAllLocated),_pRate(pts.filter(function(p){return reportCleanCount(p.count)==='0-0';}).length,_pFirstAll),_pRate(pts.filter(reportIsStrikeOutcome).length,pts.length),_pRate(pts.filter(reportIsWhiffOutcome).length,sw.length),_pRate(outside.filter(reportIsSwingOutcome).length,outside.length),_pOps(pts)],cx=ML;d.setFillColor(ri%2?248:237,ri%2?250:243,ri%2?253:249);d.rect(ML,y,CPW,_pRowH,'F');vals.forEach(function(value,ci){var mi=ci>=3?ci-3:null,n=parseFloat(value),avg=mi==null?null:_pLeagueBench[mi],grade=null;if(mi!=null&&isFinite(n)&&avg!=null){var tol=mi===3 ? .05 : 2,delta=mi===3?avg-n:n-avg;grade=delta>tol?'good':delta< -tol?'bad':'average';d.setFillColor(grade==='good'?155:grade==='bad'?244:255,grade==='good'?233:grade==='bad'?166:255,grade==='good'?159:grade==='bad'?166:255);d.rect(cx+.5,y+.45,_pWidths[ci]-1,_pRowH-.9,'F');}d.setFont('helvetica','bold');d.setFontSize(ci===0?7.2:(mi!=null?8.7:7.8));d.setTextColor(8,12,18);d.text(String(value),cx+(ci===0?3:_pWidths[ci]/2),y+4.35,ci===0?{}:{align:'center'});cx+=_pWidths[ci];});y+=_pRowH;});d.setDrawColor(205,212,223);d.setLineWidth(.2);d.rect(ML,top,CPW,tableH,'S');y+=2.5;});
 
     // ── shared metric helpers (pitcher perspective) ───────────────────────
