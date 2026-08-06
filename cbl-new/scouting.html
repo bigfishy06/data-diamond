@@ -3713,7 +3713,7 @@ Zane Skansi,Kitchener Panthers`;
         bvals.push(['SHIFT vs OS',osShift.text,null,osShift.color,true]);
         var bx=margin+4,bw=158.2/bvals.length;
         bvals.forEach(function(v,i){
-          var fillHex=v[4]?(v[3]||'#ffffff'):(i===0||v[2]==null?'#ffffff':v[2]>=67?'#9be99f':v[2]<=33?'#f4a6a6':'#ffffff'),fill=hx(fillHex);
+          var fillHex=v[4]?'#ffffff':(i===0||v[2]==null?'#ffffff':v[2]>=67?'#9be99f':v[2]<=33?'#f4a6a6':'#ffffff'),fill=hx(fillHex);
           d.setFillColor(fill[0],fill[1],fill[2]);d.rect(bx-1,y+7,bw,15,'F');d.setDrawColor(45,58,78);d.setLineWidth(.15);d.rect(bx-1,y+7,bw,15,'S');
           d.setFont('helvetica','bold');d.setFontSize(v[4]?4.7:5.5);d.setTextColor(22,43,82);d.text(v[0],bx,y+11);
           var text=v[4]?String(v[1]):v[1]==null?'-':Number(v[1]).toFixed(1)+'%';
@@ -3758,7 +3758,7 @@ Zane Skansi,Kitchener Panthers`;
       }
       var statX=margin+4,statW=role==='pitcher'?19.83:17;
       st.values.forEach(function(v,i){
-        var fillHex=v[3]||(v[2]==null?'#ffffff':v[2]>=67?'#9be99f':v[2]<=33?'#f4a6a6':'#ffffff'),fill=hx(fillHex);
+        var fillHex=v[3]?(v[3]==='#ffffff'?'#ffffff':v[3]==='#72c2aa'?'#9be99f':'#f4a6a6'):(v[2]==null?'#ffffff':v[2]>=67?'#9be99f':v[2]<=33?'#f4a6a6':'#ffffff'),fill=hx(fillHex);
         d.setFillColor(fill[0],fill[1],fill[2]);d.rect(statX+i*statW-1,y+7,statW,15,'F');d.setDrawColor(45,58,78);d.setLineWidth(.15);d.rect(statX+i*statW-1,y+7,statW,15,'S');
         d.setFontSize(5.5);d.setTextColor(22,43,82);d.text(v[0],statX+i*statW,y+11);
         d.setFont('helvetica','bold');d.setFontSize(10);
