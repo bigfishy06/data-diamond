@@ -2977,6 +2977,7 @@ Zane Skansi,Kitchener Panthers`;
 
     // TTP highlight card (if data available)
     if(ttp!=null){
+      y=drawSec(d,'Time to Plate',y);
       // Two zones: 1.0-1.35 = fast (green for batter = steal opportunity), 1.35-1.8 = slow (red for batter = risky)
       // Batter perspective: slow pitcher = good, fast pitcher = risky to run
       var ttpFast = ttp < 1.35;
@@ -2988,11 +2989,8 @@ Zane Skansi,Kitchener Panthers`;
       d.setFillColor(ttpCr,ttpCg,ttpCb);d.rect(ML,y,CPW,2,'F');
       d.setDrawColor(ttpCr,ttpCg,ttpCb);d.setLineWidth(0.3);d.rect(ML,y,CPW,16,'S');
 
-      // Label left
-      d.setFont('helvetica','bold');d.setFontSize(6);d.setTextColor(ttpCr,ttpCg,ttpCb);
-      d.text('TIME TO PLATE',ML+4,y+6);
       d.setFont('helvetica','bold');d.setFontSize(11);st(d,CO.white);
-      d.text(ttp.toFixed(2)+'s',ML+4,y+13);
+      d.text(ttp.toFixed(2)+'s',ML+4,y+10.8);
 
       // Label center — just the zone label, no AVERAGE
       d.setFont('helvetica','bold');d.setFontSize(7);d.setTextColor(ttpCr,ttpCg,ttpCb);
@@ -3128,10 +3126,12 @@ Zane Skansi,Kitchener Panthers`;
       return{hand:hand,sub:sub,sk:sk,sb:sb,ss:ss,sz:sz,subXY:sub.filter(hasPitchLocation)};
     });
     var iw=CPW/2-4,gap=8;
-    // Use the remaining one-page space for compact split heat maps.
+    // Preserve a readable heat-map aspect ratio. If page one is too full,
+    // keep Count Tendencies intact there and start Location Splits on page two.
     var splitsOverhead=14;
     var heatAspect=414/360;
     var heatAvail=PH-12-8-y-splitsOverhead;
+    if(heatAvail<58){d.addPage();drawBg(d);y=MT+8;heatAvail=PH-12-8-y-splitsOverhead;}
     var ihIdeal=Math.round(iw*heatAspect);
     var drawSplitHeat=heatAvail>=16;
     var ih=Math.max(16,Math.min(ihIdeal,Math.round(heatAvail)));
@@ -3659,6 +3659,27 @@ Zane Skansi,Kitchener Panthers`;
         return [group[0],rows.length,top,rows.length&&top!=='-'?types[top]/rows.length*100:null];
       });
     }
+    function compactPitchLocations(points){
+      var located=(points||[]).filter(hasPitchLocation),hits=['Single','Double','Triple','Home Run'];
+      var inPlay=['Single','Double','Triple','Home Run','Groundout','Ground Out','Flyout','Fly Out','Popout','Pop Out','Lineout','Line Out','Double Play','Triple Play','Error','Field Error','Fielders Choice',"Fielder's Choice"],strikeouts=['Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking'];
+      function locationOps(rows){
+        var pa=rows.filter(function(p){return inPlay.concat(strikeouts).includes(p.outcome)||['Walk','Intentional Walk','Hit By Pitch','Sacrifice Fly','Sac Fly Double Play'].includes(p.outcome)});
+        var ab=pa.filter(function(p){return inPlay.concat(strikeouts).includes(p.outcome)}).length;
+        var h=pa.filter(function(p){return hits.includes(p.outcome)}).length;
+        var bb=pa.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk'}).length;
+        var hbp=pa.filter(function(p){return p.outcome==='Hit By Pitch'}).length;
+        var sf=pa.filter(function(p){return p.outcome==='Sacrifice Fly'||p.outcome==='Sac Fly Double Play'}).length;
+        var tb=pa.reduce(function(sum,p){return sum+(p.outcome==='Single'?1:p.outcome==='Double'?2:p.outcome==='Triple'?3:p.outcome==='Home Run'?4:0)},0),obpDen=ab+bb+hbp+sf;
+        return ab&&obpDen?(h+bb+hbp)/obpDen+tb/ab:null;
+      }
+      var zones=[
+        ['UP & LEFT',function(p){return Number(p.y)>=.5&&Number(p.x)>0}],
+        ['UP & RIGHT',function(p){return Number(p.y)>=.5&&Number(p.x)<=0}],
+        ['DOWN & LEFT',function(p){return Number(p.y)<.5&&Number(p.x)>0}],
+        ['DOWN & RIGHT',function(p){return Number(p.y)<.5&&Number(p.x)<=0}]
+      ];
+      return zones.map(function(zone){var rows=located.filter(zone[1]);return[zone[0],located.length?rows.length/located.length*100:null,locationOps(rows)]});
+    }
     function batterSummaryAttack(points){
       var pts=(points||[]).filter(function(p){return hasPitchLocation(p)}),hits=['Single','Double','Triple','Home Run'];
       if(!pts.length)return ['Attack: not enough location data',''];
@@ -3767,14 +3788,26 @@ Zane Skansi,Kitchener Panthers`;
         d.setTextColor(8,12,18);d.text(String(v[1]),statX+i*statW,y+19);
       });
       if(role==='pitcher'){
-        var ctRows=compactCountTendencies(sc,team&&team.name),cx=margin+4,cw=[43,44,32];
-        d.setFont('helvetica','bold');d.setFontSize(5.2);d.setTextColor(gold[0],gold[1],gold[2]);d.text('COUNT TENDENCIES',cx,y+24.8);
-        d.setFillColor(224,229,235);d.rect(cx-1,y+26,119,3.7,'F');
-        ['COUNT','PITCH TYPE','USE'].forEach(function(label,i){d.setFontSize(4.6);d.setTextColor(22,43,82);d.text(label,cx+cw[i]/2,y+28.7,{align:'center'});cx+=cw[i]});
+        var locRows=compactPitchLocations(sc),locX=margin+3,locW=64,locCols=[34,15,15];
+        d.setFont('helvetica','bold');d.setFontSize(5.2);d.setTextColor(gold[0],gold[1],gold[2]);d.text('PITCH LOCATIONS - BATTER POV',locX+1,y+24.5);
+        d.setFillColor(224,229,235);d.rect(locX,y+25.6,locW,3.2,'F');
+        var lx=locX;
+        ['LOCATION','USE','OPS'].forEach(function(label,i){d.setFontSize(4.4);d.setTextColor(22,43,82);d.text(label,lx+locCols[i]/2,y+27.9,{align:'center'});lx+=locCols[i]});
+        locRows.forEach(function(row,ri){
+          var ry=y+28.8+ri*3.05;d.setFillColor(ri%2?250:242,ri%2?250:244,ri%2?250:247);d.rect(locX,ry,locW,3.05,'F');lx=locX;
+          [row[0],row[1]==null?'-':Number(row[1]).toFixed(1)+'%',row[2]==null?'-':dec(row[2])].forEach(function(value,i){
+            d.setFont('helvetica','bold');d.setFontSize(i===0?4.5:6);d.setTextColor(22,32,50);d.text(String(value),lx+locCols[i]/2,ry+2.25,{align:'center',maxWidth:locCols[i]-1});lx+=locCols[i];
+          });
+        });
+
+        var ctRows=compactCountTendencies(sc,team&&team.name),ctX=locX+67,cx=ctX,cw=[24,19,12],ctW=55;
+        d.setFont('helvetica','bold');d.setFontSize(5.2);d.setTextColor(gold[0],gold[1],gold[2]);d.text('COUNT TENDENCIES',ctX+1,y+24.5);
+        d.setFillColor(224,229,235);d.rect(ctX,y+25.6,ctW,3.2,'F');
+        ['COUNT','PITCH','USE'].forEach(function(label,i){d.setFontSize(4.4);d.setTextColor(22,43,82);d.text(label,cx+cw[i]/2,y+27.9,{align:'center'});cx+=cw[i]});
         ctRows.forEach(function(row,ri){
-          var ry=y+29.7+ri*3.9;d.setFillColor(ri%2?250:242,ri%2?250:244,ri%2?250:247);d.rect(margin+3,ry,119,3.9,'F');cx=margin+4;
+          var ry=y+28.8+ri*4.05;d.setFillColor(ri%2?250:242,ri%2?250:244,ri%2?250:247);d.rect(ctX,ry,ctW,4.05,'F');cx=ctX;
           [row[0],row[2],row[3]==null?'-':Number(row[3]).toFixed(1)+'%'].forEach(function(value,i){
-            d.setFont('helvetica','bold');d.setFontSize(i===2?7.2:5.3);d.setTextColor(22,32,50);
+            d.setFont('helvetica','bold');d.setFontSize(i===2?6.2:4.3);d.setTextColor(22,32,50);
             d.text(value,cx+cw[i]/2,ry+2.8,{align:'center',maxWidth:cw[i]-1});cx+=cw[i];
           });
         });
