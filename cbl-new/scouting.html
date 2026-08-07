@@ -1801,13 +1801,13 @@ Zane Skansi,Kitchener Panthers`;
     return y+hh+rows.length*rh+3;
   }
   function drawPitchTendencyByCountTable(d, rows, y) {
-    var colW=[82,52,52], tw=colW.reduce(function(a,b){return a+b;},0);
-    // Compact rows leave room for the pitcher split heat maps on the same page.
-    var x=ML+(CPW-tw)/2, hh=6, rh=4.6;
+    var colW=[86,50,50], tw=colW.reduce(function(a,b){return a+b;},0);
+    // Keep the full table together, but use enough height and type size to read it comfortably.
+    var x=ML+(CPW-tw)/2, hh=7.5, rh=6.3;
     function fastballText(pct){ return pct==null ? '-' : f1(pct)+'%'; }
     function fastballHighlight(pct){ return pct!=null && pct>70; }
     function drawCellText(txt,cx,cy,w,bold,color,align){
-      d.setFont('helvetica',bold?'bold':'normal');d.setFontSize(String(txt).length>18?4.8:5.6);
+      d.setFont('helvetica',bold?'bold':'normal');d.setFontSize(String(txt).length>18?6.2:8.2);
       if(color)d.setTextColor(color[0],color[1],color[2]);else st(d,CO.dim);
       d.text(String(txt),cx+(align==='left'?2:w/2),cy,{align:align||'center'});
     }
@@ -1815,29 +1815,29 @@ Zane Skansi,Kitchener Panthers`;
     sd(d,CO.navy3);d.setLineWidth(0.25);d.rect(x,y,tw,hh,'S');
     var headers=['COUNT / SITUATION','FASTBALL vs RHH','FASTBALL vs LHH'], cx=x;
     headers.forEach(function(h,i){
-      d.setFont('helvetica','bold');d.setFontSize(5.4);d.setTextColor(255,255,255);
-      d.text(h,cx+colW[i]/2,y+4.1,{align:'center'});
+      d.setFont('helvetica','bold');d.setFontSize(6.4);d.setTextColor(255,255,255);
+      d.text(h,cx+colW[i]/2,y+5.1,{align:'center'});
       cx+=colW[i];
     });
     rows.forEach(function(row,ri){
       var ry=y+hh+ri*rh, cx2=x;
       d.setFillColor(ri%2?248:238,ri%2?250:244,ri%2?253:249);d.rect(x,ry,tw,rh,'F');
       d.setFillColor(226,233,244);d.rect(cx2,ry,colW[0],rh,'F');
-      drawCellText(row.label,cx2,ry+3.2,colW[0],true,[22,43,82],'left');cx2+=colW[0];
+      drawCellText(row.label,cx2,ry+4.35,colW[0],true,[22,43,82],'left');cx2+=colW[0];
       if(fastballHighlight(row.rPct)){
         d.setFillColor(row.rPct>=80?130:157,row.rPct>=80?232:238,row.rPct>=80?132:158);
         d.rect(cx2,ry+0.3,colW[1],rh-0.6,'F');
-        drawCellText(fastballText(row.rPct),cx2,ry+3.2,colW[1],true,[8,12,18]);
+        drawCellText(fastballText(row.rPct),cx2,ry+4.35,colW[1],true,[8,12,18]);
       } else {
-        drawCellText(fastballText(row.rPct),cx2,ry+3.2,colW[1],true,[8,12,18]);
+        drawCellText(fastballText(row.rPct),cx2,ry+4.35,colW[1],true,[8,12,18]);
       }
       cx2+=colW[1];
       if(fastballHighlight(row.lPct)){
         d.setFillColor(row.lPct>=80?130:157,row.lPct>=80?232:238,row.lPct>=80?132:158);
         d.rect(cx2,ry+0.3,colW[2],rh-0.6,'F');
-        drawCellText(fastballText(row.lPct),cx2,ry+3.2,colW[2],true,[8,12,18]);
+        drawCellText(fastballText(row.lPct),cx2,ry+4.35,colW[2],true,[8,12,18]);
       } else {
-        drawCellText(fastballText(row.lPct),cx2,ry+3.2,colW[2],true,[8,12,18]);
+        drawCellText(fastballText(row.lPct),cx2,ry+4.35,colW[2],true,[8,12,18]);
       }
       cx2+=colW[2];
       sd(d,CO.navy3);d.setLineWidth(0.18);
@@ -2625,12 +2625,12 @@ Zane Skansi,Kitchener Panthers`;
     (DATA.pitches||[]).forEach(function(bp){['L','R'].forEach(function(side){batterHandSplitMetrics(bp.scatter||[],side).forEach(function(value,metric){if(value!=null&&isFinite(value))splitLeague[side][metric].push(value);});});});
     var splitDirections=[false,true,false,false,false];
     var splitRows=['L','R'].map(function(side){var metrics=batterHandSplitMetrics(allSc,side);return[{text:'vs. '+side+'HP'}].concat(metrics.map(function(value,metric){return{text:value==null?'—':f1(value)+'%',neutral:metric===0,pct:metric===0?null:reportPercentile(value,splitLeague[side][metric],splitDirections[metric])};}));});
-    if(PH-y<42){d.addPage();drawBg(d);y=MT+8;}
-    y=drawSec(d,'Splits',y);
-    y=drawBatterRateTable(['MATCHUP','FP SWING%','I-Z SWING%','CHASE%','WHIFF%','K%'],[36,30,30,30,30,30],splitRows,y);
     if(PH-y<38){d.addPage();drawBg(d);y=MT+8;}
     y=drawSec(d,'Count Performance',y);
     y=drawBatterRateTable(['SITUATION','SWING%','WHIFF%','CHASE%','OPS'],[42,36,36,36,36],countTableRows,y);
+    if(PH-y<42){d.addPage();drawBg(d);y=MT+8;}
+    y=drawSec(d,'Splits',y);
+    y=drawBatterRateTable(['MATCHUP','FP SWING%','I-Z SWING%','CHASE%','WHIFF%','K%'],[36,30,30,30,30,30],splitRows,y);
     if(false&&(hasSpray||hasBip)){
       // Each chart occupies half the content width
       // Layout: side-by-side if both present, centred single if only one
@@ -2820,6 +2820,7 @@ Zane Skansi,Kitchener Panthers`;
       : (selSeason==='2026'
         ? (pd26&&pd26.STR_pct!=null?pd26.STR_pct/100:(tot>0?str/tot:0))
         : (pbpP2&&pbpP2.STR_pct!=null?pbpP2.STR_pct/100:(tot>0?str/tot:0)));
+    function drawPitcherApproach(){
     y=drawSec(d,'Approach',y);
 
     var _pQuadDefs=[{label:'Up & Left',fn:function(p){return p.y>=.5&&p.x>0;}},{label:'Up & Right',fn:function(p){return p.y>=.5&&p.x<=0;}},{label:'Down & Left',fn:function(p){return p.y<.5&&p.x>0;}},{label:'Down & Right',fn:function(p){return p.y<.5&&p.x<=0;}}];
@@ -2965,6 +2966,7 @@ Zane Skansi,Kitchener Panthers`;
     });
     y+=_paBoxH+4;
     }
+    }
     var locTot=sc.filter(hasPitchLocation).length;
     var znPct=locTot>0?inZ/locTot:0;
     if(selSeason==='2026'){if(pd26&&pd26.FPS_pct!=null)fpsPct=pd26.FPS_pct;}
@@ -3010,17 +3012,17 @@ Zane Skansi,Kitchener Panthers`;
       y+=19;
     }
 
+    drawPitcherApproach();
     var tendencyRows = buildPitchCountSidePitchRows(sc);
     var drewTendencyTable = false;
     if(tendencyRows.length){
-      var tendNeed = 8 + tendencyRows.length * 7.2 + 10;
-      if(PH-y >= tendNeed + 36){
-        y+=3;
-        y=drawSec(d,'Pitch Tendencies by Count',y);
-        y=drawPitchTendencyByCountTable(d,tendencyRows,y);
-        y+=1;
-        drewTendencyTable = true;
-      }
+      var tendNeed = 7 + 7.5 + tendencyRows.length * 6.3 + 7;
+      if(PH-y < tendNeed){d.addPage();drawBg(d);y=MT+8;}
+      y+=3;
+      y=drawSec(d,'Pitch Tendencies by Count',y);
+      y=drawPitchTendencyByCountTable(d,tendencyRows,y);
+      y+=1;
+      drewTendencyTable = true;
     }
 
     // Pitch Effectiveness
