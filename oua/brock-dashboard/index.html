@@ -689,7 +689,8 @@
         card.querySelectorAll('tbody tr').forEach(row=>{
           const cells=row.querySelectorAll('td'),baseline=countAverages[cells[0]?.textContent.trim()];
           if(!baseline||cells.length<7)return;
-          paint(cells[2],parse(cells[2].textContent),baseline.swing,true,12);
+          cells[2].style.color='';
+          cells[2].style.textShadow='';
           // Batter count-performance metrics: lower Whiff%, Chase%, and K%
           // are better; a higher BAA is better.  Grade against the full
           // league sample within the same count situation.
@@ -706,7 +707,8 @@
         table.querySelectorAll('tbody tr').forEach(row=>{
           const cells=row.querySelectorAll('td'),baseline=typeAverages[cells[0]?.textContent.trim()];
           if(!baseline||cells.length<6)return;
-          paint(cells[2],parse(cells[2].textContent),baseline.swing,true,12);
+          cells[2].style.color='';
+          cells[2].style.textShadow='';
           paint(cells[3],parse(cells[3].textContent),baseline.whiff,false,12);
           paint(cells[4],parse(cells[4].textContent),baseline.k,false,12);
           paint(cells[5],parse(cells[5].textContent),baseline.bb,true,12);
