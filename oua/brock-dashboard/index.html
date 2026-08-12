@@ -223,6 +223,33 @@
   <style>
     #overviewProfiles{display:grid;grid-template-columns:1fr;gap:18px}.analysis-card,.analysis-card.sequence-card{grid-column:1/-1}.analysis-card .card-head{align-items:flex-start}.analysis-card .card-head span{max-width:210px;text-align:right}.analysis-rank{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ice);color:var(--navy);font-size:11px;font-weight:800}
   </style>
+  <style>
+    /* Phone layout: preserve dense baseball tables through horizontal scrolling,
+       while making every control and interactive visual reachable at 320px+. */
+    @media (max-width:700px){
+      .header-inner{min-height:82px;padding:8px 14px;gap:10px}
+      .logo{width:66px;height:62px}.wordmark small{font-size:8px;margin-bottom:3px}
+      .wordmark strong{font-size:20px;letter-spacing:.035em}.badgers-ribbon{font-size:9px;padding:5px 12px}
+      .shell{padding:16px 12px 38px}.control-bar{display:grid;grid-template-columns:1fr;gap:11px;padding-bottom:16px}
+      .control-bar>div{min-width:0}.control-bar select{min-width:0;width:100%}.view-switch{grid-column:auto;width:100%;justify-content:stretch}
+      .view-switch button{flex:1;min-height:42px}.profile{gap:13px;padding:22px 0 16px;align-items:center}
+      .monogram{width:58px;height:58px;border-width:3px;font-size:18px;flex:0 0 auto}.profile h1{font-size:28px;line-height:1.05;overflow-wrap:anywhere}
+      .profile p{font-size:13px;margin-top:5px}.eyebrow{font-size:9px;letter-spacing:.1em}.sample{display:none}
+      .metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{padding:13px 11px;min-width:0}.metric .value{font-size:23px;overflow-wrap:anywhere}.metric .label{font-size:10px}.stat-percentile{right:9px!important;top:10px!important;font-size:9px!important}
+      .tabs{gap:0;margin:18px -12px 0;padding:0 12px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+      .tab{flex:0 0 auto;padding:11px 10px;font-size:10px}.tab-pane{padding-top:14px}.dashboard-grid{grid-template-columns:1fr;gap:12px}.card{padding:14px 12px}.card-head{align-items:flex-start;gap:6px;margin-bottom:10px}.card h2{font-size:16px}.card-head span{font-size:11px;text-align:right}
+      .location-tools{display:grid;grid-template-columns:1fr 1fr;gap:7px}.location-tools select{width:100%;min-width:0;padding:9px 8px;font-size:11px}.location-tools select:only-child{grid-column:1/-1}
+      .table-wrap{margin:0 -1px;overflow-x:auto;-webkit-overflow-scrolling:touch}.stat-table{min-width:620px;font-size:12px}.stat-table th{padding:9px 8px;font-size:10px}.stat-table td{padding:10px 8px}
+      .pitch-row{grid-template-columns:68px minmax(75px,1fr) 42px;gap:7px;font-size:12px}.split-grid{grid-template-columns:1fr 1fr;gap:7px;margin-top:14px}.split{padding:10px}.split strong{font-size:19px}
+      #zone .zone-layout{min-height:390px}.zone-layout{gap:8px}.zone-svg{max-height:none;min-height:260px}.zone-layout .legend{font-size:11px;gap:8px 12px!important}.zone-layout::before{background-size:min(148%,650px) auto!important;background-position:center 58%!important;opacity:.45!important}
+      #overviewProfiles{gap:12px}.analysis-card .card-head span{max-width:150px}.analysis-rank{width:20px;height:20px;font-size:10px}
+      #effectivenessStatistic.effectiveness-checklist{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:10px}.effectiveness-checklist>span{grid-column:1/-1}.effectiveness-checklist label{font-size:11px}
+      .scout-report-heading{align-items:flex-start!important;gap:10px!important}.scout-report-heading img{width:54px!important;height:54px!important}.scout-grade-row,.scout-notes-grid{grid-template-columns:1fr!important}.scouting-report-card .card-head{flex-direction:column}.scout-primary{width:100%;min-height:42px}
+    }
+    @media (max-width:380px){
+      .metrics{grid-template-columns:1fr}.location-tools{grid-template-columns:1fr}.location-tools select{grid-column:1/-1}.wordmark strong{font-size:18px}.profile h1{font-size:25px}
+    }
+  </style>
   <script>
     (function(){
       const grid=document.querySelector('#overview .dashboard-grid');
