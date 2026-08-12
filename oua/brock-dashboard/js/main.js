@@ -616,8 +616,8 @@ const ACCESS = {
 
 // -- INIT ------------------------------------------
 async function init() {
-  // Auth gate: stop here if user is not signed in
-  if (!AUTH.init()) return;
+  // OUA/Brock is public. Keep the AUTH object available for optional local
+  // notes, but do not require a Google session before loading any page.
 
   await loadAll();
   buildTicker();
