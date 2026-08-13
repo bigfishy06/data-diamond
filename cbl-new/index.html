@@ -900,9 +900,10 @@
   <script>
     (function(){
       const builder=$('scoutingReportBuilder'),fields=['scoutOverallGrade','scoutRisk','scoutRecommendation','scoutExecutive','scoutStrengths','scoutWeaknesses','scoutGamePlan'];
-      const playerReportButton=$('createScoutingReport'),reportButtons=document.createElement('div'),teamReportButton=document.createElement('button');
+      const playerReportButton=$('createScoutingReport'),reportButtons=document.createElement('div'),teamReportButton=document.createElement('button'),handReportSelect=document.createElement('select');
       reportButtons.className='scouting-report-buttons';teamReportButton.id='createTeamScoutingReport';teamReportButton.type='button';teamReportButton.className='scout-primary scout-team';teamReportButton.textContent='Generate Team Report';
-      playerReportButton.parentNode.insertBefore(reportButtons,playerReportButton);reportButtons.append(playerReportButton,teamReportButton);
+      handReportSelect.id='scoutingThrowingHand';handReportSelect.hidden=true;handReportSelect.style.cssText='min-width:205px;height:38px;border:1px solid var(--navy);border-radius:4px;background:#fff;color:var(--navy);padding:0 10px;font:800 11px Inter,Arial,sans-serif';handReportSelect.innerHTML='<option value="all">Combined - both arms</option><option value="R">Right-handed pitches only</option><option value="L">Left-handed pitches only</option>';
+      playerReportButton.parentNode.insertBefore(reportButtons,playerReportButton);reportButtons.append(handReportSelect,playerReportButton,teamReportButton);
       const draftKey=()=>`cbl-scouting:${activeRole()}:${state.current?.pitcher||'unknown'}`;
       function snapshot(player){
         if(activeRole()==='pitcher')return`Strike% ${pct(player.STR_pct)} · Whiff% ${pct(player.Whiff_pct)} · K% ${pct(player.K_pct)} · BB% ${pct(player.BB_pct)} · BAA ${dec(player.BAA)}`;
@@ -911,6 +912,8 @@
       }
       function updateScoutingContext(){
         const player=state.current;if(!player)return;
+        const splitAvailable=activeRole()==='pitcher'&&String(player.pitcher||'').trim().toLowerCase()==='mizuki akatsuka';
+        handReportSelect.hidden=!splitAvailable;if(!splitAvailable)handReportSelect.value='all';
         $('scoutingReportPlayer').textContent=`${player.pitcher} · ${player.pitcher_team||'Team unavailable'}`;
         $('scoutingReportName').textContent=player.pitcher||'Player';
         $('scoutingReportMeta').textContent=`${activeRole()==='pitcher'?'Pitcher · Throws':'Batter · Bats'} ${player.throws||'—'} · ${player.pitcher_team||'Team unavailable'} · 2026 CBL`;
@@ -921,7 +924,7 @@
         let draft={};try{draft=JSON.parse(localStorage.getItem(draftKey())||'{}')}catch(e){}
         fields.forEach(id=>{if(draft[id]!=null)$(id).value=draft[id]});
       }
-      $('createScoutingReport').addEventListener('click',()=>{const player=state.current;if(!player)return;const button=$('createScoutingReport');button.disabled=true;button.textContent='Generating Report…';$('scoutingReportPlayer').textContent=`Creating ${player.pitcher}'s full-season PDF…`;const params=new URLSearchParams({season:'2026',team:player.pitcher_team||'',type:activeRole(),player:player.pitcher||'',generate:'1',nonce:String(Date.now())});let frame=$('scoutingReportGeneratorFrame');if(!frame){frame=document.createElement('iframe');frame.id='scoutingReportGeneratorFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`});
+      $('createScoutingReport').addEventListener('click',()=>{const player=state.current;if(!player)return;const button=$('createScoutingReport'),hand=!handReportSelect.hidden?handReportSelect.value:'all',handText=hand==='R'?'right-handed':hand==='L'?'left-handed':'full-season';button.disabled=true;button.textContent='Generating Report…';$('scoutingReportPlayer').textContent=`Creating ${player.pitcher}'s ${handText} PDF…`;const params=new URLSearchParams({season:'2026',team:player.pitcher_team||'',type:activeRole(),player:player.pitcher||'',generate:'1',hand:hand,nonce:String(Date.now())});let frame=$('scoutingReportGeneratorFrame');if(!frame){frame=document.createElement('iframe');frame.id='scoutingReportGeneratorFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`});
       teamReportButton.addEventListener('click',()=>{const player=state.current;if(!player||!player.pitcher_team)return;teamReportButton.disabled=true;teamReportButton.textContent='Generating Team Report…';$('scoutingReportPlayer').textContent=`Creating ${player.pitcher_team} ${activeRole()} team PDF…`;const params=new URLSearchParams({season:'2026',team:player.pitcher_team,type:activeRole(),generateTeam:'1',nonce:String(Date.now())});let frame=$('teamScoutingReportGeneratorFrame');if(!frame){frame=document.createElement('iframe');frame.id='teamScoutingReportGeneratorFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`});
       window.addEventListener('message',event=>{if(event.origin!==window.location.origin||event.data?.type!=='cbl-scouting-generated')return;const button=$('createScoutingReport');button.disabled=false;button.textContent='Generate Full-Season Report';$('scoutingReportPlayer').textContent=event.data.ok?`${event.data.player} report downloaded.`:`Could not generate ${event.data.player}'s report.`});
       window.addEventListener('message',event=>{if(event.origin!==window.location.origin||event.data?.type!=='cbl-team-scouting-generated')return;teamReportButton.disabled=false;teamReportButton.textContent='Generate Team Report';$('scoutingReportPlayer').textContent=event.data.ok?`${event.data.team} ${event.data.role} team report downloaded.`:`Could not generate ${event.data.team} team report.`});

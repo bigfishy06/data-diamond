@@ -2719,7 +2719,7 @@ Zane Skansi,Kitchener Panthers`;
 
   function genPitcherPDF(player,team,teamDoc,appendPage){
     function normName(n){return normRosterName(n);}
-    var d=teamDoc||new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),sc=player.scatter||[];
+    var d=teamDoc||new jsPDFLib.jsPDF({unit:'mm',format:'a4'}),reportSide=player.reportPitcherSide||null,sc=(player.scatter||[]).filter(function(p){return !reportSide||p.pitcher_side===reportSide;}),isHandReport=reportSide==='R'||reportSide==='L';
     if(teamDoc&&appendPage)d.addPage();
     var scTot=sc.filter(function(s){return s.outcome&&s.outcome!=='';}).length;
     var pd26=selSeason==='2026'?(DATA.pitchers.find(function(p){return normName(p.pitcher)===normName(player.name);})||{}):null;
@@ -2743,10 +2743,11 @@ Zane Skansi,Kitchener Panthers`;
     });
     var fpStr=fp.filter(reportIsStrikeOutcome).length;
     var fpsPct = fp.length>=5 ? fpStr/fp.length*100 : (player.fps_pct!=null?player.fps_pct:null);
-    var ttp = player.avg_ttp != null ? player.avg_ttp : null;
+    var _ttpRows=sc.map(function(p){return Number(p.time_to_plate);}).filter(function(v){return isFinite(v)&&v>0;});
+    var ttp = isHandReport?(_ttpRows.length?_ttpRows.reduce(function(a,b){return a+b;},0)/_ttpRows.length:null):(player.avg_ttp != null ? player.avg_ttp : null);
 
-    var _pitcherHand = getPitcherHand(player.name, sc);
-    drawBg(d);drawHdr(d,player.name,'PITCHER',team,_pitcherHand);
+    var _pitcherHand = reportSide||getPitcherHand(player.name, sc);
+    drawBg(d);drawHdr(d,player.name,isHandReport?('PITCHER - '+(reportSide==='R'?'RIGHT-HANDED':'LEFT-HANDED')):'PITCHER',team,_pitcherHand);
     var y=MT+32;
 
     // Key stat boxes
@@ -2800,7 +2801,7 @@ Zane Skansi,Kitchener Panthers`;
     var _pitKDisp  = _pitKCount!=null ? String(Math.round(_pitKCount)) : '—';
     var _pitBBDisp = _pitBBCount!=null ? String(Math.round(_pitBBCount)) : '—';
     var pitcherMetricRows=(DATA.pitchers||[]).filter(function(row){return row&&row.total_pitches>=20;});
-    var pStrike=pd26&&pd26.STR_pct!=null?+pd26.STR_pct:(tot?str/tot*100:null),pWhiff=pd26&&pd26.Whiff_pct!=null?+pd26.Whiff_pct:(sc.filter(reportIsSwingOutcome).length?swS/sc.filter(reportIsSwingOutcome).length*100:null),pK=pd26&&pd26.K_pct!=null?+pd26.K_pct:(_pitcherBF?ks/_pitcherBF*100:null),pBB=pd26&&pd26.BB_pct!=null?+pd26.BB_pct:(_pitcherBF?bbs/_pitcherBF*100:null);
+    var pStrike=!isHandReport&&pd26&&pd26.STR_pct!=null?+pd26.STR_pct:(tot?str/tot*100:null),pWhiff=!isHandReport&&pd26&&pd26.Whiff_pct!=null?+pd26.Whiff_pct:(sc.filter(reportIsSwingOutcome).length?swS/sc.filter(reportIsSwingOutcome).length*100:null),pK=!isHandReport&&pd26&&pd26.K_pct!=null?+pd26.K_pct:(_pitcherBF?ks/_pitcherBF*100:null),pBB=!isHandReport&&pd26&&pd26.BB_pct!=null?+pd26.BB_pct:(_pitcherBF?bbs/_pitcherBF*100:null);
     y=drawPercentileBoxes(d,[
       {label:'STRIKE%',display:pStrike==null?'—':f1(pStrike)+'%',pct:reportPercentile(pStrike,pitcherMetricRows.map(function(r){return +r.STR_pct;}),true)},
       {label:'WHIFF%',display:pWhiff==null?'—':f1(pWhiff)+'%',pct:reportPercentile(pWhiff,pitcherMetricRows.map(function(r){return +r.Whiff_pct;}),true)},
@@ -2810,10 +2811,10 @@ Zane Skansi,Kitchener Panthers`;
     y+=2;
 
     var kPct2=selSeason==='2026'
-      ? (pd26&&pd26.K_pct!=null?pd26.K_pct/100:(_pitcherBF>0?ks/_pitcherBF:0))
+      ? (!isHandReport&&pd26&&pd26.K_pct!=null?pd26.K_pct/100:(_pitcherBF>0?ks/_pitcherBF:0))
       : (pbpP2&&pbpP2.K_pct!=null?pbpP2.K_pct/100:(_pitcherBF>0?ks/_pitcherBF:0));
     var bbPct2=selSeason==='2026'
-      ? (pd26&&pd26.BB_pct!=null?pd26.BB_pct/100:(_pitcherBF>0?bbs/_pitcherBF:0))
+      ? (!isHandReport&&pd26&&pd26.BB_pct!=null?pd26.BB_pct/100:(_pitcherBF>0?bbs/_pitcherBF:0))
       : (pbpP2&&pbpP2.BB_pct!=null?pbpP2.BB_pct/100:(_pitcherBF>0?bbs/_pitcherBF:0));
     var strPct3=sc.length
       ? (tot>0?str/tot:0)
@@ -3161,7 +3162,7 @@ Zane Skansi,Kitchener Panthers`;
       y+=heatH+4;
     }
     }
-    if(!teamDoc)d.save('scouting_'+player.name.replace(/ /g,'_')+'_pitcher.pdf');
+    if(!teamDoc)d.save('scouting_'+player.name.replace(/ /g,'_')+'_pitcher'+(isHandReport?'_'+reportSide+'HP':'')+'.pdf');
     return d;
   }
 
@@ -3395,6 +3396,10 @@ Zane Skansi,Kitchener Panthers`;
     var requested = normRosterName(params.get('player'));
     var player = players.find(function(item){ return normRosterName(item.name) === requested; });
     if (!player) return false;
+    var requestedHand=params.get('hand');
+    if(selType==='pitcher'&&(requestedHand==='R'||requestedHand==='L')){
+      player=Object.assign({},player,{reportPitcherSide:requestedHand,scatter:(player.scatter||[]).filter(function(p){return p.pitcher_side===requestedHand;})});
+    }
     if (!canScoutPlayer(player.name, selType, team.name)) {
       autoReportHandled = true;
       if(window.parent!==window)window.parent.postMessage({type:'cbl-scouting-generated',ok:false,player:player.name},window.location.origin);
@@ -3402,7 +3407,7 @@ Zane Skansi,Kitchener Panthers`;
     }
     autoReportHandled = true;
     renderPlayerList();
-    showToast('Generating full-season report for ' + player.name + '…', '#1e3c78');
+    showToast('Generating '+(player.reportPitcherSide?player.reportPitcherSide+'HP ':'full-season ')+'report for ' + player.name + '…', '#1e3c78');
     setTimeout(function(){
       loadReportHeadshot(player.name,team).then(function(){
       try {
