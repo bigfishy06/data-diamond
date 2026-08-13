@@ -3475,6 +3475,17 @@ Zane Skansi,Kitchener Panthers`;
     function pct(v){return v==null||!isFinite(v)?'-':Number(v).toFixed(1)+'%'}
     function dec(v){return v==null||!isFinite(v)?'-':Number(v).toFixed(3).replace(/^0/,'')}
     function side(p,key){var v=String(p[key]||p.batter_side||p.pitcher_side||'').toUpperCase();return v.charAt(0)}
+    players=(players||[]).reduce(function(entries,player){
+      var source=player.scatter&&player.scatter.length?player.scatter:((player.pitch&&player.pitch.scatter)||[]);
+      var hand=role==='pitcher'?getPitcherHand(player.name,source):getBatterHand(player.name);
+      if(hand!=='S'){entries.push(player);return entries;}
+      var field=role==='pitcher'?'pitcher_side':'batter_side';
+      ['R','L'].forEach(function(reportSide){
+        var split=source.filter(function(point){return side(point,field)===reportSide;});
+        if(split.length)entries.push(Object.assign({},player,{scatter:split,summarySide:reportSide}));
+      });
+      return entries;
+    },[]);
     var pitcherLeague={fps:[],strike:[],whiff:[],k:[],bb:[]};
     var pitcherLeagueSource=(players[0]&&players[0].leaguePitchers)||DATA.pitchers||[];
     pitcherLeagueSource.forEach(function(p){
@@ -3546,28 +3557,29 @@ Zane Skansi,Kitchener Panthers`;
         var first=sc.filter(function(x){return reportCleanCount(x.count)==='0-0'||(Number(x.balls)===0&&Number(x.strikes)===0)});
         var history=getIblRowsByName(p.name)||[],ibl=history.find(function(x){return String(x.season||'').indexOf(String(season))===0&&Number(x.IP)>0})||history.find(function(x){return Number(x.IP)>0})||{};
         var whip=p.whip!=null?Number(p.whip):(Number(pd.IP)>0&&(pd.H_allowed!=null||pd.BB!=null)?(Number(pd.H_allowed||0)+Number(pd.BB||0))/Number(pd.IP):null);
-        var fpsValue=metricNumber(pd.FPS_pct);
-        if(fpsValue==null)fpsValue=metricNumber(p.fps_pct);
+        var splitSummary=p.summarySide==='R'||p.summarySide==='L';
+        var fpsValue=splitSummary?null:metricNumber(pd.FPS_pct);
+        if(fpsValue==null&&!splitSummary)fpsValue=metricNumber(p.fps_pct);
         if(fpsValue==null&&first.length)fpsValue=first.filter(reportIsStrikeOutcome).length/first.length*100;
-        var ttpValue=metricNumber(pd.avg_time_to_plate);
-        if(ttpValue==null)ttpValue=metricNumber(p.avg_ttp);
+        var ttpValue=splitSummary?null:metricNumber(pd.avg_time_to_plate);
+        if(ttpValue==null&&!splitSummary)ttpValue=metricNumber(p.avg_ttp);
         if(ttpValue==null){
           var ttpRows=sc.map(function(x){return metricNumber(x.time_to_plate)}).filter(function(x){return x!=null&&x>0});
           if(ttpRows.length)ttpValue=ttpRows.reduce(function(a,b){return a+b},0)/ttpRows.length;
         }
-        var strikeValue=metricNumber(p.strike_pct);
-        if(strikeValue==null)strikeValue=metricNumber(pd.STR_pct);
+        var strikeValue=splitSummary?null:metricNumber(p.strike_pct);
+        if(strikeValue==null&&!splitSummary)strikeValue=metricNumber(pd.STR_pct);
         if(strikeValue==null&&sc.length)strikeValue=sc.filter(reportIsStrikeOutcome).length/sc.length*100;
-        var whiffValue=metricNumber(p.whiff_pct);
-        if(whiffValue==null)whiffValue=metricNumber(pd.Whiff_pct);
+        var whiffValue=splitSummary?null:metricNumber(p.whiff_pct);
+        if(whiffValue==null&&!splitSummary)whiffValue=metricNumber(pd.Whiff_pct);
         if(whiffValue==null&&sw.length)whiffValue=wh.length/sw.length*100;
-        var kValue=metricNumber(p.k_pct);
-        if(kValue==null)kValue=metricNumber(pd.K_pct);
+        var kValue=splitSummary?null:metricNumber(p.k_pct);
+        if(kValue==null&&!splitSummary)kValue=metricNumber(pd.K_pct);
         if(kValue==null&&pa.length)kValue=ks.length/pa.length*100;
-        var bbValue=metricNumber(p.bb_pct);
-        if(bbValue==null)bbValue=metricNumber(pd.BB_pct);
+        var bbValue=splitSummary?null:metricNumber(p.bb_pct);
+        if(bbValue==null&&!splitSummary)bbValue=metricNumber(pd.BB_pct);
         if(bbValue==null&&pa.length)bbValue=bb.length/pa.length*100;
-        var hand=getPitcherHand(p.name)||pd.throws||((sc.find(function(x){return x.pitcher_side})||{}).pitcher_side)||ibl.throws||'-';
+        var hand=p.summarySide||getPitcherHand(p.name,sc)||pd.throws||((sc.find(function(x){return x.pitcher_side})||{}).pitcher_side)||ibl.throws||'-';
         var ttpNumber=Number(ttpValue),ttpColor=!isFinite(ttpNumber)?'#ffffff':ttpNumber<1.30?'#ef8f96':ttpNumber>1.40?'#72c2aa':'#ffffff';
         return {hand:String(hand).charAt(0).toUpperCase(),values:[
           ['FPS%',pct(fpsValue),reportPercentile(fpsValue,pitcherLeague.fps,true)],
@@ -3578,7 +3590,7 @@ Zane Skansi,Kitchener Panthers`;
           ['TTP',ttpValue!=null?Number(ttpValue).toFixed(2)+'s':'-',null,ttpColor]]};
       }
       var s=p.summary||{},firstB=sc.filter(function(x){return Number(x.balls)===0&&Number(x.strikes)===0});
-      return {hand:getBatterHand(p.name)||'-',values:[
+      return {hand:p.summarySide||getBatterHand(p.name)||'-',values:[
         ['PA',s.PA||pa.length||'-'],['AVG',dec(s.AVG)],['OPS',dec(s.OPS)],
         ['FPS%',pct(firstB.length?firstB.filter(reportIsStrikeOutcome).length/firstB.length*100:null)],
         ['WHIFF%',pct(sw.length?wh.length/sw.length*100:null)],['K%',pct(s.PA?Number(s.K||0)/Number(s.PA)*100:null)],
