@@ -146,10 +146,11 @@
     $('pitcherHandFilter').addEventListener('change',updateFilters);$('mapMode').addEventListener('change',updateFilters);document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(setRoleZone,0)));setTimeout(setRoleZone,600);
   </script>
   <script>
-    function validHand(value,allowSwitch){const hand=String(value||'').trim().toUpperCase();return(allowSwitch?['R','L','S']:['R','L']).includes(hand)?hand:''}
-    function trackedHand(player,field,allowSwitch){const counts={R:0,L:0,S:0};safePoints(player||{}).forEach(point=>{const hand=validHand(point[field],true);if(hand)counts[hand]++});if(allowSwitch&&counts.S>0)return'S';return['R','L'].sort((a,b)=>counts[b]-counts[a])[0]&&Math.max(counts.R,counts.L)>0?['R','L'].sort((a,b)=>counts[b]-counts[a])[0]:''}
+    function validHand(value,allowSwitch){const hand=String(value||'').trim().toUpperCase().replace(/\s+/g,'');if(allowSwitch&&['S','SWITCH','BOTH','R/L','L/R','RL','LR'].includes(hand))return'S';return['R','L'].includes(hand)?hand:''}
+    function trackedHand(player,field,allowSwitch){const counts={R:0,L:0,S:0};safePoints(player||{}).forEach(point=>{const hand=validHand(point[field],true);if(hand)counts[hand]++});if(allowSwitch&&(counts.S>0||(counts.R>0&&counts.L>0)))return'S';return counts.R||counts.L?(counts.R>=counts.L?'R':'L'):''}
     const BAT_HAND_OVERRIDES={'aj karosas':'L','anderson feliz':'S','roberto caro':'S'};
-    function profileHand(player,batter){const playerName=String(player&&(player.pitcher||player.name)||'').trim().toLowerCase(),override=batter?BAT_HAND_OVERRIDES[playerName]:'';return override||validHand(player&&player.throws,batter)||trackedHand(player,batter?'batter_side':'pitcher_side',batter)||'—'}
+    const PITCH_HAND_OVERRIDES={'mizuki akatsuka':'S'};
+    function profileHand(player,batter){const playerName=String(player&&(player.pitcher||player.name)||'').trim().toLowerCase(),override=(batter?BAT_HAND_OVERRIDES:PITCH_HAND_OVERRIDES)[playerName]||'',tracked=trackedHand(player,batter?'batter_side':'pitcher_side',true);return override||(tracked==='S'?'S':'')||validHand(player&&player.throws,true)||tracked||'—'}
     function refreshProfileContext(){const batter=activeRole()==='batter',p=state.current;if(!p)return;document.querySelector('.profile .eyebrow').textContent=batter?'BATTER PROFILE':'PITCHER PROFILE';$('playerLabel').textContent=batter?'BATTER PROFILE':'PITCHER PROFILE';$('meta').textContent=batter?`${p.pitcher_team||'Guelph Royals'} · Bats ${profileHand(p,true)}`:`${p.pitcher_team||'Guelph Royals'} · Throws ${profileHand(p,false)}`}
     document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(refreshProfileContext,0)));$('player').addEventListener('change',()=>setTimeout(refreshProfileContext,0));setTimeout(refreshProfileContext,650);
   </script>
@@ -916,7 +917,7 @@
         handReportSelect.hidden=!splitAvailable;if(!splitAvailable)handReportSelect.value='all';
         $('scoutingReportPlayer').textContent=`${player.pitcher} · ${player.pitcher_team||'Team unavailable'}`;
         $('scoutingReportName').textContent=player.pitcher||'Player';
-        $('scoutingReportMeta').textContent=`${activeRole()==='pitcher'?'Pitcher · Throws':'Batter · Bats'} ${player.throws||'—'} · ${player.pitcher_team||'Team unavailable'} · 2026 CBL`;
+        $('scoutingReportMeta').textContent=`${activeRole()==='pitcher'?'Pitcher · Throws':'Batter · Bats'} ${profileHand(player,activeRole()==='batter')} · ${player.pitcher_team||'Team unavailable'} · 2026 CBL`;
         $('scoutingStatSnapshot').textContent=snapshot(player);
         const profileImage=document.querySelector('.monogram img'),reportImage=$('scoutingReportHeadshot');if(profileImage?.src)reportImage.src=profileImage.src;else reportImage.removeAttribute('src');
       }

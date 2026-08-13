@@ -1465,6 +1465,7 @@ Zane Skansi,Kitchener Panthers`;
     if (total === 0) return null;
     var sides = Object.keys(counts);
     if (sides.length === 1) return sides[0];
+    if ((counts.R || 0) > 0 && (counts.L || 0) > 0) return 'S';
     var dominant = sides.reduce(function(a, b) { return counts[a] >= counts[b] ? a : b; });
     if (counts[dominant] / total >= 0.5) return dominant;
     return 'S';
@@ -1472,7 +1473,9 @@ Zane Skansi,Kitchener Panthers`;
 
   // Get batter handedness: scatter batter_side -> IBL history
   function getBatterHand(playerName) {
-    if (String(playerName || '').trim().toLowerCase() === 'aj karosas') return 'L';
+    var playerKey=String(playerName || '').trim().toLowerCase();
+    if (playerKey === 'aj karosas') return 'L';
+    if (playerKey === 'anderson feliz' || playerKey === 'roberto caro') return 'S';
     var pitchObj = getPitchPlayer(playerName) || getPitchPlayerForRoster(playerName);
     var scatter = pitchObj ? pitchObj.scatter : [];
     var fromScatter = scoutDeriveHand(scatter, 'batter_side');
@@ -1486,6 +1489,7 @@ Zane Skansi,Kitchener Panthers`;
 
   // Get pitcher handedness: scatter pitcher_side -> IBL history
   function getPitcherHand(playerName, scatter) {
+    if (String(playerName || '').trim().toLowerCase() === 'mizuki akatsuka') return 'S';
     var fromScatter = scoutDeriveHand(scatter || [], 'pitcher_side');
     if (fromScatter) return fromScatter;
     var iblRows = getIblRowsByName(playerName);
