@@ -2747,7 +2747,7 @@ Zane Skansi,Kitchener Panthers`;
     var ttp = isHandReport?(_ttpRows.length?_ttpRows.reduce(function(a,b){return a+b;},0)/_ttpRows.length:null):(player.avg_ttp != null ? player.avg_ttp : null);
 
     var _pitcherHand = reportSide||getPitcherHand(player.name, sc);
-    drawBg(d);drawHdr(d,player.name,isHandReport?('PITCHER - '+(reportSide==='R'?'RIGHT-HANDED':'LEFT-HANDED')):'PITCHER',team,_pitcherHand);
+    drawBg(d);drawHdr(d,player.name,'PITCHER',team,_pitcherHand);
     var y=MT+32;
 
     // Key stat boxes
