@@ -468,7 +468,6 @@
     (function(){
       const baseUpdateMix=updateMix;
       const baseRenderTendencies=renderTendencies;
-      const isBadgersPitcher=()=>activeRole()==='pitcher'&&String(state.current?.pitcher_team||'').trim().toLowerCase()==='brock badgers';
       function badgersPitchGroup(type){
         const key=String(type||'').toLowerCase().replace(/[\s-]+/g,'');
         if(['fastball','sinker','cutter'].includes(key))return'FB';
@@ -481,7 +480,7 @@
         return buckets.map(bucket=>{const usage=usageValues.get(bucket);return `<div class="pitch-row"><span>${bucket}</span><div class="bar"><span style="width:${usage}%;background:${colors[bucket]}"></span></div><strong>${usage.toFixed(1)}%</strong></div>`}).join('');
       }
       updateMix=function(player){
-        if(!isBadgersPitcher()){baseUpdateMix(player);return}
+        if(activeRole()!=='pitcher'){baseUpdateMix(player);return}
         const points=pitcherUsagePoints(state.current),splitGrid=document.querySelector('#overview .split-grid');
         splitGrid.style.display='none';
         $('mixSample').textContent=`${points.length} tracked pitches`;
@@ -489,7 +488,7 @@
         $('pitchMix').innerHTML=`<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px">${['R','L'].map(hand=>{const rows=points.filter(point=>point.batter_side===hand);return `<div><label>VS. ${hand}HH · ${rows.length} PITCHES</label>${badgersUsageRows(rows)}</div>`}).join('')}</div>`;
       };
       renderTendencies=function(){
-        if(!isBadgersPitcher()){baseRenderTendencies();return}
+        if(activeRole()!=='pitcher'){baseRenderTendencies();return}
         const points=pitcherUsagePoints(state.current),buckets=['FB','BB','OS'];
         const cells=(rows,hand)=>{const handed=rows.filter(row=>row.batter_side===hand),mapped=handed.filter(row=>badgersPitchGroup(row.pitch_type)),usageValues=normalizedUsageMap(buckets.map(bucket=>[bucket]),entry=>mapped.filter(row=>badgersPitchGroup(row.pitch_type)===entry[0]).length);return `<td>${mapped.length||'—'}</td>${buckets.map(bucket=>`<td>${mapped.length?usageValues.get(bucket).toFixed(1)+'%':'—'}</td>`).join('')}`};
         $('tendencyHead').innerHTML='<tr><th>Count situation</th><th>RHH P</th><th>RHH FB</th><th>RHH BB</th><th>RHH OS</th><th>LHH P</th><th>LHH FB</th><th>LHH BB</th><th>LHH OS</th></tr>';
@@ -511,10 +510,9 @@
         return null;
       };
       renderTendencies=function(){
-        const badgers=activeRole()==='pitcher'&&String(state.current?.pitcher_team||'').trim().toLowerCase()==='brock badgers';
-        if(!badgers){previousRenderTendencies();return}
+        if(activeRole()!=='pitcher'){previousRenderTendencies();return}
         const hand=$('tendencyHandFilter').value,groups=['FB','BB','OS'];
-        const points=selectedPoints().filter(point=>hand==='all'||point.batter_side===hand);
+        const points=selectedPoints().filter(point=>includePitchTypeStatistic(point.pitch_type)&&(hand==='all'||point.batter_side===hand));
         $('tendencyHead').innerHTML='<tr><th>Count situation</th><th>P</th><th>FB</th><th>BB</th><th>OS</th></tr>';
         $('tendencyBody').innerHTML=tendencyRows().map(([label,test])=>{
           const rows=points.filter(test),mapped=rows.filter(row=>bucket(row.pitch_type)),total=mapped.length;
