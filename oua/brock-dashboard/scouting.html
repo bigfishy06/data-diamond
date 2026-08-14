@@ -1282,14 +1282,16 @@ Zane Skansi,Kitchener Panthers`;
   function buildBatterPitchTypeRows(points) {
     function batterPitchTypeGroup(p){
       var t=reportPitchTypeName(p);
-      return (t==='Fastball'||t==='Sinker'||t==='Cutter')?'Fastball':'Offspeed';
+      if(t==='Fastball'||t==='Sinker'||t==='Cutter') return 'Fastball';
+      if(['Breaking Ball','Slider','Sweeper','Curveball','Slurve','Knuckle Curve'].includes(t)) return 'Breaking Ball';
+      return 'Offspeed';
     }
     var pts=reportBatterUsagePoints(points);
     var total=pts.length;
     if(!total)return [];
     var by={};
     pts.forEach(function(p){var t=batterPitchTypeGroup(p);(by[t]=by[t]||[]).push(p);});
-    var keys=Object.keys(by).sort(function(a,b){return (a==='Fastball'?0:1)-(b==='Fastball'?0:1);});
+    var keys=['Fastball','Breaking Ball','Offspeed'].filter(function(t){return by[t];});
     var usageParts=reportPctParts(keys.map(function(t){return by[t].length;}));
     return keys.map(function(t,ti){
       var arr=by[t],sw=arr.filter(reportIsSwingOutcome);
@@ -2823,14 +2825,14 @@ Zane Skansi,Kitchener Panthers`;
     y=drawSec(d,'Approach',y);
 
     var _pQuadDefs=[{label:'Up & Left',fn:function(p){return p.y>=.5&&p.x>0;}},{label:'Up & Right',fn:function(p){return p.y>=.5&&p.x<=0;}},{label:'Down & Left',fn:function(p){return p.y<.5&&p.x>0;}},{label:'Down & Right',fn:function(p){return p.y<.5&&p.x<=0;}}];
-    function _pGroup(p){var t=reportPitchTypeBucket(p);return (t==='Fastball'||t==='Sinker'||t==='Cutter')?'Fastballs':'Offspeed';}
+    function _pGroup(p){var t=reportPitchTypeBucket(p);if(t==='Fastball'||t==='Sinker'||t==='Cutter')return 'Fastball';if(['Breaking Ball','Slider','Sweeper','Curveball','Slurve','Knuckle Curve'].includes(t))return 'Breaking Ball';return 'Offspeed';}
     function _pRate(n,den){return den?f1(n/den*100)+'%':'—';}
     function _pOps(points){var ends=points.filter(reportIsPlateAppearance),ab=ends.filter(reportIsAtBat).length,h=ends.filter(function(p){return ['Single','Double','Triple','Home Run'].includes(p.outcome);}).length,bb=ends.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length,hbp=ends.filter(function(p){return p.outcome==='Hit By Pitch';}).length,sf=ends.filter(function(p){return p.outcome==='Sacrifice Fly'||p.outcome==='Sac Fly Double Play';}).length,tb=ends.reduce(function(sum,p){return sum+(p.outcome==='Single'?1:p.outcome==='Double'?2:p.outcome==='Triple'?3:p.outcome==='Home Run'?4:0);},0),obpd=ab+bb+hbp+sf;return ab&&obpd?f3((h+bb+hbp)/obpd+tb/ab):'—';}
     var _pLeaguePts=[];(DATA.pitchers||[]).forEach(function(p){_pLeaguePts=_pLeaguePts.concat(p.scatter||[]);});
     function _pBench(points){var swings=points.filter(reportIsSwingOutcome),outside=points.filter(xyOutOfZone),ops=parseFloat(_pOps(points));return[points.length?points.filter(reportIsStrikeOutcome).length/points.length*100:null,swings.length?points.filter(reportIsWhiffOutcome).length/swings.length*100:null,outside.length?outside.filter(reportIsSwingOutcome).length/outside.length*100:null,isFinite(ops)?ops:null];}
     var _pLeagueBench=_pBench(_pLeaguePts),_pAllLocated=sc.filter(hasPitchLocation).length,_pFirstAll=sc.filter(function(p){return reportCleanCount(p.count)==='0-0';}).length;
     var _pWidths=[37,25,25,25,25,25,24],_pHeaders=['LOCATION','USAGE%','FP USAGE%','STRIKE%','WHIFF%','CHASE%','OPS'],_pTitleH=4.8,_pHeadH=5.5,_pRowH=4.8;
-    ['Fastballs','Offspeed'].forEach(function(group,gi){var top=y,tableH=_pTitleH+_pHeadH+_pQuadDefs.length*_pRowH,bar=gi===0?[32,75,145]:[255,255,255];d.setFillColor(bar[0],bar[1],bar[2]);d.rect(ML,y,CPW,_pTitleH,'F');d.setFont('helvetica','bold');d.setFontSize(7.3);d.setTextColor(gi?8:255,gi?12:255,gi?18:255);d.text(group.toUpperCase(),ML+3,y+3.8);y+=_pTitleH;d.setFillColor(31,42,61);d.rect(ML,y,CPW,_pHeadH,'F');var hxP=ML;_pHeaders.forEach(function(label,i){d.setFont('helvetica','bold');d.setFontSize(5.6);d.setTextColor(255,255,255);d.text(label,hxP+_pWidths[i]/2,y+3.9,{align:'center'});hxP+=_pWidths[i];});y+=_pHeadH;_pQuadDefs.forEach(function(q,ri){var pts=sc.filter(function(p){return hasPitchLocation(p)&&_pGroup(p)===group&&q.fn(p);}),sw=pts.filter(reportIsSwingOutcome),outside=pts.filter(xyOutOfZone),vals=[q.label,_pRate(pts.length,_pAllLocated),_pRate(pts.filter(function(p){return reportCleanCount(p.count)==='0-0';}).length,_pFirstAll),_pRate(pts.filter(reportIsStrikeOutcome).length,pts.length),_pRate(pts.filter(reportIsWhiffOutcome).length,sw.length),_pRate(outside.filter(reportIsSwingOutcome).length,outside.length),_pOps(pts)],cx=ML;d.setFillColor(ri%2?248:237,ri%2?250:243,ri%2?253:249);d.rect(ML,y,CPW,_pRowH,'F');vals.forEach(function(value,ci){var mi=ci>=3?ci-3:null,n=parseFloat(value),avg=mi==null?null:_pLeagueBench[mi],grade=null;if(mi!=null&&isFinite(n)&&avg!=null){var tol=mi===3 ? .05 : 2,delta=mi===3?avg-n:n-avg;grade=delta>tol?'good':delta< -tol?'bad':'average';d.setFillColor(grade==='good'?155:grade==='bad'?244:255,grade==='good'?233:grade==='bad'?166:255,grade==='good'?159:grade==='bad'?166:255);d.rect(cx+.5,y+.4,_pWidths[ci]-1,_pRowH-.8,'F');}d.setFont('helvetica','bold');d.setFontSize(ci===0?6.5:(mi!=null?7.4:6.9));d.setTextColor(8,12,18);d.text(String(value),cx+(ci===0?3:_pWidths[ci]/2),y+3.55,ci===0?{}:{align:'center'});cx+=_pWidths[ci];});y+=_pRowH;});d.setDrawColor(205,212,223);d.setLineWidth(.2);d.rect(ML,top,CPW,tableH,'S');y+=1.8;});
+    ['Fastball','Breaking Ball','Offspeed'].forEach(function(group,gi){var top=y,tableH=_pTitleH+_pHeadH+_pQuadDefs.length*_pRowH,bar=gi===0?[32,75,145]:[255,255,255];d.setFillColor(bar[0],bar[1],bar[2]);d.rect(ML,y,CPW,_pTitleH,'F');d.setFont('helvetica','bold');d.setFontSize(7.3);d.setTextColor(gi?8:255,gi?12:255,gi?18:255);d.text(group.toUpperCase(),ML+3,y+3.8);y+=_pTitleH;d.setFillColor(31,42,61);d.rect(ML,y,CPW,_pHeadH,'F');var hxP=ML;_pHeaders.forEach(function(label,i){d.setFont('helvetica','bold');d.setFontSize(5.6);d.setTextColor(255,255,255);d.text(label,hxP+_pWidths[i]/2,y+3.9,{align:'center'});hxP+=_pWidths[i];});y+=_pHeadH;_pQuadDefs.forEach(function(q,ri){var pts=sc.filter(function(p){return hasPitchLocation(p)&&_pGroup(p)===group&&q.fn(p);}),sw=pts.filter(reportIsSwingOutcome),outside=pts.filter(xyOutOfZone),vals=[q.label,_pRate(pts.length,_pAllLocated),_pRate(pts.filter(function(p){return reportCleanCount(p.count)==='0-0';}).length,_pFirstAll),_pRate(pts.filter(reportIsStrikeOutcome).length,pts.length),_pRate(pts.filter(reportIsWhiffOutcome).length,sw.length),_pRate(outside.filter(reportIsSwingOutcome).length,outside.length),_pOps(pts)],cx=ML;d.setFillColor(ri%2?248:237,ri%2?250:243,ri%2?253:249);d.rect(ML,y,CPW,_pRowH,'F');vals.forEach(function(value,ci){var mi=ci>=3?ci-3:null,n=parseFloat(value),avg=mi==null?null:_pLeagueBench[mi],grade=null;if(mi!=null&&isFinite(n)&&avg!=null){var tol=mi===3 ? .05 : 2,delta=mi===3?avg-n:n-avg;grade=delta>tol?'good':delta< -tol?'bad':'average';d.setFillColor(grade==='good'?155:grade==='bad'?244:255,grade==='good'?233:grade==='bad'?166:255,grade==='good'?159:grade==='bad'?166:255);d.rect(cx+.5,y+.4,_pWidths[ci]-1,_pRowH-.8,'F');}d.setFont('helvetica','bold');d.setFontSize(ci===0?6.5:(mi!=null?7.4:6.9));d.setTextColor(8,12,18);d.text(String(value),cx+(ci===0?3:_pWidths[ci]/2),y+3.55,ci===0?{}:{align:'center'});cx+=_pWidths[ci];});y+=_pRowH;});d.setDrawColor(205,212,223);d.setLineWidth(.2);d.rect(ML,top,CPW,tableH,'S');y+=1.8;});
 
     // ── shared metric helpers (pitcher perspective) ───────────────────────
     if(false){
@@ -3702,7 +3704,7 @@ Zane Skansi,Kitchener Panthers`;
     function batterSummaryAttack(points){
       var pts=(points||[]).filter(function(p){return hasPitchLocation(p)}),hits=['Single','Double','Triple','Home Run'];
       if(!pts.length)return ['Attack: not enough location data',''];
-      function batPitch(p){var t=reportPitchTypeBucket(p);return ['Fastball','Sinker','Cutter'].includes(t)?'Fastball':'Offspeed'}
+      function batPitch(p){var t=reportPitchTypeBucket(p);if(['Fastball','Sinker','Cutter'].includes(t))return 'Fastball';if(['Breaking Ball','Slider','Sweeper','Curveball','Slurve','Knuckle Curve'].includes(t))return 'Breaking Ball';return 'Offspeed'}
       var zones=[
         ['High in zone',function(p){return Number(p.y)>.66}],['Low in zone',function(p){return Number(p.y)<.33}],
         ['Left side of zone',function(p){return Number(p.x)>.33}],['Right side of zone',function(p){return Number(p.x)<-.33}]
