@@ -1200,5 +1200,92 @@
       const average=rows=>rows[0].map((_,index)=>rows.reduce((total,row)=>total+(Number.isFinite(row[index])?row[index]:0),0)/Math.max(rows.filter(row=>Number.isFinite(row[index])).length,1));
       try{const [batters,pitchers]=await Promise.all([fetch('data/pitches2026.json').then(r=>r.json()),fetch('data/pitchers2026.json').then(r=>r.json())]);const batterAverage=average([batterMetrics(batters.flatMap(player=>Array.isArray(player.scatter)?player.scatter:[]))]),pitcherAverage=average([pitcherMetrics(pitchers.flatMap(player=>pitcherUsagePoints(player)))]);function color(){const batter=activeRole()==='batter',baseline=batter?batterAverage:pitcherAverage,lower=batter?new Set([0,2,3,4]):new Set([5,6]);[...container.querySelectorAll('.game-analysis-metric')].forEach((card,index)=>{const value=parseFloat(card.querySelector('strong')?.textContent),base=baseline[index];if(!Number.isFinite(value)||!Number.isFinite(base))return;const diff=(value-base)*(lower.has(index)?-1:1),strength=Math.min(Math.abs(diff)/(index===6?15:12),1),target=diff>=0?[22,132,92]:[216,32,50],rgb=target.map(channel=>Math.round(255+(channel-255)*strength));card.querySelector('strong').style.setProperty('color',`rgb(${rgb.join(',')})`,'important')})}new MutationObserver(color).observe(container,{childList:true});color()}catch(error){}})();
   </script>
+  <script>
+    /* The pitch export can contain a team before its summary export is refreshed.
+       Keep those hitters selectable instead of hiding their whole team. */
+    (async function () {
+      const teamSelect = $('team');
+      const playerSelect = $('player');
+      const batterButton = document.querySelector('[data-role="batter"]');
+      const pitchLevel = new Set(['', 'Ball', 'Called Strike', 'Swinging Strike', 'Foul', 'Pickoff']);
+      const nonAtBat = new Set(['Walk', 'Intentional Walk', 'Hit By Pitch', 'Sacrifice Fly', 'Sac Fly Double Play', 'Sacrifice Bunt', 'Sac Bunt Double Play', 'Catcher Interference', 'Batter Interference', 'Caught Stealing', 'Truncated Out', 'Additional Out']);
+      const hits = new Set(['Single', 'Double', 'Triple', 'Home Run']);
+      const swing = new Set(['Swinging Strike', 'Foul', 'Strikeout Swinging', 'Dropped Third Strike Swinging', 'Single', 'Double', 'Triple', 'Home Run', 'Groundout', 'Flyout', 'Popout', 'Lineout', 'Double Play', 'Triple Play', 'Error', 'Field Error', 'Fielders Choice', "Fielder's Choice", 'Sacrifice Fly', 'Sac Fly Double Play', 'Sacrifice Bunt', 'Sac Bunt Double Play']);
+      const whiff = new Set(['Swinging Strike', 'Strikeout Swinging', 'Dropped Third Strike Swinging']);
+
+      let fallbackBatters = [];
+      try {
+        const records = await fetch('data/pitches2026.json').then(response => response.json());
+        fallbackBatters = records
+          .filter(record => record && record.batter && record.team === 'McMaster Marauders')
+          .map(record => {
+            const points = Array.isArray(record.scatter) ? record.scatter : [];
+            const plateAppearances = points.filter(point => !pitchLevel.has(point.outcome || ''));
+            const atBats = plateAppearances.filter(point => !nonAtBat.has(point.outcome || ''));
+            const hitCount = atBats.filter(point => hits.has(point.outcome)).length;
+            const swings = points.filter(point => swing.has(point.outcome)).length;
+            const strikeouts = plateAppearances.filter(point => String(point.outcome || '').includes('Strikeout')).length;
+            const walks = plateAppearances.filter(point => ['Walk', 'Intentional Walk'].includes(point.outcome)).length;
+            return {
+              pitcher: record.batter,
+              pitcher_team: record.team,
+              throws: record.bats || points.map(point => point.batter_side).find(Boolean) || '—',
+              total_pitches: record.pitches_seen || points.length,
+              IP: plateAppearances.length,
+              K_pct: plateAppearances.length ? strikeouts / plateAppearances.length * 100 : 0,
+              BB_pct: plateAppearances.length ? walks / plateAppearances.length * 100 : 0,
+              Whiff_pct: swings ? points.filter(point => whiff.has(point.outcome)).length / swings * 100 : 0,
+              STR_pct: points.length ? points.filter(point => point.result === 'strike' || point.result === 'strikeout' || point.result === 'hit' || ['Groundout', 'Flyout', 'Popout', 'Lineout', 'Double Play', 'Triple Play', 'Error'].includes(point.outcome)).length / points.length * 100 : 0,
+              K_BB: 0,
+              FPS_pct: 0,
+              Putaway_pct: 0,
+              BAA: atBats.length ? hitCount / atBats.length : 0,
+              BABIP: 0,
+              GB_pct: 0,
+              scatter: points
+            };
+          });
+      } catch (error) {
+        return;
+      }
+
+      function batterMode() {
+        return batterButton && batterButton.classList.contains('active');
+      }
+      function renderFallbackPlayers(players) {
+        state.players = players;
+        playerSelect.innerHTML = players.length
+          ? players.map(player => `<option value="${player.pitcher}">${player.pitcher} · ${player.pitcher_team}</option>`).join('')
+          : '<option>No players in this team</option>';
+        if (players.length) selectPlayer(players[0].pitcher);
+      }
+      function addMcMasterOption() {
+        if (!batterMode() || !fallbackBatters.length || [...teamSelect.options].some(option => option.value === 'McMaster Marauders')) return;
+        const option = document.createElement('option');
+        option.value = 'McMaster Marauders';
+        option.textContent = 'McMaster Marauders';
+        teamSelect.appendChild(option);
+      }
+      function mergeAllBatters() {
+        const existing = Array.isArray(state.players) ? state.players : [];
+        const names = new Set(existing.map(player => String(player.pitcher || '').toLowerCase()));
+        const combined = existing.concat(fallbackBatters.filter(player => !names.has(player.pitcher.toLowerCase())));
+        renderFallbackPlayers(combined);
+      }
+
+      document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => {
+        setTimeout(() => {
+          addMcMasterOption();
+          if (batterMode() && teamSelect.value === 'all') mergeAllBatters();
+        }, 0);
+      }));
+      teamSelect.addEventListener('change', () => setTimeout(() => {
+        if (!batterMode()) return;
+        if (teamSelect.value === 'McMaster Marauders') renderFallbackPlayers(fallbackBatters);
+        else if (teamSelect.value === 'all') mergeAllBatters();
+      }, 0));
+      setTimeout(() => { addMcMasterOption(); if (batterMode() && teamSelect.value === 'all') mergeAllBatters(); }, 2300);
+    })();
+  </script>
 </body>
 </html>
