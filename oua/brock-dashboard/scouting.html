@@ -1336,7 +1336,7 @@ Zane Skansi,Kitchener Panthers`;
   function reportBatterUsagePoints(points) {
     return (points || []).filter(function(s) {
       var raw = reportRawPitchType(s);
-      return raw && raw !== 'unclassified' && raw !== 'other' && raw !== 'breaking ball' && raw !== 'breaking balls' && reportPitchTypeBucket(s) !== 'Unknown';
+      return raw && raw !== 'unclassified' && raw !== 'other' && reportPitchTypeBucket(s) !== 'Unknown';
     });
   }
   function reportPitcherUsagePoints(points, teamName) {
@@ -1344,7 +1344,7 @@ Zane Skansi,Kitchener Panthers`;
       var side = String((s && s.batter_side) || '').trim().toUpperCase();
       var raw = reportRawPitchType(s);
       if (side !== 'R' && side !== 'L') return false;
-      if (!raw || raw === 'unclassified' || raw === 'other' || raw === 'breaking ball' || raw === 'breaking balls') return false;
+      if (!raw || raw === 'unclassified' || raw === 'other') return false;
       return reportPitchTypeBucket(s) !== 'Unknown';
     });
   }

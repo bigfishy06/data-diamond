@@ -37,9 +37,7 @@
   <script>
     function includePitchTypeStatistic(type){
       const normalized=String(type||'').trim().toLowerCase();
-      const currentTeam=String(typeof state!=='undefined'&&state.current?.pitcher_team||'').trim().toLowerCase();
-      const isBrockPitcher=typeof activeRole==='function'&&activeRole()==='pitcher'&&currentTeam==='brock badgers';
-      return normalized!==''&&normalized!=='unclassified'&&normalized!=='breaking ball'&&normalized!=='breaking balls'&&!(isBrockPitcher&&normalized==='offspeed');
+      return normalized!==''&&normalized!=='unclassified'&&normalized!=='other';
     }
     function batterPitchBucket(type){
       const normalized=String(type||'').trim().toLowerCase();

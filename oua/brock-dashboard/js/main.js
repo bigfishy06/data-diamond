@@ -829,6 +829,7 @@ function pctPartsFromCounts(counts) {
 var PITCH_TYPE_DISPLAY_MODE = 'category';
 var PITCH_CATEGORY_COLORS = {
   'Fastball': '#f87171',
+  'Breaking Ball': '#60a5fa',
   'Offspeed': '#a78bfa',
   'Unknown': '#94a3b8'
 };
@@ -920,7 +921,8 @@ function pitchTypeCategory(t) {
   var pt = normalizePitchTypeName(t);
   var key = pt.toLowerCase().replace(/[\s_-]+/g, ' ');
   if (key.indexOf('fastball') !== -1 || key === 'four seam' || key === '4 seam' || key === 'two seam' || key === '2 seam' || key === 'sinker' || key === 'cutter' || key === 'cut fastball') return 'Fastball';
-  if (key.indexOf('slider') !== -1 || key.indexOf('curve') !== -1 || key.indexOf('sweeper') !== -1 || key.indexOf('slurve') !== -1 || key.indexOf('change') !== -1 || key.indexOf('split') !== -1 || key.indexOf('fork') !== -1 || key.indexOf('knuckle') !== -1 || key === 'breaking ball' || key === 'offspeed') return 'Offspeed';
+  if (key.indexOf('slider') !== -1 || key.indexOf('curve') !== -1 || key.indexOf('sweeper') !== -1 || key.indexOf('slurve') !== -1 || key === 'breaking ball') return 'Breaking Ball';
+  if (key.indexOf('change') !== -1 || key.indexOf('split') !== -1 || key.indexOf('fork') !== -1 || key.indexOf('knuckle') !== -1 || key === 'offspeed') return 'Offspeed';
   return pt === 'Unknown' ? 'Unknown' : pt;
 }
 function pitchTypeFullName(t) {
