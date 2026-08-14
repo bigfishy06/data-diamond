@@ -106,15 +106,12 @@ const AUTH = {
 };
 
 const TEAMS = [
-  { id: 'bar', name: 'Barrie Baycats',             abbreviation: 'BAR', primaryColor: '#002D62' },
-  { id: 'bra', name: 'Brantford Red Sox',           abbreviation: 'BRA', primaryColor: '#BD3039' },
-  { id: 'ckb', name: 'Chatham-Kent Barnstormers',   abbreviation: 'CKB', primaryColor: '#E87722' },
-  { id: 'gue', name: 'Guelph Royals',               abbreviation: 'GUE', primaryColor: '#003DA5' },
-  { id: 'ham', name: 'Hamilton Cardinals',           abbreviation: 'HAM', primaryColor: '#C8102E' },
-  { id: 'kit', name: 'Kitchener Panthers',           abbreviation: 'KIT', primaryColor: '#F5A800' },
-  { id: 'lon', name: 'London Majors',                abbreviation: 'LON', primaryColor: '#072B61' },
-  { id: 'tor', name: 'Toronto Maple Leafs',          abbreviation: 'TOR', primaryColor: '#134A8E' },
-  { id: 'wel', name: 'Welland Jackfish',             abbreviation: 'WEL', primaryColor: '#00703C' }
+  { id: 'bro', name: 'Brock Badgers',                abbreviation: 'BRO', primaryColor: '#102746' },
+  { id: 'gue', name: 'Guelph Gryphons',              abbreviation: 'GUE', primaryColor: '#C8102E' },
+  { id: 'mcm', name: 'McMaster Marauders',           abbreviation: 'MAC', primaryColor: '#6F2C91' },
+  { id: 'wat', name: 'Waterloo Warriors',            abbreviation: 'WAT', primaryColor: '#F6C500' },
+  { id: 'wes', name: 'Western Mustangs',             abbreviation: 'WES', primaryColor: '#4F2683' },
+  { id: 'wlu', name: 'Wilfrid Laurier Golden Hawks', abbreviation: 'WLU', primaryColor: '#5B2C83' }
 ];
 
 const ACTIVE_ROSTER_2025_CSV = `Player,Team
