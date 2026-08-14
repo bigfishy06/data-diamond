@@ -479,15 +479,7 @@
       }
       updateMix=function(player){
         if(activeRole()!=='pitcher'){
-          const points=safePoints(player),buckets={};
-          points.forEach(point=>{const type=batterPitchBucket(point.pitch_type);if(type)(buckets[type]??=[]).push(point)});
-          $('mixSample').textContent=`${points.length} tracked pitches`;
-          $('splitTitle').textContent='Statistics against pitch types';
-          $('pitchMix').innerHTML=['Fastball','Breaking Ball','Offspeed'].filter(type=>buckets[type]?.length).map(type=>{
-            const rows=buckets[type],swings=rows.filter(point=>swingOutcomes.has(point.outcome)),whiffs=rows.filter(point=>whiffOutcomes.has(point.outcome)),zone=rows.filter(point=>point.in_zone),zoneSwings=zone.filter(point=>swingOutcomes.has(point.outcome));
-            return `<div class="pitch-row" style="grid-template-columns:120px 1fr 56px"><span>${type}</span><span>${rows.length} P · Swing ${rows.length?(swings.length/rows.length*100).toFixed(0):0}% · Whiff ${swings.length?(whiffs.length/swings.length*100).toFixed(0):0}%</span><strong>${zone.length?(zoneSwings.length/zone.length*100).toFixed(0):0}% IZ</strong></div>`;
-          }).join('')||'<div class="empty">No pitch-type data.</div>';
-          return;
+          baseUpdateMix(player);return;
         }
         const points=pitcherUsagePoints(state.current),detailed=isBrockPitcher(),splitGrid=document.querySelector('#overview .split-grid');
         splitGrid.style.display='none';
