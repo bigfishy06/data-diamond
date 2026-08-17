@@ -1455,46 +1455,49 @@ Zane Skansi,Kitchener Panthers`;
     return rows;
   }
 
-  // Derive handedness from scatter using same logic as main.js deriveHand()
+  var SCOUT_SWITCH_BATTERS = {'anderson feliz':true,'roberto caro':true};
+  var SCOUT_SWITCH_PITCHERS = {'mizuki akatsuka':true};
+
+  // Tracking occasionally contains a few rows with the wrong side. Only the
+  // confirmed switch-player lists above may return S; everyone else uses the
+  // dominant recorded R/L side.
   function scoutDeriveHand(scatter, field) {
-    var counts = {}, total = 0;
+    var counts = {R:0,L:0};
     (scatter || []).forEach(function(s) {
-      var v = s[field];
-      if (v) { counts[v] = (counts[v] || 0) + 1; total++; }
+      var v = String(s[field] || '').trim().toUpperCase().charAt(0);
+      if (v === 'R' || v === 'L') counts[v]++;
     });
-    if (total === 0) return null;
-    var sides = Object.keys(counts);
-    if (sides.length === 1) return sides[0];
-    if ((counts.R || 0) > 0 && (counts.L || 0) > 0) return 'S';
-    var dominant = sides.reduce(function(a, b) { return counts[a] >= counts[b] ? a : b; });
-    if (counts[dominant] / total >= 0.5) return dominant;
-    return 'S';
+    if (!counts.R && !counts.L) return null;
+    return counts.R >= counts.L ? 'R' : 'L';
   }
 
   // Get batter handedness: scatter batter_side -> IBL history
   function getBatterHand(playerName) {
     var playerKey=String(playerName || '').trim().toLowerCase();
     if (playerKey === 'aj karosas') return 'L';
-    if (playerKey === 'anderson feliz' || playerKey === 'roberto caro') return 'S';
+    if (SCOUT_SWITCH_BATTERS[playerKey]) return 'S';
     var pitchObj = getPitchPlayer(playerName) || getPitchPlayerForRoster(playerName);
     var scatter = pitchObj ? pitchObj.scatter : [];
     var fromScatter = scoutDeriveHand(scatter, 'batter_side');
     if (fromScatter) return fromScatter;
     var iblRows = getIblRowsByName(playerName);
     for (var i = 0; i < iblRows.length; i++) {
-      if (iblRows[i].bats) return iblRows[i].bats;
+      var bats=String(iblRows[i].bats || '').trim().toUpperCase().charAt(0);
+      if (bats === 'R' || bats === 'L') return bats;
     }
     return null;
   }
 
   // Get pitcher handedness: scatter pitcher_side -> IBL history
   function getPitcherHand(playerName, scatter) {
-    if (String(playerName || '').trim().toLowerCase() === 'mizuki akatsuka') return 'S';
+    var playerKey=String(playerName || '').trim().toLowerCase();
+    if (SCOUT_SWITCH_PITCHERS[playerKey]) return 'S';
     var fromScatter = scoutDeriveHand(scatter || [], 'pitcher_side');
     if (fromScatter) return fromScatter;
     var iblRows = getIblRowsByName(playerName);
     for (var i = 0; i < iblRows.length; i++) {
-      if (iblRows[i].throws) return iblRows[i].throws;
+      var throwsHand=String(iblRows[i].throws || '').trim().toUpperCase().charAt(0);
+      if (throwsHand === 'R' || throwsHand === 'L') return throwsHand;
     }
     return null;
   }
