@@ -4411,6 +4411,7 @@
       "height": null,
       "weight": null,
       "G": 4,
+      "PA": 5,
       "AB": 4,
       "R": 0,
       "H": 0,
@@ -4435,8 +4436,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 5
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -9695,6 +9695,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -10257,6 +10258,7 @@
       "height": null,
       "weight": null,
       "G": 24,
+      "PA": 94,
       "AB": 81,
       "R": 20,
       "H": 22,
@@ -10281,8 +10283,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 94
+      "WP": null
     },
     {
       "season": "2019 Summer",
@@ -38895,6 +38896,7 @@
       "height": null,
       "weight": null,
       "G": 3,
+      "PA": 6,
       "AB": 5,
       "R": 0,
       "H": 1,
@@ -38919,8 +38921,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 6
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -41872,6 +41873,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -42226,6 +42228,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -42755,6 +42758,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -44632,6 +44636,7 @@
       "height": null,
       "weight": null,
       "G": 9,
+      "PA": 18,
       "AB": 15,
       "R": 0,
       "H": 2,
@@ -44656,8 +44661,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 18
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -45946,6 +45950,7 @@
       "height": null,
       "weight": null,
       "G": 11,
+      "PA": 37,
       "AB": 33,
       "R": 0,
       "H": 4,
@@ -45970,8 +45975,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 37
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -48493,6 +48497,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -50028,6 +50033,7 @@
       "height": null,
       "weight": null,
       "G": 39,
+      "PA": 188,
       "AB": 171,
       "R": 25,
       "H": 48,
@@ -50052,8 +50058,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 188
+      "WP": null
     },
     {
       "season": "2024 Summer",
@@ -51274,6 +51279,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -52015,6 +52021,7 @@
       "height": null,
       "weight": null,
       "G": 42,
+      "PA": 204,
       "AB": 164,
       "R": 36,
       "H": 46,
@@ -52039,8 +52046,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 204
+      "WP": null
     },
     {
       "season": "2023 Summer",
@@ -57988,6 +57994,7 @@
       "height": null,
       "weight": null,
       "G": 37,
+      "PA": 152,
       "AB": 136,
       "R": 16,
       "H": 34,
@@ -58012,8 +58019,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 152
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -58452,6 +58458,7 @@
       "height": null,
       "weight": null,
       "G": 14,
+      "PA": 33,
       "AB": 28,
       "R": 4,
       "H": 3,
@@ -58476,8 +58483,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 33
+      "WP": null
     },
     {
       "season": "2024 Summer",
@@ -59237,6 +59243,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -59554,6 +59561,7 @@
       "height": null,
       "weight": null,
       "G": 34,
+      "PA": 117,
       "AB": 100,
       "R": 20,
       "H": 29,
@@ -59578,8 +59586,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 117
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -60261,6 +60268,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -60837,6 +60845,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 2,
       "AB": 2,
       "R": 1,
       "H": 1,
@@ -60861,8 +60870,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 2
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -65660,6 +65668,7 @@
       "height": null,
       "weight": null,
       "G": 25,
+      "PA": 99,
       "AB": 94,
       "R": 11,
       "H": 27,
@@ -65684,8 +65693,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 99
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -69079,6 +69087,7 @@
       "height": null,
       "weight": null,
       "G": 29,
+      "PA": 122,
       "AB": 109,
       "R": 17,
       "H": 29,
@@ -69103,8 +69112,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 122
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -75406,6 +75414,7 @@
       "height": null,
       "weight": null,
       "G": 4,
+      "PA": 17,
       "AB": 15,
       "R": 0,
       "H": 1,
@@ -75430,8 +75439,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 17
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -76364,6 +76372,7 @@
       "height": null,
       "weight": null,
       "G": 34,
+      "PA": 153,
       "AB": 131,
       "R": 27,
       "H": 47,
@@ -76388,8 +76397,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 153
+      "WP": null
     },
     {
       "season": "2019 Summer",
@@ -78001,6 +78009,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -78359,6 +78368,7 @@
       "height": null,
       "weight": null,
       "G": 30,
+      "PA": 93,
       "AB": 82,
       "R": 7,
       "H": 23,
@@ -78383,8 +78393,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 93
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -78537,6 +78546,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -78858,6 +78868,7 @@
       "height": null,
       "weight": null,
       "G": 12,
+      "PA": 26,
       "AB": 24,
       "R": 4,
       "H": 8,
@@ -78882,8 +78893,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 26
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -80499,6 +80509,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 0,
       "AB": 0,
       "R": 0,
       "H": 0,
@@ -80523,8 +80534,7 @@
       "ER": 7,
       "BBA": 0,
       "KP": 28,
-      "WP": null,
-      "PA": 0
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -81720,6 +81730,7 @@
       "height": null,
       "weight": null,
       "G": 2,
+      "PA": 3,
       "AB": 3,
       "R": 0,
       "H": 0,
@@ -81744,8 +81755,7 @@
       "ER": 6,
       "BBA": 9,
       "KP": 32,
-      "WP": null,
-      "PA": 3
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -82149,6 +82159,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -82326,6 +82337,7 @@
       "height": null,
       "weight": null,
       "G": 33,
+      "PA": 139,
       "AB": 121,
       "R": 16,
       "H": 33,
@@ -82350,8 +82362,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 139
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -82969,6 +82980,7 @@
       "height": null,
       "weight": null,
       "G": 41,
+      "PA": 176,
       "AB": 139,
       "R": 34,
       "H": 37,
@@ -82993,8 +83005,7 @@
       "ER": 3,
       "BBA": 0,
       "KP": 2,
-      "WP": null,
-      "PA": 176
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -83538,6 +83549,7 @@
       "height": null,
       "weight": null,
       "G": 41,
+      "PA": 204,
       "AB": 174,
       "R": 41,
       "H": 55,
@@ -83562,8 +83574,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 204
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -85078,6 +85089,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -85362,6 +85374,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -85683,6 +85696,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -85860,6 +85874,7 @@
       "height": null,
       "weight": null,
       "G": 4,
+      "PA": 18,
       "AB": 15,
       "R": 3,
       "H": 3,
@@ -85873,7 +85888,7 @@
       "AVG": 0.2,
       "OBP": 0.333,
       "SLG": 0.333,
-      "OPS": 0.666,
+      "OPS": 0.667,
       "W": null,
       "L": null,
       "ERA": null,
@@ -85884,8 +85899,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 18
+      "WP": null
     },
     {
       "season": "2022 Summer",
@@ -85933,6 +85947,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 1,
       "AB": 1,
       "R": 0,
       "H": 0,
@@ -85957,8 +85972,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 1
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -86508,6 +86522,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -88177,6 +88192,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -89247,6 +89263,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -89673,6 +89690,7 @@
       "height": null,
       "weight": null,
       "G": 6,
+      "PA": 20,
       "AB": 17,
       "R": 0,
       "H": 1,
@@ -89697,8 +89715,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 20
+      "WP": null
     },
     {
       "season": "2023 Summer",
@@ -89781,6 +89798,7 @@
       "height": null,
       "weight": null,
       "G": 41,
+      "PA": 185,
       "AB": 152,
       "R": 30,
       "H": 39,
@@ -89805,8 +89823,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 185
+      "WP": null
     },
     {
       "season": "2024 Summer",
@@ -91529,6 +91546,7 @@
       "height": null,
       "weight": null,
       "G": 27,
+      "PA": 131,
       "AB": 115,
       "R": 30,
       "H": 33,
@@ -91553,8 +91571,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 131
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -94133,6 +94150,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 0,
       "AB": 0,
       "R": 1,
       "H": 0,
@@ -94157,8 +94175,7 @@
       "ER": 5,
       "BBA": 14,
       "KP": 45,
-      "WP": null,
-      "PA": 0
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -94311,6 +94328,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -94883,6 +94901,7 @@
       "height": null,
       "weight": null,
       "G": 36,
+      "PA": 151,
       "AB": 119,
       "R": 31,
       "H": 35,
@@ -94907,8 +94926,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 151
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -95166,6 +95184,7 @@
       "height": null,
       "weight": null,
       "G": 8,
+      "PA": 36,
       "AB": 34,
       "R": 2,
       "H": 11,
@@ -95190,8 +95209,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 36
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -95803,6 +95821,7 @@
       "height": null,
       "weight": null,
       "G": 38,
+      "PA": 175,
       "AB": 140,
       "R": 30,
       "H": 38,
@@ -95827,8 +95846,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 175
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -97164,6 +97182,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 133,
       "AB": 110,
       "R": 24,
       "H": 28,
@@ -97177,7 +97196,7 @@
       "AVG": 0.255,
       "OBP": 0.383,
       "SLG": 0.327,
-      "OPS": 0.71,
+      "OPS": 0.711,
       "W": null,
       "L": null,
       "ERA": null,
@@ -97188,8 +97207,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 133
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -97342,6 +97360,7 @@
       "height": null,
       "weight": null,
       "G": 10,
+      "PA": 26,
       "AB": 21,
       "R": 4,
       "H": 2,
@@ -97366,8 +97385,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 26
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -97950,6 +97968,7 @@
       "height": null,
       "weight": null,
       "G": 4,
+      "PA": 14,
       "AB": 14,
       "R": 2,
       "H": 6,
@@ -97963,7 +97982,7 @@
       "AVG": 0.429,
       "OBP": 0.429,
       "SLG": 0.429,
-      "OPS": 0.858,
+      "OPS": 0.857,
       "W": 0,
       "L": 0,
       "ERA": 0,
@@ -97974,8 +97993,7 @@
       "ER": 0,
       "BBA": 0,
       "KP": 0,
-      "WP": null,
-      "PA": 14
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -98879,6 +98897,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -100990,6 +101009,7 @@
       "height": null,
       "weight": null,
       "G": 37,
+      "PA": 166,
       "AB": 130,
       "R": 36,
       "H": 44,
@@ -101014,8 +101034,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 166
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -102250,6 +102269,7 @@
       "height": null,
       "weight": null,
       "G": 9,
+      "PA": 26,
       "AB": 19,
       "R": 3,
       "H": 2,
@@ -102274,8 +102294,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 26
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -103251,6 +103270,7 @@
       "height": null,
       "weight": null,
       "G": 37,
+      "PA": 158,
       "AB": 142,
       "R": 27,
       "H": 58,
@@ -103264,7 +103284,7 @@
       "AVG": 0.408,
       "OBP": 0.468,
       "SLG": 0.718,
-      "OPS": 1.186,
+      "OPS": 1.187,
       "W": null,
       "L": null,
       "ERA": null,
@@ -103275,8 +103295,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 158
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -112353,6 +112372,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -112532,6 +112552,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -112995,6 +113016,7 @@
       "height": null,
       "weight": null,
       "G": 20,
+      "PA": 72,
       "AB": 69,
       "R": 7,
       "H": 19,
@@ -113019,8 +113041,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 72
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -113175,6 +113196,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -114403,6 +114425,7 @@
       "height": null,
       "weight": null,
       "G": 24,
+      "PA": 44,
       "AB": 40,
       "R": 10,
       "H": 10,
@@ -114427,8 +114450,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 44
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -114618,6 +114640,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 170,
       "AB": 153,
       "R": 30,
       "H": 55,
@@ -114631,7 +114654,7 @@
       "AVG": 0.359,
       "OBP": 0.418,
       "SLG": 0.471,
-      "OPS": 0.889,
+      "OPS": 0.888,
       "W": null,
       "L": null,
       "ERA": null,
@@ -114642,8 +114665,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 170
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -115086,6 +115108,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 4,
       "AB": 3,
       "R": 0,
       "H": 0,
@@ -115110,8 +115133,7 @@
       "ER": 51,
       "BBA": 14,
       "KP": 48,
-      "WP": null,
-      "PA": 4
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -115194,6 +115216,7 @@
       "height": null,
       "weight": null,
       "G": 26,
+      "PA": 92,
       "AB": 84,
       "R": 7,
       "H": 13,
@@ -115207,7 +115230,7 @@
       "AVG": 0.155,
       "OBP": 0.217,
       "SLG": 0.202,
-      "OPS": 0.419,
+      "OPS": 0.42,
       "W": null,
       "L": null,
       "ERA": null,
@@ -115218,8 +115241,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 92
+      "WP": null
     },
     {
       "season": "2024 Summer",
@@ -116026,6 +116048,7 @@
       "height": null,
       "weight": null,
       "G": 38,
+      "PA": 152,
       "AB": 133,
       "R": 17,
       "H": 37,
@@ -116039,7 +116062,7 @@
       "AVG": 0.278,
       "OBP": 0.368,
       "SLG": 0.308,
-      "OPS": 0.676,
+      "OPS": 0.677,
       "W": null,
       "L": null,
       "ERA": null,
@@ -116050,8 +116073,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 152
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -116243,6 +116265,7 @@
       "height": null,
       "weight": null,
       "G": 13,
+      "PA": 44,
       "AB": 36,
       "R": 10,
       "H": 14,
@@ -116267,8 +116290,7 @@
       "ER": 3,
       "BBA": 3,
       "KP": 8,
-      "WP": null,
-      "PA": 44
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -116495,6 +116517,7 @@
       "height": null,
       "weight": null,
       "G": 32,
+      "PA": 100,
       "AB": 79,
       "R": 16,
       "H": 23,
@@ -116519,8 +116542,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 100
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -116603,6 +116625,7 @@
       "height": null,
       "weight": null,
       "G": 24,
+      "PA": 95,
       "AB": 88,
       "R": 12,
       "H": 31,
@@ -116627,8 +116650,7 @@
       "ER": 9,
       "BBA": 4,
       "KP": 8,
-      "WP": null,
-      "PA": 95
+      "WP": null
     },
     {
       "season": "2023 Summer",
@@ -116676,6 +116698,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -116855,6 +116878,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -117141,6 +117165,7 @@
       "height": null,
       "weight": null,
       "G": 23,
+      "PA": 68,
       "AB": 58,
       "R": 7,
       "H": 9,
@@ -117165,8 +117190,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 68
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -117428,6 +117452,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -117895,6 +117920,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -119084,6 +119110,7 @@
       "height": null,
       "weight": null,
       "G": 4,
+      "PA": 5,
       "AB": 5,
       "R": 0,
       "H": 1,
@@ -119108,8 +119135,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 5
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -119408,6 +119434,7 @@
       "height": null,
       "weight": null,
       "G": 13,
+      "PA": 42,
       "AB": 34,
       "R": 6,
       "H": 8,
@@ -119421,7 +119448,7 @@
       "AVG": 0.235,
       "OBP": 0.366,
       "SLG": 0.324,
-      "OPS": 0.69,
+      "OPS": 0.689,
       "W": null,
       "L": null,
       "ERA": null,
@@ -119432,8 +119459,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 42
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -120487,6 +120513,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -121528,6 +121555,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -122246,6 +122274,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -122643,6 +122672,7 @@
       "height": null,
       "weight": null,
       "G": 24,
+      "PA": 52,
       "AB": 45,
       "R": 13,
       "H": 9,
@@ -122656,7 +122686,7 @@
       "AVG": 0.2,
       "OBP": 0.308,
       "SLG": 0.267,
-      "OPS": 0.575,
+      "OPS": 0.574,
       "W": null,
       "L": null,
       "ERA": null,
@@ -122667,8 +122697,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 52
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -123189,6 +123218,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -123551,6 +123581,7 @@
       "height": null,
       "weight": null,
       "G": 7,
+      "PA": 17,
       "AB": 13,
       "R": 2,
       "H": 3,
@@ -123564,7 +123595,7 @@
       "AVG": 0.231,
       "OBP": 0.412,
       "SLG": 0.308,
-      "OPS": 0.72,
+      "OPS": 0.719,
       "W": null,
       "L": null,
       "ERA": null,
@@ -123575,8 +123606,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 17
+      "WP": null
     },
     {
       "season": "2024 Summer",
@@ -127805,6 +127835,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -127877,6 +127908,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -128021,6 +128053,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -128093,6 +128126,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 177,
       "AB": 161,
       "R": 26,
       "H": 43,
@@ -128117,8 +128151,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 177
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -128201,6 +128234,7 @@
       "height": null,
       "weight": null,
       "G": 6,
+      "PA": 4,
       "AB": 3,
       "R": 1,
       "H": 1,
@@ -128225,8 +128259,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 4
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -128605,6 +128638,7 @@
       "height": null,
       "weight": null,
       "G": 39,
+      "PA": 185,
       "AB": 153,
       "R": 46,
       "H": 44,
@@ -128618,7 +128652,7 @@
       "AVG": 0.288,
       "OBP": 0.411,
       "SLG": 0.556,
-      "OPS": 0.967,
+      "OPS": 0.966,
       "W": null,
       "L": null,
       "ERA": null,
@@ -128629,8 +128663,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 185
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -128826,6 +128859,7 @@
       "height": null,
       "weight": null,
       "G": 38,
+      "PA": 147,
       "AB": 134,
       "R": 23,
       "H": 36,
@@ -128839,7 +128873,7 @@
       "AVG": 0.269,
       "OBP": 0.313,
       "SLG": 0.366,
-      "OPS": 0.679,
+      "OPS": 0.678,
       "W": null,
       "L": null,
       "ERA": null,
@@ -128850,8 +128884,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 147
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -128899,6 +128932,7 @@
       "height": null,
       "weight": null,
       "G": 34,
+      "PA": 127,
       "AB": 117,
       "R": 22,
       "H": 36,
@@ -128923,8 +128957,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 127
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -129118,6 +129151,7 @@
       "height": null,
       "weight": null,
       "G": 33,
+      "PA": 46,
       "AB": 44,
       "R": 8,
       "H": 11,
@@ -129142,8 +129176,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 46
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -129300,6 +129333,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 192,
       "AB": 157,
       "R": 41,
       "H": 42,
@@ -129313,7 +129347,7 @@
       "AVG": 0.268,
       "OBP": 0.393,
       "SLG": 0.389,
-      "OPS": 0.782,
+      "OPS": 0.781,
       "W": null,
       "L": null,
       "ERA": null,
@@ -129324,8 +129358,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 192
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -129554,6 +129587,7 @@
       "height": null,
       "weight": null,
       "G": 39,
+      "PA": 164,
       "AB": 146,
       "R": 16,
       "H": 42,
@@ -129578,8 +129612,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 164
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -129627,6 +129660,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -129771,6 +129805,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -130059,6 +130094,7 @@
       "height": null,
       "weight": null,
       "G": 41,
+      "PA": 187,
       "AB": 161,
       "R": 45,
       "H": 54,
@@ -130083,8 +130119,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 187
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -130350,6 +130385,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -130459,6 +130495,7 @@
       "height": null,
       "weight": null,
       "G": 38,
+      "PA": 150,
       "AB": 133,
       "R": 20,
       "H": 27,
@@ -130483,8 +130520,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 150
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -130532,6 +130568,7 @@
       "height": null,
       "weight": null,
       "G": 9,
+      "PA": 41,
       "AB": 33,
       "R": 8,
       "H": 9,
@@ -130556,8 +130593,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 41
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -130677,6 +130713,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -130786,6 +130823,7 @@
       "height": null,
       "weight": null,
       "G": 6,
+      "PA": 23,
       "AB": 21,
       "R": 2,
       "H": 5,
@@ -130810,8 +130848,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 23
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -131040,6 +131077,7 @@
       "height": null,
       "weight": null,
       "G": 21,
+      "PA": 100,
       "AB": 89,
       "R": 20,
       "H": 30,
@@ -131064,8 +131102,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 100
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -131113,6 +131150,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -131259,6 +131297,7 @@
       "height": null,
       "weight": null,
       "G": 3,
+      "PA": 1,
       "AB": 1,
       "R": 2,
       "H": 0,
@@ -131283,8 +131322,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 1
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -131657,6 +131695,7 @@
       "height": null,
       "weight": null,
       "G": 32,
+      "PA": 128,
       "AB": 117,
       "R": 20,
       "H": 39,
@@ -131681,8 +131720,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 128
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -131765,6 +131803,7 @@
       "height": null,
       "weight": null,
       "G": 37,
+      "PA": 168,
       "AB": 141,
       "R": 35,
       "H": 35,
@@ -131789,8 +131828,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 168
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -131838,6 +131876,7 @@
       "height": null,
       "weight": null,
       "G": 13,
+      "PA": 50,
       "AB": 45,
       "R": 4,
       "H": 11,
@@ -131851,7 +131890,7 @@
       "AVG": 0.244,
       "OBP": 0.286,
       "SLG": 0.378,
-      "OPS": 0.664,
+      "OPS": 0.663,
       "W": null,
       "L": null,
       "ERA": null,
@@ -131862,8 +131901,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 50
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -131911,6 +131949,7 @@
       "height": null,
       "weight": null,
       "G": 30,
+      "PA": 137,
       "AB": 119,
       "R": 26,
       "H": 41,
@@ -131924,7 +131963,7 @@
       "AVG": 0.345,
       "OBP": 0.423,
       "SLG": 0.487,
-      "OPS": 0.91,
+      "OPS": 0.911,
       "W": null,
       "L": null,
       "ERA": null,
@@ -131935,8 +131974,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 137
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -131984,6 +132022,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -132091,6 +132130,7 @@
       "height": null,
       "weight": null,
       "G": 3,
+      "PA": 13,
       "AB": 11,
       "R": 2,
       "H": 3,
@@ -132104,7 +132144,7 @@
       "AVG": 0.273,
       "OBP": 0.385,
       "SLG": 0.273,
-      "OPS": 0.658,
+      "OPS": 0.657,
       "W": null,
       "L": null,
       "ERA": null,
@@ -132115,8 +132155,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 13
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -132164,6 +132203,7 @@
       "height": null,
       "weight": null,
       "G": 33,
+      "PA": 121,
       "AB": 105,
       "R": 21,
       "H": 30,
@@ -132188,8 +132228,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 121
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -132272,6 +132311,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -132634,6 +132674,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -132778,6 +132819,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 187,
       "AB": 162,
       "R": 28,
       "H": 47,
@@ -132802,8 +132844,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 187
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -133032,6 +133073,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -133139,6 +133181,7 @@
       "height": null,
       "weight": null,
       "G": 33,
+      "PA": 108,
       "AB": 102,
       "R": 6,
       "H": 20,
@@ -133152,7 +133195,7 @@
       "AVG": 0.196,
       "OBP": 0.234,
       "SLG": 0.265,
-      "OPS": 0.499,
+      "OPS": 0.498,
       "W": null,
       "L": null,
       "ERA": null,
@@ -133163,8 +133206,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 108
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -133247,6 +133289,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -133500,6 +133543,7 @@
       "height": null,
       "weight": null,
       "G": 35,
+      "PA": 103,
       "AB": 93,
       "R": 20,
       "H": 27,
@@ -133524,8 +133568,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 103
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -133682,6 +133725,7 @@
       "height": null,
       "weight": null,
       "G": 26,
+      "PA": 73,
       "AB": 69,
       "R": 7,
       "H": 10,
@@ -133706,8 +133750,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 73
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -133755,6 +133798,7 @@
       "height": null,
       "weight": null,
       "G": 43,
+      "PA": 200,
       "AB": 177,
       "R": 52,
       "H": 71,
@@ -133779,8 +133823,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 200
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -133865,6 +133908,7 @@
       "height": null,
       "weight": null,
       "G": 35,
+      "PA": 159,
       "AB": 131,
       "R": 32,
       "H": 46,
@@ -133889,8 +133933,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 159
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -134012,6 +134055,7 @@
       "height": null,
       "weight": null,
       "G": 39,
+      "PA": 171,
       "AB": 154,
       "R": 24,
       "H": 47,
@@ -134036,8 +134080,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 171
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -134157,6 +134200,7 @@
       "height": null,
       "weight": null,
       "G": 32,
+      "PA": 137,
       "AB": 128,
       "R": 18,
       "H": 49,
@@ -134181,8 +134225,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 137
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -134668,6 +134711,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -134814,6 +134858,7 @@
       "height": null,
       "weight": null,
       "G": 35,
+      "PA": 134,
       "AB": 106,
       "R": 19,
       "H": 21,
@@ -134838,8 +134883,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 134
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -134996,6 +135040,7 @@
       "height": null,
       "weight": null,
       "G": 22,
+      "PA": 103,
       "AB": 90,
       "R": 25,
       "H": 30,
@@ -135009,7 +135054,7 @@
       "AVG": 0.333,
       "OBP": 0.417,
       "SLG": 0.433,
-      "OPS": 0.85,
+      "OPS": 0.851,
       "W": null,
       "L": null,
       "ERA": null,
@@ -135020,8 +135065,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 103
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -135250,6 +135294,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -135359,6 +135404,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 194,
       "AB": 171,
       "R": 35,
       "H": 65,
@@ -135372,7 +135418,7 @@
       "AVG": 0.38,
       "OBP": 0.432,
       "SLG": 0.55,
-      "OPS": 0.982,
+      "OPS": 0.981,
       "W": null,
       "L": null,
       "ERA": null,
@@ -135383,8 +135429,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 194
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -135469,6 +135514,7 @@
       "height": null,
       "weight": null,
       "G": 41,
+      "PA": 178,
       "AB": 146,
       "R": 29,
       "H": 44,
@@ -135493,8 +135539,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 178
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -135542,6 +135587,7 @@
       "height": null,
       "weight": null,
       "G": 39,
+      "PA": 181,
       "AB": 171,
       "R": 35,
       "H": 63,
@@ -135566,8 +135612,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 181
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -135615,6 +135660,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -135868,6 +135914,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -136047,6 +136094,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -136191,6 +136239,7 @@
       "height": null,
       "weight": null,
       "G": 22,
+      "PA": 78,
       "AB": 63,
       "R": 14,
       "H": 19,
@@ -136215,8 +136264,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 78
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -136264,6 +136312,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 176,
       "AB": 156,
       "R": 22,
       "H": 52,
@@ -136288,8 +136337,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 176
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -136337,6 +136385,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -136627,6 +136676,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -136699,6 +136749,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -136993,6 +137044,7 @@
       "height": null,
       "weight": null,
       "G": 37,
+      "PA": 161,
       "AB": 137,
       "R": 23,
       "H": 35,
@@ -137017,8 +137069,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 161
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -137173,6 +137224,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -137426,6 +137478,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 2,
       "AB": 2,
       "R": 0,
       "H": 0,
@@ -137450,8 +137503,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 2
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -137534,6 +137586,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -137715,6 +137768,7 @@
       "height": null,
       "weight": null,
       "G": 34,
+      "PA": 142,
       "AB": 117,
       "R": 26,
       "H": 43,
@@ -137728,7 +137782,7 @@
       "AVG": 0.368,
       "OBP": 0.468,
       "SLG": 0.632,
-      "OPS": 1.1,
+      "OPS": 1.101,
       "W": null,
       "L": null,
       "ERA": null,
@@ -137739,8 +137793,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 142
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -137936,6 +137989,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -138008,6 +138062,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -138226,6 +138281,7 @@
       "height": null,
       "weight": null,
       "G": 14,
+      "PA": 48,
       "AB": 42,
       "R": 10,
       "H": 13,
@@ -138250,8 +138306,7 @@
       "ER": 21,
       "BBA": 7,
       "KP": 11,
-      "WP": null,
-      "PA": 48
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -139136,6 +139191,7 @@
       "height": null,
       "weight": null,
       "G": 41,
+      "PA": 168,
       "AB": 141,
       "R": 24,
       "H": 31,
@@ -139149,7 +139205,7 @@
       "AVG": 0.22,
       "OBP": 0.31,
       "SLG": 0.305,
-      "OPS": 0.615,
+      "OPS": 0.614,
       "W": 0,
       "L": 0,
       "ERA": 45,
@@ -139160,8 +139216,7 @@
       "ER": 5,
       "BBA": 0,
       "KP": 0,
-      "WP": null,
-      "PA": 168
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -139246,6 +139301,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -139318,6 +139374,7 @@
       "height": null,
       "weight": null,
       "G": 34,
+      "PA": 139,
       "AB": 128,
       "R": 16,
       "H": 35,
@@ -139331,7 +139388,7 @@
       "AVG": 0.273,
       "OBP": 0.331,
       "SLG": 0.352,
-      "OPS": 0.683,
+      "OPS": 0.682,
       "W": null,
       "L": null,
       "ERA": null,
@@ -139342,8 +139399,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 139
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -139391,6 +139447,7 @@
       "height": null,
       "weight": null,
       "G": 42,
+      "PA": 215,
       "AB": 186,
       "R": 41,
       "H": 67,
@@ -139404,7 +139461,7 @@
       "AVG": 0.36,
       "OBP": 0.418,
       "SLG": 0.495,
-      "OPS": 0.913,
+      "OPS": 0.912,
       "W": null,
       "L": null,
       "ERA": null,
@@ -139415,8 +139472,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 215
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -139754,6 +139810,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -139863,6 +139920,7 @@
       "height": null,
       "weight": null,
       "G": 43,
+      "PA": 202,
       "AB": 177,
       "R": 31,
       "H": 59,
@@ -139887,8 +139945,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 202
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -139936,6 +139993,7 @@
       "height": null,
       "weight": null,
       "G": 38,
+      "PA": 165,
       "AB": 123,
       "R": 35,
       "H": 29,
@@ -139960,8 +140018,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 165
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -140268,6 +140325,7 @@
       "height": null,
       "weight": null,
       "G": 11,
+      "PA": 48,
       "AB": 38,
       "R": 9,
       "H": 13,
@@ -140281,7 +140339,7 @@
       "AVG": 0.342,
       "OBP": 0.417,
       "SLG": 0.395,
-      "OPS": 0.812,
+      "OPS": 0.811,
       "W": null,
       "L": null,
       "ERA": null,
@@ -140292,8 +140350,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 48
+      "WP": null
     },
     {
       "season": "2025 Summer",
@@ -152721,6 +152778,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -156628,6 +156686,7 @@
       "height": null,
       "weight": null,
       "G": 10,
+      "PA": 43,
       "AB": 35,
       "R": 6,
       "H": 11,
@@ -156652,8 +156711,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 43
+      "WP": null
     },
     {
       "season": "2015 Summer",
@@ -168501,6 +168559,7 @@
       "height": null,
       "weight": null,
       "G": 8,
+      "PA": 29,
       "AB": 27,
       "R": 1,
       "H": 5,
@@ -168514,7 +168573,7 @@
       "AVG": 0.185,
       "OBP": 0.214,
       "SLG": 0.222,
-      "OPS": 0.436,
+      "OPS": 0.437,
       "W": null,
       "L": null,
       "ERA": null,
@@ -168525,8 +168584,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 29
+      "WP": null
     },
     {
       "season": "2024 Summer",
@@ -169277,6 +169335,7 @@
       "height": null,
       "weight": null,
       "G": 8,
+      "PA": 7,
       "AB": 5,
       "R": 2,
       "H": 1,
@@ -169301,8 +169360,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 7
+      "WP": null
     },
     {
       "season": "2024 Summer",
@@ -169646,6 +169704,7 @@
       "height": null,
       "weight": null,
       "G": 13,
+      "PA": 55,
       "AB": 47,
       "R": 11,
       "H": 17,
@@ -169659,7 +169718,7 @@
       "AVG": 0.362,
       "OBP": 0.444,
       "SLG": 0.468,
-      "OPS": 0.912,
+      "OPS": 0.913,
       "W": null,
       "L": null,
       "ERA": null,
@@ -169670,8 +169729,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 55
+      "WP": null
     },
     {
       "season": "2024 Summer",
@@ -170716,6 +170774,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -173008,6 +173067,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -173150,6 +173210,7 @@
       "height": null,
       "weight": null,
       "G": 12,
+      "PA": 31,
       "AB": 27,
       "R": 1,
       "H": 4,
@@ -173174,8 +173235,7 @@
       "ER": 26,
       "BBA": 20,
       "KP": 23,
-      "WP": null,
-      "PA": 31
+      "WP": null
     }
   ],
   "Yasiel Puig": [
@@ -173188,6 +173248,7 @@
       "height": null,
       "weight": null,
       "G": 39,
+      "PA": 174,
       "AB": 140,
       "R": 34,
       "H": 56,
@@ -173201,7 +173262,7 @@
       "AVG": 0.4,
       "OBP": 0.506,
       "SLG": 0.879,
-      "OPS": 1.385,
+      "OPS": 1.384,
       "W": null,
       "L": null,
       "ERA": null,
@@ -173212,8 +173273,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 174
+      "WP": null
     }
   ],
   "Rafael Gross": [
@@ -173226,6 +173286,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 163,
       "AB": 146,
       "R": 22,
       "H": 39,
@@ -173239,7 +173300,7 @@
       "AVG": 0.267,
       "OBP": 0.337,
       "SLG": 0.479,
-      "OPS": 0.816,
+      "OPS": 0.817,
       "W": null,
       "L": null,
       "ERA": null,
@@ -173250,8 +173311,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 163
+      "WP": null
     }
   ],
   "Kirk Gibson": [
@@ -173264,6 +173324,7 @@
       "height": null,
       "weight": null,
       "G": 24,
+      "PA": 48,
       "AB": 46,
       "R": 1,
       "H": 7,
@@ -173277,7 +173338,7 @@
       "AVG": 0.152,
       "OBP": 0.188,
       "SLG": 0.174,
-      "OPS": 0.362,
+      "OPS": 0.361,
       "W": null,
       "L": null,
       "ERA": null,
@@ -173288,8 +173349,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 48
+      "WP": null
     }
   ],
   "Zane Skansi": [
@@ -173302,6 +173362,7 @@
       "height": null,
       "weight": null,
       "G": 41,
+      "PA": 147,
       "AB": 130,
       "R": 15,
       "H": 31,
@@ -173326,8 +173387,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 147
+      "WP": null
     }
   ],
   "Owen Macneil": [
@@ -173340,6 +173400,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -173377,6 +173438,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -173414,6 +173476,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -173451,6 +173514,7 @@
       "height": null,
       "weight": null,
       "G": 24,
+      "PA": 99,
       "AB": 84,
       "R": 13,
       "H": 22,
@@ -173464,7 +173528,7 @@
       "AVG": 0.262,
       "OBP": 0.364,
       "SLG": 0.405,
-      "OPS": 0.769,
+      "OPS": 0.768,
       "W": null,
       "L": null,
       "ERA": null,
@@ -173475,8 +173539,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 99
+      "WP": null
     }
   ],
   "Wandy Ciprian": [
@@ -173489,6 +173552,7 @@
       "height": null,
       "weight": null,
       "G": 36,
+      "PA": 130,
       "AB": 119,
       "R": 26,
       "H": 42,
@@ -173502,7 +173566,7 @@
       "AVG": 0.353,
       "OBP": 0.392,
       "SLG": 0.571,
-      "OPS": 0.963,
+      "OPS": 0.964,
       "W": null,
       "L": null,
       "ERA": null,
@@ -173513,8 +173577,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 130
+      "WP": null
     }
   ],
   "Cooper Tomkinson": [
@@ -173527,6 +173590,7 @@
       "height": null,
       "weight": null,
       "G": 3,
+      "PA": 10,
       "AB": 9,
       "R": 1,
       "H": 1,
@@ -173551,8 +173615,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 10
+      "WP": null
     }
   ],
   "Kristyan Puyol-Genossar": [
@@ -173565,6 +173628,7 @@
       "height": null,
       "weight": null,
       "G": 25,
+      "PA": 44,
       "AB": 36,
       "R": 3,
       "H": 6,
@@ -173578,7 +173642,7 @@
       "AVG": 0.167,
       "OBP": 0.295,
       "SLG": 0.222,
-      "OPS": 0.517,
+      "OPS": 0.518,
       "W": null,
       "L": null,
       "ERA": null,
@@ -173589,8 +173653,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 44
+      "WP": null
     }
   ],
   "Benjamin Sterritt": [
@@ -173603,6 +173666,7 @@
       "height": null,
       "weight": null,
       "G": 9,
+      "PA": 10,
       "AB": 8,
       "R": 0,
       "H": 1,
@@ -173627,8 +173691,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 10
+      "WP": null
     }
   ],
   "Jacob Bonzon": [
@@ -173641,6 +173704,7 @@
       "height": null,
       "weight": null,
       "G": 3,
+      "PA": 5,
       "AB": 5,
       "R": 0,
       "H": 1,
@@ -173665,8 +173729,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 5
+      "WP": null
     }
   ],
   "Breidy Encarnacion": [
@@ -173679,6 +173742,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -173716,6 +173780,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -173753,6 +173818,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 1,
       "AB": 1,
       "R": 0,
       "H": 0,
@@ -173777,8 +173843,7 @@
       "ER": 32,
       "BBA": 26,
       "KP": 32,
-      "WP": null,
-      "PA": 1
+      "WP": null
     }
   ],
   "Braedan Pakkala": [
@@ -173791,6 +173856,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 1,
       "AB": 0,
       "R": 0,
       "H": 0,
@@ -173815,8 +173881,7 @@
       "ER": 21,
       "BBA": 18,
       "KP": 34,
-      "WP": null,
-      "PA": 1
+      "WP": null
     }
   ],
   "Oscar Moreta": [
@@ -173829,6 +173894,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -173866,6 +173932,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -173903,6 +173970,7 @@
       "height": null,
       "weight": null,
       "G": 33,
+      "PA": 156,
       "AB": 137,
       "R": 31,
       "H": 55,
@@ -173927,8 +173995,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 156
+      "WP": null
     }
   ],
   "Gleyvin Pineda": [
@@ -173941,6 +174008,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 2,
       "AB": 2,
       "R": 0,
       "H": 1,
@@ -173965,8 +174033,7 @@
       "ER": 4,
       "BBA": 10,
       "KP": 29,
-      "WP": null,
-      "PA": 2
+      "WP": null
     }
   ],
   "Trevor Nicoll": [
@@ -173979,6 +174046,7 @@
       "height": null,
       "weight": null,
       "G": 17,
+      "PA": 31,
       "AB": 26,
       "R": 6,
       "H": 11,
@@ -174003,8 +174071,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 31
+      "WP": null
     }
   ],
   "Austin Gurney": [
@@ -174017,6 +174084,7 @@
       "height": null,
       "weight": null,
       "G": 30,
+      "PA": 132,
       "AB": 119,
       "R": 22,
       "H": 47,
@@ -174041,8 +174109,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 132
+      "WP": null
     }
   ],
   "Ethan Mann": [
@@ -174055,6 +174122,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 191,
       "AB": 171,
       "R": 39,
       "H": 67,
@@ -174068,7 +174136,7 @@
       "AVG": 0.392,
       "OBP": 0.435,
       "SLG": 0.667,
-      "OPS": 1.102,
+      "OPS": 1.101,
       "W": null,
       "L": null,
       "ERA": null,
@@ -174079,8 +174147,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 191
+      "WP": null
     }
   ],
   "Daiki Abe": [
@@ -174093,6 +174160,7 @@
       "height": null,
       "weight": null,
       "G": 41,
+      "PA": 206,
       "AB": 170,
       "R": 55,
       "H": 66,
@@ -174117,8 +174185,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 206
+      "WP": null
     }
   ],
   "Maikol Escotto": [
@@ -174131,6 +174198,7 @@
       "height": null,
       "weight": null,
       "G": 43,
+      "PA": 215,
       "AB": 199,
       "R": 47,
       "H": 76,
@@ -174144,7 +174212,7 @@
       "AVG": 0.382,
       "OBP": 0.409,
       "SLG": 0.643,
-      "OPS": 1.052,
+      "OPS": 1.053,
       "W": null,
       "L": null,
       "ERA": null,
@@ -174155,8 +174223,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 215
+      "WP": null
     }
   ],
   "Cristian Inoa": [
@@ -174169,6 +174236,7 @@
       "height": null,
       "weight": null,
       "G": 33,
+      "PA": 157,
       "AB": 131,
       "R": 28,
       "H": 47,
@@ -174193,8 +174261,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 157
+      "WP": null
     }
   ],
   "Darlin German": [
@@ -174207,6 +174274,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 191,
       "AB": 174,
       "R": 40,
       "H": 61,
@@ -174231,8 +174299,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 191
+      "WP": null
     }
   ],
   "Victor Mascai": [
@@ -174245,6 +174312,7 @@
       "height": null,
       "weight": null,
       "G": 35,
+      "PA": 159,
       "AB": 135,
       "R": 30,
       "H": 46,
@@ -174269,8 +174337,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 159
+      "WP": null
     }
   ],
   "Antony Gilbert": [
@@ -174283,6 +174350,7 @@
       "height": null,
       "weight": null,
       "G": 35,
+      "PA": 171,
       "AB": 160,
       "R": 28,
       "H": 54,
@@ -174307,8 +174375,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 171
+      "WP": null
     }
   ],
   "Nick Iannantone": [
@@ -174321,6 +174388,7 @@
       "height": null,
       "weight": null,
       "G": 31,
+      "PA": 133,
       "AB": 113,
       "R": 18,
       "H": 38,
@@ -174345,8 +174413,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 133
+      "WP": null
     }
   ],
   "Carter Claerhout": [
@@ -174359,6 +174426,7 @@
       "height": null,
       "weight": null,
       "G": 12,
+      "PA": 54,
       "AB": 49,
       "R": 4,
       "H": 16,
@@ -174383,8 +174451,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 54
+      "WP": null
     }
   ],
   "Carson Johnson": [
@@ -174397,6 +174464,7 @@
       "height": null,
       "weight": null,
       "G": 24,
+      "PA": 76,
       "AB": 59,
       "R": 23,
       "H": 19,
@@ -174421,8 +174489,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 76
+      "WP": null
     }
   ],
   "Dario Borrero": [
@@ -174435,6 +174502,7 @@
       "height": null,
       "weight": null,
       "G": 11,
+      "PA": 50,
       "AB": 47,
       "R": 11,
       "H": 15,
@@ -174459,8 +174527,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 50
+      "WP": null
     }
   ],
   "Jarrett Burney": [
@@ -174473,6 +174540,7 @@
       "height": null,
       "weight": null,
       "G": 43,
+      "PA": 179,
       "AB": 152,
       "R": 31,
       "H": 48,
@@ -174497,8 +174565,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 179
+      "WP": null
     }
   ],
   "Miguel Hiraldo": [
@@ -174511,6 +174578,7 @@
       "height": null,
       "weight": null,
       "G": 41,
+      "PA": 192,
       "AB": 175,
       "R": 34,
       "H": 55,
@@ -174535,8 +174603,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 192
+      "WP": null
     }
   ],
   "Samuele Bruno": [
@@ -174549,6 +174616,7 @@
       "height": null,
       "weight": null,
       "G": 11,
+      "PA": 17,
       "AB": 16,
       "R": 2,
       "H": 5,
@@ -174562,7 +174630,7 @@
       "AVG": 0.313,
       "OBP": 0.353,
       "SLG": 0.313,
-      "OPS": 0.666,
+      "OPS": 0.665,
       "W": null,
       "L": null,
       "ERA": null,
@@ -174573,8 +174641,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 17
+      "WP": null
     }
   ],
   "Jj Dutton": [
@@ -174587,6 +174654,7 @@
       "height": null,
       "weight": null,
       "G": 33,
+      "PA": 153,
       "AB": 135,
       "R": 20,
       "H": 41,
@@ -174600,7 +174668,7 @@
       "AVG": 0.304,
       "OBP": 0.382,
       "SLG": 0.393,
-      "OPS": 0.775,
+      "OPS": 0.774,
       "W": null,
       "L": null,
       "ERA": null,
@@ -174611,8 +174679,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 153
+      "WP": null
     }
   ],
   "Angel Guerrero": [
@@ -174625,6 +174692,7 @@
       "height": null,
       "weight": null,
       "G": 26,
+      "PA": 95,
       "AB": 87,
       "R": 16,
       "H": 26,
@@ -174649,8 +174717,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 95
+      "WP": null
     }
   ],
   "Xavier Whittle": [
@@ -174663,6 +174730,7 @@
       "height": null,
       "weight": null,
       "G": 27,
+      "PA": 58,
       "AB": 52,
       "R": 10,
       "H": 15,
@@ -174687,8 +174755,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 58
+      "WP": null
     }
   ],
   "Julien Monks": [
@@ -174701,6 +174768,7 @@
       "height": null,
       "weight": null,
       "G": 37,
+      "PA": 167,
       "AB": 150,
       "R": 23,
       "H": 43,
@@ -174725,8 +174793,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 167
+      "WP": null
     }
   ],
   "Evan Magill": [
@@ -174739,6 +174806,7 @@
       "height": null,
       "weight": null,
       "G": 40,
+      "PA": 182,
       "AB": 154,
       "R": 33,
       "H": 43,
@@ -174763,8 +174831,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 182
+      "WP": null
     }
   ],
   "Joshua Williams": [
@@ -174777,6 +174844,7 @@
       "height": null,
       "weight": null,
       "G": 28,
+      "PA": 88,
       "AB": 80,
       "R": 8,
       "H": 22,
@@ -174790,7 +174858,7 @@
       "AVG": 0.275,
       "OBP": 0.341,
       "SLG": 0.438,
-      "OPS": 0.779,
+      "OPS": 0.778,
       "W": null,
       "L": null,
       "ERA": null,
@@ -174801,8 +174869,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 88
+      "WP": null
     }
   ],
   "Anderson Feliz": [
@@ -174815,6 +174882,7 @@
       "height": null,
       "weight": null,
       "G": 17,
+      "PA": 76,
       "AB": 63,
       "R": 9,
       "H": 17,
@@ -174839,8 +174907,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 76
+      "WP": null
     }
   ],
   "David Draayers": [
@@ -174853,6 +174920,7 @@
       "height": null,
       "weight": null,
       "G": 39,
+      "PA": 135,
       "AB": 116,
       "R": 24,
       "H": 31,
@@ -174866,7 +174934,7 @@
       "AVG": 0.267,
       "OBP": 0.344,
       "SLG": 0.44,
-      "OPS": 0.784,
+      "OPS": 0.783,
       "W": null,
       "L": null,
       "ERA": null,
@@ -174877,8 +174945,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 135
+      "WP": null
     }
   ],
   "Reyny Reyes": [
@@ -174891,6 +174958,7 @@
       "height": null,
       "weight": null,
       "G": 39,
+      "PA": 169,
       "AB": 152,
       "R": 23,
       "H": 40,
@@ -174915,8 +174983,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 169
+      "WP": null
     }
   ],
   "Walker Hultgren": [
@@ -174929,6 +174996,7 @@
       "height": null,
       "weight": null,
       "G": 31,
+      "PA": 129,
       "AB": 123,
       "R": 17,
       "H": 32,
@@ -174953,8 +175021,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 129
+      "WP": null
     }
   ],
   "Aj Karosas": [
@@ -174967,6 +175034,7 @@
       "height": null,
       "weight": null,
       "G": 16,
+      "PA": 48,
       "AB": 43,
       "R": 7,
       "H": 11,
@@ -174980,7 +175048,7 @@
       "AVG": 0.256,
       "OBP": 0.313,
       "SLG": 0.442,
-      "OPS": 0.755,
+      "OPS": 0.754,
       "W": null,
       "L": null,
       "ERA": null,
@@ -174991,8 +175059,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 48
+      "WP": null
     }
   ],
   "Deivis Nadal": [
@@ -175005,6 +175072,7 @@
       "height": null,
       "weight": null,
       "G": 25,
+      "PA": 110,
       "AB": 94,
       "R": 15,
       "H": 24,
@@ -175029,8 +175097,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 110
+      "WP": null
     }
   ],
   "J.d. Williams": [
@@ -175043,6 +175110,7 @@
       "height": null,
       "weight": null,
       "G": 20,
+      "PA": 78,
       "AB": 67,
       "R": 7,
       "H": 17,
@@ -175056,7 +175124,7 @@
       "AVG": 0.254,
       "OBP": 0.359,
       "SLG": 0.299,
-      "OPS": 0.658,
+      "OPS": 0.657,
       "W": null,
       "L": null,
       "ERA": null,
@@ -175067,8 +175135,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 78
+      "WP": null
     }
   ],
   "Ayden Vanenkevort": [
@@ -175081,6 +175148,7 @@
       "height": null,
       "weight": null,
       "G": 4,
+      "PA": 16,
       "AB": 16,
       "R": 2,
       "H": 4,
@@ -175105,8 +175173,7 @@
       "ER": 14,
       "BBA": 10,
       "KP": 6,
-      "WP": null,
-      "PA": 16
+      "WP": null
     }
   ],
   "Jeff Macleod": [
@@ -175119,6 +175186,7 @@
       "height": null,
       "weight": null,
       "G": 4,
+      "PA": 4,
       "AB": 4,
       "R": 0,
       "H": 1,
@@ -175143,8 +175211,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 4
+      "WP": null
     }
   ],
   "Crixtian Taveras": [
@@ -175157,6 +175224,7 @@
       "height": null,
       "weight": null,
       "G": 26,
+      "PA": 113,
       "AB": 96,
       "R": 18,
       "H": 24,
@@ -175170,7 +175238,7 @@
       "AVG": 0.25,
       "OBP": 0.357,
       "SLG": 0.51,
-      "OPS": 0.867,
+      "OPS": 0.868,
       "W": null,
       "L": null,
       "ERA": null,
@@ -175181,8 +175249,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 113
+      "WP": null
     }
   ],
   "Francisco Martinez": [
@@ -175195,6 +175262,7 @@
       "height": null,
       "weight": null,
       "G": 14,
+      "PA": 53,
       "AB": 45,
       "R": 11,
       "H": 11,
@@ -175219,8 +175287,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 53
+      "WP": null
     }
   ],
   "Adam Thuss": [
@@ -175233,6 +175300,7 @@
       "height": null,
       "weight": null,
       "G": 14,
+      "PA": 39,
       "AB": 33,
       "R": 7,
       "H": 8,
@@ -175257,8 +175325,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 39
+      "WP": null
     }
   ],
   "Logan Grant": [
@@ -175271,6 +175338,7 @@
       "height": null,
       "weight": null,
       "G": 25,
+      "PA": 90,
       "AB": 79,
       "R": 13,
       "H": 19,
@@ -175295,8 +175363,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 90
+      "WP": null
     }
   ],
   "Jaden Babiuk": [
@@ -175309,6 +175376,7 @@
       "height": null,
       "weight": null,
       "G": 32,
+      "PA": 98,
       "AB": 81,
       "R": 9,
       "H": 17,
@@ -175333,8 +175401,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 98
+      "WP": null
     }
   ],
   "Luke Chernesky": [
@@ -175347,6 +175414,7 @@
       "height": null,
       "weight": null,
       "G": 4,
+      "PA": 6,
       "AB": 5,
       "R": 0,
       "H": 1,
@@ -175371,8 +175439,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 6
+      "WP": null
     }
   ],
   "Nathaniel Ochoa": [
@@ -175385,6 +175452,7 @@
       "height": null,
       "weight": null,
       "G": 10,
+      "PA": 41,
       "AB": 35,
       "R": 5,
       "H": 7,
@@ -175409,8 +175477,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 41
+      "WP": null
     }
   ],
   "Bryce Arnold": [
@@ -175423,6 +175490,7 @@
       "height": null,
       "weight": null,
       "G": 13,
+      "PA": 52,
       "AB": 45,
       "R": 6,
       "H": 8,
@@ -175436,7 +175504,7 @@
       "AVG": 0.178,
       "OBP": 0.288,
       "SLG": 0.333,
-      "OPS": 0.621,
+      "OPS": 0.622,
       "W": null,
       "L": null,
       "ERA": null,
@@ -175447,8 +175515,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 52
+      "WP": null
     }
   ],
   "Brian Parry": [
@@ -175461,6 +175528,7 @@
       "height": null,
       "weight": null,
       "G": 7,
+      "PA": 30,
       "AB": 23,
       "R": 6,
       "H": 4,
@@ -175485,8 +175553,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 30
+      "WP": null
     }
   ],
   "Andy Groening": [
@@ -175499,6 +175566,7 @@
       "height": null,
       "weight": null,
       "G": 32,
+      "PA": 97,
       "AB": 83,
       "R": 7,
       "H": 14,
@@ -175523,8 +175591,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 97
+      "WP": null
     }
   ],
   "Drew Donaldson": [
@@ -175537,6 +175604,7 @@
       "height": null,
       "weight": null,
       "G": 6,
+      "PA": 21,
       "AB": 18,
       "R": 1,
       "H": 3,
@@ -175550,7 +175618,7 @@
       "AVG": 0.167,
       "OBP": 0.286,
       "SLG": 0.167,
-      "OPS": 0.453,
+      "OPS": 0.452,
       "W": null,
       "L": null,
       "ERA": null,
@@ -175561,8 +175629,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 21
+      "WP": null
     }
   ],
   "Kian Johnston": [
@@ -175575,6 +175642,7 @@
       "height": null,
       "weight": null,
       "G": 17,
+      "PA": 54,
       "AB": 49,
       "R": 7,
       "H": 8,
@@ -175599,8 +175667,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 54
+      "WP": null
     }
   ],
   "Jackson Cooke": [
@@ -175613,6 +175680,7 @@
       "height": null,
       "weight": null,
       "G": 13,
+      "PA": 37,
       "AB": 31,
       "R": 3,
       "H": 5,
@@ -175637,8 +175705,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 37
+      "WP": null
     }
   ],
   "Roberto Caro": [
@@ -175651,6 +175718,7 @@
       "height": null,
       "weight": null,
       "G": 4,
+      "PA": 15,
       "AB": 13,
       "R": 2,
       "H": 2,
@@ -175664,7 +175732,7 @@
       "AVG": 0.154,
       "OBP": 0.267,
       "SLG": 0.231,
-      "OPS": 0.498,
+      "OPS": 0.497,
       "W": null,
       "L": null,
       "ERA": null,
@@ -175675,8 +175743,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 15
+      "WP": null
     }
   ],
   "Ryder Hancock": [
@@ -175689,6 +175756,7 @@
       "height": null,
       "weight": null,
       "G": 32,
+      "PA": 59,
       "AB": 42,
       "R": 5,
       "H": 6,
@@ -175713,8 +175781,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 59
+      "WP": null
     }
   ],
   "Carson Barker": [
@@ -175727,6 +175794,7 @@
       "height": null,
       "weight": null,
       "G": 19,
+      "PA": 42,
       "AB": 36,
       "R": 4,
       "H": 5,
@@ -175751,8 +175819,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 42
+      "WP": null
     }
   ],
   "Vasilios Kaloudis": [
@@ -175765,6 +175832,7 @@
       "height": null,
       "weight": null,
       "G": 4,
+      "PA": 14,
       "AB": 11,
       "R": 0,
       "H": 1,
@@ -175789,8 +175857,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 14
+      "WP": null
     }
   ],
   "Jayden Valle": [
@@ -175803,6 +175870,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 1,
       "AB": 1,
       "R": 0,
       "H": 0,
@@ -175827,8 +175895,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 1
+      "WP": null
     }
   ],
   "Ernesto Punales": [
@@ -175841,6 +175908,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 2,
       "AB": 1,
       "R": 0,
       "H": 0,
@@ -175865,8 +175933,7 @@
       "ER": 31,
       "BBA": 17,
       "KP": 22,
-      "WP": null,
-      "PA": 2
+      "WP": null
     }
   ],
   "Noah Boughton": [
@@ -175879,6 +175946,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 2,
       "AB": 2,
       "R": 0,
       "H": 0,
@@ -175903,8 +175971,7 @@
       "ER": null,
       "BBA": null,
       "KP": null,
-      "WP": null,
-      "PA": 2
+      "WP": null
     }
   ],
   "Caleb Cassie": [
@@ -175917,6 +175984,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 0,
       "AB": 0,
       "R": 0,
       "H": 0,
@@ -175941,8 +176009,7 @@
       "ER": 10,
       "BBA": 12,
       "KP": 20,
-      "WP": null,
-      "PA": 0
+      "WP": null
     }
   ],
   "Reinaldo De Paula": [
@@ -175955,6 +176022,7 @@
       "height": null,
       "weight": null,
       "G": 1,
+      "PA": 1,
       "AB": 1,
       "R": 0,
       "H": 0,
@@ -175979,8 +176047,7 @@
       "ER": 19,
       "BBA": 8,
       "KP": 45,
-      "WP": null,
-      "PA": 1
+      "WP": null
     }
   ],
   "Ethan Boisvert": [
@@ -175993,6 +176060,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176030,6 +176098,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176067,6 +176136,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176104,6 +176174,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176141,6 +176212,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176178,6 +176250,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176215,6 +176288,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176252,6 +176326,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176289,6 +176364,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176326,6 +176402,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176363,6 +176440,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176400,6 +176478,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176437,6 +176516,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176474,6 +176554,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176511,6 +176592,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176548,6 +176630,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176585,6 +176668,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176622,6 +176706,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176659,6 +176744,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176696,6 +176782,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176733,6 +176820,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176770,6 +176858,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176807,6 +176896,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176844,6 +176934,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176881,6 +176972,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176918,6 +177010,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176955,6 +177048,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -176992,6 +177086,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177029,6 +177124,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177066,6 +177162,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177103,6 +177200,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177140,6 +177238,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177177,6 +177276,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177214,6 +177314,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177251,6 +177352,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177288,6 +177390,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177325,6 +177428,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177362,6 +177466,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177399,6 +177504,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177436,6 +177542,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177473,6 +177580,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177510,6 +177618,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177547,6 +177656,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177584,6 +177694,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177621,6 +177732,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177658,6 +177770,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
@@ -177695,6 +177808,7 @@
       "height": null,
       "weight": null,
       "G": null,
+      "PA": null,
       "AB": null,
       "R": null,
       "H": null,
