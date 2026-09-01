@@ -801,7 +801,7 @@ Zane Skansi,Kitchener Panthers`;
     var u = scoutingAccess();
     if (!u.role || u.role === 'admin') return true;
     if (u.role === 'position_player') return true;
-    if (u.role === 'catcher') return scoutingNorm(teamName) === scoutingNorm(scoutingUserTeam());
+    if (u.role === 'catcher') return true;
     return false;
   }
   function canScoutPlayer(playerName, playerType, playerTeamName) {
@@ -811,7 +811,7 @@ Zane Skansi,Kitchener Panthers`;
     var isTeammate = scoutingNorm(playerTeamName) === scoutingNorm(scoutingUserTeam());
     if (isSelf) return true;
     if (u.role === 'position_player') return !isTeammate;
-    if (u.role === 'catcher') return isTeammate && playerType === 'pitcher';
+    if (u.role === 'catcher') return !isTeammate || (isTeammate && playerType === 'pitcher');
     return false;
   }
 

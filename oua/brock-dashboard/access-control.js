@@ -19,7 +19,7 @@
     var teammate = norm(teamOf(player)) === norm(ownTeam);
     if (self) return true;
     if (currentUser.role === "position_player") return !teammate;
-    if (currentUser.role === "catcher") return teammate && role === "pitcher";
+    if (currentUser.role === "catcher") return !teammate || (teammate && role === "pitcher");
     return false;
   }
 
