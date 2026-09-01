@@ -281,6 +281,25 @@
   </script>
   <script>
     (function(){
+      const zonePane=$('zone'),zoneTable=document.createElement('article');
+      zoneTable.id='zoneQuadrantStatistics';
+      zoneTable.className='card';
+      zoneTable.style.marginTop='18px';
+      zonePane.appendChild(zoneTable);
+      function syncQuadrantTable(){
+        const source=document.querySelector('#overviewProfiles .quadrant-card');
+        zoneTable.style.display=source?'block':'none';
+        if(source)zoneTable.innerHTML=source.innerHTML;
+      }
+      new MutationObserver(syncQuadrantTable).observe($('overviewProfiles'),{childList:true,subtree:true});
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(syncQuadrantTable,160)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(syncQuadrantTable,160)));
+      document.querySelector('[data-tab="zone"]').addEventListener('click',()=>setTimeout(syncQuadrantTable,0));
+      setTimeout(syncQuadrantTable,2400);
+    })();
+  </script>
+  <script>
+    (function(){
       const resultLabel=x=>x.outcome||'—';
       const cleanCount=x=>String(x.count||'').replace(/^'/,'');
       const isHit=x=>['Single','Double','Triple','Home Run'].includes(x.outcome);
