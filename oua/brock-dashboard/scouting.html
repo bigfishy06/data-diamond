@@ -3,6 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function () {
+      try { if (JSON.parse(localStorage.getItem('oua_dd_user') || 'null')?.email) return; } catch (error) {}
+      localStorage.setItem('oua_dd_return_to', '/oua/brock-dashboard/scouting.html');
+      window.location.replace('login.html');
+    })();
+  </script>
   <title>Scouting Reports — Data Diamond</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="data:," />
@@ -774,7 +781,7 @@ Zane Skansi,Kitchener Panthers`;
 
   // ── Scouting access control — uses same Google OAuth as main.js ──
   function scoutingAccess() {
-    return (typeof AUTH !== 'undefined' && AUTH.getUser) ? AUTH.getUser() : (function(){ try { return JSON.parse(localStorage.getItem('dd_user') || '{}'); } catch(e) { return {}; } })();
+    return (function(){ try { return JSON.parse(localStorage.getItem('oua_dd_user') || '{}'); } catch(e) { return {}; } })();
   }
   function scoutingNorm(value) {
     return String(value || '').trim().toLowerCase();

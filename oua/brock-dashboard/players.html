@@ -3,6 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function () {
+      try { if (JSON.parse(localStorage.getItem('oua_dd_user') || 'null')?.email) return; } catch (error) {}
+      localStorage.setItem('oua_dd_return_to', '/oua/brock-dashboard/players.html');
+      window.location.replace('login.html');
+    })();
+  </script>
   <title>Player Stats — Data Diamond</title>
   <link rel="stylesheet" href="css/style.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
