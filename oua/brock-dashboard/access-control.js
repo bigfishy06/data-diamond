@@ -5,7 +5,7 @@
   function user() { try { return JSON.parse(localStorage.getItem("oua_dd_user") || "{}"); } catch (error) { return {}; } }
 
   var currentUser = user();
-  if (!currentUser.role || currentUser.role === "admin") return;
+  if (window.OUA_PUBLIC_ACCESS || !currentUser.role || currentUser.role === "admin") return;
 
   var sources = { pitcher: [], batter: [] };
   var uiSources = { pitcher: [], batter: [] };
