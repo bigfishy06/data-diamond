@@ -223,6 +223,7 @@
     #zone .zone-layout{grid-template-columns:1fr;position:relative;isolation:isolate;min-height:590px}#zone .zone-layout::before{content:'';position:absolute;inset:0;background:url('plate-batters.png') center 48%/min(100%,1080px) auto no-repeat;filter:brightness(0);opacity:.64;pointer-events:none;z-index:4}#zone .zone-layout .zone-svg{position:relative;z-index:1}#zone .zone-layout .legend{position:relative;z-index:5;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}#zoneSubtitle{color:var(--navy);font-size:16px;font-weight:800;letter-spacing:.04em}
   </style>
   <style>#effectiveness .dashboard-grid,#tendency.active{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}#tendencyBody td.tendency-high{background:#9be99f!important;color:#102746!important;font-weight:800}</style>
+  <style>.zone-quadrant-tools{align-items:flex-end}.zone-quadrant-tools label{margin:0}.zone-date-control{min-width:230px}.zone-date-control input{display:block;width:100%;margin:7px 0 4px;accent-color:var(--navy)}.zone-date-control span{display:block;color:var(--navy);font-size:12px;font-weight:700;letter-spacing:0}@media(max-width:560px){.zone-quadrant-tools{grid-template-columns:1fr}.zone-date-control{min-width:0}}</style>
   <style>#effectivenessTools{align-items:flex-start;flex-wrap:wrap}#effectivenessStatistic.effectiveness-checklist{display:flex;align-items:center;gap:9px 12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:5px;padding:9px 12px;min-width:520px}.effectiveness-checklist>span{color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.1em}.effectiveness-checklist label{display:flex;align-items:center;gap:4px;margin:0;color:var(--ink);font-size:12px;font-weight:700;letter-spacing:0}.effectiveness-checklist input{accent-color:var(--navy)}@media(max-width:700px){#effectivenessStatistic.effectiveness-checklist{min-width:0;width:100%}}</style>
   <script>
     (function(){const body=$('tendencyBody');function highlight(){body.querySelectorAll('td').forEach(cell=>{const value=parseFloat(cell.textContent);cell.classList.toggle('tendency-high',cell.textContent.includes('%')&&Number.isFinite(value)&&value>70)})}new MutationObserver(highlight).observe(body,{childList:true,subtree:true});['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(highlight,120)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(highlight,120)));document.querySelector('[data-tab="tendency"]').addEventListener('click',()=>setTimeout(highlight,120));setTimeout(highlight,2600)})();
@@ -282,20 +283,30 @@
   <script>
     (function(){
       const zonePane=$('zone'),zoneTable=document.createElement('article');
-      zoneTable.id='zoneQuadrantStatistics';
-      zoneTable.className='card';
-      zoneTable.style.marginTop='18px';
+      zoneTable.id='zoneQuadrantStatistics';zoneTable.className='card';zoneTable.style.marginTop='18px';
+      zoneTable.innerHTML='<div class="location-tools zone-quadrant-tools"><label class="zone-date-control">DATE<input id="zoneQuadrantDate" type="range" min="0" max="0" value="0"><span id="zoneQuadrantDateLabel">All dates</span></label><label>HANDEDNESS<select id="zoneQuadrantHand"><option value="all">All handedness</option></select></label></div><div id="zoneQuadrantTable"></div>';
       zonePane.appendChild(zoneTable);
-      function syncQuadrantTable(){
-        const source=document.querySelector('#overviewProfiles .quadrant-card');
-        zoneTable.style.display=source?'block':'none';
-        if(source)zoneTable.innerHTML=source.innerHTML;
+      const dateSlider=$('zoneQuadrantDate'),dateLabel=$('zoneQuadrantDateLabel'),handFilter=$('zoneQuadrantHand'),tableHost=$('zoneQuadrantTable');
+      const hit=point=>['Single','Double','Triple','Home Run'].includes(point.outcome),rate=(a,b)=>b?a/b*100:null;
+      let averages={pitcher:{},batter:{}};
+      const line=rows=>{const swings=rows.filter(point=>swingOutcomes.has(point.outcome)),whiffs=rows.filter(point=>whiffOutcomes.has(point.outcome)),abs=rows.filter(isOfficialAtBat);return{strike:rate(rows.filter(isPitchStrike).length,rows.length),swing:rate(swings.length,rows.length),whiff:rate(whiffs.length,swings.length),baa:abs.length?abs.filter(hit).length/abs.length:null}};
+      const tint=(role,key,value,format)=>{const average=averages[role]?.[key],higherIsBetter=role==='pitcher'?key!=='baa':key==='baa',difference=(value-average)*(higherIsBetter?1:-1),strength=Number.isFinite(difference)?Math.min(Math.abs(difference)/(key==='baa'?.08:12),1):0,target=difference>=0?[22,132,92]:[216,32,50],rgb=target.map(channel=>Math.round(255+(channel-255)*strength));return `<td style="color:rgb(${rgb.join(',')});text-shadow:-.5px -.5px 0 rgba(23,36,50,.5),.5px .5px 0 rgba(23,36,50,.5)">${value==null?'—':format(value)}</td>`};
+      function renderQuadrants(){
+        const player=state.current,role=activeRole();if(!player){zoneTable.style.display='none';return}zoneTable.style.display='block';
+        const dates=[...new Set(safePoints(player).map(point=>point.date).filter(Boolean))].sort((a,b)=>b.localeCompare(a)),dateKey=dates.join('|');
+        if(dateSlider.dataset.dates!==dateKey){dateSlider.dataset.dates=dateKey;dateSlider.max=dates.length;dateSlider.value=0}
+        const previous=handFilter.value;handFilter.innerHTML=role==='pitcher'?'<option value="all">All batter handedness</option><option value="R">RHH</option><option value="L">LHH</option>':'<option value="all">All pitcher handedness</option><option value="R">RHP</option><option value="L">LHP</option>';handFilter.value=['all','R','L'].includes(previous)?previous:'all';
+        const selectedDate=Number(dateSlider.value)?dates[Number(dateSlider.value)-1]:null;dateLabel.textContent=selectedDate||'All dates';
+        const hand=handFilter.value,side=role==='pitcher'?'batter_side':'pitcher_side',located=safePoints(player).filter(point=>point.in_zone&&(hand==='all'||point[side]===hand)&&(!selectedDate||point.date===selectedDate)),xForPov=point=>role==='pitcher'?-n(point.x):n(point.x),quadrants=[['High left',point=>xForPov(point)<0&&n(point.y)>=.5],['High right',point=>xForPov(point)>=0&&n(point.y)>=.5],['Low left',point=>xForPov(point)<0&&n(point.y)<.5],['Low right',point=>xForPov(point)>=0&&n(point.y)<.5]],headers=role==='pitcher'?['Location','Pitches','Usage%','Strike%','Whiff%','BAA']:['Location','Pitches','Usage%','Swing%','Whiff%','BAA'];
+        const body=quadrants.map(([label,test])=>{const rows=located.filter(test),stats=line(rows),usage=located.length?rows.length/located.length*100:null;return role==='pitcher'?`<tr><td>${label}</td><td>${rows.length}</td><td>${pct(usage)}</td>${tint(role,'strike',stats.strike,pct)}${tint(role,'whiff',stats.whiff,pct)}${tint(role,'baa',stats.baa,dec)}</tr>`:`<tr><td>${label}</td><td>${rows.length}</td><td>${pct(usage)}</td><td>${pct(stats.swing)}</td>${tint(role,'whiff',stats.whiff,pct)}${tint(role,'baa',stats.baa,dec)}</tr>`}).join('');
+        tableHost.innerHTML=`<div class="card-head"><h2>Strike-Zone Quadrant Statistics [${role==='pitcher'?'Batter':'Pitcher'} POV]</h2><span>${located.length} selected in-zone pitches</span></div><div class="table-wrap"><table class="stat-table"><thead><tr>${headers.map(header=>`<th>${header}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div>`;
       }
-      new MutationObserver(syncQuadrantTable).observe($('overviewProfiles'),{childList:true,subtree:true});
-      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(syncQuadrantTable,160)));
-      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(syncQuadrantTable,160)));
-      document.querySelector('[data-tab="zone"]').addEventListener('click',()=>setTimeout(syncQuadrantTable,0));
-      setTimeout(syncQuadrantTable,2400);
+      dateSlider.addEventListener('input',renderQuadrants);handFilter.addEventListener('change',renderQuadrants);
+      Promise.all([fetch('data/pitchers2026.json').then(response=>response.json()),fetch('data/pitches2026.json').then(response=>response.json())]).then(([pitchers,batters])=>{averages={pitcher:line(pitchers.flatMap(safePoints)),batter:line(batters.flatMap(safePoints))};renderQuadrants()}).catch(renderQuadrants);
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(renderQuadrants,160)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderQuadrants,160)));
+      document.querySelector('[data-tab="zone"]').addEventListener('click',()=>setTimeout(renderQuadrants,0));
+      setTimeout(renderQuadrants,2400);
     })();
   </script>
   <script>
