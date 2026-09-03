@@ -2663,6 +2663,38 @@ Zane Skansi,Kitchener Panthers`;
     var countLeague=[0,1,2].map(function(){return[[],[],[],[]];});
     (DATA.pitches||[]).forEach(function(bp){[0,1,2].forEach(function(group){countLeagueMetrics(bp.scatter||[],group).forEach(function(value,metric){if(value!=null&&isFinite(value))countLeague[group][metric].push(value);});});});
     var countTableRows=countPerformance.map(function(row,group){var directions=[null,false,false,true];return[{text:row[0]}].concat([1,2,3,4].map(function(column,metric){var value=parseFloat(row[column]);return{text:row[column],neutral:directions[metric]===null,pct:directions[metric]===null?null:reportPercentile(value,countLeague[group][metric],directions[metric])};}));});
+    var countTendencyGroups=[
+      {label:'Overall Non-RISP',test:function(point){return !reportHasRisp(point);}},
+      {label:'Overall RISP',test:function(point){return reportHasRisp(point);}},
+      {label:'0-0',test:function(point){return reportCleanCount(point.count)==='0-0';}},
+      {label:'0-1',test:function(point){return reportCleanCount(point.count)==='0-1';}},
+      {label:'1-0',test:function(point){return reportCleanCount(point.count)==='1-0';}},
+      {label:'1-1',test:function(point){return reportCleanCount(point.count)==='1-1';}},
+      {label:'Hitters (2-0, 2-1, 3-1)',test:function(point){return ['2-0','2-1','3-1'].includes(reportCleanCount(point.count));}},
+      {label:'3-2',test:function(point){return reportCleanCount(point.count)==='3-2';}},
+      {label:'2 strikes (not full)',test:function(point){return ['0-2','1-2','2-2'].includes(reportCleanCount(point.count));}}
+    ];
+    function batterCountTendencyMetrics(points, group) {
+      var rows=(points||[]).filter(group.test), swings=rows.filter(reportIsSwingOutcome);
+      var ab=rows.filter(reportIsAtBat), hits=rows.filter(function(point){return _HITS_B.includes(point.outcome);});
+      return {pitches:rows.length,swing:rows.length?swings.length/rows.length*100:null,whiff:swings.length?rows.filter(reportIsWhiffOutcome).length/swings.length*100:null,baa:ab.length?hits.length/ab.length:null};
+    }
+    var countTendencyLeague=countTendencyGroups.map(function(){return {whiff:[],baa:[]};});
+    (DATA.pitches||[]).forEach(function(batter){countTendencyGroups.forEach(function(group,index){
+      var metric=batterCountTendencyMetrics(batter.scatter||[],group);
+      if(metric.whiff!=null&&isFinite(metric.whiff))countTendencyLeague[index].whiff.push(metric.whiff);
+      if(metric.baa!=null&&isFinite(metric.baa))countTendencyLeague[index].baa.push(metric.baa);
+    });});
+    var countTendencyRows=countTendencyGroups.map(function(group,index){
+      var metric=batterCountTendencyMetrics(allSc,group);
+      return [
+        {text:group.label},
+        {text:metric.pitches?String(metric.pitches):'—',neutral:true},
+        {text:metric.swing==null?'—':f1(metric.swing)+'%',neutral:true},
+        {text:metric.whiff==null?'—':f1(metric.whiff)+'%',pct:reportPercentile(metric.whiff,countTendencyLeague[index].whiff,false)},
+        {text:metric.baa==null?'—':f3(metric.baa),pct:reportPercentile(metric.baa,countTendencyLeague[index].baa,true)}
+      ];
+    });
     function batterHandSplitMetrics(points,side){
       var rows=(points||[]).filter(function(p){return p.pitcher_side===side;});
       var first=rows.filter(function(p){return reportCleanCount(p.count)==='0-0';}),inZone=rows.filter(function(p){return hasPitchLocation(p)&&p.in_zone;}),outside=rows.filter(function(p){return hasPitchLocation(p)&&!p.in_zone;}),swings=rows.filter(reportIsSwingOutcome);
@@ -2714,9 +2746,9 @@ Zane Skansi,Kitchener Panthers`;
     y=drawSec(d,'Pitch Performance (Pitcher POV)',y);
     y=drawBatterRateTable(['PITCH TYPE','PITCHES','SWING%','WHIFF%','CHASE%','BAA','OPS'],[34,22,25,25,25,25,30],pitchPerformanceRows,y);
 
-    if(PH-y<38){d.addPage();drawBg(d);y=MT+8;}
+    if(PH-y<96){d.addPage();drawBg(d);y=MT+8;}
     y=drawSec(d,'Count Tendencies',y);
-    y=drawBatterRateTable(['SITUATION','SWING%','WHIFF%','CHASE%','OPS'],[42,36,36,36,36],countTableRows,y);
+    y=drawBatterRateTable(['COUNT SITUATION','PITCHES','SWING%','WHIFF%','BAA'],[66,28,31,31,30],countTendencyRows,y);
 
     if(PH-y<42){d.addPage();drawBg(d);y=MT+8;}
     y=drawSec(d,'Splits',y);
