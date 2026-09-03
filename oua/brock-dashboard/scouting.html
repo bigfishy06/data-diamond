@@ -2656,18 +2656,20 @@ Zane Skansi,Kitchener Panthers`;
     }
     // Shift and Pitch Split Stats are intentionally omitted from batter reports.
     function drawBatterRateTable(headers,widths,rows,tableY){
-      var headerH=8,rowH=8.5;
+      // Larger type and rows make the one-page report use the available page
+      // without sacrificing legibility.
+      var headerH=9.5,rowH=10.5;
       sf(d,CO.navy2);d.rect(ML,tableY,CPW,headerH,'F');
       var tx=ML;
-      headers.forEach(function(header,index){d.setFont('helvetica','bold');d.setFontSize(6.2);st(d,CO.gold);d.text(header,tx+widths[index]/2,tableY+5.2,{align:'center'});tx+=widths[index];});
+      headers.forEach(function(header,index){d.setFont('helvetica','bold');d.setFontSize(7.1);st(d,CO.gold);d.text(header,tx+widths[index]/2,tableY+6.2,{align:'center'});tx+=widths[index];});
       var rowY=tableY+headerH;
       rows.forEach(function(row,rowIndex){
         d.setFillColor(rowIndex%2?244:255,rowIndex%2?246:255,rowIndex%2?251:255);d.rect(ML,rowY,CPW,rowH,'F');
         var cellX=ML;
         row.forEach(function(cell,index){
-          if(index===0||cell.label){d.setFont('helvetica','bold');d.setFontSize(7.5);d.setTextColor(32,42,120);d.text(String(cell.text),cellX+widths[index]/2,rowY+5.8,{align:'center'});}
-          else if(cell.neutral){d.setFont('helvetica','bold');d.setFontSize(9);d.setTextColor(10,14,22);d.text(String(cell.text),cellX+widths[index]/2,rowY+5.9,{align:'center'});}
-          else{var cc=hx(cell.pct==null?'#ffffff':cell.pct>=67?'#9be99f':cell.pct<=33?'#f4a6a6':'#ffffff');d.setFillColor(cc[0],cc[1],cc[2]);d.rect(cellX+.6,rowY+.6,widths[index]-1.2,rowH-1.2,'F');d.setFont('helvetica','bold');d.setFontSize(9);d.setTextColor(8,12,18);d.text(String(cell.text),cellX+widths[index]/2,rowY+5.9,{align:'center'});}
+          if(index===0||cell.label){d.setFont('helvetica','bold');d.setFontSize(8.4);d.setTextColor(32,42,120);d.text(String(cell.text),cellX+widths[index]/2,rowY+6.9,{align:'center'});}
+          else if(cell.neutral){d.setFont('helvetica','bold');d.setFontSize(10.2);d.setTextColor(10,14,22);d.text(String(cell.text),cellX+widths[index]/2,rowY+7,{align:'center'});}
+          else{var cc=hx(cell.pct==null?'#ffffff':cell.pct>=67?'#9be99f':cell.pct<=33?'#f4a6a6':'#ffffff');d.setFillColor(cc[0],cc[1],cc[2]);d.rect(cellX+.6,rowY+.6,widths[index]-1.2,rowH-1.2,'F');d.setFont('helvetica','bold');d.setFontSize(10.2);d.setTextColor(8,12,18);d.text(String(cell.text),cellX+widths[index]/2,rowY+7,{align:'center'});}
           cellX+=widths[index];
         });
         rowY+=rowH;
@@ -2776,16 +2778,16 @@ Zane Skansi,Kitchener Panthers`;
     // maps are compact enough to preserve a useful one-page player report.
     y=drawSec(d,'Splits',y);
     y=drawBatterRateTable(['MATCHUP','BA','OBP','SLG','OPS'],[38,37,37,37,37],splitRows,y);
-    var reportHeatSize=Math.min(72,(CPW-10)/2);
+    var reportHeatSize=Math.min(88,(CPW-10)/2);
     y=drawSec(d,'Location Outcome Heat Maps (Pitcher POV)',y);
     var whiffHeatPoints=allSc.filter(reportIsWhiffOutcome);
     var hitHeatPoints=allSc.filter(function(point){return _HITS_B.includes(point.outcome);});
-    d.setFont('helvetica','bold');d.setFontSize(7);d.setTextColor(32,42,120);
-    d.text('WHIFF HEAT MAP',ML+reportHeatSize/2,y+4,{align:'center'});
-    d.text('HIT HEAT MAP',ML+reportHeatSize+10+reportHeatSize/2,y+4,{align:'center'});
-    d.addImage(mkHeat(whiffHeatPoints,'PITCHER'),'PNG',ML,y+7,reportHeatSize,reportHeatSize);
-    d.addImage(mkHeat(hitHeatPoints,'PITCHER'),'PNG',ML+reportHeatSize+10,y+7,reportHeatSize,reportHeatSize);
-    y+=reportHeatSize+12;
+    d.setFont('helvetica','bold');d.setFontSize(8.2);d.setTextColor(32,42,120);
+    d.text('WHIFF HEAT MAP',ML+reportHeatSize/2,y+5,{align:'center'});
+    d.text('HIT HEAT MAP',ML+reportHeatSize+10+reportHeatSize/2,y+5,{align:'center'});
+    d.addImage(mkHeat(whiffHeatPoints,'PITCHER'),'PNG',ML,y+8,reportHeatSize,reportHeatSize);
+    d.addImage(mkHeat(hitHeatPoints,'PITCHER'),'PNG',ML+reportHeatSize+10,y+8,reportHeatSize,reportHeatSize);
+    y+=reportHeatSize+14;
     if(false&&(hasSpray||hasBip)){
       // Each chart occupies half the content width
       // Layout: side-by-side if both present, centred single if only one
