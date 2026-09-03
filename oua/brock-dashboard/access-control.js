@@ -10,13 +10,15 @@
   var sources = { pitcher: [], batter: [] };
   var uiSources = { pitcher: [], batter: [] };
   var ownTeam = "Brock Badgers";
+  // Current Brock roster overrides preserve access even when older data carries a former team label.
+  var BrockRosterOverrides = new Set(["tobey drennan"]);
   var enforcing = false;
   var teamOf = function (player) { return player.pitcher_team || player.batter_team || ""; };
   var nameOf = function (player) { return player.pitcher || player.batter || ""; };
 
   function canView(player, role) {
     var self = norm(nameOf(player)) === norm(currentUser.player);
-    var teammate = norm(teamOf(player)) === norm(ownTeam);
+    var teammate = BrockRosterOverrides.has(norm(nameOf(player))) || norm(teamOf(player)) === norm(ownTeam);
     if (self) return true;
     if (currentUser.role === "position_player") return !teammate;
     if (currentUser.role === "catcher") return !teammate || (teammate && role === "pitcher");

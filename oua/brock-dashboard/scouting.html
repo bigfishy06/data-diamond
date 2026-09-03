@@ -789,6 +789,7 @@ Zane Skansi,Kitchener Panthers`;
   function scoutingNorm(value) {
     return String(value || '').trim().toLowerCase();
   }
+  var SCOUTING_BROCK_ROSTER_OVERRIDES = new Set(['tobey drennan']);
   function scoutingUserTeam() {
     var u = scoutingAccess(), own = scoutingNorm(u.player), match;
     if (typeof DATA !== 'undefined') {
@@ -811,7 +812,7 @@ Zane Skansi,Kitchener Panthers`;
     var u = scoutingAccess();
     if (!u.role || u.role === 'admin') return true;
     var isSelf = scoutingNorm(playerName) === scoutingNorm(u.player);
-    var isTeammate = scoutingNorm(playerTeamName) === scoutingNorm(scoutingUserTeam());
+    var isTeammate = SCOUTING_BROCK_ROSTER_OVERRIDES.has(scoutingNorm(playerName)) || scoutingNorm(playerTeamName) === scoutingNorm(scoutingUserTeam());
     if (isSelf) return true;
     if (u.role === 'position_player') return !isTeammate;
     if (u.role === 'catcher') return !isTeammate || (isTeammate && playerType === 'pitcher');
