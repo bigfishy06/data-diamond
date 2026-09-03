@@ -55,9 +55,14 @@
       var allowedNames = new Set(allowed.map(function (player) { return norm(nameOf(player)); }));
       var currentUi = Array.isArray(state.players) ? state.players : [];
       if (currentUi.length > uiSources[role].length) uiSources[role] = currentUi.slice();
-      var permittedUi = uiSources[role].filter(function (player) { return allowedNames.has(norm(nameOf(player))); });
+      var seasonSelect = document.getElementById("season");
+      var season = seasonSelect ? seasonSelect.value : "all";
+      var inSelectedSeason = function (player) {
+        return season === "all" || (Array.isArray(player.scatter) && player.scatter.some(function (pitch) { return String(pitch.date || "").slice(0, 4) === season; }));
+      };
+      var permittedUi = uiSources[role].filter(function (player) { return allowedNames.has(norm(nameOf(player))) && inSelectedSeason(player); });
       var priorTeam = teamSelect.value;
-      var teams = Array.from(new Set(allowed.map(teamOf).filter(Boolean))).sort();
+      var teams = Array.from(new Set(permittedUi.map(teamOf).filter(Boolean))).sort();
       var teamOptions = [{ value: "all", label: "All teams" }].concat(teams.map(function (team) { return { value: team, label: team }; }));
       replaceOptions(teamSelect, teamOptions, priorTeam);
       if (!teamOptions.some(function (option) { return option.value === priorTeam; })) teamSelect.value = "all";
@@ -98,7 +103,7 @@
     sources.batter = data[1];
     var ownRecord = sources.pitcher.concat(sources.batter).find(function (player) { return norm(nameOf(player)) === norm(currentUser.player); });
     if (ownRecord && teamOf(ownRecord)) ownTeam = teamOf(ownRecord);
-    ["player", "team"].forEach(function (id) {
+    ["player", "team", "season"].forEach(function (id) {
       var element = document.getElementById(id);
       if (element) element.addEventListener("change", function () { setTimeout(enforceAccess, 0); });
     });
