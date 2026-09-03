@@ -507,33 +507,48 @@
     { id:'wes', abbr:'WES', name:'Western Mustangs',             color:'#4F2683' },
     { id:'wlu', abbr:'WLU', name:'Wilfrid Laurier Golden Hawks', color:'#5B2C83' }
   ];
-  // Keep the individual batter reports on the same current wRC+ source as
-  // the player dashboard.  The record is keyed independently here because
-  // the scouting reports load before the legacy data script finishes.
-  var WRC_PLUS_RECORDS = [];
-  var WRC_PLUS_BY_BATTER = {};
-  function wrcPlayerKey(name) { return String(name || '').trim().replace(/\s+/g, ' ').toLowerCase(); }
-  function parseSimpleCsvLine(line) {
-    return line.split(',').map(function(value) {
-      return value.trim().replace(/^"(.*)"$/, '$1').replace(/""/g, '"');
-    });
+  // Match the OUA dashboard's MLB OPS+ definition: 100 × (OBP/lgOBP + SLG/lgSLG − 1).
+  // This is intentionally separate from wRC+ so the report and dashboard show the same metric.
+  var OPS_PLUS_BY_SEASON = {};
+  function opsPlayerKey(name) { return String(name || '').trim().replace(/\s+/g, ' ').toLowerCase(); }
+  function opsNumber(value) { var parsed = Number.parseFloat(value); return Number.isFinite(parsed) ? parsed : 0; }
+  function opsPlusRecordFor(name, season) {
+    var seasonRows = OPS_PLUS_BY_SEASON[String(season || '')] || [];
+    return seasonRows.find(function(row) { return opsPlayerKey(row.name) === opsPlayerKey(name); }) || null;
   }
-  function wrcRecordFor(name) { return WRC_PLUS_BY_BATTER[wrcPlayerKey(name)] || null; }
-  function wrcPercentile(record) {
-    if (!record || !WRC_PLUS_RECORDS.length) return null;
-    var totalPA = WRC_PLUS_RECORDS.reduce(function(total, row) { return total + row.pa; }, 0);
-    if (!totalPA) return null;
-    return WRC_PLUS_RECORDS.reduce(function(total, row) {
+  function opsPlusPercentile(record, season) {
+    var rows = OPS_PLUS_BY_SEASON[String(season || '')] || [];
+    var totalPA = rows.reduce(function(total, row) { return total + row.pa; }, 0);
+    if (!record || !totalPA) return null;
+    return rows.reduce(function(total, row) {
       return total + (row.value < record.value ? row.pa : (row.value === record.value ? row.pa * .5 : 0));
     }, 0) / totalPA * 100;
   }
-  fetch('data/wrc-plus-current-2026.csv').then(function(response) { return response.text(); }).then(function(text) {
-    text.trim().split(/\r?\n/).slice(1).forEach(function(line) {
-      var columns = parseSimpleCsvLine(line);
-      var record = { pa: Number(columns[2]) || 0, value: Number(columns[columns.length - 1]) };
-      if (!columns[0] || !isFinite(record.value) || record.pa <= 0) return;
-      WRC_PLUS_RECORDS.push(record);
-      WRC_PLUS_BY_BATTER[wrcPlayerKey(columns[0])] = record;
+  fetch('data/onu-season-stats.json').then(function(response) { return response.json(); }).then(function(source) {
+    var rows = (source.tables || []).filter(function(table) {
+      return table.type === 'Batting' && /^\d{4}$/.test(String(table.season || ''));
+    }).flatMap(function(table) {
+      return (table.rows || []).map(function(values) {
+        var row = {};
+        (table.columns || []).forEach(function(column, index) { row[column] = values[index]; });
+        row.season = String(row.Season || table.season || '');
+        return row;
+      });
+    }).filter(function(row) { return opsNumber(row.PA) > 0 && opsNumber(row.AB) > 0; });
+    rows.forEach(function(row) {
+      var seasonRows = OPS_PLUS_BY_SEASON[row.season] || (OPS_PLUS_BY_SEASON[row.season] = []);
+      seasonRows.push({ name: row.Name, pa: opsNumber(row.PA), ab: opsNumber(row.AB), obp: opsNumber(row.OBP), slg: opsNumber(row.SLG) });
+    });
+    Object.keys(OPS_PLUS_BY_SEASON).forEach(function(season) {
+      var seasonRows = OPS_PLUS_BY_SEASON[season];
+      var totalPA = seasonRows.reduce(function(total, row) { return total + row.pa; }, 0);
+      var totalAB = seasonRows.reduce(function(total, row) { return total + row.ab; }, 0);
+      var leagueOBP = seasonRows.reduce(function(total, row) { return total + row.obp * row.pa; }, 0) / Math.max(totalPA, 1);
+      var leagueSLG = seasonRows.reduce(function(total, row) { return total + row.slg * row.ab; }, 0) / Math.max(totalAB, 1);
+      seasonRows.forEach(function(row) {
+        row.value = leagueOBP > 0 && leagueSLG > 0 ? Math.round(100 * (row.obp / leagueOBP + row.slg / leagueSLG - 1)) : null;
+      });
+      OPS_PLUS_BY_SEASON[season] = seasonRows.filter(function(row) { return Number.isFinite(row.value); });
     });
   }).catch(function() {});
 
@@ -2197,9 +2212,9 @@ Zane Skansi,Kitchener Panthers`;
     var sbVal=_iblSB?fN(_iblSB.SB):(s.SB!=null?fN(s.SB):(s.stolen_bases!=null?fN(s.stolen_bases):'—'));
     function batterMetrics(pts,summary){pts=pts||[];var located=pts.filter(hasPitchLocation),inz=located.filter(function(p){return !!p.in_zone;}),outz=located.filter(function(p){return !p.in_zone;}),swings=pts.filter(reportIsSwingOutcome),firstPitches=pts.filter(function(p){return String(p.count||'').replace(/^'/,'')==='0-0';}),first=firstPitches.length?firstPitches.filter(reportIsSwingOutcome).length/firstPitches.length*100:null;return{fps:first,iz:inz.length?inz.filter(reportIsSwingOutcome).length/inz.length*100:null,chase:outz.length?outz.filter(reportIsSwingOutcome).length/outz.length*100:null,whiff:swings.length?swings.filter(reportIsWhiffOutcome).length/swings.length*100:null};}
     var bm=batterMetrics(allSc,s),batterLeague=(DATA.pitches||[]).map(function(bp){var bs=(DATA.summary||[]).find(function(row){return normRosterName(row.batter||row.player)===normRosterName(bp.batter);})||{};return batterMetrics(bp.scatter||[],bs);});
-    var wrcRecord = selSeason === '2026' ? wrcRecordFor(player.name) : null;
+    var opsPlusRecord = opsPlusRecordFor(player.name, selSeason);
     y=drawPercentileBoxes(d,[
-      {label:'wRC+',display:wrcRecord ? String(wrcRecord.value) : '—',pct:wrcPercentile(wrcRecord)},
+      {label:'OPS+',display:opsPlusRecord ? String(opsPlusRecord.value) : '—',pct:opsPlusPercentile(opsPlusRecord, selSeason)},
       {label:'IN-ZONE SWING%',display:bm.iz==null?'—':f1(bm.iz)+'%',pct:reportPercentile(bm.iz,batterLeague.map(function(m){return m.iz;}),true)},
       {label:'CHASE%',display:bm.chase==null?'—':f1(bm.chase)+'%',pct:reportPercentile(bm.chase,batterLeague.map(function(m){return m.chase;}),false)},
       {label:'WHIFF%',display:bm.whiff==null?'—':f1(bm.whiff)+'%',pct:reportPercentile(bm.whiff,batterLeague.map(function(m){return m.whiff;}),false)}
@@ -2535,7 +2550,7 @@ Zane Skansi,Kitchener Panthers`;
 
     var hasSpray=spTot2>=(hasSprayPcts?1:3);
     if(hasSpray&&PH-8-y-4<40){d.addPage();drawBg(d);y=MT+8;}
-    if(hasSpray){
+    if(false&&hasSpray){
       y=drawSec(d,'Shift',y);
       function batterShiftPitchGroup(p){
         var type=reportPitchTypeBucket(p);
@@ -2586,7 +2601,7 @@ Zane Skansi,Kitchener Panthers`;
       });
       y+=shiftCardH+4;
     }
-    drawPitchSplitStatsB();
+    // Shift and Pitch Split Stats are intentionally omitted from batter reports.
     function drawBatterRateTable(headers,widths,rows,tableY){
       var headerH=8,rowH=8.5;
       sf(d,CO.navy2);d.rect(ML,tableY,CPW,headerH,'F');
@@ -2636,12 +2651,52 @@ Zane Skansi,Kitchener Panthers`;
     (DATA.pitches||[]).forEach(function(bp){['L','R'].forEach(function(side){batterHandSplitMetrics(bp.scatter||[],side).forEach(function(value,metric){if(value!=null&&isFinite(value))splitLeague[side][metric].push(value);});});});
     var splitDirections=[false,true,false,false,false];
     var splitRows=['L','R'].map(function(side){var metrics=batterHandSplitMetrics(allSc,side);return[{text:'vs. '+side+'HP'}].concat(metrics.map(function(value,metric){return{text:value==null?'—':f1(value)+'%',neutral:metric===0,pct:metric===0?null:reportPercentile(value,splitLeague[side][metric],splitDirections[metric])};}));});
-    if(PH-y<38){d.addPage();drawBg(d);y=MT+8;}
-    y=drawSec(d,'Count Performance',y);
-    y=drawBatterRateTable(['SITUATION','SWING%','WHIFF%','CHASE%','OPS'],[42,36,36,36,36],countTableRows,y);
+    // Pitch Performance is shown from the pitcher's perspective: lower swing
+    // and contact quality, plus more whiffs and chases, are favourable.
+    function batterPitchPerformance(points, type) {
+      var rows=(points||[]).filter(function(point) {
+        var bucket=reportPitchTypeBucket(point);
+        if(type==='Fastball') return ['Fastball','Sinker','Cutter'].includes(bucket);
+        if(type==='Breaking Ball') return ['Breaking Ball','Slider','Sweeper','Curveball','Slurve','Knuckle Curve'].includes(bucket);
+        return !['Fastball','Sinker','Cutter','Breaking Ball','Slider','Sweeper','Curveball','Slurve','Knuckle Curve','Unknown'].includes(bucket);
+      });
+      var swings=rows.filter(reportIsSwingOutcome), outside=rows.filter(xyOutOfZone);
+      var ab=rows.filter(reportIsAtBat), hits=rows.filter(function(point){return _HITS_B.includes(point.outcome);});
+      var ops=parseFloat(_opsTextB(rows));
+      return {n:rows.length, swing:rows.length?swings.length/rows.length*100:null, whiff:swings.length?rows.filter(reportIsWhiffOutcome).length/swings.length*100:null, chase:outside.length?outside.filter(reportIsSwingOutcome).length/outside.length*100:null, baa:ab.length?hits.length/ab.length:null, ops:isFinite(ops)?ops:null};
+    }
+    var performanceTypes=['Fastball','Breaking Ball','Offspeed'];
+    var performanceLeague={};
+    performanceTypes.forEach(function(type){performanceLeague[type]=[[],[],[],[],[]];});
+    (DATA.pitches||[]).forEach(function(batter){performanceTypes.forEach(function(type){
+      var metric=batterPitchPerformance(batter.scatter||[],type);
+      [metric.swing,metric.whiff,metric.chase,metric.baa,metric.ops].forEach(function(value,index){if(value!=null&&isFinite(value))performanceLeague[type][index].push(value);});
+    });});
+    var pitchPerformanceRows=performanceTypes.map(function(type){
+      var metric=batterPitchPerformance(allSc,type), values=[metric.swing,metric.whiff,metric.chase,metric.baa,metric.ops];
+      return [{text:type},{text:String(metric.n),neutral:true}].concat(values.map(function(value,index){
+        var text=index>=3?(value==null?'—':f3(value)):(value==null?'—':f1(value)+'%');
+        return {text:text,pct:reportPercentile(value,performanceLeague[type][index],false)};
+      }));
+    });
+    if(PH-y<48){d.addPage();drawBg(d);y=MT+8;}
+    y=drawSec(d,'Pitch Performance (Pitcher POV)',y);
+    y=drawBatterRateTable(['PITCH TYPE','PITCHES','SWING%','WHIFF%','CHASE%','BAA','OPS'],[34,22,25,25,25,25,30],pitchPerformanceRows,y);
+
     if(PH-y<42){d.addPage();drawBg(d);y=MT+8;}
     y=drawSec(d,'Splits',y);
     y=drawBatterRateTable(['MATCHUP','FP SWING%','I-Z SWING%','CHASE%','WHIFF%','K%'],[36,30,30,30,30,30],splitRows,y);
+    var reportHeatSize=Math.min(78,(CPW-10)/2);
+    if(PH-y<reportHeatSize+18){d.addPage();drawBg(d);y=MT+8;}
+    y=drawSec(d,'Location Outcome Heat Maps (Pitcher POV)',y);
+    var whiffHeatPoints=allSc.filter(reportIsWhiffOutcome);
+    var hitHeatPoints=allSc.filter(function(point){return _HITS_B.includes(point.outcome);});
+    d.setFont('helvetica','bold');d.setFontSize(7);d.setTextColor(32,42,120);
+    d.text('WHIFF HEAT MAP',ML+reportHeatSize/2,y+4,{align:'center'});
+    d.text('HIT HEAT MAP',ML+reportHeatSize+10+reportHeatSize/2,y+4,{align:'center'});
+    d.addImage(mkHeat(whiffHeatPoints,'PITCHER'),'PNG',ML,y+7,reportHeatSize,reportHeatSize);
+    d.addImage(mkHeat(hitHeatPoints,'PITCHER'),'PNG',ML+reportHeatSize+10,y+7,reportHeatSize,reportHeatSize);
+    y+=reportHeatSize+12;
     if(false&&(hasSpray||hasBip)){
       // Each chart occupies half the content width
       // Layout: side-by-side if both present, centred single if only one
