@@ -2,8 +2,8 @@
   "users": [
     {
       "email": "christiansturgeon06@gmail.com",
-      "role": "admin",
-      "player": null
+      "role": "position_player",
+      "player": "Brady Campbell"
     }
   ]
 }
