@@ -92,7 +92,7 @@
   </script></head>
 <body>
   <header class="site-header"><div class="header-inner"><img class="logo" src="brock-badgers-logo.png" alt="Brock Badgers Baseball"><div class="wordmark"><small>BROCK UNIVERSITY ATHLETICS</small><strong>BADGERS <em>BASEBALL</em></strong></div><div class="header-note"><b>BASEBALL RESEARCH</b></div></div><div class="badgers-ribbon">BROCK BADGERS BASEBALL · BASEBALL RESEARCH</div></header>
-  <main class="shell"><section class="control-bar"><div><label for="season">SEASON</label><select id="season"><option>2026</option></select></div><div><label for="team">TEAM</label><select id="team"><option value="all">All teams</option></select></div><div id="handednessWrap" style="display:none"><label for="handedness">BATTER HANDEDNESS</label><select id="handedness"><option value="all">All hitters</option></select></div><div><label id="playerLabel" for="player">PITCHER PROFILE</label><select id="player"><option>Loading player data…</option></select></div><div class="view-switch"><button data-role="batter" type="button">Batters</button><button class="active" data-role="pitcher" type="button">Pitchers</button></div></section>
+  <main class="shell"><section class="control-bar"><div><label for="season">SEASON</label><select id="season"><option value="all" selected>All</option><option value="2025">2025</option><option value="2026">2026</option></select></div><div><label for="team">TEAM</label><select id="team"><option value="all">All teams</option></select></div><div id="handednessWrap" style="display:none"><label for="handedness">BATTER HANDEDNESS</label><select id="handedness"><option value="all">All hitters</option></select></div><div><label id="playerLabel" for="player">PITCHER PROFILE</label><select id="player"><option>Loading player data…</option></select></div><div class="view-switch"><button data-role="batter" type="button">Batters</button><button class="active" data-role="pitcher" type="button">Pitchers</button></div></section>
     <section class="profile"><div class="monogram" id="initials">BB</div><div><p class="eyebrow">PITCHER PROFILE · BROCK BADGERS</p><h1 id="name">Loading profile</h1><p id="meta">OUA Baseball · 2026 season data</p></div><div class="sample"><strong id="pitches">—</strong><span>PITCHES TRACKED</span></div></section>
     <section class="metrics"><article class="metric"><span class="label">K%</span><strong class="value" id="kPct">—</strong><span class="hint" id="kHint">Strikeout rate</span></article><article class="metric red"><span class="label">BB%</span><strong class="value" id="bbPct">—</strong><span class="hint neutral">Walk rate</span></article><article class="metric"><span class="label">WHIFF%</span><strong class="value" id="whiffPct">—</strong><span class="hint" id="whiffHint">On swings</span></article><article class="metric"><span class="label">STRIKE%</span><strong class="value" id="strikePct">—</strong><span class="hint neutral">All pitches</span></article><article class="metric"><span class="label">K–BB%</span><strong class="value" id="kbbPct">—</strong><span class="hint" id="kbbHint">Command indicator</span></article></section>
     <nav class="tabs"><button class="tab active" data-tab="overview" type="button">OVERVIEW</button><button class="tab" data-tab="effectiveness" type="button">EFFECTIVENESS</button><button class="tab" data-tab="tendency" type="button">COUNT TENDENCIES</button><button class="tab" data-tab="sequencing" type="button">PITCH SEQUENCING</button><button class="tab" data-tab="zone" type="button">STRIKE ZONE</button><button class="tab" data-tab="gamelogs" type="button">GAME LOGS</button><button class="tab" data-tab="scouting-report" type="button">SCOUTING REPORT</button><button class="tab" data-tab="results" type="button">RESULTS</button></nav>
@@ -1253,6 +1253,29 @@
       document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(decorateGameLog,650)));
       document.querySelector('[data-tab="gamelogs"]').addEventListener('click',()=>setTimeout(decorateGameLog,100));
       setTimeout(decorateGameLog,4800);
+    })();
+  </script>
+  <script>
+    (function(){
+      const season=$('season'),team=$('team'),player=$('player'),rawByRole={pitcher:null,batter:null};
+      const role=()=>activeRole(),yearOf=point=>String(point.date||'').slice(0,4);
+      function capture(){const active=role(),rows=Array.isArray(state.players)?state.players:[];if(!rawByRole[active]||rows.length>rawByRole[active].length)rawByRole[active]=rows.slice()}
+      function seasonPlayer(record){if(season.value==='all')return record;const scatter=(record.scatter||[]).filter(point=>yearOf(point)===season.value);return Object.assign({},record,{scatter:scatter,total_pitches:scatter.length,pitches_seen:scatter.length})}
+      function applySeason(){
+        capture();const active=role(),raw=rawByRole[active]||[];
+        const seasonal=raw.map(seasonPlayer).filter(record=>season.value==='all'||record.scatter.length);
+        const priorTeam=team.value,teams=[...new Set(seasonal.map(record=>record.pitcher_team).filter(Boolean))].sort();
+        team.innerHTML='<option value="all">All teams</option>'+teams.map(name=>`<option value="${name}">${name}</option>`).join('');
+        team.value=teams.includes(priorTeam)?priorTeam:'all';
+        const scoped=seasonal.filter(record=>team.value==='all'||record.pitcher_team===team.value),priorPlayer=player.value;
+        state.players=scoped;player.innerHTML=scoped.length?scoped.map(record=>`<option value="${record.pitcher}">${record.pitcher} · ${record.pitcher_team||'Team unavailable'}</option>`).join(''):'<option value="">No players in this season</option>';
+        if(scoped.length)selectPlayer(scoped.some(record=>record.pitcher===priorPlayer)?priorPlayer:scoped[0].pitcher);else state.current=null;
+        updateResults();
+      }
+      season.addEventListener('change',applySeason);
+      team.addEventListener('change',()=>setTimeout(applySeason,0));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(applySeason,120)));
+      setTimeout(()=>{capture();applySeason()},1800);
     })();
   </script>
   <script src="access-control.js?v=1"></script>
