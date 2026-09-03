@@ -2662,7 +2662,7 @@ Zane Skansi,Kitchener Panthers`;
     }
     var countLeague=[0,1,2].map(function(){return[[],[],[],[]];});
     (DATA.pitches||[]).forEach(function(bp){[0,1,2].forEach(function(group){countLeagueMetrics(bp.scatter||[],group).forEach(function(value,metric){if(value!=null&&isFinite(value))countLeague[group][metric].push(value);});});});
-    var countTableRows=countPerformance.map(function(row,group){var directions=[true,false,false,true];return[{text:row[0]}].concat([1,2,3,4].map(function(column,metric){var value=parseFloat(row[column]);return{text:row[column],pct:reportPercentile(value,countLeague[group][metric],directions[metric])};}));});
+    var countTableRows=countPerformance.map(function(row,group){var directions=[null,false,false,true];return[{text:row[0]}].concat([1,2,3,4].map(function(column,metric){var value=parseFloat(row[column]);return{text:row[column],neutral:directions[metric]===null,pct:directions[metric]===null?null:reportPercentile(value,countLeague[group][metric],directions[metric])};}));});
     function batterHandSplitMetrics(points,side){
       var rows=(points||[]).filter(function(p){return p.pitcher_side===side;});
       var first=rows.filter(function(p){return reportCleanCount(p.count)==='0-0';}),inZone=rows.filter(function(p){return hasPitchLocation(p)&&p.in_zone;}),outside=rows.filter(function(p){return hasPitchLocation(p)&&!p.in_zone;}),swings=rows.filter(reportIsSwingOutcome);
@@ -2713,6 +2713,10 @@ Zane Skansi,Kitchener Panthers`;
     if(PH-y<48){d.addPage();drawBg(d);y=MT+8;}
     y=drawSec(d,'Pitch Performance (Pitcher POV)',y);
     y=drawBatterRateTable(['PITCH TYPE','PITCHES','SWING%','WHIFF%','CHASE%','BAA','OPS'],[34,22,25,25,25,25,30],pitchPerformanceRows,y);
+
+    if(PH-y<38){d.addPage();drawBg(d);y=MT+8;}
+    y=drawSec(d,'Count Tendencies',y);
+    y=drawBatterRateTable(['SITUATION','SWING%','WHIFF%','CHASE%','OPS'],[42,36,36,36,36],countTableRows,y);
 
     if(PH-y<42){d.addPage();drawBg(d);y=MT+8;}
     y=drawSec(d,'Splits',y);
