@@ -357,9 +357,19 @@
   </script>
   <script>
     (function(){
-      const headshots={};
-      const slug=name=>String(name||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-      function renderHeadshot(){const player=state.current,holder=$('initials'),nameSlug=slug(player?.pitcher),base=player&&`${slug(player.pitcher_team)}-${nameSlug}`,file=player&&(headshots[`${slug(player.pitcher_team)}:${nameSlug}`]||headshots[nameSlug]),extensions=['jpg','jpeg','png','webp'],files=[file,...extensions.map(extension=>`${base}.${extension}`),...extensions.map(extension=>`${nameSlug}.${extension}`)].filter((value,index,items)=>value&&items.indexOf(value)===index);holder.classList.remove('has-headshot');holder.innerHTML='';const fallback=()=>{holder.classList.remove('has-headshot');holder.textContent=initials(player?.pitcher)};const load=index=>{if(index>=files.length){fallback();return}const image=new Image();image.src=`headshots/${files[index]}`;image.alt=`${player.pitcher} headshot`;image.onload=()=>{holder.classList.add('has-headshot');holder.replaceChildren(image)};image.onerror=()=>load(index+1)};load(0)}
+      // Keep photos tied to both a player and their team.  A name-only fallback
+      // can show the wrong person when two OUA rosters share a player name.
+      const headshotAliases={
+        'western-mustangs:alex-brown':'western-mustangs-alexander-brown.png',
+        'guelph-gryphons:alex-peiper':'guelph-gryphons-alexander-pieper.jpg',
+        'mcmaster-marauders:edward-hong-yu-cheng':'mcmaster-marauders-edward-cheng.jpg',
+        'waterloo-warriors:junichi-yuki':'waterloo-warriors-jun-yuki.jpg',
+        'wilfrid-laurier-golden-hawks:ash-abols':'wilfrid-laurier-golden-hawks-ashton-abols.png',
+        'wilfrid-laurier-golden-hawks:johnny-banks':'wilfrid-laurier-golden-hawks-john-banks.png'
+      };
+      const slug=name=>String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+      function headshotFiles(player){const team=slug(player?.pitcher_team),name=slug(player?.pitcher),key=`${team}:${name}`,base=team&&name?`${team}-${name}`:'',extensions=['jpg','jpeg','png','webp'],files=[headshotAliases[key],...extensions.map(extension=>`${base}.${extension}`)];if(team==='brock-badgers')files.push(...extensions.map(extension=>`${name}.${extension}`));return files.filter((value,index,items)=>value&&items.indexOf(value)===index)}
+      function renderHeadshot(){const player=state.current,holder=$('initials'),files=headshotFiles(player);holder.classList.remove('has-headshot');holder.innerHTML='';const fallback=()=>{holder.classList.remove('has-headshot');holder.textContent=initials(player?.pitcher)};const load=index=>{if(index>=files.length){fallback();return}const image=new Image();image.src=`headshots/${files[index]}`;image.alt=`${player.pitcher} headshot`;image.onload=()=>{holder.classList.add('has-headshot');holder.replaceChildren(image)};image.onerror=()=>load(index+1)};load(0)}
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(renderHeadshot,120)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderHeadshot,120)));setTimeout(renderHeadshot,3000);
     })();
   </script>

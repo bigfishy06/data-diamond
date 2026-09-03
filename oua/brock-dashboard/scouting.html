@@ -1726,7 +1726,17 @@ Zane Skansi,Kitchener Panthers`;
   function reportSlug(value){return String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
   function loadReportHeadshot(name,team){
     reportHeadshotData=null;
-    var base='headshots/'+reportSlug(team.name)+'-'+reportSlug(name),sources=[base+'.jpg',base+'.png',base+'.webp'];
+    var teamSlug=reportSlug(team.name),nameSlug=reportSlug(name),headshotAliases={
+      'western-mustangs:alex-brown':'western-mustangs-alexander-brown.png',
+      'guelph-gryphons:alex-peiper':'guelph-gryphons-alexander-pieper.jpg',
+      'mcmaster-marauders:edward-hong-yu-cheng':'mcmaster-marauders-edward-cheng.jpg',
+      'waterloo-warriors:junichi-yuki':'waterloo-warriors-jun-yuki.jpg',
+      'wilfrid-laurier-golden-hawks:ash-abols':'wilfrid-laurier-golden-hawks-ashton-abols.png',
+      'wilfrid-laurier-golden-hawks:johnny-banks':'wilfrid-laurier-golden-hawks-john-banks.png'
+    },key=teamSlug+':'+nameSlug,base='headshots/'+teamSlug+'-'+nameSlug;
+    var sources=[headshotAliases[key]?'headshots/'+headshotAliases[key]:null,base+'.jpg',base+'.png',base+'.webp'];
+    if(teamSlug==='brock-badgers')sources.push('headshots/'+nameSlug+'.jpg','headshots/'+nameSlug+'.png','headshots/'+nameSlug+'.webp');
+    sources=sources.filter(function(source,index,items){return source&&items.indexOf(source)===index;});
     return new Promise(function(resolve){
       function next(i){
         if(i>=sources.length){resolve(null);return;}
