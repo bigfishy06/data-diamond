@@ -9,12 +9,14 @@
 
   var sources = { pitcher: [], batter: [] };
   var uiSources = { pitcher: [], batter: [] };
+  // Access is scoped to Brock's roster, not to a historical team label that
+  // may be stale in an imported season row.
   var ownTeam = "Brock Badgers";
   // Current Brock roster overrides preserve access even when older data carries a former team label.
   var BrockRosterOverrides = new Set(["tobey drennan"]);
   var enforcing = false;
-  var teamOf = function (player) { return player.pitcher_team || player.batter_team || ""; };
-  var nameOf = function (player) { return player.pitcher || player.batter || ""; };
+  var teamOf = function (player) { return player.pitcher_team || player.batter_team || player.team || ""; };
+  var nameOf = function (player) { return player.pitcher || player.batter || player.player || player.name || ""; };
 
   function canView(player, role) {
     var self = norm(nameOf(player)) === norm(currentUser.player);
@@ -92,7 +94,7 @@
   function enforceAfterRoleChange() {
     // The dashboard rebuilds the player list during a role switch. Reapply after
     // that rebuild completes so a restricted user never retains teammate profiles.
-    [0, 80, 250, 600].forEach(function (delay) { setTimeout(enforceAccess, delay); });
+    [0, 30, 100, 250, 600, 1200].forEach(function (delay) { setTimeout(enforceAccess, delay); });
   }
 
   Promise.all([
@@ -101,8 +103,6 @@
   ]).then(function (data) {
     sources.pitcher = data[0];
     sources.batter = data[1];
-    var ownRecord = sources.pitcher.concat(sources.batter).find(function (player) { return norm(nameOf(player)) === norm(currentUser.player); });
-    if (ownRecord && teamOf(ownRecord)) ownTeam = teamOf(ownRecord);
     ["player", "team", "season"].forEach(function (id) {
       var element = document.getElementById(id);
       if (element) element.addEventListener("change", function () { setTimeout(enforceAccess, 0); });
@@ -117,6 +117,25 @@
       var selfIsBatter = sources.batter.some(function (player) { return norm(nameOf(player)) === norm(currentUser.player); });
       var preferred = document.querySelector('[data-role="' + (selfIsBatter ? "batter" : "pitcher") + '"]');
       if (preferred && !preferred.classList.contains("active")) preferred.click();
+    }
+    // Every dashboard script eventually calls selectPlayer(). Guarding that
+    // final hand-off prevents an asynchronous role/team rebuild from briefly
+    // selecting a teammate before the option list is refreshed.
+    var baseSelectPlayer = window.selectPlayer;
+    if (typeof baseSelectPlayer === "function") {
+      window.selectPlayer = function (requestedName) {
+        var role = activeRole();
+        var record = sources[role].find(function (player) { return norm(nameOf(player)) === norm(requestedName); });
+        if (record && !canView(record, role)) {
+          // Do not leave a forbidden profile mounted while the controls are
+          // being rebuilt. This also blocks stale select/change handlers.
+          state.current = null;
+          enforceAccess();
+          enforceAfterRoleChange();
+          return;
+        }
+        return baseSelectPlayer.apply(this, arguments);
+      };
     }
     enforceAccess();
   }).catch(function (error) { console.error("Could not apply OUA player access controls.", error); });
