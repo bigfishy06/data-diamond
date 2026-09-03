@@ -27,7 +27,10 @@
 
   function replaceOptions(select, options, selectedValue) {
     var signature = options.map(function (option) { return option.value + "\u0000" + option.label; }).join("\u0001");
-    if (select.dataset.accessSignature === signature) return;
+    var renderedSignature = Array.from(select.options).map(function (option) { return option.value + "\u0000" + option.textContent; }).join("\u0001");
+    // Role changes rebuild these selects outside this script. Do not trust a
+    // stale stored signature when the visible options were replaced.
+    if (select.dataset.accessSignature === signature && renderedSignature === signature) return;
     select.innerHTML = "";
     options.forEach(function (option) {
       var node = document.createElement("option");
