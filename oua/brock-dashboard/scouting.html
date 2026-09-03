@@ -3108,7 +3108,8 @@ Zane Skansi,Kitchener Panthers`;
       y+=19;
     }
 
-    drawPitcherApproach();
+    // The former Approach cards are omitted. Pitch-level performance below
+    // provides the actionable report view instead.
     var tendencyRows = buildPitchCountSidePitchRows(sc);
     var drewTendencyTable = false;
     if(tendencyRows.length){
@@ -3123,12 +3124,14 @@ Zane Skansi,Kitchener Panthers`;
 
     // Pitch Effectiveness
     var sT=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];});
-    var displayST=(team&&team.name==='Brock Badgers')?sT.filter(function(e){return e[0]!=='Offspeed';}):sT;
-    if(false && displayST.length && (!drewTendencyTable || PH-y >= 88)){
+    var displayST=sT;
+    if(displayST.length){
+      var performanceNeed=18+displayST.length*10;
+      if(PH-y<performanceNeed){d.addPage();drawBg(d);y=MT+8;}
       y+=3;
-      y=drawSec(d,'Pitch Effectiveness',y);
-      var atH=['PITCH TYPE','USAGE %','FP USAGE %','STRIKE %','WHIFF %','CHASE %','K%'];
-      var atW=[38,24,24,24,24,24,24];
+      y=drawSec(d,'Pitch Type Performance',y);
+      var atH=['PITCH TYPE','USAGE %','FP USAGE %','STRIKE %','WHIFF %','CHASE %','K%','BB%'];
+      var atW=[36,21.5,21.5,21.5,21.5,21.5,21.5,21.5];
       function effectivenessByType(points,type,teamName){
         var eligible=reportPitcherUsagePoints(points,teamName);
         var allFirst=eligible.filter(function(p){return reportCleanCount(p.count)==='0-0';});
@@ -3141,7 +3144,8 @@ Zane Skansi,Kitchener Panthers`;
           strike:tp.length?tp.filter(reportIsStrikeOutcome).length/tp.length*100:null,
           whiff:swings.length?tp.filter(reportIsWhiffOutcome).length/swings.length*100:null,
           chase:outside.length?outside.filter(reportIsSwingOutcome).length/outside.length*100:null,
-          k:pa.length?pa.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';}).length/pa.length*100:null
+          k:pa.length?pa.filter(function(p){return p.outcome==='Strikeout Swinging'||p.outcome==='Strikeout Looking';}).length/pa.length*100:null,
+          bb:pa.length?pa.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';}).length/pa.length*100:null
         };
       }
       var effectivenessLeague={};
@@ -3149,7 +3153,7 @@ Zane Skansi,Kitchener Panthers`;
         var pts=p.scatter||[];
         Object.keys(tc2).forEach(function(type){
           var m=effectivenessByType(pts,type,p.team||p.pitcher_team||'');
-          if(!effectivenessLeague[type])effectivenessLeague[type]={fp:[],strike:[],whiff:[],chase:[],k:[]};
+          if(!effectivenessLeague[type])effectivenessLeague[type]={fp:[],strike:[],whiff:[],chase:[],k:[],bb:[]};
           Object.keys(m).forEach(function(key){if(m[key]!=null&&isFinite(m[key]))effectivenessLeague[type][key].push(m[key]);});
         });
       });
@@ -3165,8 +3169,8 @@ Zane Skansi,Kitchener Panthers`;
         return usageSc.filter(function(p){return reportCleanCount(p.count)==='0-0'&&reportPitchTypeBucket(p)===e[0];}).length;
       }));
       var atR=displayST.map(function(e,rowIndex){
-        var t=e[0],m=effectivenessByType(sc,t,team&&team.name),league=effectivenessLeague[t]||{fp:[],strike:[],whiff:[],chase:[],k:[]};
-        return {type:t,usageText:usageParts[rowIndex],values:['fp','strike','whiff','chase','k'].map(function(key){return{raw:m[key],text:key==='fp'?fpUsageParts[rowIndex]:(m[key]==null?'—':f1(m[key])+'%'),pct:reportPercentile(m[key],league[key],true)};})};
+        var t=e[0],m=effectivenessByType(sc,t,team&&team.name),league=effectivenessLeague[t]||{fp:[],strike:[],whiff:[],chase:[],k:[],bb:[]};
+        return {type:t,usageText:usageParts[rowIndex],values:['fp','strike','whiff','chase','k','bb'].map(function(key){return{raw:m[key],text:key==='fp'?fpUsageParts[rowIndex]:(m[key]==null?'—':f1(m[key])+'%'),pct:reportPercentile(m[key],league[key],key!=='bb')};})};
       });
       var ar=y+8;
       atR.forEach(function(row,ri){
