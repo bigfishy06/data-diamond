@@ -1,0 +1,723 @@
+{
+  "source": "https://onubaseball.com/",
+  "season": "2025",
+  "method": "Team home runs per game (runs scored plus allowed) divided by that team's road runs per game; regressed 50% toward 1.000 because this is one season.",
+  "games": [
+    {
+      "date": "Friday, September 05, 2025",
+      "away": "Laurier",
+      "home": "Brock",
+      "away_runs": 2,
+      "home_runs": 7
+    },
+    {
+      "date": "Friday, September 05, 2025",
+      "away": "Laurier",
+      "home": "Brock",
+      "away_runs": 10,
+      "home_runs": 17
+    },
+    {
+      "date": "Saturday, September 06, 2025",
+      "away": "Carleton",
+      "home": "Toronto",
+      "away_runs": 6,
+      "home_runs": 9
+    },
+    {
+      "date": "Saturday, September 06, 2025",
+      "away": "Laurentian",
+      "home": "Queen's",
+      "away_runs": 4,
+      "home_runs": 14
+    },
+    {
+      "date": "Saturday, September 06, 2025",
+      "away": "Ottawa",
+      "home": "Toronto Metropolitan",
+      "away_runs": 0,
+      "home_runs": 2
+    },
+    {
+      "date": "Saturday, September 06, 2025",
+      "away": "Guelph",
+      "home": "McMaster",
+      "away_runs": 6,
+      "home_runs": 0
+    },
+    {
+      "date": "Saturday, September 06, 2025",
+      "away": "Windsor",
+      "home": "Western",
+      "away_runs": 4,
+      "home_runs": 5
+    },
+    {
+      "date": "Saturday, September 06, 2025",
+      "away": "Carleton",
+      "home": "Toronto",
+      "away_runs": 8,
+      "home_runs": 9
+    },
+    {
+      "date": "Saturday, September 06, 2025",
+      "away": "Laurentian",
+      "home": "Queen's",
+      "away_runs": 1,
+      "home_runs": 5
+    },
+    {
+      "date": "Saturday, September 06, 2025",
+      "away": "Ottawa",
+      "home": "Toronto Metropolitan",
+      "away_runs": 9,
+      "home_runs": 2
+    },
+    {
+      "date": "Saturday, September 06, 2025",
+      "away": "Guelph",
+      "home": "McMaster",
+      "away_runs": 10,
+      "home_runs": 8
+    },
+    {
+      "date": "Saturday, September 06, 2025",
+      "away": "Windsor",
+      "home": "Western",
+      "away_runs": 10,
+      "home_runs": 11
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Ottawa",
+      "home": "Toronto",
+      "away_runs": 5,
+      "home_runs": 4
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Waterloo",
+      "home": "Windsor",
+      "away_runs": 5,
+      "home_runs": 0
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Brock",
+      "home": "Guelph",
+      "away_runs": 7,
+      "home_runs": 10
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Laurentian",
+      "home": "York",
+      "away_runs": 8,
+      "home_runs": 9
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Carleton",
+      "home": "Toronto Metropolitan",
+      "away_runs": 12,
+      "home_runs": 2
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Western",
+      "home": "Laurier",
+      "away_runs": 7,
+      "home_runs": 8
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Ottawa",
+      "home": "Toronto",
+      "away_runs": 5,
+      "home_runs": 6
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Waterloo",
+      "home": "Windsor",
+      "away_runs": 12,
+      "home_runs": 0
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Brock",
+      "home": "Guelph",
+      "away_runs": 6,
+      "home_runs": 7
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Laurentian",
+      "home": "York",
+      "away_runs": 4,
+      "home_runs": 11
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Carleton",
+      "home": "Toronto Metropolitan",
+      "away_runs": 5,
+      "home_runs": 0
+    },
+    {
+      "date": "Sunday, September 07, 2025",
+      "away": "Western",
+      "home": "Laurier",
+      "away_runs": 14,
+      "home_runs": 13
+    },
+    {
+      "date": "Wednesday, September 10, 2025",
+      "away": "Ottawa",
+      "home": "Carleton",
+      "away_runs": 5,
+      "home_runs": 7
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "Windsor",
+      "home": "Guelph",
+      "away_runs": 1,
+      "home_runs": 2
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "Queen's",
+      "home": "Ottawa",
+      "away_runs": 6,
+      "home_runs": 5
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "Toronto Metropolitan",
+      "home": "Laurentian",
+      "away_runs": 5,
+      "home_runs": 1
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "McMaster",
+      "home": "Laurier",
+      "away_runs": 6,
+      "home_runs": 5
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "Western",
+      "home": "Waterloo",
+      "away_runs": 1,
+      "home_runs": 3
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "Windsor",
+      "home": "Guelph",
+      "away_runs": 4,
+      "home_runs": 2
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "Queen's",
+      "home": "Ottawa",
+      "away_runs": 10,
+      "home_runs": 0
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "Toronto Metropolitan",
+      "home": "Laurentian",
+      "away_runs": 13,
+      "home_runs": 4
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "McMaster",
+      "home": "Laurier",
+      "away_runs": 6,
+      "home_runs": 1
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "Western",
+      "home": "Waterloo",
+      "away_runs": 8,
+      "home_runs": 0
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "York",
+      "home": "Carleton",
+      "away_runs": 3,
+      "home_runs": 7
+    },
+    {
+      "date": "Saturday, September 13, 2025",
+      "away": "York",
+      "home": "Carleton",
+      "away_runs": 4,
+      "home_runs": 5
+    },
+    {
+      "date": "Sunday, September 14, 2025",
+      "away": "Queen's",
+      "home": "Carleton",
+      "away_runs": 14,
+      "home_runs": 0
+    },
+    {
+      "date": "Sunday, September 14, 2025",
+      "away": "York",
+      "home": "Ottawa",
+      "away_runs": 4,
+      "home_runs": 5
+    },
+    {
+      "date": "Sunday, September 14, 2025",
+      "away": "Toronto",
+      "home": "Laurentian",
+      "away_runs": 11,
+      "home_runs": 1
+    },
+    {
+      "date": "Sunday, September 14, 2025",
+      "away": "Guelph",
+      "home": "Laurier",
+      "away_runs": 17,
+      "home_runs": 4
+    },
+    {
+      "date": "Sunday, September 14, 2025",
+      "away": "Waterloo",
+      "home": "McMaster",
+      "away_runs": 3,
+      "home_runs": 1
+    },
+    {
+      "date": "Sunday, September 14, 2025",
+      "away": "Queen's",
+      "home": "Carleton",
+      "away_runs": 15,
+      "home_runs": 3
+    },
+    {
+      "date": "Sunday, September 14, 2025",
+      "away": "York",
+      "home": "Ottawa",
+      "away_runs": 2,
+      "home_runs": 12
+    },
+    {
+      "date": "Sunday, September 14, 2025",
+      "away": "Toronto",
+      "home": "Laurentian",
+      "away_runs": 12,
+      "home_runs": 0
+    },
+    {
+      "date": "Sunday, September 14, 2025",
+      "away": "Guelph",
+      "home": "Laurier",
+      "away_runs": 7,
+      "home_runs": 3
+    },
+    {
+      "date": "Sunday, September 14, 2025",
+      "away": "Waterloo",
+      "home": "McMaster",
+      "away_runs": 13,
+      "home_runs": 8
+    },
+    {
+      "date": "Wednesday, September 17, 2025",
+      "away": "Carleton",
+      "home": "Ottawa",
+      "away_runs": 10,
+      "home_runs": 5
+    },
+    {
+      "date": "Saturday, September 20, 2025",
+      "away": "Queen's",
+      "home": "Toronto",
+      "away_runs": 9,
+      "home_runs": 7
+    },
+    {
+      "date": "Saturday, September 20, 2025",
+      "away": "Windsor",
+      "home": "McMaster",
+      "away_runs": 5,
+      "home_runs": 2
+    },
+    {
+      "date": "Saturday, September 20, 2025",
+      "away": "Western",
+      "home": "Brock",
+      "away_runs": 3,
+      "home_runs": 1
+    },
+    {
+      "date": "Saturday, September 20, 2025",
+      "away": "Toronto Metropolitan",
+      "home": "York",
+      "away_runs": 7,
+      "home_runs": 8
+    },
+    {
+      "date": "Saturday, September 20, 2025",
+      "away": "Waterloo",
+      "home": "Guelph",
+      "away_runs": 2,
+      "home_runs": 3
+    },
+    {
+      "date": "Saturday, September 20, 2025",
+      "away": "Queen's",
+      "home": "Toronto",
+      "away_runs": 0,
+      "home_runs": 13
+    },
+    {
+      "date": "Saturday, September 20, 2025",
+      "away": "Windsor",
+      "home": "McMaster",
+      "away_runs": 0,
+      "home_runs": 12
+    },
+    {
+      "date": "Saturday, September 20, 2025",
+      "away": "Western",
+      "home": "Brock",
+      "away_runs": 14,
+      "home_runs": 3
+    },
+    {
+      "date": "Saturday, September 20, 2025",
+      "away": "Toronto Metropolitan",
+      "home": "York",
+      "away_runs": 10,
+      "home_runs": 11
+    },
+    {
+      "date": "Saturday, September 20, 2025",
+      "away": "Waterloo",
+      "home": "Guelph",
+      "away_runs": 8,
+      "home_runs": 9
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "Laurier",
+      "home": "Windsor",
+      "away_runs": 12,
+      "home_runs": 10
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "Ottawa",
+      "home": "Laurentian",
+      "away_runs": 1,
+      "home_runs": 5
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "Toronto",
+      "home": "York",
+      "away_runs": 6,
+      "home_runs": 18
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "Toronto Metropolitan",
+      "home": "Queen's",
+      "away_runs": 3,
+      "home_runs": 4
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "Brock",
+      "home": "Waterloo",
+      "away_runs": 1,
+      "home_runs": 2
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "McMaster",
+      "home": "Western",
+      "away_runs": 5,
+      "home_runs": 8
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "Laurier",
+      "home": "Windsor",
+      "away_runs": 3,
+      "home_runs": 7
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "Ottawa",
+      "home": "Laurentian",
+      "away_runs": 9,
+      "home_runs": 2
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "Toronto",
+      "home": "York",
+      "away_runs": 9,
+      "home_runs": 1
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "Toronto Metropolitan",
+      "home": "Queen's",
+      "away_runs": 8,
+      "home_runs": 4
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "Brock",
+      "home": "Waterloo",
+      "away_runs": 2,
+      "home_runs": 4
+    },
+    {
+      "date": "Sunday, September 21, 2025",
+      "away": "McMaster",
+      "home": "Western",
+      "away_runs": 5,
+      "home_runs": 8
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "Laurentian",
+      "home": "Carleton",
+      "away_runs": 0,
+      "home_runs": 10
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "York",
+      "home": "Queen's",
+      "away_runs": 2,
+      "home_runs": 8
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "McMaster",
+      "home": "Brock",
+      "away_runs": 4,
+      "home_runs": 5
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "Toronto",
+      "home": "Toronto Metropolitan",
+      "away_runs": 8,
+      "home_runs": 2
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "Laurier",
+      "home": "Waterloo",
+      "away_runs": 6,
+      "home_runs": 4
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "Guelph",
+      "home": "Western",
+      "away_runs": 7,
+      "home_runs": 9
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "Laurentian",
+      "home": "Carleton",
+      "away_runs": 3,
+      "home_runs": 11
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "York",
+      "home": "Queen's",
+      "away_runs": 1,
+      "home_runs": 2
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "McMaster",
+      "home": "Brock",
+      "away_runs": 0,
+      "home_runs": 8
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "Toronto",
+      "home": "Toronto Metropolitan",
+      "away_runs": 11,
+      "home_runs": 0
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "Laurier",
+      "home": "Waterloo",
+      "away_runs": 5,
+      "home_runs": 9
+    },
+    {
+      "date": "Saturday, September 27, 2025",
+      "away": "Guelph",
+      "home": "Western",
+      "away_runs": 1,
+      "home_runs": 0
+    }
+  ],
+  "factors": {
+    "Brock": {
+      "home_games": 6,
+      "home_runs": 74,
+      "road_games": 4,
+      "road_runs": 39,
+      "home_rpg": 12.333,
+      "road_rpg": 9.75,
+      "raw_factor": 1.265,
+      "factor": 1.1325
+    },
+    "Laurier": {
+      "home_games": 6,
+      "home_runs": 91,
+      "road_games": 6,
+      "road_runs": 92,
+      "home_rpg": 15.167,
+      "road_rpg": 15.333,
+      "raw_factor": 0.9891,
+      "factor": 0.9946
+    },
+    "Toronto": {
+      "home_games": 6,
+      "home_runs": 81,
+      "road_games": 6,
+      "road_runs": 79,
+      "home_rpg": 13.5,
+      "road_rpg": 13.167,
+      "raw_factor": 1.0253,
+      "factor": 1.0127
+    },
+    "Carleton": {
+      "home_games": 7,
+      "home_runs": 87,
+      "road_games": 5,
+      "road_runs": 66,
+      "home_rpg": 12.429,
+      "road_rpg": 13.2,
+      "raw_factor": 0.9416,
+      "factor": 0.9708
+    },
+    "Queen's": {
+      "home_games": 6,
+      "home_runs": 56,
+      "road_games": 6,
+      "road_runs": 82,
+      "home_rpg": 9.333,
+      "road_rpg": 13.667,
+      "raw_factor": 0.6829,
+      "factor": 0.8415
+    },
+    "Laurentian": {
+      "home_games": 6,
+      "home_runs": 64,
+      "road_games": 6,
+      "road_runs": 80,
+      "home_rpg": 10.667,
+      "road_rpg": 13.333,
+      "raw_factor": 0.8,
+      "factor": 0.9
+    },
+    "Toronto Metropolitan": {
+      "home_games": 6,
+      "home_runs": 53,
+      "road_games": 6,
+      "road_runs": 78,
+      "home_rpg": 8.833,
+      "road_rpg": 13.0,
+      "raw_factor": 0.6795,
+      "factor": 0.8397
+    },
+    "Ottawa": {
+      "home_games": 5,
+      "home_runs": 59,
+      "road_games": 7,
+      "road_runs": 62,
+      "home_rpg": 11.8,
+      "road_rpg": 8.857,
+      "raw_factor": 1.3323,
+      "factor": 1.1661
+    },
+    "McMaster": {
+      "home_games": 6,
+      "home_runs": 68,
+      "road_games": 6,
+      "road_runs": 61,
+      "home_rpg": 11.333,
+      "road_rpg": 10.167,
+      "raw_factor": 1.1148,
+      "factor": 1.0574
+    },
+    "Guelph": {
+      "home_games": 6,
+      "home_runs": 61,
+      "road_games": 6,
+      "road_runs": 72,
+      "home_rpg": 10.167,
+      "road_rpg": 12.0,
+      "raw_factor": 0.8472,
+      "factor": 0.9236
+    },
+    "Western": {
+      "home_games": 6,
+      "home_runs": 73,
+      "road_games": 6,
+      "road_runs": 75,
+      "home_rpg": 12.167,
+      "road_rpg": 12.5,
+      "raw_factor": 0.9733,
+      "factor": 0.9867
+    },
+    "Windsor": {
+      "home_games": 4,
+      "home_runs": 49,
+      "road_games": 6,
+      "road_runs": 58,
+      "home_rpg": 12.25,
+      "road_rpg": 9.667,
+      "raw_factor": 1.2672,
+      "factor": 1.1336
+    },
+    "Waterloo": {
+      "home_games": 6,
+      "home_runs": 45,
+      "road_games": 6,
+      "road_runs": 64,
+      "home_rpg": 7.5,
+      "road_rpg": 10.667,
+      "raw_factor": 0.7031,
+      "factor": 0.8516
+    },
+    "York": {
+      "home_games": 6,
+      "home_runs": 102,
+      "road_games": 6,
+      "road_runs": 55,
+      "home_rpg": 17.0,
+      "road_rpg": 9.167,
+      "raw_factor": 1.8545,
+      "factor": 1.4273
+    }
+  }
+}

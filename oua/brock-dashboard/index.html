@@ -1122,15 +1122,20 @@
     })();
   </script>
   <script>
-    /* MLB OPS+ formula: 100 × (OBP / league OBP + SLG / league SLG − 1). */
+    /* Park-adjusted OPS+ index: 100 × (OBP/lgOBP + SLG/lgSLG − 1) ÷ park factor. */
     (async function () {
       const number = value => {
         const parsed = Number.parseFloat(value);
         return Number.isFinite(parsed) ? parsed : 0;
       };
       let seasonRows = [];
+      let parkFactors = {};
       try {
-        const source = await fetch('data/onu-season-stats.json').then(response => response.json());
+        const [source, parks] = await Promise.all([
+          fetch('data/onu-season-stats.json').then(response => response.json()),
+          fetch('data/oua-2025-park-factors.json').then(response => response.json())
+        ]);
+        parkFactors = parks.factors || {};
         seasonRows = (source.tables || [])
           .filter(table => table.type === 'Batting' && /^\d{4}$/.test(String(table.season || '')))
           .flatMap(table => (table.rows || []).map(values => {
@@ -1142,6 +1147,23 @@
       } catch (error) {
         return;
       }
+      const parkTeam = team => {
+        const key = String(team || '').toLowerCase().replace(/[^a-z]/g, '');
+        const aliases = {
+          brock: 'Brock', carleton: 'Carleton', guelph: 'Guelph', laurier: 'Laurier',
+          laurentian: 'Laurentian', mcmaster: 'McMaster', ottawa: 'Ottawa', queens: "Queen's",
+          toronto: 'Toronto', torontometropolitan: 'Toronto Metropolitan', ramsbaseball: 'Toronto Metropolitan',
+          waterloo: 'Waterloo', western: 'Western', windsor: 'Windsor', york: 'York'
+        };
+        return aliases[key] || null;
+      };
+      const parkFactorFor = row => {
+        // 2025 is the published score season used as the current OUA park baseline.
+        if (Number(row && row.season) !== 2025) return 1;
+        const team = row && parkTeam(row.Team);
+        const factor = team && parkFactors[team] ? Number(parkFactors[team].factor) : 1;
+        return Number.isFinite(factor) && factor > 0 ? factor : 1;
+      };
       const byBatter = new Map();
       seasonRows.sort((a, b) => b.season - a.season).forEach(row => {
         const key = String(row.Name || '').trim().toLowerCase();
@@ -1162,7 +1184,7 @@
       const opsPlus = row => {
         const league = row ? leagueFor(row.season) : null;
         return row && league && league.obp > 0 && league.slg > 0
-          ? Math.round(100 * (number(row.OBP) / league.obp + number(row.SLG) / league.slg - 1)) : null;
+          ? Math.round(100 * (number(row.OBP) / league.obp + number(row.SLG) / league.slg - 1) / parkFactorFor(row)) : null;
       };
       const ordinal = value => {
         const lastTwo = value % 100;

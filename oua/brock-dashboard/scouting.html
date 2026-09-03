@@ -507,11 +507,23 @@
     { id:'wes', abbr:'WES', name:'Western Mustangs',             color:'#4F2683' },
     { id:'wlu', abbr:'WLU', name:'Wilfrid Laurier Golden Hawks', color:'#5B2C83' }
   ];
-  // Match the OUA dashboard's MLB OPS+ definition: 100 × (OBP/lgOBP + SLG/lgSLG − 1).
+  // Match the dashboard: OPS index adjusted with the public 2025 OUA park factor.
   // This is intentionally separate from wRC+ so the report and dashboard show the same metric.
   var OPS_PLUS_BY_SEASON = {};
+  var OPS_PARK_FACTORS = {};
   function opsPlayerKey(name) { return String(name || '').trim().replace(/\s+/g, ' ').toLowerCase(); }
   function opsNumber(value) { var parsed = Number.parseFloat(value); return Number.isFinite(parsed) ? parsed : 0; }
+  function opsParkTeam(team) {
+    var key=String(team||'').toLowerCase().replace(/[^a-z]/g,'');
+    var aliases={brock:'Brock',carleton:'Carleton',guelph:'Guelph',laurier:'Laurier',laurentian:'Laurentian',mcmaster:'McMaster',ottawa:'Ottawa',queens:"Queen's",toronto:'Toronto',torontometropolitan:'Toronto Metropolitan',ramsbaseball:'Toronto Metropolitan',waterloo:'Waterloo',western:'Western',windsor:'Windsor',york:'York'};
+    return aliases[key]||null;
+  }
+  function opsParkFactor(team, apply) {
+    if (!apply) return 1;
+    var entry=OPS_PARK_FACTORS[opsParkTeam(team)||''];
+    var value=entry&&Number(entry.factor);
+    return Number.isFinite(value)&&value>0?value:1;
+  }
   function opsPlusRecordFor(name, season) {
     var seasonRows = OPS_PLUS_BY_SEASON[String(season || '')] || [];
     return seasonRows.find(function(row) { return opsPlayerKey(row.name) === opsPlayerKey(name); }) || null;
@@ -524,7 +536,9 @@
       return total + (row.value < record.value ? row.pa : (row.value === record.value ? row.pa * .5 : 0));
     }, 0) / totalPA * 100;
   }
-  fetch('data/onu-season-stats.json').then(function(response) { return response.json(); }).then(function(source) {
+  Promise.all([fetch('data/onu-season-stats.json').then(function(response) { return response.json(); }),fetch('data/oua-2025-park-factors.json').then(function(response) { return response.json(); })]).then(function(results) {
+    var source=results[0], parks=results[1];
+    OPS_PARK_FACTORS=parks.factors||{};
     var rows = (source.tables || []).filter(function(table) {
       return table.type === 'Batting' && /^\d{4}$/.test(String(table.season || ''));
     }).flatMap(function(table) {
@@ -537,7 +551,7 @@
     }).filter(function(row) { return opsNumber(row.PA) > 0 && opsNumber(row.AB) > 0; });
     rows.forEach(function(row) {
       var seasonRows = OPS_PLUS_BY_SEASON[row.season] || (OPS_PLUS_BY_SEASON[row.season] = []);
-      seasonRows.push({ name: row.Name, pa: opsNumber(row.PA), ab: opsNumber(row.AB), obp: opsNumber(row.OBP), slg: opsNumber(row.SLG) });
+      seasonRows.push({ name: row.Name, team: row.Team, pa: opsNumber(row.PA), ab: opsNumber(row.AB), obp: opsNumber(row.OBP), slg: opsNumber(row.SLG) });
     });
     Object.keys(OPS_PLUS_BY_SEASON).forEach(function(season) {
       var seasonRows = OPS_PLUS_BY_SEASON[season];
@@ -546,7 +560,7 @@
       var leagueOBP = seasonRows.reduce(function(total, row) { return total + row.obp * row.pa; }, 0) / Math.max(totalPA, 1);
       var leagueSLG = seasonRows.reduce(function(total, row) { return total + row.slg * row.ab; }, 0) / Math.max(totalAB, 1);
       seasonRows.forEach(function(row) {
-        row.value = leagueOBP > 0 && leagueSLG > 0 ? Math.round(100 * (row.obp / leagueOBP + row.slg / leagueSLG - 1)) : null;
+        row.value = leagueOBP > 0 && leagueSLG > 0 ? Math.round(100 * (row.obp / leagueOBP + row.slg / leagueSLG - 1) / opsParkFactor(row.team, season === '2025')) : null;
       });
       OPS_PLUS_BY_SEASON[season] = seasonRows.filter(function(row) { return Number.isFinite(row.value); });
     });
@@ -554,14 +568,14 @@
   function summaryOpsPlusRows() {
     var summaryRows=(typeof DATA!=='undefined' && Array.isArray(DATA.summary)) ? DATA.summary : [];
     var rows=summaryRows.map(function(row) {
-      return {name:row.batter||row.player||row.name||'',pa:opsNumber(row.PA),ab:opsNumber(row.AB),obp:opsNumber(row.OBP),slg:opsNumber(row.SLG)};
+      return {name:row.batter||row.player||row.name||'',team:row.team||row.batter_team||row.Team||'',pa:opsNumber(row.PA),ab:opsNumber(row.AB),obp:opsNumber(row.OBP),slg:opsNumber(row.SLG)};
     }).filter(function(row){return row.name&&row.pa>0&&row.ab>0;});
     var totalPA=rows.reduce(function(total,row){return total+row.pa;},0);
     var totalAB=rows.reduce(function(total,row){return total+row.ab;},0);
     var leagueOBP=rows.reduce(function(total,row){return total+row.obp*row.pa;},0)/Math.max(totalPA,1);
     var leagueSLG=rows.reduce(function(total,row){return total+row.slg*row.ab;},0)/Math.max(totalAB,1);
     return rows.map(function(row){
-      row.value=leagueOBP>0&&leagueSLG>0?Math.round(100*(row.obp/leagueOBP+row.slg/leagueSLG-1)):null;
+      row.value=leagueOBP>0&&leagueSLG>0?Math.round(100*(row.obp/leagueOBP+row.slg/leagueSLG-1)/opsParkFactor(row.team,true)):null;
       return row;
     }).filter(function(row){return Number.isFinite(row.value);});
   }
