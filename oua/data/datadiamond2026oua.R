@@ -339,7 +339,8 @@ pitcher_stats <- pitches %>%
     # ── Existing rate stats ────────────────────────────────────────────────────
     K_pct     = ifelse(BF > 0,            round(K       / BF * 100, 1),            NA),
     BB_pct    = ifelse(BF > 0,            round(BB      / BF * 100, 1),            NA),
-    K_BB      = ifelse(BB > 0,            round(K / BB,  2),                        NA),
+    # K-BB% is a percentage-point differential, not the K/BB ratio.
+    K_BB      = ifelse(BF > 0,            round(K_pct - BB_pct, 1),                 NA),
     STR_pct   = ifelse(total_pitches > 0, round(strikes / total_pitches * 100, 1), NA),
 
     # ── NEW: Swing / Whiff / Putaway ──────────────────────────────────────────

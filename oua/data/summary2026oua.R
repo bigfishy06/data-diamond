@@ -148,7 +148,9 @@ pitches <- pitches %>%
     is_truncated  = outcome == "Truncated Out",
     is_add_out    = outcome == "Additional Out",
     is_pa         = outcome %in% PA_END_OUTCOMES,
-    is_ab         = !(outcome %in% c(PITCH_OUTCOMES, NON_AB_PA_OUTCOMES)),
+    # An at-bat is a completed plate appearance other than a walk (including
+    # IBB), HBP, sacrifice, or defensive interference award.
+    is_ab         = is_pa & !(outcome %in% NON_AB_PA_OUTCOMES),
     is_productive_out = outcome %in% c("Groundout", "Flyout", "Lineout",
                                        "Popout", "Double Play", "Triple Play"),
 
@@ -220,7 +222,7 @@ summary_stats <- pitches %>%
     BB             = sum(is_bb),
     IBB            = sum(is_ibb),
     HBP            = sum(is_hbp),
-    K              = sum(is_k),
+    K              = sum(is_k) + sum(is_dts),
     K_L            = sum(is_k_looking),
     K_S            = sum(is_k_swinging),
     DTS            = sum(is_dts),
@@ -261,7 +263,7 @@ summary_stats <- pitches %>%
     OBP    = ifelse((AB + BB + HBP + SF) > 0,
                     round((H + BB + HBP) / (AB + BB + HBP + SF), 3), 0),
     OPS    = round(OBP + SLG, 3),
-    K_pct  = ifelse(PA > 0, round((K + DTS) / PA * 100, 1), 0),
+    K_pct  = ifelse(PA > 0, round(K / PA * 100, 1), 0),
     BB_pct = ifelse(PA > 0, round(BB / PA * 100, 1), 0),
 
     # ── NEW: ISO = SLG - AVG ───────────────────────────────────────────────────
@@ -347,8 +349,8 @@ strike_outcomes <- c(
   "Strikeout Looking", "Strikeout Swinging",
   "Dropped Third Strike Looking", "Dropped Third Strike Swinging",
   "Single", "Double", "Triple", "Home Run",
-  "Groundout", "Flyout", "Popout", "Lineout",
-  "Double Play", "Triple Play", "Error",
+  "Groundout", "Ground Out", "Flyout", "Fly Out", "Popout", "Pop Out", "Lineout", "Line Out",
+  "Double Play", "Triple Play", "Error", "Field Error", "Fielders Choice", "Fielder's Choice",
   "Sacrifice Fly", "Sac Fly Double Play",
   "Sacrifice Bunt", "Sac Bunt Double Play"
 )
@@ -406,7 +408,7 @@ pitcher_xlsx <- pitches %>%
   summarise(
     BF               = sum(is_pa),
     total_pitches    = sum(outcome != "" & !is.na(outcome)),
-    K                = sum(is_k),
+    K                = sum(is_k) + sum(is_dts),
     BB               = sum(is_bb),
     HR               = sum(is_hr),
     strikes          = sum(outcome %in% strike_outcomes),
