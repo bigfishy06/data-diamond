@@ -553,7 +553,7 @@
     }).filter(function(row) { return opsNumber(row.PA) > 0 && opsNumber(row.AB) > 0; });
     rows.forEach(function(row) {
       var seasonRows = OPS_PLUS_BY_SEASON[row.season] || (OPS_PLUS_BY_SEASON[row.season] = []);
-      seasonRows.push({ name: row.Name, team: row.Team, pa: opsNumber(row.PA), ab: opsNumber(row.AB), obp: opsNumber(row.OBP), slg: opsNumber(row.SLG) });
+      seasonRows.push({ name: row.Name, team: row.Team, season: row.season, pa: opsNumber(row.PA), ab: opsNumber(row.AB), obp: opsNumber(row.OBP), slg: opsNumber(row.SLG) });
     });
     Object.keys(OPS_PLUS_BY_SEASON).forEach(function(season) {
       var seasonRows = OPS_PLUS_BY_SEASON[season];
@@ -581,14 +581,31 @@
       return row;
     }).filter(function(row){return Number.isFinite(row.value);});
   }
+  function newestPublishedOpsPlusRows() {
+    // Match the dashboard's byBatter map: use each player's newest published
+    // ONuBaseball season, then compare them with that same season's pool.
+    var seasons=Object.keys(OPS_PLUS_BY_SEASON).sort(function(a,b){return Number(b)-Number(a);});
+    var seen={},rows=[];
+    seasons.forEach(function(season){
+      (OPS_PLUS_BY_SEASON[season]||[]).forEach(function(row){
+        var key=opsPlayerKey(row.name);
+        if(key&&!seen[key]){seen[key]=true;rows.push(row);}
+      });
+    });
+    return rows;
+  }
   function reportOpsPlusData(name, season) {
-    var published=OPS_PLUS_BY_SEASON[String(season||'')]||[];
-    var record=published.find(function(row){return opsPlayerKey(row.name)===opsPlayerKey(name);});
-    // 2026 has not yet been published to ONuBaseball. Use the complete live
-    // OUA summary data in that case, including when a published row is absent.
-    var rows=record?published:summaryOpsPlusRows();
-    record=record||rows.find(function(row){return opsPlayerKey(row.name)===opsPlayerKey(name);})||null;
-    return {record:record,rows:rows};
+    var published=newestPublishedOpsPlusRows();
+    var record=published.find(function(row){return opsPlayerKey(row.name)===opsPlayerKey(name);})||null;
+    if(record){
+      // The dashboard percentiles a published player against all players in
+      // that exact published season, not against a mixed-year data set.
+      return {record:record,rows:OPS_PLUS_BY_SEASON[String(record.season||'')]||published};
+    }
+    // Players without a published ONuBaseball row use the current tracked
+    // OUA summary as the report fallback.
+    var rows=summaryOpsPlusRows();
+    return {record:rows.find(function(row){return opsPlayerKey(row.name)===opsPlayerKey(name);})||null,rows:rows};
   }
   function reportOpsPlusPercentile(record, rows) {
     var totalPA=(rows||[]).reduce(function(total,row){return total+row.pa;},0);
