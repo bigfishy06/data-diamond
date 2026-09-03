@@ -81,6 +81,12 @@
     } finally { enforcing = false; }
   }
 
+  function enforceAfterRoleChange() {
+    // The dashboard rebuilds the player list during a role switch. Reapply after
+    // that rebuild completes so a restricted user never retains teammate profiles.
+    [0, 80, 250, 600].forEach(function (delay) { setTimeout(enforceAccess, delay); });
+  }
+
   Promise.all([
     fetch("data/pitchers2026.json").then(function (response) { return response.json(); }),
     fetch("data/summary2026.json").then(function (response) { return response.json(); })
@@ -93,7 +99,12 @@
       var element = document.getElementById(id);
       if (element) element.addEventListener("change", function () { setTimeout(enforceAccess, 0); });
     });
-    document.querySelectorAll("[data-role]").forEach(function (button) { button.addEventListener("click", function () { setTimeout(enforceAccess, 0); }); });
+    document.querySelectorAll("[data-role]").forEach(function (button) { button.addEventListener("click", enforceAfterRoleChange); });
+    var playerSelect = document.getElementById("player");
+    if (playerSelect) new MutationObserver(function () {
+      var role = activeRole();
+      if (!enforcing && Array.isArray(state.players) && state.players.some(function (player) { return !canView(player, role); })) enforceAfterRoleChange();
+    }).observe(playerSelect, { childList: true });
     if (currentUser.role === "position_player") {
       var selfIsBatter = sources.batter.some(function (player) { return norm(nameOf(player)) === norm(currentUser.player); });
       var preferred = document.querySelector('[data-role="' + (selfIsBatter ? "batter" : "pitcher") + '"]');
