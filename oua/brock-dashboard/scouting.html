@@ -2746,10 +2746,6 @@ Zane Skansi,Kitchener Panthers`;
     y=drawSec(d,'Pitch Performance (Pitcher POV)',y);
     y=drawBatterRateTable(['PITCH TYPE','PITCHES','SWING%','WHIFF%','CHASE%','BAA','OPS'],[34,22,25,25,25,25,30],pitchPerformanceRows,y);
 
-    if(PH-y<96){d.addPage();drawBg(d);y=MT+8;}
-    y=drawSec(d,'Count Tendencies',y);
-    y=drawBatterRateTable(['COUNT SITUATION','PITCHES','SWING%','WHIFF%','BAA'],[66,28,31,31,30],countTendencyRows,y);
-
     if(PH-y<42){d.addPage();drawBg(d);y=MT+8;}
     y=drawSec(d,'Splits',y);
     y=drawBatterRateTable(['MATCHUP','FP SWING%','I-Z SWING%','CHASE%','WHIFF%','K%'],[36,30,30,30,30,30],splitRows,y);
