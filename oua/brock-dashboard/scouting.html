@@ -536,7 +536,9 @@
       return total + (row.value < record.value ? row.pa : (row.value === record.value ? row.pa * .5 : 0));
     }, 0) / totalPA * 100;
   }
-  Promise.all([fetch('data/onu-season-stats.json').then(function(response) { return response.json(); }),fetch('data/oua-2025-park-factors.json').then(function(response) { return response.json(); })]).then(function(results) {
+  // Report downloads wait for this promise so their OPS+ card uses the same
+  // current season and park-factor inputs as the dashboard.
+  var OPS_PLUS_READY = Promise.all([fetch('data/onu-season-stats.json').then(function(response) { return response.json(); }),fetch('data/oua-2025-park-factors.json').then(function(response) { return response.json(); })]).then(function(results) {
     var source=results[0], parks=results[1];
     OPS_PARK_FACTORS=parks.factors||{};
     var rows = (source.tables || []).filter(function(table) {
@@ -1664,12 +1666,14 @@ Zane Skansi,Kitchener Panthers`;
         card.classList.add('generating');
         showToast('Generating '+p.name+'…', '#FFB81C');
         setTimeout(function() {
-          try {
-            if (selType==='batter') genBatterPDF(p, team);
-            else                    genPitcherPDF(p, team);
-            showToast('Downloaded: '+p.name, '#34d399');
-          } catch(e) { console.error(e); showToast('Error generating PDF','#f87171'); }
-          card.classList.remove('generating');
+          Promise.resolve(OPS_PLUS_READY).then(function() {
+            try {
+              if (selType==='batter') genBatterPDF(p, team);
+              else                    genPitcherPDF(p, team);
+              showToast('Downloaded: '+p.name, '#34d399');
+            } catch(e) { console.error(e); showToast('Error generating PDF','#f87171'); }
+            card.classList.remove('generating');
+          });
         }, 50);
       });
       targetGrid.appendChild(card);
@@ -3571,7 +3575,7 @@ Zane Skansi,Kitchener Panthers`;
     renderPlayerList();
     showToast('Generating '+(player.reportPitcherSide?player.reportPitcherSide+'HP ':'full-season ')+'report for ' + player.name + '…', '#1e3c78');
     setTimeout(function(){
-      loadReportHeadshot(player.name,team).then(function(){
+      Promise.all([loadReportHeadshot(player.name,team), OPS_PLUS_READY]).then(function(){
       try {
         if (selType === 'pitcher') genPitcherPDF(player, team);
         else genBatterPDF(player, team);
@@ -3609,6 +3613,7 @@ Zane Skansi,Kitchener Panthers`;
     (async function(){
       try{
         var doc=new jsPDFLib.jsPDF({unit:'mm',format:'a4'});
+        await OPS_PLUS_READY;
         for(var i=0;i<players.length;i++){
           await loadReportHeadshot(players[i].name,team);
           if(selType==='pitcher')genPitcherPDF(players[i],team,doc,i>0);
