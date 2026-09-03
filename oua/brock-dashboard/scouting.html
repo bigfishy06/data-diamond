@@ -3193,9 +3193,9 @@ Zane Skansi,Kitchener Panthers`;
       }));
       var atR=displayST.map(function(e,rowIndex){
         var t=e[0],m=effectivenessByType(sc,t,team&&team.name),league=effectivenessLeague[t]||{fp:[],strike:[],whiff:[],k:[],baa:[]};
-        return {type:t,usageText:fpUsageParts[rowIndex],values:['usage','strike','whiff','k','baa'].map(function(key){
-          var direction=key==='baa'?false:(key==='usage'?null:true);
-          var text=key==='usage'?usageParts[rowIndex]:(m[key]==null?'—':(key==='baa'?f3(m[key]):f1(m[key])+'%'));
+        return {type:t,values:['fp','usage','strike','whiff','k','baa'].map(function(key){
+          var direction=key==='baa'?false:((key==='fp'||key==='usage')?null:true);
+          var text=key==='fp'?fpUsageParts[rowIndex]:(key==='usage'?usageParts[rowIndex]:(m[key]==null?'—':(key==='baa'?f3(m[key]):f1(m[key])+'%')));
           return {raw:m[key],text:text,pct:direction==null?null:reportPercentile(m[key],league[key],direction)};
         })};
       });
@@ -3205,15 +3205,11 @@ Zane Skansi,Kitchener Panthers`;
         var bx2=ML;
         d.setFont('helvetica','bold');d.setFontSize(8);st(d,CO.white);
         d.text(row.type,bx2+atW[0]/2,ar+6.4,{align:'center'});bx2+=atW[0];
-        var usageText=row.usageText||'—';
-        d.setFont('helvetica','bold');d.setFontSize(9.5);d.setTextColor(0,0,0);
-        [[-.22,0],[.22,0],[0,-.22],[0,.22]].forEach(function(o){d.text(usageText,bx2+atW[1]/2+o[0],ar+6.6+o[1],{align:'center'});});
-        d.setTextColor(255,255,255);d.text(usageText,bx2+atW[1]/2,ar+6.6,{align:'center'});bx2+=atW[1];
         row.values.forEach(function(v,vi){
           var c=hx(v.pct==null?'#ffffff':v.pct>=67?'#9be99f':v.pct<=33?'#f4a6a6':'#ffffff');
-          d.setFillColor(c[0],c[1],c[2]);d.rect(bx2+.6,ar+.6,atW[vi+2]-1.2,8.8,'F');
+          d.setFillColor(c[0],c[1],c[2]);d.rect(bx2+.6,ar+.6,atW[vi+1]-1.2,8.8,'F');
           d.setFont('helvetica','bold');d.setFontSize(9.5);d.setTextColor(8,12,18);
-          d.text(v.text,bx2+atW[vi+2]/2,ar+6.6,{align:'center'});bx2+=atW[vi+2];
+          d.text(v.text,bx2+atW[vi+1]/2,ar+6.6,{align:'center'});bx2+=atW[vi+1];
         });
         ar+=10;
       });
