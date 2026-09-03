@@ -1792,6 +1792,12 @@ Zane Skansi,Kitchener Panthers`;
     }
     d.setFont('helvetica','normal');d.setFontSize(8);d.setTextColor(222,226,249);
     d.text(role+'  •  '+team.name+'  •  OUA '+selSeason,ML+31,MT+21);
+    // Every report states the viewing orientation at the top. Batter reports
+    // evaluate the hitter as a pitcher would; pitcher reports evaluate the
+    // pitcher as a batter would. All location charts below use this same axis.
+    var reportPov=role==='BATTER'?'FROM A PITCHER\'S POV':'FROM A BATTER\'S POV';
+    d.setFont('helvetica','bold');d.setFontSize(6.3);d.setTextColor(255,255,255);
+    d.text(reportPov,ML+CPW-3,MT+21,{align:'right'});
   }
   function drawBoxes(d,stats,y){
     var bw=CPW/stats.length;
