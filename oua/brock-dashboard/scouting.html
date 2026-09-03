@@ -2602,7 +2602,7 @@ Zane Skansi,Kitchener Panthers`;
     }
 
     var hasSpray=spTot2>=(hasSprayPcts?1:3);
-    if(hasSpray&&PH-8-y-4<40){d.addPage();drawBg(d);y=MT+8;}
+    // Spray/BIP charts are disabled in this report; do not create an empty page.
     if(false&&hasSpray){
       y=drawSec(d,'Shift',y);
       function batterShiftPitchGroup(p){
@@ -2768,16 +2768,15 @@ Zane Skansi,Kitchener Panthers`;
         return {text:text,neutral:directions[index]===null,pct:directions[index]===null?null:reportPercentile(value,performanceLeague[type][index],directions[index])};
       }));
     });
-    if(PH-y<48){d.addPage();drawBg(d);y=MT+8;}
+    // Batter reports are deliberately compacted into one printable page.
     y=drawSec(d,'Pitch Performance (Pitcher POV)',y);
     y=drawBatterRateTable(['PITCH TYPE','PITCHES','SWING%','WHIFF%','CHASE%','BAA','OPS'],[34,22,25,25,25,25,30],pitchPerformanceRows,y);
 
-    // Keep the batting line and outcome maps together on their own page so
-    // the report has room for larger, more useful visual detail.
-    d.addPage();drawBg(d);y=MT+12;
+    // Keep the rest of the batting analysis on this same page. The outcome
+    // maps are compact enough to preserve a useful one-page player report.
     y=drawSec(d,'Splits',y);
     y=drawBatterRateTable(['MATCHUP','BA','OBP','SLG','OPS'],[38,37,37,37,37],splitRows,y);
-    var reportHeatSize=Math.min(88,(CPW-10)/2);
+    var reportHeatSize=Math.min(72,(CPW-10)/2);
     y=drawSec(d,'Location Outcome Heat Maps (Pitcher POV)',y);
     var whiffHeatPoints=allSc.filter(reportIsWhiffOutcome);
     var hitHeatPoints=allSc.filter(function(point){return _HITS_B.includes(point.outcome);});
