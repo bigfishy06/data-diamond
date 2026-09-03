@@ -2697,20 +2697,21 @@ Zane Skansi,Kitchener Panthers`;
     });
     function batterHandSplitMetrics(points,side){
       var rows=(points||[]).filter(function(p){return p.pitcher_side===side;});
-      var first=rows.filter(function(p){return reportCleanCount(p.count)==='0-0';}),inZone=rows.filter(function(p){return hasPitchLocation(p)&&p.in_zone;}),outside=rows.filter(function(p){return hasPitchLocation(p)&&!p.in_zone;}),swings=rows.filter(reportIsSwingOutcome);
-      var pas=rows.filter(function(p){return _IN_PLAY_B.concat(_KS_B).includes(p.outcome)||p.outcome==='Walk'||p.outcome==='Intentional Walk';}),strikeouts=pas.filter(function(p){return _KS_B.includes(p.outcome);});
-      return[
-        first.length?first.filter(reportIsSwingOutcome).length/first.length*100:null,
-        inZone.length?inZone.filter(reportIsSwingOutcome).length/inZone.length*100:null,
-        outside.length?outside.filter(reportIsSwingOutcome).length/outside.length*100:null,
-        swings.length?rows.filter(reportIsWhiffOutcome).length/swings.length*100:null,
-        pas.length?strikeouts.length/pas.length*100:null
-      ];
+      var pas=rows.filter(reportIsPlateAppearance),ab=pas.filter(reportIsAtBat);
+      var hits=pas.filter(function(p){return _HITS_B.includes(p.outcome);});
+      var walks=pas.filter(function(p){return p.outcome==='Walk'||p.outcome==='Intentional Walk';});
+      var hbp=pas.filter(function(p){return p.outcome==='Hit By Pitch'||p.outcome==='Hit by Pitch';});
+      var sacFlies=pas.filter(function(p){return p.outcome==='Sacrifice Fly'||p.outcome==='Sac Fly Double Play';});
+      var totalBases=pas.reduce(function(total,p){return total+(p.outcome==='Single'?1:p.outcome==='Double'?2:p.outcome==='Triple'?3:p.outcome==='Home Run'?4:0);},0);
+      var average=ab.length?hits.length/ab.length:null;
+      var obpDenominator=ab.length+walks.length+hbp.length+sacFlies.length;
+      var obp=obpDenominator?(hits.length+walks.length+hbp.length)/obpDenominator:null;
+      var slg=ab.length?totalBases/ab.length:null;
+      return [average,obp,slg,obp!=null&&slg!=null?obp+slg:null];
     }
-    var splitLeague={L:[[],[],[],[],[]],R:[[],[],[],[],[]]};
+    var splitLeague={L:[[],[],[],[]],R:[[],[],[],[]]};
     (DATA.pitches||[]).forEach(function(bp){['L','R'].forEach(function(side){batterHandSplitMetrics(bp.scatter||[],side).forEach(function(value,metric){if(value!=null&&isFinite(value))splitLeague[side][metric].push(value);});});});
-    var splitDirections=[false,true,false,false,false];
-    var splitRows=['L','R'].map(function(side){var metrics=batterHandSplitMetrics(allSc,side);return[{text:'vs. '+side+'HP'}].concat(metrics.map(function(value,metric){return{text:value==null?'—':f1(value)+'%',neutral:metric===0,pct:metric===0?null:reportPercentile(value,splitLeague[side][metric],splitDirections[metric])};}));});
+    var splitRows=['L','R'].map(function(side){var metrics=batterHandSplitMetrics(allSc,side);return[{text:'vs. '+side+'HP'}].concat(metrics.map(function(value,metric){return{text:value==null?'—':f3(value),pct:reportPercentile(value,splitLeague[side][metric],true)};}));});
     // Pitch Performance is shown from the pitcher's perspective: lower swing
     // and contact quality, plus more whiffs and chases, are favourable.
     function batterPitchPerformance(points, type) {
@@ -2746,11 +2747,12 @@ Zane Skansi,Kitchener Panthers`;
     y=drawSec(d,'Pitch Performance (Pitcher POV)',y);
     y=drawBatterRateTable(['PITCH TYPE','PITCHES','SWING%','WHIFF%','CHASE%','BAA','OPS'],[34,22,25,25,25,25,30],pitchPerformanceRows,y);
 
-    if(PH-y<42){d.addPage();drawBg(d);y=MT+8;}
+    // Keep the batting line and outcome maps together on their own page so
+    // the report has room for larger, more useful visual detail.
+    d.addPage();drawBg(d);y=MT+12;
     y=drawSec(d,'Splits',y);
-    y=drawBatterRateTable(['MATCHUP','FP SWING%','I-Z SWING%','CHASE%','WHIFF%','K%'],[36,30,30,30,30,30],splitRows,y);
-    var reportHeatSize=Math.min(78,(CPW-10)/2);
-    if(PH-y<reportHeatSize+18){d.addPage();drawBg(d);y=MT+8;}
+    y=drawBatterRateTable(['MATCHUP','BA','OBP','SLG','OPS'],[38,37,37,37,37],splitRows,y);
+    var reportHeatSize=Math.min(88,(CPW-10)/2);
     y=drawSec(d,'Location Outcome Heat Maps (Pitcher POV)',y);
     var whiffHeatPoints=allSc.filter(reportIsWhiffOutcome);
     var hitHeatPoints=allSc.filter(function(point){return _HITS_B.includes(point.outcome);});
