@@ -3143,16 +3143,6 @@ Zane Skansi,Kitchener Panthers`;
     // The former Approach cards are omitted. Pitch-level performance below
     // provides the actionable report view instead.
     var tendencyRows = buildPitchCountSidePitchRows(sc);
-    var drewTendencyTable = false;
-    if(tendencyRows.length){
-      var tendNeed = 7 + 6.5 + tendencyRows.length * 5.3 + 7;
-      if(PH-y < tendNeed){d.addPage();drawBg(d);y=MT+8;}
-      y+=3;
-      y=drawSec(d,'Pitch Tendencies by Count',y);
-      y=drawPitchTendencyByCountTable(d,tendencyRows,y);
-      y+=1;
-      drewTendencyTable = true;
-    }
 
     // Pitch Effectiveness
     var sT=Object.entries(tc2).filter(function(e){return e[0]!=='Unknown';}).sort(function(a,b){return b[1]-a[1];});
@@ -3227,6 +3217,15 @@ Zane Skansi,Kitchener Panthers`;
       });
       sd(d,CO.navy2);d.setLineWidth(0.2);d.rect(ML,y+8,CPW,atR.length*10,'S');
       y=ar+2;
+    }
+
+    if(tendencyRows.length){
+      var tendNeed = 7 + 6.5 + tendencyRows.length * 5.3 + 7;
+      if(PH-y < tendNeed){d.addPage();drawBg(d);y=MT+8;}
+      y+=3;
+      y=drawSec(d,'Pitch Tendencies by Count',y);
+      y=drawPitchTendencyByCountTable(d,tendencyRows,y);
+      y+=1;
     }
 
     var tendency = buildPitchCountTendencyRows(sc, team && team.name);
