@@ -3246,7 +3246,7 @@ Zane Skansi,Kitchener Panthers`;
         var pts=p.scatter||[];
         Object.keys(tc2).forEach(function(type){
           var m=effectivenessByType(pts,type,p.team||p.pitcher_team||'');
-          if(!effectivenessLeague[type])effectivenessLeague[type]={fp:[],strike:[],whiff:[],k:[],baa:[]};
+          if(!effectivenessLeague[type])effectivenessLeague[type]={pitches:[],fp:[],strike:[],whiff:[],k:[],baa:[]};
           Object.keys(m).forEach(function(key){if(m[key]!=null&&isFinite(m[key]))effectivenessLeague[type][key].push(m[key]);});
         });
       });
@@ -3262,7 +3262,7 @@ Zane Skansi,Kitchener Panthers`;
         return usageSc.filter(function(p){return reportCleanCount(p.count)==='0-0'&&reportPitchTypeBucket(p)===e[0];}).length;
       }));
       var atR=displayST.map(function(e,rowIndex){
-        var t=e[0],m=effectivenessByType(sc,t,team&&team.name),league=effectivenessLeague[t]||{fp:[],strike:[],whiff:[],k:[],baa:[]};
+        var t=e[0],m=effectivenessByType(sc,t,team&&team.name),league=effectivenessLeague[t]||{pitches:[],fp:[],strike:[],whiff:[],k:[],baa:[]};
         return {type:t,values:['pitches','fp','usage','strike','whiff','k','baa'].map(function(key){
           var direction=key==='baa'?false:((key==='pitches'||key==='fp'||key==='usage')?null:true);
           var text=key==='pitches'?String(m.pitches):(key==='fp'?fpUsageParts[rowIndex]:(key==='usage'?usageParts[rowIndex]:(m[key]==null?'—':(key==='baa'?f3(m[key]):f1(m[key])+'%'))));
