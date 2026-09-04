@@ -904,8 +904,10 @@ Zane Skansi,Kitchener Panthers`;
     var isSelf = scoutingNorm(playerName) === scoutingNorm(u.player);
     var isTeammate = SCOUTING_BROCK_ROSTER_OVERRIDES.has(scoutingNorm(playerName)) || scoutingNorm(playerTeamName) === scoutingNorm(scoutingUserTeam());
     if (isSelf) return true;
-    // Players may access their own report and opponent reports only.
-    if (u.role === 'position_player' || u.role === 'catcher') return !isTeammate;
+    // Catchers prepare against opponents and work with every Brock pitcher;
+    // position players remain limited to themselves and opponents.
+    if (u.role === 'catcher') return !isTeammate || playerType === 'pitcher';
+    if (u.role === 'position_player') return !isTeammate;
     return false;
   }
 

@@ -22,9 +22,11 @@
     var self = norm(nameOf(player)) === norm(currentUser.player);
     var teammate = BrockRosterOverrides.has(norm(nameOf(player))) || norm(teamOf(player)) === norm(ownTeam);
     if (self) return true;
-    // Players may view their own profile and opponents only. Catchers use the
-    // same restriction here; pitcher access must not expose teammates.
-    if (currentUser.role === "position_player" || currentUser.role === "catcher") return !teammate;
+    // Position players may view their own profile and opponents only. Catchers
+    // also need access to every Brock pitcher for game preparation, while Brock
+    // batter teammates remain private.
+    if (currentUser.role === "catcher") return !teammate || role === "pitcher";
+    if (currentUser.role === "position_player") return !teammate;
     return false;
   }
 
