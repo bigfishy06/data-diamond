@@ -511,6 +511,7 @@
   // This is intentionally separate from wRC+ so the report and dashboard show the same metric.
   var OPS_PLUS_BY_SEASON = {};
   var OPS_PARK_FACTORS = {};
+  var ONU_FIP_2025 = [];
   function opsPlayerKey(name) { return String(name || '').trim().replace(/\s+/g, ' ').toLowerCase(); }
   function opsNumber(value) { var parsed = Number.parseFloat(value); return Number.isFinite(parsed) ? parsed : 0; }
   function opsParkTeam(team) {
@@ -566,7 +567,20 @@
       });
       OPS_PLUS_BY_SEASON[season] = seasonRows.filter(function(row) { return Number.isFinite(row.value); });
     });
+    ONU_FIP_2025 = (source.tables || []).filter(function(table) {
+      return table.type === 'Pitching' && String(table.season || '') === '2025';
+    }).flatMap(function(table) {
+      return (table.rows || []).map(function(values) {
+        var row = {};
+        (table.columns || []).forEach(function(column, index) { row[column] = values[index]; });
+        return {name: row.Name, team: row.Team, fip: Number.parseFloat(row.FIP)};
+      });
+    }).filter(function(row) { return row.name && Number.isFinite(row.fip); });
   }).catch(function() {});
+  function reportFipData(name) {
+    var key=opsPlayerKey(name),record=ONU_FIP_2025.find(function(row){return opsPlayerKey(row.name)===key;})||null;
+    return {record:record,rows:ONU_FIP_2025};
+  }
   function summaryOpsPlusRows() {
     var summaryRows=(typeof DATA!=='undefined' && Array.isArray(DATA.summary)) ? DATA.summary : [];
     var rows=summaryRows.map(function(row) {
@@ -2982,12 +2996,13 @@ Zane Skansi,Kitchener Panthers`;
     var _pitKDisp  = _pitKCount!=null ? String(Math.round(_pitKCount)) : '—';
     var _pitBBDisp = _pitBBCount!=null ? String(Math.round(_pitBBCount)) : '—';
     var pitcherMetricRows=(DATA.pitchers||[]).filter(function(row){return row&&row.total_pitches>=20;});
-    var pStrike=!isHandReport&&pd26&&pd26.STR_pct!=null?+pd26.STR_pct:(tot?str/tot*100:null),pWhiff=!isHandReport&&pd26&&pd26.Whiff_pct!=null?+pd26.Whiff_pct:(sc.filter(reportIsSwingOutcome).length?swS/sc.filter(reportIsSwingOutcome).length*100:null),pK=!isHandReport&&pd26&&pd26.K_pct!=null?+pd26.K_pct:(_pitcherBF?ks/_pitcherBF*100:null),pBB=!isHandReport&&pd26&&pd26.BB_pct!=null?+pd26.BB_pct:(_pitcherBF?bbs/_pitcherBF*100:null);
+    var fipData=reportFipData(player.name),pFip=fipData.record?fipData.record.fip:null;
+    var pStrike=!isHandReport&&pd26&&pd26.STR_pct!=null?+pd26.STR_pct:(tot?str/tot*100:null),pWhiff=!isHandReport&&pd26&&pd26.Whiff_pct!=null?+pd26.Whiff_pct:(sc.filter(reportIsSwingOutcome).length?swS/sc.filter(reportIsSwingOutcome).length*100:null),pK=!isHandReport&&pd26&&pd26.K_pct!=null?+pd26.K_pct:(_pitcherBF?ks/_pitcherBF*100:null);
     y=drawPercentileBoxes(d,[
+      {label:'FIP',display:pFip==null?'—':f2(pFip),pct:reportPercentile(pFip,fipData.rows.map(function(row){return row.fip;}),false)},
       {label:'STRIKE%',display:pStrike==null?'—':f1(pStrike)+'%',pct:reportPercentile(pStrike,pitcherMetricRows.map(function(r){return +r.STR_pct;}),true)},
       {label:'WHIFF%',display:pWhiff==null?'—':f1(pWhiff)+'%',pct:reportPercentile(pWhiff,pitcherMetricRows.map(function(r){return +r.Whiff_pct;}),true)},
-      {label:'K%',display:pK==null?'—':f1(pK)+'%',pct:reportPercentile(pK,pitcherMetricRows.map(function(r){return +r.K_pct;}),true)},
-      {label:'BB%',display:pBB==null?'—':f1(pBB)+'%',pct:reportPercentile(pBB,pitcherMetricRows.map(function(r){return +r.BB_pct;}),false)}
+      {label:'K%',display:pK==null?'—':f1(pK)+'%',pct:reportPercentile(pK,pitcherMetricRows.map(function(r){return +r.K_pct;}),true)}
     ],y,true);
     y+=2;
 

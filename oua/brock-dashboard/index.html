@@ -1316,6 +1316,41 @@
       setTimeout(()=>{capture();applySeason()},1800);
     })();
   </script>
+  <script>
+    (function(){
+      // Use the published 2025 ONuBaseball FIP field for the pitcher profile
+      // card. FIP is lower-is-better, so its percentile is ranked accordingly.
+      let fipRows=[];
+      const key=value=>String(value||'').trim().replace(/\s+/g,' ').toLowerCase();
+      const ordinal=value=>{const last=value%100;return `${value}${last>=11&&last<=13?'th':({1:'st',2:'nd',3:'rd'}[value%10]||'th')}`;};
+      function applyPitcherFip(){
+        if(activeRole()!=='pitcher'||!state.current)return;
+        const record=fipRows.find(row=>key(row.name)===key(state.current.pitcher));
+        const labels=document.querySelectorAll('.metric .label'),values=document.querySelectorAll('.metric .value'),hints=document.querySelectorAll('.metric .hint');
+        if(labels.length<4||values.length<4)return;
+        labels[0].textContent='FIP';labels[1].textContent='STRIKE%';labels[2].textContent='WHIFF%';labels[3].textContent='K%';
+        values[0].textContent=record?record.fip.toFixed(2):'—';values[1].textContent=pct(state.current.STR_pct);values[2].textContent=pct(state.current.Whiff_pct);values[3].textContent=pct(state.current.K_pct);
+        hints[0].textContent='2025 ONuBaseball';hints[1].textContent='All pitches';hints[2].textContent='On swings';hints[3].textContent='Strikeout rate';
+        const card=document.querySelectorAll('.metric')[0];
+        if(!card||!record||!fipRows.length)return;
+        const percentile=Math.round(fipRows.reduce((total,row)=>total+(row.fip>record.fip?1:(row.fip===record.fip ? .5 : 0)),0)/fipRows.length*100);
+        let badge=card.querySelector('.stat-percentile');if(!badge){badge=document.createElement('span');badge.className='stat-percentile';card.appendChild(badge);}
+        const strength=Math.min(Math.abs(percentile-50)/50,1),target=percentile>=50?[22,132,92]:[216,32,50],color=target.map(channel=>Math.round(255+(channel-255)*strength));
+        values[0].style.setProperty('color',`rgb(${color.join(',')})`,'important');badge.classList.remove('is-hidden');badge.textContent=`${ordinal(percentile)} pct.`;
+      }
+      const inheritedSelectPlayer=selectPlayer;
+      selectPlayer=function(id){inheritedSelectPlayer(id);applyPitcherFip();};
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(applyPitcherFip,0)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(applyPitcherFip,130)));
+      fetch('data/onu-season-stats.json').then(response=>response.json()).then(source=>{
+        fipRows=(source.tables||[]).filter(table=>table.type==='Pitching'&&String(table.season)==='2025').flatMap(table=>(table.rows||[]).map(values=>{
+          const row=Object.fromEntries((table.columns||[]).map((column,index)=>[column,values[index]]));
+          return {name:row.Name,fip:Number.parseFloat(row.FIP)};
+        })).filter(row=>row.name&&Number.isFinite(row.fip));
+        applyPitcherFip();
+      }).catch(()=>applyPitcherFip());
+    })();
+  </script>
   <script src="access-control.js?v=3"></script>
 </body>
 </html>
