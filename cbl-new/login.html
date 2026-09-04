@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/cbl-new/session-guard.js" data-auth-page="login" data-auth-home="/cbl-new/index.html"></script>
   <title>Data Diamond — Sign In</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -95,14 +96,6 @@
   <script>
     var CLIENT_ID    = "348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com";
     var REDIRECT_URI = "https://data-diamond.ca/cbl/login.html";
-
-    // Already signed in — go straight to app
-    try {
-      var saved = localStorage.getItem("dd_user");
-      if (saved && JSON.parse(saved).email) {
-        window.location.replace("index.html");
-      }
-    } catch(e) {}
 
     // Handle redirect back from Google (id_token in URL hash)
     (function handleCallback() {

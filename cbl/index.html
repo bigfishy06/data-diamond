@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=/">
   <link rel="canonical" href="https://data-diamond.ca/">
   <title>Data Diamond</title>
-  <script>window.location.replace("/");</script>
+  <script src="/cbl-new/session-guard.js" data-auth-page="app"></script>
+  <script>window.DD_ACCESS_READY.then(function (allowed) { if (allowed) window.location.replace("/"); });</script>
 </head>
 <body><a href="/">Continue to Data Diamond</a></body>
 </html>
