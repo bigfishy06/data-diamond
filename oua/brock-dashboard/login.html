@@ -96,11 +96,29 @@
     var CLIENT_ID    = "348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com";
     var REDIRECT_URI = "https://data-diamond.ca/oua/brock-dashboard/login.html";
 
-    // Already signed in — go straight to app
+    // Revalidate an existing browser session before allowing automatic entry.
+    // Removing an email from allowed.json therefore revokes its next load.
     try {
       var saved = localStorage.getItem("oua_dd_user");
       if (saved && JSON.parse(saved).email) {
-        window.location.replace("index.html");
+        var savedUser = JSON.parse(saved);
+        fetch("allowed.json?_=" + Date.now(), {cache:"no-store"})
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            var match = (data.users || []).find(function(u) {
+              return String(u.email || "").toLowerCase().trim() === String(savedUser.email || "").toLowerCase().trim();
+            });
+            if (!match) {
+              localStorage.removeItem("oua_dd_user");
+              return;
+            }
+            localStorage.setItem("oua_dd_user", JSON.stringify(Object.assign({}, savedUser, {
+              role: match.role || "admin",
+              player: match.player || null
+            })));
+            window.location.replace(localStorage.getItem("oua_dd_return_to") || "index.html");
+          })
+          .catch(function() { localStorage.removeItem("oua_dd_user"); });
       }
     } catch(e) {}
 

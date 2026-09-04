@@ -7,9 +7,26 @@
       // Temporary public access switch. Set to true only when sign-in is disabled.
       window.OUA_PUBLIC_ACCESS = false;
       if (window.OUA_PUBLIC_ACCESS) return;
-      try { if (JSON.parse(localStorage.getItem('oua_dd_user') || 'null')?.email) return; } catch (error) {}
-      localStorage.setItem('oua_dd_return_to', '/oua/brock-dashboard/index.html');
-      window.location.replace('login.html');
+      var saved;
+      try { saved = JSON.parse(localStorage.getItem('oua_dd_user') || 'null'); } catch (error) {}
+      if (!saved?.email) {
+        localStorage.setItem('oua_dd_return_to', '/oua/brock-dashboard/index.html');
+        window.location.replace('login.html');
+        return;
+      }
+      // Revalidate the stored browser session on every page load. A removed
+      // email is immediately signed out instead of retaining prior access.
+      document.documentElement.style.visibility = 'hidden';
+      fetch('allowed.json?_=' + Date.now(), {cache:'no-store'}).then(function(response){ return response.json(); }).then(function(data){
+        var match = (data.users || []).find(function(entry){ return String(entry.email || '').trim().toLowerCase() === String(saved.email).trim().toLowerCase(); });
+        if (!match) throw new Error('Access revoked');
+        localStorage.setItem('oua_dd_user', JSON.stringify(Object.assign({}, saved, {role:match.role || 'admin', player:match.player || null})));
+        document.documentElement.style.visibility = '';
+      }).catch(function(){
+        localStorage.removeItem('oua_dd_user');
+        localStorage.setItem('oua_dd_return_to', '/oua/brock-dashboard/index.html');
+        window.location.replace('login.html');
+      });
     })();
   </script>
   <title>Brock Badgers Baseball | Baseball Research Dashboard</title>
