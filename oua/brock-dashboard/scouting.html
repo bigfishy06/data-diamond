@@ -3223,8 +3223,8 @@ Zane Skansi,Kitchener Panthers`;
       if(PH-y<performanceNeed){d.addPage();drawBg(d);y=MT+8;}
       y+=3;
       y=drawSec(d,'Pitch Type Performance',y);
-      var atH=['PITCH TYPE','FP USAGE %','USAGE %','STRIKE %','WHIFF %','K%','BAA'];
-      var atW=[35,25,24,26,26,25,25];
+      var atH=['PITCH TYPE','PITCHES','FP USAGE %','USAGE %','STRIKE %','WHIFF %','K%','BAA'];
+      var atW=[30,17,24,22,24,24,22,23];
       function effectivenessByType(points,type,teamName){
         var eligible=reportPitcherUsagePoints(points,teamName);
         var allFirst=eligible.filter(function(p){return reportCleanCount(p.count)==='0-0';});
@@ -3233,6 +3233,7 @@ Zane Skansi,Kitchener Panthers`;
         var swings=tp.filter(reportIsSwingOutcome),ab=tp.filter(reportIsAtBat),hits=tp.filter(function(p){return ['Single','Double','Triple','Home Run'].includes(p.outcome);});
         var pa=tp.filter(function(p){return ['Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking','Walk','Intentional Walk','Hit By Pitch','Single','Double','Triple','Home Run','Groundout','Ground Out','Flyout','Fly Out','Popout','Pop Out','Lineout','Line Out','Double Play','Triple Play','Error','Field Error','Fielders Choice',"Fielder's Choice",'Sacrifice Fly','Sac Fly Double Play','Sacrifice Bunt','Sac Bunt Double Play','Catcher Interference','Batter Interference'].includes(p.outcome);});
         return {
+          pitches:tp.length,
           fp:allFirst.length?first.length/allFirst.length*100:null,
           strike:tp.length?tp.filter(reportIsStrikeOutcome).length/tp.length*100:null,
           whiff:swings.length?tp.filter(reportIsWhiffOutcome).length/swings.length*100:null,
@@ -3262,9 +3263,9 @@ Zane Skansi,Kitchener Panthers`;
       }));
       var atR=displayST.map(function(e,rowIndex){
         var t=e[0],m=effectivenessByType(sc,t,team&&team.name),league=effectivenessLeague[t]||{fp:[],strike:[],whiff:[],k:[],baa:[]};
-        return {type:t,values:['fp','usage','strike','whiff','k','baa'].map(function(key){
-          var direction=key==='baa'?false:((key==='fp'||key==='usage')?null:true);
-          var text=key==='fp'?fpUsageParts[rowIndex]:(key==='usage'?usageParts[rowIndex]:(m[key]==null?'—':(key==='baa'?f3(m[key]):f1(m[key])+'%')));
+        return {type:t,values:['pitches','fp','usage','strike','whiff','k','baa'].map(function(key){
+          var direction=key==='baa'?false:((key==='pitches'||key==='fp'||key==='usage')?null:true);
+          var text=key==='pitches'?String(m.pitches):(key==='fp'?fpUsageParts[rowIndex]:(key==='usage'?usageParts[rowIndex]:(m[key]==null?'—':(key==='baa'?f3(m[key]):f1(m[key])+'%'))));
           return {raw:m[key],text:text,pct:direction==null?null:reportPercentile(m[key],league[key],direction)};
         })};
       });
