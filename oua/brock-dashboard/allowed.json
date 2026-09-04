@@ -2,8 +2,8 @@
   "users": [
     {
       "email": "christiansturgeon06@gmail.com",
-      "role": "catcher",
-      "player": "Brayden Sowrey"
+      "role": "admin",
+      "player": "Christian Meagher-Sturgeon"
     },
     {
       "email": "dantecifala@gmail.com",
@@ -14,6 +14,11 @@
       "email": "geoffstrong55@gmail.com",
       "role": "admin",
       "player": "Geoff Strong"
+    },
+    {
+      "email": "fdelrio75@icloud.com",
+      "role": "admin",
+      "player": "Fabio Del Rio"
     },
     {
       "email": "mlepage9@outlook.com",
