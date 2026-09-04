@@ -1400,6 +1400,55 @@
       setTimeout(applyPitcherFip,5500);
     })();
   </script>
+  <script>
+    (function(){
+      // Pitcher game-log summary cards use a league-wide, pitch-level baseline.
+      // Higher is better for FPS%, Strike%, 1-1 Strike%, Whiff%, K%, and
+      // Putaway%; lower is better for BB% and BAA.
+      const container=$('gameAnalysisMetrics');
+      if(!container)return;
+      const rate=(part,total)=>total?part/total*100:null;
+      const strikeout=new Set(['Strikeout Swinging','Strikeout Looking','Dropped Third Strike Swinging','Dropped Third Strike Looking']);
+      const hit=new Set(['Single','Double','Triple','Home Run']);
+      const line=points=>{
+        const first=points.filter(point=>String(point.count||'').replace(/^'/,'')==='0-0');
+        const oneOne=points.filter(point=>String(point.count||'').replace(/^'/,'')==='1-1');
+        const twoStrike=points.filter(point=>String(point.count||'').replace(/^'/,'').endsWith('-2'));
+        const swings=points.filter(point=>swingOutcomes.has(point.outcome));
+        const pa=points.filter(isTerminalPa),abs=points.filter(isOfficialAtBat);
+        const ks=pa.filter(point=>strikeout.has(point.outcome)),walks=pa.filter(point=>point.outcome==='Walk'||point.outcome==='Intentional Walk');
+        return [
+          rate(first.filter(isPitchStrike).length,first.length),
+          rate(points.filter(isPitchStrike).length,points.length),
+          rate(oneOne.filter(isPitchStrike).length,oneOne.length),
+          rate(points.filter(point=>whiffOutcomes.has(point.outcome)).length,swings.length),
+          rate(ks.length,pa.length),rate(ks.length,twoStrike.length),rate(walks.length,pa.length),
+          abs.length?abs.filter(point=>hit.has(point.outcome)).length/abs.length:null
+        ];
+      };
+      let baseline=[];
+      const paint=()=>{
+        if(activeRole()!=='pitcher'||!baseline.length)return;
+        const lowerIsBetter=new Set([6,7]);
+        [...container.querySelectorAll('.game-analysis-metric')].forEach((card,index)=>{
+          const value=Number.parseFloat(card.querySelector('strong')?.textContent),average=baseline[index];
+          if(!Number.isFinite(value)||!Number.isFinite(average))return;
+          const difference=(value-average)*(lowerIsBetter.has(index)?-1:1);
+          const scale=index===7?.08:12,strength=Math.min(Math.abs(difference)/scale,1);
+          const target=difference>=0?[22,132,92]:[216,32,50];
+          const color=target.map(channel=>Math.round(255+(channel-255)*strength));
+          card.querySelector('strong').style.setProperty('color',`rgb(${color.join(',')})`,'important');
+        });
+      };
+      fetch('data/pitchers2026.json').then(response=>response.json()).then(players=>{
+        baseline=line((players||[]).flatMap(player=>Array.isArray(player.scatter)?player.scatter:[]));
+        paint();
+      }).catch(function(){});
+      new MutationObserver(()=>queueMicrotask(paint)).observe(container,{childList:true});
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(paint,140)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(paint,180)));
+    })();
+  </script>
   <script src="access-control.js?v=4"></script>
 </body>
 </html>
