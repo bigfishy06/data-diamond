@@ -369,9 +369,13 @@
         'western-mustangs:alex-brown':'western-mustangs-alexander-brown.png',
         'guelph-gryphons:alex-peiper':'guelph-gryphons-alexander-pieper.jpg',
         'mcmaster-marauders:edward-hong-yu-cheng':'mcmaster-marauders-edward-cheng.jpg',
+        'mcmaster-marauders:alex-vanraay':'mcmaster-marauders-alex-van-raay.jpg',
+        'mcmaster-marauders:neal-amar-bhattacharya':'mcmaster-marauders-neal-bhattacharya.jpg',
         'waterloo-warriors:junichi-yuki':'waterloo-warriors-jun-yuki.jpg',
         'wilfrid-laurier-golden-hawks:ash-abols':'wilfrid-laurier-golden-hawks-ashton-abols.png',
-        'wilfrid-laurier-golden-hawks:johnny-banks':'wilfrid-laurier-golden-hawks-john-banks.png'
+        'wilfrid-laurier-golden-hawks:johnny-banks':'wilfrid-laurier-golden-hawks-john-banks.png',
+        'wilfrid-laurier-golden-hawks:ben-rae':'wilfrid-laurier-golden-hawks-benjamin-rae.png',
+        'brock-badgers:haydon-cupolo':'hayden-cupolo.jpg'
       };
       const slug=name=>String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
       function headshotFiles(player){const team=slug(player?.pitcher_team),name=slug(player?.pitcher),key=`${team}:${name}`,base=team&&name?`${team}-${name}`:'',extensions=['jpg','jpeg','png','webp'],files=[headshotAliases[key],...extensions.map(extension=>`${base}.${extension}`)];if(team==='brock-badgers')files.push(...extensions.map(extension=>`${name}.${extension}`));return files.filter((value,index,items)=>value&&items.indexOf(value)===index)}
