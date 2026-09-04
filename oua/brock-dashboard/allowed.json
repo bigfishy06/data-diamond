@@ -3,7 +3,167 @@
     {
       "email": "christiansturgeon06@gmail.com",
       "role": "catcher",
+      "player": "Brayden Sowrey"
+    },
+    {
+      "email": "dantecifala@gmail.com",
+      "role": "admin",
+      "player": "Dante Cifala"
+    },
+    {
+      "email": "geoffstrong55@gmail.com",
+      "role": "admin",
+      "player": "Geoff Strong"
+    },
+    {
+      "email": "mlepage9@outlook.com",
+      "role": "admin",
+      "player": "Marc LePage"
+    },
+    {
+      "email": "jayfalardeau55@gmail.com",
+      "role": "admin",
+      "player": "Jay Falardeau"
+    },
+    {
+      "email": "charliehughes2411@gmail.com",
+      "role": "position_player",
+      "player": "Charlie Hughes"
+    },
+    {
+      "email": "jadenleeder@gmail.com",
+      "role": "position_player",
+      "player": "Jaden Leeder"
+    },
+    {
+      "email": "jtiessen54@gmail.com",
+      "role": "position_player",
+      "player": "Jack Tiessen"
+    },
+    {
+      "email": "rileyliamj@gmail.com",
+      "role": "position_player",
+      "player": "Liam Riley"
+    },
+    {
+      "email": "nolan.phelan@yahoo.ca",
+      "role": "position_player",
+      "player": "Nolan Phelan"
+    },
+    {
+      "email": "olivershikatani@gmail.com",
+      "role": "position_player",
+      "player": "Oliver Shikatani"
+    },
+    {
+      "email": "ryanfacchini@icloud.com",
+      "role": "position_player",
+      "player": "Ryan Facchini"
+    },
+    {
+      "email": "mavericklb10@gmail.com",
+      "role": "position_player",
+      "player": "Maverick Lawrence"
+    },
+    {
+      "email": "adam22geddes@gmail.com",
+      "role": "position_player",
+      "player": "Adam Geddes"
+    },
+    {
+      "email": "maxburroughsford@gmail.com",
+      "role": "position_player",
+      "player": "Max Burroughsford"
+    },
+    {
+      "email": "jackpcohen@gmail.com",
+      "role": "position_player",
+      "player": "Jack Cohen"
+    },
+    {
+      "email": "taylorgavin249@gmail.com",
+      "role": "position_player",
+      "player": "Gavin Taylor"
+    },
+    {
+      "email": "brady.a.4@gmail.com",
+      "role": "position_player",
       "player": "Brady Campbell"
+    },
+    {
+      "email": "flynnmatheson@gmail.com",
+      "role": "position_player",
+      "player": "Flynn Matheson"
+    },
+    {
+      "email": "timmy.somerville@gmail.com",
+      "role": "position_player",
+      "player": "Tim Somerville"
+    },
+    {
+      "email": "gelderrowan@gmail.com",
+      "role": "position_player",
+      "player": "Rowan Gelder"
+    },
+    {
+      "email": "mvandam124@gmail.com",
+      "role": "position_player",
+      "player": "Max Van Dam"
+    },
+    {
+      "email": "evanmarks77@yahoo.com",
+      "role": "position_player",
+      "player": "Evan Marks"
+    },
+    {
+      "email": "jack.shannon011@gmail.com",
+      "role": "catcher",
+      "player": "Jack Shannon"
+    },
+    {
+      "email": "kadefalardeau@gmail.com",
+      "role": "position_player",
+      "player": "Kade Falardeau"
+    },
+    {
+      "email": "comimorosbro@icloud.com",
+      "role": "catcher",
+      "player": "Colin Mockford"
+    },
+    {
+      "email": "averymbrooks9@gmail.com",
+      "role": "position_player",
+      "player": "Avery Brooks"
+    },
+    {
+      "email": "bmssowrey@gmail.com",
+      "role": "catcher",
+      "player": "Brayden Sowrey"
+    },
+    {
+      "email": "jackson.price@icloud.com",
+      "role": "position_player",
+      "player": "Jackson Price"
+    },
+    {
+      "email": "jfrazer08@icloud.com",
+      "role": "position_player",
+      "player": "Josh Frazer"
+    },
+    {
+      "email": "mcnmcfarlane0424@gmail.com",
+      "role": "position_player",
+      "player": "Nolan McFarlane"
+    },
+    {
+      "email": "nateparsons@gmail.com",
+      "role": "catcher",
+      "player": "Nate Parsons"
+    },
+    {
+      "email": "tysongomm@hotmail.com",
+      "role": "admin",
+      "player": "Tyson Gomm"
     }
   ]
 }
