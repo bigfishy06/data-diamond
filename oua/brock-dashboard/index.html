@@ -1338,6 +1338,18 @@
         const strength=Math.min(Math.abs(percentile-50)/50,1),target=percentile>=50?[22,132,92]:[216,32,50],color=target.map(channel=>Math.round(255+(channel-255)*strength));
         values[0].style.setProperty('color',`rgb(${color.join(',')})`,'important');badge.classList.remove('is-hidden');badge.textContent=`${ordinal(percentile)} pct.`;
       }
+      // Legacy dashboard refreshers also write the pitcher cards. Observe the
+      // metric strip and immediately restore FIP whenever one of them tries
+      // to put Strike% back in the first position.
+      window.applyPitcherFip=applyPitcherFip;
+      let fipRestoreQueued=false;
+      const enforcePitcherFip=()=>{
+        const firstLabel=document.querySelector('.metric .label');
+        if(activeRole()!=='pitcher'||!firstLabel||firstLabel.textContent==='FIP'||fipRestoreQueued)return;
+        fipRestoreQueued=true;
+        queueMicrotask(()=>{fipRestoreQueued=false;if(activeRole()==='pitcher'&&document.querySelector('.metric .label')?.textContent!=='FIP')applyPitcherFip();});
+      };
+      new MutationObserver(enforcePitcherFip).observe(document.querySelector('.metrics'),{childList:true,subtree:true,characterData:true});
       const inheritedSelectPlayer=selectPlayer;
       selectPlayer=function(id){inheritedSelectPlayer(id);applyPitcherFip();};
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(applyPitcherFip,0)));
