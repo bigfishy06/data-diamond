@@ -47,6 +47,19 @@
     if (options.some(function (option) { return option.value === selectedValue; })) select.value = selectedValue;
   }
 
+  function clearProfile() {
+    state.current = null;
+    var name = document.getElementById("name");
+    var initials = document.getElementById("initials");
+    var meta = document.getElementById("meta");
+    var pitches = document.getElementById("pitches");
+    if (name) name.textContent = "Select a player";
+    if (initials) initials.textContent = "—";
+    if (meta) meta.textContent = "Choose a player profile to view the dashboard";
+    if (pitches) pitches.textContent = "—";
+    document.querySelectorAll(".metric .value").forEach(function (node) { node.textContent = "—"; });
+  }
+
   function enforceAccess() {
     if (enforcing || typeof state === "undefined" || typeof activeRole !== "function") return;
     enforcing = true;
@@ -74,9 +87,9 @@
 
       var scoped = permittedUi.filter(function (player) { return teamSelect.value === "all" || teamOf(player) === teamSelect.value; });
       var priorPlayer = playerSelect.value;
-      replaceOptions(playerSelect, scoped.map(function (player) {
+      replaceOptions(playerSelect, [{ value: "", label: "Select a player" }].concat(scoped.map(function (player) {
         return { value: nameOf(player), label: nameOf(player) + " · " + (teamOf(player) || "Team unavailable") };
-      }), priorPlayer);
+      })), priorPlayer);
       state.players = scoped;
       if (!scoped.length) {
         state.current = null;
@@ -88,7 +101,11 @@
         var selfProfile = scoped.find(function (player) { return norm(nameOf(player)) === norm(currentUser.player); });
         if (selfProfile) selected = nameOf(selfProfile);
       }
-      selected = selected || nameOf(scoped[0]);
+      if (!selected) {
+        playerSelect.value = "";
+        clearProfile();
+        return;
+      }
       playerSelect.value = selected;
       if (!state.current || nameOf(state.current) !== selected || !canView(state.current, role)) selectPlayer(selected);
     } finally { enforcing = false; }
