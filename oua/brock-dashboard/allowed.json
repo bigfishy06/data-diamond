@@ -91,9 +91,14 @@
       "player": "Gavin Taylor"
     },
     {
-      "email": "brady.a.4@gmail.com",
+      "email": "brady.a.campbell4@gmail.com",
       "role": "position_player",
       "player": "Brady Campbell"
+    },
+    {
+      "email": "kivasalzman@gmail.com",
+      "role": "position_player",
+      "player": "Kiva Salzman"
     },
     {
       "email": "flynnmatheson@gmail.com",
@@ -161,7 +166,7 @@
       "player": "Nolan McFarlane"
     },
     {
-      "email": "nateparsons@gmail.com",
+      "email": "nateparsonsbaseball@gmail.com",
       "role": "catcher",
       "player": "Nate Parsons"
     },
