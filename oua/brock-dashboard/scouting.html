@@ -526,7 +526,7 @@
   // This is intentionally separate from wRC+ so the report and dashboard show the same metric.
   var OPS_PLUS_BY_SEASON = {};
   var OPS_PARK_FACTORS = {};
-  var ONU_FIP_2025 = [];
+  var ONU_FIP_BY_SEASON = {};
   function opsPlayerKey(name) { return String(name || '').trim().replace(/\s+/g, ' ').toLowerCase(); }
   function opsNumber(value) { var parsed = Number.parseFloat(value); return Number.isFinite(parsed) ? parsed : 0; }
   function opsParkTeam(team) {
@@ -582,19 +582,21 @@
       });
       OPS_PLUS_BY_SEASON[season] = seasonRows.filter(function(row) { return Number.isFinite(row.value); });
     });
-    ONU_FIP_2025 = (source.tables || []).filter(function(table) {
-      return table.type === 'Pitching' && String(table.season || '') === '2025';
-    }).flatMap(function(table) {
-      return (table.rows || []).map(function(values) {
+    ONU_FIP_BY_SEASON = (source.tables || []).filter(function(table) {
+      return table.type === 'Pitching' && /^\d{4}$/.test(String(table.season || ''));
+    }).reduce(function(bySeason, table) {
+      bySeason[String(table.season)] = (table.rows || []).map(function(values) {
         var row = {};
         (table.columns || []).forEach(function(column, index) { row[column] = values[index]; });
         return {name: row.Name, team: row.Team, fip: Number.parseFloat(row.FIP)};
-      });
-    }).filter(function(row) { return row.name && Number.isFinite(row.fip); });
+      }).filter(function(row) { return row.name && Number.isFinite(row.fip); });
+      return bySeason;
+    }, {});
   }).catch(function() {});
-  function reportFipData(name) {
-    var key=opsPlayerKey(name),record=ONU_FIP_2025.find(function(row){return opsPlayerKey(row.name)===key;})||null;
-    return {record:record,rows:ONU_FIP_2025};
+  function reportFipData(name, season) {
+    var rows=ONU_FIP_BY_SEASON[String(season || '')] || [];
+    var key=opsPlayerKey(name),record=rows.find(function(row){return opsPlayerKey(row.name)===key;})||null;
+    return {record:record,rows:rows};
   }
   function summaryOpsPlusRows() {
     var summaryRows=(typeof DATA!=='undefined' && Array.isArray(DATA.summary)) ? DATA.summary : [];
@@ -624,16 +626,9 @@
     return rows;
   }
   function reportOpsPlusData(name, season) {
-    var published=newestPublishedOpsPlusRows();
-    var record=published.find(function(row){return opsPlayerKey(row.name)===opsPlayerKey(name);})||null;
-    if(record){
-      // The dashboard percentiles a published player against all players in
-      // that exact published season, not against a mixed-year data set.
-      return {record:record,rows:OPS_PLUS_BY_SEASON[String(record.season||'')]||published};
-    }
-    // Players without a published ONuBaseball row use the current tracked
-    // OUA summary as the report fallback.
-    var rows=summaryOpsPlusRows();
+    // OPS+ must use the requested season's published ONuBaseball league
+    // environment. Do not substitute a prior season or tracked fallback.
+    var rows=OPS_PLUS_BY_SEASON[String(season || '')] || [];
     return {record:rows.find(function(row){return opsPlayerKey(row.name)===opsPlayerKey(name);})||null,rows:rows};
   }
   function reportOpsPlusPercentile(record, rows) {
@@ -3017,7 +3012,7 @@ Zane Skansi,Kitchener Panthers`;
     var _pitKDisp  = _pitKCount!=null ? String(Math.round(_pitKCount)) : '—';
     var _pitBBDisp = _pitBBCount!=null ? String(Math.round(_pitBBCount)) : '—';
     var pitcherMetricRows=(DATA.pitchers||[]).filter(function(row){return row&&row.total_pitches>=20;});
-    var fipData=reportFipData(player.name),pFip=fipData.record?fipData.record.fip:null;
+    var fipData=reportFipData(player.name,selSeason),pFip=fipData.record?fipData.record.fip:null;
     var pStrike=!isHandReport&&pd26&&pd26.STR_pct!=null?+pd26.STR_pct:(tot?str/tot*100:null),pWhiff=!isHandReport&&pd26&&pd26.Whiff_pct!=null?+pd26.Whiff_pct:(sc.filter(reportIsSwingOutcome).length?swS/sc.filter(reportIsSwingOutcome).length*100:null),pK=!isHandReport&&pd26&&pd26.K_pct!=null?+pd26.K_pct:(_pitcherBF?ks/_pitcherBF*100:null);
     y=drawPercentileBoxes(d,[
       {label:'FIP',display:pFip==null?'—':f2(pFip),pct:reportPercentile(pFip,fipData.rows.map(function(row){return row.fip;}),false)},

@@ -1214,8 +1214,8 @@
     "Str_pct": 28.6,
     "Oppo_pct": 0,
     "pitch_mix": {
-      "Breaking Ball": 5.9,
       "Changeup": 5.9,
+      "Curveball": 5.9,
       "Cutter": 23.5,
       "Fastball": 58.8,
       "Splitter": 5.9

@@ -1185,11 +1185,6 @@
         const factor = team && parkFactors[team] ? Number(parkFactors[team].factor) : 1;
         return Number.isFinite(factor) && factor > 0 ? factor : 1;
       };
-      const byBatter = new Map();
-      seasonRows.sort((a, b) => b.season - a.season).forEach(row => {
-        const key = String(row.Name || '').trim().toLowerCase();
-        if (key && !byBatter.has(key)) byBatter.set(key, row);
-      });
       const leagueRates = new Map();
       function leagueFor(season) {
         if (leagueRates.has(season)) return leagueRates.get(season);
@@ -1238,7 +1233,12 @@
 
       function refreshOpsPlus() {
         if (activeRole() !== 'batter' || !state.current) return;
-        const player = byBatter.get(String(state.current.pitcher || '').trim().toLowerCase());
+        // Never carry a prior ONuBaseball season into a current dashboard
+        // season. OPS+ is only displayed when ONuBaseball publishes that
+        // exact season's batting table.
+        const selectedSeason = String($('season')?.value || '');
+        const player = seasonRows.find(row => String(row.season) === selectedSeason &&
+          String(row.Name || '').trim().toLowerCase() === String(state.current.pitcher || '').trim().toLowerCase());
         const labels = document.querySelectorAll('.metric .label');
         const values = document.querySelectorAll('.metric .value');
         const hints = document.querySelectorAll('.metric .hint');
@@ -1247,6 +1247,11 @@
         labels[0].textContent = 'OPS+';
         const playerOpsPlus = opsPlus(player);
         values[0].textContent = Number.isFinite(playerOpsPlus) ? String(playerOpsPlus) : '—';
+        if (!Number.isFinite(playerOpsPlus)) {
+          values[0].style.removeProperty('color');
+          const badge = values[0].closest('.metric')?.querySelector('.stat-percentile');
+          if (badge) badge.classList.add('is-hidden');
+        }
         const points = safePoints(state.current);
         const swing = point => swingOutcomes.has(point.outcome);
         const whiff = point => whiffOutcomes.has(point.outcome);
@@ -1269,7 +1274,7 @@
 
       // Other dashboard refreshes call this shared function, so make OPS+ the persistent batter-card order.
       refreshBatterMetricOrder = refreshOpsPlus;
-      ['player', 'team'].forEach(id => $(id).addEventListener('change', () => setTimeout(refreshOpsPlus, 120)));
+      ['player', 'team', 'season'].forEach(id => $(id).addEventListener('change', () => setTimeout(refreshOpsPlus, 120)));
       document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => setTimeout(refreshOpsPlus, 120)));
       setTimeout(refreshOpsPlus, 2200);
       setTimeout(refreshOpsPlus, 5200);
@@ -1339,19 +1344,21 @@
   </script>
   <script>
     (function(){
-      // Use the published 2025 ONuBaseball FIP field for the pitcher profile
-      // card. FIP is lower-is-better, so its percentile is ranked accordingly.
-      let fipRows=[],pitcherRows=[];
+      // FIP is lower-is-better. Keep ONuBaseball seasons isolated so a
+      // published 2025 FIP can never appear on a 2026 player profile.
+      let fipRowsBySeason={},pitcherRows=[];
       const key=value=>String(value||'').trim().replace(/\s+/g,' ').toLowerCase();
       const ordinal=value=>{const last=value%100;return `${value}${last>=11&&last<=13?'th':({1:'st',2:'nd',3:'rd'}[value%10]||'th')}`;};
       function applyPitcherFip(){
         if(activeRole()!=='pitcher'||!state.current)return;
+        const selectedSeason=String($('season')?.value||'');
+        const fipRows=fipRowsBySeason[selectedSeason]||[];
         const record=fipRows.find(row=>key(row.name)===key(state.current.pitcher));
         const labels=document.querySelectorAll('.metric .label'),values=document.querySelectorAll('.metric .value'),hints=document.querySelectorAll('.metric .hint');
         if(labels.length<4||values.length<4)return;
         labels[0].textContent='FIP';labels[1].textContent='STRIKE%';labels[2].textContent='WHIFF%';labels[3].textContent='K%';
         values[0].textContent=record?record.fip.toFixed(2):'—';values[1].textContent=pct(state.current.STR_pct);values[2].textContent=pct(state.current.Whiff_pct);values[3].textContent=pct(state.current.K_pct);
-        hints[0].textContent='2025 ONuBaseball';hints[1].textContent='All pitches';hints[2].textContent='On swings';hints[3].textContent='Strikeout rate';
+        hints[0].textContent=record?`${selectedSeason} ONuBaseball`:'Not yet published';hints[1].textContent='All pitches';hints[2].textContent='On swings';hints[3].textContent='Strikeout rate';
         // The visible card order differs from the dashboard's legacy order.
         // Grade the cards by their actual labels: FIP is lower-is-better;
         // Strike%, Whiff%, and K% are higher-is-better.
@@ -1363,7 +1370,14 @@
         ];
         metrics.forEach((metric,index)=>{
           const pool=metric.pool.filter(Number.isFinite),card=cards[index];
-          if(!card||!Number.isFinite(metric.value)||!pool.length)return;
+          if(!card||!Number.isFinite(metric.value)||!pool.length){
+            if(index===0){
+              values[index].style.removeProperty('color');
+              const badge=card?.querySelector('.stat-percentile');
+              if(badge)badge.classList.add('is-hidden');
+            }
+            return;
+          }
           const raw=Math.round(pool.reduce((total,value)=>total+(value<metric.value?1:value===metric.value?.5:0),0)/pool.length*100);
           const percentile=metric.lower?100-raw:raw;
           let badge=card.querySelector('.stat-percentile');if(!badge){badge=document.createElement('span');badge.className='stat-percentile';card.appendChild(badge);}
@@ -1385,14 +1399,17 @@
       new MutationObserver(enforcePitcherFip).observe(document.querySelector('.metrics'),{childList:true,subtree:true,characterData:true});
       const inheritedSelectPlayer=selectPlayer;
       selectPlayer=function(id){inheritedSelectPlayer(id);applyPitcherFip();};
-      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(applyPitcherFip,90)));
+      ['player','team','season'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(applyPitcherFip,90)));
       document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(applyPitcherFip,180)));
       Promise.all([fetch('data/onu-season-stats.json').then(response=>response.json()),fetch('data/pitchers2026.json').then(response=>response.json())]).then(([source,pitchers])=>{
         pitcherRows=Array.isArray(pitchers)?pitchers:[];
-        fipRows=(source.tables||[]).filter(table=>table.type==='Pitching'&&String(table.season)==='2025').flatMap(table=>(table.rows||[]).map(values=>{
-          const row=Object.fromEntries((table.columns||[]).map((column,index)=>[column,values[index]]));
-          return {name:row.Name,fip:Number.parseFloat(row.FIP)};
-        })).filter(row=>row.name&&Number.isFinite(row.fip));
+        fipRowsBySeason=(source.tables||[]).filter(table=>table.type==='Pitching'&&/^\d{4}$/.test(String(table.season||''))).reduce((bySeason,table)=>{
+          bySeason[String(table.season)]=(table.rows||[]).map(values=>{
+            const row=Object.fromEntries((table.columns||[]).map((column,index)=>[column,values[index]]));
+            return {name:row.Name,fip:Number.parseFloat(row.FIP)};
+          }).filter(row=>row.name&&Number.isFinite(row.fip));
+          return bySeason;
+        },{});
         applyPitcherFip();
       }).catch(()=>applyPitcherFip());
       // Run after the older metric decorators, which initialize slightly later.
