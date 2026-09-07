@@ -1210,7 +1210,7 @@
 
       function applyOpsPlusPercentile(value, season) {
         const card = document.querySelectorAll('.metric')[0];
-        const comparisonPool = seasonRows.filter(row => Number.isFinite(opsPlus(row)));
+        const comparisonPool = seasonRows.filter(row => row.season === season && Number.isFinite(opsPlus(row)));
         const totalPa = comparisonPool.reduce((total, row) => total + number(row.PA), 0);
         if (!card || !Number.isFinite(value) || !comparisonPool.length || !totalPa) return;
         let badge = card.querySelector('.stat-percentile');
@@ -1353,7 +1353,6 @@
         if(activeRole()!=='pitcher'||!state.current)return;
         const selectedSeason=String($('season')?.value||'');
         const fipRows=fipRowsBySeason[selectedSeason]||[];
-        const allFipRows=Object.values(fipRowsBySeason).flat();
         const record=fipRows.find(row=>key(row.name)===key(state.current.pitcher));
         const labels=document.querySelectorAll('.metric .label'),values=document.querySelectorAll('.metric .value'),hints=document.querySelectorAll('.metric .hint');
         if(labels.length<4||values.length<4)return;
@@ -1364,7 +1363,7 @@
         // Grade the cards by their actual labels: FIP is lower-is-better;
         // Strike%, Whiff%, and K% are higher-is-better.
         const cards=[...document.querySelectorAll('.metric')].slice(0,4),metrics=[
-          {value:record?.fip,pool:allFipRows.map(row=>row.fip),lower:true},
+          {value:record?.fip,pool:fipRows.map(row=>row.fip),lower:true},
           {value:Number(state.current.STR_pct),pool:pitcherRows.map(row=>Number(row.STR_pct)),lower:false},
           {value:Number(state.current.Whiff_pct),pool:pitcherRows.map(row=>Number(row.Whiff_pct)),lower:false},
           {value:Number(state.current.K_pct),pool:pitcherRows.map(row=>Number(row.K_pct)),lower:false}

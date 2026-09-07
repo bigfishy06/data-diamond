@@ -595,9 +595,8 @@
   }).catch(function() {});
   function reportFipData(name, season) {
     var seasonRows=ONU_FIP_BY_SEASON[String(season || '')] || [];
-    var rows=Object.keys(ONU_FIP_BY_SEASON).flatMap(function(year){return ONU_FIP_BY_SEASON[year]||[];});
     var key=opsPlayerKey(name),record=seasonRows.find(function(row){return opsPlayerKey(row.name)===key;})||null;
-    return {record:record,rows:rows};
+    return {record:record,rows:seasonRows};
   }
   function summaryOpsPlusRows() {
     var summaryRows=(typeof DATA!=='undefined' && Array.isArray(DATA.summary)) ? DATA.summary : [];
@@ -630,8 +629,7 @@
     // OPS+ must use the requested season's published ONuBaseball league
     // environment. Do not substitute a prior season or tracked fallback.
     var seasonRows=OPS_PLUS_BY_SEASON[String(season || '')] || [];
-    var rows=Object.keys(OPS_PLUS_BY_SEASON).flatMap(function(year){return OPS_PLUS_BY_SEASON[year]||[];});
-    return {record:seasonRows.find(function(row){return opsPlayerKey(row.name)===opsPlayerKey(name);})||null,rows:rows};
+    return {record:seasonRows.find(function(row){return opsPlayerKey(row.name)===opsPlayerKey(name);})||null,rows:seasonRows};
   }
   function reportOpsPlusPercentile(record, rows) {
     var totalPA=(rows||[]).reduce(function(total,row){return total+row.pa;},0);
