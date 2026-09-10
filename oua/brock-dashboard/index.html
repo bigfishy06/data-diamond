@@ -1343,7 +1343,12 @@
       const season=$('season'),team=$('team'),player=$('player'),rawByRole={pitcher:null,batter:null};
       const role=()=>activeRole(),yearOf=point=>String(point.date||'').slice(0,4);
       function capture(){const active=role(),rows=Array.isArray(state.players)?state.players:[];if(!rawByRole[active]||rows.length>rawByRole[active].length)rawByRole[active]=rows.slice()}
-      function seasonPlayer(record){if(season.value==='all')return record;const scatter=(record.scatter||[]).filter(point=>yearOf(point)===season.value);return Object.assign({},record,{scatter:scatter,total_pitches:scatter.length,pitches_seen:scatter.length})}
+      function seasonPlayer(record){
+        const scatter=(record.scatter||[]).filter(point=>season.value==='all'||yearOf(point)===season.value),rate=(part,total)=>total?part/total*100:null,swings=scatter.filter(point=>swingOutcomes.has(point.outcome)),whiffs=scatter.filter(point=>whiffOutcomes.has(point.outcome)),strikes=scatter.filter(isPitchStrike),pa=scatter.filter(isTerminalPa),abs=scatter.filter(isOfficialAtBat),ks=pa.filter(isStrikeout),walks=pa.filter(isWalk),hits=abs.filter(point=>['Single','Double','Triple','Home Run'].includes(point.outcome)),first=scatter.filter(point=>cleanCount(point)==='0-0'),twoStrike=scatter.filter(point=>cleanCount(point).endsWith('-2')),kRate=rate(ks.length,pa.length),bbRate=rate(walks.length,pa.length);
+        // The source records can contain both seasons. Recalculate every
+        // rate that is driven by pitch tracking from the selected season.
+        return Object.assign({},record,{season:Number(season.value),scatter,total_pitches:scatter.length,pitches_seen:scatter.length,STR_pct:rate(strikes.length,scatter.length),Whiff_pct:rate(whiffs.length,swings.length),K_pct:kRate,BB_pct:bbRate,K_BB:kRate==null||bbRate==null?null:kRate-bbRate,FPS_pct:rate(first.filter(isPitchStrike).length,first.length),Putaway_pct:rate(ks.length,twoStrike.length),BAA:abs.length?hits.length/abs.length:null});
+      }
       function applySeason(){
         capture();const active=role(),raw=rawByRole[active]||[];
         const seasonal=raw.map(seasonPlayer).filter(record=>season.value==='all'||record.scatter.length);
@@ -1352,7 +1357,7 @@
         team.value=teams.includes(priorTeam)?priorTeam:'all';
         const scoped=seasonal.filter(record=>team.value==='all'||record.pitcher_team===team.value),priorPlayer=player.value;
         state.players=scoped;player.innerHTML=scoped.length?'<option value="">Select a player</option>'+scoped.map(record=>`<option value="${record.pitcher}">${record.pitcher} · ${record.pitcher_team||'Team unavailable'}</option>`).join(''):'<option value="">No players in this season</option>';
-        if(scoped.some(record=>record.pitcher===priorPlayer)){player.value=priorPlayer;selectPlayer(priorPlayer)}else window.clearDashboardProfile?.();
+        if(scoped.some(record=>record.pitcher===priorPlayer)){player.value=priorPlayer;selectPlayer(priorPlayer);player.dispatchEvent(new Event('change'))}else window.clearDashboardProfile?.();
         updateResults();
       }
       season.addEventListener('change',applySeason);
