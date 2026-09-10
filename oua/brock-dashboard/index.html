@@ -320,7 +320,7 @@
       const tint=(role,key,value,format)=>{const average=averages[role]?.[key],higherIsBetter=role==='pitcher'?key!=='baa':key==='baa',difference=(value-average)*(higherIsBetter?1:-1),strength=Number.isFinite(difference)?Math.min(Math.abs(difference)/(key==='baa'?.08:12),1):0,target=difference>=0?[22,132,92]:[216,32,50],rgb=target.map(channel=>Math.round(255+(channel-255)*strength));return `<td style="color:rgb(${rgb.join(',')});text-shadow:-.5px -.5px 0 rgba(23,36,50,.5),.5px .5px 0 rgba(23,36,50,.5)">${value==null?'—':format(value)}</td>`};
       function renderQuadrants(){
         const player=state.current,role=activeRole();if(!player){zoneTable.style.display='none';return}zoneTable.style.display='block';
-        const hand=zoneTable.dataset.hand||'all',side=role==='pitcher'?'batter_side':'pitcher_side',located=safePoints(player).filter(point=>point.in_zone&&(hand==='all'||point[side]===hand)),xForPov=point=>role==='pitcher'?-n(point.x):n(point.x),quadrants=[['High left',point=>xForPov(point)<0&&n(point.y)>=.5],['High right',point=>xForPov(point)>=0&&n(point.y)>=.5],['Low left',point=>xForPov(point)<0&&n(point.y)<.5],['Low right',point=>xForPov(point)>=0&&n(point.y)<.5]],headers=role==='pitcher'?['Location','Pitches','Usage%','Strike%','Whiff%','BAA']:['Location','Pitches','Usage%','Swing%','Whiff%','BAA'],handOptions=role==='pitcher'?'<option value="all">All batter handedness</option><option value="R">RHH</option><option value="L">LHH</option>':'<option value="all">All pitcher handedness</option><option value="R">RHP</option><option value="L">LHP</option>';
+        const hand=zoneTable.dataset.hand||'all',side=role==='pitcher'?'batter_side':'pitcher_side',zonePoints=typeof window.zoneDateScopedPoints==='function'?window.zoneDateScopedPoints():safePoints(player),located=zonePoints.filter(point=>point.in_zone&&(hand==='all'||point[side]===hand)),xForPov=point=>role==='pitcher'?-n(point.x):n(point.x),quadrants=[['High left',point=>xForPov(point)<0&&n(point.y)>=.5],['High right',point=>xForPov(point)>=0&&n(point.y)>=.5],['Low left',point=>xForPov(point)<0&&n(point.y)<.5],['Low right',point=>xForPov(point)>=0&&n(point.y)<.5]],headers=role==='pitcher'?['Location','Pitches','Usage%','Strike%','Whiff%','BAA']:['Location','Pitches','Usage%','Swing%','Whiff%','BAA'],handOptions=role==='pitcher'?'<option value="all">All batter handedness</option><option value="R">RHH</option><option value="L">LHH</option>':'<option value="all">All pitcher handedness</option><option value="R">RHP</option><option value="L">LHP</option>';
         const body=quadrants.map(([label,test])=>{const rows=located.filter(test),stats=line(rows),usage=located.length?rows.length/located.length*100:null;return role==='pitcher'?`<tr><td>${label}</td><td>${rows.length}</td><td>${pct(usage)}</td>${tint(role,'strike',stats.strike,pct)}${tint(role,'whiff',stats.whiff,pct)}${tint(role,'baa',stats.baa,dec)}</tr>`:`<tr><td>${label}</td><td>${rows.length}</td><td>${pct(usage)}</td><td>${pct(stats.swing)}</td>${tint(role,'whiff',stats.whiff,pct)}${tint(role,'baa',stats.baa,dec)}</tr>`}).join('');
         tableHost.innerHTML=`<div class="card-head"><h2>Strike-Zone Quadrant Statistics [${role==='pitcher'?'Batter':'Pitcher'} POV]</h2><span>${located.length} selected in-zone pitches</span></div><div class="location-tools zone-quadrant-tools"><label>HANDEDNESS<select id="zoneQuadrantHand">${handOptions}</select></label></div><div class="table-wrap"><table class="stat-table"><thead><tr>${headers.map(header=>`<th>${header}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div>`;
         tableHost.querySelector('#zoneQuadrantHand').value=hand;
@@ -354,7 +354,7 @@
       function populateZonePitchTypes(){const select=$('typeFilter'),current=select.value,detailed=activeRole()==='pitcher'&&String(state.current?.pitcher_team||'').trim().toLowerCase()==='brock badgers',types=detailed?[...new Set(selectedPoints().map(x=>x.pitch_type||'Unclassified'))].sort():['Fastball','Breaking Ball','Offspeed'];select.innerHTML='<option value="all">All pitch types</option>'+types.map(type=>`<option value="${type}">${type}</option>`).join('');select.value=types.includes(current)?current:'all'}
       function configureZoneHandedness(){const batter=activeRole()==='batter',select=$('pitcherHandFilter');select.options[0].textContent=batter?'All pitcher handedness':'All batter handedness';select.options[1].textContent=batter?'RHP':'RHH';select.options[2].textContent=batter?'LHP':'LHH';$('otherPitchLegend').style.display=batter?'none':'';$('resultFilter').style.display='block';if(!['scatter','heat'].includes($('mapMode').value))$('mapMode').value='scatter';$('zoneTitle').textContent='Strike Zone'}
       function configureZonePov(reset=false){const defaultPov=activeRole()==='batter'?'batter':'pitcher',select=$('povFilter');if(reset||!select.dataset.role)select.value=defaultPov;select.dataset.role=defaultPov}
-      updateFilters=function(){let points=selectedPoints(),hand=$('pitcherHandFilter').value,type=$('typeFilter').value,stat=$('resultFilter').value,pov=$('povFilter').value,batter=activeRole()==='batter',detailed=!batter&&String(state.current?.pitcher_team||'').trim().toLowerCase()==='brock badgers';if(hand!=='all')points=points.filter(x=>batter?x.pitcher_side===hand:x.batter_side===hand);if(type!=='all')points=points.filter(x=>(detailed?(x.pitch_type||'Unclassified'):batterPitchBucket(x.pitch_type))===type);points=applyStatistic(points,stat);
+      updateFilters=function(){let points=typeof window.zoneDateScopedPoints==='function'?window.zoneDateScopedPoints():selectedPoints(),hand=$('pitcherHandFilter').value,type=$('typeFilter').value,stat=$('resultFilter').value,pov=$('povFilter').value,batter=activeRole()==='batter',detailed=!batter&&String(state.current?.pitcher_team||'').trim().toLowerCase()==='brock badgers';if(hand!=='all')points=points.filter(x=>batter?x.pitcher_side===hand:x.batter_side===hand);if(type!=='all')points=points.filter(x=>(detailed?(x.pitch_type||'Unclassified'):batterPitchBucket(x.pitch_type))===type);points=applyStatistic(points,stat);
         // Stored locations are batter-facing. Keep them unchanged for Batter POV;
         // mirror their horizontal coordinate only for Pitcher POV, for both roles.
         if(pov==='pitcher')points=points.map(point=>({...point,x:-n(point.x)}));
@@ -873,6 +873,9 @@
   <style>
     #effectivenessDateRange,#tendencyDateRange,#sequencingDateRange{display:flex!important;flex-direction:row!important;align-items:center!important;flex-wrap:nowrap!important;overflow:hidden!important}#effectivenessDateRange>span,#tendencyDateRange>span,#sequencingDateRange>span{flex:0 0 auto;margin:0;line-height:1}#effectivenessDateRange .date-range-sliders,#tendencyDateRange .date-range-sliders,#sequencingDateRange .date-range-sliders{display:flex!important;flex:1 1 auto;align-items:center;flex-wrap:nowrap!important;min-width:0;height:100%}#effectivenessDateRange .date-slider-label,#tendencyDateRange .date-slider-label,#sequencingDateRange .date-slider-label{flex:0 0 auto;line-height:1}#effectivenessDateRange input,#tendencyDateRange input,#sequencingDateRange input{flex:1 1 48px;min-width:48px;max-width:60px}#effectivenessDateRange b,#tendencyDateRange b,#sequencingDateRange b{flex:0 0 60px;line-height:1.2}
   </style>
+  <style>
+    #zone .location-tools{align-items:center;flex-wrap:nowrap;overflow-x:auto}#zoneDateRange{display:flex!important;flex:0 0 410px;width:410px;height:44px;margin:0;padding:6px 9px;gap:7px;box-sizing:border-box;flex-direction:row!important;align-items:center!important;flex-wrap:nowrap!important;overflow:hidden!important}#zoneDateRange>span{flex:0 0 auto;margin:0;line-height:1}#zoneDateRange .date-range-sliders{display:flex!important;flex:1 1 auto;align-items:center;flex-wrap:nowrap!important;min-width:0;height:100%;gap:6px}#zoneDateRange .date-slider-label{flex:0 0 auto;line-height:1;font-size:9px}#zoneDateRange input{flex:1 1 48px;min-width:48px;max-width:60px;width:60px}#zoneDateRange b{flex:0 0 60px;min-width:60px;padding:3px;font-size:9px;line-height:1.2}@media(max-width:760px){#zoneDateRange{flex-basis:410px;width:410px}}
+  </style>
   <script>
     (function(){
       const dateOf=point=>String(point.date||'').trim();
@@ -886,14 +889,17 @@
       const effectivenessGrid=$('effectivenessGrid');$('effectivenessTools').prepend(effectivenessControl);
       const tendencyControl=makeDateControl('tendencyDateRange');
       $('tendency').querySelector('.location-tools').prepend(tendencyControl);
+      const zoneControl=makeDateControl('zoneDateRange');
+      $('zone').querySelector('.location-tools').prepend(zoneControl);
       const sequencingControl=makeDateControl('sequencingDateRange'),sequenceHand=document.createElement('select');
       sequenceHand.id='sequenceHandFilter';sequenceHand.innerHTML='<option value="all">All batter handedness</option><option value="R">RHH</option><option value="L">LHH</option>';
       const sequenceRow=document.createElement('div');sequenceRow.className='sequence-filter-row';sequenceRow.append(sequencingControl,sequenceHand);
       $('pitchSequencingPanel').insertBefore(sequenceRow,$('pitchSequencingPanel').children[1]);
-      const controls=[effectivenessControl,tendencyControl,sequencingControl];
-      function datesForCurrent(){return[...new Set(allPitcherPoints().map(dateOf).filter(Boolean))].sort()}
+      const controls=[effectivenessControl,tendencyControl,sequencingControl,zoneControl];
+      function pointsFor(control){return control===zoneControl?selectedPoints():allPitcherPoints()}
+      function datesForCurrent(control){return[...new Set(pointsFor(control).map(dateOf).filter(Boolean))].sort()}
       function configure(control,reset=false,changedInput=null){
-        const dates=datesForCurrent(),start=control.querySelector('.date-start'),end=control.querySelector('.date-end'),player=$('player').value;
+        const dates=datesForCurrent(control),start=control.querySelector('.date-start'),end=control.querySelector('.date-end'),player=$('player').value;
         if(reset||control.dataset.player!==player){start.min=end.min=0;start.max=end.max=String(Math.max(dates.length-1,0));start.value='0';end.value=String(Math.max(dates.length-1,0));control.dataset.player=player}
         start.max=end.max=String(Math.max(dates.length-1,0));
         if(Number(start.value)>Number(end.value)){if(changedInput===start)end.value=start.value;else if(changedInput===end)start.value=end.value;else end.value=start.value}
@@ -903,8 +909,9 @@
       }
       function scoped(control,hand='all'){
         configure(control);const dates=control._dates||[],start=dates[Number(control.querySelector('.date-start').value)],end=dates[Number(control.querySelector('.date-end').value)];
-        return allPitcherPoints().filter(point=>(!start||dateOf(point)>=start)&&(!end||dateOf(point)<=end)&&(hand==='all'||point.batter_side===hand));
+        return pointsFor(control).filter(point=>(!start||dateOf(point)>=start)&&(!end||dateOf(point)<=end)&&(hand==='all'||point.batter_side===hand));
       }
+      window.zoneDateScopedPoints=()=>scoped(zoneControl);
       function withScopedPoints(points,callback){const player=state.current;if(!player)return;const original=player.scatter;player.scatter=points;try{callback()}finally{player.scatter=original}}
       function renderEffectivenessDate(){
         const pitcher=activeRole()==='pitcher';effectivenessControl.style.display=pitcher?'grid':'none';if(!pitcher)return;
@@ -913,6 +920,11 @@
       function renderTendencyDate(){
         const pitcher=activeRole()==='pitcher';tendencyControl.style.display=pitcher?'grid':'none';if(!pitcher)return;
         withScopedPoints(scoped(tendencyControl),()=>renderTendencies());
+      }
+      function renderZoneDate(){
+        zoneControl.style.display='flex';
+        updateFilters();
+        if(typeof renderQuadrants==='function')renderQuadrants();
       }
       const sequenceMetrics=rows=>{const swings=rows.filter(point=>swingOutcomes.has(point.outcome)),whiffs=rows.filter(point=>whiffOutcomes.has(point.outcome)),located=rows.filter(point=>point.x!==null&&point.x!==undefined&&String(point.x).trim()!==''&&point.y!==null&&point.y!==undefined&&String(point.y).trim()!==''),outside=located.filter(point=>!point.in_zone),chases=outside.filter(point=>swingOutcomes.has(point.outcome)),abs=rows.filter(isOfficialAtBat),hits=abs.filter(point=>['Single','Double','Triple','Home Run'].includes(point.outcome));return{strike:rows.length?rows.filter(isPitchStrike).length/rows.length*100:null,whiff:swings.length?whiffs.length/swings.length*100:null,chase:outside.length?chases.length/outside.length*100:null,baa:abs.length?hits.length/abs.length:null}};
       function renderSequencingDate(){
@@ -926,19 +938,20 @@
         let table=$('pitchSequencingPanel').querySelector('.table-wrap');if(!table){table=document.createElement('div');table.className='table-wrap';$('pitchSequencingPanel').appendChild(table)}
         table.innerHTML=`<table class="stat-table"><thead><tr><th>Rank</th><th>Sequence</th><th>Pitches</th><th>Strike%</th><th>Whiff%</th><th>Chase%</th><th>BAA</th></tr></thead><tbody>${rows.map((row,index)=>`<tr><td><span class="analysis-rank">${index+1}</span></td><td>${row.sequence}</td><td>${row.pitches.length}</td><td>${pct(row.stats.strike)}</td><td>${pct(row.stats.whiff)}</td><td>${pct(row.stats.chase)}</td><td>${row.stats.baa==null?'—':dec(row.stats.baa)}</td></tr>`).join('')||'<tr><td colspan="7">No sequences in this date and handedness range.</td></tr>'}</tbody></table>`;
       }
-      const renderers=new Map([[effectivenessControl,renderEffectivenessDate],[tendencyControl,renderTendencyDate],[sequencingControl,renderSequencingDate]]);
+      const renderers=new Map([[effectivenessControl,renderEffectivenessDate],[tendencyControl,renderTendencyDate],[sequencingControl,renderSequencingDate],[zoneControl,renderZoneDate]]);
       controls.forEach(control=>control.querySelectorAll('input').forEach(input=>{
         const apply=()=>{configure(control,false,input);renderers.get(control)()};
         input.addEventListener('input',apply);
         input.addEventListener('change',apply);
       }));
       sequenceHand.addEventListener('change',renderSequencingDate);
-      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate()},950)));
-      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate()},950)));
+      ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate();renderZoneDate()},950)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate();renderZoneDate()},950)));
       document.querySelector('[data-tab="effectiveness"]').addEventListener('click',()=>setTimeout(renderEffectivenessDate,0));
       document.querySelector('[data-tab="tendency"]').addEventListener('click',()=>setTimeout(renderTendencyDate,0));
       document.querySelector('[data-tab="sequencing"]').addEventListener('click',()=>setTimeout(renderSequencingDate,0));
-      setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate()},5800);
+      document.querySelector('[data-tab="zone"]').addEventListener('click',()=>setTimeout(renderZoneDate,0));
+      setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate();renderZoneDate()},5800);
     })();
   </script>
   <script>
