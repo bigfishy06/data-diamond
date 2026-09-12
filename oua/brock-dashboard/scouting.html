@@ -1208,7 +1208,14 @@ Zane Skansi,Kitchener Panthers`;
       if (!pitcherData) return null;
       var pitcherPoints = (Array.isArray(pitcherData.scatter) ? pitcherData.scatter : []).filter(function(point) { return String(point.date || '').slice(0, 4) === year; });
       if (!pitcherPoints.length) return null;
-      return { team: resolveTeam(pitcherData.pitcher_team || pitcherData.team), player: Object.assign({}, pitcherData, { name: pitcherData.pitcher, season: year, scatter: pitcherPoints }) };
+      // The master file contains multiple calendar years.  Recalculate TTP
+      // from the selected season's tracked pitches instead of retaining the
+      // all-data summary average from the master pitcher record.
+      var seasonTtpRows = pitcherPoints.map(function(point) { return Number(point.time_to_plate); }).filter(function(value) { return isFinite(value) && value > 0; });
+      var seasonTtp = seasonTtpRows.length
+        ? seasonTtpRows.reduce(function(total, value) { return total + value; }, 0) / seasonTtpRows.length
+        : null;
+      return { team: resolveTeam(pitcherData.pitcher_team || pitcherData.team), player: Object.assign({}, pitcherData, { name: pitcherData.pitcher, season: year, scatter: pitcherPoints, avg_ttp: seasonTtp }) };
     }
     var summary = (DATA.summary2026 || []).find(function(row) { return normRosterName(row.batter) === key; }) || null;
     var pitchData = (DATA.pitches2026 || []).find(function(row) { return normRosterName(row.batter) === key; }) || null;
@@ -3000,7 +3007,11 @@ Zane Skansi,Kitchener Panthers`;
     var fpStr=fp.filter(reportIsStrikeOutcome).length;
     var fpsPct = fp.length>=5 ? fpStr/fp.length*100 : (player.fps_pct!=null?player.fps_pct:null);
     var _ttpRows=sc.map(function(p){return Number(p.time_to_plate);}).filter(function(v){return isFinite(v)&&v>0;});
-    var ttp = isHandReport?(_ttpRows.length?_ttpRows.reduce(function(a,b){return a+b;},0)/_ttpRows.length:null):(player.avg_ttp != null ? player.avg_ttp : null);
+    var _scatterTtp=_ttpRows.length?_ttpRows.reduce(function(a,b){return a+b;},0)/_ttpRows.length:null;
+    var _summaryTtp=Number(player.avg_ttp);
+    // Prefer the selected report's pitch-level readings.  The summary average
+    // remains a fallback for legacy reports whose pitch rows predate TTP.
+    var ttp = isHandReport?_scatterTtp:(_scatterTtp!=null?_scatterTtp:(isFinite(_summaryTtp)&&_summaryTtp>0?_summaryTtp:null));
 
     var _pitcherHand = reportSide||getPitcherHand(player.name, sc);
     drawBg(d);drawHdr(d,player.name,'PITCHER',team,_pitcherHand);
