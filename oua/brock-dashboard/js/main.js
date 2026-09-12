@@ -645,9 +645,12 @@ async function loadAll() {
       sumRes, pitRes, pitcherRes, iblRes, pbpBRes, pbpPRes,
       sum26Res, pit26Res, pitcher26Res
     ] = await Promise.all([
-      fetch(base + 'data/summary.json'),
-      fetch(base + 'data/pitches.json'),
-      fetch(base + 'data/pitchers.json'),
+      // The generic files are legacy exports.  Reports and the 2025 selector
+      // must use the season-locked files so no 2026 tracking data can bleed
+      // into a 2025 player report.
+      fetch(base + 'data/summary2025.json'),
+      fetch(base + 'data/pitches2025.json'),
+      fetch(base + 'data/pitchers2025.json'),
       fetch(base + 'data/ibl_history.json'),
       fetch(base + 'data/pbp_batters.json'),
       fetch(base + 'data/pbp_pitchers.json'),
