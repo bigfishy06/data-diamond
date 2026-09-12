@@ -1197,6 +1197,27 @@ Zane Skansi,Kitchener Panthers`;
     return hasAnyBatterStats(merged, ibl, pitch) ? { name: name, season: '2025', summary: merged, pbp: summary || null, ibl: ibl, pitch: pitch } : null;
   }
 
+  // The current master export contains both calendar years. Its filenames
+  // were created during upload and are not a reliable season indicator.
+  // Reports therefore use the master records and the pitch date.
+  function getDateFilteredMasterReportPlayer(name, season, role) {
+    var key = normRosterName(name);
+    var year = String(season || '');
+    if (role === 'pitcher') {
+      var pitcherData = (DATA.pitchers2026 || []).find(function(row) { return normRosterName(row.pitcher) === key; });
+      if (!pitcherData) return null;
+      var pitcherPoints = (Array.isArray(pitcherData.scatter) ? pitcherData.scatter : []).filter(function(point) { return String(point.date || '').slice(0, 4) === year; });
+      if (!pitcherPoints.length) return null;
+      return { team: resolveTeam(pitcherData.pitcher_team || pitcherData.team), player: Object.assign({}, pitcherData, { name: pitcherData.pitcher, season: year, scatter: pitcherPoints }) };
+    }
+    var summary = (DATA.summary2026 || []).find(function(row) { return normRosterName(row.batter) === key; }) || null;
+    var pitchData = (DATA.pitches2026 || []).find(function(row) { return normRosterName(row.batter) === key; }) || null;
+    var points = (pitchData && Array.isArray(pitchData.scatter) ? pitchData.scatter : []).filter(function(point) { return String(point.date || '').slice(0, 4) === year; });
+    if (!points.length) return null;
+    var displayName = (summary && summary.batter) || pitchData.batter || name;
+    return { team: resolveTeam((summary && (summary.batter_team || summary.team)) || pitchData.batter_team || pitchData.team), player: { name: displayName, season: year, summary: summary || { batter: displayName }, pbp: null, ibl: null, pitch: { scatter: points } } };
+  }
+
   function getInactiveReportPlayers2025(teamId, role) {
     return getInferredReportPlayers2025(teamId, role).filter(function(player) {
       return !isOnActiveRoster2025(player.name);
@@ -3619,12 +3640,13 @@ Zane Skansi,Kitchener Panthers`;
     var params = new URLSearchParams(window.location.search);
     if (params.get('generate') !== '1' || !params.get('player')) return true;
     if (typeof DATA === 'undefined' || !DATA.summary || !DATA.summary.length) return false;
-    var team = resolveTeam(params.get('team'));
-    if (!team) return false;
     selSeason = params.get('season') || '2026';
     selType = params.get('type') === 'pitcher' ? 'pitcher' : 'batter';
+    var dateFiltered = getDateFilteredMasterReportPlayer(params.get('player'), selSeason, selType);
+    var team = dateFiltered && dateFiltered.team ? dateFiltered.team : resolveTeam(params.get('team'));
+    if (!team) return false;
     selTeam = team.id;
-    if (typeof swapSeasonData === 'function') swapSeasonData('year:' + selSeason);
+    if (typeof swapSeasonData === 'function') swapSeasonData('year:2026');
     document.getElementById('btn-season-2025').classList.toggle('active', selSeason === '2025');
     document.getElementById('btn-season-2026').classList.toggle('active', selSeason !== '2025');
     document.getElementById('btn-batter').classList.toggle('active', selType === 'batter');
@@ -3633,7 +3655,7 @@ Zane Skansi,Kitchener Panthers`;
       ? getRosterReportPlayers2025(selTeam, selType)
       : (selType === 'pitcher' ? getTeamPitcherReports2026(selTeam) : getTeamBatterReports2026(selTeam));
     var requested = normRosterName(params.get('player'));
-    var player = players.find(function(item){ return normRosterName(item.name) === requested; });
+    var player = dateFiltered ? dateFiltered.player : players.find(function(item){ return normRosterName(item.name) === requested; });
     if (!player && selSeason === '2025') player = getRequestedReportPlayer2025(params.get('player'), selTeam, selType);
     if (!player) return false;
     var requestedHand=params.get('hand');
