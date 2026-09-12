@@ -688,9 +688,9 @@ async function loadAll() {
     // Default players/player cards to 2026. 2025 remains available via season filter.
     swapSeasonData('year:2026');
 
-    console.log('2025 summary:', DATA.summary.length, '| 2026 summary:', DATA.summary2026.length);
-    console.log('2025 pitches:', DATA.pitches.length, '| 2026 pitches:', DATA.pitches2026.length);
-    console.log('2025 pitchers:', DATA.pitchers.length, '| 2026 pitchers:', DATA.pitchers2026.length);
+    console.log('2025 summary:', DATA._summary25.length, '| 2026 summary:', DATA.summary2026.length);
+    console.log('2025 pitches:', DATA._pitches25.length, '| 2026 pitches:', DATA.pitches2026.length);
+    console.log('2025 pitchers:', DATA._pitchers25.length, '| 2026 pitchers:', DATA.pitchers2026.length);
   } catch(e) {
     console.error('loadAll failed:', e.message);
   }

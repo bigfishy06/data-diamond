@@ -1173,6 +1173,30 @@ Zane Skansi,Kitchener Panthers`;
     }).filter(Boolean).sort(function(a, b) { return a.name.localeCompare(b.name); });
   }
 
+  // The dashboard can select a valid 2025 player who is absent from the
+  // historical hand-maintained roster.  Resolve that player directly from the
+  // locked 2025 files rather than rejecting an otherwise valid report request.
+  function getRequestedReportPlayer2025(name, teamId, role) {
+    name = canonicalName(name);
+    if (role === 'pitcher') {
+      var pitcher = makeRosterPitcher2025(name);
+      if (!pitcher) return null;
+      var sourcePitcher = findByName(DATA.pitchers, 'pitcher', name) || {};
+      var pitcherTeam = sourcePitcher.pitcher_team || (pitcher.scatter || []).find(function(point) { return point.pitcher_team; })?.pitcher_team;
+      var resolvedPitcherTeam = resolveTeam(pitcherTeam);
+      return !resolvedPitcherTeam || resolvedPitcherTeam.id === teamId ? pitcher : null;
+    }
+    var summary = findByName(DATA.summary, 'batter', name);
+    var pitch = getPitchPlayerForRoster(name);
+    var sourcePitch = DATA.pitches.find(function(row) { return normRosterName(row.batter) === normRosterName(name); }) || {};
+    var batterTeam = (summary && (summary.batter_team || summary.team)) || sourcePitch.batter_team || sourcePitch.team;
+    var resolvedBatterTeam = resolveTeam(batterTeam);
+    if ((!summary && !pitch) || (resolvedBatterTeam && resolvedBatterTeam.id !== teamId)) return null;
+    var ibl = getIblSeasonByName(name, function(row) { return row.pos !== 'P' && ((row.AB || 0) > 0 || (row.PA || 0) > 0); });
+    var merged = mergeIblKBB(Object.assign({ batter: name }, summary || {}, ibl || {}), ibl);
+    return hasAnyBatterStats(merged, ibl, pitch) ? { name: name, season: '2025', summary: merged, pbp: summary || null, ibl: ibl, pitch: pitch } : null;
+  }
+
   function getInactiveReportPlayers2025(teamId, role) {
     return getInferredReportPlayers2025(teamId, role).filter(function(player) {
       return !isOnActiveRoster2025(player.name);
@@ -3610,6 +3634,7 @@ Zane Skansi,Kitchener Panthers`;
       : (selType === 'pitcher' ? getTeamPitcherReports2026(selTeam) : getTeamBatterReports2026(selTeam));
     var requested = normRosterName(params.get('player'));
     var player = players.find(function(item){ return normRosterName(item.name) === requested; });
+    if (!player && selSeason === '2025') player = getRequestedReportPlayer2025(params.get('player'), selTeam, selType);
     if (!player) return false;
     var requestedHand=params.get('hand');
     if(selType==='pitcher'&&(requestedHand==='R'||requestedHand==='L')){
