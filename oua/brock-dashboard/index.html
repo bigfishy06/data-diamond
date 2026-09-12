@@ -1046,8 +1046,8 @@
         let draft={};try{draft=JSON.parse(localStorage.getItem(draftKey())||'{}')}catch(e){}
         fields.forEach(id=>{if(draft[id]!=null)$(id).value=draft[id]});
       }
-      $('createScoutingReport').addEventListener('click',()=>{const player=state.current;if(!player)return;const button=$('createScoutingReport');button.disabled=true;button.textContent='Generating Report…';$('scoutingReportPlayer').textContent=`Creating ${player.pitcher}'s full-season PDF…`;const params=new URLSearchParams({season:'2026',team:player.pitcher_team||'',type:activeRole(),player:player.pitcher||'',generate:'1',nonce:String(Date.now())});let frame=$('scoutingReportGeneratorFrame');if(!frame){frame=document.createElement('iframe');frame.id='scoutingReportGeneratorFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`});
-      teamReportButton.addEventListener('click',()=>{const player=state.current;if(!player||!player.pitcher_team)return;teamReportButton.disabled=true;teamReportButton.textContent='Generating Team Report…';$('scoutingReportPlayer').textContent=`Creating ${player.pitcher_team} ${activeRole()} team PDF…`;const params=new URLSearchParams({season:'2026',team:player.pitcher_team,type:activeRole(),generateTeam:'1',nonce:String(Date.now())});let frame=$('teamScoutingReportGeneratorFrame');if(!frame){frame=document.createElement('iframe');frame.id='teamScoutingReportGeneratorFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`});
+      $('createScoutingReport').addEventListener('click',()=>{const player=state.current;if(!player)return;const button=$('createScoutingReport');button.disabled=true;button.textContent='Generating Report…';$('scoutingReportPlayer').textContent=`Creating ${player.pitcher}'s full-season PDF…`;const params=new URLSearchParams({season:String($('season')?.value||'2025'),team:player.pitcher_team||'',type:activeRole(),player:player.pitcher||'',generate:'1',nonce:String(Date.now())});let frame=$('scoutingReportGeneratorFrame');if(!frame){frame=document.createElement('iframe');frame.id='scoutingReportGeneratorFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`});
+      teamReportButton.addEventListener('click',()=>{const player=state.current;if(!player||!player.pitcher_team)return;teamReportButton.disabled=true;teamReportButton.textContent='Generating Team Report…';$('scoutingReportPlayer').textContent=`Creating ${player.pitcher_team} ${activeRole()} team PDF…`;const params=new URLSearchParams({season:String($('season')?.value||'2025'),team:player.pitcher_team,type:activeRole(),generateTeam:'1',nonce:String(Date.now())});let frame=$('teamScoutingReportGeneratorFrame');if(!frame){frame=document.createElement('iframe');frame.id='teamScoutingReportGeneratorFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`});
       window.addEventListener('message',event=>{if(event.origin!==window.location.origin||event.data?.type!=='cbl-scouting-generated')return;const button=$('createScoutingReport');button.disabled=false;button.textContent='Generate Full-Season Report';$('scoutingReportPlayer').textContent=event.data.ok?`${event.data.player} report downloaded.`:`Could not generate ${event.data.player}'s report.`});
       window.addEventListener('message',event=>{if(event.origin!==window.location.origin||event.data?.type!=='cbl-team-scouting-generated')return;teamReportButton.disabled=false;teamReportButton.textContent='Generate Team Report';$('scoutingReportPlayer').textContent=event.data.ok?`${event.data.team} ${event.data.role} team report downloaded.`:`Could not generate ${event.data.team} team report.`});
       $('saveScoutingDraft').addEventListener('click',()=>{const draft={};fields.forEach(id=>draft[id]=$(id).value);localStorage.setItem(draftKey(),JSON.stringify(draft));$('scoutingSaveStatus').textContent='Draft saved';setTimeout(()=>$('scoutingSaveStatus').textContent='',1800)});
@@ -1087,7 +1087,7 @@
         const player=state.current,selected=[...picker.querySelectorAll('input:checked')].map(input=>input.value);if(!player||!selected.length)return;
         const runButton=$('runTeamSummaryReport');runButton.disabled=true;runButton.textContent='Generating Summary…';
         $('scoutingReportPlayer').textContent=`Creating ${player.pitcher_team} ${activeRole()} summary PDF…`;
-        const params=new URLSearchParams({season:'2026',team:player.pitcher_team,type:activeRole(),generateTeamSummary:'1',players:JSON.stringify(selected),nonce:String(Date.now())});
+        const params=new URLSearchParams({season:String($('season')?.value||'2025'),team:player.pitcher_team,type:activeRole(),generateTeamSummary:'1',players:JSON.stringify(selected),nonce:String(Date.now())});
         let frame=$('teamScoutingReportSummaryFrame');if(!frame){frame=document.createElement('iframe');frame.id='teamScoutingReportSummaryFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`;
       });
       window.addEventListener('message',event=>{
@@ -1177,7 +1177,7 @@
         ]);
         parkFactors = parks.factors || {};
         seasonRows = (source.tables || [])
-          .filter(table => table.type === 'Batting' && /^\d{4}$/.test(String(table.season || '')))
+          .filter(table => table.type === 'Batting' && String(table.season) === '2025')
           .flatMap(table => (table.rows || []).map(values => {
             const row = Object.fromEntries((table.columns || []).map((column, index) => [column, values[index]]));
             row.season = Number.parseInt(row.Season || table.season, 10);
@@ -1427,7 +1427,7 @@
       document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(applyPitcherFip,180)));
       Promise.all([fetch('data/onu-season-stats.json').then(response=>response.json()),fetch('data/pitchers2026.json').then(response=>response.json())]).then(([source,pitchers])=>{
         pitcherRows=Array.isArray(pitchers)?pitchers:[];
-        fipRowsBySeason=(source.tables||[]).filter(table=>table.type==='Pitching'&&/^\d{4}$/.test(String(table.season||''))).reduce((bySeason,table)=>{
+        fipRowsBySeason=(source.tables||[]).filter(table=>table.type==='Pitching'&&String(table.season)==='2025').reduce((bySeason,table)=>{
           bySeason[String(table.season)]=(table.rows||[]).map(values=>{
             const row=Object.fromEntries((table.columns||[]).map((column,index)=>[column,values[index]]));
             return {name:row.Name,fip:Number.parseFloat(row.FIP)};

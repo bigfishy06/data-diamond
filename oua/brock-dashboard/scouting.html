@@ -558,7 +558,7 @@
     var source=results[0], parks=results[1];
     OPS_PARK_FACTORS=parks.factors||{};
     var rows = (source.tables || []).filter(function(table) {
-      return table.type === 'Batting' && /^\d{4}$/.test(String(table.season || ''));
+      return table.type === 'Batting' && String(table.season) === '2025';
     }).flatMap(function(table) {
       return (table.rows || []).map(function(values) {
         var row = {};
@@ -583,7 +583,7 @@
       OPS_PLUS_BY_SEASON[season] = seasonRows.filter(function(row) { return Number.isFinite(row.value); });
     });
     ONU_FIP_BY_SEASON = (source.tables || []).filter(function(table) {
-      return table.type === 'Pitching' && /^\d{4}$/.test(String(table.season || ''));
+      return table.type === 'Pitching' && String(table.season) === '2025';
     }).reduce(function(bySeason, table) {
       bySeason[String(table.season)] = (table.rows || []).map(function(values) {
         var row = {};
