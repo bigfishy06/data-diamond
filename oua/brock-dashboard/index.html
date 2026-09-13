@@ -876,6 +876,26 @@
   <style>
     #zone .location-tools{align-items:center;flex-wrap:nowrap;overflow-x:auto}#zoneDateRange{display:flex!important;flex:0 0 560px;width:560px;height:44px;margin:0;padding:6px 9px;gap:7px;box-sizing:border-box;flex-direction:row!important;align-items:center!important;flex-wrap:nowrap!important;overflow:hidden!important}#zoneDateRange>span{flex:0 0 auto;margin:0;line-height:1}#zoneDateRange .date-range-sliders{display:flex!important;flex:1 1 auto;align-items:center;flex-wrap:nowrap!important;min-width:0;height:100%;gap:6px}#zoneDateRange .date-slider-label{flex:0 0 auto;line-height:1;font-size:9px}#zoneDateRange input{flex:1 1 112px;min-width:112px;max-width:none;width:auto}#zoneDateRange b{flex:0 0 60px;min-width:60px;padding:3px;font-size:9px;line-height:1.2}@media(max-width:760px){#zoneDateRange{flex-basis:560px;width:560px}}
   </style>
+  <style>
+    /* On phones each date range becomes two full, usable slider rows rather
+       than clipping a desktop-width control inside the filter toolbar. */
+    @media(max-width:760px){
+      #effectivenessTools,#tendency .location-tools,#zone .location-tools{flex-wrap:wrap;overflow-x:visible}
+      #effectivenessDateRange,#tendencyDateRange,#sequencingDateRange,#zoneDateRange{
+        flex:0 0 100%!important;width:100%!important;height:auto!important;
+        overflow:visible!important;align-items:flex-start!important;gap:7px!important
+      }
+      #effectivenessDateRange .date-range-sliders,#tendencyDateRange .date-range-sliders,#sequencingDateRange .date-range-sliders,#zoneDateRange .date-range-sliders{
+        display:grid!important;grid-template-columns:34px minmax(90px,1fr) 72px;
+        grid-template-rows:28px 28px;gap:5px 7px;width:100%;height:auto!important
+      }
+      #effectivenessDateRange .date-slider-label,#tendencyDateRange .date-slider-label,#sequencingDateRange .date-slider-label,#zoneDateRange .date-slider-label{grid-column:1!important}
+      #effectivenessDateRange .date-slider-label:first-child,#tendencyDateRange .date-slider-label:first-child,#sequencingDateRange .date-slider-label:first-child,#zoneDateRange .date-slider-label:first-child,#effectivenessDateRange .date-start,#tendencyDateRange .date-start,#sequencingDateRange .date-start,#zoneDateRange .date-start,#effectivenessDateRange .date-start-label,#tendencyDateRange .date-start-label,#sequencingDateRange .date-start-label,#zoneDateRange .date-start-label{grid-row:1}
+      #effectivenessDateRange .date-slider-label:nth-of-type(2),#tendencyDateRange .date-slider-label:nth-of-type(2),#sequencingDateRange .date-slider-label:nth-of-type(2),#zoneDateRange .date-slider-label:nth-of-type(2),#effectivenessDateRange .date-end,#tendencyDateRange .date-end,#sequencingDateRange .date-end,#zoneDateRange .date-end,#effectivenessDateRange .date-end-label,#tendencyDateRange .date-end-label,#sequencingDateRange .date-end-label,#zoneDateRange .date-end-label{grid-row:2}
+      #effectivenessDateRange input,#tendencyDateRange input,#sequencingDateRange input,#zoneDateRange input{grid-column:2!important;min-width:0!important;width:100%!important;max-width:none!important}
+      #effectivenessDateRange b,#tendencyDateRange b,#sequencingDateRange b,#zoneDateRange b{grid-column:3!important;min-width:0!important;width:72px!important}
+    }
+  </style>
   <script>
     (function(){
       const dateOf=point=>String(point.date||'').trim();
