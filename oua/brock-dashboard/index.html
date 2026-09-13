@@ -994,8 +994,12 @@
     (function(){
       const tools=$('effectivenessTools'),grid=$('effectivenessGrid');
       function placeEffectivenessFilters(){
-        const card=$('effectivenessPitchTypeCard'),head=card?.querySelector('.card-head');
-        if(card&&head&&tools.parentElement!==card)head.after(tools);
+        const card=$('effectivenessPitchTypeCard');
+        // renderEffectiveness replaces the contents of this card. Keeping the
+        // filters inside it unmounts a range input during every drag event,
+        // which makes the thumb lose its active drag. Keep the toolbar as the
+        // card's stable sibling instead.
+        if(card&&tools.parentElement!==grid)grid.insertBefore(tools,card);
       }
       new MutationObserver(placeEffectivenessFilters).observe(grid,{childList:true,subtree:true});
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(placeEffectivenessFilters,300)));
