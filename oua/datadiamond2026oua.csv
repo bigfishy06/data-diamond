@@ -4661,3 +4661,210 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,1,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Max Burroughsford,R,R,Fastball,Strikeout Swinging,,,0,-0.635772963,0.695674261
 7,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Max Burroughsford,R,R,Changeup,Ball,,,0,1.338277228,0.782479766
 7,2,1,0,'1-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Max Burroughsford,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.261522579,0.143275592
+1,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Curveball,Called Strike,,,0,0.181762975,0.277429554
+1,0,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Curveball,Ball,,,0,1.418036832,0.245863916
+1,0,1,1,'1-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Changeup,Swinging Strike,,,0,0.700200399,-0.338100391
+1,0,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Curveball,Ball,,,0,0.600500894,-0.188163609
+1,0,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.316734548,0.648325803
+1,1,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Charlie Hughes,L,R,Fastball,Swinging Strike,,,0,-0.516133557,0.332669421
+1,1,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Charlie Hughes,L,R,Changeup,Swinging Strike,,,0,-1.373549297,0.277429554
+1,1,0,2,'0-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Charlie Hughes,L,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.361222083,0.474714793
+1,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Charlie Hughes,R,R,Curveball,Called Strike,,,0,-0.13727544,0.758805537
+1,2,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Charlie Hughes,R,R,Curveball,Swinging Strike,,,0,0.401101885,1.113918967
+1,2,0,2,'0-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Charlie Hughes,R,R,Curveball,Strikeout Swinging,,,0,1.258517625,-0.274969115
+1,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Fastball,Called Strike,,,0,0.600500894,0.285320964
+1,0,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Breaking Ball,Ball,,,0,1.956414157,-0.093466695
+1,0,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Fastball,Called Strike,,,0,1.198697922,0.277429554
+1,0,1,2,'1-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Breaking Ball,Foul,,,0,0.520741291,0.506280431
+1,0,1,2,'1-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Breaking Ball,Strikeout Swinging,,,0,0.381161984,0.695674261
+1,1,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Kade Falardeau,Daniel Meron,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.7201403,0.695674261
+1,2,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Daniel Meron,R,R,Breaking Ball,Ball,,,0,1.617435841,-0.274969115
+1,2,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Daniel Meron,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.620440795,0.600977346
+2,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Charlie Hughes,L,R,Changeup,Groundout,Ground Ball,Straightaway,0,-0.496193657,0.198515459
+2,1,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Charlie Hughes,R,R,Curveball,Foul,,,0,0.460921588,0.261646735
+2,1,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Charlie Hughes,R,R,Curveball,Ball,,,0,0.460921588,0.940307957
+2,1,1,1,'1-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Charlie Hughes,R,R,Curveball,Called Strike,,,0,0.241582678,0.18273264
+2,1,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Charlie Hughes,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.261522579,0.640434394
+2,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Charlie Hughes,R,R,Curveball,Called Strike,,,0,0.28146248,0.514171841
+2,2,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Charlie Hughes,R,R,Curveball,Groundout,Ground Ball,Pull,0,0.221642777,0.277429554
+2,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Fastball,Ball,,,0,1.617435841,-0.022444009
+2,0,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Fastball,Flyout,Fly Ball,Pull,0,0.261522579,0.214298278
+2,1,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Daniel Meron,L,R,Offspeed,Swinging Strike,,,0,-0.336674449,0.119601363
+2,1,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Daniel Meron,L,R,Offspeed,Ball,,,0,-0.276854746,-0.432797306
+2,1,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Daniel Meron,L,R,Offspeed,Called Strike,,,0,-0.57595326,0.632542984
+2,1,1,2,'1-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Daniel Meron,L,R,Fastball,Ball,,,0,1.757015148,-0.164489381
+2,1,2,2,'2-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Daniel Meron,L,R,Offspeed,Strikeout Swinging,,,0,-0.875051774,0.17484123
+2,2,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Called Strike,,,0,0.740080201,0.222189687
+2,2,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Breaking Ball,Ball,,,0,1.138878219,-0.369666029
+2,2,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Ball,,,0,1.517736337,-0.148706562
+2,2,2,1,'2-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Foul,,,0,0.620440795,0.648325803
+2,2,2,2,'2-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Breaking Ball,Strikeout Looking,,,0,-0.157215341,0.340560831
+3,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Ray Gloria,Charlie Hughes,R,R,Curveball,Called Strike,,,0,0.30140238,0.143275592
+3,0,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Ray Gloria,Charlie Hughes,R,R,Curveball,Swinging Strike,,,0,0.440981687,0.380017878
+3,0,0,2,'0-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Ray Gloria,Charlie Hughes,R,R,Fastball,Ball,,,0,0.680260498,1.121810376
+3,0,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Ray Gloria,Charlie Hughes,R,R,Curveball,Ball,,,0,1.657315643,-0.1802722
+3,0,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Ray Gloria,Charlie Hughes,R,R,Fastball,Foul,,,0,0.401101885,0.829828223
+3,0,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Ray Gloria,Charlie Hughes,R,R,Curveball,Popout,Pop Up,Straightaway,0,0.401101885,0.640434394
+3,1,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Charlie Hughes,R,R,Curveball,Called Strike,,,0,-0.436373954,0.34845224
+3,1,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Charlie Hughes,R,R,Fastball,Ball,,,0,0.620440795,1.23229011
+3,1,1,1,'1-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Charlie Hughes,R,R,Changeup,Swinging Strike,,,0,0.700200399,-0.203946429
+3,1,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Charlie Hughes,R,R,Curveball,Groundout,Ground Ball,Pull,0,0.50080139,0.743022718
+3,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Charlie Hughes,R,R,Changeup,Ball,,,0,1.118938318,-0.1802722
+3,2,1,0,'1-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Charlie Hughes,R,R,Changeup,Called Strike,,,0,-0.376554251,0.600977346
+3,2,1,1,'1-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Charlie Hughes,R,R,Curveball,Ball,,,0,0.28146248,1.082353329
+3,2,2,1,'2-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Charlie Hughes,R,R,Curveball,Ball,,,0,1.457916634,0.837719632
+3,2,3,1,'3-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Charlie Hughes,R,R,Fastball,Walk,,,0,0.50080139,1.090244738
+3,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Fastball,Ball,,,100,0.341282182,0.948199366
+3,2,1,0,'1-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Curveball,Foul,,,100,0.560621092,0.948199366
+3,2,1,1,'1-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Curveball,Called Strike,,,100,0.640380696,0.498389022
+3,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Curveball,Ball,,,100,0.042183668,-0.322317572
+3,2,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Fastball,Ball,,,100,-0.296794647,1.145484605
+3,2,3,2,'3-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Curveball,Walk,,,100,0.859719606,0.672000032
+3,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Charlie Hughes,L,R,Fastball,Flyout,Fly Ball,Straightaway,110,0.421041786,0.593085936
+3,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Nate Parsons,Daniel Meron,L,R,Fastball,Ball,,,0,-0.595893161,-0.338100391
+3,0,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Nate Parsons,Daniel Meron,L,R,Fastball,Foul,,,0,-0.456313855,0.585194527
+3,0,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Nate Parsons,Daniel Meron,L,R,Offspeed,Groundout,Ground Ball,Pull,0,-0.536073458,0.821936813
+3,1,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Fastball,Ball,,,0,0.480861489,1.106027557
+3,1,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Fastball,Lineout,Line Drive,Pull,0,0.381161984,0.190624049
+3,2,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Offspeed,Called Strike,,,0,0.460921588,0.427366336
+3,2,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Offspeed,Foul,,,0,-0.556013359,0.18273264
+3,2,0,2,'0-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Offspeed,Triple,Fly Ball,Pull,0,-0.655712864,0.766696947
+3,2,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Breaking Ball,Ball,,,1,1.298397427,-0.235512067
+3,2,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Fastball,Ball,,,1,1.497796436,0.821936813
+3,2,2,0,'2-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Fastball,Ball,,,1,-0.35661435,-0.132923743
+3,2,3,0,'3-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Breaking Ball,Walk,,,1,0.440981687,-0.219729248
+3,2,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Kade Falardeau,Daniel Meron,R,R,Fastball,Called Strike,,,101,0.28146248,0.640434394
+3,2,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Kade Falardeau,Daniel Meron,R,R,Fastball,Ball,,,101,1.278457526,0.892959499
+3,2,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Kade Falardeau,Daniel Meron,R,R,Breaking Ball,Called Strike,,,11,0.241582678,0.806153994
+3,2,1,2,'1-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Kade Falardeau,Daniel Meron,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,11,0.440981687,0.285320964
+4,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Charlie Hughes,R,R,Curveball,Called Strike,,,0,0.28146248,0.814045404
+4,0,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Charlie Hughes,R,R,Curveball,Foul,,,0,0.421041786,0.143275592
+4,0,0,2,'0-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Charlie Hughes,R,R,Curveball,Ball,,,0,1.238577724,-0.36177462
+4,0,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Charlie Hughes,R,R,Fastball,Single,Line Drive,Opposite Field,0,0.560621092,0.648325803
+4,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Charlie Hughes,L,R,Fastball,Ball,,,100,1.15881812,0.837719632
+4,0,1,0,'1-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Charlie Hughes,L,R,Fastball,Single,Ground Ball,Straightaway,100,-0.496193657,0.198515459
+4,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Charlie Hughes,R,R,Curveball,Sacrifice Bunt,Ground Ball,Pull,110,-0.336674449,0.750914127
+4,1,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Charlie Hughes,R,R,Changeup,Foul,,,11,0.261522579,0.648325803
+4,1,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Charlie Hughes,R,R,Curveball,Ball,,,11,0.321342281,0.940307957
+4,1,1,1,'1-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Charlie Hughes,R,R,Changeup,Ball,,,11,0.221642777,1.121810376
+4,1,2,1,'2-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Charlie Hughes,R,R,Fastball,Swinging Strike,,,11,-0.35661435,0.411583517
+4,1,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Charlie Hughes,R,R,Fastball,Foul,,,11,0.440981687,0.624651575
+4,1,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Charlie Hughes,R,R,Changeup,Single,Ground Ball,Pull,11,0.421041786,0.419474926
+4,1,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Ray Gloria,Charlie Hughes,R,R,Fastball,Sacrifice Fly,Fly Ball,Straightaway,11,0.460921588,0.766696947
+4,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Charlie Hughes,R,R,Fastball,Ball,,,10,-1.21403009,0.758805537
+4,2,1,1,'1-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Charlie Hughes,L,R,Curveball,Called Strike,,,10,0.600500894,0.514171841
+4,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Charlie Hughes,L,R,Fastball,Foul,,,10,0.680260498,0.198515459
+4,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Charlie Hughes,L,R,Changeup,Foul,,,10,0.740080201,-0.17238079
+4,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Charlie Hughes,L,R,Fastball,Ball,,,10,-0.456313855,1.208615881
+4,2,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Charlie Hughes,L,R,Curveball,Strikeout Swinging,,,10,1.59749594,0.056470087
+4,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Daniel Meron,R,R,Breaking Ball,Ball,,,0,1.856714652,0.466823384
+4,0,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Daniel Meron,R,R,Fastball,Error,Ground Ball,Opposite Field,0,0.440981687,0.798262585
+4,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Daniel Meron,R,R,Fastball,Single,Line Drive,Straightaway,100,0.520741291,0.364235059
+4,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Daniel Meron,L,R,Offspeed,Ball,,,110,-1.453308901,1.177050243
+4,0,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Daniel Meron,L,R,Offspeed,Swinging Strike,,,110,0.361222083,0.143275592
+4,0,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Daniel Meron,L,R,Fastball,Single,Ground Ball,Opposite Field,110,0.460921588,0.269538145
+4,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Breaking Ball,Ball,,,111,0.979359012,-0.338100391
+4,0,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Fastball,Called Strike,,,111,1.15881812,0.395800698
+4,0,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Daniel Meron,R,R,Breaking Ball,Flyout,Fly Ball,Opposite Field,111,0.321342281,0.743022718
+4,1,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Nate Parsons,Daniel Meron,L,R,Fastball,Foul,,,101,1.37815703,0.743022718
+4,1,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Nate Parsons,Daniel Meron,L,R,Breaking Ball,Ball,,,101,0.421041786,-0.188163609
+4,1,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Nate Parsons,Daniel Meron,L,R,Fastball,Sacrifice Fly,Fly Ball,Straightaway,11,-0.316734548,0.837719632
+4,2,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Breaking Ball,Called Strike,,,10,0.401101885,1.074461919
+4,2,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Nolan Phelan,Daniel Meron,R,R,Breaking Ball,Flyout,Fly Ball,Straightaway,10,0.181762975,0.34845224
+5,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Charlie Hughes,R,R,Curveball,Called Strike,,,0,0.341282182,0.679891441
+5,0,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Charlie Hughes,R,R,Curveball,Groundout,Ground Ball,Straightaway,0,0.580560993,0.316886602
+5,1,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Charlie Hughes,R,R,Curveball,Groundout,Ground Ball,Pull,0,-0.675652765,0.52206325
+5,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Charlie Hughes,L,R,Curveball,Called Strike,,,0,-0.775352269,0.261646735
+5,2,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Charlie Hughes,L,R,Changeup,Swinging Strike,,,0,-0.57595326,-0.211837838
+5,2,0,2,'0-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Charlie Hughes,L,R,Fastball,Ball,,,0,-0.536073458,1.177050243
+5,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Charlie Hughes,L,R,Changeup,Strikeout Swinging,,,0,-0.316734548,-0.330208981
+5,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Fastball,Ball,,,0,0.30140238,-0.345991801
+5,0,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Fastball,Ball,,,0,0.640380696,-0.401231667
+5,0,2,0,'2-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Breaking Ball,Ball,,,0,0.580560993,0.837719632
+5,0,3,0,'3-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Fastball,Called Strike,,,0,0.381161984,0.443149155
+5,0,3,1,'3-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Daniel Meron,L,R,Fastball,Walk,,,0,0.361222083,-0.093466695
+5,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Breaking Ball,Ball,,,100,0.421041786,1.121810376
+5,0,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Fastball,Called Strike,,,100,0.700200399,0.135384182
+5,0,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Breaking Ball,Ball,,,10,-0.695592666,1.082353329
+5,0,2,1,'2-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Fastball,Ball,,,1,0.620440795,1.121810376
+5,0,3,1,'3-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Gavin Taylor,Daniel Meron,R,R,Fastball,Walk,,,1,0.540681192,1.106027557
+5,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Kade Falardeau,Daniel Meron,R,R,Fastball,Ball,,,101,0.221642777,1.106027557
+5,0,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Kade Falardeau,Daniel Meron,R,R,Fastball,Ball,,,11,0.819839804,-0.227620657
+5,0,2,0,'2-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Kade Falardeau,Daniel Meron,R,R,Breaking Ball,Called Strike,,,11,0.7201403,0.616760165
+5,0,2,1,'2-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Kade Falardeau,Daniel Meron,R,R,Fastball,Single,Ground Ball,Pull,11,0.181762975,0.735131308
+5,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Vinny Bouchard Wright,R,L,Fastball,Ball,,,101,1.098998417,1.208615881
+5,0,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Vinny Bouchard Wright,R,L,Fastball,Ball,,,11,0.879659507,-0.196055019
+5,0,2,0,'2-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Vinny Bouchard Wright,R,L,Fastball,Foul,,,11,1.238577724,0.451040564
+5,0,2,1,'2-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Vinny Bouchard Wright,R,L,Offspeed,Swinging Strike,,,11,1.637375742,0.056470087
+5,0,2,2,'2-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Vinny Bouchard Wright,R,L,Offspeed,Ball,,,11,0.799899904,-0.432797306
+5,0,3,2,'3-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Jaden Leeder,Vinny Bouchard Wright,R,L,Breaking Ball,Strikeout Looking,,,11,0.680260498,0.585194527
+5,1,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Vinny Bouchard Wright,R,L,Fastball,Foul,,,11,0.7201403,0.672000032
+5,1,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Vinny Bouchard Wright,R,L,Offspeed,Ball,,,11,1.936474256,-0.203946429
+5,1,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Flynn Matheson,Vinny Bouchard Wright,R,L,Fastball,Groundout,Ground Ball,Pull,11,0.261522579,0.648325803
+5,2,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Vinny Bouchard Wright,L,L,Breaking Ball,Called Strike,,,110,-0.635772963,0.34845224
+5,2,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Vinny Bouchard Wright,L,L,Breaking Ball,Swinging Strike,,,110,0.520741291,-0.211837838
+5,2,0,2,'0-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Josh Frazer,Vinny Bouchard Wright,L,L,Breaking Ball,Single,Line Drive,Opposite Field,110,-0.436373954,0.206406868
+5,2,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Vinny Bouchard Wright,R,L,Fastball,Called Strike,,,100,0.28146248,0.821936813
+5,2,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Vinny Bouchard Wright,R,L,Fastball,Foul,,,100,0.421041786,0.545737479
+5,2,0,2,'0-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Vinny Bouchard Wright,R,L,Offspeed,Ball,,,100,1.398096931,-0.203946429
+5,2,1,2,'1-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Brady Campbell,Vinny Bouchard Wright,R,L,Fastball,Flyout,Fly Ball,Opposite Field,100,0.440981687,0.672000032
+6,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Jack Tiessen,R,R,Curveball,Ball,,,0,-0.57595326,1.113918967
+6,0,1,0,'1-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Jack Tiessen,R,R,Fastball,Ball,,,0,1.936474256,0.048578677
+6,0,2,0,'2-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Jack Tiessen,R,R,Curveball,Called Strike,,,0,0.460921588,0.892959499
+6,0,2,1,'2-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Jack Tiessen,R,R,Curveball,Foul,,,0,0.201702876,0.869285271
+6,0,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Jack Tiessen,R,R,Changeup,Foul,,,0,0.361222083,0.806153994
+6,0,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Andrew Johnston,Jack Tiessen,R,R,Curveball,Popout,Pop Up,Opposite Field,0,-0.376554251,0.829828223
+6,1,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Sawyer Whitaker,Jack Tiessen,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.396494152,0.214298278
+6,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Curveball,Ball,,,0,0.460921588,-0.401231667
+6,2,1,0,'1-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Curveball,Ball,,,0,0.740080201,-0.322317572
+6,2,2,0,'2-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Called Strike,,,0,0.680260498,0.861393861
+6,2,2,1,'2-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Called Strike,,,0,0.839779705,0.687782851
+6,2,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Ball,,,0,-0.456313855,1.066570509
+6,2,3,2,'3-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Foul,,,0,0.600500894,0.095927134
+6,2,3,2,'3-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Marco Da Gama,Jack Tiessen,R,R,Fastball,Strikeout Looking,,,0,0.680260498,0.908742318
+6,0,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Nate Parsons,Vinny Bouchard Wright,L,L,Breaking Ball,Ball,,,0,1.178758021,0.790371175
+6,0,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Nate Parsons,Vinny Bouchard Wright,L,L,Breaking Ball,Ball,,,0,-1.373549297,0.750914127
+6,0,2,0,'2-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Nate Parsons,Vinny Bouchard Wright,L,L,Fastball,Groundout,Ground Ball,Pull,0,0.261522579,0.814045404
+6,1,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Liam Riley,Vinny Bouchard Wright,R,L,Fastball,Foul,,,0,0.401101885,0.435257745
+6,1,0,1,'0-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Liam Riley,Vinny Bouchard Wright,R,L,Fastball,Ball,,,0,-0.236974945,-0.219729248
+6,1,1,1,'1-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Liam Riley,Vinny Bouchard Wright,R,L,Fastball,Ball,,,0,1.37815703,0.308995192
+6,1,2,1,'2-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Liam Riley,Vinny Bouchard Wright,R,L,Fastball,Called Strike,,,0,0.740080201,0.806153994
+6,1,2,2,'2-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Liam Riley,Vinny Bouchard Wright,R,L,Fastball,Foul,,,0,-0.496193657,0.332669421
+6,1,2,2,'2-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Liam Riley,Vinny Bouchard Wright,R,L,Fastball,Foul,,,0,0.08206347,0.119601363
+6,1,2,2,'2-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Liam Riley,Vinny Bouchard Wright,R,L,Fastball,Ball,,,0,1.437976733,-0.077683876
+6,1,3,2,'3-2,2026-09-13,Brock Badgers,Guelph Gryphons,,Liam Riley,Vinny Bouchard Wright,R,L,Fastball,Groundout,Ground Ball,Straightaway,0,0.620440795,0.593085936
+6,2,0,0,'0-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Harrison Young,L,L,Fastball,Ball,,,0,-0.79529217,-0.188163609
+6,2,1,0,'1-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Harrison Young,L,L,Fastball,Ball,,,0,0.600500894,-0.274969115
+6,2,2,0,'2-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Harrison Young,L,L,Fastball,Ball,,,0,-0.934871477,-0.298643343
+6,2,3,0,'3-0,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Harrison Young,L,L,Fastball,Called Strike,,,0,-0.556013359,0.727239899
+6,2,3,1,'3-1,2026-09-13,Brock Badgers,Guelph Gryphons,,Adam Geddes,Harrison Young,L,L,Fastball,Groundout,Ground Ball,Pull,0,0.361222083,0.285320964
+7,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Fastball,Called Strike,,,0,0.341282182,0.758805537
+7,0,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Changeup,Ball,,,0,-0.875051774,1.121810376
+7,0,1,1,'1-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Fastball,Ball,,,0,-0.456313855,1.098136148
+7,0,2,1,'2-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Fastball,Foul,,,0,0.221642777,0.088035725
+7,0,2,2,'2-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Brendan Cooper,Jack Tiessen,R,R,Fastball,Hit By Pitch,,,0,-1.572948306,1.003439233
+7,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Fastball,Ball,,,100,-0.296794647,-0.330208981
+7,0,1,0,'1-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Fastball,Ball,,,100,1.198697922,-0.401231667
+7,0,2,0,'2-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Fastball,Swinging Strike,,,100,0.421041786,-0.1802722
+7,0,2,1,'2-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Jack Gillis,Jack Tiessen,L,R,Fastball,Double,Fly Ball,Straightaway,100,-0.396494152,0.845611042
+7,0,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Swinging Strike,,,11,0.50080139,0.269538145
+7,0,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Called Strike,,,11,0.680260498,0.395800698
+7,0,0,2,'0-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Ball,,,11,1.298397427,0.214298278
+7,0,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Noah Chang,Jack Tiessen,R,R,Fastball,Groundout,Ground Ball,Straightaway,11,0.401101885,0.656217213
+7,1,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Ball,,,1,1.697195445,-0.1802722
+7,1,1,0,'1-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Ball,,,1,0.50080139,0.956090776
+7,1,2,0,'2-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Foul,,,1,0.859719606,0.845611042
+7,1,2,1,'2-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Ball,,,1,0.660320597,-0.36177462
+7,1,3,1,'3-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Jaylen Wood,Jack Tiessen,R,R,Fastball,Walk,,,1,-1.134270486,1.169158834
+7,1,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Evan Ogston,Max Van Dam,R,L,Fastball,Groundout,Ground Ball,Pull,101,0.540681192,0.672000032
+7,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Max Van Dam,L,L,Fastball,Ball,,,11,1.418036832,-0.235512067
+7,2,1,0,'1-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Max Van Dam,L,L,Fastball,Ball,,,11,-0.476253756,-0.259186295
+7,2,2,0,'2-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Max Van Dam,L,L,Fastball,Foul,,,11,0.460921588,0.593085936
+7,2,2,1,'2-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Max Van Dam,L,L,Fastball,Ball,,,11,-0.755412369,0.372126469
+7,2,3,1,'3-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Nolan Scicluna,Max Van Dam,L,L,Fastball,Walk,,,11,1.318337327,0.814045404
+7,2,0,0,'0-0,2026-09-13,Guelph Gryphons,Brock Badgers,,Adrian Crewe,Max Van Dam,L,L,Fastball,Foul,,,111,0.50080139,0.364235059
+7,2,0,1,'0-1,2026-09-13,Guelph Gryphons,Brock Badgers,,Adrian Crewe,Max Van Dam,L,L,Fastball,Called Strike,,,111,-0.556013359,0.845611042
+7,2,0,2,'0-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Adrian Crewe,Max Van Dam,L,L,Slider,Ball,,,111,-0.35661435,-0.511711401
+7,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Adrian Crewe,Max Van Dam,L,L,Fastball,Foul,,,111,0.421041786,0.679891441
+7,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Adrian Crewe,Max Van Dam,L,L,Slider,Foul,,,111,-0.396494152,-0.117140923
+7,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Adrian Crewe,Max Van Dam,L,L,Fastball,Groundout,Ground Ball,Straightaway,111,0.28146248,0.837719632
