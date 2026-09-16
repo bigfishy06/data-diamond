@@ -23,10 +23,10 @@ from selenium.webdriver.chrome.service import Service
 SITE = "https://onubaseball.com/"
 SEASONS = ["2020", "2021", "2021 Postseason", "2022", "2022 Postseason",
            "2023", "2023 Postseason", "2024", "2024 Postseason",
-           "2024 National Championship", "2025"]
+           "2024 National Championship", "2025", "2026"]
 STAT_TYPES = ("Batting", "Pitching")
 CHROME = Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe")
-DRIVER = Path(r"C:\Users\chris\Documents\Codex\tools\chromedriver\chromedriver-win64\chromedriver.exe")
+DRIVER = Path(r"C:\Users\chris\Documents\Codex\tools\chromedriver-152\chromedriver-win64\chromedriver.exe")
 OUTPUT = Path(__file__).resolve().parents[1] / "brock-dashboard" / "data" / "onu-season-stats.json"
 
 
@@ -38,6 +38,9 @@ def browser() -> webdriver.Chrome:
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
     options.set_capability("goog:loggingPrefs", {"performance": "ALL"})
+    # This PC runs ARM Python, which Selenium Manager cannot currently use to
+    # resolve a Windows ChromeDriver. Keep this path on the current Chrome
+    # release and update it when Chrome changes.
     return webdriver.Chrome(service=Service(str(DRIVER)), options=options)
 
 

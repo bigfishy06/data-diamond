@@ -1221,7 +1221,7 @@
         ]);
         parkFactors = parks.factors || {};
         seasonRows = (source.tables || [])
-          .filter(table => table.type === 'Batting' && String(table.season) === '2025')
+          .filter(table => table.type === 'Batting' && /^20\d{2}$/.test(String(table.season)))
           .flatMap(table => (table.rows || []).map(values => {
             const row = Object.fromEntries((table.columns || []).map((column, index) => [column, values[index]]));
             row.season = Number.parseInt(row.Season || table.season, 10);
@@ -1243,6 +1243,8 @@
       };
       const parkFactorFor = row => {
         // 2025 is the published score season used as the current OUA park baseline.
+        // Other ONuBaseball seasons remain neutral until their own score-based
+        // park factors are published.
         if (Number(row && row.season) !== 2025) return 1;
         const team = row && parkTeam(row.Team);
         const factor = team && parkFactors[team] ? Number(parkFactors[team].factor) : 1;
@@ -1471,7 +1473,7 @@
       document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(applyPitcherFip,180)));
       Promise.all([fetch('data/onu-season-stats.json').then(response=>response.json()),fetch('data/pitchers2026.json').then(response=>response.json())]).then(([source,pitchers])=>{
         pitcherRows=Array.isArray(pitchers)?pitchers:[];
-        fipRowsBySeason=(source.tables||[]).filter(table=>table.type==='Pitching'&&String(table.season)==='2025').reduce((bySeason,table)=>{
+        fipRowsBySeason=(source.tables||[]).filter(table=>table.type==='Pitching'&&/^20\d{2}$/.test(String(table.season))).reduce((bySeason,table)=>{
           bySeason[String(table.season)]=(table.rows||[]).map(values=>{
             const row=Object.fromEntries((table.columns||[]).map((column,index)=>[column,values[index]]));
             return {name:row.Name,fip:Number.parseFloat(row.FIP)};
