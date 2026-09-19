@@ -4868,3 +4868,70 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Adrian Crewe,Max Van Dam,L,L,Fastball,Foul,,,111,0.421041786,0.679891441
 7,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Adrian Crewe,Max Van Dam,L,L,Slider,Foul,,,111,-0.396494152,-0.117140923
 7,2,1,2,'1-2,2026-09-13,Guelph Gryphons,Brock Badgers,,Adrian Crewe,Max Van Dam,L,L,Fastball,Groundout,Ground Ball,Straightaway,111,0.28146248,0.837719632
+1,0,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Jack Cohen,R,R,Fastball,Ball,,,111,-0.536073458,-0.424905896
+1,0,1,0,'1-0,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Jack Cohen,R,R,Fastball,Foul,,,,0.440981687,0.245863916
+1,0,1,1,'1-1,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Jack Cohen,R,R,Fastball,Ball,,,,1.697195445,-0.203946429
+1,0,2,1,'2-1,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Jack Cohen,R,R,Fastball,Called Strike,,,,-0.416434053,0.088035725
+1,0,2,2,'2-2,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Jack Cohen,R,R,Fastball,Foul,,,,0.600500894,-0.1802722
+1,0,2,2,'2-2,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Jack Cohen,R,R,Slider,Ball,,,,1.298397427,-0.298643343
+1,0,3,2,'3-2,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Jack Cohen,R,R,Fastball,Foul,,,,0.879659507,-0.077683876
+1,0,3,2,'3-2,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Jack Cohen,R,R,Fastball,Error,Fly Ball,Opposite Field,,0.421041786,0.624651575
+1,0,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Jack Cohen,L,R,Fastball,Ball,,,,1.238577724,0.324778012
+1,0,1,0,'1-0,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Jack Cohen,L,R,Fastball,Foul,,,,-0.376554251,0.222189687
+1,0,1,1,'1-1,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Jack Cohen,L,R,Fastball,Ball,,,,-1.712527613,0.230081097
+1,0,2,1,'2-1,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Jack Cohen,L,R,Fastball,Swinging Strike,,,,-0.695592666,0.616760165
+1,0,2,2,'2-2,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Jack Cohen,L,R,Slider,Strikeout Swinging,,,,-0.556013359,-0.251294886
+1,1,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Brayden Sowrey,Jack Cohen,R,R,Slider,Swinging Strike,,,,1.238577724,-0.132923743
+1,1,0,1,'0-1,2026-09-16,Brock Badgers,Brock Badgers,,Brayden Sowrey,Jack Cohen,R,R,Fastball,Ball,,,,-1.493188703,0.829828223
+1,1,1,1,'1-1,2026-09-16,Brock Badgers,Brock Badgers,,Brayden Sowrey,Jack Cohen,R,R,Fastball,Ball,,,,1.019238814,-0.345991801
+1,1,2,1,'2-1,2026-09-16,Brock Badgers,Brock Badgers,,Brayden Sowrey,Jack Cohen,R,R,Fastball,Ball,,,,1.318337327,0.774588356
+1,1,3,1,'3-1,2026-09-16,Brock Badgers,Brock Badgers,,Brayden Sowrey,Jack Cohen,R,R,Fastball,Foul,,,,-0.037575935,0.214298278
+1,1,3,2,'3-2,2026-09-16,Brock Badgers,Brock Badgers,,Brayden Sowrey,Jack Cohen,R,R,Fastball,Flyout,Fly Ball,Opposite Field,,-0.336674449,0.695674261
+1,2,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Jack Cohen,R,R,Fastball,Called Strike,,,,-0.536073458,0.735131308
+1,2,0,1,'0-1,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Jack Cohen,R,R,Fastball,Groundout,Ground Ball,Straightaway,,-0.615833062,0.190624049
+1,0,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Tim Somerville,Nolan McFarlane,R,R,Fastball,Ball,,,,,
+1,0,1,0,'1-0,2026-09-16,Brock Badgers,Brock Badgers,,Tim Somerville,Nolan McFarlane,R,R,Changeup,Ball,,,,-1.692587712,-0.093466695
+1,0,2,0,'2-0,2026-09-16,Brock Badgers,Brock Badgers,,Tim Somerville,Nolan McFarlane,R,R,Slider,Groundout,Ground Ball,Straightaway,,0.560621092,0.18273264
+1,1,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Nolan McFarlane,L,R,Changeup,Called Strike,,,,-0.695592666,0.569411708
+1,1,0,1,'0-1,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Nolan McFarlane,L,R,Changeup,Ball,,,,-1.373549297,0.032795858
+1,1,1,1,'1-1,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Nolan McFarlane,L,R,Fastball,Swinging Strike,,,,-0.595893161,0.758805537
+1,1,1,2,'1-2,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Nolan McFarlane,L,R,Changeup,Ball,,,,0.760020102,-0.290751934
+1,1,2,2,'2-2,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Nolan McFarlane,L,R,Fastball,Ball,,,,0.381161984,-0.35388321
+1,1,3,2,'3-2,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Nolan McFarlane,L,R,Fastball,Foul,,,,0.28146248,0.545737479
+1,1,3,2,'3-2,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Nolan McFarlane,L,R,Fastball,Foul,,,,0.201702876,0.269538145
+1,1,3,2,'3-2,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Nolan McFarlane,L,R,Changeup,Strikeout Swinging,,,,0.740080201,0.332669421
+1,2,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Nolan McFarlane,R,R,Slider,Called Strike,,,,0.022243767,0.798262585
+1,2,0,1,'0-1,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Nolan McFarlane,R,R,Slider,Groundout,Ground Ball,Straightaway,,-0.396494152,0.166949821
+2,0,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Nolan McFarlane,R,R,Fastball,Single,Ground Ball,Pull,,0.321342281,0.056470087
+2,0,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Jack Cohen,Nolan McFarlane,R,R,Fastball,Foul,,,,-0.35661435,0.616760165
+2,0,0,1,'0-1,2026-09-16,Brock Badgers,Brock Badgers,,Jack Cohen,Nolan McFarlane,R,R,Slider,Home Run,Fly Ball,Pull,,-0.35661435,0.774588356
+2,0,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Ryan Atkinson,R,R,Curveball,Called Strike,,,,0.440981687,0.190624049
+2,0,0,1,'0-1,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Ryan Atkinson,R,R,Curveball,Swinging Strike,,,,0.421041786,-0.235512067
+2,0,0,2,'0-2,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Ryan Atkinson,R,R,Curveball,Foul,,,,-0.755412369,0.380017878
+2,0,0,2,'0-2,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Ryan Atkinson,R,R,Fastball,Ball,,,,-0.516133557,1.161267424
+2,0,1,2,'1-2,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Ryan Atkinson,R,R,Curveball,Foul,,,,-0.496193657,0.569411708
+2,0,1,2,'1-2,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Ryan Atkinson,R,R,Curveball,Strikeout Looking,,,,-0.835171972,0.616760165
+2,1,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Ryan Atkinson,R,R,Splitter,Ball,,,,1.437976733,0.71145708
+2,1,1,0,'1-0,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Ryan Atkinson,R,R,Curveball,Ball,,,,0.460921588,1.137593195
+2,1,2,0,'2-0,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Ryan Atkinson,R,R,Fastball,Foul,,,,0.50080139,0.301103783
+2,1,2,1,'2-1,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Ryan Atkinson,R,R,Curveball,Called Strike,,,,-0.695592666,0.892959499
+2,1,2,2,'2-2,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Ryan Atkinson,R,R,Curveball,Groundout,Ground Ball,Straightaway,,0.620440795,0.506280431
+2,2,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Ryan Atkinson,L,R,Fastball,Ball,,,,-0.755412369,1.066570509
+2,2,1,0,'1-0,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Ryan Atkinson,L,R,Fastball,Ball,,,,-0.735472468,1.137593195
+2,2,2,0,'2-0,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Ryan Atkinson,L,R,Curveball,Called Strike,,,,1.358217129,0.301103783
+2,2,2,1,'2-1,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Ryan Atkinson,L,R,Splitter,Foul,,,,0.28146248,0.088035725
+2,2,2,2,'2-2,2026-09-16,Brock Badgers,Brock Badgers,,Colin Mockford,Ryan Atkinson,L,R,Fastball,Groundout,Ground Ball,Straightaway,,-0.536073458,0.17484123
+2,0,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Tim Somerville,Maverick Lawrence,R,R,Fastball,Ball,,,,-1.393489198,0.979765004
+2,0,1,0,'1-0,2026-09-16,Brock Badgers,Brock Badgers,,Tim Somerville,Maverick Lawrence,R,R,Fastball,Foul,,,,-1.313729594,0.687782851
+2,0,1,1,'1-1,2026-09-16,Brock Badgers,Brock Badgers,,Tim Somerville,Maverick Lawrence,R,R,Slider,Swinging Strike,,,,0.760020102,-0.338100391
+2,0,1,2,'1-2,2026-09-16,Brock Badgers,Brock Badgers,,Tim Somerville,Maverick Lawrence,R,R,Slider,Single,Ground Ball,Pull,,-0.256914845,0.261646735
+2,0,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Josh Frazer,Maverick Lawrence,L,R,Fastball,Ball,,,,0.08206347,1.082353329
+2,0,1,0,'1-0,2026-09-16,Brock Badgers,Brock Badgers,,Josh Frazer,Maverick Lawrence,L,R,Changeup,Foul,,,,0.161823074,0.214298278
+2,0,1,1,'1-1,2026-09-16,Brock Badgers,Brock Badgers,,Josh Frazer,Maverick Lawrence,L,R,Changeup,Called Strike,,,,-0.99469118,-0.243403476
+2,0,1,2,'1-2,2026-09-16,Brock Badgers,Brock Badgers,,Josh Frazer,Maverick Lawrence,L,R,Fastball,Ball,,,,0.959419111,1.24018152
+2,0,2,2,'2-2,2026-09-16,Brock Badgers,Brock Badgers,,Josh Frazer,Maverick Lawrence,L,R,Slider,Groundout,Ground Ball,Straightaway,,-1.413429099,0.159058411
+2,1,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Maverick Lawrence,R,R,Fastball,Ball,,,,0.620440795,1.042896281
+2,1,1,0,'1-0,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Maverick Lawrence,R,R,Changeup,Swinging Strike,,,,-0.635772963,-0.132923743
+2,1,1,1,'1-1,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Maverick Lawrence,R,R,Fastball,Called Strike,,,,1.278457526,0.214298278
+2,1,1,2,'1-2,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Maverick Lawrence,R,R,Changeup,Strikeout Swinging,,,,-0.217035044,-0.290751934
+2,2,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Maverick Lawrence,R,R,Fastball,Single,Line Drive,Straightaway,,0.221642777,0.316886602
