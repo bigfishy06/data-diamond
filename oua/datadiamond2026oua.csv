@@ -4935,3 +4935,519 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 2,1,1,1,'1-1,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Maverick Lawrence,R,R,Fastball,Called Strike,,,,1.278457526,0.214298278
 2,1,1,2,'1-2,2026-09-16,Brock Badgers,Brock Badgers,,Liam Riley,Maverick Lawrence,R,R,Changeup,Strikeout Swinging,,,,-0.217035044,-0.290751934
 2,2,0,0,'0-0,2026-09-16,Brock Badgers,Brock Badgers,,Avery Brooks,Maverick Lawrence,R,R,Fastball,Single,Line Drive,Straightaway,,0.221642777,0.316886602
+1,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Leo LeClair,R,R,Fastball,Called Strike,,,0,-0.444738257,0.888555679
+1,0,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Leo LeClair,R,R,Breaking Ball,Ball,,,0,0.86636624,-0.345755354
+1,0,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Leo LeClair,R,R,Breaking Ball,Ball,,,0,-1.259212262,1.140134998
+1,0,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Leo LeClair,R,R,Fastball,Popout,Pop Up,Straightaway,0,-0.385142598,0.322502212
+1,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Called Strike,,,0,0.151218333,0.676285629
+1,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Foul,,,0,0.349870529,0.259607382
+1,1,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Foul,,,0,0.449196627,1.140134998
+1,1,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Breaking Ball,Ball,,,0,0.647848824,0.102370308
+1,1,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Ball,,,0,0.588253165,1.163720559
+1,1,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Groundout,Ground Ball,Pull,0,-0.345412159,0.204574406
+1,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Fastball,Ball,,,0,-1.457864459,-0.18851828
+1,2,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Fastball,Called Strike,,,0,0.767040142,0.42470631
+1,2,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Breaking Ball,Foul,,,0,0.488927067,-0.133485304
+1,2,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Fastball,Foul,,,0,0.747174922,0.841384557
+1,2,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Breaking Ball,Ball,,,0,1.44245761,-0.243551256
+1,2,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Breaking Ball,Ball,,,0,1.482188049,-0.345755354
+1,2,3,2,'3-2,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Fastball,Walk,,,0,-0.941368748,1.163720559
+1,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,0.95,Josh Frazer,Leo LeClair,L,R,Fastball,Ball,,,100,-1.259212262,0.408982603
+1,2,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Offspeed,Ball,,,100,-1.517460118,1.085102022
+1,2,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Fastball,Ball,,,100,-1.636651436,0.841384557
+1,2,3,0,'3-0,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Fastball,Single,Line Drive,Straightaway,100,-0.146759962,0.188850699
+1,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Leo LeClair,R,R,Fastball,Double,Fly Ball,Opposite Field,110,0.548522726,0.770627873
+1,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Breaking Ball,Called Strike,,,10,0.369735749,0.173126991
+1,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Fastball,Swinging Strike,,,10,0.330005309,0.63697636
+1,2,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Fastball,Foul,,,10,-0.464603476,0.408982603
+1,2,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Breaking Ball,Single,Ground Ball,Straightaway,10,0.627983604,0.558357823
+1,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Leo LeClair,R,R,Fastball,Foul,,,100,0.330005309,0.864970118
+1,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Leo LeClair,R,R,Fastball,Called Strike,,,100,-0.325546939,0.84924641
+1,2,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Leo LeClair,R,R,Breaking Ball,Strikeout Swinging,,,100,0.568387945,0.125955869
+1,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Jack Cohen,L,R,Fastball,Ball,,,0,1.303401072,-0.196380133
+1,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Jack Cohen,L,R,Fastball,Ball,,,0,-0.24608606,1.163720559
+1,0,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Jack Cohen,L,R,Fastball,Ball,,,0,1.303401072,0.69987119
+1,0,3,0,'3-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Jack Cohen,L,R,Fastball,Walk,,,0,-1.457864459,0.857108264
+1,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Jack Cohen,R,R,Fastball,Ball,,,100,0.747174922,0.251745528
+1,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,,,,,,Caught Stealing,,,,,
+1,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Jack Cohen,R,R,Slider,Called Strike,,,0,-0.742716552,0.684147483
+1,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Jack Cohen,R,R,Slider,Swinging Strike,,,0,0.84650102,-0.109899742
+1,1,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Jack Cohen,R,R,Slider,Single,Fly Ball,Straightaway,0,-0.484468696,-0.133485304
+1,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Jack Cohen,R,R,Changeup,Ball,,,100,-1.318807921,-0.345755354
+1,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Jack Cohen,R,R,Fastball,Ball,,,100,0.747174922,0.629114507
+1,1,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Jack Cohen,R,R,Fastball,Ball,,,100,0.588253165,-0.558025404
+1,1,3,0,'3-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Jack Cohen,R,R,Fastball,Walk,,,100,-1.775707973,0.982897924
+1,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Jack Cohen,R,R,Slider,Called Strike,,,110,-0.126894742,0.157403284
+1,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Jack Cohen,R,R,Fastball,Foul,,,110,0.608118385,0.338225919
+1,1,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Jack Cohen,R,R,Slider,Single,Line Drive,Opposite Field,110,-0.24608606,0.519048555
+1,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Jack Cohen,L,R,Fastball,Ball,,,101,0.548522726,-0.385064622
+1,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Jack Cohen,L,R,Changeup,Ball,,,101,-1.616786216,0.951450509
+1,1,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Jack Cohen,L,R,Fastball,Ball,,,101,-1.418134019,-0.015557498
+1,1,3,0,'3-0,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Jack Cohen,L,R,Fastball,Walk,,,101,-0.921503528,-0.196380133
+1,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Jack Cohen,L,R,Changeup,Ball,,,111,-1.755842753,0.864970118
+1,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Jack Cohen,L,R,Fastball,Swinging Strike,,,111,-0.623525234,0.534772262
+1,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Jack Cohen,L,R,Fastball,Called Strike,,,111,0.409466188,0.825660849
+1,1,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Jack Cohen,L,R,Fastball,Sacrifice Fly,Fly Ball,Pull,111,-0.524199135,0.165265138
+1,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Jack Cohen,R,R,Slider,Groundout,Ground Ball,Straightaway,101,SKIP,
+2,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Jack Shannon,Leo LeClair,R,R,Fastball,Popout,Pop Up,Straightaway,0,-0.325546939,0.857108264
+2,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Leo LeClair,L,R,Fastball,Foul,,,0,-0.087164303,0.416844456
+2,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Leo LeClair,L,R,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.603660014,0.660561921
+2,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Leo LeClair,R,R,Fastball,Swinging Strike,,,0,-0.563929575,0.880693825
+2,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Leo LeClair,R,R,Breaking Ball,Ball,,,0,0.29027487,1.092963875
+2,2,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Leo LeClair,R,R,Breaking Ball,Called Strike,,,0,0.568387945,0.243883675
+2,2,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Leo LeClair,R,R,Fastball,Strikeout Swinging,,,0,0.548522726,0.48760114
+2,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Jack Cohen,L,R,Fastball,Ball,,,0,-1.457864459,0.864970118
+2,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Jack Cohen,L,R,Fastball,Called Strike,,,0,0.707444483,0.346087773
+2,0,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Jack Cohen,L,R,Fastball,Swinging Strike,,,0,-0.524199135,0.621252653
+2,0,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Jack Cohen,L,R,Fastball,Ball,,,0,-0.325546939,-0.306446085
+2,0,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Jack Cohen,L,R,Fastball,Ball,,,0,-1.477729678,0.69987119
+2,0,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Jack Cohen,L,R,Fastball,Walk,,,0,0.667714043,-0.243551256
+2,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Alex Brown,Jack Cohen,L,R,Fastball,Ball,,,100,2.038414199,0.220298114
+2,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Alex Brown,Jack Cohen,L,R,Changeup,Ball,,,100,-1.497594898,0.353949627
+2,0,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Alex Brown,Jack Cohen,L,R,Fastball,Ball,,,100,-1.855168852,0.770627873
+2,0,3,0,'3-0,2026-09-19,Western Mustangs,Brock Badgers,,Alex Brown,Jack Cohen,L,R,Fastball,Walk,,,100,0.84650102,-0.463683159
+2,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Nolan McFarlane,L,R,Fastball,Ball,,,110,0.528657506,-0.212103841
+2,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Nolan McFarlane,L,R,Slider,Single,Ground Ball,Opposite Field,110,-0.464603476,0.283192943
+2,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Nolan McFarlane,R,R,Fastball,Ball,,,101,0.906096679,0.432568164
+2,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Nolan McFarlane,R,R,Fastball,Sacrifice Fly,Fly Ball,Pull,101,0.429331408,0.157403284
+2,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Nolan McFarlane,L,R,Slider,Foul,,,1,0.250544431,0.534772262
+2,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Nolan McFarlane,L,R,Changeup,Foul,,,1,-0.742716552,0.110232162
+2,1,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Nolan McFarlane,L,R,Changeup,Error,Ground Ball,Pull,1,-0.683120893,0.220298114
+2,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Nolan McFarlane,L,R,Fastball,Single,Ground Ball,Opposite Field,100,-0.24608606,0.794213435
+2,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Nolan McFarlane,L,R,Changeup,Groundout,Ground Ball,Opposite Field,110,-0.484468696,0.267469236
+2,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Nolan McFarlane,L,R,Changeup,Foul,,,101,-0.663255673,0.0866466
+2,2,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Nolan McFarlane,L,R,Changeup,Swinging Strike,,,101,-0.484468696,-0.424373891
+2,2,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Nolan McFarlane,L,R,Changeup,Ball,,,101,-1.716112314,0.346087773
+2,2,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Nolan McFarlane,L,R,Fastball,Ball,,,101,-1.577055777,0.684147483
+2,2,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Nolan McFarlane,L,R,Changeup,Ball,,,101,-1.735977534,1.234477242
+2,2,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Nolan McFarlane,L,R,Fastball,Walk,,,101,0.826635801,-0.243551256
+2,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Nolan McFarlane,R,R,Slider,Called Strike,,,111,0.190948772,0.91214124
+2,2,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Nolan McFarlane,R,R,Fastball,Lineout,Line Drive,Straightaway,111,-0.345412159,0.69987119
+3,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Swinging Strike,,,0,0.29027487,0.660561921
+3,0,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Breaking Ball,Foul,,,0,-0.206355621,0.291054797
+3,0,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Foul,,,0,-0.583794794,1.210891681
+3,0,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Ball,,,0,1.243805413,0.84924641
+3,0,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Ball,,,0,1.502053269,-0.212103841
+3,0,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Breaking Ball,Foul,,,0,0.330005309,0.880693825
+3,0,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Foul,,,0,-0.484468696,0.841384557
+3,0,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Groundout,,,0,0.409466188,0.228159967
+3,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Fastball,Swinging Strike,,,0,-0.484468696,0.621252653
+3,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Breaking Ball,Swinging Strike,,,0,0.588253165,0.157403284
+3,1,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Fastball,Strikeout Swinging,,,0,-0.107029523,0.864970118
+3,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Fastball,Called Strike,,,0,-1.239347043,0.692009336
+3,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Fastball,Foul,,,0,0.151218333,0.27533109
+3,2,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Fastball,Ball,,,0,0.508792286,1.132273144
+3,2,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Offspeed,Foul,,,0,-1.35853836,0.880693825
+3,2,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Fastball,Strikeout Looking,,,0,0.667714043,0.621252653
+3,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Nolan McFarlane,L,R,Fastball,Called Strike,,,0,-0.24608606,0.188850699
+3,0,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Nolan McFarlane,L,R,Changeup,Ball,,,0,-1.577055777,-0.149209011
+3,0,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Nolan McFarlane,L,R,Changeup,Foul,,,0,-0.2858165,0.416844456
+3,0,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Nolan McFarlane,L,R,Changeup,Ball,,,0,0.627983604,-0.290722378
+3,0,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Nolan McFarlane,L,R,Changeup,Foul,,,0,-1.259212262,0.330364066
+3,0,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Nolan McFarlane,L,R,Fastball,Strikeout Swinging,,,0,-0.623525234,0.692009336
+3,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Alex Brown,Nolan McFarlane,L,R,Fastball,Ball,,,0,0.29027487,1.12441129
+3,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Alex Brown,Nolan McFarlane,L,R,Fastball,Ball,,,0,-1.716112314,0.228159967
+3,1,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Alex Brown,Nolan McFarlane,L,R,Fastball,Flyout,Fly Ball,Pull,0,-0.563929575,0.369673334
+3,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Nolan McFarlane,L,R,Fastball,Ball,,,0,-0.047433864,-0.235689402
+3,2,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Nolan McFarlane,L,R,Fastball,Ball,,,0,-1.537325337,0.802075288
+3,2,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Nolan McFarlane,L,R,Fastball,Called Strike,,,0,0.270409651,0.589805238
+3,2,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Nolan McFarlane,L,R,Changeup,Flyout,Fly Ball,Opposite Field,0,-0.504333916,0.259607382
+4,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Leo LeClair,R,R,Breaking Ball,Called Strike,,,0,0.190948772,0.794213435
+4,0,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Leo LeClair,R,R,Fastball,Double,Fly Ball,Opposite Field,0,-0.26595128,0.291054797
+4,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Fastball,Swinging Strike,,,10,0.449196627,0.479739286
+4,0,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Fastball,Foul,,,10,0.330005309,0.243883675
+4,0,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Fastball,Foul,,,10,-0.683120893,0.471877432
+4,0,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Breaking Ball,Strikeout Swinging,,,10,0.84650102,-0.424373891
+4,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Leo LeClair,R,R,Fastball,Called Strike,,,10,0.727309702,0.385397042
+4,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Leo LeClair,R,R,Breaking Ball,Ball,,,10,0.091622674,-0.298584232
+4,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Leo LeClair,R,R,Fastball,Foul,,,10,-0.424873037,0.353949627
+4,1,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Leo LeClair,R,R,Fastball,Popout,Pop Up,Straightaway,10,-0.464603476,0.872831972
+4,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Jack Shannon,Leo LeClair,R,R,Breaking Ball,Ball,,,10,-0.206355621,-0.259274963
+4,2,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Jack Shannon,Leo LeClair,R,R,Breaking Ball,Ball,,,10,1.144479315,-0.219965694
+4,2,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Jack Shannon,Leo LeClair,R,R,Fastball,Swinging Strike,,,10,-0.166625182,0.644838214
+4,2,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Jack Shannon,Leo LeClair,R,R,Fastball,Error,Ground Ball,Pull,10,-0.603660014,0.652700068
+4,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Leo LeClair,L,R,Fastball,Ball,,,101,-0.464603476,1.132273144
+4,2,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Leo LeClair,L,R,Fastball,Foul,,,101,-0.583794794,0.196712552
+4,2,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Leo LeClair,L,R,Fastball,Foul,,,101,-0.26595128,0.833522703
+4,2,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Leo LeClair,L,R,Fastball,Strikeout Looking,,,101,0.826635801,0.770627873
+4,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Nolan McFarlane,R,R,Fastball,Ball,,,0,1.263670633,0.802075288
+4,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Nolan McFarlane,R,R,Changeup,Ball,,,0,-0.385142598,-0.227827548
+4,0,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Nolan McFarlane,R,R,Changeup,Double,Line Drive,Pull,0,-0.26595128,0.125955869
+4,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Nolan McFarlane,L,R,Changeup,Ball,,,10,-0.345412159,-0.094176035
+4,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Nolan McFarlane,L,R,Changeup,Ball,,,10,-1.219481823,-0.385064622
+4,0,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Nolan McFarlane,L,R,Changeup,Ball,,,10,-1.517460118,0.157403284
+4,0,3,0,'3-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Nolan McFarlane,L,R,Fastball,Called Strike,,,10,0.608118385,0.63697636
+4,0,3,1,'3-1,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Nolan McFarlane,L,R,Changeup,Foul,,,10,-0.603660014,0.574081531
+4,0,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Nolan McFarlane,L,R,Changeup,Groundout,Ground Ball,Pull,10,-0.504333916,0.684147483
+4,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Nolan McFarlane,R,R,Slider,Single,Line Drive,Pull,1,0.429331408,0.385397042
+4,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Nolan McFarlane,L,R,Changeup,Foul,,,100,0.190948772,0.644838214
+4,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Nolan McFarlane,L,R,Fastball,Foul,,,100,-0.702986112,0.786351581
+4,1,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Nolan McFarlane,L,R,Slider,Single,Ground Ball,Pull,100,0.369735749,0.141679576
+4,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Nolan McFarlane,L,R,Fastball,Ball,,,110,-1.735977534,0.330364066
+4,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Nolan McFarlane,L,R,Changeup,Single,Ground Ball,Pull,110,-0.663255673,0.14954143
+4,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Nolan McFarlane,R,R,Fastball,Called Strike,,,1,-0.623525234,0.817798996
+4,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Nolan McFarlane,R,R,Fastball,Called Strike,,,1,0.608118385,0.110232162
+4,1,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Nolan McFarlane,R,R,Slider,Sacrifice Fly,,,1,-0.444738257,0.566219677
+4,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Nolan McFarlane,L,R,Changeup,Called Strike,,,1,-0.742716552,0.314640358
+4,2,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Nolan McFarlane,L,R,Fastball,Flyout,Fly Ball,Opposite Field,1,-0.464603476,0.220298114
+5,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Tim Somerville,Leo LeClair,R,R,Fastball,Called Strike,,,0,0.707444483,0.629114507
+5,0,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Tim Somerville,Leo LeClair,R,R,Breaking Ball,Foul,,,0,0.826635801,0.283192943
+5,0,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Tim Somerville,Leo LeClair,R,R,Fastball,Ball,,,0,2.038414199,-0.133485304
+5,0,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Tim Somerville,Leo LeClair,R,R,Breaking Ball,Ball,,,0,0.786905361,-0.510854282
+5,0,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Tim Somerville,Leo LeClair,R,R,Fastball,Foul,,,0,-0.444738257,0.471877432
+5,0,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Tim Somerville,Leo LeClair,R,R,Breaking Ball,Flyout,Fly Ball,Pull,0,-0.226220841,0.251745528
+5,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Ball,,,0,-1.040694846,1.179444266
+5,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Breaking Ball,Called Strike,,,0,0.131353113,0.228159967
+5,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Foul,,,0,0.250544431,0.864970118
+5,1,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.488927067,0.401120749
+5,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,L,R,Fastball,Popout,,,0,0.548522726,0.668423775
+5,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Alex Brown,Maverick Lawrence,L,R,Fastball,Flyout,,,0,-0.504333916,0.605528945
+5,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Maverick Lawrence,L,R,Changeup,Ball,,,0,-1.437999239,-0.251413109
+5,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Maverick Lawrence,L,R,Fastball,Foul,,,0,-0.186490401,0.48760114
+5,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Maverick Lawrence,L,R,Changeup,Lineout,Line Drive,Straightaway,0,-0.365277378,0.141679576
+5,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Maverick Lawrence,R,R,Fastball,Ball,,,0,1.581514147,0.864970118
+5,2,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Maverick Lawrence,R,R,Slider,Ball,,,0,0.86636624,0.236021821
+5,2,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Maverick Lawrence,R,R,Slider,Flyout,Fly Ball,Straightaway,0,0.647848824,0.629114507
+6,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Fastball,Ball,,,0,-1.477729678,1.108687583
+6,0,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Fastball,Called Strike,,,0,0.508792286,0.338225919
+6,0,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Fastball,Swinging Strike,,,0,-0.424873037,0.684147483
+6,0,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Leo LeClair,L,R,Offspeed,Popout,Pop Up,Opposite Field,0,0.250544431,0.118094015
+6,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Leo LeClair,L,R,Breaking Ball,Popout,Pop Up,Straightaway,0,-0.424873037,0.267469236
+6,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Fastball,Called Strike,,,0,0.389600968,0.48760114
+6,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Breaking Ball,Called Strike,,,0,0.548522726,0.165265138
+6,2,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Fastball,Ball,,,0,0.84650102,1.147996851
+6,2,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Breaking Ball,Ball,,,0,1.323266292,0.495462993
+6,2,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Fastball,Ball,,,0,0.548522726,-0.212103841
+6,2,3,2,'3-2,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Leo LeClair,R,R,Fastball,Groundout,Ground Ball,Pull,0,-0.305681719,0.495462993
+6,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Maverick Lawrence,L,R,Fastball,Foul,,,0,-0.504333916,0.668423775
+6,0,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Maverick Lawrence,L,R,Fastball,Called Strike,,,0,0.687579263,0.621252653
+6,0,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Maverick Lawrence,L,R,Changeup,Ball,,,0,0.508792286,-0.282860524
+6,0,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Maverick Lawrence,L,R,Changeup,Groundout,Ground Ball,Pull,0,-0.643390453,0.125955869
+6,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Maverick Lawrence,R,R,Fastball,Called Strike,,,0,0.508792286,0.196712552
+6,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Maverick Lawrence,R,R,Slider,Single,Line Drive,Pull,0,-0.166625182,0.236021821
+6,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Maverick Lawrence,L,R,Changeup,Foul,,,100,-0.226220841,0.157403284
+6,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Maverick Lawrence,L,R,Changeup,Ball,,,100,-1.279077482,0.0866466
+6,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Maverick Lawrence,L,R,Fastball,Error,Ground Ball,Pull,100,-0.464603476,0.346087773
+6,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Maverick Lawrence,L,R,Fastball,Foul,,,110,-0.365277378,0.479739286
+6,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Maverick Lawrence,L,R,Fastball,Called Strike,,,110,0.687579263,0.401120749
+6,1,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Maverick Lawrence,L,R,Fastball,Flyout,Fly Ball,Straightaway,110,0.29027487,0.841384557
+6,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Maverick Lawrence,R,R,Fastball,Ball,,,110,-0.424873037,1.12441129
+6,2,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Maverick Lawrence,R,R,Slider,Called Strike,,,110,0.627983604,0.825660849
+6,2,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Maverick Lawrence,R,R,Slider,Ball,,,110,0.647848824,-0.471545013
+6,2,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Maverick Lawrence,R,R,Fastball,Ball,,,110,-0.226220841,1.352405048
+6,2,3,1,'3-1,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Maverick Lawrence,R,R,Fastball,Swinging Strike,,,110,0.767040142,0.298916651
+6,2,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Maverick Lawrence,R,R,Slider,Foul,,,110,0.369735749,0.754904166
+6,2,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Thomas Valero,Maverick Lawrence,R,R,Changeup,Strikeout Swinging,,,110,-0.027568644,-0.251413109
+7,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Liam Riley,Leo LeClair,R,R,Fastball,Double,Line Drive,Pull,0,0.508792286,0.63697636
+7,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Brayden Sowrey,Leo LeClair,R,R,Fastball,Ball,,,10,0.608118385,1.218753535
+7,0,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Brayden Sowrey,Leo LeClair,R,R,Fastball,Single,Pop Up,Pull,10,-0.464603476,0.621252653
+7,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Leo LeClair,L,R,Offspeed,Ball,,,110,0.230679211,-0.164932718
+7,0,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Leo LeClair,L,R,Fastball,Foul,,,110,-0.623525234,0.542634116
+7,0,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Leo LeClair,L,R,Fastball,Called Strike,,,110,0.647848824,0.377535188
+7,0,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Leo LeClair,L,R,Fastball,Popout,Pop Up,Pull,110,-0.26595128,0.495462993
+7,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Tim Somerville,Leo LeClair,R,R,Fastball,Error,Ground Ball,Pull,110,0.270409651,0.440430017
+7,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Foul,,,111,-0.24608606,0.228159967
+7,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Fastball,Ball,,,111,1.44245761,0.251745528
+7,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Leo LeClair,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,111,0.469061847,0.165265138
+7,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Fastball,Ball,,,101,-0.683120893,1.140134998
+7,2,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Fastball,Swinging Strike,,,101,-0.484468696,1.061516461
+7,2,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Breaking Ball,Ball,,,101,1.005422777,-0.416512037
+7,2,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Fastball,Ball,,,101,-1.3982688,1.132273144
+7,2,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Leo LeClair,R,R,Fastball,Popout,Pop Up,Pull,101,-0.365277378,0.597667092
+1,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Ball,,,,1.343131511,-0.251413109
+1,0,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Called Strike,,,,0.608118385,0.21243626
+1,0,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Swinging Strike,,,,0.230679211,0.21243626
+1,0,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Foul,,,,-0.405007818,0.377535188
+1,0,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Ball,,,,-0.663255673,1.132273144
+1,0,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Groundout,Ground Ball,Pull,,0.429331408,0.21243626
+1,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Ball,,,,-1.318807921,0.794213435
+1,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Ball,,,,0.230679211,-0.314307939
+1,1,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Called Strike,,,,0.608118385,0.684147483
+1,1,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Ball,,,,-1.199616603,-0.27499867
+1,1,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Walk,,,,-1.567123167,-0.031281205
+1,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Fastball,Called Strike,,,,0.131353113,0.621252653
+1,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Breaking Ball,Single,Line Drive,Straightaway,,0.548522726,0.76276602
+1,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Tyler Ray,L,R,Fastball,Double,Line Drive,Straightaway,,-0.345412159,0.267469236
+1,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Tyler Ray,R,R,Fastball,Ball,,,,-0.80231221,-0.353617207
+1,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Tyler Ray,R,R,Fastball,Ball,,,,0.767040142,-0.117761596
+1,1,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Tyler Ray,R,R,Fastball,Foul,,,,0.29027487,0.141679576
+1,1,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Tyler Ray,R,R,Fastball,Ball,,,,1.561648928,-0.015557498
+1,1,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Tyler Ray,R,R,Fastball,Foul,,,,-0.087164303,0.401120749
+1,1,3,2,'3-2,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Tyler Ray,R,R,Fastball,Strikeout Looking,,,,0.727309702,0.125955869
+1,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Tyler Ray,R,R,Breaking Ball,Ball,,,,1.939088101,0.236021821
+1,2,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Tyler Ray,R,R,Fastball,Ball,,,,1.42259239,0.251745528
+1,2,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Tyler Ray,R,R,Fastball,Single,Line Drive,Straightaway,,-0.206355621,0.802075288
+1,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Fastball,Swinging Strike,,,,-0.702986112,0.786351581
+1,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Offspeed,Called Strike,,,,0.190948772,0.322502212
+1,2,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Fastball,Strikeout Swinging,,,,0.389600968,-0.086314181
+1,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Changeup,Ball,,,,-1.557190557,0.84924641
+1,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Fastball,Ball,,,,-0.603660014,1.18730612
+1,0,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Fastball,Ball,,,,-1.3982688,1.12441129
+1,0,3,0,'3-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Cutter,Called Strike,,,,-0.603660014,0.676285629
+1,0,3,1,'3-1,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Cutter,Walk,,,,-0.424873037,1.077240168
+1,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Cutter,Ball,,,,1.204074974,-0.251413109
+1,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Cutter,Called Strike,,,,0.429331408,0.888555679
+1,0,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Cutter,Ball,,,,1.601379367,-0.141347157
+1,0,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Fastball,Ball,,,,0.449196627,1.195167974
+1,0,3,1,'3-1,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Cutter,Called Strike,,,,-0.722851332,0.63697636
+1,0,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Cutter,Strikeout Looking,,,,-0.762581771,0.802075288
+1,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Ryan Facchini,L,R,Fastball,Single,Ground Ball,Opposite Field,0,-0.424873037,0.794213435
+1,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,L,R,Cutter,Swinging Strike,,,,-0.524199135,0.574081531
+1,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,L,R,Cutter,Called Strike,,,,0.508792286,0.621252653
+1,1,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,L,R,Slider,Ball,,,,0.925961899,-0.219965694
+1,1,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,L,R,Fastball,Ball,,,,-0.405007818,1.242339096
+1,1,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,L,R,Cutter,Ball,,,,-1.716112314,0.97503607
+1,1,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,L,R,Fastball,Walk,,,,1.462322829,0.188850699
+1,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Ryan Facchini,L,R,Fastball,Ball,,,,0.727309702,1.108687583
+1,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Ryan Facchini,L,R,Cutter,Called Strike,,,,0.409466188,0.684147483
+1,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Ryan Facchini,L,R,Cutter,Popout,Pop Up,Straightaway,,-0.2858165,0.542634116
+1,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Ryan Facchini,L,R,Cutter,Groundout,Ground Ball,Pull,,0.389600968,0.511186701
+2,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Tyler Ray,R,R,Fastball,Ball,,,,-0.762581771,1.116549437
+2,0,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Tyler Ray,R,R,Fastball,Single,Ground Ball,Pull,,-0.444738257,0.401120749
+2,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Ball,,,,-1.477729678,0.817798996
+2,0,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Ball,,,,-1.418134019,-0.353617207
+2,0,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Ball,,,,0.667714043,-0.227827548
+2,0,3,0,'3-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Called Strike,,,,-0.643390453,0.76276602
+2,0,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Swinging Strike,,,,-1.577055777,0.597667092
+2,0,3,2,'3-2,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Groundout,Ground Ball,Pull,,-0.444738257,0.644838214
+2,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Ball,,,,1.482188049,0.440430017
+2,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Breaking Ball,Ball,,,,1.561648928,-0.180656426
+2,1,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Walk,,,,-1.557190557,0.236021821
+2,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Called Strike,,,,0.389600968,0.267469236
+2,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Breaking Ball,Foul,,,,0.369735749,0.825660849
+2,1,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Foul,,,,0.806770581,0.180988845
+2,1,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Foul,,,,0.707444483,0.385397042
+2,1,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Popout,Pop Up,Straightaway,,-0.405007818,0.76276602
+2,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Fastball,Foul,,,,0.091622674,-0.133485304
+2,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Breaking Ball,Ball,,,,1.621244586,-0.031281205
+2,2,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Fastball,Ball,,,,0.88623146,-0.18851828
+2,2,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Fastball,Popout,Pop Up,Opposite Field,,0.449196627,0.141679576
+2,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Dominic Pugliese,Ryan Facchini,L,R,Cutter,Foul,,,,0.230679211,0.157403284
+2,0,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Dominic Pugliese,Ryan Facchini,L,R,Changeup,Ball,,,,-1.557190557,0.770627873
+2,0,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Dominic Pugliese,Ryan Facchini,L,R,Splitter,Called Strike,,,,0.151218333,0.589805238
+2,0,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Dominic Pugliese,Ryan Facchini,L,R,Fastball,Ball,,,,-1.298942702,1.12441129
+2,0,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Dominic Pugliese,Ryan Facchini,L,R,Changeup,Ball,,,,-1.855168852,0.998621631
+2,0,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Dominic Pugliese,Ryan Facchini,L,R,Cutter,Strikeout Swinging,,,,-0.683120893,0.825660849
+2,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Ryan Facchini,L,R,Changeup,Ball,,,,-0.504333916,1.12441129
+2,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Ryan Facchini,L,R,Cutter,Called Strike,,,,-0.464603476,0.747042312
+2,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Ryan Facchini,L,R,Splitter,Ball,,,,-0.742716552,0.393258895
+2,1,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Ryan Facchini,L,R,Cutter,Single,Line Drive,Pull,,-0.365277378,0.393258895
+2,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Awrey,Ryan Facchini,L,R,Cutter,Groundout,Ground Ball,Pull,,-0.583794794,0.259607382
+2,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Splitter,Called Strike,,,,-0.702986112,0.597667092
+2,2,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Splitter,Single,Ground Ball,Straightaway,,-0.26595128,0.173126991
+2,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Cutter,Ball,,,,1.204074974,-0.219965694
+2,2,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Cutter,Swinging Strike,,,,0.747174922,0.346087773
+2,2,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Cutter,Foul,,,,-0.325546939,-0.12562345
+2,2,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Slider,Ball,,,,0.647848824,-0.518716135
+2,2,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Fastball,Ball,,,,0.488927067,1.116549437
+2,2,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Cutter,Double,Fly Ball,Pull,,0.31014009,0.267469236
+2,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Neurnberger,Ryan Facchini,L,R,Cutter,Hit By Pitch,,,,1.680840245,0.36181148
+2,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Cutter,Called Strike,,,,-0.742716552,0.204574406
+2,2,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Fastball,Called Strike,,,,-0.702986112,0.692009336
+2,2,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Slider,Ball,,,,-1.298942702,0.180988845
+2,2,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Cutter,Ball,,,,1.502053269,0.173126991
+2,2,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Cutter,Ball,,,,0.667714043,0.935726801
+2,2,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Cutter,Walk,,,,1.343131511,0.228159967
+2,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Ryan Facchini,L,R,Fastball,Called Strike,,,,-0.683120893,0.770627873
+2,2,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Ryan Facchini,L,R,Cutter,Foul,,,,-0.24608606,0.094508454
+2,2,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Ryan Facchini,L,R,Fastball,Foul,,,,-0.484468696,0.84924641
+2,2,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Ryan Facchini,L,R,Slider,Foul,,,,-0.683120893,0.322502212
+2,2,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Ryan Facchini,L,R,Changeup,Strikeout Swinging,,,,0.31014009,0.102370308
+3,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Tyler Ray,L,R,Fastball,Called Strike,,,,-0.583794794,0.173126991
+3,0,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Tyler Ray,L,R,Offspeed,Swinging Strike,,,,0.171083552,0.369673334
+3,0,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Tyler Ray,L,R,Fastball,Ball,,,,-1.855168852,0.982897924
+3,0,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Tyler Ray,L,R,Offspeed,Popout,Pop Up,Opposite Field,,-0.206355621,0.236021821
+3,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Tyler Ray,R,R,Fastball,Called Strike,,,,0.548522726,0.125955869
+3,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Tyler Ray,R,R,Offspeed,Ball,,,,1.561648928,-0.235689402
+3,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Tyler Ray,R,R,Breaking Ball,Foul,,,,0.409466188,0.589805238
+3,1,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Jaden Leeder,Tyler Ray,R,R,Fastball,Groundout,Ground Ball,Opposite Field,,0.31014009,0.864970118
+3,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Tyler Ray,R,R,Breaking Ball,Ball,,,,1.541783708,1.147996851
+3,2,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Tyler Ray,R,R,Fastball,Ball,,,,-1.338673141,-0.235689402
+3,2,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Brady Campbell,Tyler Ray,R,R,Fastball,Popout,Pop Up,Straightaway,,-0.504333916,0.864970118
+3,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Ryan Facchini,L,R,Cutter,Swinging Strike,,,,0.210813992,0.786351581
+3,0,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Ryan Facchini,L,R,Splitter,Ball,,,,-1.795573193,0.055199186
+3,0,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Ryan Facchini,L,R,Changeup,Foul,,,,-0.544064355,0.809937142
+3,0,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Parker McLean,Ryan Facchini,L,R,Cutter,Groundout,Ground Ball,Pull,,0.171083552,0.464015579
+3,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Dominic Pugliese,Ryan Facchini,L,R,Changeup,Ball,,,,-1.537325337,0.408982603
+3,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Dominic Pugliese,Ryan Facchini,L,R,Splitter,Single,Line Drive,Pull,,-0.464603476,0.267469236
+3,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Ryan Facchini,L,R,Fastball,Called Strike,,,,-0.861907869,0.393258895
+3,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Matt Dubrick,Ryan Facchini,L,R,Changeup,Error,Ground Ball,Pull,,-0.166625182,0.204574406
+3,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Awrey,Ryan Facchini,L,R,Cutter,Called Strike,,,,-0.26595128,0.613390799
+3,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Adam Awrey,Ryan Facchini,L,R,Fastball,Ball,,,,-0.603660014,1.163720559
+3,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Adam Awrey,Ryan Facchini,L,R,Cutter,Ball,,,,-1.418134019,0.070922893
+3,1,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Adam Awrey,Ryan Facchini,L,R,Cutter,Groundout,Ground Ball,Pull,,-0.444738257,0.621252653
+3,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Fastball,Called Strike,,,,0.250544431,0.76276602
+3,2,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Fastball,Ball,,,,-1.636651436,0.802075288
+3,2,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Cutter,Called Strike,,,,-0.206355621,0.668423775
+3,2,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Quin Steinke,Ryan Facchini,L,R,Changeup,Groundout,Ground Ball,Straightaway,,-0.385142598,0.157403284
+4,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Offspeed,Foul,,,,-0.504333916,0.21243626
+4,0,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Fastball,Foul,,,,-0.405007818,0.872831972
+4,0,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Fastball,Ball,,,,-0.623525234,1.242339096
+4,0,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Fastball,Ball,,,,-1.497594898,0.794213435
+4,0,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Offspeed,Ball,,,,0.588253165,-0.361479061
+4,0,3,2,'3-2,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Fastball,Strikeout Looking,,,,0.389600968,0.196712552
+4,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Tyler Ray,R,R,Breaking Ball,Called Strike,,,,0.608118385,0.118094015
+4,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Tyler Ray,R,R,Fastball,Ball,,,,1.44245761,-0.227827548
+4,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Tyler Ray,R,R,Fastball,Hit By Pitch,,,,-1.537325337,0.684147483
+4,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Ball,,,,-1.716112314,0.770627873
+4,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Offspeed,Called Strike,,,,-0.663255673,0.621252653
+4,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Offspeed,Swinging Strike,,,,-1.279077482,0.338225919
+4,1,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Hit By Pitch,,,,1.40272717,0.864970118
+4,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Single,Ground Ball,Pull,,-0.623525234,0.42470631
+4,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Ball,,,,1.343131511,0.668423775
+4,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Breaking Ball,Called Strike,,,,0.826635801,0.432568164
+4,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Breaking Ball,Ball,,,,1.263670633,0.668423775
+4,1,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Fastball,Foul,,,,0.806770581,0.173126991
+4,1,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Tyler Ray,R,R,Breaking Ball,Single,Line Drive,Opposite Field,,0.449196627,0.298916651
+4,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Fastball,Ball,,,,0.687579263,-0.133485304
+4,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Fastball,Swinging Strike,,,,-0.24608606,0.416844456
+4,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Fastball,Ball,,,,-0.146759962,-0.282860524
+4,1,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Fastball,Ball,,,,-0.464603476,1.147996851
+4,1,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Tyler Ray,R,R,Fastball,Walk,,,,-0.663255673,1.100825729
+4,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Tyler Ray,L,R,Fastball,Ball,,,,-1.279077482,0.196712552
+4,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Josh Frazer,Tyler Ray,L,R,Offspeed,Popout,Pop Up,Opposite Field,,0.151218333,0.27533109
+4,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Thuss,Ryan Facchini,R,R,Slider,Ball,,,,-1.437999239,0.731318605
+4,2,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Thuss,Ryan Facchini,R,R,Cutter,Called Strike,,,,0.250544431,0.660561921
+4,2,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Thuss,Ryan Facchini,R,R,Changeup,Ball,,,,-1.239347043,0.857108264
+4,2,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Thuss,Ryan Facchini,R,R,Cutter,Popout,Pop Up,Straightaway,,-0.464603476,-0.157070865
+4,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Ryan Facchini,L,R,Changeup,Called Strike,,,,-0.563929575,0.377535188
+4,0,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Ryan Facchini,L,R,Changeup,Called Strike,,,,0.250544431,0.534772262
+4,0,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Ryan Facchini,L,R,Fastball,Ball,,,,-1.696247094,0.770627873
+4,0,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Ryan Facchini,L,R,Changeup,Double,Fly Ball,Pull,,-0.424873037,0.291054797
+4,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Fastball,Ball,,,,-0.524199135,1.108687583
+4,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Cutter,Ball,,,,1.084883656,-0.27499867
+4,0,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Cutter,Called Strike,,,,-0.762581771,-0.06272862
+4,0,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Fastball,Ball,,,,-0.82217743,0.676285629
+4,0,3,1,'3-1,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Cutter,Swinging Strike,,,,0.627983604,0.133817723
+4,0,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Cutter,Popout,Pop Up,Straightaway,,0.190948772,0.141679576
+4,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Rowan Rajhans,Ryan Facchini,L,R,Changeup,Groundout,Ground Ball,Pull,,-0.444738257,0.133817723
+4,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Jaden Leeder,Tyler Ray,R,R,Breaking Ball,Double,Line Drive,Pull,,-0.434805647,0.369673334
+4,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Brady Campbell,Tyler Ray,R,R,Fastball,Ball,,,,1.362996731,-0.282860524
+4,2,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Brady Campbell,Tyler Ray,R,R,Fastball,Called Strike,,,,0.826635801,0.21243626
+4,2,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Brady Campbell,Tyler Ray,R,R,Fastball,Groundout,Ground Ball,Straightaway,,-0.424873037,0.668423775
+5,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Changeup,Swinging Strike,,,,-0.087164303,-0.306446085
+5,0,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Fastball,Called Strike,,,,0.210813992,0.589805238
+5,0,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Nate Parsons,Tyler Ray,L,R,Fastball,Strikeout Swinging,,,,0.429331408,-0.172794572
+5,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Tyler Ray,R,R,Fastball,Ball,,,,0.508792286,1.108687583
+5,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Tyler Ray,R,R,Fastball,Ball,,,,-1.179751384,1.147996851
+5,1,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Tyler Ray,R,R,Fastball,Foul,,,,-0.504333916,0.165265138
+5,1,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Tyler Ray,R,R,Fastball,Ball,,,,1.44245761,0.330364066
+5,1,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Nolan Phelan,Tyler Ray,R,R,Fastball,Walk,,,,0.906096679,0.747042312
+5,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Ball,,,,0.786905361,-0.219965694
+5,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Offspeed,Ball,,,,-1.676381875,1.108687583
+5,1,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Ball,,,,1.104748876,-0.282860524
+5,1,3,0,'3-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Called Strike,,,,-0.643390453,0.291054797
+5,1,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Geddes,Tyler Ray,L,R,Fastball,Walk,,,,1.065018436,-0.3378935
+5,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Called Strike,,,,0.747174922,0.574081531
+5,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Tyler Ray,R,R,Fastball,Flyout,Fly Ball,Straightaway,,-0.702986112,0.558357823
+5,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Ryan Facchini,L,R,Changeup,Swinging Strike,,,,-1.100290505,-0.227827548
+5,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Ryan Facchini,L,R,Changeup,Ball,,,,-1.477729678,-0.212103841
+5,2,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Ryan Facchini,L,R,Fastball,Ball,,,,-1.596920996,0.715594897
+5,2,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Ryan Facchini,L,R,Cutter,Foul,,,,-0.544064355,0.416844456
+5,2,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Ryan Facchini,L,R,Changeup,Ball,,,,-2.033955828,0.298916651
+5,2,3,2,'3-2,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Ryan Facchini,L,R,Cutter,Double,Fly Ball,Pull,,0.111487893,0.141679576
+5,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Dominic Pugliese,Ryan Facchini,L,R,Cutter,Ball,,,,1.541783708,0.369673334
+5,2,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Dominic Pugliese,Ryan Facchini,L,R,Fastball,Swinging Strike,,,,-0.375209988,1.096894802
+5,2,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Dominic Pugliese,Ryan Facchini,L,R,Changeup,Ball,,,,-0.583794794,-0.40078833
+5,2,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Dominic Pugliese,Ryan Facchini,L,R,Fastball,Ball,,,,0.588253165,-0.157070865
+5,2,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Dominic Pugliese,Ryan Facchini,L,R,Cutter,Walk,,,,0.727309702,-0.392926476
+5,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Matt Dubrick,Jack Tiessen,L,R,Fastball,Called Strike,,,,0.608118385,0.621252653
+5,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Matt Dubrick,Jack Tiessen,L,R,Fastball,Sacrifice Fly,Fly Ball,Straightaway,,-0.524199135,0.754904166
+5,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Awrey,Jack Tiessen,L,R,Fastball,Called Strike,,,,-1.3982688,-0.023419352
+5,0,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Awrey,Jack Tiessen,L,R,Fastball,Ball,,,,0.508792286,-0.219965694
+5,0,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Awrey,Jack Tiessen,L,R,Fastball,Groundout,Ground Ball,Pull,,-0.504333916,0.676285629
+5,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Quin Steinke,Jack Tiessen,L,R,Fastball,Swinging Strike,,,,-0.702986112,1.210891681
+5,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Quin Steinke,Jack Tiessen,L,R,Fastball,Foul,,,,-0.464603476,0.306778504
+5,1,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Quin Steinke,Jack Tiessen,L,R,Fastball,Foul,,,,-0.424873037,1.132273144
+5,1,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Quin Steinke,Jack Tiessen,L,R,Fastball,Single,Line Drive,Opposite Field,,-0.544064355,0.589805238
+5,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Thuss,Jack Tiessen,R,R,Fastball,Flyout,Fly Ball,Straightaway,,0.31014009,0.188850699
+5,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Kade Falardeau,Connor Lynch,R,R,Fastball,Single,Line Drive,Straightaway,,-0.126894742,0.228159967
+5,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Connor Lynch,R,R,Fastball,Foul,,,,0.469061847,0.660561921
+5,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Connor Lynch,R,R,Breaking Ball,Ball,,,,0.88623146,-0.314307939
+5,2,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Connor Lynch,R,R,Fastball,Ball,,,,-0.583794794,1.108687583
+5,2,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Connor Lynch,R,R,Breaking Ball,Ball,,,,0.528657506,-0.259274963
+5,2,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Flynn Matheson,Connor Lynch,R,R,Fastball,Groundout,Ground Ball,Pull,,-0.464603476,0.613390799
+5,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Josh Frazer,Connor Lynch,L,R,Offspeed,Ball,,,,0.767040142,-0.440097598
+5,0,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Josh Frazer,Connor Lynch,L,R,Offspeed,Swinging Strike,,,,-1.477729678,0.21243626
+5,0,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Josh Frazer,Connor Lynch,L,R,Offspeed,Foul,,,,-0.504333916,-0.157070865
+5,0,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Josh Frazer,Connor Lynch,L,R,Offspeed,Strikeout Swinging,,,,0.449196627,0.110232162
+5,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Jaden Leeder,Connor Lynch,R,R,Breaking Ball,Ball,,,,-0.722851332,1.116549437
+5,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Jaden Leeder,Connor Lynch,R,R,Fastball,Foul,,,,0.151218333,0.723456751
+5,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Jaden Leeder,Connor Lynch,R,R,Breaking Ball,Ball,,,,1.223940194,-0.235689402
+5,1,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Jaden Leeder,Connor Lynch,R,R,Fastball,Error,Ground Ball,Pull,,0.687579263,0.157403284
+5,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Brady Campbell,Connor Lynch,R,R,Fastball,Foul,,,,-0.544064355,0.401120749
+5,1,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Brady Campbell,Connor Lynch,R,R,Fastball,Ball,,,,1.164344535,-0.345755354
+5,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Brady Campbell,Connor Lynch,R,R,Offspeed,Ball,,,,-0.444738257,-0.345755354
+5,1,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Brady Campbell,Connor Lynch,R,R,Fastball,Ball,,,,-1.35853836,0.904279386
+5,1,3,1,'3-1,2026-09-19,Western Mustangs,Brock Badgers,,Brady Campbell,Connor Lynch,R,R,Fastball,Single,Line Drive,Pull,,-0.504333916,0.283192943
+5,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Tim Somerville,Connor Lynch,R,R,Fastball,Error,Ground Ball,Straightaway,,-0.80231221,0.330364066
+5,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Liam Riley,Connor Lynch,R,R,Breaking Ball,Ball,,,,0.806770581,-0.196380133
+5,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Liam Riley,Connor Lynch,R,R,Breaking Ball,Swinging Strike,,,,-0.26595128,0.754904166
+5,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Liam Riley,Connor Lynch,R,R,Fastball,Swinging Strike,,,,0.429331408,0.243883675
+5,1,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Liam Riley,Connor Lynch,R,R,Breaking Ball,Ball,,,,1.263670633,-0.447959452
+5,1,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Liam Riley,Connor Lynch,R,R,Fastball,Single,Ground Ball,Pull,,-0.683120893,0.251745528
+5,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Geddes,Connor Lynch,L,R,Offspeed,Ball,,,,-1.298942702,0.817798996
+5,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Geddes,Connor Lynch,L,R,Fastball,Ball,,,,-0.881773089,1.140134998
+5,1,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Adam Geddes,Connor Lynch,L,R,Offspeed,Popout,Pop Up,Opposite Field,,-0.563929575,0.133817723
+5,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Jack Tiessen,L,R,Fastball,Ball,,,,0.369735749,0.090577527
+5,2,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Jack Tiessen,L,R,Fastball,Ball,,,,0.469061847,1.116549437
+5,2,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Jack Tiessen,L,R,Fastball,Ball,,,,1.42259239,-0.102037889
+5,2,3,0,'3-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Jack Tiessen,L,R,Fastball,Walk,,,,-1.259212262,0.809937142
+5,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Jack Tiessen,R,R,Fastball,Ball,,,,-1.477729678,0.872831972
+5,2,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Rowan Gelder,R,L,Fastball,Called Strike,,,,-0.2858165,0.251745528
+5,2,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Rowan Gelder,R,L,Fastball,Ball,,,,-0.583794794,-0.3378935
+5,2,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Rowan Gelder,R,L,Fastball,Lineout,Line Drive,Opposite Field,,0.508792286,0.220298114
+6,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Thomas Valero,Rowan Gelder,R,L,Fastball,Ball,,,,-1.040694846,-0.212103841
+6,0,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Thomas Valero,Rowan Gelder,R,L,Fastball,Ball,,,,-1.477729678,0.133817723
+6,0,2,0,'2-0,2026-09-19,Brock Badgers,Western Mustangs,,Thomas Valero,Rowan Gelder,R,L,Fastball,Groundout,Ground Ball,Straightaway,,0.667714043,0.094508454
+6,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Rowan Gelder,L,L,Fastball,Called Strike,,,,-0.563929575,0.27533109
+6,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Rowan Gelder,L,L,Curveball,Ball,,,,-0.365277378,1.132273144
+6,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Rowan Gelder,L,L,Fastball,Ball,,,,-1.735977534,0.188850699
+6,1,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Rowan Gelder,L,L,Fastball,Foul,,,,-0.583794794,0.825660849
+6,1,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Rowan Gelder,L,L,Curveball,Foul,,,,-0.683120893,0.471877432
+6,1,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Rowan Gelder,L,L,Fastball,Foul,,,,0.667714043,0.526910408
+6,1,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Rowan Gelder,L,L,Fastball,Ball,,,,0.032027015,1.226615389
+6,1,3,2,'3-2,2026-09-19,Brock Badgers,Western Mustangs,,Parker McLean,Rowan Gelder,L,L,Fastball,Walk,,,,0.151218333,1.163720559
+6,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Dominic Pugliese,Rowan Gelder,L,L,Fastball,Foul,,,,0.111487893,0.456153725
+6,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Dominic Pugliese,Rowan Gelder,L,L,Fastball,Ball,,,,0.806770581,0.644838214
+6,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Dominic Pugliese,Rowan Gelder,L,L,Fastball,Ball,,,,-0.84204265,0.298916651
+6,1,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Dominic Pugliese,Rowan Gelder,L,L,Fastball,Ball,,,,-0.027568644,1.18730612
+6,1,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Dominic Pugliese,Rowan Gelder,L,L,Fastball,Walk,,,,-1.775707973,-0.196380133
+6,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Matt Dubrick,Rowan Gelder,L,L,Fastball,Ball,,,,-1.577055777,-0.109899742
+6,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Matt Dubrick,Rowan Gelder,L,L,Fastball,Called Strike,,,,-0.146759962,0.377535188
+6,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Matt Dubrick,Rowan Gelder,L,L,Fastball,Ball,,,,-1.37840358,-0.27499867
+6,1,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Matt Dubrick,Rowan Gelder,L,L,Fastball,Ball,,,,0.469061847,1.077240168
+6,1,3,1,'3-1,2026-09-19,Brock Badgers,Western Mustangs,,Matt Dubrick,Rowan Gelder,L,L,Fastball,Walk,,,,-0.603660014,0.330364066
+6,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Awrey,Rowan Gelder,L,L,Fastball,Called Strike,,,,0.131353113,0.97503607
+6,1,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Awrey,Rowan Gelder,L,L,Fastball,Ball,,,,-0.126894742,0.133817723
+6,1,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Awrey,Rowan Gelder,L,L,Fastball,Ball,,,,0.230679211,-0.086314181
+6,1,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Adam Awrey,Rowan Gelder,L,L,Curveball,Called Strike,,,,-0.722851332,0.69987119
+6,1,2,2,'2-2,2026-09-19,Brock Badgers,Western Mustangs,,Adam Awrey,Rowan Gelder,L,L,Fastball,Strikeout Swinging,,,,-0.524199135,0.668423775
+6,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Sebastian Shikatani,R,R,Fastball,Called Strike,,,,-0.464603476,0.76276602
+6,2,0,1,'0-1,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Sebastian Shikatani,R,R,Breaking Ball,Swinging Strike,,,,1.521918488,-0.141347157
+6,2,0,2,'0-2,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Sebastian Shikatani,R,R,Breaking Ball,Ball,,,,1.919222881,0.456153725
+6,2,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Sebastian Shikatani,R,R,Breaking Ball,Foul,,,,-0.385142598,0.27533109
+6,2,1,2,'1-2,2026-09-19,Brock Badgers,Western Mustangs,,Gavin Taylor,Sebastian Shikatani,R,R,Fastball,Strikeout Swinging,,,,0.270409651,0.676285629
+6,0,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Kade Falardeau,Sebastian Shikatani,R,R,Fastball,Called Strike,,,,0.548522726,0.377535188
+6,0,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Kade Falardeau,Sebastian Shikatani,R,R,Fastball,Called Strike,,,,-0.126894742,0.802075288
+6,0,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Kade Falardeau,Sebastian Shikatani,R,R,Breaking Ball,Groundout,Ground Ball,Pull,,-0.126894742,0.196712552
+6,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Flynn Matheson,Sebastian Shikatani,R,R,Fastball,Ball,,,,2.038414199,-0.039143059
+6,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Flynn Matheson,Sebastian Shikatani,R,R,Fastball,Foul,,,,0.568387945,0.251745528
+6,1,1,1,'1-1,2026-09-19,Western Mustangs,Brock Badgers,,Flynn Matheson,Sebastian Shikatani,R,R,Fastball,Ball,,,,1.879492442,0.833522703
+6,1,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Flynn Matheson,Sebastian Shikatani,R,R,Fastball,Called Strike,,,,-0.583794794,0.369673334
+6,1,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Flynn Matheson,Sebastian Shikatani,R,R,Breaking Ball,Ball,,,,-1.437999239,0.291054797
+6,1,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Flynn Matheson,Sebastian Shikatani,R,R,Fastball,Strikeout Swinging,,,,0.270409651,1.100825729
+6,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Josh Frazer,Sebastian Shikatani,L,R,Breaking Ball,Ball,,,,-1.696247094,-0.133485304
+6,2,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Josh Frazer,Sebastian Shikatani,L,R,Fastball,Ball,,,,1.243805413,0.841384557
+6,2,2,0,'2-0,2026-09-19,Western Mustangs,Brock Badgers,,Josh Frazer,Sebastian Shikatani,L,R,Fastball,Foul,,,,0.29027487,0.314640358
+6,2,2,1,'2-1,2026-09-19,Western Mustangs,Brock Badgers,,Josh Frazer,Sebastian Shikatani,L,R,Fastball,Ball,,,,0.826635801,0.27533109
+6,2,3,1,'3-1,2026-09-19,Western Mustangs,Brock Badgers,,Josh Frazer,Sebastian Shikatani,L,R,Fastball,Flyout,Fly Ball,Pull,,0.528657506,0.692009336
+7,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Quin Steinke,Max Van Dam,L,L,Fastball,Ball,,,,-1.437999239,-0.196380133
+7,0,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Quin Steinke,Max Van Dam,L,L,Fastball,Called Strike,,,,-0.722851332,0.298916651
+7,0,1,1,'1-1,2026-09-19,Brock Badgers,Western Mustangs,,Quin Steinke,Max Van Dam,L,L,Fastball,Ball,,,,-0.722851332,0.802075288
+7,0,2,1,'2-1,2026-09-19,Brock Badgers,Western Mustangs,,Quin Steinke,Max Van Dam,L,L,Fastball,Single,Line Drive,Opposite Field,,0.508792286,0.63697636
+7,0,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Adam Thuss,Max Van Dam,R,L,Fastball,Popout,Pop Up,Opposite Field,,0.449196627,0.786351581
+7,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Ryan Nuernberger,Max Van Dam,L,L,Slider,Hit By Pitch,,,,1.700705465,0.267469236
+7,1,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Trent Sillett,Max Van Dam,R,L,Fastball,Ball,,,,-1.418134019,0.27533109
+7,1,1,0,'1-0,2026-09-19,Brock Badgers,Western Mustangs,,Trent Sillett,Max Van Dam,R,L,Fastball,Flyout,Fly Ball,Opposite Field,,0.84650102,0.786351581
+7,2,0,0,'0-0,2026-09-19,Brock Badgers,Western Mustangs,,Nathaniel King,Max Van Dam,R,L,Fastball,Flyout,Fly Ball,Straightaway,,0.190948772,0.157403284
