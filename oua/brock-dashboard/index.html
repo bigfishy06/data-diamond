@@ -924,14 +924,20 @@
       const controls=[effectivenessControl,tendencyControl,sequencingControl,zoneControl];
       function pointsFor(control){return control===zoneControl||activeRole()==='batter'?selectedPoints():allPitcherPoints()}
       function datesForCurrent(control){return[...new Set(pointsFor(control).map(dateOf).filter(Boolean))].sort()}
-      function configure(control,reset=false,changedInput=null){
-        const dates=datesForCurrent(control),start=control.querySelector('.date-start'),end=control.querySelector('.date-end'),player=$('player').value;
-        if(reset||control.dataset.player!==player){start.min=end.min=0;start.max=end.max=String(Math.max(dates.length-1,0));start.value='0';end.value=String(Math.max(dates.length-1,0));control.dataset.player=player}
-        start.max=end.max=String(Math.max(dates.length-1,0));
-        if(Number(start.value)>Number(end.value)){if(changedInput===start)end.value=start.value;else if(changedInput===end)start.value=end.value;else end.value=start.value}
-        control._dates=dates;
+      function controlKey(){return`${activeRole()}|${$('player').value}|${$('team').value}`}
+      function paintRange(control,changedInput=null){
+        const dates=control._dates||[],start=control.querySelector('.date-start'),end=control.querySelector('.date-end');
+        start.value=String(Math.max(0,Math.min(Number(start.value)||0,Math.max(dates.length-1,0))));
+        end.value=String(Math.max(0,Math.min(Number(end.value)||0,Math.max(dates.length-1,0))));
+        if(Number(start.value)>Number(end.value)){if(changedInput===start)end.value=start.value;else start.value=end.value}
         control.querySelector('.date-start-label').textContent=dates[Number(start.value)]||'All dates';
         control.querySelector('.date-end-label').textContent=dates[Number(end.value)]||'All dates';
+      }
+      function configure(control,reset=false){
+        const key=controlKey(),dates=datesForCurrent(control),start=control.querySelector('.date-start'),end=control.querySelector('.date-end'),oldDates=control._dates||[],oldStart=oldDates[Number(start.value)],oldEnd=oldDates[Number(end.value)],changed=reset||control.dataset.key!==key;
+        control._dates=dates;start.min=end.min='0';start.max=end.max=String(Math.max(dates.length-1,0));
+        if(changed){start.value=String(Math.max(0,dates.indexOf(oldStart)));end.value=String(Math.max(0,dates.indexOf(oldEnd)));if(reset||!oldStart)start.value='0';if(reset||!oldEnd)end.value=String(Math.max(dates.length-1,0));control.dataset.key=key}
+        paintRange(control);
       }
       function scoped(control,hand='all'){
         configure(control);const dates=control._dates||[],start=dates[Number(control.querySelector('.date-start').value)],end=dates[Number(control.querySelector('.date-end').value)];
@@ -967,28 +973,31 @@
         table.innerHTML=`<table class="stat-table"><thead><tr><th>Rank</th><th>Sequence</th><th>Pitches</th><th>Strike%</th><th>Whiff%</th><th>Chase%</th><th>BAA</th></tr></thead><tbody>${rows.map((row,index)=>`<tr><td><span class="analysis-rank">${index+1}</span></td><td>${row.sequence}</td><td>${row.pitches.length}</td><td>${pct(row.stats.strike)}</td><td>${pct(row.stats.whiff)}</td><td>${pct(row.stats.chase)}</td><td>${row.stats.baa==null?'—':dec(row.stats.baa)}</td></tr>`).join('')||'<tr><td colspan="7">No sequences in this date and handedness range.</td></tr>'}</tbody></table>`;
       }
       const renderers=new Map([[effectivenessControl,renderEffectivenessDate],[tendencyControl,renderTendencyDate],[sequencingControl,renderSequencingDate],[zoneControl,renderZoneDate]]);
-      function renderSoon(control){
+      function applyRange(control){
         clearTimeout(control._renderTimer);
-        // Updating a large table / heat map synchronously during every drag
-        // event prevents the native range thumb from moving smoothly.
-        control._renderTimer=setTimeout(function(){
-          control._renderTimer=null;
-          renderers.get(control)();
-        },90);
+        control._renderTimer=null;
+        if(control===zoneControl)document.dispatchEvent(new CustomEvent('zone-date-range-change'));
+        renderers.get(control)();
+      }
+      function queueRangeApply(control){
+        clearTimeout(control._renderTimer);
+        // Labels react immediately. A short pause before data work keeps the
+        // thumb freely draggable even when a heat map has many pitches.
+        control._renderTimer=setTimeout(()=>applyRange(control),220);
       }
       controls.forEach(control=>control.querySelectorAll('input').forEach(input=>{
         input.addEventListener('input',function(){
-          configure(control,false,input);
-          if(control===zoneControl)document.dispatchEvent(new CustomEvent('zone-date-range-change'));
-          renderSoon(control);
+          // Keep drag work limited to the control itself. Rebuilding charts
+          // while the thumb is moving makes native range inputs feel stuck.
+          paintRange(control,input);
+          queueRangeApply(control);
         });
         input.addEventListener('change',function(){
-          clearTimeout(control._renderTimer);
-          control._renderTimer=null;
-          configure(control,false,input);
-          if(control===zoneControl)document.dispatchEvent(new CustomEvent('zone-date-range-change'));
-          renderers.get(control)();
+          paintRange(control,input);
+          applyRange(control);
         });
+        input.addEventListener('pointerup',()=>applyRange(control));
+        input.addEventListener('keyup',()=>applyRange(control));
       }));
       sequenceHand.addEventListener('change',renderSequencingDate);
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(()=>{controls.forEach(control=>configure(control,true));renderEffectivenessDate();renderTendencyDate();renderSequencingDate();renderZoneDate()},950)));
