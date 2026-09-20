@@ -948,7 +948,10 @@
       function withScopedPoints(points,callback){const player=state.current;if(!player)return;const original=player.scatter;player.scatter=points;try{callback()}finally{player.scatter=original}}
       function renderEffectivenessDate(){
         effectivenessControl.style.display='grid';
-        renderEffectiveness();
+        // renderEffectiveness is private to the effectiveness setup script.
+        // Route slider refreshes through its established control event so the
+        // current date-scoped points are recalculated for both dashboard roles.
+        $('effectivenessHand').dispatchEvent(new Event('change'));
       }
       function renderTendencyDate(){
         const pitcher=activeRole()==='pitcher';tendencyControl.style.display='grid';if(!pitcher){renderTendencies();return;}
