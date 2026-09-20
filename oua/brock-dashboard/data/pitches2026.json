@@ -58861,7 +58861,7 @@
   {
     "batter": "Jaxon Price",
     "team": "Brock Badgers",
-    "pitches_seen": 1,
+    "pitches_seen": 16,
     "scatter": [
       {
         "x": 0.3014,
@@ -58882,15 +58882,7 @@
         "pitcher_side": "R",
         "date": "2026-09-06",
         "in_zone": true
-      }
-    ],
-    "bats": "R"
-  },
-  {
-    "batter": "Jaxson Price",
-    "team": "Brock Badgers",
-    "pitches_seen": 15,
-    "scatter": [
+      },
       {
         "x": -1.5131,
         "y": 0.9166,
