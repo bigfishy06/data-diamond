@@ -5452,3 +5452,356 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,1,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Max Van Dam,R,L,Fastball,Ball,,,,-1.418134019,0.27533109
 7,1,1,0,'1-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Max Van Dam,R,L,Fastball,Flyout,Fly Ball,Opposite Field,,0.84650102,0.786351581
 7,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Nathaniel King,Max Van Dam,R,L,Fastball,Flyout,Fly Ball,Straightaway,,0.190948772,0.157403284
+1,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Evan Marks,L,R,Fastball,Groundout,Ground Ball,Opposite Field,0,-0.405007818,0.794213435
+1,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Evan Marks,R,R,Splitter,Groundout,Ground Ball,Opposite Field,0,-0.663255673,0.676285629
+1,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Leatherland,Evan Marks,L,R,Fastball,Called Strike,,,0,0.270409651,0.629114507
+1,2,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Leatherland,Evan Marks,L,R,Splitter,Ball,,,0,-1.3982688,0.48760114
+1,2,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Leatherland,Evan Marks,L,R,Splitter,Groundout,Ground Ball,Pull,0,-0.444738257,0.125955869
+1,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Myles Robinson,L,R,Fastball,Ball,,,0,0.349870529,-0.180656426
+1,0,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Myles Robinson,L,R,Fastball,Ball,,,0,-1.437999239,0.825660849
+1,0,2,0,'2-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Myles Robinson,L,R,Fastball,Called Strike,,,0,-0.901638309,0.644838214
+1,0,2,1,'2-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Myles Robinson,L,R,Fastball,Single,Line Drive,Opposite Field,0,-0.484468696,0.841384557
+1,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,1.43,Kade Falardeau,Myles Robinson,R,R,Breaking Ball,Called Strike,,,100,-0.107029523,0.118094015
+1,0,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,1.16,Kade Falardeau,Myles Robinson,R,R,Breaking Ball,Called Strike,,,100,-0.146759962,0.550495969
+1,0,0,2,'0-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Myles Robinson,R,R,,Caught Stealing,,,0,,
+1,1,0,2,'0-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Myles Robinson,R,R,Fastball,Strikeout Swinging,,,0,0.409466188,0.754904166
+1,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Fastball,Swinging Strike,,,0,-0.603660014,1.100825729
+1,2,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Breaking Ball,Ball,,,0,0.84650102,0.314640358
+1,2,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Breaking Ball,Foul,,,0,0.568387945,0.377535188
+1,2,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Fastball,Ball,,,0,-0.166625182,1.234477242
+1,2,2,2,'2-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Breaking Ball,Strikeout Looking,,,0,-0.643390453,0.125955869
+2,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Evan Marks,R,R,Splitter,Ball,,,0,-1.159886164,0.817798996
+2,0,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Evan Marks,R,R,Fastball,Single,Ground Ball,Pull,0,0.449196627,0.36181148
+2,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Evan Marks,L,R,Fastball,Called Strike,,,100,-0.087164303,0.322502212
+2,0,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Evan Marks,L,R,Splitter,Swinging Strike,,,100,-0.444738257,-0.157070865
+2,0,0,2,'0-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Evan Marks,L,R,Splitter,Foul,,,100,-0.544064355,0.283192943
+2,0,0,2,'0-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Evan Marks,L,R,Fastball,Foul,,,100,-0.524199135,1.155858705
+2,0,0,2,'0-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Evan Marks,L,R,Splitter,Single,Ground Ball,Pull,100,-0.484468696,0.188850699
+2,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Evan Marks,R,R,Fastball,Ball,,,110,0.707444483,0.723456751
+2,0,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Evan Marks,R,R,Splitter,Called Strike,,,110,0.528657506,0.196712552
+2,0,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Evan Marks,R,R,Splitter,Swinging Strike,,,110,0.528657506,0.110232162
+2,0,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Evan Marks,R,R,Splitter,Ball,,,110,0.29027487,-0.298584232
+2,0,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Evan Marks,R,R,Slider,Strikeout Swinging,,,110,1.263670633,-0.227827548
+2,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Evan Marks,R,R,Splitter,Swinging Strike,,,110,-0.742716552,0.173126991
+2,1,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Evan Marks,R,R,Slider,Ball,,,110,1.303401072,-0.3378935
+2,1,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Evan Marks,R,R,Fastball,Foul,,,110,-0.444738257,0.629114507
+2,1,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Evan Marks,R,R,Slider,Strikeout Swinging,,,110,0.707444483,-0.227827548
+2,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Splitter,Single,Line Drive,Straightaway,110,-0.444738257,0.809937142
+2,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Fastball,Flyout,Fly Ball,Opposite Field,101,0.488927067,0.841384557
+2,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Breaking Ball,Ball,,,0,-1.259212262,1.147996851
+2,0,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Fastball,Hit By Pitch,,,0,-1.477729678,1.030069046
+2,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,1.16,Josh Frazer,Myles Robinson,L,R,Fastball,Called Strike,,,100,-0.663255673,0.27533109
+2,0,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Josh Frazer,Myles Robinson,L,R,Breaking Ball,Groundout,Ground Ball,Pull,100,-0.2858165,0.188850699
+2,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Myles Robinson,R,R,Fastball,Swinging Strike,,,100,-0.544064355,0.959312362
+2,1,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Myles Robinson,R,R,Breaking Ball,Ball,,,100,1.084883656,-0.314307939
+2,1,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Myles Robinson,R,R,Fastball,Called Strike,,,100,0.707444483,0.21243626
+2,1,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Myles Robinson,R,R,Breaking Ball,Ball,,,100,-0.087164303,0.91214124
+2,1,2,2,'2-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Myles Robinson,R,R,Fastball,Ball,,,100,-1.497594898,0.023751771
+2,1,3,2,'3-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Myles Robinson,R,R,Fastball,Popout,Pop Up,Opposite Field,100,0.230679211,0.385397042
+2,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Myles Robinson,R,R,Fastball,Foul,,,100,-0.544064355,0.668423775
+2,2,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Myles Robinson,R,R,Fastball,Ball,,,100,1.283535852,0.220298114
+2,2,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Myles Robinson,R,R,Fastball,Called Strike,,,100,0.488927067,0.196712552
+2,2,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Myles Robinson,R,R,Fastball,Foul,,,100,0.429331408,0.794213435
+2,2,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Myles Robinson,R,R,Breaking Ball,Flyout,Fly Ball,Pull,100,0.190948772,0.841384557
+3,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Evan Marks,L,R,Splitter,Swinging Strike,,,0,-0.544064355,0.550495969
+3,0,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Evan Marks,L,R,Splitter,Ball,,,0,-0.981099187,-0.298584232
+3,0,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Evan Marks,L,R,Fastball,Flyout,Fly Ball,Straightaway,0,-0.325546939,0.825660849
+3,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Evan Marks,R,R,Splitter,Foul,,,0,-0.305681719,0.0866466
+3,1,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Evan Marks,R,R,Splitter,Foul,,,0,0.409466188,0.133817723
+3,1,0,2,'0-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Evan Marks,R,R,Splitter,Strikeout Swinging,,,0,0.151218333,0.330364066
+3,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Leatherland,Evan Marks,L,R,Fastball,Called Strike,,,0,-0.444738257,0.464015579
+3,2,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Leatherland,Evan Marks,L,R,Splitter,Ball,,,0,-0.623525234,-0.141347157
+3,2,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Leatherland,Evan Marks,L,R,Splitter,Single,Line Drive,Straightaway,0,0.488927067,0.259607382
+3,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Evan Marks,R,R,Slider,Called Strike,,,100,0.230679211,0.809937142
+3,2,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Evan Marks,R,R,Slider,Single,Ground Ball,Pull,10,0.508792286,0.503324847
+3,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Evan Marks,L,R,Splitter,Foul,,,101,-0.504333916,0.283192943
+3,2,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Evan Marks,L,R,Fastball,Called Strike,,,101,-0.464603476,0.707733044
+3,2,0,2,'0-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Evan Marks,L,R,Splitter,Single,Ground Ball,Straightaway,11,-0.524199135,0.157403284
+3,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Evan Marks,R,R,Slider,Called Strike,,,10,0.349870529,0.338225919
+3,2,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Evan Marks,R,R,Fastball,Ball,,,10,0.727309702,0.204574406
+3,2,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Evan Marks,R,R,Slider,Foul,,,10,0.369735749,0.118094015
+3,2,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Evan Marks,R,R,Fastball,Strikeout Looking,,,10,0.627983604,0.778489727
+3,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jack Shannon,Myles Robinson,R,R,Fastball,Called Strike,,,0,0.171083552,0.346087773
+3,0,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Jack Shannon,Myles Robinson,R,R,Fastball,Ball,,,0,0.409466188,1.258062803
+3,0,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Jack Shannon,Myles Robinson,R,R,Breaking Ball,Ball,,,0,0.806770581,-0.345755354
+3,0,2,1,'2-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Jack Shannon,Myles Robinson,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.389600968,0.180988845
+3,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Myles Robinson,R,R,Breaking Ball,Called Strike,,,0,-0.24608606,0.503324847
+3,1,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Myles Robinson,R,R,Fastball,Foul,,,0,-0.345412159,0.259607382
+3,1,0,2,'0-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Myles Robinson,R,R,Fastball,Popout,Pop Up,Opposite Field,0,0.349870529,0.692009336
+3,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Myles Robinson,L,R,Offspeed,Ball,,,0,-1.298942702,-0.172794572
+3,2,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Myles Robinson,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.449196627,0.605528945
+4,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Evan Marks,R,R,Slider,Called Strike,,,0,0.131353113,0.338225919
+4,0,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Evan Marks,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.31014009,0.794213435
+4,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Splitter,Ball,,,0,-0.563929575,0.0866466
+4,1,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Fastball,Ball,,,0,-0.24608606,-0.109899742
+4,1,2,0,'2-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Fastball,Foul,,,0,-0.464603476,0.298916651
+4,1,2,1,'2-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Splitter,Foul,,,0,-0.663255673,0.196712552
+4,1,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Splitter,Ball,,,0,-0.742716552,-0.314307939
+4,1,3,2,'3-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Fastball,Single,Ground Ball,Pull,0,0.270409651,0.157403284
+4,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Slider,Ball,,,,1.780166344,0.21243626
+4,1,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Splitter,Ball,,,,-0.305681719,0.055199186
+4,1,2,0,'2-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Fastball,Called Strike,,,,0.31014009,0.676285629
+4,1,2,1,'2-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Splitter,Ball,,,,-0.583794794,-0.282860524
+4,1,3,1,'3-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Fastball,Called Strike,,,,0.449196627,0.503324847
+4,1,3,2,'3-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Fastball,Strikeout Looking,,,,0.330005309,0.204574406
+4,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Evan Marks,L,R,Splitter,Popout,Pop Up,Opposite Field,10,-0.603660014,0.27533109
+4,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Myles Robinson,R,R,Fastball,Error,Fly Ball,Straightaway,0,0.190948772,0.306778504
+4,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Breaking Ball,Foul,,,100,-0.305681719,0.668423775
+4,0,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Breaking Ball,Swinging Strike,,,10,0.051892234,0.220298114
+4,0,0,2,'0-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Fastball,Foul,,,10,-0.643390453,0.802075288
+4,0,0,2,'0-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Fastball,Ball,,,10,-0.762581771,1.12441129
+4,0,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Breaking Ball,Flyout,Fly Ball,Opposite Field,10,0.409466188,0.180988845
+4,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Breaking Ball,Ball,,,10,-1.239347043,0.84924641
+4,1,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Fastball,Swinging Strike,,,,0.488927067,1.147996851
+4,1,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Fastball,Ball,,,,-1.37840358,0.69987119
+4,1,2,1,'2-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Fastball,Swinging Strike,,,,-0.84204265,0.778489727
+4,1,2,2,'2-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Breaking Ball,Ball,,,,1.204074974,-0.27499867
+4,1,3,2,'3-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Fastball,Walk,,,,-1.199616603,1.045792753
+4,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Josh Frazer,Myles Robinson,L,R,Fastball,Flyout,Fly Ball,Straightaway,110,0.250544431,0.668423775
+4,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Myles Robinson,R,R,Breaking Ball,Ball,,,110,1.800031563,0.259607382
+4,2,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Myles Robinson,R,R,Fastball,Foul,,,,0.389600968,0.283192943
+4,2,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Myles Robinson,R,R,Fastball,Foul,,,,1.263670633,0.574081531
+4,2,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Myles Robinson,R,R,Fastball,Flyout,Fly Ball,Opposite Field,110,0.409466188,0.76276602
+5,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Evan Marks,R,R,Splitter,Lineout,Line Drive,Pull,0,-0.424873037,0.188850699
+5,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Nico Valvo,Evan Marks,R,R,Fastball,Called Strike,,,0,-0.405007818,0.558357823
+5,1,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Nico Valvo,Evan Marks,R,R,Splitter,Swinging Strike,,,0,-0.345412159,0.432568164
+5,1,0,2,'0-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Nico Valvo,Evan Marks,R,R,Slider,Ball,,,0,1.124614095,-0.204241987
+5,1,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Nico Valvo,Evan Marks,R,R,Fastball,Single,Ground Ball,Pull,0,-0.643390453,0.715594897
+5,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Evan Marks,R,R,Slider,Ball,,,100,0.667714043,0.416844456
+5,1,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Evan Marks,R,R,Slider,Double Play,Fly Ball,Straightaway,100,0.488927067,0.283192943
+5,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Myles Robinson,R,R,Fastball,Ball,,,0,0.548522726,-0.141347157
+5,0,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Myles Robinson,R,R,Fastball,Foul,,,0,0.349870529,0.613390799
+5,0,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Myles Robinson,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.608118385,0.432568164
+5,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jack Shannon,Myles Robinson,R,R,Breaking Ball,Ball,,,0,1.42259239,0.864970118
+5,1,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jack Shannon,Myles Robinson,R,R,Fastball,Called Strike,,,0,0.190948772,0.809937142
+5,1,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Jack Shannon,Myles Robinson,R,R,Breaking Ball,Error,Ground Ball,Pull,0,-0.365277378,0.495462993
+5,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Myles Robinson,R,R,Fastball,Ball,,,0,0.528657506,-0.282860524
+5,1,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Myles Robinson,R,R,Fastball,Ball,,,0,-0.325546939,0.920003094
+5,1,2,0,'2-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Myles Robinson,R,R,Fastball,Foul,,,0,-0.544064355,0.692009336
+5,1,2,1,'2-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Myles Robinson,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.464603476,0.676285629
+5,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Rhys Jenkyn,Evan Marks,L,R,Splitter,Called Strike,,,0,-0.603660014,0.456153725
+5,2,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Rhys Jenkyn,Evan Marks,L,R,Fastball,Foul,,,0,-0.762581771,0.220298114
+5,2,0,2,'0-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Rhys Jenkyn,Evan Marks,L,R,Splitter,Single,Ground Ball,Straightaway,0,-0.544064355,0.157403284
+5,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Junichi Yuki,Evan Marks,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.31014009,0.817798996
+6,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Arthur Kowara,Evan Marks,R,R,Slider,Foul,,,0,-0.107029523,0.165265138
+6,0,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Arthur Kowara,Evan Marks,R,R,Splitter,Ball,,,0,0.945827119,-0.306446085
+6,0,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Arthur Kowara,Evan Marks,R,R,Slider,Ball,,,0,1.482188049,-0.267136817
+6,0,2,1,'2-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Arthur Kowara,Evan Marks,R,R,Slider,Called Strike,,,0,0.488927067,0.802075288
+6,0,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Arthur Kowara,Evan Marks,R,R,Splitter,Strikeout Swinging,,,0,-0.126894742,-0.314307939
+6,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Splitter,Ball,,,0,-0.82217743,0.668423775
+6,1,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Splitter,Ball,,,,-0.861907869,-0.330031646
+6,1,2,0,'2-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Fastball,Ball,,,,1.303401072,0.786351581
+6,1,3,0,'3-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Evan Marks,L,R,Fastball,Walk,,,,1.204074974,0.896417533
+6,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Splitter,Called Strike,,,0,-0.683120893,0.36181148
+6,1,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Slider,Ball,,,0,0.469061847,-0.180656426
+6,1,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Fastball,Swinging Strike,,,0,0.548522726,0.668423775
+6,1,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Kalan Maharaj,Evan Marks,R,R,Slider,Strikeout Swinging,,,0,-0.742716552,0.055199186
+6,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Geddes,Myles Robinson,L,R,Breaking Ball,Ball,,,0,-1.557190557,0.00016621
+6,2,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Geddes,Myles Robinson,L,R,Fastball,Ball,,,0,-1.517460118,1.147996851
+6,2,2,0,'2-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Geddes,Myles Robinson,L,R,Fastball,Called Strike,,,0,-0.524199135,0.385397042
+6,2,2,1,'2-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Geddes,Myles Robinson,L,R,Breaking Ball,Foul,,,0,-0.623525234,0.243883675
+6,2,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Geddes,Myles Robinson,L,R,Fastball,Foul,,,0,0.349870529,0.817798996
+6,2,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Geddes,Myles Robinson,L,R,Fastball,Ball,,,0,-1.596920996,0.990759777
+6,2,3,2,'3-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Adam Geddes,Myles Robinson,L,R,Fastball,Single,Line Drive,Opposite Field,0,-0.563929575,0.825660849
+6,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Kade Falardeau,Myles Robinson,R,R,Breaking Ball,Ball,,,100,-0.544064355,1.108687583
+6,2,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Kade Falardeau,Myles Robinson,R,R,Fastball,Called Strike,,,,0.330005309,0.291054797
+6,2,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Kade Falardeau,Myles Robinson,R,R,Fastball,Groundout,Ground Ball,Pull,,-0.603660014,0.322502212
+6,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Fastball,Ball,,,1,-1.477729678,0.196712552
+6,0,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Myles Robinson,R,R,Fastball,Groundout,Ground Ball,Straightaway,1,0.508792286,0.63697636
+6,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Breaking Ball,Called Strike,,,0,0.727309702,0.69987119
+6,1,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Fastball,Ball,,,,-0.484468696,-0.117761596
+6,1,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Fastball,Swinging Strike,,,,0.270409651,0.692009336
+6,1,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Fastball,Ball,,,,1.204074974,-0.204241987
+6,1,2,2,'2-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Flynn Matheson,Myles Robinson,R,R,Fastball,Strikeout Looking,,,,-0.325546939,0.094508454
+6,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Ty Tinnish,Max Van Dam,L,L,Slider,Ball,,,0,1.581514147,0.314640358
+6,2,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Ty Tinnish,Max Van Dam,L,L,Slider,Called Strike,,,,0.548522726,0.14954143
+6,2,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Ty Tinnish,Max Van Dam,L,L,Slider,Ball,,,,-0.504333916,-0.243551256
+6,2,2,1,'2-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Ty Tinnish,Max Van Dam,L,L,Slider,Flyout,Fly Ball,Opposite Field,0,-0.504333916,0.353949627
+7,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Van Dam,R,L,Slider,Ball,,,0,1.204074974,0.416844456
+7,0,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Van Dam,R,L,Changeup,Ball,,,,1.97881854,0.070922893
+7,0,2,0,'2-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Van Dam,R,L,Changeup,Single,Ground Ball,Pull,,0.171083552,0.196712552
+7,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Nico Valvo,Max Van Dam,R,L,Fastball,Ball,,,100,1.720570685,0.731318605
+7,0,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Nico Valvo,Max Van Dam,R,L,Fastball,Called Strike,,,,0.548522726,0.833522703
+7,0,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Nico Valvo,Max Van Dam,R,L,Fastball,Double Play,Ground Ball,Straightaway,100,0.270409651,0.715594897
+7,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Josh Frazer,Owen Toon,L,R,Fastball,Ball,,,0,-1.259212262,-0.141347157
+7,2,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Josh Frazer,Owen Toon,L,R,Fastball,Ball,,,0,0.687579263,-0.330031646
+7,2,2,0,'2-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Josh Frazer,Owen Toon,L,R,Fastball,Called Strike,,,0,-1.298942702,0.228159967
+7,2,2,1,'2-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Josh Frazer,Owen Toon,L,R,Fastball,Ball,,,0,1.263670633,0.27533109
+7,2,3,1,'3-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Josh Frazer,Owen Toon,L,R,Fastball,Called Strike,,,0,0.330005309,1.092963875
+7,2,3,2,'3-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Josh Frazer,Owen Toon,L,R,Fastball,Walk,,,0,1.502053269,-0.172794572
+7,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Brady Campbell,Owen Toon,R,R,Fastball,Ball,,,100,-0.365277378,-0.086314181
+7,2,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Brady Campbell,Owen Toon,R,R,Fastball,Called Strike,,,100,0.429331408,0.21243626
+7,2,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Brady Campbell,Owen Toon,R,R,Fastball,Single,Ground Ball,Opposite Field,100,-0.643390453,0.69987119
+7,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Liam Riley,Owen Toon,R,R,Fastball,Ball,,,110,-0.683120893,-0.306446085
+7,2,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Liam Riley,Owen Toon,R,R,Fastball,Single,Pop Up,Opposite Field,11,-0.544064355,0.63697636
+7,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Tim Somerville,Owen Toon,R,R,Fastball,Single,Ground Ball,Straightaway,10,-0.146759962,0.69987119
+7,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Gavin Taylor,Owen Toon,R,R,Fastball,Ball,,,11,1.40272717,0.157403284
+7,2,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Gavin Taylor,Owen Toon,R,R,Fastball,Foul,,,11,-0.544064355,0.754904166
+7,2,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Gavin Taylor,Owen Toon,R,R,Fastball,Foul,,,11,0.488927067,0.809937142
+7,2,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Gavin Taylor,Owen Toon,R,R,Breaking Ball,Ball,,,11,1.601379367,0.369673334
+7,2,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Gavin Taylor,Owen Toon,R,R,Fastball,Flyout,Fly Ball,Opposite Field,11,0.349870529,0.786351581
+7,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Owen Toon,L,R,,Walk,,,111,,
+7,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Toon,R,R,Fastball,Ball,,,,0.608118385,-0.290722378
+7,0,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Toon,R,R,Fastball,Ball,,,,1.541783708,0.857108264
+7,0,2,0,'2-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Toon,R,R,Fastball,Foul,,,,0.647848824,0.644838214
+7,0,2,1,'2-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Toon,R,R,Fastball,Error,Ground Ball,Straightaway,,0.508792286,0.369673334
+1,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Changeup,Ball,,,0,-1.179751384,0.141679576
+1,0,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Fastball,Foul,,,0,0.31014009,0.739180459
+1,0,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Changeup,Called Strike,,,0,-0.782446991,0.511186701
+1,0,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Slider,Foul,,,0,0.131353113,0.872831972
+1,0,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Changeup,Ball,,,0,-1.35853836,0.377535188
+1,0,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Fastball,Ball,,,0,-1.259212262,0.236021821
+1,0,3,2,'3-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Fastball,Flyout,Fly Ball,Pull,0,0.508792286,0.542634116
+1,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Burroughsford,R,R,Slider,Groundout,Ground Ball,Pull,0,-0.107029523,0.833522703
+1,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Max Burroughsford,L,R,Changeup,Called Strike,,,0,-0.742716552,0.84924641
+1,2,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Max Burroughsford,L,R,Changeup,Ball,,,0,-0.544064355,-0.455821306
+1,2,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Max Burroughsford,L,R,Fastball,Foul,,,0,-0.484468696,0.644838214
+1,2,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Max Burroughsford,L,R,Changeup,Ball,,,0,-0.325546939,-0.172794572
+1,2,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Max Burroughsford,L,R,Fastball,Strikeout Looking,,,0,-0.80231221,0.707733044
+1,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Justin Mende,L,R,Fastball,Ball,,,0,0.29027487,-0.322169793
+1,0,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Justin Mende,L,R,Fastball,Ball,,,,0.270409651,1.163720559
+1,0,2,0,'2-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Justin Mende,L,R,Fastball,Ball,,,,-0.107029523,-0.40078833
+1,0,3,0,'3-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Justin Mende,L,R,Fastball,Walk,,,,0.429331408,-0.172794572
+1,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Justin Mende,R,R,Fastball,Called Strike,,,100,0.449196627,0.605528945
+1,0,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Justin Mende,R,R,Fastball,Single,Line Drive,Pull,,-0.405007818,0.660561921
+1,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Justin Mende,R,R,Fastball,Swinging Strike,,,110,-0.345412159,-0.133485304
+1,0,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Justin Mende,R,R,Fastball,Swinging Strike,,,,-0.26595128,0.259607382
+1,0,0,2,'0-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Justin Mende,R,R,Breaking Ball,Ball,,,,0.786905361,-0.306446085
+1,0,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Justin Mende,R,R,Fastball,Double Play,Fly Ball,Straightaway,,0.488927067,0.220298114
+1,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Justin Mende,R,R,Fastball,Foul,,,,-0.683120893,0.794213435
+1,2,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Justin Mende,R,R,Fastball,Ball,,,,-0.2858165,-0.369340915
+1,2,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Justin Mende,R,R,Fastball,Swinging Strike,,,,1.283535852,0.220298114
+1,2,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Justin Mende,R,R,Fastball,Ball,,,,-0.80231221,1.12441129
+1,2,2,2,'2-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Justin Mende,R,R,Fastball,Strikeout Swinging,,,,0.647848824,-0.164932718
+2,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Slider,Called Strike,,,,0.488927067,0.802075288
+2,0,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Slider,Foul,,,,0.250544431,0.613390799
+2,0,0,2,'0-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Slider,Ball,,,,0.925961899,1.163720559
+2,0,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Slider,Ball,,,,0.528657506,-0.243551256
+2,0,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Slider,Foul,,,,-0.702986112,0.857108264
+2,0,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Slider,Strikeout Swinging,,,,0.469061847,1.085102022
+2,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Max Burroughsford,L,R,Changeup,Groundout,Ground Ball,Pull,,-0.524199135,0.243883675
+2,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Max Burroughsford,L,R,Slider,Ball,,,,1.462322829,0.825660849
+2,2,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Max Burroughsford,L,R,Splitter,Swinging Strike,,,,0.369735749,0.322502212
+2,2,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Max Burroughsford,L,R,Slider,Foul,,,,0.270409651,0.479739286
+2,2,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Max Burroughsford,L,R,Fastball,Ball,,,,0.012161795,1.25020095
+2,2,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Max Burroughsford,L,R,Slider,Flyout,Fly Ball,Straightaway,,0.687579263,0.574081531
+2,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Justin Mende,R,R,Fastball,Ball,,,0,0.588253165,1.116549437
+2,0,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Justin Mende,R,R,Fastball,Foul,,,0,-0.563929575,0.778489727
+2,0,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Justin Mende,R,R,Fastball,Flyout,Fly Ball,Straightaway,,0.469061847,0.652700068
+2,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Josh Frazer,Justin Mende,L,R,Breaking Ball,Ball,,,,0.071757454,-0.408650183
+2,1,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Josh Frazer,Justin Mende,L,R,Fastball,Swinging Strike,,,,0.647848824,0.794213435
+2,1,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Josh Frazer,Justin Mende,L,R,Fastball,Foul,,,,0.171083552,0.094508454
+2,1,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Josh Frazer,Justin Mende,L,R,Fastball,Ball,,,,-1.517460118,0.27533109
+2,1,2,2,'2-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Josh Frazer,Justin Mende,L,R,Fastball,Groundout,Ground Ball,Pull,,0.786905361,0.644838214
+2,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Justin Mende,R,R,Fastball,Called Strike,,,,0.389600968,0.440430017
+2,2,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Justin Mende,R,R,Fastball,Ball,,,,1.44245761,1.155858705
+2,2,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Justin Mende,R,R,Fastball,Ball,,,,0.627983604,-0.267136817
+2,2,2,1,'2-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Justin Mende,R,R,Fastball,Swinging Strike,,,,1.382861951,0.731318605
+2,2,2,2,'2-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Justin Mende,R,R,Fastball,Strikeout Swinging,,,,0.627983604,0.754904166
+3,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Fastball,Ball,,,0,0.369735749,-0.109899742
+3,0,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Changeup,Ball,,,,-0.762581771,0.306778504
+3,0,2,0,'2-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Fastball,Called Strike,,,,-0.504333916,0.927864948
+3,0,2,1,'2-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Changeup,Groundout,Ground Ball,Pull,,0.31014009,0.322502212
+3,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Jonah Allen,Max Burroughsford,R,R,Slider,Ball,,,,1.502053269,0.97503607
+3,1,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Jonah Allen,Max Burroughsford,R,R,Slider,Foul,,,,0.508792286,0.731318605
+3,1,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Jonah Allen,Max Burroughsford,R,R,Fastball,Swinging Strike,,,,0.727309702,0.857108264
+3,1,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Jonah Allen,Max Burroughsford,R,R,Fastball,Error,Ground Ball,Straightaway,,-0.325546939,0.173126991
+3,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Max Burroughsford,R,R,Fastball,Ball,,,,0.330005309,0.063061039
+3,1,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Max Burroughsford,R,R,Slider,Called Strike,,,,0.767040142,0.652700068
+3,1,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Max Burroughsford,R,R,Fastball,Foul,,,,0.469061847,0.173126991
+3,1,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Max Burroughsford,R,R,Slider,Foul,,,,0.349870529,0.864970118
+3,1,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Max Burroughsford,R,R,Fastball,Flyout,Fly Ball,Straightaway,,-0.563929575,-0.180656426
+3,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Fastball,Foul,,,,-0.583794794,0.809937142
+3,2,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Fastball,Called Strike,,,,-0.603660014,0.157403284
+3,2,0,2,'0-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Fastball,Popout,Pop Up,Opposite Field,,-0.623525234,0.621252653
+3,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Nate Parsons,Justin Mende,L,R,Fastball,Ball,,,0,-1.437999239,0.739180459
+3,0,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Nate Parsons,Justin Mende,L,R,Fastball,Swinging Strike,,,,-0.2858165,0.306778504
+3,0,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Nate Parsons,Justin Mende,L,R,Offspeed,Called Strike,,,,-0.663255673,0.676285629
+3,0,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Nate Parsons,Justin Mende,L,R,Fastball,Single,Ground Ball,Pull,,-0.524199135,0.377535188
+3,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Justin Mende,R,R,Fastball,Sacrifice Bunt,Ground Ball,Straightaway,,0.449196627,0.298916651
+3,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Justin Mende,L,R,Fastball,Foul,,,,-0.305681719,0.786351581
+3,1,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Justin Mende,L,R,Offspeed,Flyout,Fly Ball,Straightaway,,-0.643390453,0.251745528
+3,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Justin Mende,R,R,Fastball,Ball,,,,-0.563929575,1.132273144
+3,2,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Justin Mende,R,R,Fastball,Groundout,Ground Ball,Straightaway,,0.488927067,0.180988845
+4,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Burroughsford,R,R,Fastball,Called Strike,,,,0.508792286,0.393258895
+4,0,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Burroughsford,R,R,Slider,Ball,,,,1.462322829,-0.259274963
+4,0,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Burroughsford,R,R,Slider,Called Strike,,,,0.588253165,0.534772262
+4,0,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Burroughsford,R,R,Slider,Foul,,,,0.210813992,0.857108264
+4,0,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Burroughsford,R,R,Slider,Foul,,,,0.568387945,0.864970118
+4,0,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Burroughsford,R,R,Slider,Ball,,,,1.561648928,0.322502212
+4,0,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Burroughsford,R,R,Fastball,Single,Ground Ball,Pull,,-0.464603476,0.133817723
+4,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Max Burroughsford,L,R,Fastball,Sacrifice Bunt,Ground Ball,Opposite Field,,-0.444738257,0.48760114
+4,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Slider,Ball,,,,1.740435904,0.927864948
+4,1,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Fastball,Ball,,,,-0.424873037,-0.164932718
+4,1,2,0,'2-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Slider,Ball,,,,-0.107029523,1.077240168
+4,1,3,0,'3-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Slider,Called Strike,,,,0.608118385,0.259607382
+4,1,3,1,'3-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Fastball,Walk,,,10,-1.239347043,1.045792753
+4,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Max Burroughsford,L,R,Fastball,Called Strike,,,110,0.29027487,0.204574406
+4,1,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Max Burroughsford,L,R,Changeup,Foul,,,,-0.563929575,0.668423775
+4,1,0,2,'0-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Max Burroughsford,L,R,Fastball,Ball,,,,-1.537325337,0.951450509
+4,1,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Max Burroughsford,L,R,Slider,Foul,,,110,0.051892234,0.102370308
+4,1,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Max Burroughsford,L,R,Fastball,Ball,,,,-1.477729678,0.306778504
+4,1,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Max Burroughsford,L,R,Slider,Ball,,,,-1.219481823,0.809937142
+4,1,3,2,'3-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Max Burroughsford,L,R,Fastball,Strikeout Swinging,,,,-0.623525234,1.108687583
+4,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Max Burroughsford,R,R,Slider,Called Strike,,,,0.786905361,0.408982603
+4,2,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Max Burroughsford,R,R,Slider,Called Strike,,,,0.687579263,0.676285629
+4,2,0,2,'0-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Max Burroughsford,R,R,Fastball,Ball,,,,0.111487893,-0.298584232
+4,2,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Max Burroughsford,R,R,Slider,Ball,,,,-1.020829627,1.195167974
+4,2,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Junichi Yuki,Max Burroughsford,R,R,Slider,Strikeout Looking,,,,0.786905361,0.613390799
+4,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Justin Mende,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.469061847,0.739180459
+4,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Liam Riley,Justin Mende,R,R,Fastball,Single,Ground Ball,Pull,0,0.369735749,0.188850699
+4,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Justin Mende,R,R,Fastball,Ball,,,100,-0.047433864,-0.18851828
+4,1,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Justin Mende,R,R,Fastball,Ball,,,100,0.627983604,-0.369340915
+4,1,2,0,'2-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Justin Mende,R,R,Fastball,Single,Line Drive,Straightaway,10,0.429331408,0.825660849
+4,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Josh Frazer,Justin Mende,L,R,Fastball,Ball,,,10,-0.742716552,1.171582413
+4,1,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Josh Frazer,Justin Mende,L,R,Fastball,Flyout,Fly Ball,Pull,10,-0.762581771,0.802075288
+4,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Justin Mende,R,R,Fastball,Ball,,,10,-0.961233968,-0.164932718
+4,2,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Justin Mende,R,R,Fastball,Ball,,,,-0.186490401,-0.322169793
+4,2,2,0,'2-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Justin Mende,R,R,Fastball,Foul,,,,-0.544064355,0.652700068
+4,2,2,1,'2-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Justin Mende,R,R,Fastball,Ball,,,,-0.563929575,-0.361479061
+4,2,3,1,'3-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Nolan Phelan,Justin Mende,R,R,Fastball,Single,Line Drive,Straightaway,10,0.627983604,0.833522703
+4,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Nate Parsons,Justin Mende,L,R,Fastball,Swinging Strike,,,100,-0.226220841,0.550495969
+4,2,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Nate Parsons,Justin Mende,L,R,Offspeed,Groundout,Ground Ball,Pull,100,-0.702986112,0.731318605
+5,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Slider,Swinging Strike,,,0,0.330005309,-0.243551256
+5,0,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Changeup,Ball,,,,-1.338673141,0.794213435
+5,0,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Changeup,Called Strike,,,,-1.298942702,-0.039143059
+5,0,1,2,'1-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Fastball,Ball,,,,-0.504333916,1.171582413
+5,0,2,2,'2-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Changeup,Ball,,,,-1.676381875,0.440430017
+5,0,3,2,'3-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Changeup,Strikeout Swinging,,,,-0.683120893,0.283192943
+5,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Jonah Allen,Max Burroughsford,R,R,Slider,Ball,,,0,0.747174922,-0.102037889
+5,1,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Jonah Allen,Max Burroughsford,R,R,Changeup,Swinging Strike,,,,-0.623525234,0.055199186
+5,1,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Jonah Allen,Max Burroughsford,R,R,Slider,Ball,,,,0.667714043,-0.180656426
+5,1,2,1,'2-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Jonah Allen,Max Burroughsford,R,R,Slider,Ball,,,,0.449196627,0.920003094
+5,1,3,1,'3-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Jonah Allen,Max Burroughsford,R,R,Fastball,Called Strike,,,,-0.663255673,0.14954143
+5,1,3,2,'3-2,2026-09-20,Waterloo Warriors,Brock Badgers,,Jonah Allen,Max Burroughsford,R,R,Slider,Groundout,Ground Ball,Pull,,0.190948772,0.173126991
+5,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Max Burroughsford,R,R,Slider,Swinging Strike,,,,0.330005309,0.668423775
+5,2,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Max Burroughsford,R,R,Slider,Ball,,,,2.058279419,0.330364066
+5,2,1,1,'1-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Jai Pawa,Max Burroughsford,R,R,Slider,Groundout,Ground Ball,Straightaway,,0.826635801,-0.251413109
+5,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Owen Newman,R,R,Fastball,Foul,,,0,-0.305681719,0.330364066
+5,0,0,1,'0-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Owen Newman,R,R,Breaking Ball,Ball,,,,1.521918488,0.070922893
+5,0,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Owen Newman,R,R,Fastball,Called Strike,,,,0.349870529,0.228159967
+5,0,1,2,'1-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Owen Newman,R,R,Breaking Ball,Ball,,,,1.899357661,-0.070590474
+5,0,2,2,'2-2,2026-09-20,Brock Badgers,Waterloo Warriors,,Gavin Taylor,Owen Newman,R,R,Fastball,Strikeout Swinging,,,,0.667714043,0.676285629
+5,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Adam Geddes,Owen Newman,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.325546939,0.63697636
+5,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Newman,R,R,Fastball,Ball,,,,0.627983604,1.132273144
+5,2,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Newman,R,R,Fastball,Swinging Strike,,,,0.250544431,0.070922893
+5,2,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Newman,R,R,Fastball,Ball,,,,-0.623525234,-0.282860524
+5,2,2,1,'2-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Newman,R,R,Fastball,Groundout,Ground Ball,Pull,,0.727309702,0.566219677
+6,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ben Waddell,Max Burroughsford,L,R,Changeup,Groundout,Ground Ball,Pull,0,-0.464603476,0.251745528
+6,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Carter Kipp,Max Burroughsford,R,R,Slider,Single,Fly Ball,Straightaway,0,0.588253165,0.157403284
+6,1,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Max Burroughsford,L,R,Changeup,Ball,,,100,0.727309702,-0.298584232
+6,1,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Ty Tinnish,Max Burroughsford,L,R,Fastball,Flyout,Fly Ball,Pull,100,0.190948772,0.809937142
+6,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Changeup,Ball,,,100,-0.504333916,-0.290722378
+6,2,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Fastball,Ball,,,100,0.429331408,1.163720559
+6,2,2,0,'2-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Sam Shephard,Max Burroughsford,R,R,Fastball,Flyout,Fly Ball,Opposite Field,100,0.608118385,0.668423775
+6,0,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Jaden Leeder,Owen Newman,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.469061847,0.377535188
+6,1,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Liam Riley,Owen Newman,R,R,Fastball,Ball,,,0,-1.279077482,0.888555679
+6,1,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Liam Riley,Owen Newman,R,R,Fastball,Foul,,,0,0.111487893,0.0866466
+6,1,1,1,'1-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Liam Riley,Owen Newman,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.429331408,0.173126991
+6,2,0,0,'0-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Brady Campbell,Owen Newman,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.667714043,0.322502212
+7,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Max Burroughsford,L,R,Fastball,Ball,,,0,0.647848824,-0.290722378
+7,0,1,0,'1-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Rhys Jenkyn,Max Burroughsford,L,R,Fastball,Single,Line Drive,Straightaway,0,-0.623525234,0.353949627
+7,0,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Arthur Kowara,Max Burroughsford,R,R,Slider,Called Strike,,,100,0.548522726,0.298916651
+7,0,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Arthur Kowara,Max Burroughsford,R,R,Slider,Double Play,Ground Ball,Pull,0,0.627983604,0.479739286
+7,2,0,0,'0-0,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Slider,Called Strike,,,0,-0.087164303,0.786351581
+7,2,0,1,'0-1,2026-09-20,Waterloo Warriors,Brock Badgers,,Cole Smart,Max Burroughsford,L,R,Fastball,Groundout,Ground Ball,Pull,0,-0.583794794,0.550495969
