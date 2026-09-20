@@ -326,6 +326,10 @@
         tableHost.querySelector('#zoneQuadrantHand').value=hand;
       }
       zoneTable.addEventListener('change',event=>{if(event.target.id==='zoneQuadrantHand'){zoneTable.dataset.hand=event.target.value;renderQuadrants()}});
+      // The map's date range is installed after this table. Listen for its
+      // explicit change event so the table always redraws from the same
+      // scoped pitch set as the map, rather than retaining the full season.
+      document.addEventListener('zone-date-range-change',()=>setTimeout(renderQuadrants,0));
       Promise.all([fetch('data/pitchers2026.json').then(response=>response.json()),fetch('data/pitches2026.json').then(response=>response.json())]).then(([pitchers,batters])=>{averages={pitcher:line(pitchers.flatMap(safePoints)),batter:line(batters.flatMap(safePoints))};renderQuadrants()}).catch(renderQuadrants);
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(renderQuadrants,160)));
       document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderQuadrants,160)));
@@ -946,6 +950,7 @@
         zoneControl.style.display='flex';
         updateFilters();
         if(typeof renderQuadrants==='function')renderQuadrants();
+        document.dispatchEvent(new CustomEvent('zone-date-range-change'));
       }
       const sequenceMetrics=rows=>{const swings=rows.filter(point=>swingOutcomes.has(point.outcome)),whiffs=rows.filter(point=>whiffOutcomes.has(point.outcome)),located=rows.filter(point=>point.x!==null&&point.x!==undefined&&String(point.x).trim()!==''&&point.y!==null&&point.y!==undefined&&String(point.y).trim()!==''),outside=located.filter(point=>!point.in_zone),chases=outside.filter(point=>swingOutcomes.has(point.outcome)),abs=rows.filter(isOfficialAtBat),hits=abs.filter(point=>['Single','Double','Triple','Home Run'].includes(point.outcome));return{strike:rows.length?rows.filter(isPitchStrike).length/rows.length*100:null,whiff:swings.length?whiffs.length/swings.length*100:null,chase:outside.length?chases.length/outside.length*100:null,baa:abs.length?hits.length/abs.length:null}};
       function renderSequencingDate(){
@@ -972,12 +977,14 @@
       controls.forEach(control=>control.querySelectorAll('input').forEach(input=>{
         input.addEventListener('input',function(){
           configure(control,false,input);
+          if(control===zoneControl)document.dispatchEvent(new CustomEvent('zone-date-range-change'));
           renderSoon(control);
         });
         input.addEventListener('change',function(){
           clearTimeout(control._renderTimer);
           control._renderTimer=null;
           configure(control,false,input);
+          if(control===zoneControl)document.dispatchEvent(new CustomEvent('zone-date-range-change'));
           renderers.get(control)();
         });
       }));
