@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Brock Badgers Baseball | Scouting Report</title>
+  <style>body{margin:0;background:#f7f9fb;color:#102746;font:600 16px Arial,sans-serif}.loading{min-height:100vh;display:grid;place-items:center;text-align:center}.loading span{display:block;margin-top:8px;color:#657486;font-size:13px;font-weight:400}</style>
+</head>
+<body>
+  <main class="loading">Preparing scouting report<span>Brock Badgers Baseball</span></main>
+  <script>
+    (function () {
+      const source = '/oua/brock-dashboard/scouting.html';
+      fetch(source, { cache: 'no-store' })
+        .then(response => {
+          if (!response.ok) throw new Error('Scouting report source could not be loaded.');
+          return response.text();
+        })
+        .then(html => {
+          html = html
+            .replace(/<head>/i, '<head><base href="/oua/brock-dashboard/">')
+            .replace('window.OUA_PUBLIC_ACCESS = false;', 'window.OUA_PUBLIC_ACCESS = true;');
+          document.open();
+          document.write(html);
+          document.close();
+        })
+        .catch(error => {
+          document.body.innerHTML = '<main class="loading">Scouting report is temporarily unavailable.<span>Please return to the dashboard and try again.</span></main>';
+          console.error(error);
+        });
+    })();
+  </script>
+</body>
+</html>
