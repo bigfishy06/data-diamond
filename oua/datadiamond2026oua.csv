@@ -5241,7 +5241,7 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 2,2,1,2,'1-2,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Slider,Ball,,,,0.647848824,-0.518716135
 2,2,2,2,'2-2,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Fastball,Ball,,,,0.488927067,1.116549437
 2,2,3,2,'3-2,2026-09-19,Western Mustangs,Brock Badgers,,Adam Thuss,Ryan Facchini,R,R,Cutter,Double,Fly Ball,Pull,,0.31014009,0.267469236
-2,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Neurnberger,Ryan Facchini,L,R,Cutter,Hit By Pitch,,,,1.680840245,0.36181148
+2,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Ryan Nuernberger,Ryan Facchini,L,R,Cutter,Hit By Pitch,,,,1.680840245,0.36181148
 2,2,0,0,'0-0,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Cutter,Called Strike,,,,-0.742716552,0.204574406
 2,2,0,1,'0-1,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Fastball,Called Strike,,,,-0.702986112,0.692009336
 2,2,0,2,'0-2,2026-09-19,Western Mustangs,Brock Badgers,,Trent Sillett,Ryan Facchini,R,R,Slider,Ball,,,,-1.298942702,0.180988845
@@ -5805,3 +5805,210 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,1,1,0,'1-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Toon,R,R,Fastball,Ball,,,,1.541783708,0.857108264
 7,1,2,0,'2-0,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Toon,R,R,Fastball,Foul,,,,0.647848824,0.644838214
 7,1,2,1,'2-1,2026-09-20,Brock Badgers,Waterloo Warriors,,Kade Falardeau,Owen Toon,R,R,Fastball,Error,Ground Ball,Straightaway,,0.508792286,0.369673334
+1,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Justin Meade,Myles Robinson,L,R,Fastball,Called Strike,,,0,-1.208322927,0.255677185
+1,0,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Justin Meade,Myles Robinson,L,R,,Called Strike,,,0,,
+1,0,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Justin Meade,Myles Robinson,L,R,,Groundout,Ground Ball,Opposite Field,0,,
+1,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nathan Smid,Myles Robinson,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.65162962,0.549432899
+1,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Myles Robinson,R,R,,Ball,,,0,,
+1,2,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Myles Robinson,R,R,Fastball,Called Strike,,,0,-0.350087413,0.191418123
+1,2,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Myles Robinson,R,R,Fastball,Ball,,,0,0.577734765,-0.203316119
+1,2,2,1,'2-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Myles Robinson,R,R,Fastball,Called Strike,,,0,-0.257305195,0.420914774
+1,2,2,2,'2-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Myles Robinson,R,R,Fastball,Walk,,,0,-0.721216284,1.302181917
+1,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Myles Robinson,R,R,Fastball,Ball,,,100,-0.396478522,0.099619462
+1,2,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,1.06,Quinten Shannon,Myles Robinson,R,R,Fastball,Home Run,Fly Ball,Opposite Field,100,0.299388112,0.576972498
+1,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Myles Robinson,L,R,Fastball,Called Strike,,,10,0.508148102,0.264857051
+1,2,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Myles Robinson,L,R,Fastball,Ball,,,10,-1.347496254,1.237922855
+1,2,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Myles Robinson,L,R,Breaking Ball,Flyout,Fly Ball,Straightaway,10,-0.605238512,0.659591292
+1,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Premnath Nayak,L,R,Breaking Ball,Ball,,,0,-1.440278472,0.264857051
+1,0,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Premnath Nayak,L,R,Fastball,Foul,,,0,-0.558847403,0.347475846
+1,0,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Premnath Nayak,L,R,Fastball,Foul,,,0,-0.350087413,0.632051694
+1,0,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Premnath Nayak,L,R,Fastball,Groundout,Ground Ball,Opposite Field,0,-0.721216284,0.503533569
+1,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Called Strike,,,0,-0.744411838,0.411734908
+1,1,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,,Single,Ground Ball,Straightaway,0,,
+1,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Premnath Nayak,R,R,Breaking Ball,Hit By Pitch,,,100,-1.533060689,0.760569819
+1,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Premnath Nayak,R,R,Breaking Ball,Hit By Pitch,,,110,-1.579451798,0.861548346
+1,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Premnath Nayak,L,R,Fastball,Ball,,,111,-1.208322927,0.824828881
+1,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Premnath Nayak,L,R,Fastball,Ball,,,111,-1.48666958,0.136338926
+1,1,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Premnath Nayak,L,R,Fastball,Error,Ground Ball,Straightaway,111,-0.512456294,0.448454373
+1,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Premnath Nayak,R,R,Fastball,Called Strike,,,111,-0.396478522,0.420914774
+1,1,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Premnath Nayak,R,R,Fastball,Error,Ground Ball,Pull,111,0.438561439,0.503533569
+1,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Premnath Nayak,L,R,Fastball,Ball,,,101,-1.556256244,-0.028898663
+1,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Premnath Nayak,L,R,Fastball,Ball,,,11,0.368974775,-0.267575181
+1,1,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Premnath Nayak,L,R,Fastball,Ball,,,11,0.786494755,-0.38691344
+1,1,3,0,'3-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Premnath Nayak,L,R,Fastball,Called Strike,,,11,-0.466065185,0.622871828
+1,1,3,1,'3-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Premnath Nayak,L,R,Fastball,Single,Ground Ball,Pull,11,-0.582042957,0.43009464
+1,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Myles Hazen,Premnath Nayak,R,R,Breaking Ball,Swinging Strike,,,101,0.740103646,0.292396649
+1,1,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Myles Hazen,Premnath Nayak,R,R,Breaking Ball,Ball,,,101,-1.27790959,0.310756381
+1,1,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Myles Hazen,Premnath Nayak,R,R,Breaking Ball,Foul,,,101,-0.187718532,0.246497319
+1,1,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Myles Hazen,Premnath Nayak,R,R,Breaking Ball,Foul,,,101,1.43597028,-0.17577652
+1,1,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Myles Hazen,Premnath Nayak,R,R,Breaking Ball,Strikeout Swinging,,,101,0.276192557,0.33829598
+1,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Fastball,Ball,,,11,0.137019231,1.100224863
+1,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Breaking Ball,Ball,,,11,-1.27790959,1.100224863
+1,2,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Fastball,Foul,,,11,0.554539211,0.356655712
+1,2,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Breaking Ball,Called Strike,,,11,-0.419674076,0.154698658
+1,2,2,2,'2-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Breaking Ball,Ball,,,11,-0.999562937,-0.295114779
+1,2,3,2,'3-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Fastball,Walk,,,11,-0.698020729,1.118584596
+1,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Premnath Nayak,L,R,Fastball,Foul,,,111,-0.373282967,0.310756381
+1,2,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Premnath Nayak,L,R,Fastball,Called Strike,,,111,-0.744411838,0.375015444
+1,2,0,2,'0-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Premnath Nayak,L,R,Fastball,Ball,,,111,-1.370691808,0.760569819
+1,2,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Premnath Nayak,L,R,Fastball,Ball,,,111,-1.69542957,0.072079864
+1,2,2,2,'2-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Premnath Nayak,L,R,Fastball,Single,Ground Ball,Opposite Field,111,-0.582042957,0.255677185
+1,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Ball,,,111,-1.185127373,0.769749685
+1,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Ball,,,111,-0.44286963,1.072685265
+1,2,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Called Strike,,,111,-0.698020729,0.650411426
+1,2,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Ball,,,111,-0.628434066,1.210383256
+1,2,3,1,'3-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Swinging Strike,,,111,-0.721216284,0.228137587
+1,2,3,2,'3-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Walk,,,111,-1.649038462,0.806469149
+1,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Premnath Nayak,R,R,Breaking Ball,Ball,,,111,0.113823676,1.10940473
+1,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Premnath Nayak,R,R,Fastball,Double,Ground Ball,Pull,111,-0.326891858,0.531073167
+1,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Premnath Nayak,R,R,Fastball,Foul,,,11,0.763299201,0.760569819
+1,2,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Premnath Nayak,R,R,Fastball,Swinging Strike,,,11,0.18341034,0.154698658
+1,2,0,2,'0-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Premnath Nayak,R,R,Breaking Ball,Strikeout Looking,,,11,0.160214785,0.375015444
+2,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Myles Robinson,R,R,Fastball,Ball,,,0,-1.533060689,1.15530406
+2,0,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Myles Robinson,R,R,Fastball,Ball,,,0,-0.489260739,1.274642319
+2,0,2,0,'2-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Myles Robinson,R,R,Fastball,Ball,,,0,1.714316933,0.228137587
+2,0,3,0,'3-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Myles Robinson,R,R,Fastball,Walk,,,0,0.577734765,1.136944328
+2,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Myles Robinson,R,R,Fastball,Called Strike,,,100,0.624125874,0.475993971
+2,0,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Myles Robinson,R,R,Fastball,Ball,,,100,-1.440278472,1.008426203
+2,0,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Myles Robinson,R,R,Fastball,Ball,,,100,0.508148102,-0.221675851
+2,0,2,1,'2-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Myles Robinson,R,R,Fastball,Swinging Strike,,,100,-0.373282967,0.586152364
+2,0,2,2,'2-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Myles Robinson,R,R,Fastball,Ball,,,100,-1.161931818,1.256282587
+2,0,3,2,'3-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Myles Robinson,R,R,Fastball,Strikeout Swinging,,,100,-0.396478522,1.15530406
+2,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Myles Robinson,R,R,Fastball,Ball,,,100,-1.602647353,0.17305839
+2,1,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Myles Robinson,R,R,Fastball,Ball,,,100,0.740103646,1.127764462
+2,1,2,0,'2-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Myles Robinson,R,R,Fastball,Ball,,,100,0.508148102,1.10940473
+2,1,3,0,'3-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Myles Robinson,R,R,Fastball,Called Strike,,,100,0.044237013,0.310756381
+2,1,3,1,'3-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Myles Robinson,R,R,Fastball,Called Strike,,,100,0.160214785,0.448454373
+2,1,3,2,'3-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Myles Robinson,R,R,Fastball,Walk,,,100,0.206605894,-0.17577652
+2,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Myles Robinson,R,R,Breaking Ball,Called Strike,,,110,0.345779221,0.310756381
+2,1,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Myles Robinson,R,R,Breaking Ball,Ball,,,110,1.783903596,0.08125973
+2,1,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Myles Robinson,R,R,Fastball,Ball,,,110,1.598339161,-0.194136252
+2,1,2,1,'2-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Myles Robinson,R,R,Fastball,Groundout,Ground Ball,Opposite Field,110,-0.419674076,0.439274506
+2,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Justin Meade,Myles Robinson,L,R,Fastball,Ball,,,11,-1.69542957,0.889087944
+2,2,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Justin Meade,Myles Robinson,L,R,Fastball,Called Strike,,,11,-0.65162962,0.38419531
+2,2,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Justin Meade,Myles Robinson,L,R,Breaking Ball,Ball,,,11,0.252997003,0.136338926
+2,2,2,1,'2-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Justin Meade,Myles Robinson,L,R,Offspeed,Swinging Strike,,,11,-0.373282967,0.347475846
+2,2,2,2,'2-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Justin Meade,Myles Robinson,L,R,Offspeed,Strikeout Swinging,,,11,-1.393887363,0.43009464
+2,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Premnath Nayak,L,R,Breaking Ball,Ball,,,0,0.554539211,-0.194136252
+2,0,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Premnath Nayak,L,R,Fastball,Foul,,,0,-0.396478522,0.329116114
+2,0,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Premnath Nayak,L,R,Fastball,Ball,,,0,1.273601399,0.870728212
+2,0,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Premnath Nayak,L,R,Fastball,Swinging Strike,,,0,-0.280500749,1.15530406
+2,0,2,2,'2-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Premnath Nayak,L,R,Breaking Ball,Strikeout Looking,,,0,-0.813998502,0.319936248
+2,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Premnath Nayak,R,R,Breaking Ball,Ball,,,0,-1.370691808,0.650411426
+2,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Premnath Nayak,R,R,Fastball,Lineout,Line Drive,Pull,0,0.461756993,0.677951024
+2,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Premnath Nayak,L,R,Fastball,Ball,,,0,-0.512456294,1.118584596
+2,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Premnath Nayak,L,R,Fastball,Ball,,,0,-0.628434066,1.146124194
+2,2,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Premnath Nayak,L,R,Fastball,Called Strike,,,0,-1.161931818,0.797289283
+2,2,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Premnath Nayak,L,R,Fastball,Ball,,,0,0.832885864,-0.12987719
+2,2,3,1,'3-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Premnath Nayak,L,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.206605894,0.356655712
+3,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nathan Smid,Myles Robinson,R,R,Fastball,Single,Ground Ball,Pull,0,0.206605894,0.365835578
+3,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Myles Robinson,R,R,Fastball,Called Strike,,,100,0.461756993,0.632051694
+3,0,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Myles Robinson,R,R,Breaking Ball,Ball,,,100,-1.556256244,1.008426203
+3,0,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Myles Robinson,R,R,Fastball,Swinging Strike,,,100,0.276192557,0.59533223
+3,0,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Myles Robinson,R,R,Fastball,Groundout,Ground Ball,Pull,100,-0.44286963,0.402555042
+3,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Myles Robinson,R,R,Fastball,Ball,,,10,1.296796953,0.824828881
+3,1,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Myles Robinson,R,R,Fastball,Swinging Strike,,,10,-0.350087413,1.136944328
+3,1,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Myles Robinson,R,R,Breaking Ball,Ball,,,10,-0.44286963,0.099619462
+3,1,2,1,'2-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Myles Robinson,R,R,Fastball,Ball,,,10,0.461756993,-0.194136252
+3,1,3,1,'3-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Myles Robinson,R,R,Offspeed,Swinging Strike,,,10,-0.65162962,0.751389953
+3,1,3,2,'3-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Myles Robinson,R,R,Fastball,Walk,,,10,1.366383616,0.274036917
+3,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Myles Robinson,L,R,,Groundout,Ground Ball,Straightaway,110,,
+3,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Myles Robinson,R,R,,Ball,,,101,,
+3,2,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Myles Robinson,R,R,Fastball,Ball,,,101,-1.533060689,1.210383256
+3,2,2,0,'2-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Myles Robinson,R,R,Fastball,Foul,,,101,0.508148102,0.38419531
+3,2,2,1,'2-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Myles Robinson,R,R,Fastball,Ball,,,101,0.80969031,0.228137587
+3,2,3,1,'3-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Myles Robinson,R,R,Offspeed,Walk,,,101,-0.65162962,1.10940473
+3,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Myles Robinson,R,R,Fastball,Ball,,,111,-0.953171828,1.192023524
+3,2,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Myles Robinson,R,R,Fastball,Swinging Strike,,,111,0.044237013,0.953347006
+3,2,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Myles Robinson,R,R,Fastball,Popout,Pop Up,Pull,111,0.18341034,0.89826781
+3,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Myles Hazen,Premnath Nayak,R,R,Breaking Ball,Swinging Strike,,,0,-0.674825175,0.43009464
+3,0,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Myles Hazen,Premnath Nayak,R,R,,Error,Ground Ball,Pull,0,,
+3,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Fastball,Called Strike,,,100,-0.257305195,0.650411426
+3,0,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Fastball,Ball,,,100,1.111232517,-0.221675851
+3,0,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Fastball,Ball,,,100,-0.790802947,-0.230855717
+3,0,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Breaking Ball,Ball,,,100,-0.512456294,-0.267575181
+3,0,3,1,'3-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Premnath Nayak,R,R,Fastball,Groundout,Ground Ball,Straightaway,100,0.067432567,0.815649015
+3,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Premnath Nayak,L,R,Fastball,Single,Ground Ball,Pull,10,-0.674825175,0.632051694
+3,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Ball,,,100,-0.535651848,-0.102337592
+3,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Ball,,,10,-1.556256244,1.164483926
+3,1,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Ball,,,10,-1.347496254,0.439274506
+3,1,3,0,'3-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Premnath Nayak,L,R,Fastball,Walk,,,10,-1.370691808,1.035965801
+3,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Devan Fenwick,R,R,Fastball,Hit By Pitch,,,110,-1.463474026,0.586152364
+3,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Devan Fenwick,R,R,Fastball,Foul,,,111,0.206605894,0.420914774
+3,1,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Devan Fenwick,R,R,Fastball,Ball,,,111,0.484952548,-0.139057056
+3,1,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Devan Fenwick,R,R,Breaking Ball,Home Run,Fly Ball,Straightaway,111,0.438561439,0.393375176
+3,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Devan Fenwick,L,R,Offspeed,Ball,,,0,-1.463474026,0.834008747
+3,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Devan Fenwick,L,R,Fastball,Called Strike,,,0,-0.280500749,0.319936248
+3,1,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Devan Fenwick,L,R,Fastball,Called Strike,,,0,-0.744411838,0.393375176
+3,1,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Devan Fenwick,L,R,Fastball,Foul,,,0,-0.65162962,0.797289283
+3,1,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Devan Fenwick,L,R,Offspeed,Foul,,,0,0.461756993,0.439274506
+3,1,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Devan Fenwick,L,R,Breaking Ball,Foul,,,0,-0.280500749,0.68713089
+3,1,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Devan Fenwick,L,R,Fastball,Single,Line Drive,Opposite Field,0,-0.605238512,0.632051694
+3,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Devan Fenwick,R,R,Fastball,Ball,,,0,0.229801449,0.08125973
+3,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Devan Fenwick,R,R,Fastball,Called Strike,,,0,1.250405844,0.292396649
+3,1,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Devan Fenwick,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,0,-0.489260739,0.402555042
+3,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Devan Fenwick,L,R,Fastball,Ball,,,100,-1.347496254,0.402555042
+3,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Devan Fenwick,L,R,Breaking Ball,Ball,,,100,-1.533060689,0.907447676
+3,2,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Devan Fenwick,L,R,Breaking Ball,Lineout,Line Drive,Opposite Field,100,0.229801449,0.237317453
+4,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Owen Newman,R,R,Fastball,Called Strike,,,0,0.438561439,0.677951024
+4,0,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Owen Newman,R,R,Fastball,Foul,,,0,-0.280500749,0.733030221
+4,0,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Owen Newman,R,R,Fastball,Ball,,,0,1.551948052,-0.221675851
+4,0,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Owen Newman,R,R,Fastball,Ball,,,0,1.505556943,0.797289283
+4,0,2,2,'2-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Owen Newman,R,R,Fastball,Ball,,,0,0.693712538,-0.414453038
+4,0,3,2,'3-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Owen Newman,R,R,Offspeed,Foul,,,0,-0.44286963,0.17305839
+4,0,3,2,'3-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Brody Nguyen,Owen Newman,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.18341034,0.237317453
+4,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Owen Newman,R,R,Fastball,Swinging Strike,,,0,0.206605894,0.576972498
+4,1,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Owen Newman,R,R,Fastball,Ball,,,0,1.737512488,-0.010538931
+4,1,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Owen Newman,R,R,Fastball,Error,Ground Ball,Pull,0,0.322583666,0.439274506
+4,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jackson McQuade,Owen Newman,R,R,Fastball,Ball,,,10,-0.257305195,-0.056438261
+4,1,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jackson McQuade,Owen Newman,R,R,Fastball,Swinging Strike,,,10,-0.23410964,0.420914774
+4,1,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jackson McQuade,Owen Newman,R,R,Fastball,Groundout,Ground Ball,Pull,10,0.484952548,0.310756381
+4,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nathan Smid,Owen Newman,R,R,Fastball,Ball,,,10,0.206605894,1.146124194
+4,2,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nathan Smid,Owen Newman,R,R,Fastball,Groundout,Ground Ball,Pull,10,0.206605894,0.457634239
+4,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Myles Hazen,Xavier Nguyen,R,R,Fastball,Ball,,,0,1.505556943,0.154698658
+4,0,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Myles Hazen,Xavier Nguyen,R,R,Fastball,Ball,,,0,0.484952548,0.154698658
+4,0,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Myles Hazen,Xavier Nguyen,R,R,Breaking Ball,Home Run,Fly Ball,Pull,0,0.229801449,0.788109417
+4,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Xavier Nguyen,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.558847403,0.613691962
+4,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Xavier Nguyen,L,R,Fastball,Single,Ground Ball,Pull,0,-0.512456294,0.319936248
+4,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Xavier Nguyen,L,R,Breaking Ball,Called Strike,,,100,-0.721216284,0.466814105
+4,1,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Xavier Nguyen,L,R,Fastball,Ball,,,100,-1.347496254,0.778929551
+4,1,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Xavier Nguyen,L,R,Breaking Ball,Ball,,,100,-1.625842907,0.218957721
+4,1,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Xavier Nguyen,L,R,Breaking Ball,Ball,,,100,-1.393887363,0.521893301
+4,1,3,1,'3-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Xavier Nguyen,L,R,Fastball,Foul,,,100,0.415365884,0.43009464
+4,1,3,2,'3-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Xavier Nguyen,L,R,Fastball,Walk,,,100,-0.512456294,-0.285934913
+4,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Xavier Nguyen,R,R,Fastball,Single,Line Drive,Straightaway,110,0.160214785,0.237317453
+4,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Xavier Nguyen,R,R,Fastball,Ball,,,110,-1.185127373,0.916627542
+4,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Xavier Nguyen,R,R,Breaking Ball,Ball,,,110,-1.672234016,0.94416714
+4,1,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Xavier Nguyen,R,R,Fastball,Ball,,,110,-1.533060689,-0.166596654
+4,1,3,0,'3-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Xavier Nguyen,R,R,Fastball,Called Strike,,,110,0.206605894,0.393375176
+4,1,3,1,'3-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Xavier Nguyen,R,R,Breaking Ball,Walk,,,110,-0.721216284,1.10940473
+4,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Xavier Nguyen,L,R,Fastball,Sacrifice Fly,Fly Ball,Opposite Field,111,0.206605894,0.117979194
+4,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Xavier Nguyen,R,R,Fastball,Ball,,,110,-1.370691808,0.907447676
+4,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Xavier Nguyen,R,R,Breaking Ball,Ball,,,110,-0.419674076,1.100224863
+4,2,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Xavier Nguyen,R,R,Breaking Ball,Foul,,,110,-0.326891858,0.705490623
+4,2,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Xavier Nguyen,R,R,Fastball,Single,Line Drive,Pull,110,0.368974775,0.778929551
+4,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Xavier Nguyen,L,R,Fastball,Ball,,,110,-0.582042957,1.127764462
+4,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Xavier Nguyen,L,R,Breaking Ball,Called Strike,,,110,0.090628122,1.100224863
+4,2,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Xavier Nguyen,L,R,Breaking Ball,Ball,,,110,-1.417082917,1.008426203
+4,2,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Xavier Nguyen,L,R,Fastball,Lineout,Line Drive,Opposite Field,110,-0.605238512,0.163878524
+5,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jackson McQuade,Owen Toon,R,R,Fastball,Called Strike,,,0,0.856081419,0.448454373
+5,0,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jackson McQuade,Owen Toon,R,R,Fastball,Foul,,,0,0.322583666,0.788109417
+5,0,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jackson McQuade,Owen Toon,R,R,Fastball,Strikeout Looking,,,0,0.18341034,0.393375176
+5,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Owen Toon,R,R,Fastball,Called Strike,,,0,0.531343656,0.319936248
+5,1,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Owen Toon,R,R,Fastball,Foul,,,0,-0.558847403,0.604512096
+5,1,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Owen Toon,R,R,Fastball,Ball,,,0,1.969468032,0.200597989
+5,1,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Owen Toon,R,R,Breaking Ball,Strikeout Looking,,,0,1.343188062,0.301576515
+5,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Owen Toon,L,R,Breaking Ball,Ball,,,0,-0.698020729,0.255677185
+5,2,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Owen Toon,L,R,Fastball,Foul,,,0,0.508148102,0.778929551
+5,2,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Owen Toon,L,R,Fastball,Foul,,,0,-0.744411838,0.705490623
+5,2,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Owen Toon,L,R,Fastball,Foul,,,0,-0.721216284,0.85236848
+5,2,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Owen Toon,L,R,Fastball,Ball,,,0,-0.813998502,-0.313474511
+5,2,2,2,'2-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Owen Toon,L,R,Fastball,Ball,,,0,-0.280500749,1.247102721
+5,2,3,2,'3-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Owen Toon,L,R,Fastball,Walk,,,0,-1.301105145,0.870728212
+5,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Owen Toon,R,R,Fastball,Called Strike,,,100,0.160214785,0.677951024
+5,2,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Owen Toon,R,R,Fastball,Swinging Strike,,,100,0.693712538,0.714670489
+5,2,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Owen Toon,R,R,Fastball,Foul,,,100,-0.419674076,0.393375176
+5,2,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Owen Toon,R,R,Fastball,Ball,,,100,0.508148102,1.146124194
+5,2,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Owen Toon,R,R,Fastball,Foul,,,100,0.368974775,0.870728212
+5,2,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Owen Toon,R,R,Fastball,Foul,,,100,0.276192557,0.448454373
+5,2,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Owen Toon,R,R,Breaking Ball,Strikeout Swinging,,,100,1.598339161,0.292396649
