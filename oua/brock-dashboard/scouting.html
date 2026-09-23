@@ -2895,10 +2895,18 @@ Zane Skansi,Kitchener Panthers`;
     y=drawSec(d,'Pitch Performance (Pitcher POV)',y);
     y=drawBatterRateTable(['PITCH TYPE','PITCHES','SWING%','WHIFF%','CHASE%','BAA','OPS'],[34,22,25,25,25,25,30],pitchPerformanceRows,y);
 
-    // Keep the rest of the batting analysis on this same page. The outcome
-    // maps are compact enough to preserve a useful one-page player report.
-    y=drawSec(d,'Splits',y);
-    y=drawBatterRateTable(['MATCHUP','BA','OBP','SLG','OPS'],[38,37,37,37,37],splitRows,y);
+    // Keep the rest of the batting analysis on this same page.  A count view
+    // is more actionable for a pitcher than handedness slash-line splits.
+    // These are the first pitch plus the most decision-relevant count states.
+    var notableCountRows=[
+      [{text:'First Pitch'}].concat(countTendencyRows[2].slice(1)),
+      countTendencyRows[3], // 0-1
+      countTendencyRows[5], // 1-1
+      countTendencyRows[6], // hitter's counts
+      countTendencyRows[8]  // two strikes, excluding a full count
+    ];
+    y=drawSec(d,'Count Tendencies',y);
+    y=drawBatterRateTable(['COUNT','PITCHES','SWING%','WHIFF%','BAA'],[54,26,34,34,38],notableCountRows,y);
     var reportHeatSize=Math.min(88,(CPW-10)/2);
     y=drawSec(d,'Location Outcome Heat Maps (Pitcher POV)',y);
     var whiffHeatPoints=allSc.filter(reportIsWhiffOutcome);
