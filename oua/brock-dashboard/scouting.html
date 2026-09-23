@@ -1884,7 +1884,7 @@ Zane Skansi,Kitchener Panthers`;
           ctx.beginPath();ctx.arc(size/2,size/2,size/2-5,0,Math.PI*2);ctx.lineWidth=10;ctx.strokeStyle='#cfd5f2';ctx.stroke();
           reportHeadshotData=c.toDataURL('image/png');resolve(reportHeadshotData);
         };
-        img.onerror=function(){next(i+1);};img.src=sources[i];
+        img.onerror=function(){next(i+1);};img.src=sources[i]+'?v=portrait-reset-20260923';
       } next(0);
     });
   }
