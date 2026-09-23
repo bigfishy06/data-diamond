@@ -1694,6 +1694,29 @@
       setTimeout(renderAllPitchTendencies, 6000);
     })();
   </script>
+  <script>
+    /* Keep the visible player picker alphabetical even when a legacy data
+       refresher rebuilds its option list after a team or season change. */
+    (function () {
+      const picker = $('player');
+      function sortPlayerPicker() {
+        const options = [...picker.options];
+        const prompt = options.filter(option => !option.value);
+        const players = options.filter(option => option.value).sort((a, b) =>
+          a.textContent.localeCompare(b.textContent, undefined, { sensitivity: 'base' })
+        );
+        const sorted = prompt.concat(players);
+        if (options.every((option, index) => option === sorted[index])) return;
+        const selected = picker.value;
+        sorted.forEach(option => picker.appendChild(option));
+        picker.value = selected;
+      }
+      new MutationObserver(() => queueMicrotask(sortPlayerPicker)).observe(picker, { childList: true });
+      ['team', 'season'].forEach(id => $(id).addEventListener('change', () => setTimeout(sortPlayerPicker, 120)));
+      document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => setTimeout(sortPlayerPicker, 120)));
+      setTimeout(sortPlayerPicker, 700);
+    })();
+  </script>
   <script src="access-control.js?v=4"></script>
 </body>
 </html>
