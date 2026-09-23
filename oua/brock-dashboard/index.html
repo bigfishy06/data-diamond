@@ -392,15 +392,23 @@
       // Keep photos tied to both a player and their team.  A name-only fallback
       // can show the wrong person when two OUA rosters share a player name.
       const headshotAliases={
-        'western-mustangs:alex-brown':'western-mustangs-alexander-brown.png',
-        'guelph-gryphons:alex-peiper':'guelph-gryphons-alexander-pieper.jpg',
-        'mcmaster-marauders:edward-hong-yu-cheng':'mcmaster-marauders-edward-cheng.jpg',
-        'mcmaster-marauders:alex-vanraay':'mcmaster-marauders-alex-van-raay.jpg',
-        'mcmaster-marauders:neal-amar-bhattacharya':'mcmaster-marauders-neal-bhattacharya.jpg',
-        'waterloo-warriors:junichi-yuki':'waterloo-warriors-jun-yuki.jpg',
+        'western-mustangs:alex-brown':'western-mustangs-alexander-brown.webp',
+        'guelph-gryphons:alex-peiper':'guelph-gryphons-alexander-pieper.webp',
+        'guelph-gryphons:alex-picard':'guelph-gryphons-alexandre-picard.webp',
+        'guelph-gryphons:jj-reynolds':'guelph-gryphons-j-c-reynolds.webp',
+        'guelph-gryphons:tommy-cullen':'guelph-gryphons-thomas-cullen.webp',
+        'mcmaster-marauders:edward-hong-yu-cheng':'mcmaster-marauders-edward-cheng.webp',
+        'mcmaster-marauders:alex-vanraay':'mcmaster-marauders-alex-van-raay.webp',
+        'mcmaster-marauders:neal-amar-bhattacharya':'mcmaster-marauders-neal-bhattacharya.webp',
+        'waterloo-warriors:junichi-yuki':'waterloo-warriors-jun-yuki.webp',
+        'u-of-t-varsity-blues:kojiro-hirata':'u-of-t-varsity-blues-koji-hirata.webp',
         'wilfrid-laurier-golden-hawks:ash-abols':'wilfrid-laurier-golden-hawks-ashton-abols.png',
-        'wilfrid-laurier-golden-hawks:johnny-banks':'wilfrid-laurier-golden-hawks-john-banks.png',
-        'wilfrid-laurier-golden-hawks:ben-rae':'wilfrid-laurier-golden-hawks-benjamin-rae.png',
+        'wilfrid-laurier-golden-hawks:johnny-banks':'wilfrid-laurier-golden-hawks-john-banks.webp',
+        'wilfrid-laurier-golden-hawks:ben-rae':'wilfrid-laurier-golden-hawks-benjamin-rae.webp',
+        'wilfrid-laurier-golden-hawks:jack-rosseti':'wilfrid-laurier-golden-hawks-jack-rossetti.webp',
+        'windsor-lancers:ben-recker':'windsor-lancers-benjamin-recker.webp',
+        'brock-badgers:kade-falardeau':'brock-badgers-kaden-falardeau.webp',
+        'brock-badgers:tim-somerville':'brock-badgers-timothy-somerville.webp',
         'brock-badgers:haydon-cupolo':'hayden-cupolo.jpg'
       };
       const slug=name=>String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
