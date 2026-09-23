@@ -711,8 +711,18 @@ async function loadAll() {
       });
       return Array.from(groups.values());
     }
-    DATA.summaryAll = mergeTracked(DATA._summary25.concat(DATA.summary2026), 'batter');
     DATA.pitchesAll = mergeTracked(DATA._pitches25.concat(DATA.pitches2026), 'batter');
+    DATA.summaryAll = mergeTracked(DATA._summary25.concat(DATA.summary2026), 'batter');
+    // A summary row occasionally carries a same-name player from another
+    // school.  Use the matched tracked-pitch record as the team source for
+    // ALL YEARS, which keeps team filters and reports aligned with the data.
+    var trackedBatterTeams = new Map(DATA.pitchesAll.map(function(row) {
+      return [String(row.batter || '').trim().toLowerCase(), row.team || row.batter_team];
+    }));
+    DATA.summaryAll.forEach(function(row) {
+      var trackedTeam = trackedBatterTeams.get(String(row.batter || '').trim().toLowerCase());
+      if (trackedTeam) row.batter_team = trackedTeam;
+    });
     DATA.pitchersAll = mergeTracked(DATA._pitchers25.concat(DATA.pitchers2026), 'pitcher');
 
     // Default players/player cards to 2026. 2025 remains available via season filter.

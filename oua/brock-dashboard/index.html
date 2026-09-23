@@ -1603,16 +1603,20 @@
         });
       };
       function allBatters(summaries, pitches) {
-        const byName = new Map();
-        merge(summaries, 'batter').forEach(row => byName.set(key(row.batter), Object.assign({}, row, { scatter: [] })));
-        merge(pitches, 'batter').forEach(row => {
-          const name = key(row.batter), summary = byName.get(name) || { batter: row.batter, scatter: [] };
-          Object.assign(summary, row, { batter: summary.batter || row.batter, scatter: row.scatter || summary.scatter });
-          byName.set(name, summary);
+        const latestSummary = new Map();
+        summaries.flat().forEach(row => latestSummary.set(key(row.batter), row));
+        // Pitch records are authoritative for a tracked player's team.  The
+        // summary export can contain a same-name row from another program.
+        return merge(pitches, 'batter').map(row => {
+          const summary = latestSummary.get(key(row.batter));
+          const pitchTeam = row.team || row.batter_team || 'Team unavailable';
+          const summaryTeam = summary && (summary.batter_team || summary.team);
+          const compatibleSummary = key(summaryTeam) === key(pitchTeam) ? summary : {};
+          return recalc(Object.assign({}, compatibleSummary, row, {
+            pitcher: row.batter,
+            pitcher_team: pitchTeam
+          }));
         });
-        return [...byName.values()].map(row => recalc(Object.assign({}, row, {
-          pitcher: row.batter, pitcher_team: row.batter_team || row.team || 'Team unavailable'
-        })));
       }
       function allPitchers(rows) {
         return merge(rows, 'pitcher').map(row => recalc(row));
