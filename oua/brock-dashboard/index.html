@@ -109,7 +109,7 @@
   </script></head>
 <body>
   <header class="site-header"><div class="header-inner"><img class="logo" src="brock-badgers-logo.png" alt="Brock Badgers Baseball"><div class="wordmark"><small>BROCK UNIVERSITY ATHLETICS</small><strong>BADGERS <em>BASEBALL</em></strong></div><div class="header-note"><b>BASEBALL RESEARCH</b></div></div><div class="badgers-ribbon">BROCK BADGERS BASEBALL · BASEBALL RESEARCH</div></header>
-  <main class="shell"><section class="control-bar"><div><label for="season">SEASON</label><select id="season"><option value="2025">2025</option><option value="2026" selected>2026</option></select></div><div><label for="team">TEAM</label><select id="team"><option value="all">All teams</option></select></div><div id="handednessWrap" style="display:none"><label for="handedness">BATTER HANDEDNESS</label><select id="handedness"><option value="all">All hitters</option></select></div><div><label id="playerLabel" for="player">PITCHER PROFILE</label><select id="player"><option>Loading player data…</option></select></div><div class="view-switch"><button data-role="batter" type="button">Batters</button><button class="active" data-role="pitcher" type="button">Pitchers</button></div></section>
+  <main class="shell"><section class="control-bar"><div><label for="season">SEASON</label><select id="season"><option value="all">ALL YEARS</option><option value="2025">2025</option><option value="2026" selected>2026</option></select></div><div><label for="team">TEAM</label><select id="team"><option value="all">All teams</option></select></div><div id="handednessWrap" style="display:none"><label for="handedness">BATTER HANDEDNESS</label><select id="handedness"><option value="all">All hitters</option></select></div><div><label id="playerLabel" for="player">PITCHER PROFILE</label><select id="player"><option>Loading player data…</option></select></div><div class="view-switch"><button data-role="batter" type="button">Batters</button><button class="active" data-role="pitcher" type="button">Pitchers</button></div></section>
     <section class="profile"><div class="monogram" id="initials">BB</div><div><p class="eyebrow">PITCHER PROFILE · BROCK BADGERS</p><h1 id="name">Loading profile</h1><p id="meta">OUA Baseball · 2026 season data</p></div><div class="sample"><strong id="pitches">—</strong><span>PITCHES TRACKED</span></div></section>
     <section class="metrics"><article class="metric"><span class="label">K%</span><strong class="value" id="kPct">—</strong><span class="hint" id="kHint">Strikeout rate</span></article><article class="metric red"><span class="label">BB%</span><strong class="value" id="bbPct">—</strong><span class="hint neutral">Walk rate</span></article><article class="metric"><span class="label">WHIFF%</span><strong class="value" id="whiffPct">—</strong><span class="hint" id="whiffHint">On swings</span></article><article class="metric"><span class="label">STRIKE%</span><strong class="value" id="strikePct">—</strong><span class="hint neutral">All pitches</span></article><article class="metric"><span class="label">K–BB%</span><strong class="value" id="kbbPct">—</strong><span class="hint" id="kbbHint">Command indicator</span></article></section>
     <nav class="tabs"><button class="tab active" data-tab="overview" type="button">OVERVIEW</button><button class="tab" data-tab="effectiveness" type="button">EFFECTIVENESS</button><button class="tab" data-tab="tendency" type="button">COUNT TENDENCIES</button><button class="tab" data-tab="sequencing" type="button">PITCH SEQUENCING</button><button class="tab" data-tab="zone" type="button">STRIKE ZONE</button><button class="tab" data-tab="scouting-report" type="button">SCOUTING REPORT</button><button class="tab" data-tab="results" type="button">RESULTS</button></nav>
@@ -1320,12 +1320,12 @@
 
       function refreshOpsPlus() {
         if (activeRole() !== 'batter' || !state.current) return;
-        // Never carry a prior ONuBaseball season into a current dashboard
-        // season. OPS+ is only displayed when ONuBaseball publishes that
-        // exact season's batting table.
         const selectedSeason = String($('season')?.value || '');
-        const player = seasonRows.find(row => String(row.season) === selectedSeason &&
-          String(row.Name || '').trim().toLowerCase() === String(state.current.pitcher || '').trim().toLowerCase());
+        const playerName = String(state.current.pitcher || '').trim().toLowerCase();
+        const player = (selectedSeason === 'all'
+          ? seasonRows.filter(row => String(row.Name || '').trim().toLowerCase() === playerName).sort((a, b) => b.season - a.season)
+          : seasonRows.filter(row => String(row.season) === selectedSeason && String(row.Name || '').trim().toLowerCase() === playerName)
+        )[0];
         const labels = document.querySelectorAll('.metric .label');
         const values = document.querySelectorAll('.metric .value');
         const hints = document.querySelectorAll('.metric .hint');
@@ -1444,13 +1444,15 @@
       function applyPitcherFip(){
         if(activeRole()!=='pitcher'||!state.current)return;
         const selectedSeason=String($('season')?.value||'');
-        const fipRows=fipRowsBySeason[selectedSeason]||[];
-        const record=fipRows.find(row=>key(row.name)===key(state.current.pitcher));
+        const seasons=Object.keys(fipRowsBySeason).sort((a,b)=>Number(b)-Number(a));
+        const candidates=selectedSeason==='all'?seasons.flatMap(value=>fipRowsBySeason[value]||[]):(fipRowsBySeason[selectedSeason]||[]);
+        const record=candidates.find(row=>key(row.name)===key(state.current.pitcher));
+        const fipRows=record?(fipRowsBySeason[String(record.season)]||[]):candidates;
         const labels=document.querySelectorAll('.metric .label'),values=document.querySelectorAll('.metric .value'),hints=document.querySelectorAll('.metric .hint');
         if(labels.length<4||values.length<4)return;
         labels[0].textContent='FIP';labels[1].textContent='STRIKE%';labels[2].textContent='WHIFF%';labels[3].textContent='K%';
         values[0].textContent=record?record.fip.toFixed(2):'—';values[1].textContent=pct(state.current.STR_pct);values[2].textContent=pct(state.current.Whiff_pct);values[3].textContent=pct(state.current.K_pct);
-        hints[0].textContent=record?`${selectedSeason} ONuBaseball`:'Not yet published';hints[1].textContent='All pitches';hints[2].textContent='On swings';hints[3].textContent='Strikeout rate';
+        hints[0].textContent=record?`${record.season} ONuBaseball`:'Not yet published';hints[1].textContent='All pitches';hints[2].textContent='On swings';hints[3].textContent='Strikeout rate';
         // The visible card order differs from the dashboard's legacy order.
         // Grade the cards by their actual labels: FIP is lower-is-better;
         // Strike%, Whiff%, and K% are higher-is-better.
@@ -1493,12 +1495,12 @@
       selectPlayer=function(id){inheritedSelectPlayer(id);applyPitcherFip();};
       ['player','team','season'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(applyPitcherFip,90)));
       document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(applyPitcherFip,180)));
-      Promise.all([fetch('data/onu-season-stats.json').then(response=>response.json()),fetch('data/pitchers2026.json').then(response=>response.json())]).then(([source,pitchers])=>{
-        pitcherRows=Array.isArray(pitchers)?pitchers:[];
+      Promise.all([fetch('data/onu-season-stats.json').then(response=>response.json()),fetch('data/pitchers2025.json').then(response=>response.json()),fetch('data/pitchers2026.json').then(response=>response.json())]).then(([source,pitchers2025,pitchers2026])=>{
+        pitcherRows=(Array.isArray(pitchers2025)?pitchers2025:[]).concat(Array.isArray(pitchers2026)?pitchers2026:[]);
         fipRowsBySeason=(source.tables||[]).filter(table=>table.type==='Pitching'&&/^20\d{2}$/.test(String(table.season))).reduce((bySeason,table)=>{
           bySeason[String(table.season)]=(table.rows||[]).map(values=>{
             const row=Object.fromEntries((table.columns||[]).map((column,index)=>[column,values[index]]));
-            return {name:row.Name,fip:Number.parseFloat(row.FIP)};
+            return {name:row.Name,season:String(table.season),fip:Number.parseFloat(row.FIP)};
           }).filter(row=>row.name&&Number.isFinite(row.fip));
           return bySeason;
         },{});
@@ -1556,6 +1558,100 @@
       new MutationObserver(()=>queueMicrotask(paint)).observe(container,{childList:true});
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(paint,140)));
       document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(paint,180)));
+    })();
+  </script>
+  <script>
+    /* ALL YEARS is a real combined pitch dataset.  The newest profile row
+       supplies display metadata; every tracking-derived rate is recalculated
+       from the merged 2025 + 2026 pitch records. */
+    (function () {
+      const season = $('season'), team = $('team'), player = $('player');
+      let combined = null;
+      const key = value => String(value || '').trim().toLowerCase();
+      const merge = (rows, field) => {
+        const groups = new Map();
+        rows.flat().forEach(row => {
+          const name = key(row && row[field]);
+          if (!name) return;
+          const existing = groups.get(name);
+          if (!existing) groups.set(name, Object.assign({}, row, { scatter: Array.isArray(row.scatter) ? row.scatter.slice() : [] }));
+          else {
+            const points = existing.scatter.concat(Array.isArray(row.scatter) ? row.scatter : []);
+            Object.assign(existing, row, { scatter: points });
+          }
+        });
+        return [...groups.values()];
+      };
+      const rate = (part, total) => total ? part / total * 100 : null;
+      const recalc = record => {
+        const points = Array.isArray(record.scatter) ? record.scatter : [];
+        const swings = points.filter(point => swingOutcomes.has(point.outcome));
+        const pa = points.filter(isTerminalPa), ab = points.filter(isOfficialAtBat);
+        const first = points.filter(point => cleanCount(point) === '0-0');
+        const two = points.filter(point => cleanCount(point).endsWith('-2'));
+        const strikeouts = pa.filter(isStrikeout), walks = pa.filter(isWalk);
+        const hits = ab.filter(point => ['Single', 'Double', 'Triple', 'Home Run'].includes(point.outcome));
+        const k = rate(strikeouts.length, pa.length), bb = rate(walks.length, pa.length);
+        return Object.assign(record, {
+          total_pitches: points.length, pitches_seen: points.length,
+          STR_pct: rate(points.filter(isPitchStrike).length, points.length),
+          Whiff_pct: rate(points.filter(point => whiffOutcomes.has(point.outcome)).length, swings.length),
+          K_pct: k, BB_pct: bb, K_BB: k == null || bb == null ? null : k - bb,
+          FPS_pct: rate(first.filter(isPitchStrike).length, first.length),
+          Putaway_pct: rate(strikeouts.length, two.length),
+          BAA: ab.length ? hits.length / ab.length : null
+        });
+      };
+      function allBatters(summaries, pitches) {
+        const byName = new Map();
+        merge(summaries, 'batter').forEach(row => byName.set(key(row.batter), Object.assign({}, row, { scatter: [] })));
+        merge(pitches, 'batter').forEach(row => {
+          const name = key(row.batter), summary = byName.get(name) || { batter: row.batter, scatter: [] };
+          Object.assign(summary, row, { batter: summary.batter || row.batter, scatter: row.scatter || summary.scatter });
+          byName.set(name, summary);
+        });
+        return [...byName.values()].map(row => recalc(Object.assign({}, row, {
+          pitcher: row.batter, pitcher_team: row.batter_team || row.team || 'Team unavailable'
+        })));
+      }
+      function allPitchers(rows) {
+        return merge(rows, 'pitcher').map(row => recalc(row));
+      }
+      async function loadCombined() {
+        const files = ['pitchers2025','pitchers2026','summary2025','summary2026','pitches2025','pitches2026'];
+        const loaded = await Promise.all(files.map(file => fetch(`data/${file}.json`).then(response => response.json())));
+        combined = {
+          pitchers: allPitchers([loaded[0], loaded[1]]),
+          batters: allBatters([loaded[2], loaded[3]], [loaded[4], loaded[5]])
+        };
+      }
+      function applyAllYears() {
+        if (season.value !== 'all' || !combined) return;
+        const isPitcher = activeRole() === 'pitcher';
+        const records = (isPitcher ? combined.pitchers : combined.batters).slice();
+        const priorTeam = team.value, priorPlayer = player.value;
+        const teams = [...new Set(records.map(record => record.pitcher_team).filter(Boolean))].sort();
+        team.innerHTML = '<option value="all">All teams</option>' + teams.map(name => `<option value="${name}">${name}</option>`).join('');
+        team.value = teams.includes(priorTeam) ? priorTeam : 'all';
+        const scoped = records.filter(record => team.value === 'all' || record.pitcher_team === team.value);
+        state.players = scoped;
+        player.innerHTML = scoped.length
+          ? '<option value="">Select a player</option>' + scoped.map(record => `<option value="${record.pitcher}">${record.pitcher} · ${record.pitcher_team || 'Team unavailable'}</option>`).join('')
+          : '<option value="">No players in all years</option>';
+        if (scoped.some(record => record.pitcher === priorPlayer)) {
+          player.value = priorPlayer;
+          selectPlayer(priorPlayer);
+        } else if (scoped.length) {
+          player.value = scoped[0].pitcher;
+          selectPlayer(scoped[0].pitcher);
+        } else window.clearDashboardProfile?.();
+        updateResults?.();
+      }
+      loadCombined().then(() => {
+        if (season.value === 'all') applyAllYears();
+      }).catch(() => {});
+      ['season', 'team', 'player'].forEach(id => $(id).addEventListener('change', () => setTimeout(applyAllYears, 40)));
+      document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => setTimeout(applyAllYears, 180)));
     })();
   </script>
   <script src="access-control.js?v=4"></script>

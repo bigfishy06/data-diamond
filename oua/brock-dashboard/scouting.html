@@ -472,6 +472,7 @@
     <div class="selector-card">
       <div class="selector-label">00 — Select Season</div>
       <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap">
+        <button class="type-btn" id="btn-season-all" style="flex:none;padding:10px 28px">ALL YEARS</button>
         <button class="type-btn active" id="btn-season-2026" style="flex:none;padding:10px 28px">2026</button>
         <button class="type-btn" id="btn-season-2025" style="flex:none;padding:10px 28px">2025</button>
       </div>
@@ -558,7 +559,7 @@
     var source=results[0], parks=results[1];
     OPS_PARK_FACTORS=parks.factors||{};
     var rows = (source.tables || []).filter(function(table) {
-      return table.type === 'Batting' && String(table.season) === '2025';
+      return table.type === 'Batting' && /^20\d{2}$/.test(String(table.season));
     }).flatMap(function(table) {
       return (table.rows || []).map(function(values) {
         var row = {};
@@ -583,20 +584,21 @@
       OPS_PLUS_BY_SEASON[season] = seasonRows.filter(function(row) { return Number.isFinite(row.value); });
     });
     ONU_FIP_BY_SEASON = (source.tables || []).filter(function(table) {
-      return table.type === 'Pitching' && String(table.season) === '2025';
+      return table.type === 'Pitching' && /^20\d{2}$/.test(String(table.season));
     }).reduce(function(bySeason, table) {
       bySeason[String(table.season)] = (table.rows || []).map(function(values) {
         var row = {};
         (table.columns || []).forEach(function(column, index) { row[column] = values[index]; });
-        return {name: row.Name, team: row.Team, fip: Number.parseFloat(row.FIP)};
+        return {name: row.Name, team: row.Team, season: String(table.season), fip: Number.parseFloat(row.FIP)};
       }).filter(function(row) { return row.name && Number.isFinite(row.fip); });
       return bySeason;
     }, {});
   }).catch(function() {});
   function reportFipData(name, season) {
-    var seasonRows=ONU_FIP_BY_SEASON[String(season || '')] || [];
-    var key=opsPlayerKey(name),record=seasonRows.find(function(row){return opsPlayerKey(row.name)===key;})||null;
-    return {record:record,rows:seasonRows};
+    var requested=String(season || ''),key=opsPlayerKey(name),seasons=Object.keys(ONU_FIP_BY_SEASON).sort(function(a,b){return Number(b)-Number(a);});
+    var candidates=requested==='all'?seasons.flatMap(function(value){return ONU_FIP_BY_SEASON[value]||[]}):(ONU_FIP_BY_SEASON[requested]||[]);
+    var record=candidates.find(function(row){return opsPlayerKey(row.name)===key;})||null;
+    return {record:record,rows:record?(ONU_FIP_BY_SEASON[String(record.season)]||[]):candidates};
   }
   function summaryOpsPlusRows() {
     var summaryRows=(typeof DATA!=='undefined' && Array.isArray(DATA.summary)) ? DATA.summary : [];
@@ -628,8 +630,10 @@
   function reportOpsPlusData(name, season) {
     // OPS+ must use the requested season's published ONuBaseball league
     // environment. Do not substitute a prior season or tracked fallback.
-    var seasonRows=OPS_PLUS_BY_SEASON[String(season || '')] || [];
-    return {record:seasonRows.find(function(row){return opsPlayerKey(row.name)===opsPlayerKey(name);})||null,rows:seasonRows};
+    var requested=String(season || ''),seasons=Object.keys(OPS_PLUS_BY_SEASON).sort(function(a,b){return Number(b)-Number(a);});
+    var candidates=requested==='all'?seasons.flatMap(function(value){return OPS_PLUS_BY_SEASON[value]||[]}):(OPS_PLUS_BY_SEASON[requested]||[]);
+    var record=candidates.find(function(row){return opsPlayerKey(row.name)===opsPlayerKey(name);})||null;
+    return {record:record,rows:record?(OPS_PLUS_BY_SEASON[String(record.season)]||[]):candidates};
   }
   function reportOpsPlusPercentile(record, rows) {
     var totalPA=(rows||[]).reduce(function(total,row){return total+row.pa;},0);
@@ -867,19 +871,22 @@ Zane Skansi,Kitchener Panthers`;
 
   var selTeam = null, selType = 'batter', selSeason = '2026';
 
-  document.getElementById('btn-season-2025').addEventListener('click', function() {
-    selSeason = '2025';
-    document.getElementById('btn-season-2025').classList.add('active');
-    document.getElementById('btn-season-2026').classList.remove('active');
-    if (typeof swapSeasonData === 'function') swapSeasonData('year:2025');
+  function setScoutingSeason(season) {
+    selSeason = season;
+    ['all', '2025', '2026'].forEach(function(value) {
+      document.getElementById('btn-season-' + value).classList.toggle('active', value === season);
+    });
+    if (typeof swapSeasonData === 'function') swapSeasonData('year:' + season);
     if (selTeam) renderPlayerList();
+  }
+
+  document.getElementById('btn-season-all').addEventListener('click', function() { setScoutingSeason('all'); });
+
+  document.getElementById('btn-season-2025').addEventListener('click', function() {
+    setScoutingSeason('2025');
   });
   document.getElementById('btn-season-2026').addEventListener('click', function() {
-    selSeason = '2026';
-    document.getElementById('btn-season-2026').classList.add('active');
-    document.getElementById('btn-season-2025').classList.remove('active');
-    if (typeof swapSeasonData === 'function') swapSeasonData('year:2026');
-    if (selTeam) renderPlayerList();
+    setScoutingSeason('2026');
   });
 
   // ── Scouting access control — uses same Google OAuth as main.js ──
@@ -1203,10 +1210,13 @@ Zane Skansi,Kitchener Panthers`;
   function getDateFilteredMasterReportPlayer(name, season, role) {
     var key = normRosterName(name);
     var year = String(season || '');
+    var isAllYears = year === 'all';
+    var sameYear = function(point) { return isAllYears || String(point.date || '').slice(0, 4) === year; };
     if (role === 'pitcher') {
-      var pitcherData = (DATA.pitchers2026 || []).find(function(row) { return normRosterName(row.pitcher) === key; });
+      var pitcherSource = isAllYears ? (DATA.pitchersAll || []) : (year === '2025' ? (DATA._pitchers25 || []) : (DATA.pitchers2026 || []));
+      var pitcherData = pitcherSource.find(function(row) { return normRosterName(row.pitcher) === key; });
       if (!pitcherData) return null;
-      var pitcherPoints = (Array.isArray(pitcherData.scatter) ? pitcherData.scatter : []).filter(function(point) { return String(point.date || '').slice(0, 4) === year; });
+      var pitcherPoints = (Array.isArray(pitcherData.scatter) ? pitcherData.scatter : []).filter(sameYear);
       if (!pitcherPoints.length) return null;
       // The master file contains multiple calendar years.  Recalculate TTP
       // from the selected season's tracked pitches instead of retaining the
@@ -1217,9 +1227,11 @@ Zane Skansi,Kitchener Panthers`;
         : null;
       return { team: resolveTeam(pitcherData.pitcher_team || pitcherData.team), player: Object.assign({}, pitcherData, { name: pitcherData.pitcher, season: year, scatter: pitcherPoints, avg_ttp: seasonTtp }) };
     }
-    var summary = (DATA.summary2026 || []).find(function(row) { return normRosterName(row.batter) === key; }) || null;
-    var pitchData = (DATA.pitches2026 || []).find(function(row) { return normRosterName(row.batter) === key; }) || null;
-    var points = (pitchData && Array.isArray(pitchData.scatter) ? pitchData.scatter : []).filter(function(point) { return String(point.date || '').slice(0, 4) === year; });
+    var summarySource = isAllYears ? (DATA.summaryAll || []) : (year === '2025' ? (DATA._summary25 || []) : (DATA.summary2026 || []));
+    var pitchSource = isAllYears ? (DATA.pitchesAll || []) : (year === '2025' ? (DATA._pitches25 || []) : (DATA.pitches2026 || []));
+    var summary = summarySource.find(function(row) { return normRosterName(row.batter) === key; }) || null;
+    var pitchData = pitchSource.find(function(row) { return normRosterName(row.batter) === key; }) || null;
+    var points = (pitchData && Array.isArray(pitchData.scatter) ? pitchData.scatter : []).filter(sameYear);
     if (!points.length) return null;
     var displayName = (summary && summary.batter) || pitchData.batter || name;
     return { team: resolveTeam((summary && (summary.batter_team || summary.team)) || pitchData.batter_team || pitchData.team), player: { name: displayName, season: year, summary: summary || { batter: displayName }, pbp: null, ibl: null, pitch: { scatter: points } } };
@@ -1679,8 +1691,8 @@ Zane Skansi,Kitchener Panthers`;
     } else {
       players = getTeamPitcherReports2026(selTeam);
     }
-    players = players.filter(function(p) { return !p.season || p.season === selSeason; });
-    inactivePlayers = inactivePlayers.filter(function(p) { return !p.season || p.season === selSeason; });
+    players = players.filter(function(p) { return selSeason === 'all' || !p.season || p.season === selSeason; });
+    inactivePlayers = inactivePlayers.filter(function(p) { return selSeason === 'all' || !p.season || p.season === selSeason; });
     players = players.filter(function(p) { return canScoutPlayer(p.name, selType, team.name); });
     inactivePlayers = inactivePlayers.filter(function(p) { return canScoutPlayer(p.name, selType, team.name); });
 
@@ -3657,9 +3669,10 @@ Zane Skansi,Kitchener Panthers`;
     var team = dateFiltered && dateFiltered.team ? dateFiltered.team : resolveTeam(params.get('team'));
     if (!team) return false;
     selTeam = team.id;
-    if (typeof swapSeasonData === 'function') swapSeasonData('year:2026');
+    if (typeof swapSeasonData === 'function') swapSeasonData('year:' + selSeason);
     document.getElementById('btn-season-2025').classList.toggle('active', selSeason === '2025');
-    document.getElementById('btn-season-2026').classList.toggle('active', selSeason !== '2025');
+    document.getElementById('btn-season-2026').classList.toggle('active', selSeason === '2026');
+    document.getElementById('btn-season-all').classList.toggle('active', selSeason === 'all');
     document.getElementById('btn-batter').classList.toggle('active', selType === 'batter');
     document.getElementById('btn-pitcher').classList.toggle('active', selType === 'pitcher');
     var players = selSeason === '2025'

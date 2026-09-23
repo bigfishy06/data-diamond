@@ -511,7 +511,8 @@ function normalizeDataDiamondPitcherRow(p) {
 let DATA = {
   summary: [], pitches: [], pitchers: [], iblHistory: {},
   pbpBatters: [], pbpPitchers: [],
-  summary2026: [], pitches2026: [], pitchers2026: []
+  summary2026: [], pitches2026: [], pitchers2026: [],
+  summaryAll: [], pitchesAll: [], pitchersAll: []
 };
 
 // -- Global season tracker (set by season filter buttons) ----------------------
@@ -526,6 +527,12 @@ function swapSeasonData(yr) {
     DATA.pitchers    = DATA.pitchers2026;
     DATA.pbpBatters  = [];
     DATA.pbpPitchers = [];
+  } else if (yr === 'year:all') {
+    DATA.summary     = DATA.summaryAll;
+    DATA.pitches     = DATA.pitchesAll;
+    DATA.pitchers    = DATA.pitchersAll;
+    DATA.pbpBatters  = DATA._pbpBatters25;
+    DATA.pbpPitchers = DATA._pbpPitchers25;
   } else {
     // Restore from stored 2025 copies
     DATA.summary     = DATA._summary25;
@@ -684,6 +691,29 @@ async function loadAll() {
     DATA._pitchers25    = DATA.pitchers;
     DATA._pbpBatters25  = DATA.pbpBatters;
     DATA._pbpPitchers25 = DATA.pbpPitchers;
+
+    // Merge same-player records at the pitch level for the All-years view.
+    // Summary fields remain from the newest available record; every rate on
+    // the dashboard/report is recalculated from this combined scatter.
+    function mergeTracked(rows, nameKey) {
+      var groups = new Map();
+      rows.forEach(function(row) {
+        var name = String(row[nameKey] || '').trim().toLowerCase();
+        if (!name) return;
+        var current = groups.get(name);
+        if (!current) {
+          current = Object.assign({}, row, { scatter: [] });
+          groups.set(name, current);
+        } else {
+          Object.assign(current, row);
+        }
+        current.scatter = current.scatter.concat(Array.isArray(row.scatter) ? row.scatter : []);
+      });
+      return Array.from(groups.values());
+    }
+    DATA.summaryAll = mergeTracked(DATA._summary25.concat(DATA.summary2026), 'batter');
+    DATA.pitchesAll = mergeTracked(DATA._pitches25.concat(DATA.pitches2026), 'batter');
+    DATA.pitchersAll = mergeTracked(DATA._pitchers25.concat(DATA.pitchers2026), 'pitcher');
 
     // Default players/player cards to 2026. 2025 remains available via season filter.
     swapSeasonData('year:2026');
