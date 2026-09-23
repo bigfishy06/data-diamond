@@ -2897,12 +2897,32 @@ Zane Skansi,Kitchener Panthers`;
 
     // Keep the rest of the batting analysis on this same page.  A count view
     // is more actionable for a pitcher than handedness slash-line splits.
-    // These are the first pitch plus the most decision-relevant count states.
+    // These are the first pitch plus the three most decision-relevant count states.
+    var pitcherCountGroup={label:"Pitcher's Counts",test:function(point){
+      return ['0-1','0-2','1-2'].includes(reportCleanCount(point.count));
+    }};
+    var pitcherCountMetric=batterCountTendencyMetrics(allSc,pitcherCountGroup);
+    var pitcherCountLeague=[];
+    (DATA.pitches||[]).forEach(function(batter){
+      var metric=batterCountTendencyMetrics(batter.scatter||[],pitcherCountGroup);
+      if(metric.whiff!=null&&isFinite(metric.whiff))pitcherCountLeague.push(metric.whiff);
+    });
+    var pitcherBaaLeague=[];
+    (DATA.pitches||[]).forEach(function(batter){
+      var metric=batterCountTendencyMetrics(batter.scatter||[],pitcherCountGroup);
+      if(metric.baa!=null&&isFinite(metric.baa))pitcherBaaLeague.push(metric.baa);
+    });
+    var pitcherCountRow=[
+      {text:pitcherCountGroup.label},
+      {text:pitcherCountMetric.pitches?String(pitcherCountMetric.pitches):'—',neutral:true},
+      {text:pitcherCountMetric.swing==null?'—':f1(pitcherCountMetric.swing)+'%',neutral:true},
+      {text:pitcherCountMetric.whiff==null?'—':f1(pitcherCountMetric.whiff)+'%',pct:reportPercentile(pitcherCountMetric.whiff,pitcherCountLeague,false)},
+      {text:pitcherCountMetric.baa==null?'—':f3(pitcherCountMetric.baa),pct:reportPercentile(pitcherCountMetric.baa,pitcherBaaLeague,true)}
+    ];
     var notableCountRows=[
       [{text:'First Pitch'}].concat(countTendencyRows[2].slice(1)),
-      countTendencyRows[3], // 0-1
-      countTendencyRows[5], // 1-1
       countTendencyRows[6], // hitter's counts
+      pitcherCountRow,
       countTendencyRows[8]  // two strikes, excluding a full count
     ];
     y=drawSec(d,'Count Tendencies',y);
