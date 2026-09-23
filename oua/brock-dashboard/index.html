@@ -1331,7 +1331,7 @@
         const hints = document.querySelectorAll('.metric .hint');
         if (!labels[0] || !values[0]) return;
 
-        labels[0].textContent = 'OPS+';
+        labels[0].textContent = selectedSeason === 'all' && player ? `${player.season} OPS+` : 'OPS+';
         const playerOpsPlus = opsPlus(player);
         values[0].textContent = Number.isFinite(playerOpsPlus) ? String(playerOpsPlus) : '—';
         if (!Number.isFinite(playerOpsPlus)) {
@@ -1450,7 +1450,7 @@
         const fipRows=record?(fipRowsBySeason[String(record.season)]||[]):candidates;
         const labels=document.querySelectorAll('.metric .label'),values=document.querySelectorAll('.metric .value'),hints=document.querySelectorAll('.metric .hint');
         if(labels.length<4||values.length<4)return;
-        labels[0].textContent='FIP';labels[1].textContent='STRIKE%';labels[2].textContent='WHIFF%';labels[3].textContent='K%';
+        labels[0].textContent=selectedSeason==='all'&&record?`${record.season} FIP`:'FIP';labels[1].textContent='STRIKE%';labels[2].textContent='WHIFF%';labels[3].textContent='K%';
         values[0].textContent=record?record.fip.toFixed(2):'—';values[1].textContent=pct(state.current.STR_pct);values[2].textContent=pct(state.current.Whiff_pct);values[3].textContent=pct(state.current.K_pct);
         hints[0].textContent=record?`${record.season} ONuBaseball`:'Not yet published';hints[1].textContent='All pitches';hints[2].textContent='On swings';hints[3].textContent='Strikeout rate';
         // The visible card order differs from the dashboard's legacy order.
@@ -1486,7 +1486,7 @@
       let fipRestoreQueued=false;
       const enforcePitcherFip=()=>{
         const firstLabel=document.querySelector('.metric .label');
-        if(activeRole()!=='pitcher'||!firstLabel||firstLabel.textContent==='FIP'||fipRestoreQueued)return;
+        if(activeRole()!=='pitcher'||!firstLabel||/FIP$/.test(firstLabel.textContent)||fipRestoreQueued)return;
         fipRestoreQueued=true;
         queueMicrotask(()=>{fipRestoreQueued=false;if(activeRole()==='pitcher'&&document.querySelector('.metric .label')?.textContent!=='FIP')applyPitcherFip();});
       };
