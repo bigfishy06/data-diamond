@@ -6012,3 +6012,180 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 5,2,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Owen Toon,R,R,Fastball,Foul,,,100,0.368974775,0.870728212
 5,2,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Owen Toon,R,R,Fastball,Foul,,,100,0.276192557,0.448454373
 5,2,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Owen Toon,R,R,Breaking Ball,Strikeout Swinging,,,100,1.598339161,0.292396649
+1,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Jaxx Carthy,R,R,Fastball,Ball,,,0,0.624125874,-0.276755047
+1,0,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Jaxx Carthy,R,R,Fastball,Foul,,,0,-0.698020729,0.448454373
+1,0,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Jaxx Carthy,R,R,Fastball,Swinging Strike,,,0,0.276192557,0.769749685
+1,0,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Jaxx Carthy,R,R,Fastball,Foul,Fly Ball,Opposite Field,0,0.39217033,0.375015444
+1,0,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Jaxx Carthy,R,R,Breaking Ball,Ball,,,0,-0.674825175,1.118584596
+1,0,2,2,'2-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Jaxx Carthy,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.113823676,0.38419531
+1,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Jaxx Carthy,R,R,Breaking Ball,Called Strike,,,0,-0.535651848,0.925807408
+1,1,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Jaxx Carthy,R,R,Breaking Ball,Called Strike,,,0,-0.767607393,0.521893301
+1,1,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Jaxx Carthy,R,R,Fastball,Ball,,,0,1.412774725,0.824828881
+1,1,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Jaxx Carthy,R,R,Fastball,Ball,,,0,0.948863636,-0.368553708
+1,1,2,2,'2-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Jaxx Carthy,R,R,Fastball,Strikeout Swinging,,,0,-0.210914086,0.329116114
+1,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Jaxx Carthy,R,R,Fastball,Called Strike,,,0,0.554539211,0.485173837
+1,2,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Jaxx Carthy,R,R,Breaking Ball,Swinging Strike,,,0,1.482361389,0.200597989
+1,2,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Jaxx Carthy,R,R,Fastball,Flyout,Fly Ball,Pull,0,-0.094936314,0.879908078
+1,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Alex VanRaay,L,R,Fastball,Foul,,,0,-0.698020729,0.329116114
+1,0,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Alex VanRaay,L,R,Offspeed,Ball,,,0,0.484952548,-0.285934913
+1,0,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Alex VanRaay,L,R,Offspeed,Double,Fly Ball,Pull,0,-0.582042957,0.182238256
+1,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,,Ball,,,10,,
+1,0,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,Fastball,Foul,,,10,-0.303696304,0.89826781
+1,0,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,Offspeed,Foul,,,10,0.322583666,0.604512096
+1,0,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,,Ball,,,10,,
+1,0,2,2,'2-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,Offspeed,Single,Line Drive,Pull,10,-0.326891858,0.301576515
+1,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Alex VanRaay,R,R,Breaking Ball,Ball,,,10,1.807099151,0.246497319
+1,0,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Alex VanRaay,R,R,Offspeed,Foul,,,10,-0.512456294,0.843188614
+1,0,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Alex VanRaay,R,R,Fastball,Ball,,,10,0.80969031,-0.230855717
+1,0,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Alex VanRaay,R,R,Fastball,Groundout,Ground Ball,Pull,10,-0.582042957,0.319936248
+1,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Alex VanRaay,R,R,Fastball,Home Run,Fly Ball,Straightaway,10,0.206605894,0.255677185
+1,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Alex VanRaay,L,R,Fastball,Single,Ground Ball,Pull,0,-0.280500749,0.668771158
+1,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Alex VanRaay,R,R,Breaking Ball,Ball,,,100,-0.65162962,1.164483926
+1,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Alex VanRaay,R,R,Fastball,Popout,Pop Up,Opposite Field,100,0.229801449,0.907447676
+1,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,Breaking Ball,Ball,,,100,-1.324300699,0.292396649
+1,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,Fastball,Ball,,,100,-0.86038961,1.146124194
+1,2,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,1,Declan Uniac,Alex VanRaay,L,R,Fastball,Ball,,,100,-1.370691808,0.889087944
+1,2,3,0,'3-0,2026-09-04,Waterloo Warriors,McMaster Marauders,1.15,Declan Uniac,Alex VanRaay,L,R,Fastball,Walk,,,100,0.531343656,-0.148236922
+1,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Raywat Bajracharya,Alex VanRaay,R,R,Fastball,Ball,,,110,0.067432567,1.20120339
+1,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Raywat Bajracharya,Alex VanRaay,R,R,Fastball,Swinging Strike,,,110,0.438561439,0.824828881
+1,2,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Raywat Bajracharya,Alex VanRaay,R,R,Fastball,Ball,,,110,0.902472528,1.136944328
+1,2,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Raywat Bajracharya,Alex VanRaay,R,R,Fastball,Groundout,Ground Ball,Pull,110,0.18341034,0.824828881
+2,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Jaxx Carthy,R,R,Breaking Ball,Called Strike,,,0,-0.605238512,0.622871828
+2,0,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Jaxx Carthy,R,R,Fastball,Called Strike,,,0,0.763299201,0.38419531
+2,0,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Jaxx Carthy,R,R,Fastball,Ball,,,0,-1.579451798,0.053720131
+2,0,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Jaxx Carthy,R,R,Fastball,Strikeout Swinging,,,0,-0.164522977,0.797289283
+2,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Jaxx Carthy,L,R,Breaking Ball,Ball,,,0,1.621534715,0.200597989
+2,1,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Anden Cooper,Jaxx Carthy,L,R,Fastball,Error,Ground Ball,Pull,0,-0.350087413,0.411734908
+2,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jackson McQuade,Jaxx Carthy,R,R,Fastball,Called Strike,,,100,0.252997003,0.778929551
+2,1,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,1.12,Jackson McQuade,Jaxx Carthy,R,R,Fastball,Groundout,Ground Ball,Pull,100,-0.512456294,0.68713089
+2,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Coy Gordon,Jaxx Carthy,L,R,Fastball,Called Strike,,,100,-0.118131868,0.393375176
+2,2,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Coy Gordon,Jaxx Carthy,L,R,Breaking Ball,Ball,,,100,-1.347496254,0.797289283
+2,2,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Coy Gordon,Jaxx Carthy,L,R,Fastball,Groundout,Ground Ball,Pull,100,-0.280500749,0.163878524
+2,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,Breaking Ball,Swinging Strike,,,0,0.438561439,0.393375176
+2,0,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,Fastball,Ball,,,0,1.621534715,-0.230855717
+2,0,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,Fastball,Called Strike,,,0,0.508148102,0.255677185
+2,0,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,Fastball,Ball,,,0,1.296796953,-0.331834244
+2,0,2,2,'2-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,Breaking Ball,Ball,,,0,1.412774725,1.045145667
+2,0,3,2,'3-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.582042957,0.503533569
+2,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Alex VanRaay,L,R,Fastball,Called Strike,,,0,0.624125874,0.705490623
+2,1,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Alex VanRaay,L,R,Fastball,Foul,,,0,-0.466065185,0.255677185
+2,1,0,2,'0-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Alex VanRaay,L,R,Fastball,Ball,,,0,-0.813998502,1.15530406
+2,1,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Alex VanRaay,L,R,Fastball,Foul,,,0,-0.605238512,0.696310756
+2,1,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Alex VanRaay,L,R,Fastball,Foul,,,0,0.18341034,0.962526872
+2,1,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Adam Leatherland,Alex VanRaay,L,R,Fastball,Strikeout Swinging,,,0,-1.208322927,0.237317453
+2,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,Breaking Ball,Ball,,,0,-0.466065185,1.192023524
+2,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,Fastball,Called Strike,,,0,-0.744411838,0.375015444
+2,2,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,Fastball,Popout,Pop Up,Straightaway,0,0.508148102,0.365835578
+3,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Jaxx Carthy,R,R,,Called Strike,,,0,0.554539211,0.255677185
+3,0,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Jaxx Carthy,R,R,,Foul,,,0,,
+3,0,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Jaxx Carthy,R,R,Fastball,Error,Ground Ball,Pull,0,-0.23410964,0.889087944
+3,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Jaxx Carthy,R,R,Fastball,Double Play,Ground Ball,Pull,100,0.508148102,0.319936248
+3,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Jaxx Carthy,R,R,,Called Strike,,,0,,
+3,2,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Jaxx Carthy,R,R,Fastball,Foul,,,0,-0.44286963,0.375015444
+3,2,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Jaxx Carthy,R,R,Fastball,Strikeout Swinging,,,0,-0.674825175,0.264857051
+3,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Alex VanRaay,R,R,Offspeed,Double,Line Drive,Pull,0,-0.257305195,0.797289283
+3,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Alex VanRaay,R,R,Breaking Ball,Ball,,,10,0.137019231,1.164483926
+3,0,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Alex VanRaay,R,R,Fastball,Ball,,,10,1.899881369,-0.12987719
+3,0,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Alex VanRaay,R,R,Offspeed,Foul,,,10,-0.489260739,0.824828881
+3,0,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Alex VanRaay,R,R,Fastball,Ball,,,10,-0.929976274,1.20120339
+3,0,3,1,'3-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Alex VanRaay,R,R,Fastball,Swinging Strike,,,10,1.43597028,0.163878524
+3,0,3,2,'3-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Alex VanRaay,R,R,,Double,Line Drive,Pull,10,,
+3,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Alex VanRaay,L,R,Fastball,Ball,,,10,-1.417082917,1.20120339
+3,0,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Rhys Jenkyn,Alex VanRaay,L,R,Offspeed,Flyout,Fly Ball,Pull,10,-0.350087413,0.59533223
+3,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Alex VanRaay,R,R,Breaking Ball,Ball,,,1,1.482361389,0.310756381
+3,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Sam Shephard,Alex VanRaay,R,R,Fastball,Popout,Pop Up,Straightaway,1,0.345779221,0.411734908
+3,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,Offspeed,Called Strike,,,1,0.345779221,0.751389953
+3,2,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,Fastball,Foul,,,1,-0.512456294,0.889087944
+3,2,0,2,'0-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,Fastball,Ball,,,1,0.461756993,-0.276755047
+3,2,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,Offspeed,Groundout,Ground Ball,Pull,1,-0.326891858,0.319936248
+4,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Jaxx Carthy,R,R,Fastball,Ball,,,0,-0.558847403,1.118584596
+4,0,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Jaxx Carthy,R,R,Fastball,Foul,,,0,-0.396478522,0.145518792
+4,0,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Jaxx Carthy,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.624125874,0.218957721
+4,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Jaxx Carthy,R,R,Breaking Ball,Foul,,,0,-0.23410964,0.668771158
+4,1,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Jaxx Carthy,R,R,Breaking Ball,Ball,,,0,-0.303696304,-0.139057056
+4,1,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Jaxx Carthy,R,R,Offspeed,Ball,,,0,-1.27790959,0.85236848
+4,1,2,1,'2-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Jaxx Carthy,R,R,Breaking Ball,Called Strike,,,0,-0.721216284,0.604512096
+4,1,2,2,'2-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Jaxx Carthy,R,R,Breaking Ball,Strikeout Swinging,,,0,0.716908092,0.43009464
+4,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Jaxx Carthy,R,R,Fastball,Foul,,,0,-1.347496254,0.834008747
+4,2,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Jaxx Carthy,R,R,Breaking Ball,Called Strike,,,0,-0.558847403,0.59533223
+4,2,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Quinten Shannon,Jaxx Carthy,R,R,Breaking Ball,Strikeout Swinging,,,0,0.925668082,-0.396093306
+4,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Raywat Bajracharya,Alex VanRaay,R,R,Fastball,Groundout,Ground Ball,Pull,0,-0.23410964,0.375015444
+4,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,,Ball,,,0,,
+4,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,Fastball,Home Run,Fly Ball,Opposite Field,0,0.438561439,0.650411426
+4,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,,Ball,,,0,,
+4,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,,Ball,,,0,,
+4,1,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,,Ball,,,0,,
+4,1,3,0,'3-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,,Called Strike,,,0,,
+4,1,3,1,'3-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,,Walk,,,0,,
+4,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Alex VanRaay,R,R,,Called Strike,,,100,,
+4,1,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Carter Kipp,Alex VanRaay,R,R,,Double,Line Drive,Straightaway,100,,
+4,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Alex VanRaay,R,R,,Foul,,,10,,
+4,1,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Arthur Kowara,Alex VanRaay,R,R,,Flyout,,,10,,
+4,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Anden Cooper,Jaxx Carthy,L,R,,Called Strike,,,0,,
+4,2,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Anden Cooper,Jaxx Carthy,L,R,,Foul,,,0,,
+4,2,0,2,'0-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Anden Cooper,Jaxx Carthy,L,R,,Strikeout Looking,,,0,,
+5,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jackson McQuade,Jaxx Carthy,R,R,,Ball,,,0,,
+5,0,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jackson McQuade,Jaxx Carthy,R,R,,Ball,,,0,,
+5,0,2,0,'2-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jackson McQuade,Jaxx Carthy,R,R,,Hit By Pitch,,,0,,
+5,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Coy Gordon,Jaxx Carthy,L,R,,Ball,,,100,,
+5,0,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Coy Gordon,Jaxx Carthy,L,R,,Double Play,Ground Ball,Pull,100,,
+5,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Rhys Jenkyn,Alex VanRaay,L,R,,Single,Ground Ball,Opposite Field,0,,
+5,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Sam Shephard,Alex VanRaay,R,R,,Foul,,,100,,
+5,2,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Sam Shephard,Alex VanRaay,R,R,,Foul,,,100,,
+5,2,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Sam Shephard,Alex VanRaay,R,R,,Flyout,Fly Ball,Opposite Field,100,,
+5,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,,Called Strike,,,100,,
+5,0,0,1,'0-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,,Ball,,,100,,
+5,0,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,,Ball,,,100,,
+5,0,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,,Foul,,,1,,
+5,0,2,2,'2-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,,Ball,,,1,,
+5,0,3,2,'3-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,,Foul,,,1,,
+5,0,3,2,'3-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Declan Uniac,Alex VanRaay,L,R,,Walk,,,1,,
+5,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Max Greaves,Alex VanRaay,R,R,,Popout,Pop Up,,101,,
+5,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,,Ball,,,0,,
+5,1,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,,Ball,,,0,,
+5,1,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,,Swinging Strike,,,0,,
+5,1,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,,Called Strike,,,0,,
+5,1,2,2,'2-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Junichi Yuki,Alex VanRaay,R,R,,Groundout,Ground Ball,,0,,
+5,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Jueun Chung,Risden Dimayuga,R,R,,Ball,,,0,,
+5,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Jueun Chung,Risden Dimayuga,R,R,,Single,Ground Ball,Pull,0,,
+5,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Nikolas Proksel,Risden Dimayuga,R,R,,Ball,,,100,,
+5,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Nikolas Proksel,Risden Dimayuga,R,R,,Ball,,,100,,
+5,2,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Nikolas Proksel,Risden Dimayuga,R,R,,Swinging Strike,,,100,,
+5,2,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Nikolas Proksel,Risden Dimayuga,R,R,,Called Strike,,,100,,
+5,2,2,2,'2-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Nikolas Proksel,Risden Dimayuga,R,R,,Ball,,,100,,
+5,2,3,2,'3-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Nikolas Proksel,Risden Dimayuga,R,R,,Foul,,,100,,
+5,2,3,2,'3-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Nikolas Proksel,Risden Dimayuga,R,R,,Strikeout Swinging,,,100,,
+6,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Risden Dimayuga,R,R,,Ball,,,100,,
+6,0,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Risden Dimayuga,R,R,,Foul,,,100,,
+6,0,1,1,'1-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Devan Fenwick,Risden Dimayuga,R,R,,Error,Ground Ball,,100,,
+6,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Risden Dimayuga,R,R,,Swinging Strike,,,110,,
+6,0,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Risden Dimayuga,R,R,,Swinging Strike,,,110,,
+6,0,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Kayan Alazem,Risden Dimayuga,R,R,,Strikeout Swinging,,,110,,
+6,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,John Dykyj,Risden Dimayuga,R,R,,Groundout,Ground Ball,Straightaway,110,,
+6,2,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Adam Leatherland,Alex VanRaay,L,R,,Ball,,,0,,
+6,2,1,0,'1-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Adam Leatherland,Alex VanRaay,L,R,,Ball,,,0,,
+6,2,2,0,'2-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Adam Leatherland,Alex VanRaay,L,R,,Groundout,,,0,,
+6,0,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,,Ball,,,0,,
+6,0,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Ty Tinnish,Alex VanRaay,L,R,,Lineout,Line Drive,Opposite Field,0,,
+6,1,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Jai Pawa,Alex VanRaay,R,R,,Groundout,,,0,,
+6,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Quinten Shannon,Maddox Yee,R,R,,Ball,,,0,,
+6,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Quinten Shannon,Maddox Yee,R,R,Fastball,Ball,,,0,1.876685814,-0.368553708
+6,2,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Quinten Shannon,Maddox Yee,R,R,Fastball,Ball,,,0,1.807099151,0.843188614
+6,2,3,0,'3-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Quinten Shannon,Maddox Yee,R,R,Fastball,Walk,,,0,-0.535651848,1.10940473
+6,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Anden Cooper,Maddox Yee,L,R,Fastball,Hit By Pitch,,,100,1.830294705,0.209777855
+6,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Jackson McQuade,Maddox Yee,R,R,Fastball,Ball,,,110,1.575143606,0.283216783
+6,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Jackson McQuade,Maddox Yee,R,R,Fastball,Ball,,,110,1.714316933,0.622871828
+6,2,2,0,'2-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Jackson McQuade,Maddox Yee,R,R,Fastball,Called Strike,,,11,0.647321429,0.806469149
+6,2,2,1,'2-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Jackson McQuade,Maddox Yee,R,R,Fastball,Foul,,,11,0.60093032,0.420914774
+6,2,2,2,'2-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Jackson McQuade,Maddox Yee,R,R,Breaking Ball,Ball,,,11,1.505556943,0.347475846
+6,2,3,2,'3-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Jackson McQuade,Maddox Yee,R,R,Breaking Ball,Walk,,,11,1.575143606,0.778929551
+6,2,0,0,'0-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Coy Gordon,Maddox Yee,L,R,Fastball,Ball,,,111,-0.883585165,1.136944328
+6,2,1,0,'1-0,2026-09-04,Waterloo Warriors,McMaster Marauders,,Coy Gordon,Maddox Yee,L,R,Fastball,Called Strike,,,111,0.368974775,0.68713089
+6,2,1,1,'1-1,2026-09-04,Waterloo Warriors,McMaster Marauders,,Coy Gordon,Maddox Yee,L,R,Fastball,Foul,,,111,-0.071740759,0.834008747
+6,2,1,2,'1-2,2026-09-04,Waterloo Warriors,McMaster Marauders,,Coy Gordon,Maddox Yee,L,R,Breaking Ball,Strikeout Swinging,,,111,0.39217033,-0.258395315
+7,0,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Maddox Yee,R,R,Fastball,Called Strike,,,111,0.39217033,0.576972498
+7,0,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Jueun Chung,Maddox Yee,R,R,Fastball,Flyout,Fly Ball,Pull,111,0.137019231,0.622871828
+7,1,0,0,'0-0,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Maddox Yee,R,R,Fastball,Foul,,,111,0.160214785,0.356655712
+7,1,0,1,'0-1,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Maddox Yee,R,R,Fastball,Foul,,,111,0.044237013,0.503533569
+7,1,0,2,'0-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Maddox Yee,R,R,Fastball,Ball,,,111,-0.326891858,1.173663792
+7,1,1,2,'1-2,2026-09-04,McMaster Marauders,Waterloo Warriors,,Nikolas Proksel,Maddox Yee,R,R,Breaking Ball,Strikeout Swinging,,,111,0.925668082,-0.359373842
