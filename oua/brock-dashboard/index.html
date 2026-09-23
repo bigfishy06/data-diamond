@@ -1659,6 +1659,41 @@
       document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => setTimeout(applyAllYears, 180)));
     })();
   </script>
+  <script>
+    /* Count Tendencies must retain every recorded pitch label.  This runs
+       last so older dashboard decorators cannot collapse Slider, Changeup,
+       Cutter, Curveball, etc. into generic Fastball / Offspeed buckets. */
+    (function () {
+      const previousRenderTendencies = renderTendencies;
+      const cleanType = point => String(point && point.pitch_type || '').trim();
+      function renderAllPitchTendencies() {
+        if (activeRole() !== 'pitcher') {
+          previousRenderTendencies();
+          return;
+        }
+        const hand = $('tendencyHandFilter').value;
+        const source = typeof window.dashboardDateScopedPoints === 'function'
+          ? window.dashboardDateScopedPoints('tendency')
+          : selectedPoints();
+        const points = source.filter(point => (hand === 'all' || point.batter_side === hand) && cleanType(point));
+        const types = [...new Set(points.map(cleanType))].sort((a, b) => a.localeCompare(b));
+        $('tendencyHead').innerHTML = `<tr><th>Count situation</th><th>P</th>${types.map(type => `<th>${type}</th>`).join('')}</tr>`;
+        $('tendencyBody').innerHTML = tendencyRows().map(([label, test]) => {
+          const rows = points.filter(test);
+          return `<tr><td>${label}</td><td>${rows.length || '—'}</td>${types.map(type => {
+            const value = rows.length ? `${(rows.filter(point => cleanType(point) === type).length / rows.length * 100).toFixed(1)}%` : '—';
+            return `<td>${value}</td>`;
+          }).join('')}</tr>`;
+        }).join('');
+      }
+      renderTendencies = renderAllPitchTendencies;
+      $('tendencyHandFilter').addEventListener('change', renderAllPitchTendencies);
+      ['player', 'team', 'season'].forEach(id => $(id).addEventListener('change', () => setTimeout(renderAllPitchTendencies, 100)));
+      document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => setTimeout(renderAllPitchTendencies, 100)));
+      document.querySelector('[data-tab="tendency"]')?.addEventListener('click', () => setTimeout(renderAllPitchTendencies, 0));
+      setTimeout(renderAllPitchTendencies, 6000);
+    })();
+  </script>
   <script src="access-control.js?v=4"></script>
 </body>
 </html>
