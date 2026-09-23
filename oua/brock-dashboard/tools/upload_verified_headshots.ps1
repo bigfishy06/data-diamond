@@ -21,7 +21,7 @@ $headshots = Join-Path $root 'headshots'
 
 $teams = [ordered]@{
   'brock-badgers' = 'https://gobadgers.ca/sports/baseball/roster'
-  'guelph-gryphons' = 'https://gryphons.ca/sports/baseball/roster/2025-26'
+  'guelph-gryphons' = 'https://gryphons.ca/sports/baseball/roster'
   'mcmaster-marauders' = 'https://marauders.ca/sports/baseb/roster'
   'u-of-t-varsity-blues' = 'https://varsityblues.ca/sports/baseball/roster'
   'waterloo-warriors' = 'https://athletics.uwaterloo.ca/sports/baseball/roster'
