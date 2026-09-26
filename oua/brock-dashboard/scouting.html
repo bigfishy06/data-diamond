@@ -1645,11 +1645,24 @@ Zane Skansi,Kitchener Panthers`;
     return 'S';
   }
 
-  // Get batter handedness: scatter batter_side -> IBL history
+  function scoutRecordedHand(value) {
+    var hand = String(value || '').trim().toUpperCase().charAt(0);
+    return hand === 'R' || hand === 'L' || hand === 'S' ? hand : null;
+  }
+
+  // The exported roster Bats/Throws value is authoritative.  Scatter is only
+  // a fallback: one miscoded pitch must not turn a right- or left-handed
+  // player into a switch hitter on their report.
+  // Get batter handedness: recorded roster value -> scatter -> IBL history
   function getBatterHand(playerName) {
     var playerKey=String(playerName || '').trim().toLowerCase();
     if (playerKey === 'aj karosas') return 'L';
     if (playerKey === 'anderson feliz' || playerKey === 'roberto caro') return 'S';
+    var direct = (DATA.pitches || []).find(function(p) {
+      return normRosterName(p.batter) === normRosterName(playerName);
+    });
+    var recorded = scoutRecordedHand(direct && direct.bats);
+    if (recorded) return recorded;
     var pitchObj = getPitchPlayer(playerName) || getPitchPlayerForRoster(playerName);
     var scatter = pitchObj ? pitchObj.scatter : [];
     var fromScatter = scoutDeriveHand(scatter, 'batter_side');
@@ -1661,9 +1674,14 @@ Zane Skansi,Kitchener Panthers`;
     return null;
   }
 
-  // Get pitcher handedness: scatter pitcher_side -> IBL history
+  // Get pitcher handedness: recorded roster value -> scatter -> IBL history
   function getPitcherHand(playerName, scatter) {
     if (String(playerName || '').trim().toLowerCase() === 'mizuki akatsuka') return 'S';
+    var direct = (DATA.pitchers || []).find(function(p) {
+      return normRosterName(p.pitcher) === normRosterName(playerName);
+    });
+    var recorded = scoutRecordedHand(direct && direct.throws);
+    if (recorded) return recorded;
     var fromScatter = scoutDeriveHand(scatter || [], 'pitcher_side');
     if (fromScatter) return fromScatter;
     var iblRows = getIblRowsByName(playerName);
