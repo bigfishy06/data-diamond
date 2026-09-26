@@ -1927,7 +1927,7 @@ Zane Skansi,Kitchener Panthers`;
       d.text(handPrefix+hand,ML+33+nameW,MT+12.5);
     }
     d.setFont('helvetica','normal');d.setFontSize(8);d.setTextColor(222,226,249);
-    d.text(role+'  •  '+team.name+'  •  OUA '+selSeason,ML+31,MT+21);
+    d.text(role+'  •  '+team.name+'  •  OUA BASEBALL',ML+31,MT+21);
   }
   function drawBoxes(d,stats,y){
     var bw=CPW/stats.length;
@@ -2406,7 +2406,7 @@ Zane Skansi,Kitchener Panthers`;
     var bm=batterMetrics(allSc,s),allLeaguePitches=(DATA._pitches25||[]).concat(DATA.pitches2026||[]),allLeagueSummary=(DATA._summary25||[]).concat(DATA.summary2026||[]),batterLeague=allLeaguePitches.map(function(bp){var bs=allLeagueSummary.find(function(row){return normRosterName(row.batter||row.player)===normRosterName(bp.batter);})||{};return batterMetrics(bp.scatter||[],bs);});
     var opsPlusData = reportOpsPlusData(player.name, selSeason);
     y=drawPercentileBoxes(d,[
-      {label:'OPS+',display:opsPlusData.record ? String(opsPlusData.record.value) : '—',pct:reportOpsPlusPercentile(opsPlusData.record,opsPlusData.rows)},
+      {label:opsPlusData.record ? opsPlusData.record.season+' OPS+' : 'OPS+',display:opsPlusData.record ? String(opsPlusData.record.value) : '—',pct:reportOpsPlusPercentile(opsPlusData.record,opsPlusData.rows)},
       {label:'IN-ZONE SWING%',display:bm.iz==null?'—':f1(bm.iz)+'%',pct:reportPercentile(bm.iz,batterLeague.map(function(m){return m.iz;}),true)},
       {label:'CHASE%',display:bm.chase==null?'—':f1(bm.chase)+'%',pct:reportPercentile(bm.chase,batterLeague.map(function(m){return m.chase;}),false)},
       {label:'WHIFF%',display:bm.whiff==null?'—':f1(bm.whiff)+'%',pct:reportPercentile(bm.whiff,batterLeague.map(function(m){return m.whiff;}),false)}
@@ -3132,7 +3132,7 @@ Zane Skansi,Kitchener Panthers`;
     var fipData=reportFipData(player.name,selSeason),pFip=fipData.record?fipData.record.fip:null;
     var pStrike=!isHandReport&&pd26&&pd26.STR_pct!=null?+pd26.STR_pct:(tot?str/tot*100:null),pWhiff=!isHandReport&&pd26&&pd26.Whiff_pct!=null?+pd26.Whiff_pct:(sc.filter(reportIsSwingOutcome).length?swS/sc.filter(reportIsSwingOutcome).length*100:null),pK=!isHandReport&&pd26&&pd26.K_pct!=null?+pd26.K_pct:(_pitcherBF?ks/_pitcherBF*100:null);
     y=drawPercentileBoxes(d,[
-      {label:'FIP',display:pFip==null?'—':f2(pFip),pct:reportPercentile(pFip,fipData.rows.map(function(row){return row.fip;}),false)},
+      {label:fipData.record ? fipData.record.season+' FIP' : 'FIP',display:pFip==null?'—':f2(pFip),pct:reportPercentile(pFip,fipData.rows.map(function(row){return row.fip;}),false)},
       {label:'STRIKE%',display:pStrike==null?'—':f1(pStrike)+'%',pct:reportPercentile(pStrike,pitcherMetricRows.map(function(r){return +r.STR_pct;}),true)},
       {label:'WHIFF%',display:pWhiff==null?'—':f1(pWhiff)+'%',pct:reportPercentile(pWhiff,pitcherMetricRows.map(function(r){return +r.Whiff_pct;}),true)},
       {label:'K%',display:pK==null?'—':f1(pK)+'%',pct:reportPercentile(pK,pitcherMetricRows.map(function(r){return +r.K_pct;}),true)}
