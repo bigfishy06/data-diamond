@@ -6462,3 +6462,162 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,2,2,0,'2-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Sawyer Whitaker,Sam McMillan,L,R,Fastball,Ball,,,111,-1.347496254,0.705490623
 7,2,3,0,'3-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Sawyer Whitaker,Sam McMillan,L,R,Fastball,Called Strike,,,111,-0.419674076,0.742210087
 7,2,3,1,'3-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Sawyer Whitaker,Sam McMillan,L,R,Fastball,Walk,,,111,0.461756993,-0.148236922
+1,0,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Devan Fenwick,Alex Picard,R,L,Fastball,Called Strike,,,0,0.067432567,0.375015444
+1,0,0,1,'0-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Devan Fenwick,Alex Picard,R,L,Fastball,Foul,,,0,0.484952548,0.145518792
+1,0,0,2,'0-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Devan Fenwick,Alex Picard,R,L,Fastball,Foul,,,0,0.624125874,0.292396649
+1,0,0,2,'0-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Devan Fenwick,Alex Picard,R,L,Fastball,Ball,,,0,1.598339161,0.815649015
+1,0,1,2,'1-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Devan Fenwick,Alex Picard,R,L,Fastball,Single,Ground Ball,Pull,0,0.276192557,0.751389953
+1,0,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Smid,Alex Picard,R,L,Fastball,Single,Ground Ball,Pull,100,0.508148102,0.907447676
+1,0,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,John Dykyj,Alex Picard,R,L,Fastball,Ball,,,110,0.670516983,-0.203316119
+1,0,1,0,'1-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,John Dykyj,Alex Picard,R,L,Fastball,Called Strike,,,11,0.693712538,0.668771158
+1,0,1,1,'1-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,John Dykyj,Alex Picard,R,L,Fastball,Foul,,,11,0.740103646,0.604512096
+1,0,1,2,'1-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,John Dykyj,Alex Picard,R,L,Fastball,Foul,,,11,0.786494755,0.457634239
+1,0,1,2,'1-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,John Dykyj,Alex Picard,R,L,Fastball,Single,Fly Ball,Opposite Field,11,0.229801449,0.916627542
+1,0,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Quinten Shannon,Alex Picard,R,L,Fastball,Ball,,,101,0.345779221,1.247102721
+1,0,1,0,'1-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Quinten Shannon,Alex Picard,R,L,Fastball,Single,Ground Ball,Opposite Field,101,0.252997003,0.136338926
+1,0,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Markle,Alex Picard,R,L,Fastball,Called Strike,,,110,-0.257305195,0.264857051
+1,0,0,1,'0-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Markle,Alex Picard,R,L,Fastball,Called Strike,,,110,-0.141327423,0.08125973
+1,0,0,2,'0-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Markle,Alex Picard,R,L,Fastball,Ball,,,110,-1.463474026,-0.194136252
+1,0,1,2,'1-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Markle,Alex Picard,R,L,Fastball,Strikeout Looking,,,110,0.832885864,0.182238256
+1,1,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Anden Cooper,Alex Picard,L,L,Fastball,Ball,,,101,-1.718625125,0.329116114
+1,1,1,0,'1-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Anden Cooper,Alex Picard,L,L,Fastball,Called Strike,,,101,-0.698020729,0.329116114
+1,1,1,1,'1-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Anden Cooper,Alex Picard,L,L,Fastball,Ball,,,101,-1.393887363,0.59533223
+1,1,2,1,'2-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Anden Cooper,Alex Picard,L,L,Fastball,Ball,,,101,-1.254714036,0.870728212
+1,1,3,1,'3-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Anden Cooper,Alex Picard,L,L,Fastball,Called Strike,,,101,-0.535651848,0.301576515
+1,1,3,2,'3-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Anden Cooper,Alex Picard,L,L,Fastball,Groundout,Ground Ball,Opposite Field,101,0.39217033,0.264857051
+1,2,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Kayan Alazem,Alex Picard,R,L,Fastball,Called Strike,,,100,-0.187718532,0.934987274
+1,2,0,1,'0-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Kayan Alazem,Alex Picard,R,L,Fastball,Swinging Strike,,,100,0.531343656,0.632051694
+1,2,0,2,'0-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Kayan Alazem,Alex Picard,R,L,Fastball,Ball,,,100,0.160214785,0.953347006
+1,2,1,2,'1-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Kayan Alazem,Alex Picard,R,L,Fastball,Foul,,,100,0.299388112,0.788109417
+1,2,1,2,'1-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Kayan Alazem,Alex Picard,R,L,Fastball,Strikeout Looking,,,100,-0.65162962,0.742210087
+1,0,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Jaden Fonseca,R,R,Breaking Ball,Ball,,,0,1.43597028,-0.359373842
+1,0,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Jaden Fonseca,R,R,Fastball,Called Strike,,,0,0.670516983,0.632051694
+1,0,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Jaden Fonseca,R,R,Fastball,Called Strike,,,0,-0.535651848,0.393375176
+1,0,1,2,'1-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Jaden Fonseca,R,R,Breaking Ball,Ball,,,0,-1.324300699,0.38419531
+1,0,2,2,'2-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Jaden Fonseca,R,R,Fastball,Foul,,,0,0.368974775,0.870728212
+1,0,2,2,'2-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Jaden Fonseca,R,R,Fastball,Popout,Pop Up,Opposite Field,0,-0.373282967,0.879908078
+1,1,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jack Gillis,Jaden Fonseca,L,R,Breaking Ball,Swinging Strike,,,0,1.482361389,0.136338926
+1,1,0,1,'0-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jack Gillis,Jaden Fonseca,L,R,Breaking Ball,Single,Line Drive,Pull,0,-0.257305195,0.264857051
+1,1,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jaden Fonseca,R,R,,Ball,,,100,1.85349026,0.090439596
+1,1,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jaden Fonseca,R,R,Fastball,Called Strike,,,100,0.531343656,0.889087944
+1,1,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jaden Fonseca,R,R,Fastball,Foul,,,100,0.345779221,0.925807408
+1,1,1,2,'1-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jaden Fonseca,R,R,Breaking Ball,Ball,,,100,1.807099151,-0.102337592
+1,1,2,2,'2-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jaden Fonseca,R,R,Fastball,Hit By Pitch,,,100,-1.463474026,1.127764462
+,,,,,,,,,Marco Da Gama,Jaden Fonseca,R,R,Breaking Ball,Ball,,,100,0.531343656,-0.38691344
+1,1,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Jaden Fonseca,R,R,Fastball,Ball,,,110,0.740103646,-0.111517458
+1,1,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Jaden Fonseca,R,R,Fastball,Error,Ground Ball,Pull,110,0.531343656,0.439274506
+1,1,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Jaden Fonseca,L,R,Fastball,Called Strike,,,101,-0.582042957,0.659591292
+1,1,0,1,'0-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Jaden Fonseca,L,R,Fastball,Hit By Pitch,,,101,1.64473027,0.806469149
+1,1,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Tommy Cullen,Jaden Fonseca,R,R,Fastball,Called Strike,,,111,0.137019231,0.613691962
+1,1,0,1,'0-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Tommy Cullen,Jaden Fonseca,R,R,Breaking Ball,Ball,,,111,-1.393887363,0.503533569
+1,1,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Tommy Cullen,Jaden Fonseca,R,R,Fastball,Ball,,,111,-1.533060689,0.17305839
+1,1,2,1,'2-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Tommy Cullen,Jaden Fonseca,R,R,Fastball,Called Strike,,,111,0.856081419,0.347475846
+1,1,2,2,'2-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Tommy Cullen,Jaden Fonseca,R,R,Fastball,Hit By Pitch,,,111,-1.602647353,1.035965801
+1,1,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Noah Chang,Jaden Fonseca,R,R,Fastball,Ball,,,111,-0.466065185,1.265462453
+1,1,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Noah Chang,Jaden Fonseca,R,R,Fastball,Ball,,,111,-0.628434066,1.15530406
+1,1,2,0,'2-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Noah Chang,Jaden Fonseca,R,R,Fastball,Ball,,,111,0.554539211,1.15530406
+1,1,3,0,'3-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Noah Chang,Jaden Fonseca,R,R,Fastball,Called Strike,,,111,-0.280500749,0.540253033
+1,1,3,1,'3-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Noah Chang,Jaden Fonseca,R,R,Fastball,Swinging Strike,,,111,-0.419674076,0.834008747
+1,1,3,2,'3-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Noah Chang,Jaden Fonseca,R,R,Fastball,Popout,Pop Up,Pull,111,-0.23410964,0.916627542
+1,2,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Ethan Westfall,Jaden Fonseca,R,R,Fastball,Ball,,,111,-0.883585165,0.677951024
+1,2,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Ethan Westfall,Jaden Fonseca,R,R,Fastball,Called Strike,,,111,0.670516983,0.274036917
+1,2,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Ethan Westfall,Jaden Fonseca,R,R,Fastball,Ball,,,111,-1.393887363,0.907447676
+1,2,2,1,'2-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Ethan Westfall,Jaden Fonseca,R,R,Fastball,Ball,,,111,-0.257305195,1.182843658
+1,2,3,1,'3-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Ethan Westfall,Jaden Fonseca,R,R,Fastball,Walk,,,111,-1.509865135,0.347475846
+1,2,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jaylen Wood,Jaden Fonseca,R,R,Fastball,Swinging Strike,,,111,0.577734765,0.843188614
+1,2,0,1,'0-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jaylen Wood,Jaden Fonseca,R,R,Fastball,Foul,,,111,0.438561439,0.38419531
+1,2,0,2,'0-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jaylen Wood,Jaden Fonseca,R,R,Fastball,Ball,,,111,1.760708042,0.89826781
+1,2,1,2,'1-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jaylen Wood,Jaden Fonseca,R,R,Fastball,Ball,,,111,-2.275318432,1.173663792
+1,2,2,2,'2-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jaylen Wood,Jaden Fonseca,R,R,Fastball,Single,Line Drive,Straightaway,111,0.368974775,0.310756381
+1,2,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Fastball,Ball,,,101,-0.512456294,1.237922855
+1,2,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Breaking Ball,Ball,,,101,1.64473027,0.062899998
+1,2,2,0,'2-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Fastball,Foul,,,101,0.206605894,0.797289283
+1,2,2,1,'2-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Fastball,Ball,,,11,-0.44286963,1.127764462
+1,2,3,1,'3-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Fastball,Called Strike,,,1,-0.698020729,0.723850355
+1,2,3,2,'3-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Fastball,Walk,,,1,-0.535651848,1.256282587
+1,2,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jack Gillis,Erik Lopez,L,R,Fastball,Ball,,,101,-1.741820679,1.081865131
+1,2,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jack Gillis,Erik Lopez,L,R,Fastball,Swinging Strike,,,10,-0.605238512,0.889087944
+1,2,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jack Gillis,Erik Lopez,L,R,Fastball,Popout,Pop Up,Opposite Field,10,-0.141327423,0.576972498
+2,0,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Brody Nguyen,Alex Picard,R,L,Fastball,Called Strike,,,0,0.229801449,0.420914774
+2,0,0,1,'0-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Brody Nguyen,Alex Picard,R,L,Fastball,Swinging Strike,,,0,0.368974775,0.879908078
+2,0,0,2,'0-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Brody Nguyen,Alex Picard,R,L,Fastball,Foul,,,0,0.902472528,0.292396649
+2,0,0,2,'0-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Brody Nguyen,Alex Picard,R,L,Fastball,Groundout,Ground Ball,Straightaway,0,0.484952548,0.650411426
+2,1,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Jueun Chung,Alex Picard,R,L,,Ball,,,0,,
+2,1,1,0,'1-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Jueun Chung,Alex Picard,R,L,Fastball,Called Strike,,,0,0.345779221,0.136338926
+2,1,1,1,'1-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Jueun Chung,Alex Picard,R,L,Fastball,Ball,,,0,-1.533060689,-0.166596654
+2,1,2,1,'2-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Jueun Chung,Alex Picard,R,L,Fastball,Foul,,,0,0.461756993,0.613691962
+2,1,2,2,'2-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Jueun Chung,Alex Picard,R,L,Fastball,Ball,,,0,1.412774725,1.063505399
+2,1,3,2,'3-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Jueun Chung,Alex Picard,R,L,Fastball,Walk,,,0,-1.48666958,0.044540265
+2,1,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Devan Fenwick,Alex Picard,R,L,Fastball,Ball,,,100,0.415365884,1.182843658
+2,1,1,0,'1-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Devan Fenwick,Alex Picard,R,L,Fastball,Foul,,,10,-0.23410964,0.604512096
+2,1,1,1,'1-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Devan Fenwick,Alex Picard,R,L,Fastball,Single,Ground Ball,Pull,10,0.299388112,0.586152364
+2,1,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Smid,Alex Picard,R,L,Breaking Ball,Called Strike,,,110,-0.02534965,0.136338926
+2,1,0,1,'0-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Smid,Alex Picard,R,L,Breaking Ball,Called Strike,,,110,0.763299201,0.136338926
+2,1,0,2,'0-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Smid,Alex Picard,R,L,Breaking Ball,Ball,,,110,-1.602647353,-0.230855717
+2,1,1,2,'1-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Smid,Alex Picard,R,L,Fastball,Flyout,Fly Ball,Straightaway,110,0.693712538,0.292396649
+2,2,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,John Dykyj,Alex Picard,R,L,Fastball,Ball,,,101,1.505556943,0.870728212
+2,2,1,0,'1-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,John Dykyj,Alex Picard,R,L,Fastball,Foul,,,101,0.299388112,0.668771158
+2,2,1,1,'1-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,John Dykyj,Alex Picard,R,L,Fastball,Foul,,,101,0.716908092,0.59533223
+2,2,1,2,'1-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,John Dykyj,Alex Picard,R,L,Fastball,Hit By Pitch,,,101,-1.857798452,0.108799328
+2,2,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Quinten Shannon,Alex Picard,R,L,Fastball,Called Strike,,,111,-0.396478522,0.613691962
+2,2,0,1,'0-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Quinten Shannon,Alex Picard,R,L,Fastball,Called Strike,,,111,-0.790802947,0.64123156
+2,2,0,2,'0-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Quinten Shannon,Alex Picard,R,L,Breaking Ball,Strikeout Swinging,,,111,-0.512456294,0.182238256
+2,0,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Erik Lopez,R,R,Fastball,Ball,,,0,1.737512488,0.503533569
+2,0,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Erik Lopez,R,R,Breaking Ball,Called Strike,,,0,-0.164522977,0.457634239
+2,0,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Erik Lopez,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.438561439,0.255677185
+2,1,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Erik Lopez,R,R,Fastball,Ball,,,0,-0.906780719,1.237922855
+2,1,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Erik Lopez,R,R,Fastball,Ball,,,0,-0.744411838,-0.322654377
+2,1,2,0,'2-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Erik Lopez,R,R,Fastball,Ball,,,0,-1.440278472,0.43009464
+2,1,3,0,'3-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Erik Lopez,R,R,Fastball,Called Strike,,,0,0.693712538,0.38419531
+2,1,3,1,'3-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Erik Lopez,R,R,Fastball,Single,Ground Ball,Pull,0,0.137019231,0.43009464
+2,1,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Erik Lopez,L,R,Fastball,Called Strike,,,100,-0.582042957,0.365835578
+2,1,0,1,'0-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Erik Lopez,L,R,Fastball,Ball,,,100,-1.185127373,1.20120339
+2,1,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Erik Lopez,L,R,Offspeed,Swinging Strike,,,100,-0.721216284,0.531073167
+2,1,1,2,'1-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Erik Lopez,L,R,Offspeed,Ball,,,1,-1.602647353,0.072079864
+2,1,2,2,'2-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Erik Lopez,L,R,Offspeed,Ball,,,1,-1.90418956,0.38419531
+2,1,3,2,'3-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Erik Lopez,L,R,Fastball,Strikeout Swinging,,,1,-0.535651848,0.705490623
+2,2,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Tommy Cullen,Erik Lopez,R,R,Fastball,Ball,,,1,1.505556943,0.33829598
+2,2,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Tommy Cullen,Erik Lopez,R,R,Fastball,Ball,,,1,1.551948052,0.108799328
+2,2,2,0,'2-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Tommy Cullen,Erik Lopez,R,R,Fastball,Flyout,Fly Ball,Opposite Field,1,0.299388112,0.283216783
+3,0,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Markle,Alex Picard,R,L,Fastball,Ball,,,0,0.60093032,0.237317453
+3,0,1,0,'1-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Markle,Alex Picard,R,L,Fastball,Foul,,,0,0.461756993,0.668771158
+3,0,1,1,'1-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Markle,Alex Picard,R,L,Fastball,Foul,,,0,0.693712538,0.494353703
+3,0,1,2,'1-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Nathan Markle,Alex Picard,R,L,Fastball,Groundout,Ground Ball,Straightaway,0,0.206605894,0.319936248
+3,1,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Anden Cooper,Alex Picard,L,L,Breaking Ball,Foul,,,0,-0.164522977,0.843188614
+3,1,0,1,'0-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Anden Cooper,Alex Picard,L,L,Breaking Ball,Swinging Strike,,,0,-1.625842907,-0.093157726
+3,1,0,2,'0-2,2026-09-05,McMaster Marauders,Guelph Gryphons,,Anden Cooper,Alex Picard,L,L,Fastball,Groundout,Ground Ball,Straightaway,0,-0.605238512,0.283216783
+3,2,0,0,'0-0,2026-09-05,McMaster Marauders,Guelph Gryphons,,Kayan Alazem,Alex Picard,R,L,Fastball,Swinging Strike,,,0,0.624125874,0.099619462
+3,2,0,1,'0-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Kayan Alazem,Alex Picard,R,L,Fastball,Ball,,,0,-0.326891858,-0.194136252
+3,2,1,1,'1-1,2026-09-05,McMaster Marauders,Guelph Gryphons,,Kayan Alazem,Alex Picard,R,L,Fastball,Groundout,Ground Ball,Straightaway,0,-0.23410964,0.797289283
+3,0,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Noah Chang,Erik Lopez,R,R,Fastball,Hit By Pitch,,,0,-1.625842907,0.962526872
+3,0,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Ethan Westfall,Erik Lopez,R,R,Fastball,Single,Line Drive,Pull,100,-0.280500749,0.255677185
+3,0,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jaylen Wood,Erik Lopez,R,R,Breaking Ball,Ball,,,110,1.319992507,0.85236848
+3,0,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jaylen Wood,Erik Lopez,R,R,Fastball,Single,Ground Ball,Straightaway,110,0.345779221,0.255677185
+3,0,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Breaking Ball,Ball,,,110,-0.187718532,-0.212495985
+3,0,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Fastball,Swinging Strike,,,110,0.786494755,0.540253033
+3,0,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Fastball,Foul,,,110,-0.326891858,0.613691962
+3,0,1,2,'1-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Breaking Ball,Ball,,,110,1.598339161,-0.148236922
+3,0,2,2,'2-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Fastball,Ball,,,110,1.737512488,0.668771158
+3,0,3,2,'3-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Evan Ogston,Erik Lopez,R,R,Fastball,Walk,,,110,-0.512456294,-0.203316119
+3,0,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jack Gillis,Erik Lopez,L,R,Fastball,Ball,,,111,-1.417082917,1.136944328
+3,0,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jack Gillis,Erik Lopez,L,R,Fastball,Ball,,,111,-1.509865135,0.475993971
+3,0,2,0,'2-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jack Gillis,Erik Lopez,L,R,Fastball,Ball,,,111,-1.533060689,0.604512096
+3,0,3,0,'3-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Jack Gillis,Erik Lopez,L,R,Fastball,Walk,,,111,-2.020167333,0.586152364
+3,0,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jonah Ferry,R,L,Fastball,Ball,,,111,0.531343656,1.20120339
+3,0,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jonah Ferry,R,L,Breaking Ball,Called Strike,,,111,0.090628122,0.797289283
+3,0,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jonah Ferry,R,L,Breaking Ball,Ball,,,111,0.879276973,-0.285934913
+3,0,2,1,'2-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jonah Ferry,R,L,Fastball,Ball,,,111,0.693712538,1.146124194
+3,0,3,1,'3-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jonah Ferry,R,L,Fastball,Called Strike,,,111,0.670516983,0.696310756
+3,0,3,2,'3-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Andrew Johnston,Jonah Ferry,R,L,Fastball,Single,Line Drive,Pull,111,0.252997003,0.705490623
+3,0,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Jonah Ferry,R,L,Breaking Ball,Ball,,,110,-0.953171828,-0.359373842
+3,0,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Jonah Ferry,R,L,Fastball,Ball,,,11,-0.65162962,1.127764462
+3,0,2,0,'2-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Jonah Ferry,R,L,Fastball,Ball,,,11,-1.370691808,-0.166596654
+3,0,3,0,'3-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Jonah Ferry,R,L,Fastball,Called Strike,,,11,-0.628434066,0.89826781
+3,0,3,1,'3-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Jonah Ferry,R,L,Fastball,Called Strike,,,11,0.647321429,0.604512096
+3,0,3,2,'3-2,2026-09-05,Guelph Gryphons,McMaster Marauders,,Marco Da Gama,Jonah Ferry,R,L,Fastball,Double Play,Line Drive,Straightaway,11,0.39217033,0.613691962
+3,2,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Jonah Ferry,L,L,Breaking Ball,Ball,,,1,-0.65162962,1.072685265
+3,2,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Jonah Ferry,L,L,Fastball,Called Strike,,,1,-0.65162962,0.723850355
+3,2,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Julian Fabrizio,Jonah Ferry,L,L,Fastball,Single,Ground Ball,Opposite Field,1,0.554539211,0.411734908
+3,2,0,0,'0-0,2026-09-05,Guelph Gryphons,McMaster Marauders,1.47,Tommy Cullen,Jonah Ferry,R,L,Fastball,Ball,,,100,-0.373282967,1.118584596
+3,2,1,0,'1-0,2026-09-05,Guelph Gryphons,McMaster Marauders,,Tommy Cullen,Jonah Ferry,R,L,Fastball,Called Strike,,,100,0.229801449,0.59533223
+3,2,1,1,'1-1,2026-09-05,Guelph Gryphons,McMaster Marauders,,Tommy Cullen,Jonah Ferry,R,L,Breaking Ball,Ball,,,100,0.438561439,-0.34101411
