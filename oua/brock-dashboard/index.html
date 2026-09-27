@@ -908,7 +908,6 @@
   <script>
     (function(){
       const dateOf=point=>String(point.date||'').trim();
-      const allPitcherPoints=()=>pitcherUsagePoints(state.current);
       function makeDateControl(id){
         const node=document.createElement('div');node.className='date-range-filter';node.id=id;
         node.innerHTML='<span>DATE RANGE</span><div class="date-range-sliders"><span class="date-slider-label">From</span><input class="date-start" type="range" min="0" max="0" value="0" aria-label="Start date"><b class="date-start-label">All dates</b><span class="date-slider-label">To</span><input class="date-end" type="range" min="0" max="0" value="0" aria-label="End date"><b class="date-end-label">All dates</b></div>';
@@ -925,9 +924,13 @@
       const sequenceRow=document.createElement('div');sequenceRow.className='sequence-filter-row';sequenceRow.append(sequencingControl,sequenceHand);
       $('pitchSequencingPanel').insertBefore(sequenceRow,$('pitchSequencingPanel').children[1]);
       const controls=[effectivenessControl,tendencyControl,sequencingControl,zoneControl];
-      function pointsFor(control){return control===zoneControl||activeRole()==='batter'?selectedPoints():allPitcherPoints()}
+      // A date range must be built from the same full tracked sample that the
+      // section later filters.  In particular, Count Tendencies includes every
+      // recorded pitch label, so it cannot start from the narrower pitcher-use
+      // helper (which drops unclassified pitches and rows without handedness).
+      function pointsFor(){return selectedPoints()}
       function datesForCurrent(control){return[...new Set(pointsFor(control).map(dateOf).filter(Boolean))].sort()}
-      function controlKey(){return`${activeRole()}|${$('player').value}|${$('team').value}`}
+      function controlKey(){return`${activeRole()}|${$('season').value}|${$('player').value}|${$('team').value}`}
       function paintRange(control,changedInput=null){
         const dates=control._dates||[],start=control.querySelector('.date-start'),end=control.querySelector('.date-end');
         start.value=String(Math.max(0,Math.min(Number(start.value)||0,Math.max(dates.length-1,0))));
@@ -957,8 +960,13 @@
         $('effectivenessHand').dispatchEvent(new Event('change'));
       }
       function renderTendencyDate(){
-        const pitcher=activeRole()==='pitcher';tendencyControl.style.display='grid';if(!pitcher){renderTendencies();return;}
-        withScopedPoints(scoped(tendencyControl),()=>renderTendencies());
+        tendencyControl.style.display='grid';
+        // Count Tendencies owns its own table renderer.  Notify it directly
+        // rather than temporarily replacing player.scatter; replacement made
+        // its result dependent on script load order and could leave a stale
+        // table after the range thumb moved.
+        document.dispatchEvent(new CustomEvent('tendency-date-range-change'));
+        renderTendencies();
       }
       function renderZoneDate(){
         zoneControl.style.display='flex';
@@ -995,10 +1003,12 @@
         input.addEventListener('input',function(){
           // Keep drag work limited to the control itself. Rebuilding charts
           // while the thumb is moving makes native range inputs feel stuck.
+          configure(control);
           paintRange(control,input);
           queueRangeApply(control);
         });
         input.addEventListener('change',function(){
+          configure(control);
           paintRange(control,input);
           applyRange(control);
         });
@@ -1691,6 +1701,10 @@
       }
       renderTendencies = renderAllPitchTendencies;
       $('tendencyHandFilter').addEventListener('change', renderAllPitchTendencies);
+      // The range controls live in a later-independent setup block. Listening
+      // for its event keeps this final, full-pitch renderer in sync regardless
+      // of which earlier tendency implementation ran first.
+      document.addEventListener('tendency-date-range-change', renderAllPitchTendencies);
       ['player', 'team', 'season'].forEach(id => $(id).addEventListener('change', () => setTimeout(renderAllPitchTendencies, 100)));
       document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => setTimeout(renderAllPitchTendencies, 100)));
       document.querySelector('[data-tab="tendency"]')?.addEventListener('click', () => setTimeout(renderAllPitchTendencies, 0));
