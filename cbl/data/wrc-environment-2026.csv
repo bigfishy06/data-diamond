@@ -1,0 +1,10 @@
+Team,Park_Factor,Games_Used,League_Runs,League_PA,League_R_per_PA,wOBA_Scale,Weight_Source,Validated_Games,Validated_PA,Source
+Barrie Baycats,83.6,213,2965,15269,0.19418429497675,0.998609617198793,DataDiamond transitions validated against official CBL scores,84,6686,https://cbl.ca/api/stats-api/feed/game-packages?seasonYear=2026&limit=500
+Brantford Red Sox,81.2,213,2965,15269,0.19418429497675,0.998609617198793,DataDiamond transitions validated against official CBL scores,84,6686,https://cbl.ca/api/stats-api/feed/game-packages?seasonYear=2026&limit=500
+Chatham-Kent Barnstormers,110.5,213,2965,15269,0.19418429497675,0.998609617198793,DataDiamond transitions validated against official CBL scores,84,6686,https://cbl.ca/api/stats-api/feed/game-packages?seasonYear=2026&limit=500
+Guelph Royals,76.4,213,2965,15269,0.19418429497675,0.998609617198793,DataDiamond transitions validated against official CBL scores,84,6686,https://cbl.ca/api/stats-api/feed/game-packages?seasonYear=2026&limit=500
+Hamilton Cardinals,85.9,213,2965,15269,0.19418429497675,0.998609617198793,DataDiamond transitions validated against official CBL scores,84,6686,https://cbl.ca/api/stats-api/feed/game-packages?seasonYear=2026&limit=500
+Kitchener Panthers,141.1,213,2965,15269,0.19418429497675,0.998609617198793,DataDiamond transitions validated against official CBL scores,84,6686,https://cbl.ca/api/stats-api/feed/game-packages?seasonYear=2026&limit=500
+London Majors,109.2,213,2965,15269,0.19418429497675,0.998609617198793,DataDiamond transitions validated against official CBL scores,84,6686,https://cbl.ca/api/stats-api/feed/game-packages?seasonYear=2026&limit=500
+Toronto Maple Leafs,108.5,213,2965,15269,0.19418429497675,0.998609617198793,DataDiamond transitions validated against official CBL scores,84,6686,https://cbl.ca/api/stats-api/feed/game-packages?seasonYear=2026&limit=500
+Welland Jackfish,112.1,213,2965,15269,0.19418429497675,0.998609617198793,DataDiamond transitions validated against official CBL scores,84,6686,https://cbl.ca/api/stats-api/feed/game-packages?seasonYear=2026&limit=500

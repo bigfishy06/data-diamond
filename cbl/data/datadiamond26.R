@@ -6,14 +6,37 @@ pitches_raw <- read.csv("C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/datadiamo
                         header = TRUE,
                         stringsAsFactors = FALSE)
 
+extra_columns <- intersect(c("X", "X.1"), names(pitches_raw))
+
+for (column in extra_columns) {
+  values <- pitches_raw[[column]]
+
+  if (!all(is.na(values) | trimws(as.character(values)) == "")) {
+    stop(column, " contains data and cannot safely be discarded.")
+  }
+}
+
+pitches_raw <- pitches_raw[
+  , !names(pitches_raw) %in% c("X", "X.1"),
+  drop = FALSE
+]
+
+expected_names <- c("inning", "outs", "balls", "strikes", "count",
+                    "date", "batter_team", "pitcher_team",
+                    "time_to_plate",
+                    "batter", "pitcher",
+                    "batter_side", "pitcher_side", "pitch_type",
+                    "outcome", "contact_quality", "spray_chart",
+                    "runners", "pitch_x", "pitch_y")
+
+if (ncol(pitches_raw) != length(expected_names)) {
+  stop("Unexpected CSV schema: found ", ncol(pitches_raw),
+       " columns after removing empty trailing columns; expected ",
+       length(expected_names), ".")
+}
+
 pitches <- as.data.frame(pitches_raw)
-colnames(pitches) <- c("inning", "outs", "balls", "strikes", "count",
-                       "date", "batter_team", "pitcher_team",
-                       "time_to_plate",
-                       "batter", "pitcher",
-                       "batter_side", "pitcher_side", "pitch_type",
-                       "outcome", "contact_quality", "spray_chart",
-                       "runners", "pitch_x", "pitch_y")
+colnames(pitches) <- expected_names
 
 # ── Clean ──────────────────────────────────────────────────────────────────────
 pitches$pitch_x       <- suppressWarnings(as.numeric(pitches$pitch_x))
