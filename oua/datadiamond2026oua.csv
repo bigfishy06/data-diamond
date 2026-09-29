@@ -7192,3 +7192,209 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,1,3,2,'3-2,2026-09-26,McMaster Marauders,Brock Badgers,,Anden Cooper,Jack Tiessen,L,R,Fastball,Walk,,,11,-1.045954046,1.210383256
 7,1,0,0,'0-0,2026-09-26,McMaster Marauders,Brock Badgers,,Quinten Shannon,Jack Tiessen,R,R,Fastball,Flyout,Fly Ball,Opposite Field,111,0.415365884,0.411734908
 7,2,0,0,'0-0,2026-09-26,McMaster Marauders,Brock Badgers,,Justin Meade,Jack Tiessen,L,R,Fastball,Flyout,Fly Ball,Straightaway,101,0.229801449,0.17305839
+1,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Fastball,Called Strike,,,0,-0.535651848,0.834008747
+1,0,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.23410964,0.622871828
+1,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Joshua Neposlan,R,R,Fastball,Foul,,,0,-0.187718532,0.329116114
+1,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Joshua Neposlan,R,R,Breaking Ball,Ball,,,0,1.366383616,-0.240035583
+1,1,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Joshua Neposlan,R,R,Fastball,Ball,,,0,-0.605238512,1.182843658
+1,1,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Joshua Neposlan,R,R,Fastball,Swinging Strike,,,0,-0.605238512,0.420914774
+1,1,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Joshua Neposlan,R,R,Breaking Ball,Single,Ground Ball,Pull,0,0.740103646,0.356655712
+1,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Joshua Neposlan,R,R,Fastball,Called Strike,,,100,0.577734765,0.64123156
+1,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Joshua Neposlan,R,R,Fastball,Single,Line Drive,Pull,100,-0.23410964,0.43009464
+1,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Joshua Neposlan,L,R,Fastball,Ball,,,110,0.879276973,-0.295114779
+1,1,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Joshua Neposlan,L,R,Fastball,Ball,,,110,-1.579451798,0.907447676
+1,1,2,0,'2-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Joshua Neposlan,L,R,Fastball,Popout,Pop Up,Opposite Field,110,-0.373282967,0.696310756
+1,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Joshua Neposlan,L,R,Offspeed,Called Strike,,,110,-0.698020729,0.200597989
+1,2,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Joshua Neposlan,L,R,Fastball,Ball,,,110,-1.27790959,0.861548346
+1,2,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Joshua Neposlan,L,R,Offspeed,Foul,,,110,-0.466065185,0.466814105
+1,2,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Joshua Neposlan,L,R,Offspeed,Ball,,,110,0.554539211,-0.240035583
+1,2,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Joshua Neposlan,L,R,Fastball,Strikeout Looking,,,110,-0.744411838,0.769749685
+1,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,Mack Rabeau,R,R,Fastball,Ball,,,0,-1.347496254,0.861548346
+1,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,Mack Rabeau,R,R,Fastball,Single,Line Drive,Opposite Field,0,0.021041459,0.347475846
+1,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Aidan Vivaldi,Mack Rabeau,L,R,Breaking Ball,Foul,,,100,0.763299201,0.237317453
+1,0,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Aidan Vivaldi,Mack Rabeau,L,R,Fastball,Called Strike,,,100,-0.512456294,1.072685265
+1,0,0,2,'0-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Aidan Vivaldi,Mack Rabeau,L,R,Fastball,Strikeout Swinging,,,100,0.925668082,-0.212495985
+1,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,Mack Rabeau,R,R,Breaking Ball,Ball,,,100,0.856081419,-0.350193976
+1,1,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,Mack Rabeau,R,R,Fastball,Foul,,,100,0.137019231,0.815649015
+1,1,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,Mack Rabeau,R,R,Breaking Ball,Foul,,,10,0.647321429,0.68713089
+1,1,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,Mack Rabeau,R,R,Fastball,Foul,,,10,0.39217033,0.439274506
+1,1,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,Mack Rabeau,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,10,0.39217033,0.632051694
+1,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elias Rubio Reyes,Mack Rabeau,R,R,Fastball,Groundout,Ground Ball,Opposite Field,10,-0.44286963,0.843188614
+2,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Joshua Neposlan,L,R,Fastball,Flyout,Fly Ball,Straightaway,0,-0.23410964,0.191418123
+2,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Brett Hardy,Joshua Neposlan,L,R,Breaking Ball,Called Strike,,,0,0.322583666,0.163878524
+2,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Brett Hardy,Joshua Neposlan,L,R,Fastball,Ball,,,0,-1.48666958,0.907447676
+2,1,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Brett Hardy,Joshua Neposlan,L,R,Fastball,Ball,,,0,-1.602647353,-0.157416788
+2,1,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Brett Hardy,Joshua Neposlan,L,R,Fastball,Ball,,,0,0.554539211,-0.17577652
+2,1,3,1,'3-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Brett Hardy,Joshua Neposlan,L,R,Fastball,Double,Line Drive,Opposite Field,0,-0.535651848,0.778929551
+2,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Joshua Neposlan,R,R,Fastball,Ball,,,10,1.204014735,-0.267575181
+2,1,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Joshua Neposlan,R,R,Breaking Ball,Called Strike,,,10,0.693712538,0.494353703
+2,1,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Joshua Neposlan,R,R,Breaking Ball,Groundout,Ground Ball,Opposite Field,10,0.554539211,0.613691962
+2,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Joshua Neposlan,R,R,Breaking Ball,Ball,,,1,1.273601399,-0.359373842
+2,2,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Joshua Neposlan,R,R,Fastball,Groundout,Ground Ball,Straightaway,1,-0.535651848,0.632051694
+2,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Mack Rabeau,R,R,Fastball,Ball,,,0,1.528752498,-0.221675851
+2,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Mack Rabeau,R,R,Fastball,Lineout,Line Drive,Straightaway,0,0.438561439,0.714670489
+2,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,1.47,Jackson Gannett,Mack Rabeau,R,R,Breaking Ball,Called Strike,,,100,0.647321429,0.356655712
+2,1,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jackson Gannett,Mack Rabeau,R,R,Fastball,Called Strike,,,100,0.484952548,0.89826781
+2,1,0,2,'0-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jackson Gannett,Mack Rabeau,R,R,Breaking Ball,Ball,,,100,1.621534715,-0.093157726
+2,1,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jackson Gannett,Mack Rabeau,R,R,Fastball,Strikeout Swinging,,,100,0.624125874,0.788109417
+2,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Mack Rabeau,L,R,Fastball,Ball,,,100,-1.347496254,0.815649015
+2,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Mack Rabeau,L,R,Fastball,Ball,,,100,-1.625842907,1.10940473
+2,2,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Mack Rabeau,L,R,Offspeed,Called Strike,,,100,-0.65162962,0.604512096
+2,2,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Mack Rabeau,L,R,Breaking Ball,Ball,,,100,1.459165834,-0.093157726
+2,2,3,1,'3-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Mack Rabeau,L,R,Fastball,Foul,,,100,-0.419674076,0.356655712
+2,2,3,2,'3-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Mack Rabeau,L,R,Fastball,Walk,,,100,0.067432567,1.118584596
+2,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Matt Fischer,Mack Rabeau,R,R,Breaking Ball,Swinging Strike,,,110,0.624125874,0.274036917
+2,2,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Matt Fischer,Mack Rabeau,R,R,Breaking Ball,Ball,,,110,1.111232517,-0.194136252
+2,2,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Matt Fischer,Mack Rabeau,R,R,Fastball,Ball,,,110,-0.86038961,1.192023524
+2,2,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Matt Fischer,Mack Rabeau,R,R,Fastball,Swinging Strike,,,110,0.299388112,0.659591292
+2,2,2,2,'2-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Matt Fischer,Mack Rabeau,R,R,Fastball,Ball,,,110,-0.65162962,1.237922855
+2,2,3,2,'3-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Matt Fischer,Mack Rabeau,R,R,Fastball,Hit By Pitch,,,110,-1.463474026,0.769749685
+2,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Tomoki Yamamoto,Mack Rabeau,L,R,Fastball,Ball,,,111,-1.509865135,1.256282587
+2,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Tomoki Yamamoto,Mack Rabeau,L,R,Fastball,Swinging Strike,,,111,-0.118131868,0.319936248
+2,2,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Tomoki Yamamoto,Mack Rabeau,L,R,Fastball,Called Strike,,,111,0.693712538,0.255677185
+2,2,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Tomoki Yamamoto,Mack Rabeau,L,R,Fastball,Strikeout Looking,,,111,0.508148102,0.108799328
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Offspeed,Ball,,,0,-0.628434066,-0.258395315
+3,0,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Offspeed,Ball,,,0,-1.092345155,-0.157416788
+3,0,2,0,'2-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Breaking Ball,Called Strike,,,0,0.368974775,0.283216783
+3,0,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Breaking Ball,Ball,,,0,0.368974775,-0.295114779
+3,0,3,1,'3-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Fastball,Called Strike,,,0,-0.721216284,0.200597989
+3,0,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Breaking Ball,Walk,,,0,0.693712538,-0.469532235
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Joshua Neposlan,R,R,Offspeed,Called Strike,,,100,-0.350087413,0.163878524
+3,0,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Joshua Neposlan,R,R,Fastball,Home Run,Fly Ball,Pull,100,0.206605894,0.356655712
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Joshua Neposlan,R,R,Fastball,Called Strike,,,0,-0.280500749,0.778929551
+3,0,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Joshua Neposlan,R,R,Fastball,Foul,,,0,0.554539211,0.365835578
+3,0,0,2,'0-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Joshua Neposlan,R,R,Offspeed,Ball,,,0,-1.463474026,0.264857051
+3,0,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Joshua Neposlan,R,R,Breaking Ball,Ball,,,0,0.461756993,-0.313474511
+3,0,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Joshua Neposlan,R,R,Fastball,Ball,,,0,1.551948052,0.283216783
+3,0,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Joshua Neposlan,R,R,Fastball,Foul,,,0,-0.558847403,0.889087944
+3,0,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Joshua Neposlan,R,R,Fastball,Foul,,,0,-0.512456294,0.439274506
+3,0,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Joshua Neposlan,R,R,Fastball,Double,Line Drive,Opposite Field,0,0.624125874,0.723850355
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Joshua Neposlan,L,R,Fastball,Groundout,Ground Ball,Straightaway,10,-0.535651848,0.209777855
+3,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Joshua Neposlan,L,R,Fastball,Called Strike,,,1,-0.790802947,0.274036917
+3,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Joshua Neposlan,L,R,Breaking Ball,Ball,,,1,-0.489260739,-0.359373842
+3,1,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Joshua Neposlan,L,R,Fastball,Groundout,Ground Ball,Straightaway,1,-0.744411838,0.68713089
+3,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Joshua Neposlan,L,R,Offspeed,Ball,,,1,-1.556256244,-0.056438261
+3,2,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Joshua Neposlan,L,R,Fastball,Called Strike,,,1,-0.744411838,0.38419531
+3,2,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Joshua Neposlan,L,R,Fastball,Ball,,,1,-1.509865135,0.778929551
+3,2,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Joshua Neposlan,L,R,Breaking Ball,Ball,,,1,-1.347496254,0.475993971
+3,2,3,1,'3-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Joshua Neposlan,L,R,Fastball,Groundout,Ground Ball,Straightaway,1,0.113823676,0.494353703
+3,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,Mack Rabeau,R,R,Breaking Ball,Ball,,,0,1.273601399,-0.304294645
+3,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,Mack Rabeau,R,R,Fastball,Ball,,,0,0.693712538,-0.240035583
+3,0,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,Mack Rabeau,R,R,Fastball,Ball,,,0,0.925668082,-0.313474511
+3,0,3,0,'3-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,Mack Rabeau,R,R,Fastball,Called Strike,,,0,0.276192557,0.668771158
+3,0,3,1,'3-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,Mack Rabeau,R,R,Fastball,Walk,,,0,0.484952548,-0.12987719
+3,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,0.99,Aidan Vivaldi,Mack Rabeau,L,R,Fastball,Swinging Strike,,,100,-0.65162962,0.733030221
+3,0,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Aidan Vivaldi,Mack Rabeau,L,R,Fastball,Double Play,Ground Ball,Opposite Field,100,-0.466065185,0.393375176
+3,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,Mack Rabeau,R,R,Breaking Ball,Called Strike,,,0,0.693712538,0.604512096
+3,2,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,Mack Rabeau,R,R,Fastball,Called Strike,,,0,0.577734765,0.329116114
+3,2,0,2,'0-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,Mack Rabeau,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.345779221,0.218957721
+4,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Brett Hardy,Joshua Neposlan,L,R,Offspeed,Single,Ground Ball,Pull,0,-0.512456294,0.182238256
+4,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Joshua Neposlan,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,100,0.345779221,0.824828881
+4,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Joshua Neposlan,R,R,Fastball,Called Strike,,,10,0.368974775,0.255677185
+4,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Joshua Neposlan,R,R,Fastball,Groundout,Ground Ball,Pull,10,0.252997003,0.43009464
+4,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Offspeed,Swinging Strike,,,1,-0.489260739,-0.221675851
+4,2,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Offspeed,Ball,,,1,-1.602647353,0.806469149
+4,2,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Breaking Ball,Ball,,,1,-1.347496254,-0.285934913
+4,2,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Breaking Ball,Ball,,,1,0.60093032,-0.34101411
+4,2,3,1,'3-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Fastball,Swinging Strike,,,1,-0.326891858,0.117979194
+4,2,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Joshua Neposlan,L,R,Fastball,Flyout,Fly Ball,Opposite Field,1,-0.535651848,0.68713089
+4,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elias Rubio Reyes,Mack Rabeau,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.368974775,0.760569819
+4,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Mack Rabeau,R,R,Fastball,Lineout,Line Drive,Opposite Field,0,-0.187718532,0.182238256
+4,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jackson Gannett,Mack Rabeau,R,R,Fastball,Called Strike,,,0,-0.280500749,0.329116114
+4,2,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jackson Gannett,Mack Rabeau,R,R,Breaking Ball,Called Strike,,,0,0.508148102,0.310756381
+4,2,0,2,'0-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jackson Gannett,Mack Rabeau,R,R,Fastball,Ball,,,0,1.528752498,0.33829598
+4,2,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jackson Gannett,Mack Rabeau,R,R,Breaking Ball,Ball,,,0,1.575143606,-0.074797994
+4,2,2,2,'2-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jackson Gannett,Mack Rabeau,R,R,Fastball,Strikeout Swinging,,,0,0.508148102,0.531073167
+5,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Kenny Leung,R,R,Fastball,Called Strike,,,0,0.252997003,0.38419531
+5,0,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Kenny Leung,R,R,Breaking Ball,Ball,,,0,0.415365884,1.136944328
+5,0,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Kenny Leung,R,R,Fastball,Ball,,,0,0.60093032,1.072685265
+5,0,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Kenny Leung,R,R,Fastball,Ball,,,0,1.621534715,-0.184956386
+5,0,3,1,'3-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Kenny Leung,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.229801449,0.751389953
+5,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Kenny Leung,R,R,Breaking Ball,Swinging Strike,,,0,0.740103646,0.108799328
+5,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Kenny Leung,R,R,Fastball,Ball,,,0,1.459165834,1.10940473
+5,1,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Kenny Leung,R,R,Breaking Ball,Called Strike,,,0,0.160214785,0.485173837
+5,1,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Kenny Leung,R,R,Fastball,Ball,,,0,-0.512456294,1.210383256
+5,1,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Kenny Leung,R,R,Breaking Ball,Ball,,,0,1.204014735,-0.350193976
+5,1,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Kenny Leung,R,R,Fastball,Strikeout Swinging,,,0,0.879276973,0.255677185
+5,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Kenny Leung,L,R,Fastball,Foul,,,0,0.624125874,0.274036917
+5,2,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Kenny Leung,L,R,Breaking Ball,Ball,,,0,-0.65162962,1.136944328
+5,2,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Kenny Leung,L,R,Breaking Ball,Ball,,,0,0.763299201,-0.414453038
+5,2,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Kenny Leung,L,R,Fastball,Foul,,,0,0.322583666,0.145518792
+5,2,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Kenny Leung,L,R,Breaking Ball,Ball,,,0,-0.605238512,1.20120339
+5,2,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Kenny Leung,L,R,Fastball,Walk,,,0,1.598339161,-0.194136252
+5,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Kenny Leung,L,R,Fastball,Called Strike,,,100,0.461756993,0.43009464
+5,2,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,1.45,Alex Cole,Kenny Leung,L,R,Fastball,Groundout,Ground Ball,Pull,100,-0.303696304,0.604512096
+5,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,River Cote,R,R,Fastball,Ball,,,0,0.39217033,1.384800712
+5,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,River Cote,R,R,Fastball,Foul,,,0,0.276192557,0.163878524
+5,0,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,River Cote,R,R,Breaking Ball,Swinging Strike,,,0,0.647321429,0.494353703
+5,0,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,River Cote,R,R,Fastball,Ball,,,0,1.273601399,0.806469149
+5,0,2,2,'2-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,River Cote,R,R,Fastball,Strikeout Swinging,,,0,-0.767607393,0.751389953
+5,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Matt Fischer,River Cote,R,R,Breaking Ball,Ball,,,0,1.667925824,0.209777855
+5,1,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Matt Fischer,River Cote,R,R,Fastball,Popout,Pop Up,Straightaway,0,0.716908092,0.283216783
+5,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Tomoki Yamamoto,River Cote,L,R,Fastball,Ball,,,0,-0.512456294,1.256282587
+5,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Tomoki Yamamoto,River Cote,L,R,Fastball,Ball,,,0,0.39217033,1.219563122
+5,2,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Tomoki Yamamoto,River Cote,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.60093032,0.824828881
+6,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Kenny Leung,L,R,Fastball,Ball,,,0,1.296796953,0.723850355
+6,0,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Kenny Leung,L,R,Breaking Ball,Ball,,,0,0.832885864,-0.230855717
+6,0,2,0,'2-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Kenny Leung,L,R,Breaking Ball,Ball,,,0,0.995254745,-0.350193976
+6,0,3,0,'3-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Kenny Leung,L,R,Fastball,Called Strike,,,0,-0.466065185,0.567792631
+6,0,3,1,'3-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Kenny Leung,L,R,Breaking Ball,Called Strike,,,0,0.763299201,0.733030221
+6,0,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Kenny Leung,L,R,Fastball,Walk,,,0,0.577734765,0.33829598
+6,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Brett Hardy,Kenny Leung,L,R,Fastball,Called Strike,,,100,0.670516983,0.769749685
+6,0,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,1.29,Brett Hardy,Kenny Leung,L,R,Fastball,Foul,,,100,0.624125874,0.292396649
+6,0,0,2,'0-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,1.22,Brett Hardy,Kenny Leung,L,R,Breaking Ball,Foul,,,100,0.113823676,0.485173837
+6,0,0,2,'0-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,1.24,Brett Hardy,Kenny Leung,L,R,Breaking Ball,Foul,,,100,0.60093032,0.200597989
+6,0,0,2,'0-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Brett Hardy,Kenny Leung,L,R,Breaking Ball,Ball,,,100,-0.558847403,1.15530406
+6,0,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Brett Hardy,Kenny Leung,L,R,Fastball,Single,Ground Ball,Pull,100,0.299388112,0.834008747
+6,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnick,Armin Najmaie,R,R,Fastball,Ball,,,110,1.250405844,0.788109417
+6,0,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnick,Armin Najmaie,R,R,Fastball,Foul,,,110,-0.512456294,0.411734908
+6,0,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnick,Armin Najmaie,R,R,Offspeed,Foul,,,110,-0.535651848,0.824828881
+6,0,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnick,Armin Najmaie,R,R,Offspeed,Strikeout Looking,,,110,-0.674825175,0.68713089
+6,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Armin Najmaie,R,R,Fastball,Called Strike,,,110,0.113823676,0.310756381
+6,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Armin Najmaie,R,R,Offspeed,Called Strike,,,110,0.508148102,0.283216783
+6,1,0,2,'0-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Armin Najmaie,R,R,Offspeed,Strikeout Swinging,,,110,0.856081419,0.145518792
+6,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Armin Najmaie,L,R,Fastball,Called Strike,,,110,0.415365884,0.512713435
+6,2,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jack Angel,Armin Najmaie,L,R,Offspeed,Error,Ground Ball,Pull,110,-0.512456294,0.283216783
+6,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,,,,,,Additional Out,,,,,
+6,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,River Cote,R,R,Breaking Ball,Ball,,,0,1.366383616,0.393375176
+6,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,River Cote,R,R,Fastball,Called Strike,,,0,0.345779221,0.053720131
+6,0,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,River Cote,R,R,Breaking Ball,Ball,,,0,0.925668082,-0.331834244
+6,0,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,River Cote,R,R,Fastball,Ball,,,0,-0.535651848,1.182843658
+6,0,3,1,'3-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Spenser Ross,River Cote,R,R,Fastball,Walk,,,0,-0.767607393,1.127764462
+6,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Aidan Vivaldi,River Cote,L,R,Fastball,Called Strike,,,100,-0.65162962,0.677951024
+6,0,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Aidan Vivaldi,River Cote,L,R,Fastball,Foul,,,100,0.276192557,0.668771158
+6,0,0,2,'0-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,1.51,Aidan Vivaldi,River Cote,L,R,Fastball,Strikeout Swinging,,,100,0.508148102,0.393375176
+6,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,River Cote,R,R,Fastball,Swinging Strike,,,10,0.554539211,0.824828881
+6,1,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,River Cote,R,R,Breaking Ball,Ball,,,10,-0.373282967,1.274642319
+6,1,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,River Cote,R,R,Fastball,Foul,,,10,0.252997003,0.365835578
+6,1,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Diego Fuentes,River Cote,R,R,Breaking Ball,Error,Ground Ball,Pull,10,0.299388112,0.962526872
+6,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elias Rubio Reyes,River Cote,R,R,Breaking Ball,Ball,,,11,1.714316933,0.778929551
+6,1,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elias Rubio Reyes,River Cote,R,R,Fastball,Foul,,,11,0.322583666,0.439274506
+6,1,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elias Rubio Reyes,River Cote,R,R,Breaking Ball,Ball,,,11,1.180819181,-0.377733574
+6,1,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elias Rubio Reyes,River Cote,R,R,Fastball,Groundout,Ground Ball,Opposite Field,11,0.508148102,0.163878524
+6,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,River Cote,R,R,Fastball,Ball,,,1,0.508148102,1.210383256
+6,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,River Cote,R,R,Fastball,Ball,,,1,0.693712538,1.15530406
+6,2,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,River Cote,R,R,Fastball,Ball,,,1,1.296796953,0.622871828
+6,2,3,0,'3-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,River Cote,R,R,Fastball,Walk,,,1,0.368974775,1.127764462
+6,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,River Cote,L,R,Fastball,Ball,,,101,-1.370691808,1.265462453
+6,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,River Cote,L,R,Offspeed,Ball,,,101,-0.210914086,-0.258395315
+6,2,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,River Cote,L,R,Fastball,Swinging Strike,,,101,-0.466065185,0.723850355
+6,2,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,River Cote,L,R,Fastball,Ball,,,11,-0.837194056,1.136944328
+6,2,3,1,'3-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,River Cote,L,R,Fastball,Called Strike,,,11,0.856081419,0.733030221
+6,2,3,2,'3-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,River Cote,L,R,Fastball,Hit By Pitch,,,11,1.737512488,0.89826781
+6,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jack Barber,Jacob Finlayson,R,R,Fastball,Foul,,,111,-0.210914086,0.375015444
+6,2,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jack Barber,Jacob Finlayson,R,R,Breaking Ball,Single,Line Drive,Opposite Field,111,0.670516983,0.38419531
+6,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jack Barber,Jacob Finlayson,R,R,,Additional Out,,,0,,
+7,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Armin Najmaie,R,R,Fastball,Ball,,,0,1.783903596,-0.230855717
+7,0,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Armin Najmaie,R,R,Fastball,Called Strike,,,0,0.647321429,0.503533569
+7,0,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Armin Najmaie,R,R,Fastball,Ball,,,0,1.273601399,-0.313474511
+7,0,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Armin Najmaie,R,R,Offspeed,Called Strike,,,0,0.531343656,0.191418123
+7,0,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sean Skorupski,Armin Najmaie,R,R,Offspeed,Groundout,Ground Ball,Straightaway,0,0.693712538,0.117979194
+7,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Armin Najmaie,R,R,Fastball,Ball,,,0,1.667925824,0.613691962
+7,1,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Owen Sartor,Armin Najmaie,R,R,Breaking Ball,Hit By Pitch,,,0,-1.602647353,1.008426203
+7,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Armin Najmaie,L,R,Fastball,Called Strike,,,100,-0.698020729,0.824828881
+7,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Armin Najmaie,L,R,Offspeed,Ball,,,100,2.085445804,-0.322654377
+7,1,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Armin Najmaie,L,R,Fastball,Ball,,,10,-1.880994006,0.861548346
+7,1,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Armin Najmaie,L,R,Fastball,Called Strike,,,1,-0.535651848,0.540253033
+7,1,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Armin Najmaie,L,R,Fastball,Sacrifice Fly,Fly Ball,Straightaway,1,-0.257305195,0.393375176
+7,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Armin Najmaie,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.326891858,0.751389953
