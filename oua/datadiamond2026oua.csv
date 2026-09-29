@@ -7398,3 +7398,207 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,1,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Armin Najmaie,L,R,Fastball,Called Strike,,,1,-0.535651848,0.540253033
 7,1,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Armin Najmaie,L,R,Fastball,Sacrifice Fly,Fly Ball,Straightaway,1,-0.257305195,0.393375176
 7,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Armin Najmaie,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.326891858,0.751389953
+1,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,1.6,Cole Geldart,Max Lanoue,R,R,Fastball,Single,Line Drive,Pull,0,-0.365766888,0.721302764
+1,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Max Lanoue,R,R,Fastball,Swinging Strike,,,100,0.364479513,0.090382666
+1,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Max Lanoue,R,R,Fastball,Ball,,,100,0.158776301,0.106664475
+1,0,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Max Lanoue,R,R,Breaking Ball,Flyout,Fly Ball,Straightaway,100,-0.921165559,0.892261758
+1,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Breaking Ball,Ball,,,100,0.086780177,0.546273317
+1,1,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Fastball,Called Strike,,,10,-0.509759136,0.367173419
+1,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Fastball,Single,Pop Up,Straightaway,10,0.580467885,0.232848495
+1,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Fastball,Called Strike,,,101,0.662749169,0.407877941
+1,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Fastball,Ball,,,101,0.940448505,-0.104999041
+1,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Swinging Strike,,,11,-0.026356589,0.139228093
+1,1,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Foul,,,11,-0.057212071,0.045607692
+1,1,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Strikeout Swinging,,,11,0.683319491,0.090382666
+1,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Max Lanoue,L,R,Fastball,Ball,,,11,-0.314341085,0.041537239
+1,2,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Max Lanoue,L,R,Fastball,Called Strike,,,11,-0.766888151,0.448582464
+1,2,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Max Lanoue,L,R,Fastball,Ball,,,11,-0.910880399,0.122946284
+1,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Max Lanoue,L,R,Fastball,Swinging Strike,,,11,-0.684606866,0.265412113
+1,2,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Max Lanoue,L,R,Fastball,Strikeout Swinging,,,11,0.32333887,0.93296628
+1,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Jack Comper,R,R,Fastball,Swinging Strike,,,0,-0.808028793,0.737584573
+1,0,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Jack Comper,R,R,Fastball,Ball,,,0,1.218147841,0.057819048
+1,0,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Jack Comper,R,R,Fastball,Ball,,,0,-0.550899779,0.949248089
+1,0,2,1,'2-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Jack Comper,R,R,Fastball,Called Strike,,,0,-0.715462348,0.595118744
+1,0,2,2,'2-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Jack Comper,R,R,Fastball,Single,Line Drive,Straightaway,0,0.529042082,0.306116635
+1,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Jack Comper,L,R,Fastball,Called Strike,,,100,0.601038206,0.790500452
+1,0,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,1.56,Jonah Brotman,Jack Comper,L,R,Fastball,Called Strike,,,100,-0.75660299,0.127016737
+1,0,0,2,'0-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Jack Comper,L,R,Breaking Ball,Foul,,,10,-0.437763012,0.477075629
+1,0,0,2,'0-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Jack Comper,L,R,Fastball,Error,Ground Ball,Opposite Field,10,-0.643466224,0.399737037
+1,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Owen Sartor,Jack Comper,R,R,Breaking Ball,Ball,,,11,-0.900595238,0.928895828
+1,0,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Owen Sartor,Jack Comper,R,R,Fastball,Foul,,,11,-0.016071429,0.334609801
+1,0,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Owen Sartor,Jack Comper,R,R,Fastball,Sacrifice Fly,Fly Ball,Straightaway,11,-0.252630122,0.464864273
+1,1,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jack Comper,L,R,Fastball,Called Strike,,,10,-0.376052049,0.790500452
+1,1,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jack Comper,L,R,Fastball,Ball,,,10,0.817026578,0.033396335
+1,1,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jack Comper,L,R,Fastball,Ball,,,10,-1.065157807,0.953318542
+1,1,2,1,'2-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jack Comper,L,R,Fastball,Ball,,,10,-1.168009413,0.46079382
+1,1,3,1,'3-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jack Comper,L,R,Fastball,Called Strike,,,10,-0.797743632,0.676527789
+1,1,3,2,'3-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jack Comper,L,R,Fastball,Foul,,,10,0.642178848,0.611400553
+1,1,3,2,'3-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jack Comper,L,R,Fastball,Double,Line Drive,Pull,10,-0.448048173,0.574766483
+1,1,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Jack Comper,L,R,Fastball,Ball,,,10,-0.818313954,1.02251623
+1,1,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Jack Comper,L,R,Fastball,Foul,,,10,0.436475637,0.464864273
+1,1,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Jack Comper,L,R,Breaking Ball,Foul,,,10,0.837596899,0.375314323
+1,1,1,2,'1-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Jack Comper,L,R,Fastball,Ball,,,10,-1.013732004,0.957388994
+1,1,2,2,'2-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Jack Comper,L,R,Fastball,Ball,,,10,0.446760797,0.082241762
+1,1,3,2,'3-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Jack Comper,L,R,Fastball,Walk,,,10,-1.178294574,0.904473115
+1,1,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O'Sullivan,Jack Comper,L,R,Fastball,Called Strike,,,110,-0.58175526,0.497427891
+1,1,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O'Sullivan,Jack Comper,L,R,Fastball,Single,Line Drive,Pull,110,0.385049834,0.66024598
+1,1,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Colby Wilhelm,Jack Comper,L,R,Fastball,Called Strike,,,111,0.035354374,0.416018846
+1,1,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Colby Wilhelm,Jack Comper,L,R,Fastball,Foul,,,111,0.31305371,0.58697784
+1,1,0,2,'0-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Colby Wilhelm,Jack Comper,L,R,Fastball,Double,Line Drive,Pull,111,0.31305371,0.330539349
+1,1,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Ryan Opresnik,Jack Comper,L,R,Breaking Ball,Called Strike,,,10,-0.489188815,0.627682362
+1,1,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Ryan Opresnik,Jack Comper,L,R,Fastball,Foul,,,10,-0.766888151,0.62361191
+1,1,0,2,'0-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Ryan Opresnik,Jack Comper,L,R,Breaking Ball,Strikeout Swinging,,,10,-0.232059801,0.611400553
+1,2,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Matthew McDonald,Jack Comper,L,R,Fastball,Groundout,Ground Ball,Pull,10,-0.550899779,0.546273317
+2,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Max Lanoue,R,R,Fastball,Ball,,,0,0.878737542,0.074100857
+2,0,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Max Lanoue,R,R,Fastball,Single,Line Drive,Straightaway,0,-0.21148948,0.135157641
+2,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Gabriel Lopez,Max Lanoue,L,R,Fastball,Popout,Fly Ball,Opposite Field,100,0.765600775,0.700950503
+2,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Max Lanoue,R,R,Breaking Ball,Ball,,,100,0.930163344,-0.015449092
+2,1,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Max Lanoue,R,R,Fastball,Caught Stealing,,,100,-0.098352713,1.034727586
+2,2,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Max Lanoue,R,R,Fastball,Called Strike,,,0,-0.653751384,0.395666585
+2,2,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Max Lanoue,R,R,Fastball,Ball,,,0,-0.921165559,0.692809598
+2,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Max Lanoue,R,R,Fastball,Foul,,,0,0.354194352,0.416018846
+2,2,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Max Lanoue,R,R,Fastball,Walk,,,0,0.477616279,0.02525543
+2,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Max Lanoue,R,R,Fastball,Swinging Strike,,,100,-0.324626246,0.416018846
+2,2,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Max Lanoue,R,R,Fastball,Ball,,,100,0.518756921,0.884120854
+2,2,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Max Lanoue,R,R,Fastball,Ball,,,100,0.827311739,0.029325883
+2,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Max Lanoue,R,R,Fastball,Ball,,,100,0.745030454,0.794570904
+2,2,3,1,'3-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Max Lanoue,R,R,Fastball,Swinging Strike,,,100,0.436475637,0.871909497
+2,2,3,2,'3-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Max Lanoue,R,R,Fastball,Strikeout Swinging,,,100,-0.355481728,0.884120854
+2,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Clark Needles,Jordan Miller,R,L,Changeup,Ball,,,0,0.097065338,0.082241762
+2,0,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Clark Needles,Jordan Miller,R,L,Fastball,Ball,,,0,-0.828599114,0.118875832
+2,0,2,0,'2-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Clark Needles,Jordan Miller,R,L,Fastball,Lineout,Line Drive,Straightaway,0,-0.499473976,0.399737037
+2,1,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Jordan Miller,R,L,Fastball,Swinging Strike,,,0,-0.504616556,0.664316433
+2,1,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Jordan Miller,R,L,Slider,Called Strike,,,0,-0.530329457,0.717232312
+2,1,0,2,'0-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Jordan Miller,R,L,Changeup,Strikeout Swinging,,,0,0.85816722,0.106664475
+2,2,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Jordan Miller,L,L,Slider,Ball,,,0,-0.869739756,0.318327992
+2,2,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Jordan Miller,L,L,Fastball,Ball,,,0,-1.054872647,0.061889501
+2,2,2,0,'2-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Jordan Miller,L,L,Fastball,Ball,,,0,-0.838884275,0.045607692
+2,2,3,0,'3-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Jordan Miller,L,L,Fastball,Called Strike,,,0,-0.633181063,0.489286986
+2,2,3,1,'3-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Jordan Miller,L,L,Changeup,Foul,,,0,0.601038206,0.122946284
+2,2,3,2,'3-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Jordan Miller,L,L,Slider,Walk,,,0,-0.489188815,0.041537239
+2,2,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Owen Sartor,Jordan Miller,R,L,Fastball,Groundout,Ground Ball,Pull,100,-0.304055925,0.570696031
+3,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Matthew Kong,Max Lanoue,R,R,Fastball,Swinging Strike,,,0,-0.22177464,0.627682362
+3,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Matthew Kong,Max Lanoue,R,R,Fastball,Foul,,,0,-0.345196567,0.318327992
+3,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Matthew Kong,Max Lanoue,R,R,Fastball,Foul,,,0,-0.427477852,0.265412113
+3,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Matthew Kong,Max Lanoue,R,R,Breaking Ball,Strikeout Looking,,,0,-0.005786268,0.574766483
+3,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Max Lanoue,R,R,Breaking Ball,Called Strike,,,0,-0.725747508,0.481146082
+3,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Max Lanoue,R,R,Fastball,Foul,,,0,0.559897564,0.232848495
+3,1,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Max Lanoue,R,R,Breaking Ball,Flyout,Fly Ball,Pull,0,-0.602325581,0.375314323
+3,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Max Lanoue,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.364479513,0.432300655
+3,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jordan Miller,L,L,Fastball,Ball,,,0,-1.024017165,0.245059852
+3,0,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jordan Miller,L,L,Slider,Called Strike,,,0,-0.201204319,0.179932616
+3,0,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jordan Miller,L,L,Fastball,Ball,,,0,-0.859454596,0.216566686
+3,0,2,1,'2-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jordan Miller,L,L,Slider,Ball,,,0,-1.065157807,0.35089161
+3,0,3,1,'3-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Jordan Miller,L,L,Fastball,Single,Line Drive,Pull,0,-0.293770764,0.55034377
+3,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Brett Hardy,Jordan Miller,L,L,Fastball,Called Strike,,,100,-0.633181063,0.403807489
+3,0,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Brett Hardy,Jordan Miller,L,L,Slider,Foul,,,100,0.354194352,0.847486783
+3,0,0,2,'0-2,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Brett Hardy,Jordan Miller,L,L,Slider,Flyout,Line Drive,Opposite Field,100,0.364479513,0.383455228
+3,1,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,1.41,Patrick O'Sullivan,Jordan Miller,L,L,Slider,Ball,,,100,-0.345196567,0.070030405
+3,1,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O'Sullivan,Jordan Miller,L,L,Fastball,Ball,,,10,-0.869739756,0.318327992
+3,1,2,0,'2-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O'Sullivan,Jordan Miller,L,L,Fastball,Called Strike,,,10,-0.705177187,0.5137097
+3,1,2,1,'2-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O'Sullivan,Jordan Miller,L,L,Slider,Caught Stealing,,,10,-0.622895903,0.245059852
+3,2,2,1,'2-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O'Sullivan,Jordan Miller,L,L,Slider,Strikeout Swinging,,,0,0.549612403,0.546273317
+4,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Fastball,Called Strike,,,0,0.529042082,0.648034624
+4,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Fastball,Foul,,,0,0.302768549,0.326468896
+4,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.343909192,0.448582464
+4,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Called Strike,,,0,-0.643466224,0.705020955
+4,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Ball,,,0,0.878737542,0.814923165
+4,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.415905316,0.367173419
+4,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Russel DuHamel,L,R,Fastball,Swinging Strike,,,0,-0.345196567,0.643964171
+4,2,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Russel DuHamel,L,R,Fastball,Ball,,,0,1.002159468,0.045607692
+4,2,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Russel DuHamel,L,R,Breaking Ball,Ball,,,0,0.817026578,0.416018846
+4,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Russel DuHamel,L,R,Breaking Ball,Called Strike,,,0,-0.458333333,0.432300655
+4,2,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Russel DuHamel,L,R,Breaking Ball,Strikeout Swinging,,,0,0.724460133,0.082241762
+4,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Colby Wilhelm,Evan Carabetta,L,R,Fastball,Single,Line Drive,Opposite Field,0,0.271913068,0.456723368
+4,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Ryan Opresnik,Evan Carabetta,L,R,Fastball,Foul,,,100,0.31305371,0.871909497
+4,0,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Ryan Opresnik,Evan Carabetta,L,R,Fastball,Double Play,Ground Ball,Pull,100,0.477616279,0.240989399
+4,2,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Matthew McDonald,Evan Carabetta,L,R,Fastball,Ball,,,0,0.940448505,0.293905278
+4,2,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Matthew McDonald,Evan Carabetta,L,R,Fastball,Ball,,,0,-0.93145072,0.977741255
+4,2,2,0,'2-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Matthew McDonald,Evan Carabetta,L,R,Slider,Foul,,,0,0.477616279,0.538132413
+4,2,2,1,'2-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Matthew McDonald,Evan Carabetta,L,R,Fastball,Ball,,,0,-1.054872647,0.977741255
+4,2,3,1,'3-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Matthew McDonald,Evan Carabetta,L,R,Fastball,Walk,,,0,1.074155592,0.367173419
+4,2,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,1.38,Clark Needles,Evan Carabetta,R,R,Slider,Groundout,Ground Ball,Opposite Field,100,-0.406907531,0.477075629
+5,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Russel DuHamel,R,R,Breaking Ball,Called Strike,,,0,0.405620155,0.285764374
+5,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Russel DuHamel,R,R,Breaking Ball,Swinging Strike,,,0,0.971303987,0.074100857
+5,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Russel DuHamel,R,R,Fastball,Hit By Pitch,,,0,-0.993161683,0.904473115
+5,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Gabriel Lopez,Russel DuHamel,L,R,Breaking Ball,Called Strike,,,100,0.631893688,0.334609801
+5,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Gabriel Lopez,Russel DuHamel,L,R,Breaking Ball,Ball,,,100,0.518756921,0.045607692
+5,0,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Gabriel Lopez,Russel DuHamel,L,R,Fastball,Foul,,,100,0.354194352,0.668386885
+5,0,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,1.96,Gabriel Lopez,Russel DuHamel,L,R,Breaking Ball,Strikeout Swinging,,,100,0.508471761,0.143298546
+5,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Russel DuHamel,R,R,Fastball,Ball,,,100,0.899307863,0.220637138
+5,1,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Russel DuHamel,R,R,Breaking Ball,Foul,,,100,-0.520044297,0.448582464
+5,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Russel DuHamel,R,R,Breaking Ball,Ball,,,100,-0.705177187,0.989952612
+5,1,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Russel DuHamel,R,R,Breaking Ball,Ball,,,100,0.889022702,0.399737037
+5,1,3,1,'3-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Russel DuHamel,R,R,Breaking Ball,Called Strike,,,100,0.693604651,0.448582464
+5,1,3,2,'3-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Russel DuHamel,R,R,Breaking Ball,Walk,,,100,1.03301495,0.322398444
+5,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Russel DuHamel,R,R,Breaking Ball,Called Strike,,,110,0.631893688,0.656175528
+5,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Russel DuHamel,R,R,Fastball,Ball,,,110,1.516417497,0.155509902
+5,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Russel DuHamel,R,R,Fastball,Foul,,,110,-0.58175526,0.525921056
+5,1,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Russel DuHamel,R,R,Breaking Ball,Ball,,,110,0.84788206,0.493357438
+5,1,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Russel DuHamel,R,R,Breaking Ball,Error,Line Drive,Straightaway,110,0.271913068,0.428230202
+5,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Matthew Kong,Russel DuHamel,R,R,Breaking Ball,Called Strike,,,101,-0.58175526,0.582907388
+5,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Matthew Kong,Russel DuHamel,R,R,Breaking Ball,Groundout,Ground Ball,Opposite Field,101,0.529042082,0.403807489
+5,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Russel DuHamel,R,R,Fastball,Ball,,,10,0.84788206,0.888191306
+5,2,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Russel DuHamel,R,R,Breaking Ball,Ball,,,10,0.85816722,0.098523571
+5,2,2,0,'2-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Russel DuHamel,R,R,Breaking Ball,Ball,,,10,-0.900595238,0.851557236
+5,2,3,0,'3-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Russel DuHamel,R,R,Fastball,Walk,,,10,-0.880024917,0.957388994
+5,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Slider,Ball,,,110,0.84788206,0.061889501
+5,2,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Fastball,Ball,,,110,0.919878184,0.334609801
+5,2,2,0,'2-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Fastball,Called Strike,,,110,0.662749169,0.236918947
+5,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Slider,Ball,,,110,1.012444629,0.297975731
+5,2,3,1,'3-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Fastball,Walk,,,110,0.950733666,0.200284877
+5,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Robert Jamieson,L,R,Fastball,Ball,,,111,0.333624031,0.061889501
+5,2,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Robert Jamieson,L,R,Fastball,Ball,,,111,0.652464009,0.07817131
+5,2,2,0,'2-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Robert Jamieson,L,R,Fastball,Called Strike,,,111,-0.5714701,0.562555126
+5,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Robert Jamieson,L,R,Fastball,Popout,Pop Up,Opposite Field,111,0.32333887,0.399737037
+5,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Evan Carabetta,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.261627907,0.416018846
+5,1,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Evan Carabetta,L,R,Slider,Called Strike,,,0,-0.509759136,0.42415975
+5,1,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Evan Carabetta,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.405620155,0.326468896
+5,2,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Owen Sartor,Evan Carabetta,R,R,Slider,Ball,,,0,-0.365766888,0.937036733
+5,2,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Owen Sartor,Evan Carabetta,R,R,Slider,Ball,,,0,0.909593023,0.037466787
+5,2,2,0,'2-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Owen Sartor,Evan Carabetta,R,R,Fastball,Groundout,Ground Ball,Pull,0,-0.376052049,0.538132413
+6,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Robert Jamieson,L,R,Fastball,Foul,Ground Ball,Pull,0,0.241057586,0.354962062
+6,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Robert Jamieson,L,R,Slider,Single,Fly Ball,Pull,0,0.117635659,0.289834826
+6,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Robert Jamieson,L,R,Slider,Ball,,,100,0.909593023,0.322398444
+6,0,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Robert Jamieson,L,R,Fastball,Foul,,,100,0.683319491,0.627682362
+6,0,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,1.53,Aaron Collings,Robert Jamieson,L,R,Slider,Ball,,,100,0.230772425,0.065959953
+6,0,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Robert Jamieson,L,R,Fastball,Ball,,,100,-0.890310078,0.668386885
+6,0,3,1,'3-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aaron Collings,Robert Jamieson,L,R,Fastball,Walk,,,100,-0.509759136,0.98588216
+6,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Robert Jamieson,R,R,Fastball,Ball,,,110,-0.921165559,0.578836935
+6,0,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Robert Jamieson,R,R,Fastball,Foul,,,110,-0.180633998,0.534061961
+6,0,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Robert Jamieson,R,R,Slider,Ball,,,110,0.827311739,0.049678144
+6,0,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Robert Jamieson,R,R,Fastball,Called Strike,,,110,-0.098352713,0.302046183
+6,0,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Robert Jamieson,R,R,Fastball,Ball,,,110,-0.345196567,0.920754924
+6,0,3,2,'3-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jared Wellman,Robert Jamieson,R,R,Fastball,Single,,,110,-0.633181063,0.322398444
+6,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Gabriel Lopez,Robert Jamieson,L,R,Fastball,Called Strike,,,101,0.354194352,0.440441559
+6,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Gabriel Lopez,Robert Jamieson,L,R,,Pickoff,,,101,,
+6,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Gabriel Lopez,Robert Jamieson,L,R,Fastball,Ball,,,1,-0.602325581,0.973670803
+6,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Gabriel Lopez,Robert Jamieson,L,R,Slider,Ball,,,1,0.775885936,0.057819048
+6,1,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Gabriel Lopez,Robert Jamieson,L,R,Fastball,Single,Ground Ball,Straightaway,1,0.333624031,0.395666585
+6,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Robert Jamieson,R,R,Slider,Ball,,,100,1.125581395,0.216566686
+6,1,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Robert Jamieson,R,R,Fastball,Called Strike,,,10,0.210202104,0.196214425
+6,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Robert Jamieson,R,R,Fastball,Foul,,,10,-0.22177464,0.497427891
+6,1,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jordan Taube,Robert Jamieson,R,R,Slider,Error,Fly Ball,Pull,10,-0.314341085,0.668386885
+6,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Robert Jamieson,R,R,Fastball,Swinging Strike,,,11,-0.766888151,0.713161859
+6,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Robert Jamieson,R,R,Fastball,Called Strike,,,11,0.693604651,0.391596132
+6,1,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Robert Jamieson,R,R,Fastball,Strikeout Swinging,,,11,-0.458333333,0.839345879
+6,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Matthew Kong,Robert Jamieson,R,R,Fastball,Called Strike,,,11,0.395334995,0.135157641
+6,2,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Matthew Kong,Robert Jamieson,R,R,Fastball,Popout,Pop Up,Pull,11,-0.684606866,0.574766483
+6,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Philip Sephton,L,R,Fastball,Ball,,,0,0.971303987,0.367173419
+6,0,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Philip Sephton,L,R,Fastball,Called Strike,,,0,-0.520044297,0.31425754
+6,0,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Philip Sephton,L,R,Fastball,Single,,,0,0.251342746,0.391596132
+6,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Philip Sephton,L,R,Fastball,Foul,,,100,0.570182724,0.501498343
+6,0,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,1.21,Liam Smith,Philip Sephton,L,R,Fastball,Ball,,,100,-0.324626246,0.070030405
+6,0,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Philip Sephton,L,R,Fastball,Double Play,Line Drive,Pull,100,0.601038206,0.228778043
+6,2,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O'Sullivan,Philip Sephton,L,R,Fastball,Ball,,,0,0.415905316,0.041537239
+6,2,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O'Sullivan,Philip Sephton,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.395334995,0.35089161
+7,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Jacob Finlayson,R,R,Fastball,Swinging Strike,,,0,0.477616279,0.269482565
+7,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Jacob Finlayson,R,R,Breaking Ball,Called Strike,,,0,0.662749169,0.212496234
+7,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Jacob Finlayson,R,R,Fastball,Strikeout Swinging,,,0,-0.715462348,0.38752568
+7,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Jacob Finlayson,R,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.436475637,0.436371107
+7,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Breaking Ball,Called Strike,,,0,0.12792082,0.452652916
+7,2,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.921165559,0.802711809
+7,2,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Foul,,,0,0.518756921,0.521850604
+7,2,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Breaking Ball,Ball,,,0,0.508471761,0.008973621
+7,2,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.262915282,0.98588216
+7,2,3,2,'3-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Strikeout Swinging,,,0,-0.304055925,0.843416331
