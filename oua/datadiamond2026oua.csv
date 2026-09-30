@@ -7602,3 +7602,217 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,2,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Breaking Ball,Ball,,,0,0.508471761,0.008973621
 7,2,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.262915282,0.98588216
 7,2,3,2,'3-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Strikeout Swinging,,,0,-0.304055925,0.843416331
+1,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,Landon Hutar,R,R,Fastball,Single,Ground Ball,Pull,0,-0.419674076,0.632051694
+1,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,1.07,Lucas Bateman,Landon Hutar,R,R,Fastball,Called Strike,,,100,-0.419674076,0.806469149
+1,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Breaking Ball,Ball,,,100,1.43597028,0.17305839
+1,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Breaking Ball,Flyout,Fly Ball,Pull,100,0.229801449,0.420914774
+1,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Landon Hutar,R,R,,Swinging Strike,,,100,,
+1,1,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Landon Hutar,R,R,Breaking Ball,Ball,,,10,0.577734765,-0.322654377
+1,1,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Landon Hutar,R,R,Fastball,Flyout,Fly Ball,Opposite Field,10,-0.210914086,0.521893301
+1,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Landon Hutar,R,R,Breaking Ball,Called Strike,,,10,-0.628434066,0.356655712
+1,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Landon Hutar,R,R,Offspeed,Called Strike,,,10,-0.721216284,0.072079864
+1,2,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Landon Hutar,R,R,Offspeed,Single,Ground Ball,Straightaway,10,-0.257305195,0.099619462
+1,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Landon Hutar,R,R,Breaking Ball,Ball,,,10,1.319992507,-0.194136252
+1,2,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Landon Hutar,R,R,Fastball,Flyout,Fly Ball,Opposite Field,10,0.415365884,0.760569819
+1,0,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aiden Tonge,R,R,Fastball,Called Strike,,,0,0.832885864,0.365835578
+1,0,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aiden Tonge,R,R,Fastball,Foul,,,0,0.508148102,0.714670489
+1,0,0,2,'0-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aiden Tonge,R,R,Offspeed,Ball,,,0,-0.210914086,0.108799328
+1,0,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aiden Tonge,R,R,Breaking Ball,Ball,,,0,1.482361389,-0.157416788
+1,0,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aiden Tonge,R,R,Fastball,Ball,,,0,0.902472528,0.255677185
+1,0,3,2,'3-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aiden Tonge,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,-0.558847403,0.228137587
+1,1,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Aiden Tonge,L,R,Offspeed,Ball,,,0,-0.65162962,-0.093157726
+1,1,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Aiden Tonge,L,R,Offspeed,Ball,,,0,0.206605894,-0.08397786
+1,1,2,0,'2-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Aiden Tonge,L,R,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.419674076,0.301576515
+1,2,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,,Ball,,,0,,
+1,2,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,Fastball,Ball,,,0,-0.44286963,1.127764462
+1,2,2,0,'2-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,Fastball,Called Strike,,,0,-0.790802947,0.733030221
+1,2,2,1,'2-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,Fastball,Called Strike,,,0,0.345779221,1.118584596
+1,2,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,Fastball,Foul,,,0,0.554539211,0.145518792
+1,2,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,Fastball,Strikeout Looking,,,0,0.276192557,0.191418123
+2,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,Landon Hutar,L,R,,Foul,,,0,,
+2,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,Landon Hutar,L,R,Breaking Ball,Ball,,,0,0.902472528,-0.414453038
+2,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,Landon Hutar,L,R,Offspeed,Ball,,,0,-0.466065185,-0.221675851
+2,0,2,1,'2-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,Landon Hutar,L,R,Offspeed,Groundout,Ground Ball,Pull,0,-0.44286963,0.255677185
+2,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Brendan Boys,Landon Hutar,R,R,,Foul,,,0,,
+2,1,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Brendan Boys,Landon Hutar,R,R,Fastball,Hit By Pitch,,,0,-1.463474026,0.778929551
+2,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Landon Hutar,R,R,Fastball,Double Play,Ground Ball,Straightaway,100,0.229801449,0.834008747
+2,0,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Fastball,Swinging Strike,,,0,0.206605894,0.834008747
+2,0,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Offspeed,Called Strike,,,0,0.39217033,0.393375176
+2,0,0,2,'0-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Offspeed,Ball,,,0,-1.48666958,0.38419531
+2,0,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Fastball,Foul,,,0,-0.257305195,0.843188614
+2,0,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Offspeed,Strikeout Looking,,,0,-0.512456294,0.191418123
+2,1,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Aiden Tonge,L,R,,Foul,,,0,,
+2,1,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Aiden Tonge,L,R,Fastball,Ball,,,0,-0.44286963,1.136944328
+2,1,1,1,'1-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Aiden Tonge,L,R,Offspeed,Ball,,,0,-0.164522977,-0.184956386
+2,1,2,1,'2-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Aiden Tonge,L,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.461756993,0.17305839
+2,2,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Aiden Tonge,R,R,Offspeed,Swinging Strike,,,0,-0.210914086,0.117979194
+2,2,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Aiden Tonge,R,R,Fastball,Ball,,,0,1.760708042,0.375015444
+2,2,1,1,'1-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Aiden Tonge,R,R,Offspeed,Foul,,,0,-0.512456294,0.145518792
+2,2,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Aiden Tonge,R,R,Offspeed,Strikeout Looking,,,0,0.740103646,0.59533223
+3,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Geldart,Landon Hutar,L,R,Fastball,Double,Fly Ball,Pull,0,-0.489260739,0.576972498
+3,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,Landon Hutar,R,R,Fastball,Double,Line Drive,Opposite Field,10,0.39217033,0.347475846
+3,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Fastball,Called Strike,,,10,0.39217033,0.12715906
+3,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Breaking Ball,Ball,,,10,1.22721029,-0.34101411
+3,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Breaking Ball,Called Strike,,,10,0.345779221,0.85236848
+3,0,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Fastball,Foul,,,10,-0.396478522,0.365835578
+3,0,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,10,0.252997003,0.733030221
+3,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Landon Hutar,R,R,Breaking Ball,Foul,,,1,0.740103646,0.209777855
+3,1,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Landon Hutar,R,R,Fastball,Sacrifice Fly,Fly Ball,Opposite Field,1,0.531343656,0.255677185
+3,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Landon Hutar,L,R,Fastball,Called Strike,,,0,0.670516983,0.393375176
+3,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Landon Hutar,L,R,Breaking Ball,Ball,,,0,0.740103646,-0.240035583
+3,2,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Landon Hutar,L,R,Fastball,Flyout,Fly Ball,Straightaway,0,-0.65162962,0.769749685
+3,0,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Fastball,Ball,,,0,0.206605894,1.118584596
+3,0,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Fastball,Ball,,,0,0.438561439,1.10940473
+3,0,2,0,'2-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Fastball,Swinging Strike,,,0,0.415365884,0.301576515
+3,0,2,1,'2-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Fastball,Called Strike,,,0,0.508148102,0.797289283
+3,0,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Breaking Ball,Ball,,,0,0.670516983,-0.396093306
+3,0,3,2,'3-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Offspeed,Groundout,Ground Ball,Pull,0,-0.373282967,0.319936248
+3,1,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Aiden Tonge,L,R,Offspeed,Ball,,,0,0.229801449,-0.184956386
+3,1,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Aiden Tonge,L,R,Offspeed,Ball,,,0,0.902472528,-0.148236922
+3,1,2,0,'2-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Aiden Tonge,L,R,Offspeed,Swinging Strike,,,0,-0.628434066,0.475993971
+3,1,2,1,'2-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Aiden Tonge,L,R,Fastball,Foul,,,0,-0.303696304,0.466814105
+3,1,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Aiden Tonge,L,R,Offspeed,Groundout,Ground Ball,Pull,0,0.299388112,0.108799328
+3,2,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Aiden Tonge,R,R,Fastball,Swinging Strike,,,0,0.206605894,1.118584596
+3,2,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Aiden Tonge,R,R,Fastball,Swinging Strike,,,0,0.577734765,0.246497319
+3,2,0,2,'0-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Aiden Tonge,R,R,Breaking Ball,Ball,,,0,-0.44286963,-0.497071833
+3,2,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Aiden Tonge,R,R,Fastball,Ball,,,0,-0.698020729,1.15530406
+3,2,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Aiden Tonge,R,R,Fastball,Foul,,,0,0.484952548,0.824828881
+3,2,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Aiden Tonge,R,R,Breaking Ball,Ball,,,0,-0.44286963,1.247102721
+3,2,3,2,'3-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Aiden Tonge,R,R,Fastball,Popout,Pop Up,Opposite Field,0,0.18341034,0.411734908
+4,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Landon Hutar,R,R,Breaking Ball,Ball,,,0,1.43597028,-0.331834244
+4,0,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Landon Hutar,R,R,Breaking Ball,Ball,,,0,0.972059191,-0.221675851
+4,0,2,0,'2-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Landon Hutar,R,R,Breaking Ball,Foul,,,0,0.322583666,0.17305839
+4,0,2,1,'2-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Landon Hutar,R,R,Breaking Ball,Single,Line Drive,Opposite Field,0,0.113823676,0.283216783
+4,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,Landon Hutar,L,R,Breaking Ball,Swinging Strike,,,100,-0.23410964,-0.285934913
+4,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,Landon Hutar,L,R,Fastball,Single,Ground Ball,Straightaway,100,-0.489260739,0.375015444
+4,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Brendan Boys,Landon Hutar,R,R,Fastball,Ball,,,110,-0.489260739,1.136944328
+4,0,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Brendan Boys,Landon Hutar,R,R,Fastball,Foul,,,110,0.299388112,0.705490623
+4,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Brendan Boys,Landon Hutar,R,R,Breaking Ball,Ball,,,110,0.716908092,-0.313474511
+4,0,2,1,'2-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Brendan Boys,Landon Hutar,R,R,Breaking Ball,Ball,,,110,1.273601399,-0.304294645
+4,0,3,1,'3-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Brendan Boys,Landon Hutar,R,R,Fastball,Walk,,,110,-0.350087413,-0.166596654
+4,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Landon Hutar,R,R,Breaking Ball,Called Strike,,,111,0.113823676,0.889087944
+4,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Landon Hutar,R,R,Fastball,Sacrifice Fly,Fly Ball,Pull,111,0.484952548,0.815649015
+4,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Geldart,Landon Hutar,L,R,Fastball,Sacrifice Bunt,Ground Ball,Pull,101,0.484952548,0.264857051
+4,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,Landon Hutar,R,R,Breaking Ball,Called Strike,,,11,0.925668082,0.485173837
+4,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,Landon Hutar,R,R,Fastball,Popout,Pop Up,Opposite Field,11,0.438561439,0.329116114
+4,0,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aiden Tonge,R,R,Fastball,Called Strike,,,0,0.624125874,0.677951024
+4,0,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aiden Tonge,R,R,Fastball,Foul,,,0,-0.373282967,0.797289283
+4,0,0,2,'0-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aiden Tonge,R,R,Fastball,Strikeout Swinging,,,0,-0.118131868,0.934987274
+4,1,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Aiden Tonge,L,R,Offspeed,Groundout,Ground Ball,Pull,0,0.252997003,0.191418123
+4,2,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,Fastball,Ball,,,0,-0.141327423,1.311361783
+4,2,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,Fastball,Swinging Strike,,,0,0.322583666,0.788109417
+4,2,1,1,'1-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,Offspeed,Foul,,,0,0.322583666,0.108799328
+4,2,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,Offspeed,Foul,,,0,-0.582042957,0.301576515
+4,2,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Aiden Tonge,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.647321429,0.889087944
+5,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Fastball,Called Strike,,,0,0.647321429,0.824828881
+5,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Breaking Ball,Ball,,,0,1.528752498,-0.258395315
+5,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Breaking Ball,Called Strike,,,0,0.531343656,0.218957721
+5,0,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Breaking Ball,Foul,,,0,0.160214785,0.861548346
+5,0,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Breaking Ball,Foul,,,0,-0.187718532,0.163878524
+5,0,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.670516983,0.668771158
+5,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Landon Hutar,R,R,Fastball,Ball,,,0,1.250405844,-0.203316119
+5,1,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Landon Hutar,R,R,Breaking Ball,Ball,,,0,1.575143606,-0.166596654
+5,1,2,0,'2-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Landon Hutar,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.415365884,0.778929551
+5,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Landon Hutar,L,R,Fastball,Single,Ground Ball,Straightaway,0,-0.23410964,0.393375176
+5,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Landon Hutar,R,R,,Called Strike,,,0,,
+5,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Landon Hutar,R,R,,Swinging Strike,,,0,,
+5,2,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Landon Hutar,R,R,,Strikeout Swinging,,,0,,
+5,0,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Offspeed,Ball,,,0,0.925668082,-0.240035583
+5,0,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Fastball,Ball,,,0,0.832885864,1.127764462
+5,0,2,0,'2-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Fastball,Foul,,,0,-0.558847403,0.632051694
+5,0,2,1,'2-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Offspeed,Swinging Strike,,,0,-0.512456294,0.411734908
+5,0,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Breaking Ball,Ball,,,0,0.577734765,-0.157416788
+5,0,3,2,'3-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Aiden Tonge,L,R,Offspeed,Walk,,,0,-0.489260739,-0.139057056
+5,0,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Aiden Tonge,L,R,Fastball,Called Strike,,,100,-0.744411838,0.769749685
+5,0,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,1.08,Adrian Crewe,Aiden Tonge,L,R,Offspeed,Called Strike,,,100,-0.744411838,0.182238256
+5,0,0,2,'0-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Aiden Tonge,L,R,Offspeed,Popout,Pop Up,Opposite Field,100,0.484952548,0.503533569
+5,1,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Aiden Tonge,R,R,Fastball,Flyout,Fly Ball,Straightaway,100,-0.466065185,0.733030221
+5,2,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Fastball,Ball,,,100,0.508148102,1.100224863
+5,2,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,0.92,Noah Chang,Aiden Tonge,R,R,Offspeed,Swinging Strike,,,100,0.438561439,0.310756381
+5,2,1,1,'1-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Fastball,Called Strike,,,100,-0.419674076,0.89826781
+5,2,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Offspeed,Ball,,,100,1.389579171,0.108799328
+5,2,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Fastball,Foul,,,100,-0.210914086,0.788109417
+5,2,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Fastball,Ball,,,100,-0.373282967,1.228742988
+5,2,3,2,'3-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Aiden Tonge,R,R,Offspeed,Walk,,,100,-0.605238512,1.127764462
+5,2,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Aiden Tonge,L,R,Fastball,Ball,,,110,-1.138736264,1.237922855
+5,2,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Aiden Tonge,L,R,Fastball,Foul,,,110,0.229801449,0.439274506
+5,2,1,1,'1-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Aiden Tonge,L,R,Offspeed,Ball,,,110,0.484952548,-0.313474511
+5,2,2,1,'2-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Aiden Tonge,L,R,Offspeed,Ball,,,110,1.528752498,-0.166596654
+5,2,3,1,'3-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Aiden Tonge,L,R,Fastball,Walk,,,11,1.250405844,0.751389953
+5,2,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Graham Taylor,R,R,Fastball,Ball,,,111,1.459165834,0.200597989
+5,2,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Graham Taylor,R,R,Fastball,Ball,,,111,-0.303696304,-0.212495985
+5,2,2,0,'2-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Graham Taylor,R,R,Fastball,Foul,,,111,-0.419674076,0.604512096
+5,2,2,1,'2-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Graham Taylor,R,R,Fastball,Called Strike,,,111,-0.396478522,0.925807408
+5,2,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Graham Taylor,R,R,Fastball,Ball,,,111,-0.698020729,1.20120339
+5,2,3,2,'3-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Graham Taylor,R,R,Fastball,Strikeout Swinging,,,111,0.39217033,0.861548346
+6,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,Landon Hutar,L,R,Offspeed,Ball,,,0,0.415365884,-0.267575181
+6,0,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,Landon Hutar,L,R,Offspeed,Swinging Strike,,,0,-0.628434066,0.365835578
+6,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,Landon Hutar,L,R,Offspeed,Error,Ground Ball,Pull,0,-0.512456294,0.613691962
+6,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Brendan Boys,Landon Hutar,R,R,Breaking Ball,Single,Ground Ball,Pull,100,0.554539211,0.365835578
+6,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Landon Hutar,R,R,Breaking Ball,Ball,,,110,0.856081419,-0.212495985
+6,0,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Landon Hutar,R,R,Breaking Ball,Single,Ground Ball,Pull,110,0.113823676,0.264857051
+6,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Geldart,JJ Reynolds,L,R,Offspeed,Called Strike,,,101,-0.605238512,0.136338926
+6,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Geldart,JJ Reynolds,L,R,Fastball,Ball,,,101,-1.625842907,0.026180533
+6,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Geldart,JJ Reynolds,L,R,Offspeed,Sacrifice Fly,Fly Ball,Straightaway,101,-0.721216284,0.558612765
+6,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,JJ Reynolds,R,R,Breaking Ball,Ball,,,0,1.111232517,-0.12987719
+6,1,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,JJ Reynolds,R,R,Fastball,Single,Ground Ball,Pull,0,-0.373282967,0.705490623
+6,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,JJ Reynolds,R,R,Breaking Ball,Called Strike,,,100,0.763299201,0.760569819
+6,1,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,JJ Reynolds,R,R,Fastball,Flyout,Fly Ball,Opposite Field,100,0.39217033,0.742210087
+6,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,JJ Reynolds,R,R,Breaking Ball,Swinging Strike,,,100,0.345779221,0.12715906
+6,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,JJ Reynolds,R,R,Breaking Ball,Ball,,,10,1.157623626,-0.322654377
+6,2,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,JJ Reynolds,R,R,Breaking Ball,Swinging Strike,,,10,0.80969031,0.329116114
+6,2,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,JJ Reynolds,R,R,Fastball,Groundout,Ground Ball,Straightaway,10,-0.512456294,0.485173837
+6,0,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Ball,,,0,-1.393887363,1.15530406
+6,0,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Ball,,,0,-0.582042957,1.173663792
+6,0,2,0,'2-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Ball,,,0,-1.254714036,0.89826781
+6,0,3,0,'3-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Called Strike,,,0,-0.350087413,0.393375176
+6,0,3,1,'3-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Foul,,,0,0.508148102,0.861548346
+6,0,3,2,'3-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Walk,,,0,0.763299201,-0.184956386
+6,0,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Graham Taylor,L,R,Offspeed,Ball,,,100,-1.347496254,-0.065618127
+6,0,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Graham Taylor,L,R,Fastball,Ball,,,10,0.554539211,-0.359373842
+6,0,2,0,'2-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Graham Taylor,L,R,Fastball,Ball,,,10,-1.417082917,0.696310756
+6,0,3,0,'3-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Graham Taylor,L,R,Fastball,Called Strike,,,10,0.368974775,0.448454373
+6,0,3,1,'3-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Graham Taylor,L,R,Offspeed,Flyout,Fly Ball,Straightaway,10,-0.65162962,0.742210087
+6,1,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Graham Taylor,R,R,Fastball,Ball,,,10,1.737512488,0.879908078
+6,1,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Graham Taylor,R,R,Fastball,Swinging Strike,,,10,0.18341034,0.824828881
+6,1,1,1,'1-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Andrew Johnston,Graham Taylor,R,R,Fastball,Double,Fly Ball,Opposite Field,10,,
+6,1,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Graham Taylor,L,R,Fastball,Ball,,,10,0.531343656,1.127764462
+6,1,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Sawyer Whitaker,Graham Taylor,L,R,Fastball,Double Play,Line Drive,Straightaway,10,-0.558847403,0.632051694
+7,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,JJ Reynolds,L,R,Offspeed,Flyout,Fly Ball,Pull,0,-0.44286963,0.283216783
+7,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,JJ Reynolds,R,R,Fastball,Ball,,,0,1.088036963,1.210383256
+7,1,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,JJ Reynolds,R,R,Offspeed,Ball,,,0,-0.257305195,-0.102337592
+7,1,2,0,'2-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,JJ Reynolds,R,R,Breaking Ball,Called Strike,,,0,0.577734765,0.218957721
+7,1,2,1,'2-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,JJ Reynolds,R,R,Offspeed,Called Strike,,,0,-0.582042957,0.494353703
+7,1,2,2,'2-2,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,JJ Reynolds,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.670516983,0.604512096
+7,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,JJ Reynolds,L,R,Breaking Ball,Called Strike,,,0,-0.303696304,0.622871828
+7,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,JJ Reynolds,L,R,Breaking Ball,Ball,,,0,-0.280500749,-0.17577652
+7,2,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,JJ Reynolds,L,R,Offspeed,Called Strike,,,0,-0.558847403,0.246497319
+7,2,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Gavriel Perreira,JJ Reynolds,L,R,Fastball,Strikeout Looking,,,0,-0.767607393,0.824828881
+7,0,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Graham Taylor,L,R,Fastball,Called Strike,,,0,-0.257305195,0.411734908
+7,0,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Graham Taylor,L,R,Offspeed,Ball,,,0,1.482361389,0.200597989
+7,0,1,1,'1-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Graham Taylor,L,R,Offspeed,Ball,,,0,1.575143606,0.090439596
+7,0,2,1,'2-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Graham Taylor,L,R,Fastball,Foul,,,0,-0.558847403,0.751389953
+7,0,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Graham Taylor,L,R,Fastball,Foul,,,0,-0.582042957,0.650411426
+7,0,2,2,'2-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Graham Taylor,L,R,Breaking Ball,Ball,,,0,-0.558847403,1.10940473
+7,0,3,2,'3-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Adrian Crewe,Graham Taylor,L,R,Fastball,Lineout,Line Drive,Straightaway,0,-0.744411838,0.85236848
+7,1,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Graham Taylor,R,R,Fastball,Ball,,,0,-1.509865135,-0.056438261
+7,1,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Graham Taylor,R,R,Fastball,Ball,,,0,0.021041459,-0.230855717
+7,1,2,0,'2-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Graham Taylor,R,R,Fastball,Ball,,,0,1.946272478,-0.203316119
+7,1,3,0,'3-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Graham Taylor,R,R,Fastball,Walk,,,0,-0.767607393,1.265462453
+7,1,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Graham Taylor,R,R,Fastball,Ball,,,100,-1.417082917,0.705490623
+7,1,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Graham Taylor,R,R,Fastball,Called Strike,,,100,0.577734765,0.393375176
+7,1,1,1,'1-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,1.35,Noah Chang,Graham Taylor,R,R,Fastball,Swinging Strike,,,100,0.832885864,0.549432899
+7,1,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Noah Chang,Graham Taylor,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,100,-0.23410964,0.411734908
+7,2,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Graham Taylor,L,R,Fastball,Ball,,,10,-1.48666958,0.815649015
+7,2,1,0,'1-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Graham Taylor,L,R,Fastball,Ball,,,10,-0.419674076,1.247102721
+7,2,2,0,'2-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Graham Taylor,L,R,Fastball,Called Strike,,,10,-0.303696304,0.218957721
+7,2,2,1,'2-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Graham Taylor,L,R,Fastball,Ball,,,10,-1.509865135,1.173663792
+7,2,3,1,'3-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Graham Taylor,L,R,Fastball,Called Strike,,,10,-0.721216284,0.705490623
+7,2,3,2,'3-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Nolan Scicluna,Graham Taylor,L,R,Fastball,Walk,,,10,-0.744411838,1.173663792
+7,2,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Graham Taylor,R,R,Fastball,Called Strike,,,110,0.624125874,0.255677185
+7,2,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Graham Taylor,R,R,Fastball,Ball,,,110,-0.535651848,1.20120339
+7,2,1,1,'1-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jaylen Wood,Graham Taylor,R,R,Fastball,Hit By Pitch,,,110,-1.602647353,0.89826781
+7,2,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Foul,,,111,-0.396478522,0.604512096
+7,2,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Foul,,,111,0.484952548,0.815649015
+7,2,0,2,'0-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Breaking Ball,Ball,,,111,1.412774725,-0.350193976
+7,2,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Groundout,Ground Ball,Pull,111,0.229801449,0.806469149
