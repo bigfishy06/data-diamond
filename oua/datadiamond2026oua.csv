@@ -7816,3 +7816,199 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,2,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Foul,,,111,0.484952548,0.815649015
 7,2,0,2,'0-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Breaking Ball,Ball,,,111,1.412774725,-0.350193976
 7,2,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Graham Taylor,R,R,Fastball,Groundout,Ground Ball,Pull,111,0.229801449,0.806469149
+1,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Ravin Yuvarajan,L,R,Fastball,Flyout,Fly Ball,Pull,0,,
+1,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Clark Needles,Ravin Yuvarajan,R,R,Fastball,Error,Fly Ball,Opposite Field,0,,
+1,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Ravin Yuvarajan,L,R,Fastball,Foul,,,10,0.210202104,0.790500452
+1,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Ravin Yuvarajan,L,R,Offspeed,Groundout,Ground Ball,Pull,10,-0.622895903,0.269482565
+1,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Ravin Yuvarajan,L,R,Curveball,Ball,,,10,0.755315615,0.057819048
+1,2,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Ravin Yuvarajan,L,R,Fastball,Double,Fly Ball,Pull,10,0.395334995,0.810852713
+1,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Ravin Yuvarajan,R,R,Curveball,Ball,,,10,0.889022702,0.094453119
+1,2,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Ravin Yuvarajan,R,R,Fastball,Called Strike,,,10,0.570182724,0.501498343
+1,2,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Ravin Yuvarajan,R,R,Fastball,Hit By Pitch,,,10,-1.126868771,1.010304873
+1,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Russel DuHamel,Ravin Yuvarajan,L,R,Curveball,Called Strike,,,110,-0.705177187,0.196214425
+1,2,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Russel DuHamel,Ravin Yuvarajan,L,R,Curveball,Foul,Ground Ball,Pull,110,0.343909192,0.420089298
+1,2,0,2,'0-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Russel DuHamel,Ravin Yuvarajan,L,R,Curveball,Ball,,,110,0.652464009,0.102594023
+1,2,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Russel DuHamel,Ravin Yuvarajan,L,R,Fastball,Groundout,Ground Ball,Pull,110,0.395334995,0.66024598
+1,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Ben Rossiter,R,R,Fastball,Called Strike,,,0,0.271913068,0.399737037
+1,0,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Ben Rossiter,R,R,Curveball,Error,Ground Ball,Pull,0,-0.592040421,0.627682362
+1,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Ben Rossiter,L,R,Fastball,Ball,,,10,-0.952021041,0.22470759
+1,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Ben Rossiter,L,R,Fastball,Foul,,,10,0.457045958,0.595118744
+1,0,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Ben Rossiter,L,R,Changeup,Foul,,,10,0.333624031,0.106664475
+1,0,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Ben Rossiter,L,R,Curveball,Ball,,,10,-0.797743632,1.09578437
+1,0,2,2,'2-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Ben Rossiter,L,R,Fastball,Ball,,,10,-0.859454596,0.269482565
+1,0,3,2,'3-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Ben Rossiter,L,R,Fastball,Walk,,,10,0.868452381,0.086312214
+1,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Ben Rossiter,L,R,Curveball,Ball,,,101,-0.910880399,0.086312214
+1,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Ben Rossiter,L,R,Changeup,Ball,,,101,-1.147439092,0.094453119
+1,0,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Ben Rossiter,L,R,Fastball,Called Strike,,,10,-0.612610742,0.403807489
+1,0,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Ben Rossiter,L,R,Changeup,Ball,,,10,-0.900595238,0.02525543
+1,0,3,1,'3-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Ben Rossiter,L,R,Fastball,Foul,,,1,0.395334995,0.831204974
+1,0,3,2,'3-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Ben Rossiter,L,R,Fastball,Strikeout Swinging,,,1,0.374764673,0.928895828
+1,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elias Rubio Reyes,Ben Rossiter,R,R,Curveball,Ball,,,1,0.302768549,0.033396335
+1,1,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elias Rubio Reyes,Ben Rossiter,R,R,Fastball,Hit By Pitch,,,1,-0.952021041,0.676527789
+1,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Ben Rossiter,R,R,Curveball,Called Strike,,,101,-0.550899779,0.273553017
+1,1,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Ben Rossiter,R,R,Curveball,Swinging Strike,,,101,-0.386337209,0.302046183
+1,1,0,2,'0-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Ben Rossiter,R,R,Curveball,Ball,,,101,-0.509759136,0.049678144
+1,1,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Ben Rossiter,R,R,Curveball,Foul,,,101,-0.22177464,0.603259649
+1,1,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Ben Rossiter,R,R,Curveball,Single,Ground Ball,Pull,101,0.31305371,0.713161859
+1,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Ben Rossiter,R,R,Curveball,Ball,,,110,0.13820598,0.937036733
+1,1,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Ben Rossiter,R,R,Fastball,Popout,Pop Up,Straightaway,110,-0.21148948,0.521850604
+1,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Ben Rossiter,L,R,Fastball,Ball,,,110,0.652464009,0.888191306
+1,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Ben Rossiter,L,R,Curveball,Ball,,,110,0.518756921,0.045607692
+1,2,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Ben Rossiter,L,R,Fastball,Ball,,,110,-0.838884275,0.904473115
+1,2,3,0,'3-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Ben Rossiter,L,R,Fastball,Walk,,,110,-0.921165559,0.363102967
+1,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,Ben Rossiter,R,R,Curveball,Ball,,,111,0.385049834,0.065959953
+1,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,Ben Rossiter,R,R,Fastball,Double,Fly Ball,Pull,111,-0.427477852,0.367173419
+1,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jalen Worthen,Ben Rossiter,R,R,Fastball,Swinging Strike,,,1,-0.684606866,0.66024598
+1,2,0,1,'0-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jalen Worthen,Ben Rossiter,R,R,Curveball,Ball,,,1,0.889022702,0.220637138
+1,2,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jalen Worthen,Ben Rossiter,R,R,Curveball,Ball,,,1,-0.386337209,0.93296628
+1,2,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jalen Worthen,Ben Rossiter,R,R,Fastball,Ball,,,1,-1.301716501,0.871909497
+1,2,3,1,'3-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jalen Worthen,Ben Rossiter,R,R,Fastball,Walk,,,0,0.971303987,0.383455228
+1,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Kojiro Hirata,Ben Rossiter,R,R,Fastball,Ball,,,100,1.218147841,0.135157641
+1,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Kojiro Hirata,Ben Rossiter,R,R,Fastball,Foul,,,10,0.282198228,0.627682362
+1,2,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Kojiro Hirata,Ben Rossiter,R,R,Fastball,Single,Line Drive,Pull,10,-0.468618494,0.464864273
+1,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,1.70 sec,Marcus Santos,Ben Rossiter,R,R,Curveball,Ball,,,100,0.529042082,1.002163969
+1,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Ben Rossiter,R,R,Fastball,Ball,,,10,1.177007198,0.236918947
+1,2,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Ben Rossiter,R,R,Fastball,Called Strike,,,10,0.84788206,0.27762347
+1,2,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Ben Rossiter,R,R,Fastball,Foul,,,10,-0.622895903,0.5137097
+1,2,2,2,'2-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Ben Rossiter,R,R,Curveball,Ball,,,10,1.002159468,0.757936834
+1,2,3,2,'3-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Ben Rossiter,R,R,Curveball,Walk,,,10,1.053585271,0.037466787
+1,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Lysander Gold,L,R,Fastball,Ball,,,110,0.971303987,0.269482565
+1,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Lysander Gold,L,R,Changeup,Groundout,Ground Ball,Pull,110,-0.622895903,0.297975731
+2,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnik,Ravin Yuvarajan,L,R,Curveball,Ball,,,0,0.889022702,0.02525543
+2,0,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnik,Ravin Yuvarajan,L,R,Changeup,Swinging Strike,,,0,-0.612610742,0.27762347
+2,0,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnik,Ravin Yuvarajan,L,R,Curveball,Ball,,,0,0.84788206,0.013044074
+2,0,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnik,Ravin Yuvarajan,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.302768549,0.35089161
+2,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Ravin Yuvarajan,R,R,Curveball,Called Strike,,,0,0.539327243,0.306116635
+2,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Ravin Yuvarajan,R,R,Curveball,Ball,,,0,0.909593023,0.057819048
+2,1,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Ravin Yuvarajan,R,R,Fastball,Foul,,,0,-0.5714701,0.436371107
+2,1,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Ravin Yuvarajan,R,R,Curveball,Ball,,,0,0.940448505,0.086312214
+2,1,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Ravin Yuvarajan,R,R,Fastball,Foul,,,0,-0.273200443,0.627682362
+2,1,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Ravin Yuvarajan,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.518756921,0.432300655
+2,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Adam Ho,Ravin Yuvarajan,R,R,Curveball,Ball,,,0,0.919878184,0.293905278
+2,2,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Adam Ho,Ravin Yuvarajan,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.436475637,0.721302764
+2,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Lysander Gold,L,R,Fastball,Ball,,,0,0.919878184,0.69688005
+2,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Lysander Gold,L,R,Fastball,Called Strike,,,0,0.796456257,0.5137097
+2,0,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Lysander Gold,L,R,Changeup,Groundout,Ground Ball,Pull,0,-0.715462348,0.448582464
+2,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Lysander Gold,R,R,Fastball,Ball,,,0,-0.777173311,0.135157641
+2,1,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Lysander Gold,R,R,Fastball,Called Strike,,,0,0.467331119,0.367173419
+2,1,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Lysander Gold,R,R,Breaking Ball,Ball,,,0,0.930163344,0.049678144
+2,1,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Lysander Gold,R,R,Fastball,Foul,,,0,-0.427477852,0.562555126
+2,1,2,2,'2-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Haven Tai,Lysander Gold,R,R,Fastball,Strikeout Looking,,,0,-0.561184939,0.269482565
+2,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Lysander Gold,R,R,Breaking Ball,Ball,,,0,0.631893688,0.432300655
+2,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Lysander Gold,R,R,Fastball,Ball,,,0,1.238718162,0.184003068
+2,2,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Lysander Gold,R,R,Fastball,Ball,,,0,1.166722038,0.074100857
+2,2,3,0,'3-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Lysander Gold,R,R,Fastball,Called Strike,,,0,0.426190476,0.269482565
+2,2,3,1,'3-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Lysander Gold,R,R,Fastball,Walk,,,0,-0.067497231,0.017114526
+2,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Lysander Gold,R,R,Breaking Ball,Ball,,,100,0.13820598,0.017114526
+2,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Lysander Gold,R,R,Breaking Ball,Ball,,,100,0.446760797,-0.035801353
+2,2,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Lysander Gold,R,R,Changeup,Foul,,,100,-0.684606866,0.102594023
+2,2,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Lysander Gold,R,R,Breaking Ball,Ball,,,100,0.580467885,0.004903169
+2,2,3,1,'3-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Lysander Gold,R,R,Fastball,Foul,,,10,-0.592040421,0.875979949
+2,2,3,2,'3-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Lysander Gold,R,R,Fastball,Walk,,,10,0.961018826,0.440441559
+2,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Lysander Gold,L,R,Fastball,Ball,,,110,-0.982876523,0.289834826
+2,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Lysander Gold,L,R,Fastball,Called Strike,,,110,0.374764673,0.416018846
+2,2,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Lysander Gold,L,R,Breaking Ball,Foul,,,110,0.508471761,0.55034377
+2,2,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Lysander Gold,L,R,Breaking Ball,Ball,,,110,-0.849169435,0.924825376
+2,2,2,2,'2-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Lysander Gold,L,R,Fastball,Strikeout Looking,,,11,0.31305371,0.179932616
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Ravin Yuvarajan,R,R,Curveball,Swinging Strike,,,0,0.796456257,0.086312214
+3,0,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Ravin Yuvarajan,R,R,Curveball,Swinging Strike,,,0,0.796456257,0.143298546
+3,0,0,2,'0-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Ravin Yuvarajan,R,R,Curveball,Ball,,,0,1.03301495,0.008973621
+3,0,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Ravin Yuvarajan,R,R,Curveball,Ball,,,0,1.002159468,0.07817131
+3,0,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Ravin Yuvarajan,R,R,Curveball,Ball,,,0,0.261627907,0.074100857
+3,0,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Ravin Yuvarajan,R,R,Fastball,Walk,,,0,0.868452381,0.240989399
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Ravin Yuvarajan,L,R,Fastball,Single,Line Drive,Straightaway,100,-0.417192691,0.411948394
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Clark Needles,Ravin Yuvarajan,R,R,Curveball,Hit By Pitch,,,110,-1.126868771,0.994023064
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Ravin Yuvarajan,L,R,Fastball,Single,Line Drive,Pull,111,0.467331119,0.578836935
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Ravin Yuvarajan,L,R,Curveball,Foul,,,110,0.549612403,0.31425754
+3,0,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Ravin Yuvarajan,L,R,Changeup,Ball,,,110,-0.406907531,-0.007308187
+3,0,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Ravin Yuvarajan,L,R,Changeup,Swinging Strike,,,11,-0.93145072,0.106664475
+3,0,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Ravin Yuvarajan,L,R,Curveball,Ball,,,11,0.868452381,0.008973621
+3,0,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Ravin Yuvarajan,L,R,Fastball,Single,Ground Ball,Straightaway,1,-0.355481728,0.529991509
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Max Hernandez,R,R,Fastball,Ball,,,100,0.703889812,0.998093516
+3,0,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Max Hernandez,R,R,Fastball,Ball,,,100,-0.5714701,1.006234421
+3,0,2,0,'2-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Max Hernandez,R,R,Fastball,Ball,,,100,0.457045958,1.042868491
+3,0,3,0,'3-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Max Hernandez,R,R,Fastball,Walk,,,100,0.621608527,0.208425781
+3,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Russel DuHamel,Max Hernandez,L,R,Fastball,Called Strike,,,110,0.220487265,0.220637138
+3,0,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Russel DuHamel,Max Hernandez,L,R,Fastball,Foul,,,110,-0.376052049,0.627682362
+3,0,0,2,'0-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Russel DuHamel,Max Hernandez,L,R,Fastball,Foul,,,110,0.302768549,0.322398444
+3,0,0,2,'0-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Russel DuHamel,Max Hernandez,L,R,Fastball,Flyout,Fly Ball,Opposite Field,110,-0.324626246,0.904473115
+3,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnik,Max Hernandez,L,R,Fastball,Ball,,,101,-0.283485604,1.112066179
+3,1,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnik,Max Hernandez,L,R,Slider,Single,Line Drive,Pull,101,0.385049834,0.456723368
+3,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Max Hernandez,R,R,Slider,Ball,,,110,-0.993161683,1.0591503
+3,1,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Max Hernandez,R,R,Fastball,Called Strike,,,110,0.415905316,0.253200756
+3,1,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Max Hernandez,R,R,Fastball,Called Strike,,,110,0.631893688,0.338680253
+3,1,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Max Hernandez,R,R,Slider,Ball,,,110,0.076495017,0.977741255
+3,1,2,2,'2-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Sam Shulman,Max Hernandez,R,R,Slider,Groundout,,,110,0.385049834,0.053748596
+3,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Adam Ho,Max Hernandez,R,R,Slider,Ball,,,11,0.878737542,0.159580355
+3,2,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Adam Ho,Max Hernandez,R,R,Slider,Ball,,,11,0.035354374,0.289834826
+3,2,2,0,'2-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Adam Ho,Max Hernandez,R,R,Fastball,Called Strike,,,11,0.539327243,0.957388994
+3,2,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Adam Ho,Max Hernandez,R,R,Fastball,Ball,,,11,0.544469823,0.407877941
+3,2,3,1,'3-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Adam Ho,Max Hernandez,R,R,Slider,Called Strike,,,11,0.611323367,0.11480538
+3,2,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Adam Ho,Max Hernandez,R,R,Fastball,Foul,,,11,0.199916944,0.619541458
+3,2,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Adam Ho,Max Hernandez,R,R,Fastball,Flyout,Fly Ball,,11,-0.190919158,0.58697784
+3,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,Calen Biemiller,R,L,Fastball,Ball,,,0,-1.147439092,-0.039871805
+3,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,Calen Biemiller,R,L,Fastball,Foul,,,0,-0.458333333,0.721302764
+3,0,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,Calen Biemiller,R,L,Slider,Called Strike,,,0,0.405620155,0.354962062
+3,0,1,2,'1-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Woochan Nam,Calen Biemiller,R,L,Slider,Strikeout Swinging,,,0,-0.900595238,0.135157641
+3,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jalen Worthen,Calen Biemiller,R,L,Slider,Ball,,,0,-0.952021041,0.082241762
+3,1,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jalen Worthen,Calen Biemiller,R,L,Fastball,Ball,,,0,-0.273200443,0.981811707
+3,1,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jalen Worthen,Calen Biemiller,R,L,Fastball,Ball,,,0,-0.890310078,0.93296628
+3,1,3,0,'3-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Jalen Worthen,Calen Biemiller,R,L,Fastball,Walk,,,0,0.889022702,0.93296628
+3,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Kojiro Hirata,Calen Biemiller,R,L,Slider,Ball,,,0,-1.024017165,0.037466787
+3,1,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Kojiro Hirata,Calen Biemiller,R,L,Fastball,Double,,,100,-0.324626246,0.42415975
+3,1,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Calen Biemiller,R,L,Slider,Ball,,,10,-0.900595238,0.045607692
+3,1,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Calen Biemiller,R,L,Slider,Swinging Strike,,,10,-0.664036545,0.216566686
+3,1,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Calen Biemiller,R,L,Fastball,Ball,,,10,1.115296235,0.969600351
+3,1,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Calen Biemiller,R,L,Slider,Swinging Strike,,,1,-0.509759136,0.330539349
+3,1,2,2,'2-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Calen Biemiller,R,L,Slider,Foul,,,1,-0.561184939,0.383455228
+3,1,2,2,'2-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Calen Biemiller,R,L,Fastball,Ball,,,1,0.817026578,0.961459446
+3,1,3,2,'3-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Marcus Santos,Calen Biemiller,R,L,Offspeed,Strikeout Looking,,,1,0.662749169,0.399737037
+3,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Paul Verman,Calen Biemiller,L,L,Slider,Flyout,Fly Ball,Straightaway,1,-0.468618494,0.497427891
+4,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colton Donaldson,Max Hernandez,R,R,Slider,Groundout,Ground Ball,,0,0.241057586,0.38752568
+4,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Max Hernandez,L,R,Fastball,Ball,,,0,0.189631783,0.949248089
+4,1,1,0,'1-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Max Hernandez,L,R,Fastball,Ball,,,0,0.066209856,0.945177637
+4,1,2,0,'2-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Max Hernandez,L,R,Fastball,Flyout,Fly Ball,Pull,0,-0.262915282,0.444512011
+4,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Clark Needles,Max Hernandez,R,R,Slider,Called Strike,,,0,0.457045958,0.464864273
+4,2,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Clark Needles,Max Hernandez,R,R,Slider,Ball,,,0,0.467331119,0.904473115
+4,2,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Clark Needles,Max Hernandez,R,R,Slider,Ball,,,0,0.642178848,1.034727586
+4,2,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Clark Needles,Max Hernandez,R,R,Slider,Ball,,,0,-0.736032669,1.128347988
+4,2,3,1,'3-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Clark Needles,Max Hernandez,R,R,Slider,Groundout,Ground Ball,Pull,0,-0.664036545,0.448582464
+4,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Richard Klimaszewski,Tyler Garrity,L,R,Fastball,Ball,,,0,1.02272979,0.342750705
+4,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Richard Klimaszewski,Tyler Garrity,L,R,Fastball,Swinging Strike,,,0,0.261627907,0.416018846
+4,0,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Richard Klimaszewski,Tyler Garrity,L,R,Offspeed,Ball,,,0,-0.088067553,0.045607692
+4,0,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Richard Klimaszewski,Tyler Garrity,L,R,Fastball,Swinging Strike,,,0,0.806741418,0.908543567
+4,0,2,2,'2-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Richard Klimaszewski,Tyler Garrity,L,R,Fastball,Ball,,,0,-0.653751384,1.0591503
+4,0,3,2,'3-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Richard Klimaszewski,Tyler Garrity,L,R,Fastball,Walk,,,0,0.889022702,0.981811707
+4,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,1.44 sec,Jack Barber,Tyler Garrity,R,R,Offspeed,Single,Ground Ball,Pull,100,-0.550899779,0.379384776
+4,0,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Tyler Garrity,R,R,Slider,Ball,,,110,1.084440753,0.074100857
+4,0,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Tyler Garrity,R,R,Offspeed,Called Strike,,,110,-0.612610742,0.261341661
+4,0,1,1,'1-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Tyler Garrity,R,R,Slider,Ball,,,110,0.446760797,0.004903169
+4,0,2,1,'2-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Peter Zidros,Tyler Garrity,R,R,Fastball,Double Play,Pop Up,,110,0.806741418,0.285764374
+4,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Tyler Garrity,L,R,Fastball,Ball,,,100,-0.777173311,1.063220752
+4,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Tyler Garrity,L,R,Fastball,Ball,,,100,-0.777173311,1.063220752
+4,2,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Tyler Garrity,L,R,Fastball,Ball,,,10,-0.962306202,0.912614019
+4,2,3,0,'3-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Elis Johnson,Tyler Garrity,L,R,Fastball,Walk,,,10,0.436475637,1.034727586
+4,2,0,0,'0-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Tyler Garrity,L,R,Fastball,Ball,,,110,0.765600775,0.074100857
+4,2,1,0,'1-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Tyler Garrity,L,R,Slider,Ball,,,110,0.991874308,0.517780152
+4,2,2,0,'2-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Tyler Garrity,L,R,Fastball,Ball,,,110,0.539327243,0.017114526
+4,2,3,0,'3-0,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Tyler Garrity,L,R,Fastball,Called Strike,,,110,0.559897564,1.051009395
+4,2,3,1,'3-1,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Tyler Garrity,L,R,Fastball,Foul,,,110,0.395334995,0.574766483
+4,2,3,2,'3-2,2026-08-30,U of T Varsity Blues,Queen's Gaels,,Taisei Hihara,Tyler Garrity,L,R,Fastball,Groundout,Ground Ball,Pull,110,0.271913068,0.192143972
+5,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Ryan Hsu,L,R,Fastball,Called Strike,,,0,-0.75660299,0.428230202
+5,0,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Ryan Hsu,L,R,Fastball,Ball,,,0,0.971303987,0.835275427
+5,0,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Ryan Hsu,L,R,Fastball,Ball,,,0,0.714174972,0.061889501
+5,0,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Ryan Hsu,L,R,Fastball,Ball,,,0,-0.993161683,0.204355329
+5,0,3,1,'3-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Alex Cole,Ryan Hsu,L,R,Slider,Walk,,,0,0.343909192,0.065959953
+5,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Ryan Hsu,L,R,Fastball,Called Strike,,,100,0.436475637,0.322398444
+5,0,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,1.23 sec,Patrick O'Sullivan,Ryan Hsu,L,R,Fastball,Ball,,,100,-0.04692691,0.937036733
+5,0,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Ryan Hsu,R,R,Fastball,Foul,,,100,-0.592040421,0.289834826
+5,0,1,2,'1-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Patrick O'Sullivan,Ryan Hsu,R,R,Fastball,Strikeout Swinging,,,100,0.395334995,0.871909497
+5,1,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Ryan Hsu,R,R,Slider,Called Strike,,,100,0.745030454,0.440441559
+5,1,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Ryan Hsu,R,R,Slider,Ball,,,100,0.703889812,0.135157641
+5,1,1,1,'1-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Ryan Hsu,R,R,Fastball,Ball,,,100,1.115296235,0.204355329
+5,1,2,1,'2-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Ryan Hsu,R,R,Fastball,Ball,,,100,-0.962306202,1.014375325
+5,1,3,1,'3-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Ryan Hsu,R,R,Fastball,Foul,,,100,0.292483389,0.46079382
+5,1,3,2,'3-2,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Jeffrey Jamieson,Ryan Hsu,R,R,Fastball,Popout,Pop Up,Pull,100,-0.550899779,0.383455228
+5,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Russel DuHamel,Ryan Hsu,L,R,Fastball,Hit By Pitch,,,100,1.012444629,0.534061961
+5,2,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnik,Ryan Hsu,L,R,Fastball,Called Strike,,,110,-0.684606866,0.668386885
+5,2,0,1,'0-1,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Ryan Opresnik,Ryan Hsu,L,R,Fastball,Groundout,Ground Ball,Pull,110,-0.674321705,0.375314323
