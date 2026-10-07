@@ -1943,10 +1943,8 @@ Zane Skansi,Kitchener Panthers`;
     var badgeX=PW-ML-33,badgeY=MT+13,badgeR=11.5,handLabel=hand?(hand+(role==='PITCHER'?'HP':'HH')):'—';
     d.setFillColor(tc[0],tc[1],tc[2]);d.circle(badgeX,badgeY,badgeR,'F');
     d.setDrawColor(255,255,255);d.setLineWidth(.8);d.circle(badgeX,badgeY,badgeR-.5,'S');
-    d.setFont('helvetica','bold');d.setFontSize(3.5);d.setTextColor(224,231,240);
-    d.text(role==='PITCHER'?'THROWS':'BATS',badgeX,badgeY-4.1,{align:'center'});
-    d.setFont('helvetica','bold');d.setFontSize(handLabel.length>2?10.8:13);d.setTextColor(255,255,255);
-    d.text(handLabel,badgeX,badgeY+4,{align:'center'});
+    d.setFont('helvetica','bold');d.setFontSize(handLabel.length>2?12.5:14);d.setTextColor(255,255,255);
+    d.text(handLabel,badgeX,badgeY+4.3,{align:'center'});
     var logoX=PW-ML-10.5,logoY=MT+13,logoSize=21;
     if(reportTeamLogoData)d.addImage(reportTeamLogoData,'PNG',logoX-logoSize/2,logoY-logoSize/2,logoSize,logoSize);
     else{d.setDrawColor(tc[0],tc[1],tc[2]);d.setLineWidth(.5);d.circle(logoX,logoY,8.5,'S');d.setFont('helvetica','bold');d.setFontSize(5.5);d.setTextColor(tc[0],tc[1],tc[2]);d.text(team.abbr,logoX,logoY+1.8,{align:'center'});}
