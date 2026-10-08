@@ -8504,3 +8504,546 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,2,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Breaking Ball,Ball,,,0,0.508471761,0.008973621
 7,2,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.262915282,0.98588216
 7,2,3,2,'3-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Strikeout Swinging,,,0,-0.304055925,0.843416331
+1,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Ball,,,0,-0.890310078,0.892261758
+1,0,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Swinging Strike,,,0,-0.468618494,0.611400553
+1,0,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Ball,,,0,0.508471761,0.297975731
+1,0,2,1,'2-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Swinging Strike,,,0,-0.427477852,0.27762347
+1,0,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Foul,,,0,0.271913068,0.420089298
+1,0,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Strikeout Swinging,,,0,-0.39662237,0.888191306
+1,1,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Swinging Strike,,,0,-0.262915282,0.900402663
+1,1,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Swinging Strike,,,0,0.025069214,0.904473115
+1,1,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Ball,,,0,-1.054872647,0.953318542
+1,1,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Ball,,,0,0.354194352,0.957388994
+1,1,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Strikeout Swinging,,,0,0.508471761,0.705020955
+1,2,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Offspeed,Foul,,,0,-0.75660299,0.440441559
+1,2,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Ball,,,0,0.590753045,0.008973621
+1,2,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Ball,,,0,-0.890310078,0.928895828
+1,2,2,1,'2-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Offspeed,Ball,,,0,0.518756921,0.888191306
+1,2,3,1,'3-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Lineout,Line Drive,Pull,0,-0.592040421,0.770148191
+1,0,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Fastball,Ball,,,0,0.84788206,0.053748596
+1,0,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Offspeed,Ball,,,0,0.518756921,0.061889501
+1,0,2,0,'2-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Breaking Ball,Ball,,,0,0.539327243,0.871909497
+1,0,3,0,'3-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Fastball,Called Strike,,,0,-0.386337209,0.440441559
+1,0,3,1,'3-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Fastball,Swinging Strike,,,0,0.796456257,0.468934725
+1,0,3,2,'3-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Breaking Ball,Strikeout Looking,,,0,0.755315615,0.403807489
+1,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Called Strike,,,0,0.4981866,0.399737037
+1,1,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Offspeed,Called Strike,,,0,0.611323367,0.318327992
+1,1,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Foul,,,0,0.477616279,0.904473115
+1,1,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Foul,,,0,0.611323367,0.399737037
+1,1,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Offspeed,Foul,,,0,-0.252630122,0.521850604
+1,1,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Ball,,,0,0.683319491,0.102594023
+1,1,1,2,'1-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Offspeed,Foul,,,0,-0.273200443,0.399737037
+1,1,1,2,'1-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Single,Ground Ball,Pull,0,0.282198228,0.871909497
+1,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Owen Gibson,R,R,Fastball,Ball,,,100,1.053585271,0.245059852
+1,1,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Owen Gibson,R,R,Breaking Ball,Called Strike,,,100,0.703889812,0.542202865
+1,1,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Owen Gibson,R,R,Fastball,Swinging Strike,,,100,-0.016071429,0.639893719
+1,1,1,2,'1-2,2026-09-13,Queen's Gaels,Carleton Ravens,1.43 sec,Clark Needles,Owen Gibson,R,R,Breaking Ball,Ball,,,100,0.930163344,0.395666585
+1,1,2,2,'2-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Owen Gibson,R,R,Fastball,Strikeout Swinging,,,10,-0.118923034,0.941107185
+1,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Owen Gibson,L,R,Fastball,Ball,,,1,0.693604651,0.045607692
+1,2,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Owen Gibson,L,R,Fastball,Foul,,,1,0.48790144,0.627682362
+1,2,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Owen Gibson,L,R,Fastball,Foul,,,1,0.724460133,0.521850604
+1,2,1,2,'1-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Owen Gibson,L,R,Fastball,Foul,,,1,-0.550899779,0.652105076
+1,2,1,2,'1-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Owen Gibson,L,R,Offspeed,Flyout,Fly Ball,Opposite Field,1,-0.766888151,0.122946284
+2,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Jordan Cruz,Brett James,R,R,Fastball,Ball,,,0,0.4981866,0.049678144
+2,0,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Jordan Cruz,Brett James,R,R,Fastball,Ball,,,0,-0.304055925,0.937036733
+2,0,2,0,'2-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Jordan Cruz,Brett James,R,R,Fastball,Swinging Strike,,,0,-0.293770764,0.562555126
+2,0,2,1,'2-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Jordan Cruz,Brett James,R,R,Fastball,Single,Line Drive,Pull,0,-0.468618494,0.375314323
+2,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Fastball,Swinging Strike,,,100,0.467331119,0.367173419
+2,0,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Fastball,Swinging Strike,,,100,0.148491141,0.82306407
+2,0,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Offspeed,Strikeout Swinging,,,100,-0.890310078,0.570696031
+2,1,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,1.53 sec,Eric Del Fatti,Brett James,L,R,Fastball,Ball,,,100,0.31305371,0.912614019
+2,1,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Eric Del Fatti,Brett James,L,R,Fastball,Called Strike,,,100,0.292483389,0.318327992
+2,1,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Eric Del Fatti,Brett James,L,R,Offspeed,Called Strike,,,100,-0.653751384,0.69688005
+2,1,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Eric Del Fatti,Brett James,L,R,Fastball,Strikeout Swinging,,,100,0.693604651,0.643964171
+2,2,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Fastball,Foul,,,100,0.169061462,0.269482565
+2,2,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Breaking Ball,Called Strike,,,100,-0.139493356,0.705020955
+2,2,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Fastball,Ball,,,100,1.03301495,0.607330101
+2,2,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Fastball,Foul,,,100,0.148491141,0.888191306
+2,2,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Breaking Ball,Ball,,,100,0.889022702,0.546273317
+2,2,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Fastball,Single,,,100,0.878737542,0.428230202
+2,2,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Ball,,,110,0.48790144,0.127016737
+2,2,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Ball,,,110,-0.293770764,0.888191306
+2,2,2,0,'2-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Flyout,Fly Ball,Opposite Field,110,0.271913068,0.595118744
+2,0,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Owen Gibson,R,R,Fastball,Ball,,,0,0.950733666,0.094453119
+2,0,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Owen Gibson,R,R,Fastball,Ball,,,0,0.631893688,0.89633221
+2,0,2,0,'2-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Owen Gibson,R,R,Fastball,Ball,,,0,0.477616279,0.941107185
+2,0,3,0,'3-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Owen Gibson,R,R,Fastball,Called Strike,,,0,0.714174972,0.464864273
+2,0,3,1,'3-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Owen Gibson,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.724460133,0.62361191
+2,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Patrick O'Sullivan,Owen Gibson,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.477616279,0.709091407
+2,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Owen Gibson,L,R,Fastball,Ball,,,0,-0.149778516,0.912614019
+2,2,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Owen Gibson,L,R,Fastball,Ball,,,0,0.971303987,0.18807352
+2,2,2,0,'2-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Owen Gibson,L,R,Offspeed,Ball,,,0,-0.612610742,0.924825376
+2,2,3,0,'3-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Owen Gibson,L,R,Fastball,Walk,,,0,0.84788206,0.11480538
+2,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Alex Cole,Owen Gibson,L,R,Fastball,Single,Ground Ball,Straightaway,100,0.086780177,0.782359548
+2,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Owen Gibson,R,R,Fastball,Called Strike,,,110,0.827311739,0.383455228
+2,2,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Owen Gibson,R,R,Breaking Ball,Ball,,,110,0.84788206,0.464864273
+2,2,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Owen Gibson,R,R,Fastball,Swinging Strike,,,110,0.4981866,0.42415975
+2,2,1,2,'1-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Owen Gibson,R,R,Breaking Ball,Ball,,,110,0.950733666,0.02525543
+2,2,2,2,'2-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Owen Gibson,R,R,Fastball,Ball,,,110,-0.694892027,0.916684472
+2,2,3,2,'3-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Owen Gibson,R,R,Fastball,Walk,,,110,0.724460133,0.074100857
+2,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Fastball,Called Strike,,,111,0.611323367,0.501498343
+2,2,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Breaking Ball,Called Strike,,,111,0.84788206,0.220637138
+2,2,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Fastball,Ball,,,111,0.84788206,0.285764374
+2,2,1,2,'1-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Breaking Ball,Ball,,,111,1.053585271,0.143298546
+2,2,2,2,'2-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Fastball,Strikeout Swinging,,,111,0.601038206,0.888191306
+3,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Called Strike,,,0,0.395334995,0.240989399
+3,0,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Offspeed,Foul,,,0,0.559897564,0.118875832
+3,0,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Ball,,,0,0.899307863,0.900402663
+3,0,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Ball,,,0,1.012444629,0.82306407
+3,0,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Foul,,,0,-0.201204319,0.481146082
+3,0,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Breaking Ball,Ball,,,0,0.539327243,0.008973621
+3,0,3,2,'3-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Groundout,Ground Ball,Pull,0,-0.314341085,0.334609801
+3,1,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Breaking Ball,Ball,,,0,-0.838884275,0.937036733
+3,1,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Foul,,,0,-0.705177187,0.464864273
+3,1,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Breaking Ball,Hit By Pitch,,,0,0.909593023,0.070030405
+3,1,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Foul,,,100,0.230772425,0.481146082
+3,1,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Swinging Strike,,,100,0.271913068,0.774218643
+3,1,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Strikeout Swinging,,,100,0.724460133,0.871909497
+3,2,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Ball,,,100,0.991874308,0.603259649
+3,2,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Foul,,,100,-0.232059801,0.737584573
+3,2,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Breaking Ball,Ball,,,100,0.827311739,0.061889501
+3,2,2,1,'2-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Offspeed,Ball,,,100,-0.94173588,0.269482565
+3,2,3,1,'3-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Walk,,,100,-0.386337209,0.912614019
+3,2,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Jordan Cruz,Brett James,R,R,Fastball,Called Strike,,,110,0.48790144,0.62361191
+3,2,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Jordan Cruz,Brett James,R,R,Fastball,Called Strike,,,110,0.662749169,0.31425754
+3,2,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Jordan Cruz,Brett James,R,R,Breaking Ball,Single,Line Drive,Pull,110,0.241057586,0.240989399
+3,2,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Fastball,Called Strike,,,111,0.446760797,0.334609801
+3,2,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Offspeed,Swinging Strike,,,111,0.292483389,0.334609801
+3,2,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Fastball,Foul,,,111,0.549612403,0.884120854
+3,2,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Fastball,Strikeout Swinging,,,111,0.724460133,0.729443668
+3,0,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Ball,,,0,0.961018826,0.941107185
+3,0,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Called Strike,,,0,0.642178848,0.269482565
+3,0,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Offspeed,Single,Line Drive,Pull,0,0.611323367,0.127016737
+3,0,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Owen Gibson,R,R,Offspeed,Foul,,,100,-0.520044297,0.31425754
+3,0,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Owen Gibson,R,R,Fastball,Swinging Strike,,,100,0.85816722,0.627682362
+3,0,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Owen Gibson,R,R,Breaking Ball,Groundout,Ground Ball,Pull,100,0.559897564,0.534061961
+3,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Owen Gibson,L,R,Fastball,Groundout,Ground Ball,Pull,100,0.765600775,0.131087189
+3,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Owen Gibson,R,R,Fastball,Home Run,Fly Ball,Pull,10,0.220487265,0.595118744
+3,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Patrick O'Sullivan,Owen Gibson,L,R,Offspeed,Called Strike,,,0,0.426190476,0.399737037
+3,2,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Patrick O'Sullivan,Owen Gibson,L,R,Offspeed,Swinging Strike,,,0,0.67303433,0.07817131
+3,2,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Patrick O'Sullivan,Owen Gibson,L,R,Fastball,Foul,,,0,0.539327243,0.774218643
+3,2,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Patrick O'Sullivan,Owen Gibson,L,R,Breaking Ball,Foul,,,0,-0.478903655,0.452652916
+3,2,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Patrick O'Sullivan,Owen Gibson,L,R,Offspeed,Strikeout Swinging,,,0,-0.386337209,0.086312214
+4,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Eric Del Fatti,Brett James,L,R,Fastball,Ball,,,0,-0.890310078,0.253200756
+4,0,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Eric Del Fatti,Brett James,L,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.415905316,0.363102967
+4,1,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Fastball,Foul,,,0,0.518756921,0.330539349
+4,1,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Fastball,Ball,,,0,0.508471761,0.973670803
+4,1,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Breaking Ball,Ball,,,0,1.03301495,0.212496234
+4,1,2,1,'2-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Fastball,Called Strike,,,0,0.703889812,0.334609801
+4,1,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Fastball,Strikeout Swinging,,,0,0.436475637,0.790500452
+4,2,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Foul,,,0,-0.324626246,0.407877941
+4,2,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Ball,,,0,-0.345196567,0.900402663
+4,2,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Ball,,,0,-0.458333333,0.904473115
+4,2,2,1,'2-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Called Strike,,,0,0.48790144,0.257271208
+4,2,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Offspeed,Strikeout Looking,,,0,-0.499473976,0.31425754
+4,0,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Owen Gibson,L,R,Offspeed,Called Strike,,,0,-0.355481728,0.762007286
+4,0,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Owen Gibson,L,R,Fastball,Ball,,,0,0.950733666,0.135157641
+4,0,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Owen Gibson,L,R,Fastball,Called Strike,,,0,0.703889812,0.110734928
+4,0,1,2,'1-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Owen Gibson,L,R,Breaking Ball,Ball,,,0,0.31305371,0.02525543
+4,0,2,2,'2-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Owen Gibson,L,R,Fastball,Double,Fly Ball,Opposite Field,0,-0.386337209,0.814923165
+4,0,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Alex Cole,Owen Gibson,L,R,Fastball,Triple,Line Drive,Pull,10,0.107350498,0.774218643
+4,0,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Owen Gibson,R,R,Breaking Ball,Ball,,,1,0.930163344,0.008973621
+4,0,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Owen Gibson,R,R,Fastball,Foul,,,1,0.724460133,0.595118744
+4,0,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Owen Gibson,R,R,Fastball,Flyout,Fly Ball,Straightaway,1,-0.232059801,0.58697784
+4,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Breaking Ball,Ball,,,0,0.84788206,0.053748596
+4,1,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Fastball,Called Strike,,,0,0.621608527,0.529991509
+4,1,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Breaking Ball,Ball,,,0,0.991874308,0.057819048
+4,1,2,1,'2-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Fastball,Ball,,,0,0.827311739,0.367173419
+4,1,3,1,'3-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Owen Gibson,R,R,Fastball,Walk,,,0,-0.098352713,0.888191306
+4,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Foul,,,100,0.580467885,0.668386885
+4,1,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Ball,,,100,0.559897564,0.086312214
+4,1,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Ball,,,100,0.84788206,0.017114526
+4,1,2,1,'2-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Breaking Ball,Swinging Strike,,,1,0.765600775,0.713161859
+4,1,2,2,'2-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Offspeed,Ball,,,1,-0.324626246,0.057819048
+4,1,3,2,'3-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Foul,,,1,0.529042082,0.330539349
+4,1,3,2,'3-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Fastball,Foul,,,1,-0.304055925,0.302046183
+4,1,3,2,'3-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Owen Gibson,L,R,Offspeed,Walk,,,1,-0.653751384,0.945177637
+4,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Nic Bertrand,R,R,Breaking Ball,Ball,,,101,1.053585271,0.110734928
+4,1,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Nic Bertrand,R,R,Breaking Ball,Ball,,,101,1.002159468,0.326468896
+4,1,2,0,'2-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Nic Bertrand,R,R,Breaking Ball,Ball,,,11,-0.509759136,0.961459446
+4,1,3,0,'3-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Nic Bertrand,R,R,,Intentional Walk,,,11,,
+4,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Nic Bertrand,L,R,Offspeed,Ball,,,111,0.755315615,0.049678144
+4,1,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Nic Bertrand,L,R,Fastball,Ball,,,111,0.652464009,0.118875832
+4,1,2,0,'2-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Nic Bertrand,L,R,Fastball,Ball,,,111,0.734745294,0.122946284
+4,1,3,0,'3-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Nic Bertrand,L,R,Fastball,Called Strike,,,111,0.642178848,0.643964171
+4,1,3,1,'3-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Nic Bertrand,L,R,Fastball,Walk,,,111,0.889022702,0.428230202
+4,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Nic Bertrand,R,R,Fastball,Called Strike,,,111,-0.180633998,0.338680253
+4,1,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Nic Bertrand,R,R,Fastball,Ball,,,111,-0.21148948,0.920754924
+4,1,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Nic Bertrand,R,R,Fastball,Ball,,,111,0.991874308,0.289834826
+4,1,2,1,'2-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Nic Bertrand,R,R,Offspeed,Popout,Pop Up,Straightaway,111,-0.324626246,0.326468896
+4,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Patrick O'Sullivan,Nic Bertrand,L,R,Fastball,Called Strike,,,111,-0.427477852,0.261341661
+4,2,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Patrick O'Sullivan,Nic Bertrand,L,R,Fastball,Flyout,Fly Ball,Opposite Field,111,-0.365766888,0.432300655
+5,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,L,R,Fastball,Called Strike,,,0,0.621608527,0.359032514
+5,0,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,L,R,Fastball,Called Strike,,,0,0.261627907,0.27762347
+5,0,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,L,R,Breaking Ball,Groundout,Ground Ball,Straightaway,0,0.85816722,0.676527789
+5,1,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Ball,,,0,-0.838884275,0.253200756
+5,1,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Swinging Strike,,,0,-0.376052049,0.908543567
+5,1,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.271913068,0.798641357
+5,2,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Foul,,,0,-0.324626246,0.330539349
+5,2,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Called Strike,,,0,-0.725747508,0.684668694
+5,2,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.48790144,0.639893719
+5,0,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Nic Bertrand,L,R,Fastball,Ball,,,0,-0.797743632,0.916684472
+5,0,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Nic Bertrand,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.549612403,0.367173419
+5,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Alex Cole,Nic Bertrand,L,R,Fastball,Swinging Strike,,,0,-0.129208195,0.74979593
+5,1,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Alex Cole,Nic Bertrand,L,R,Offspeed,Ball,,,0,-0.952021041,0.770148191
+5,1,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Alex Cole,Nic Bertrand,L,R,Fastball,Double,Line Drive,Opposite Field,0,0.364479513,0.318327992
+5,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Nic Bertrand,R,R,Fastball,Foul,,,10,-0.417192691,0.489286986
+5,1,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Nic Bertrand,R,R,Breaking Ball,Called Strike,,,10,-0.345196567,0.18807352
+5,1,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Nic Bertrand,R,R,Fastball,Foul,,,10,0.436475637,0.745725477
+5,1,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Nic Bertrand,R,R,Fastball,Foul,,,10,-0.437763012,0.802711809
+5,1,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Jeffrey Jamieson,Nic Bertrand,R,R,Breaking Ball,Popout,Pop Up,Opposite Field,10,-0.643466224,0.245059852
+5,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Nic Bertrand,R,R,Breaking Ball,Ball,,,10,-0.910880399,0.607330101
+5,2,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Nic Bertrand,R,R,Fastball,Called Strike,,,10,0.631893688,0.269482565
+5,2,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Nic Bertrand,R,R,Breaking Ball,Ball,,,10,0.878737542,0.566625579
+5,2,2,1,'2-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Nic Bertrand,R,R,Fastball,Ball,,,10,0.971303987,0.074100857
+5,2,3,1,'3-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Sean Skorupski,Nic Bertrand,R,R,Fastball,Walk,,,1,0.13820598,0.928895828
+5,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Nic Bertrand,L,R,Fastball,Ball,,,101,0.261627907,0.098523571
+5,2,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Nic Bertrand,L,R,Fastball,Swinging Strike,,,11,0.559897564,0.529991509
+5,2,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Nic Bertrand,L,R,Offspeed,Ball,,,11,0.837596899,0.057819048
+5,2,2,1,'2-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Nic Bertrand,L,R,Offspeed,Ball,,,11,-1.003446844,0.627682362
+5,2,3,1,'3-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Jack Angel,Nic Bertrand,L,R,Fastball,Walk,,,11,-0.643466224,0.953318542
+5,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Thomas Allan,R,R,Fastball,Called Strike,,,111,0.745030454,0.595118744
+5,2,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Thomas Allan,R,R,Breaking Ball,Swinging Strike,,,111,0.837596899,0.676527789
+5,2,0,2,'0-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Thomas Allan,R,R,Fastball,Ball,,,111,0.086780177,1.006234421
+5,2,1,2,'1-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Thomas Allan,R,R,Fastball,Foul,,,11,-0.478903655,0.281693922
+5,2,1,2,'1-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Thomas Allan,R,R,Fastball,Ball,,,11,0.559897564,1.02251623
+5,2,2,2,'2-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Thomas Allan,R,R,Breaking Ball,Foul,,,11,0.889022702,0.179932616
+5,2,2,2,'2-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Clark Needles,Thomas Allan,R,R,Fastball,Flyout,Fly Ball,Straightaway,11,0.169061462,0.245059852
+6,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Ball,,,11,-0.890310078,0.245059852
+6,0,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Ball,,,11,0.991874308,0.15143945
+6,0,2,0,'2-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Offspeed,Foul,,,11,0.354194352,0.269482565
+6,0,2,1,'2-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Called Strike,,,11,-0.694892027,0.342750705
+6,0,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Ball,,,11,0.652464009,0.969600351
+6,0,3,2,'3-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Foul,,,11,0.518756921,0.529991509
+6,0,3,2,'3-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Rian Malig,Brett James,L,R,Fastball,Single,Ground Ball,Pull,0,-0.293770764,0.517780152
+6,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Jordan Cruz,Brett James,R,R,Breaking Ball,Ball,,,100,-0.067497231,0.057819048
+6,0,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Jordan Cruz,Brett James,R,R,Fastball,Flyout,Fly Ball,Opposite Field,10,-0.386337209,0.631752815
+6,1,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Fastball,Called Strike,,,10,0.67303433,0.38752568
+6,1,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Fastball,Ball,,,10,-0.098352713,0.953318542
+6,1,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Fastball,Foul,,,10,0.601038206,0.326468896
+6,1,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Offspeed,Foul,,,10,-0.345196567,0.285764374
+6,1,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Fastball,Foul,,,10,-0.540614618,0.85969814
+6,1,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Breaking Ball,Ball,,,10,0.457045958,0.892261758
+6,1,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Fastball,Foul,,,10,0.580467885,0.420089298
+6,1,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Giordano Richard,Brett James,L,R,Offspeed,Strikeout Swinging,,,10,-0.22177464,0.330539349
+6,2,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Eric Del Fatti,Brett James,L,R,Fastball,Ball,,,10,-0.705177187,0.912614019
+6,2,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Eric Del Fatti,Brett James,L,R,Fastball,Foul,,,10,0.436475637,0.546273317
+6,2,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Eric Del Fatti,Brett James,L,R,Fastball,Called Strike,,,10,0.354194352,0.240989399
+6,2,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Eric Del Fatti,Brett James,L,R,Fastball,Strikeout Swinging,,,10,0.374764673,0.851557236
+6,0,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Jonah Brotman,Thomas Allan,L,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.446760797,0.253200756
+6,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Thomas Allan,R,R,Fastball,Ball,,,0,0.84788206,0.578836935
+6,1,1,0,'1-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Thomas Allan,R,R,Fastball,Ball,,,0,-0.530329457,0.074100857
+6,1,2,0,'2-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Thomas Allan,R,R,Fastball,Foul,,,0,0.652464009,0.497427891
+6,1,2,1,'2-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Owen Sartor,Thomas Allan,R,R,Fastball,Double,Line Drive,Pull,0,-0.334911406,0.416018846
+6,1,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Patrick O'Sullivan,Thomas Allan,L,R,Fastball,Groundout,Ground Ball,Pull,10,0.539327243,0.721302764
+6,2,0,0,'0-0,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Thomas Allan,L,R,Fastball,Called Strike,,,1,-0.633181063,0.375314323
+6,2,0,1,'0-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Thomas Allan,L,R,Fastball,Ball,,,1,-1.003446844,0.875979949
+6,2,1,1,'1-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Thomas Allan,L,R,Fastball,Ball,,,1,-0.437763012,1.018445778
+6,2,2,1,'2-1,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Thomas Allan,L,R,Fastball,Called Strike,,,1,-0.674321705,0.420089298
+6,2,2,2,'2-2,2026-09-13,Queen's Gaels,Carleton Ravens,,Colby Wilhelm,Thomas Allan,L,R,Slider,Groundout,Ground Ball,Opposite Field,1,0.395334995,0.627682362
+7,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Thomas Fournier,Brett James,R,R,Fastball,Flyout,Fly Ball,Pull,0,0.518756921,0.525921056
+7,1,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Ball,,,0,0.631893688,0.908543567
+7,1,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Swinging Strike,,,0,-0.314341085,0.725373216
+7,1,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Ball,,,0,-0.972591362,0.456723368
+7,1,2,1,'2-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Breaking Ball,Ball,,,0,0.580467885,0.065959953
+7,1,3,1,'3-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Sal Lima,Brett James,L,R,Fastball,Walk,,,0,0.85816722,0.281693922
+7,1,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Ball,,,100,0.67303433,0.106664475
+7,1,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Swinging Strike,,,100,-0.273200443,0.375314323
+7,1,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Foul,,,100,0.32333887,0.745725477
+7,1,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Ball,,,100,-0.293770764,0.937036733
+7,1,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Foul,,,100,-0.478903655,0.420089298
+7,1,2,2,'2-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Breaking Ball,Ball,,,100,0.385049834,0.037466787
+7,1,3,2,'3-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Brendan Sotta,Brett James,R,R,Fastball,Walk,,,100,0.889022702,0.216566686
+7,1,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Foul,,,110,0.241057586,0.334609801
+7,1,0,1,'0-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Called Strike,,,110,-0.633181063,0.578836935
+7,1,0,2,'0-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Offspeed,Ball,,,110,-0.859454596,0.359032514
+7,1,1,2,'1-2,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Flyout,Fly Ball,Opposite Field,110,0.4981866,0.35089161
+7,2,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Ball,,,110,0.878737542,0.171791711
+7,2,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Breaking Ball,Ball,,,110,0.899307863,0.029325883
+7,2,2,0,'2-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Dylan Merpaw,Brett James,L,R,Fastball,Groundout,Ground Ball,Pull,110,0.457045958,0.269482565
+1,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Charlie Hughes,L,R,Fastball,Foul,,,0,-0.501578885,0.805001964
+1,0,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Charlie Hughes,L,R,Changeup,Foul,,,0,-0.675798312,0.460256809
+1,0,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Charlie Hughes,L,R,Curveball,Ball,,,0,1.008322809,-0.336487548
+1,0,1,2,'1-2,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Charlie Hughes,L,R,Fastball,Single,Ground Ball,Straightaway,0,-0.308001745,0.896934005
+1,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Charlie Hughes,L,R,Fastball,Single,Ground Ball,Opposite Field,100,-0.443505743,0.383646775
+1,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Charlie Hughes,R,R,Fastball,Foul,,,110,0.408233674,0.138494665
+1,0,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Charlie Hughes,R,R,Fastball,Swinging Strike,,,110,-0.501578885,0.889273001
+1,0,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Charlie Hughes,R,R,Fastball,Single,Ground Ball,Opposite Field,110,0.272729676,0.398968782
+1,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Charlie Hughes,R,R,,Foul,,,101,,
+1,0,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Charlie Hughes,R,R,Curveball,Called Strike,,,101,0.698599385,0.092528644
+1,0,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Charlie Hughes,R,R,Curveball,Sacrifice Fly,Fly Ball,Pull,101,-0.579009741,0.873950995
+1,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Charlie Hughes,R,R,Fastball,Ball,,,100,-1.295245161,0.314697744
+1,1,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Charlie Hughes,R,R,Fastball,Lineout,Line Drive,Opposite Field,100,0.175941106,0.130833661
+1,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Charlie Hughes,L,R,Curveball,Ball,,,10,1.240615378,-0.2292335
+1,2,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Charlie Hughes,L,R,Fastball,Ball,,,10,1.376119376,1.073137084
+1,2,2,0,'2-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Charlie Hughes,L,R,Fastball,Flyout,Fly Ball,Straightaway,1,-0.269286317,0.30703674
+1,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Fastball,Called Strike,,,0,-0.695156026,0.644120892
+1,0,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Fastball,Foul,,,0,0.582453101,0.429612795
+1,0,0,2,'0-2,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,0.776030241,-0.336487548
+1,0,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Breaking Ball,Strikeout Swinging,,,0,-0.114424605,0.705408919
+1,1,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Breaking Ball,Ball,,,0,1.414834804,-0.091335438
+1,1,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Breaking Ball,Ball,,,0,1.221257664,-0.298182531
+1,1,2,0,'2-0,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.230570889,0.353002761
+1,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,0.872818811,-0.436080593
+1,2,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Nathan Van Putten,R,R,Fastball,Ball,,,0,1.027680524,1.149747118
+1,2,2,0,'2-0,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Nathan Van Putten,R,R,Fastball,Foul,,,0,-0.424148029,0.360663764
+1,2,2,1,'2-1,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Nathan Van Putten,R,R,Fastball,Lineout,Line Drive,Straightaway,0,0.717957099,0.77435795
+2,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Charlie Hughes,R,R,Fastball,Ball,,,0,-0.424148029,1.211035146
+2,0,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Charlie Hughes,R,R,Curveball,Ball,,,0,1.821346799,-0.2292335
+2,0,2,0,'2-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Charlie Hughes,R,R,Fastball,Foul,,,0,-0.482221171,0.452595806
+2,0,2,1,'2-1,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Charlie Hughes,R,R,Curveball,Single,Ground Ball,Straightaway,0,-0.249928603,0.375985771
+2,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Charlie Hughes,L,R,Fastball,Single,Line Drive,Straightaway,100,-0.598367455,0.26107072
+2,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Charlie Hughes,R,R,Curveball,Foul,,,110,-0.346717173,0.590493868
+2,0,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Charlie Hughes,R,R,Fastball,Foul,,,110,-0.191855461,0.843306981
+2,0,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Charlie Hughes,R,R,Curveball,Ball,,,110,1.047038238,-0.298182531
+2,0,1,2,'1-2,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Charlie Hughes,R,R,Fastball,Groundout,Ground Ball,Pull,11,-0.482221171,0.79734096
+2,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Charlie Hughes,L,R,Curveball,Ball,,,101,0.892176525,-0.20625049
+2,1,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Charlie Hughes,L,R,Fastball,Ball,,,101,-1.256529733,1.134425111
+2,1,2,0,'2-0,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Charlie Hughes,L,R,Curveball,Ball,,,101,-1.275887447,0.850967984
+2,1,3,0,'3-0,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Charlie Hughes,L,R,,Caught Stealing,,,1,,
+2,2,3,0,'3-0,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Charlie Hughes,L,R,Fastball,Lineout,Line Drive,Opposite Field,1,-0.617725169,0.690086912
+2,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Nathan Van Putten,R,R,Fastball,Single,Line Drive,Straightaway,0,-0.288644031,0.276392727
+2,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Nathan Van Putten,R,R,Fastball,Foul,,,100,-0.346717173,0.100189648
+2,0,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Nathan Van Putten,R,R,Breaking Ball,Ball,,,100,1.49226566,0.146155668
+2,0,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Nathan Van Putten,R,R,Fastball,Double Play,Ground Ball,Straightaway,100,-0.540294313,0.161477675
+2,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Breaking Ball,Called Strike,,,0,0.601810815,0.375985771
+2,2,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Fastball,Swinging Strike,,,0,0.543737673,1.111442101
+2,2,0,2,'0-2,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Breaking Ball,Single,Ground Ball,Straightaway,0,0.563095387,0.659442898
+2,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Brady Campbell,Nathan Van Putten,R,R,Fastball,Ball,,,100,1.589054231,0.835645977
+2,2,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,1.41,Brady Campbell,Nathan Van Putten,R,R,Fastball,Called Strike,,,100,-0.695156026,0.667103902
+2,2,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Brady Campbell,Nathan Van Putten,R,R,Fastball,Double,Fly Ball,Opposite Field,10,0.601810815,0.759035943
+2,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Liam Riley,Nathan Van Putten,R,R,Fastball,Swinging Strike,,,10,0.466306817,0.391307778
+2,2,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Liam Riley,Nathan Van Putten,R,R,Fastball,Foul,,,10,-0.675798312,0.161477675
+2,2,0,2,'0-2,2025-10-10,Brock Badgers,Carleton Ravens,,Liam Riley,Nathan Van Putten,R,R,Fastball,Ball,,,10,0.369518246,1.111442101
+2,2,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Liam Riley,Nathan Van Putten,R,R,Breaking Ball,Strikeout Swinging,,,10,-0.230570889,0.360663764
+3,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Charlie Hughes,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.482221171,0.613476878
+3,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Charlie Hughes,R,R,Curveball,Ball,,,0,1.434192518,1.157408122
+3,1,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Charlie Hughes,R,R,Curveball,Ball,,,0,0.679241671,-0.305843534
+3,1,2,0,'2-0,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Charlie Hughes,R,R,Changeup,Swinging Strike,,,0,-0.559652027,0.26107072
+3,1,2,1,'2-1,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Charlie Hughes,R,R,Curveball,Single,Fly Ball,Opposite Field,0,-0.308001745,0.720730926
+3,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Charlie Hughes,R,R,Fastball,Error,Ground Ball,Pull,100,-0.249928603,0.889273001
+3,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Charlie Hughes,R,R,Curveball,Called Strike,,,110,0.485664531,0.330019751
+3,1,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Charlie Hughes,R,R,Fastball,Called Strike,,,110,0.776030241,0.199782692
+3,1,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Charlie Hughes,R,R,Fastball,Foul,,,110,-0.617725169,0.421951792
+3,1,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Charlie Hughes,R,R,Curveball,Double,Fly Ball,Opposite Field,110,-0.559652027,0.337680754
+3,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Charlie Hughes,L,R,Fastball,Ball,,,11,-0.482221171,1.126764108
+3,1,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Charlie Hughes,L,R,Fastball,Ball,,,11,-0.269286317,1.157408122
+3,1,2,0,'2-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Charlie Hughes,L,R,Changeup,Called Strike,,,11,-0.520936599,0.161477675
+3,1,2,1,'2-1,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Charlie Hughes,L,R,Curveball,Single,Ground Ball,Opposite Field,11,-0.366074887,0.575171861
+3,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Charlie Hughes,R,R,Curveball,Foul,,,1,-0.598367455,0.299375737
+3,1,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Charlie Hughes,R,R,Curveball,Single,Fly Ball,Straightaway,1,0.466306817,0.322358747
+3,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Charlie Hughes,L,R,Fastball,Ball,,,100,0.679241671,-0.167945473
+3,1,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Charlie Hughes,L,R,Fastball,Called Strike,,,100,0.640526243,0.682425909
+3,1,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Charlie Hughes,L,R,Changeup,Ball,,,100,-0.791944596,0.222765703
+3,1,2,1,'2-1,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Charlie Hughes,L,R,Fastball,Flyout,Fly Ball,Opposite Field,100,-0.327359459,0.153816672
+3,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Charlie Hughes,R,R,Curveball,Called Strike,,,100,-0.172497747,0.28405373
+3,2,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Charlie Hughes,R,R,Fastball,Foul,,,100,-0.637082884,0.383646775
+3,2,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Charlie Hughes,R,R,Curveball,Ball,,,100,1.047038238,-0.321165541
+3,2,1,2,'1-2,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Charlie Hughes,R,R,Curveball,Groundout,Ground Ball,Pull,10,-0.172497747,0.345341758
+3,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Fastball,Called Strike,,,0,0.28146248,0.845611042
+3,0,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Offspeed,Called Strike,,,0,-0.655712864,0.080144315
+3,0,0,2,'0-2,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Offspeed,Ball,,,0,-0.735472468,-0.464362944
+3,0,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Offspeed,Groundout,Ground Ball,Pull,0,-0.416434053,0.18273264
+3,1,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Fastball,Foul,,,0,-0.456313855,0.695674261
+3,1,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Fastball,Ball,,,0,0.421041786,1.106027557
+3,1,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Fastball,Groundout,Ground Ball,Pull,0,-0.436373954,0.111709954
+3,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Fastball,Foul,,,0,-0.675652765,0.301103783
+3,2,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Offspeed,Foul,,,0,-0.695592666,0.332669421
+3,2,0,2,'0-2,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Offspeed,Ball,,,0,-1.273849793,0.18273264
+3,2,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Breaking Ball,Called Strike,,,0,-0.376554251,0.269538145
+3,2,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Offspeed,Ball,,,0,-1.114330585,-0.1802722
+3,2,2,2,'2-2,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Fastball,Strikeout Swinging,,,0,-0.436373954,0.963982185
+4,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Charlie Hughes,L,R,Fastball,Double,Fly Ball,Straightaway,0,-0.516133557,0.245863916
+4,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Charlie Hughes,L,R,Curveball,Foul,,,10,-0.57595326,-0.17238079
+4,0,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Charlie Hughes,L,R,Fastball,Ball,,,10,-1.373549297,0.261646735
+4,0,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Charlie Hughes,L,R,Changeup,Single,Line Drive,Pull,10,-0.456313855,0.316886602
+4,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Charlie Hughes,R,R,Fastball,Single,Ground Ball,Straightaway,100,-0.436373954,0.70356567
+4,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Ryan Facchini,R,R,Slider,Foul,,,110,-0.755412369,0.687782851
+4,0,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Ryan Facchini,R,R,Slider,Ball,,,110,0.7201403,-0.495928582
+4,0,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Ryan Facchini,R,R,Fastball,Swinging Strike,,,110,-0.57595326,0.869285271
+4,0,1,2,'1-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Ryan Facchini,R,R,Cutter,Flyout,Fly Ball,Straightaway,110,-0.336674449,0.127492773
+4,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Cutter,Ball,,,110,-0.894991675,1.24018152
+4,1,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Cutter,Ball,,,110,-0.954811378,-0.298643343
+4,1,2,0,'2-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Fastball,Foul,,,110,-0.536073458,0.111709954
+4,1,2,1,'2-1,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Cutter,Swinging Strike,,,110,-0.217035044,-0.274969115
+4,1,2,2,'2-2,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Cutter,Groundout,Ground Ball,Pull,110,-0.336674449,0.237972506
+4,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Changeup,Ball,,,110,-1.333669495,-0.203946429
+4,2,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Fastball,Groundout,Ground Ball,Pull,110,-0.456313855,0.324778012
+4,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Nathan Van Putten,R,R,Breaking Ball,Called Strike,,,0,0.221642777,0.364235059
+4,0,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,-0.436373954,-0.330208981
+4,0,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Nathan Van Putten,R,R,Fastball,Foul,,,0,-0.57595326,0.332669421
+4,0,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Nathan Van Putten,R,R,Breaking Ball,Strikeout Swinging,,,0,0.740080201,-0.17238079
+4,1,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Nathan Van Putten,R,R,Fastball,Foul,,,0,-0.35661435,0.222189687
+4,1,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,1.457916634,0.024904449
+4,1,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Nathan Van Putten,R,R,Fastball,Foul,,,0,-0.715532567,0.206406868
+4,1,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,1.278457526,-0.306534753
+4,1,2,2,'2-2,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Nathan Van Putten,R,R,Fastball,Strikeout Swinging,,,0,-0.396494152,-0.093466695
+4,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Nathan Van Putten,R,R,Breaking Ball,Swinging Strike,,,0,0.460921588,0.072252906
+4,2,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,0.740080201,0.316886602
+4,2,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Nathan Van Putten,R,R,Fastball,Double,Fly Ball,Opposite Field,0,0.520741291,0.719348489
+4,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Breaking Ball,Ball,,,10,-0.57595326,1.113918967
+4,2,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Offspeed,Swinging Strike,,,10,-0.655712864,0.222189687
+4,2,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Breaking Ball,Called Strike,,,10,-0.35661435,0.869285271
+4,2,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Fastball,Foul,,,10,0.28146248,0.111709954
+4,2,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Breaking Ball,Foul,,,10,-0.217035044,0.277429554
+4,2,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Fastball,Single,Line Drive,Opposite Field,10,0.560621092,0.70356567
+4,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Brady Campbell,Nathan Van Putten,R,R,Fastball,Flyout,Fly Ball,Pull,10,-0.376554251,0.845611042
+5,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Cutter,Ball,,,0,0.28146248,0.963982185
+5,0,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Cutter,Called Strike,,,0,-0.675652765,0.640434394
+5,0,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Slider,Single,Line Drive,Straightaway,0,0.640380696,0.648325803
+5,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Ryan Facchini,L,R,Cutter,Ball,,,100,-0.556013359,1.121810376
+5,0,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Ryan Facchini,L,R,Cutter,Ball,,,100,-1.393489198,0.293212373
+5,0,2,0,'2-0,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Ryan Facchini,L,R,Cutter,Groundout,Ground Ball,Pull,100,-0.436373954,0.198515459
+5,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Ryan Facchini,R,R,Fastball,Foul,,,100,-0.755412369,0.608868755
+5,1,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Ryan Facchini,R,R,Cutter,Single,Line Drive,Opposite Field,100,-0.276854746,0.151167001
+5,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,,,,,,Additional Out,,,,,
+5,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Ryan Facchini,L,R,Fastball,Called Strike,,,100,0.321342281,0.056470087
+5,2,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Ryan Facchini,L,R,Cutter,Ball,,,100,-0.396494152,-0.290751934
+5,2,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Ryan Facchini,L,R,Cutter,Ball,,,100,0.161823074,1.224398701
+5,2,2,1,'2-1,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Ryan Facchini,L,R,Cutter,Hit By Pitch,,,100,1.737075247,0.206406868
+5,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Ryan Facchini,L,R,Cutter,Called Strike,,,111,0.660320597,0.814045404
+5,2,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Ryan Facchini,L,R,Cutter,Flyout,Fly Ball,Opposite Field,111,-0.595893161,0.151167001
+5,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Liam Riley,Nathan Van Putten,R,R,Fastball,Called Strike,,,0,0.062123569,0.845611042
+5,0,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Liam Riley,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,-1.154210387,1.121810376
+5,0,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Liam Riley,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,-0.496193657,-0.251294886
+5,0,2,1,'2-1,2025-10-10,Brock Badgers,Carleton Ravens,,Liam Riley,Nathan Van Putten,R,R,Fastball,Called Strike,,,0,-0.236974945,0.190624049
+5,0,2,2,'2-2,2025-10-10,Brock Badgers,Carleton Ravens,,Liam Riley,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,0.520741291,-0.401231667
+5,0,3,2,'3-2,2025-10-10,Brock Badgers,Carleton Ravens,,Liam Riley,Nathan Van Putten,R,R,Fastball,Walk,,,0,1.178758021,-0.243403476
+5,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Fastball,Swinging Strike,,,100,-0.316734548,1.177050243
+5,0,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,,Pickoff,,,100,,
+5,1,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Fastball,Ball,,,0,-0.775352269,1.137593195
+5,1,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Fastball,Called Strike,,,0,-0.436373954,0.135384182
+5,1,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Breaking Ball,Single,Ground Ball,Opposite Field,0,0.321342281,0.648325803
+5,1,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,,Pickoff,,,100,,
+5,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Fastball,Ball,,,0,-0.416434053,1.23229011
+5,2,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Fastball,Foul,,,0,0.50080139,0.411583517
+5,2,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,-0.655712864,1.113918967
+5,2,2,1,'2-1,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Nathan Van Putten,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.440981687,0.301103783
+6,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Ryan Facchini,R,R,Fastball,Single,Line Drive,Pull,0,-0.316734548,0.87717668
+6,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Ryan Facchini,R,R,Slider,Swinging Strike,,,100,-0.316734548,-0.306534753
+6,0,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Ryan Facchini,R,R,Fastball,Foul,,,10,-0.595893161,0.561520298
+6,0,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Ryan Facchini,R,R,Fastball,Ball,,,10,0.540681192,-0.17238079
+6,0,1,2,'1-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Ryan Facchini,R,R,Cutter,Strikeout Swinging,,,10,-0.236974945,0.159058411
+6,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Cutter,Groundout,Ground Ball,Pull,10,-0.416434053,0.127492773
+6,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Fastball,Called Strike,,,1,-0.735472468,0.159058411
+6,2,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Cutter,Foul,,,1,-0.635772963,0.88506809
+6,2,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Fastball,Ball,,,1,-1.473248802,0.719348489
+6,2,1,2,'1-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Fastball,Ball,,,1,-1.253909892,0.237972506
+6,2,2,2,'2-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Cutter,Ball,,,1,-1.373549297,0.782479766
+6,2,3,2,'3-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Fastball,Foul,,,1,-0.536073458,0.956090776
+6,2,3,2,'3-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Cutter,Foul,,,1,-0.456313855,0.656217213
+6,2,3,2,'3-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Cutter,Foul,,,1,-0.655712864,0.380017878
+6,2,3,2,'3-2,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Del Fatti,Ryan Facchini,L,R,Cutter,Flyout,Fly Ball,Opposite Field,1,-0.655712864,0.743022718
+6,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Fastball,Foul,,,0,-0.516133557,0.380017878
+6,0,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Breaking Ball,Ball,,,0,1.238577724,-0.274969115
+6,0,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Fastball,Foul,,,0,-0.496193657,0.632542984
+6,0,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Nathan Van Putten,L,R,Offspeed,Groundout,Ground Ball,Pull,0,-0.516133557,-0.17238079
+6,1,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Nathan Van Putten,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.799899904,0.624651575
+6,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Nathan Van Putten,R,R,Breaking Ball,Called Strike,,,0,-0.715532567,0.372126469
+6,2,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Nathan Van Putten,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.28146248,0.166949821
+7,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Fastball,Ball,,,0,-1.373549297,0.821936813
+7,0,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Cutter,Ball,,,0,-1.373549297,0.166949821
+7,0,2,0,'2-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Slider,Called Strike,,,0,0.30140238,0.672000032
+7,0,2,1,'2-1,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Fastball,Foul,,,0,-0.516133557,0.166949821
+7,0,2,2,'2-2,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Fastball,Strikeout Swinging,,,0,-0.536073458,1.137593195
+7,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Ryan Facchini,L,R,Changeup,Ball,,,0,-1.21403009,0.222189687
+7,1,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Ryan Facchini,L,R,Cutter,Called Strike,,,0,-0.735472468,0.798262585
+7,1,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Ryan Facchini,L,R,Fastball,Single,Ground Ball,Opposite Field,0,-0.536073458,0.340560831
+7,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Ryan Facchini,R,R,Cutter,Popout,Pop Up,Opposite Field,100,-0.177155242,0.127492773
+7,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Ryan Facchini,L,R,Changeup,Swinging Strike,,,100,-0.336674449,-0.282860524
+7,2,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Ryan Facchini,L,R,Slider,Foul,,,100,-0.336674449,0.814045404
+7,2,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Ryan Facchini,L,R,Slider,Strikeout Swinging,,,100,0.480861489,0.095927134
+7,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,1.278457526,0.269538145
+7,0,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Nathan Van Putten,R,R,Fastball,Swinging Strike,,,0,-0.556013359,0.719348489
+7,0,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Nathan Van Putten,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,0,0.361222083,0.222189687
+7,1,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,-0.017636034,-0.401231667
+7,1,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Fastball,Foul,,,0,-0.57595326,0.34845224
+7,1,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Nathan Van Putten,R,R,Fastball,Triple,Fly Ball,Opposite Field,0,-0.35661435,0.553628889
+7,1,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Brady Campbell,Nathan Van Putten,R,R,Breaking Ball,Ball,,,1,0.560621092,-0.203946429
+7,1,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Brady Campbell,Nathan Van Putten,R,R,Fastball,Ball,,,1,-1.373549297,-0.046118237
+7,1,2,0,'2-0,2025-10-10,Brock Badgers,Carleton Ravens,,Brady Campbell,Nathan Van Putten,R,R,Fastball,Ball,,,1,-1.014631081,1.121810376
+7,1,3,0,'3-0,2025-10-10,Brock Badgers,Carleton Ravens,,Brady Campbell,Nathan Van Putten,R,R,Fastball,Called Strike,,,1,-0.775352269,0.245863916
+7,1,3,1,'3-1,2025-10-10,Brock Badgers,Carleton Ravens,,Brady Campbell,Nathan Van Putten,R,R,Fastball,Groundout,Ground Ball,Opposite Field,1,0.201702876,0.17484123
+7,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Nathan Van Putten,L,R,Offspeed,Swinging Strike,,,0,-0.675652765,0.166949821
+7,2,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Nathan Van Putten,L,R,Fastball,Ball,,,0,-0.815232071,1.224398701
+7,2,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Nathan Van Putten,L,R,Fastball,Ball,,,0,0.700200399,-0.393340258
+7,2,2,1,'2-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Nathan Van Putten,L,R,Fastball,Called Strike,,,0,-0.117335539,-0.061901057
+7,2,2,2,'2-2,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Nathan Van Putten,L,R,Offspeed,Double,Fly Ball,Straightaway,0,-0.476253756,-0.156597971
+7,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Fastball,Ball,,,10,-0.296794647,-0.338100391
+7,2,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Fastball,Ball,,,10,1.418036832,0.056470087
+7,2,2,0,'2-0,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Fastball,Called Strike,,,10,-0.217035044,0.080144315
+7,2,2,1,'2-1,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Fastball,Ball,,,10,0.421041786,-0.259186295
+7,2,3,1,'3-1,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Fastball,Foul,,,10,-0.13727544,0.640434394
+7,2,3,2,'3-2,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Nathan Van Putten,L,R,Fastball,Strikeout Swinging,,,10,0.381161984,0.52995466
+8,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Ryan Facchini,L,R,Fastball,Called Strike,,,0,-0.556013359,0.380017878
+8,0,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Ryan Facchini,L,R,Cutter,Ball,,,0,-1.114330585,1.192833062
+8,0,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Ryan Facchini,L,R,Cutter,Groundout,Ground Ball,Straightaway,0,-0.496193657,0.261646735
+8,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Ryan Facchini,R,R,Fastball,Called Strike,,,0,-0.516133557,0.695674261
+8,1,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Thomas Fournier,Ryan Facchini,R,R,Cutter,Home Run,Fly Ball,Pull,0,-0.655712864,0.277429554
+8,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Ryan Facchini,R,R,Cutter,Ball,,,0,-0.755412369,1.106027557
+8,1,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Eric Blamauer,Ryan Facchini,R,R,Cutter,Error,Ground Ball,Pull,0,-0.037575935,0.222189687
+8,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Slider,Ball,,,100,0.740080201,-0.322317572
+8,1,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Slider,Ball,,,100,0.480861489,-0.259186295
+8,1,2,0,'2-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Slider,Swinging Strike,,,100,0.680260498,-0.148706562
+8,1,2,1,'2-1,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Cutter,Groundout,Ground Ball,Pull,100,-0.615833062,0.821936813
+8,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Merpaw,Ryan Facchini,L,R,Cutter,Foul,,,100,-0.496193657,0.837719632
+8,2,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Merpaw,Ryan Facchini,L,R,Cutter,Ball,,,100,-1.453308901,0.774588356
+8,2,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Merpaw,Ryan Facchini,L,R,Cutter,Single,Ground Ball,Pull,100,-0.456313855,0.119601363
+8,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Merpaw,Ryan Facchini,L,R,,Additional Out,,,101,,
+8,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Michael Millross,R,R,Breaking Ball,Ball,,,0,-0.496193657,1.208615881
+8,0,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Michael Millross,R,R,Fastball,Error,Ground Ball,Straightaway,0,-0.336674449,0.159058411
+8,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Michael Millross,L,R,Breaking Ball,Ball,,,100,0.50080139,-0.259186295
+8,0,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Michael Millross,L,R,Fastball,Single,,,100,-0.436373954,0.648325803
+8,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Michael Millross,R,R,Fastball,Groundout,Ground Ball,Straightaway,110,0.421041786,0.735131308
+8,1,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Michael Millross,R,R,Breaking Ball,Ball,,,101,1.59749594,-0.030335418
+8,1,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Michael Millross,R,R,Fastball,Double,Line Drive,Straightaway,101,-0.496193657,0.119601363
+8,1,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Michael Millross,R,R,Breaking Ball,Called Strike,,,10,-0.755412369,0.695674261
+8,1,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Michael Millross,R,R,Breaking Ball,Ball,,,10,-0.35661435,-0.495928582
+8,1,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Michael Millross,R,R,Breaking Ball,Lineout,Line Drive,Pull,10,-0.217035044,0.103818544
+8,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Michael Millross,R,R,Breaking Ball,Foul,,,10,-0.715532567,0.332669421
+8,2,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Michael Millross,R,R,Breaking Ball,Ball,,,10,0.779960003,-0.36177462
+8,2,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Michael Millross,R,R,Fastball,Ball,,,10,0.221642777,1.113918967
+8,2,2,1,'2-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Michael Millross,R,R,Fastball,Foul,,,10,-0.077455737,0.87717668
+8,2,2,2,'2-2,2025-10-10,Brock Badgers,Carleton Ravens,,Nolan Phelan,Michael Millross,R,R,Breaking Ball,Single,Ground Ball,Opposite Field,10,-0.296794647,0.395800698
+8,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Brady Campbell,Michael Millross,R,R,Fastball,Ball,,,100,-0.755412369,-0.330208981
+8,2,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Brady Campbell,Michael Millross,R,R,Fastball,Single,Ground Ball,Straightaway,100,0.460921588,0.648325803
+8,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Robert Forward,L,R,Fastball,Ball,,,110,-0.157215341,1.224398701
+8,2,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Robert Forward,L,R,Fastball,Ball,,,110,0.221642777,1.177050243
+8,2,2,0,'2-0,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Robert Forward,L,R,Fastball,Called Strike,,,110,-0.35661435,0.70356567
+8,2,2,1,'2-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Robert Forward,L,R,Breaking Ball,Ball,,,110,0.799899904,-0.298643343
+8,2,3,1,'3-1,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Robert Forward,L,R,Fastball,Swinging Strike,,,110,-0.396494152,1.137593195
+8,2,3,2,'3-2,2025-10-10,Brock Badgers,Carleton Ravens,,Nate Parsons,Robert Forward,L,R,Fastball,Strikeout Swinging,,,110,-0.655712864,1.161267424
+9,0,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Cutter,Ball,,,0,-1.313729594,0.892959499
+9,0,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Cutter,Swinging Strike,,,0,-1.174150288,0.727239899
+9,0,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Jordan Cruz,Ryan Facchini,R,R,Cutter,Groundout,Ground Ball,Pull,0,-0.157215341,0.340560831
+9,1,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Ryan Facchini,L,R,Fastball,Called Strike,,,0,-0.595893161,0.111709954
+9,1,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Ryan Facchini,L,R,Cutter,Foul,,,0,0.361222083,0.506280431
+9,1,0,2,'0-2,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Ryan Facchini,L,R,Changeup,Ball,,,0,-1.353609396,0.230081097
+9,1,1,2,'1-2,2025-10-10,Carleton Ravens,Brock Badgers,,Rian Malig,Ryan Facchini,L,R,Changeup,Strikeout Swinging,,,0,-0.595893161,-0.156597971
+9,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Ryan Facchini,R,R,Cutter,Called Strike,,,0,-0.675652765,0.214298278
+9,2,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Colby Schroeder,Ryan Facchini,R,R,Cutter,Single,Ground Ball,Straightaway,0,-0.316734548,0.143275592
+9,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Ryan Facchini,L,R,Cutter,Foul,,,100,0.30140238,0.222189687
+9,2,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Andrew Sahadeo,Ryan Facchini,L,R,Cutter,Single,Ground Ball,Straightaway,100,-0.456313855,0.380017878
+9,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Ryan Facchini,L,R,Slider,Ball,,,110,0.600500894,-0.393340258
+9,2,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Ryan Facchini,L,R,Slider,Foul,,,110,-0.276854746,0.214298278
+9,2,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Carter Smith,Ryan Facchini,L,R,Cutter,Groundout,Ground Ball,Pull,110,-0.476253756,0.127492773
+9,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Robert Forward,L,R,Fastball,Ball,,,0,1.59749594,0.632542984
+9,0,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Robert Forward,L,R,Fastball,Ball,,,0,0.999298913,1.271747158
+9,0,2,0,'2-0,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Robert Forward,L,R,Fastball,Ball,,,0,1.019238814,1.177050243
+9,0,3,0,'3-0,2025-10-10,Brock Badgers,Carleton Ravens,,Adam Geddes,Robert Forward,L,R,Fastball,Walk,,,0,0.819839804,1.129701786
+9,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Jack Novak,R,R,Fastball,Ball,,,100,0.480861489,1.184941653
+9,0,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Jack Novak,R,R,Fastball,Ball,,,100,-0.655712864,1.098136148
+9,0,2,0,'2-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Jack Novak,R,R,Fastball,Called Strike,,,100,-0.296794647,0.837719632
+9,0,2,1,'2-1,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Jack Novak,R,R,Fastball,Double,Fly Ball,Pull,100,0.341282182,0.821936813
+9,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Jack Novak,L,R,Offspeed,Ball,,,11,0.440981687,-0.251294886
+9,0,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Jack Novak,L,R,Fastball,Called Strike,,,11,-0.316734548,0.206406868
+9,0,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Jack Novak,L,R,Offspeed,Called Strike,,,11,0.480861489,0.632542984
+9,0,1,2,'1-2,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Jack Novak,L,R,Fastball,Popout,Pop Up,Opposite Field,11,-0.695592666,0.340560831
+9,1,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Jack Novak,R,R,Fastball,Called Strike,,,11,0.062123569,0.845611042
+9,1,0,1,'0-1,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Jack Novak,R,R,Breaking Ball,Ball,,,11,0.600500894,-0.393340258
+9,1,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Cole Carpenter,Jack Novak,R,R,Fastball,Sacrifice Fly,Fly Ball,Pull,11,-0.436373954,0.222189687
+9,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Jack Novak,R,R,Breaking Ball,Ball,,,10,1.079058516,-0.345991801
+9,2,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Jack Novak,R,R,Breaking Ball,Called Strike,,,10,0.141883173,0.616760165
+9,2,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Jack Novak,R,R,Breaking Ball,Single,Line Drive,Pull,10,-0.316734548,0.664108622
+9,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Jack Novak,R,R,Breaking Ball,Ball,,,101,1.477856535,0.222189687
+9,2,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Jack Novak,R,R,Fastball,Groundout,Ground Ball,Straightaway,101,-0.556013359,-0.203946429
