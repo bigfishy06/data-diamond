@@ -457,6 +457,35 @@
   </script>
   <script>
     (function(){
+      const grid=document.querySelector('#overview .dashboard-grid'),usageCard=$('pitchMix').closest('.card'),card=document.createElement('article');
+      card.className='card';card.id='pitcherSplitStatsCard';card.style.gridColumn='1 / -1';
+      card.innerHTML='<div class="card-head"><h2>Pitcher Split Statistics</h2><span id="pitcherSplitStatsNote">RHH and LHH performance</span></div><div class="table-wrap"><table class="stat-table"><thead><tr><th>Split</th><th>Pitches</th><th>Strike%</th><th>Swing%</th><th>Whiff%</th><th>Chase%</th><th>K%</th><th>BB%</th><th>BAA</th></tr></thead><tbody id="pitcherSplitStatsBody"></tbody></table></div>';
+      usageCard.after(card);
+      const rate=(numerator,denominator)=>denominator?numerator/denominator*100:null;
+      const hit=point=>['Single','Double','Triple','Home Run'].includes(point.outcome);
+      function splitLine(points){
+        const swings=points.filter(point=>swingOutcomes.has(point.outcome)),whiffs=points.filter(point=>whiffOutcomes.has(point.outcome)),located=points.filter(point=>Number.isFinite(Number(point.x))&&Number.isFinite(Number(point.y))),outside=located.filter(point=>!point.in_zone),outSwings=outside.filter(point=>swingOutcomes.has(point.outcome)),pa=points.filter(isTerminalPa),abs=points.filter(isOfficialAtBat);
+        return{pitches:points.length,strike:rate(points.filter(isPitchStrike).length,points.length),swing:rate(swings.length,points.length),whiff:rate(whiffs.length,swings.length),chase:rate(outSwings.length,outside.length),k:rate(pa.filter(isStrikeout).length,pa.length),bb:rate(pa.filter(isWalk).length,pa.length),baa:abs.length?abs.filter(hit).length/abs.length:null};
+      }
+      function renderPitcherSplits(){
+        const pitcher=activeRole()==='pitcher',player=state.current;
+        card.style.display=pitcher?'block':'none';
+        if(!pitcher||!player)return;
+        const points=selectedPoints(),body=$('pitcherSplitStatsBody');
+        $('pitcherSplitStatsNote').textContent=`${points.length} tracked pitches`;
+        body.innerHTML=['R','L'].map(hand=>{
+          const stats=splitLine(points.filter(point=>point.batter_side===hand));
+          const fmt=value=>value==null?'—':pct(value);
+          return `<tr><td>vs. ${hand}HH</td><td>${stats.pitches||'—'}</td><td>${fmt(stats.strike)}</td><td>${fmt(stats.swing)}</td><td>${fmt(stats.whiff)}</td><td>${fmt(stats.chase)}</td><td>${fmt(stats.k)}</td><td>${fmt(stats.bb)}</td><td>${stats.baa==null?'—':dec(stats.baa)}</td></tr>`;
+        }).join('');
+      }
+      ['player','team','season'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(renderPitcherSplits,120)));
+      document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderPitcherSplits,120)));
+      setTimeout(renderPitcherSplits,3600);
+    })();
+  </script>
+  <script>
+    (function(){
       const sequencingTab=document.querySelector('[data-tab="sequencing"]');
       const sequencingPane=$('sequencing');
       const overviewTab=document.querySelector('[data-tab="overview"]');
