@@ -407,8 +407,8 @@
         'brock-badgers:haydon-cupolo':'hayden-cupolo.jpg'
       };
       const slug=name=>String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-      function headshotFiles(player){const team=slug(player?.pitcher_team),name=slug(player?.pitcher),key=`${team}:${name}`,base=team&&name?`${team}-${name}`:'',extensions=['jpg','jpeg','png','webp'],files=[headshotAliases[key],...extensions.map(extension=>`${base}.${extension}`)];if(team==='brock-badgers')files.push(...extensions.map(extension=>`${name}.${extension}`));return files.filter((value,index,items)=>value&&items.indexOf(value)===index)}
-      function renderHeadshot(){const player=state.current,holder=$('initials'),files=headshotFiles(player);holder.classList.remove('has-headshot');holder.innerHTML='';const fallback=()=>{holder.classList.remove('has-headshot');holder.textContent=initials(player?.pitcher)};const load=index=>{if(index>=files.length){fallback();return}const image=new Image();image.src=`headshots/${files[index]}?v=verified-roster-20260923-current`;image.alt=`${player.pitcher} headshot`;image.onload=()=>{holder.classList.add('has-headshot');holder.replaceChildren(image)};image.onerror=()=>load(index+1)};load(0)}
+      function headshotFiles(player){const team=slug(player?.pitcher_team||player?.batter_team||player?.team),name=slug(player?.pitcher||player?.batter||player?.name),key=`${team}:${name}`,base=team&&name?`${team}-${name}`:'',extensions=['jpg','jpeg','png','webp'],files=[headshotAliases[key],...extensions.map(extension=>`${base}.${extension}`)];if(team==='brock-badgers')files.push(...extensions.map(extension=>`${name}.${extension}`));return files.filter((value,index,items)=>value&&items.indexOf(value)===index)}
+      function renderHeadshot(){const player=state.current,holder=$('initials');if(!holder)return;if(!player){holder.classList.remove('has-headshot');holder.textContent='—';return}const name=player.pitcher||player.batter||player.name||'',files=headshotFiles(player);holder.classList.remove('has-headshot');holder.innerHTML='';const fallback=()=>{holder.classList.remove('has-headshot');holder.textContent=initials(name)};const load=index=>{if(index>=files.length){fallback();return}const image=new Image();image.src=`headshots/${files[index]}?v=verified-roster-20260923-current`;image.alt=`${name} headshot`;image.onload=()=>{holder.classList.add('has-headshot');holder.replaceChildren(image)};image.onerror=()=>load(index+1)};load(0)}
       ['player','team'].forEach(id=>$(id).addEventListener('change',()=>setTimeout(renderHeadshot,120)));document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>setTimeout(renderHeadshot,120)));setTimeout(renderHeadshot,3000);
     })();
   </script>
@@ -1081,9 +1081,9 @@
         return[rate(first.filter(point=>swingOutcomes.has(point.outcome)).length,first.length),rate(zone.filter(point=>swingOutcomes.has(point.outcome)).length,zone.length),rate(outside.filter(point=>swingOutcomes.has(point.outcome)).length,outside.length),rate(points.filter(point=>whiffOutcomes.has(point.outcome)).length,swings.length),rate(pa.filter(point=>String(point.outcome).includes('Strikeout')).length,pa.length),rate(pa.filter(point=>point.outcome==='Walk').length,pa.length),rate(batted.filter(point=>point.contact==='Fly Ball').length,batted.length)]
       }
       function applyGamePercentiles(){
-        if(!distributions||activeRole()!=='batter')return;
+        if(!container||!distributions||activeRole()!=='batter')return;
         [...container.querySelectorAll('.game-analysis-metric')].forEach((card,index)=>{
-          const value=parseFloat(card.querySelector('strong')?.textContent),list=distributions[index].filter(Number.isFinite);
+          const value=parseFloat(card.querySelector('strong')?.textContent),list=(distributions[index]||[]).filter(Number.isFinite);
           let badge=card.querySelector('.game-stat-percentile');if(!badge){badge=document.createElement('span');badge.className='game-stat-percentile';card.appendChild(badge)}
           if(!Number.isFinite(value)||!list.length){badge.textContent='—';return}
           const raw=Math.round(list.reduce((sum,item)=>sum+(item<value?1:item===value?.5:0),0)/list.length*100),performance=lowerIsBetter.has(index)?100-raw:raw;
@@ -1113,11 +1113,13 @@
         const points=Array.isArray(player.scatter)?player.scatter:[],swings=points.filter(point=>swingOutcomes.has(point.outcome)),whiffs=points.filter(point=>whiffOutcomes.has(point.outcome)),pa=points.filter(isTerminalPa),hits=points.filter(isOfficialAtBat).filter(point=>['Single','Double','Triple','Home Run'].includes(point.outcome));
         return`${points.length} pitches seen · Whiff% ${pct(swings.length?whiffs.length/swings.length*100:null)} · K% ${pct(pa.length?pa.filter(point=>String(point.outcome).includes('Strikeout')).length/pa.length*100:null)} · Hits ${hits.length}`;
       }
+      const reportPlayerName=player=>String(player?.pitcher||player?.batter||player?.name||'').trim();
       function updateScoutingContext(){
         const player=state.current;if(!player)return;
-        $('scoutingReportPlayer').textContent=`${player.pitcher} · ${player.pitcher_team||'Team unavailable'}`;
-        $('scoutingReportName').textContent=player.pitcher||'Player';
-        $('scoutingReportMeta').textContent=`${activeRole()==='pitcher'?'Pitcher · Throws':'Batter · Bats'} ${player.throws||'—'} · ${player.pitcher_team||'Team unavailable'} · 2026 OUA`;
+        const name=reportPlayerName(player),team=reportTeam(player)||player.pitcher_team||player.batter_team||'Team unavailable';
+        $('scoutingReportPlayer').textContent=`${name||'Player'} · ${team}`;
+        $('scoutingReportName').textContent=name||'Player';
+        $('scoutingReportMeta').textContent=`${activeRole()==='pitcher'?'Pitcher · Throws':'Batter · Bats'} ${player.throws||'—'} · ${team} · 2026 OUA`;
         $('scoutingStatSnapshot').textContent=snapshot(player);
         const profileImage=document.querySelector('.monogram img'),reportImage=$('scoutingReportHeadshot');if(profileImage?.src)reportImage.src=profileImage.src;else reportImage.removeAttribute('src');
       }
@@ -1125,7 +1127,7 @@
         let draft={};try{draft=JSON.parse(localStorage.getItem(draftKey())||'{}')}catch(e){}
         fields.forEach(id=>{if(draft[id]!=null)$(id).value=draft[id]});
       }
-      $('createScoutingReport').addEventListener('click',()=>{const player=state.current;if(!player)return;const button=$('createScoutingReport');button.disabled=true;button.textContent='Generating Report…';$('scoutingReportPlayer').textContent=`Creating ${player.pitcher}'s full-season PDF…`;const params=new URLSearchParams({season:String($('season')?.value||'2025'),team:reportTeam(player),type:activeRole(),player:player.pitcher||'',generate:'1',nonce:String(Date.now())});let frame=$('scoutingReportGeneratorFrame');if(!frame){frame=document.createElement('iframe');frame.id='scoutingReportGeneratorFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`});
+      $('createScoutingReport').addEventListener('click',()=>{const player=state.current,name=reportPlayerName(player);if(!player||!name)return;const button=$('createScoutingReport');button.disabled=true;button.textContent='Generating Report…';$('scoutingReportPlayer').textContent=`Creating ${name}'s full-season PDF…`;const params=new URLSearchParams({season:String($('season')?.value||'2025'),team:reportTeam(player),type:activeRole(),player:name,generate:'1',nonce:String(Date.now())});let frame=$('scoutingReportGeneratorFrame');if(!frame){frame=document.createElement('iframe');frame.id='scoutingReportGeneratorFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`});
       teamReportButton.addEventListener('click',()=>{const player=state.current;if(!player||!player.pitcher_team)return;teamReportButton.disabled=true;teamReportButton.textContent='Generating Team Report…';$('scoutingReportPlayer').textContent=`Creating ${player.pitcher_team} ${activeRole()} team PDF…`;const params=new URLSearchParams({season:String($('season')?.value||'2025'),team:player.pitcher_team,type:activeRole(),generateTeam:'1',nonce:String(Date.now())});let frame=$('teamScoutingReportGeneratorFrame');if(!frame){frame=document.createElement('iframe');frame.id='teamScoutingReportGeneratorFrame';frame.hidden=true;document.body.appendChild(frame)}frame.src=`scouting.html?${params.toString()}`});
       window.addEventListener('message',event=>{if(event.origin!==window.location.origin||event.data?.type!=='cbl-scouting-generated')return;const button=$('createScoutingReport');button.disabled=false;button.textContent='Generate Full-Season Report';$('scoutingReportPlayer').textContent=event.data.ok?`${event.data.player} report downloaded.`:`Could not generate ${event.data.player}'s report.`});
       window.addEventListener('message',event=>{if(event.origin!==window.location.origin||event.data?.type!=='cbl-team-scouting-generated')return;teamReportButton.disabled=false;teamReportButton.textContent='Generate Team Report';$('scoutingReportPlayer').textContent=event.data.ok?`${event.data.team} ${event.data.role} team report downloaded.`:`Could not generate ${event.data.team} team report.`});
