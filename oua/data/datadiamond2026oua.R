@@ -9,22 +9,37 @@ expected_columns <- c("inning", "outs", "balls", "strikes", "count",
                       "outcome", "contact_quality", "spray_chart",
                       "runners", "pitch_x", "pitch_y")
 
-# The TrackMan export pads each row with empty columns. Read only the first
-# 20 fields, which are the complete pitch-data schema, before using dplyr.
-read_oua_pitches <- function(path) {
-  lines <- readLines(path, warn = FALSE)
-  if (length(lines) < 2) stop("The OUA CSV does not contain any pitch rows.")
-  trim_to_schema <- function(line) {
-    commas <- gregexpr(",", line, fixed = TRUE)[[1]]
-    if (length(commas) >= 20) substr(line, 1, commas[20] - 1) else line
+# Decode each value to valid UTF-8 before any trimws(), gsub(), or dplyr text
+# operation. TrackMan exports occasionally contain Windows-1252 characters
+# (for example curly apostrophes in player names) alongside UTF-8 text.
+decode_utf8 <- function(x) {
+  x <- as.character(x)
+  decoded <- suppressWarnings(iconv(x, from = "UTF-8", to = "UTF-8", sub = NA_character_))
+  invalid <- is.na(decoded) & !is.na(x)
+  if (any(invalid)) {
+    decoded[invalid] <- iconv(x[invalid], from = "Windows-1252", to = "UTF-8", sub = "")
   }
-  raw <- read.csv(text = vapply(lines[-1], trim_to_schema, character(1)),
+  decoded[is.na(decoded) & !is.na(x)] <- ""
+  enc2utf8(decoded)
+}
+
+# The TrackMan export pads each row with empty columns. Parse the CSV first so
+# quoted fields remain intact, then retain the first 20 pitch-data fields.
+read_oua_pitches <- function(path) {
+  lines <- readLines(path, warn = FALSE, encoding = "bytes", skipNul = TRUE)
+  lines <- decode_utf8(lines)
+  if (length(lines) < 2) stop("The OUA CSV does not contain any pitch rows.")
+  raw <- read.csv(text = paste(lines[-1], collapse = "\n"),
                   header = FALSE, stringsAsFactors = FALSE, fill = TRUE,
                   check.names = FALSE)
   if (ncol(raw) < length(expected_columns)) {
     stop("The OUA CSV has fewer than 20 pitch-data columns.")
   }
-  raw[, seq_along(expected_columns), drop = FALSE]
+  raw <- raw[, seq_along(expected_columns), drop = FALSE]
+  raw[] <- lapply(raw, function(column) {
+    if (is.character(column)) decode_utf8(column) else column
+  })
+  raw
 }
 
 pitches <- as.data.frame(read_oua_pitches(
