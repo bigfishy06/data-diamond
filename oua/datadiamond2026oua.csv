@@ -3175,10 +3175,10 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 2,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Charlie Hughes,R,R,Fastball,Swinging Strike,,,0,-0.236974945,1.192833062
 2,1,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Charlie Hughes,R,R,Fastball,Swinging Strike,,,0,-0.815232071,0.679891441
 2,1,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Charlie Hughes,R,R,Fastball,Flyout,Fly Ball,Pull,0,0.261522579,0.837719632
-2,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Curveball,Called Strike,,,0,-0.376554251,0.143275592
-2,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Fastball,Swinging Strike,,,0,-0.635772963,1.098136148
-2,2,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Fastball,Foul,,,0,0.680260498,0.829828223
-2,2,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Curveball,Flyout,Fly Ball,Straightaway,0,-0.217035044,-0.148706562
+2,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Curveball,Called Strike,,,0,-0.376554251,0.143275592
+2,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Fastball,Swinging Strike,,,0,-0.635772963,1.098136148
+2,2,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Fastball,Foul,,,0,0.680260498,0.829828223
+2,2,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Curveball,Flyout,Fly Ball,Straightaway,0,-0.217035044,-0.148706562
 3,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Gavin McLean,R,R,Breaking Ball,Called Strike,,,0,0.540681192,0.301103783
 3,0,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Gavin McLean,R,R,Fastball,Ball,,,0,1.278457526,0.853502452
 3,0,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Gavin McLean,R,R,Fastball,Called Strike,,,0,-0.396494152,0.34845224
@@ -3252,7 +3252,7 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 4,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Charlie Hughes,R,R,Fastball,Called Strike,,,10,,
 4,1,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Charlie Hughes,R,R,Fastball,Foul,,,10,0.361222083,0.372126469
 4,1,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Charlie Hughes,R,R,Fastball,Groundout,Ground Ball,Straightaway,10,0.30140238,0.790371175
-4,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Fastball,Single,Fly Ball,Pull,1,0.30140238,0.451040564
+4,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Fastball,Single,Fly Ball,Pull,1,0.30140238,0.451040564
 4,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Matthew Kong,Charlie Hughes,R,R,Curveball,Ball,,,10,1.15881812,-0.36177462
 4,2,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Matthew Kong,Charlie Hughes,R,R,Curveball,Ball,,,10,0.600500894,-0.290751934
 4,2,2,0,'2-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Matthew Kong,Charlie Hughes,R,R,Fastball,Called Strike,,,10,0.640380696,0.664108622
@@ -3354,13 +3354,13 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 6,1,2,0,'2-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Charlie Hughes,R,R,Fastball,Ball,,,0,1.856714652,0.632542984
 6,1,3,0,'3-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Charlie Hughes,R,R,Fastball,Called Strike,,,0,-0.615833062,0.537846069
 6,1,3,1,'3-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Charlie Hughes,R,R,Fastball,Double,Fly Ball,Pull,0,-0.655712864,0.687782851
-6,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Curveball,Swinging Strike,,,10,0.839779705,-0.243403476
-6,1,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Curveball,Called Strike,,,10,-0.615833062,0.159058411
-6,1,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Fastball,Ball,,,10,0.600500894,1.098136148
-6,1,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Fastball,Ball,,,10,-0.894991675,1.23229011
-6,1,2,2,'2-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Curveball,Foul,,,10,-0.655712864,0.616760165
-6,1,2,2,'2-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Curveball,Ball,,,10,0.899599408,-0.377557439
-6,1,3,2,'3-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Patrick Vieira,Charlie Hughes,R,R,Fastball,Walk,,,10,1.298397427,-0.188163609
+6,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Curveball,Swinging Strike,,,10,0.839779705,-0.243403476
+6,1,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Curveball,Called Strike,,,10,-0.615833062,0.159058411
+6,1,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Fastball,Ball,,,10,0.600500894,1.098136148
+6,1,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Fastball,Ball,,,10,-0.894991675,1.23229011
+6,1,2,2,'2-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Curveball,Foul,,,10,-0.655712864,0.616760165
+6,1,2,2,'2-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Curveball,Ball,,,10,0.899599408,-0.377557439
+6,1,3,2,'3-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Charlie Hughes,R,R,Fastball,Walk,,,10,1.298397427,-0.188163609
 6,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Matthew Kong,Jack Tiessen,R,R,Fastball,Groundout,Ground Ball,Straightaway,110,-0.276854746,0.648325803
 6,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Jack Tiessen,R,R,Fastball,Foul,,,101,-1.174150288,0.206406868
 6,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Jack Tiessen,R,R,Fastball,Groundout,Ground Ball,Straightaway,101,0.401101885,0.585194527
@@ -7445,7 +7445,7 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 2,2,0,1,'0-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Aiden Tonge,R,R,Fastball,Ball,,,0,1.760708042,0.375015444
 2,2,1,1,'1-1,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Aiden Tonge,R,R,Offspeed,Foul,,,0,-0.512456294,0.145518792
 2,2,1,2,'1-2,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Marco Da Gama,Aiden Tonge,R,R,Offspeed,Strikeout Looking,,,0,0.740103646,0.59533223
-3,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Geldart,Landon Hutar,L,R,Fastball,Double,Fly Ball,Pull,0,-0.489260739,0.576972498
+3,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cole Geldart,Landon Hutar,L,R,Fastball,Double,Fly Ball,Pull,0,-0.489260739,0.576972498
 3,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,Landon Hutar,R,R,Fastball,Double,Line Drive,Opposite Field,10,0.39217033,0.347475846
 3,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Fastball,Called Strike,,,10,0.39217033,0.12715906
 3,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Landon Hutar,R,R,Breaking Ball,Ball,,,10,1.22721029,-0.34101411
@@ -7488,7 +7488,7 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 4,0,3,1,'3-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Brendan Boys,Landon Hutar,R,R,Fastball,Walk,,,110,-0.350087413,-0.166596654
 4,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Landon Hutar,R,R,Breaking Ball,Called Strike,,,111,0.113823676,0.889087944
 4,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Landon Hutar,R,R,Fastball,Sacrifice Fly,Fly Ball,Pull,111,0.484952548,0.815649015
-4,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Geldart,Landon Hutar,L,R,Fastball,Sacrifice Bunt,Ground Ball,Pull,101,0.484952548,0.264857051
+4,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cole Geldart,Landon Hutar,L,R,Fastball,Sacrifice Bunt,Ground Ball,Pull,101,0.484952548,0.264857051
 4,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,Landon Hutar,R,R,Breaking Ball,Called Strike,,,11,0.925668082,0.485173837
 4,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,Landon Hutar,R,R,Fastball,Popout,Pop Up,Opposite Field,11,0.438561439,0.329116114
 4,0,0,0,'0-0,2026-09-05,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aiden Tonge,R,R,Fastball,Called Strike,,,0,0.624125874,0.677951024
@@ -7547,9 +7547,9 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 6,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Brendan Boys,Landon Hutar,R,R,Breaking Ball,Single,Ground Ball,Pull,100,0.554539211,0.365835578
 6,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Landon Hutar,R,R,Breaking Ball,Ball,,,110,0.856081419,-0.212495985
 6,0,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Landon Hutar,R,R,Breaking Ball,Single,Ground Ball,Pull,110,0.113823676,0.264857051
-6,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Geldart,JJ Reynolds,L,R,Offspeed,Called Strike,,,101,-0.605238512,0.136338926
-6,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Geldart,JJ Reynolds,L,R,Fastball,Ball,,,101,-1.625842907,0.026180533
-6,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Geldart,JJ Reynolds,L,R,Offspeed,Sacrifice Fly,Fly Ball,Straightaway,101,-0.721216284,0.558612765
+6,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cole Geldart,JJ Reynolds,L,R,Offspeed,Called Strike,,,101,-0.605238512,0.136338926
+6,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cole Geldart,JJ Reynolds,L,R,Fastball,Ball,,,101,-1.625842907,0.026180533
+6,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cole Geldart,JJ Reynolds,L,R,Offspeed,Sacrifice Fly,Fly Ball,Straightaway,101,-0.721216284,0.558612765
 6,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,JJ Reynolds,R,R,Breaking Ball,Ball,,,0,1.111232517,-0.12987719
 6,1,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Johnny Banks,JJ Reynolds,R,R,Fastball,Single,Ground Ball,Pull,0,-0.373282967,0.705490623
 6,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,JJ Reynolds,R,R,Breaking Ball,Called Strike,,,100,0.763299201,0.760569819
@@ -7925,10 +7925,10 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 1,1,2,2,'2-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Daniel Meron,R,R,Fastball,Ball,,,0,0.775885936,0.924825376
 1,1,3,2,'3-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Daniel Meron,R,R,Fastball,Strikeout Swinging,,,0,0.642178848,0.322398444
 1,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Daniel Meron,R,R,Fastball,Single,Line Drive,Pull,0,0.436475637,0.570696031
-1,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Fastball,Ball,,,100,0.683319491,0.041537239
-1,2,1,0,'1-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Fastball,Foul,,,100,0.601038206,0.78643
-1,2,1,1,'1-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Fastball,Swinging Strike,,,100,0.364479513,0.22470759
-1,2,1,2,'1-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Offspeed,Strikeout Swinging,,,100,-0.962306202,0.289834826
+1,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Ball,,,100,0.683319491,0.041537239
+1,2,1,0,'1-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Foul,,,100,0.601038206,0.78643
+1,2,1,1,'1-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Swinging Strike,,,100,0.364479513,0.22470759
+1,2,1,2,'1-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Offspeed,Strikeout Swinging,,,100,-0.962306202,0.289834826
 1,0,0,0,'0-0,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Aidan Gelhard,R,R,Fastball,Groundout,Line Drive,Straightaway,0,0.683319491,0.399737037
 1,1,0,0,'0-0,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Aidan Gelhard,L,R,Fastball,Called Strike,,,0,0.426190476,0.440441559
 1,1,0,1,'0-1,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Aidan Gelhard,L,R,Breaking Ball,Ball,,,0,-1.024017165,0.367173419
@@ -8021,12 +8021,12 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 4,0,0,1,'0-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Daniel Meron,R,R,Breaking Ball,Foul,,,100,-0.201204319,0.599189197
 4,0,0,2,'0-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Daniel Meron,R,R,Breaking Ball,Ball,,,100,1.03301495,0.139228093
 4,0,1,2,'1-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Daniel Meron,R,R,Fastball,Flyout,Fly Ball,Pull,100,0.518756921,0.436371107
-4,1,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Offspeed,Ball,,,100,-0.93145072,0.122946284
-4,1,1,0,'1-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Fastball,Ball,,,100,-0.694892027,0.949248089
-4,1,2,0,'2-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Fastball,Called Strike,,,100,0.343909192,0.18807352
-4,1,2,1,'2-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Fastball,Ball,,,100,0.724460133,0.037466787
-4,1,3,1,'3-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Fastball,Called Strike,,,100,0.621608527,0.27762347
-4,1,3,2,'3-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Fastball,Single,Line Drive,Straightaway,100,0.611323367,0.306116635
+4,1,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Offspeed,Ball,,,100,-0.93145072,0.122946284
+4,1,1,0,'1-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Ball,,,100,-0.694892027,0.949248089
+4,1,2,0,'2-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Called Strike,,,100,0.343909192,0.18807352
+4,1,2,1,'2-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Ball,,,100,0.724460133,0.037466787
+4,1,3,1,'3-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Called Strike,,,100,0.621608527,0.27762347
+4,1,3,2,'3-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Single,Line Drive,Straightaway,100,0.611323367,0.306116635
 4,1,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Daniel Meron,R,R,Fastball,Flyout,Fly Ball,Pull,110,0.117635659,0.440441559
 4,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Fastball,Ball,,,110,0.940448505,0.42415975
 4,2,1,0,'1-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,R,R,Fastball,Ball,,,110,0.683319491,0.106664475
@@ -8075,7 +8075,7 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 6,1,0,2,'0-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Daniel Meron,R,R,Fastball,Ball,,,0,0.84788206,0.692809598
 6,1,1,2,'1-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Lucas Bateman,Daniel Meron,R,R,Breaking Ball,Strikeout Swinging,,,0,0.405620155,0.155509902
 6,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Cameron Bendo,Daniel Meron,R,R,Breaking Ball,Hit By Pitch,,,0,-1.013732004,0.664316433
-6,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffin Duenkler,Daniel Meron,L,R,Fastball,Flyout,Fly Ball,Straightaway,100,0.31305371,0.611400553
+6,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Flyout,Fly Ball,Straightaway,100,0.31305371,0.611400553
 6,0,0,0,'0-0,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Julian Fabrizio,Liam Conlin,L,R,Fastball,Called Strike,,,0,-0.715462348,0.546273317
 6,0,0,1,'0-1,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Julian Fabrizio,Liam Conlin,L,R,Fastball,Ball,,,0,-0.818313954,0.766077739
 6,0,1,1,'1-1,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Julian Fabrizio,Liam Conlin,L,R,Breaking Ball,Ball,,,0,0.467331119,0.904473115
@@ -8304,9 +8304,9 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 1,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Max Lanoue,R,R,Fastball,Swinging Strike,,,100,0.364479513,0.090382666
 1,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Max Lanoue,R,R,Fastball,Ball,,,100,0.158776301,0.106664475
 1,0,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Max Lanoue,R,R,Breaking Ball,Flyout,Fly Ball,Straightaway,100,-0.921165559,0.892261758
-1,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Breaking Ball,Ball,,,100,0.086780177,0.546273317
-1,1,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Fastball,Called Strike,,,10,-0.509759136,0.367173419
-1,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Fastball,Single,Pop Up,Straightaway,10,0.580467885,0.232848495
+1,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Breaking Ball,Ball,,,100,0.086780177,0.546273317
+1,1,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Fastball,Called Strike,,,10,-0.509759136,0.367173419
+1,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Fastball,Single,Pop Up,Straightaway,10,0.580467885,0.232848495
 1,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Fastball,Called Strike,,,101,0.662749169,0.407877941
 1,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Fastball,Ball,,,101,0.940448505,-0.104999041
 1,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Swinging Strike,,,11,-0.026356589,0.139228093
@@ -8400,9 +8400,9 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 3,1,2,0,'2-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O’Sullivan,Jordan Miller,L,L,Fastball,Called Strike,,,10,-0.705177187,0.5137097
 3,1,2,1,'2-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O’Sullivan,Jordan Miller,L,L,Breaking Ball,Caught Stealing,,,10,-0.622895903,0.245059852
 3,2,2,1,'2-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O’Sullivan,Jordan Miller,L,L,Breaking Ball,Strikeout Swinging,,,0,0.549612403,0.546273317
-4,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Fastball,Called Strike,,,0,0.529042082,0.648034624
-4,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Fastball,Foul,,,0,0.302768549,0.326468896
-4,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Max Lanoue,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.343909192,0.448582464
+4,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Fastball,Called Strike,,,0,0.529042082,0.648034624
+4,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Fastball,Foul,,,0,0.302768549,0.326468896
+4,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.343909192,0.448582464
 4,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Called Strike,,,0,-0.643466224,0.705020955
 4,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Ball,,,0,0.878737542,0.814923165
 4,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.415905316,0.367173419
@@ -8449,10 +8449,10 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 5,2,2,0,'2-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Fastball,Called Strike,,,110,0.662749169,0.236918947
 5,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Breaking Ball,Ball,,,110,1.012444629,0.297975731
 5,2,3,1,'3-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Fastball,Walk,,,110,0.950733666,0.200284877
-5,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Robert Jamieson,L,R,Fastball,Ball,,,111,0.333624031,0.061889501
-5,2,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Robert Jamieson,L,R,Fastball,Ball,,,111,0.652464009,0.07817131
-5,2,2,0,'2-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Robert Jamieson,L,R,Fastball,Called Strike,,,111,-0.5714701,0.562555126
-5,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Robert Jamieson,L,R,Fastball,Popout,Pop Up,Opposite Field,111,0.32333887,0.399737037
+5,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Robert Jamieson,L,R,Fastball,Ball,,,111,0.333624031,0.061889501
+5,2,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Robert Jamieson,L,R,Fastball,Ball,,,111,0.652464009,0.07817131
+5,2,2,0,'2-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Robert Jamieson,L,R,Fastball,Called Strike,,,111,-0.5714701,0.562555126
+5,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Robert Jamieson,L,R,Fastball,Popout,Pop Up,Opposite Field,111,0.32333887,0.399737037
 5,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Evan Carabetta,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.261627907,0.416018846
 5,1,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Evan Carabetta,L,R,Breaking Ball,Called Strike,,,0,-0.509759136,0.42415975
 5,1,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Evan Carabetta,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.405620155,0.326468896
@@ -8498,12 +8498,12 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Jacob Finlayson,R,R,Breaking Ball,Called Strike,,,0,0.662749169,0.212496234
 7,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Jacob Finlayson,R,R,Fastball,Strikeout Swinging,,,0,-0.715462348,0.38752568
 7,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Jacob Finlayson,R,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.436475637,0.436371107
-7,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Breaking Ball,Called Strike,,,0,0.12792082,0.452652916
-7,2,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.921165559,0.802711809
-7,2,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Foul,,,0,0.518756921,0.521850604
-7,2,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Breaking Ball,Ball,,,0,0.508471761,0.008973621
-7,2,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.262915282,0.98588216
-7,2,3,2,'3-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosetti,Jacob Finlayson,L,R,Fastball,Strikeout Swinging,,,0,-0.304055925,0.843416331
+7,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Breaking Ball,Called Strike,,,0,0.12792082,0.452652916
+7,2,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.921165559,0.802711809
+7,2,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Fastball,Foul,,,0,0.518756921,0.521850604
+7,2,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Breaking Ball,Ball,,,0,0.508471761,0.008973621
+7,2,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.262915282,0.98588216
+7,2,3,2,'3-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Fastball,Strikeout Swinging,,,0,-0.304055925,0.843416331
 1,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Ball,,,0,-0.890310078,0.892261758
 1,0,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Swinging Strike,,,0,-0.468618494,0.611400553
 1,0,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Ball,,,0,0.508471761,0.297975731
