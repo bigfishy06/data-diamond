@@ -8986,10 +8986,10 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 8,1,1,0,'1-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Slider,Ball,,,100,0.480861489,-0.259186295
 8,1,2,0,'2-0,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Slider,Swinging Strike,,,100,0.680260498,-0.148706562
 8,1,2,1,'2-1,2025-10-10,Carleton Ravens,Brock Badgers,,Brayden Bult,Ryan Facchini,R,R,Cutter,Groundout,Ground Ball,Pull,100,-0.615833062,0.821936813
-8,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Merpaw,Ryan Facchini,L,R,Cutter,Foul,,,100,-0.496193657,0.837719632
-8,2,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Merpaw,Ryan Facchini,L,R,Cutter,Ball,,,100,-1.453308901,0.774588356
-8,2,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Merpaw,Ryan Facchini,L,R,Cutter,Single,Ground Ball,Pull,100,-0.456313855,0.119601363
-8,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Merpaw,Ryan Facchini,L,R,,Additional Out,,,101,,
+8,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Dylan Merpaw,Ryan Facchini,L,R,Cutter,Foul,,,100,-0.496193657,0.837719632
+8,2,0,1,'0-1,2025-10-10,Carleton Ravens,Brock Badgers,,Dylan Merpaw,Ryan Facchini,L,R,Cutter,Ball,,,100,-1.453308901,0.774588356
+8,2,1,1,'1-1,2025-10-10,Carleton Ravens,Brock Badgers,,Dylan Merpaw,Ryan Facchini,L,R,Cutter,Single,Ground Ball,Pull,100,-0.456313855,0.119601363
+8,2,0,0,'0-0,2025-10-10,Carleton Ravens,Brock Badgers,,Dylan Merpaw,Ryan Facchini,L,R,,Additional Out,,,101,,
 8,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Michael Millross,R,R,Breaking Ball,Ball,,,0,-0.496193657,1.208615881
 8,0,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Gavin Taylor,Michael Millross,R,R,Fastball,Error,Ground Ball,Straightaway,0,-0.336674449,0.159058411
 8,0,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Reid Lunney,Michael Millross,L,R,Breaking Ball,Ball,,,100,0.50080139,-0.259186295
