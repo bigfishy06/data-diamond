@@ -9047,3 +9047,721 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 9,2,1,1,'1-1,2025-10-10,Brock Badgers,Carleton Ravens,,Jaden Leeder,Jack Novak,R,R,Breaking Ball,Single,Line Drive,Pull,10,-0.316734548,0.664108622
 9,2,0,0,'0-0,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Jack Novak,R,R,Breaking Ball,Ball,,,101,1.477856535,0.222189687
 9,2,1,0,'1-0,2025-10-10,Brock Badgers,Carleton Ravens,,Flynn Matheson,Jack Novak,R,R,Fastball,Groundout,Ground Ball,Straightaway,101,-0.556013359,-0.203946429
+1,0,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Matt Fischer,Nathan Van Putten,R,R,Fastball,Ball,,,0,1.418036832,0.853502452
+1,0,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Matt Fischer,Nathan Van Putten,R,R,Fastball,Swinging Strike,,,0,-0.436373954,0.971873595
+1,0,1,1,'1-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Matt Fischer,Nathan Van Putten,R,R,Fastball,Called Strike,,,0,0.700200399,0.837719632
+1,0,1,2,'1-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Matt Fischer,Nathan Van Putten,R,R,Breaking Ball,Ball,,,0,-0.615833062,1.121810376
+1,0,2,2,'2-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Matt Fischer,Nathan Van Putten,R,R,Fastball,Single,Ground Ball,Pull,0,0.560621092,0.632542984
+1,0,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nathan Van Putten,L,R,Fastball,Ball,,,100,-0.934871477,1.177050243
+1,0,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nathan Van Putten,L,R,Fastball,Ball,,,10,1.457916634,0.214298278
+1,0,2,0,'2-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nathan Van Putten,L,R,Breaking Ball,Ball,,,10,-0.476253756,1.129701786
+1,0,3,0,'3-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nathan Van Putten,L,R,Fastball,Called Strike,,,10,0.221642777,0.664108622
+1,0,3,1,'3-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nathan Van Putten,L,R,Fastball,Foul,,,10,-0.436373954,0.387909288
+1,0,3,2,'3-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nathan Van Putten,L,R,Fastball,Foul,,,10,-0.615833062,0.821936813
+1,0,3,2,'3-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nathan Van Putten,L,R,Breaking Ball,Strikeout Swinging,,,10,1.079058516,-0.219729248
+1,1,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,Offspeed,Ball,,,10,0.540681192,-0.17238079
+1,1,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,Fastball,Ball,,,10,-0.79529217,1.161267424
+1,1,2,0,'2-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,Fastball,Called Strike,,,10,-0.296794647,0.52206325
+1,1,2,1,'2-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,,Caught Stealing,,,10,,
+1,2,2,1,'2-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,Fastball,Ball,,,0,0.839779705,0.198515459
+1,2,3,1,'3-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,Fastball,Single,Ground Ball,Pull,0,-0.615833062,0.269538145
+1,2,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Marcus Santos,Nathan Van Putten,R,R,Offspeed,Single,Fly Ball,Straightaway,100,0.361222083,0.151167001
+1,2,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Nathan Van Putten,R,R,Breaking Ball,Called Strike,,,1,0.440981687,0.380017878
+1,2,0,1,'0-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Nathan Van Putten,R,R,Fastball,Called Strike,,,1,0.620440795,0.285320964
+1,2,0,2,'0-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Nathan Van Putten,R,R,Breaking Ball,Strikeout Swinging,,,1,1.757015148,0.064361496
+1,0,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Lucas Rigakos,R,R,Fastball,Called Strike,,,0,0.102003371,0.324778012
+1,0,0,1,'0-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Lucas Rigakos,R,R,Breaking Ball,Single,Fly Ball,Opposite Field,100,-0.117335539,0.143275592
+1,0,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Lucas Rigakos,R,R,Offspeed,Ball,,,100,0.560621092,-0.35388321
+1,0,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Lucas Rigakos,R,R,Fastball,Flyout,Fly Ball,Opposite Field,100,-0.316734548,0.900850909
+1,1,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Offspeed,Ball,,,100,-1.373549297,0.790371175
+1,1,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Fastball,Ball,,,100,0.879659507,0.237972506
+1,1,2,0,'2-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Fastball,Called Strike,,,100,-0.695592666,0.372126469
+1,1,2,1,'2-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Fastball,Called Strike,,,100,0.740080201,0.419474926
+1,1,2,2,'2-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Offspeed,Ball,,,100,0.859719606,-0.267077705
+1,1,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Fastball,Foul,,,100,-0.516133557,0.214298278
+1,1,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Fastball,Strikeout Swinging,,,100,-0.157215341,0.869285271
+1,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Lucas Rigakos,R,R,Breaking Ball,Ball,,,100,1.437976733,-0.251294886
+1,2,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Lucas Rigakos,R,R,Fastball,Ball,,,100,-0.79529217,1.255964339
+1,2,2,0,'2-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Lucas Rigakos,R,R,Fastball,Foul,,,100,0.440981687,0.71145708
+1,2,2,1,'2-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Lucas Rigakos,R,R,Fastball,Called Strike,,,100,-0.336674449,0.159058411
+1,2,2,2,'2-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Lucas Rigakos,R,R,Breaking Ball,Single,Line Drive,Pull,100,-0.256914845,0.253755326
+1,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Rian Malig,Lucas Rigakos,L,R,Offspeed,Ball,,,110,0.999298913,-0.432797306
+1,2,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Rian Malig,Lucas Rigakos,L,R,Fastball,Groundout,Ground Ball,Pull,110,-0.416434053,0.482606203
+2,0,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Elias Rubio Reyes,Nathan Van Putten,R,R,Fastball,Foul,,,0,-0.615833062,0.735131308
+2,0,0,1,'0-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Elias Rubio Reyes,Nathan Van Putten,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,0,0.241582678,0.237972506
+2,1,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nathan Van Putten,R,R,Fastball,Ball,,,0,-0.436373954,1.106027557
+2,1,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nathan Van Putten,R,R,Offspeed,Ball,,,0,0.261522579,-0.211837838
+2,1,2,0,'2-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nathan Van Putten,R,R,Fastball,Swinging Strike,,,0,-0.615833062,0.222189687
+2,1,2,1,'2-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nathan Van Putten,R,R,Fastball,Ball,,,0,1.836774751,0.159058411
+2,1,3,1,'3-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nathan Van Putten,R,R,Fastball,Swinging Strike,,,0,0.30140238,0.111709954
+2,1,3,2,'3-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nathan Van Putten,R,R,Fastball,Strikeout Swinging,,,0,-0.177155242,0.135384182
+2,2,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Kirk Gibson,Nathan Van Putten,R,R,Fastball,Called Strike,,,0,0.580560993,0.758805537
+2,2,0,1,'0-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Kirk Gibson,Nathan Van Putten,R,R,Breaking Ball,Home Run,Fly Ball,Straightaway,0,0.201702876,0.411583517
+2,2,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Haven Tai,Nathan Van Putten,L,R,Fastball,Called Strike,,,0,0.440981687,0.206406868
+2,2,0,1,'0-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Haven Tai,Nathan Van Putten,L,R,Fastball,Ball,,,0,-1.273849793,1.074461919
+2,2,1,1,'1-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Haven Tai,Nathan Van Putten,L,R,Breaking Ball,Foul,,,0,-0.117335539,0.648325803
+2,2,1,2,'1-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Haven Tai,Nathan Van Putten,L,R,Fastball,Ball,,,0,-0.476253756,-0.101358104
+2,2,2,2,'2-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Haven Tai,Nathan Van Putten,L,R,Offspeed,Ball,,,0,0.600500894,-0.085575285
+2,2,3,2,'3-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Haven Tai,Nathan Van Putten,L,R,Fastball,Strikeout Swinging,,,0,0.221642777,0.932416547
+2,0,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Ball,,,0,-1.373549297,1.192833062
+2,0,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Called Strike,,,0,0.700200399,0.332669421
+2,0,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Swinging Strike,,,0,-0.496193657,0.88506809
+2,0,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Strikeout Looking,,,0,-0.456313855,0.072252906
+2,1,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Giordano Richard,Lucas Rigakos,L,R,Fastball,Ball,,,0,-0.296794647,1.24018152
+2,1,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Giordano Richard,Lucas Rigakos,L,R,Fastball,Ball,,,0,-0.595893161,1.184941653
+2,1,2,0,'2-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Giordano Richard,Lucas Rigakos,L,R,Fastball,Ball,,,0,-1.712527613,1.23229011
+2,1,3,0,'3-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Giordano Richard,Lucas Rigakos,L,R,Fastball,Called Strike,,,0,-0.57595326,0.687782851
+2,1,3,1,'3-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Giordano Richard,Lucas Rigakos,L,R,Fastball,Called Strike,,,0,0.620440795,0.230081097
+2,1,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Giordano Richard,Lucas Rigakos,L,R,Fastball,Strikeout Swinging,,,0,-0.695592666,0.514171841
+2,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Lucas Rigakos,L,R,Fastball,Ball,,,0,0.859719606,0.143275592
+2,2,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Lucas Rigakos,L,R,Fastball,Foul,,,0,-0.296794647,0.277429554
+2,2,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Lucas Rigakos,L,R,Fastball,Ball,,,0,1.318337327,0.814045404
+2,2,2,1,'2-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Lucas Rigakos,L,R,Fastball,Foul,,,0,-0.715532567,0.159058411
+2,2,2,2,'2-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Lucas Rigakos,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.361222083,0.640434394
+3,0,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Matt Fischer,Nathan Van Putten,R,R,Fastball,Single,Fly Ball,Opposite Field,0,-0.316734548,0.269538145
+3,0,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nathan Van Putten,L,R,Fastball,Ball,,,100,0.640380696,-0.211837838
+3,0,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nathan Van Putten,L,R,Breaking Ball,Called Strike,,,100,-0.57595326,0.70356567
+3,0,1,1,'1-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nathan Van Putten,L,R,Fastball,Sacrifice Bunt,Ground Ball,Straightaway,100,-0.35661435,0.861393861
+3,1,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,Fastball,Called Strike,,,10,0.680260498,0.790371175
+3,1,0,1,'0-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,Fastball,Ball,,,10,0.700200399,0.159058411
+3,1,1,1,'1-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,Breaking Ball,Ball,,,10,0.959419111,-0.377557439
+3,1,2,1,'2-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,Offspeed,Ball,,,10,-0.755412369,0.340560831
+3,1,3,1,'3-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nathan Van Putten,R,R,Fastball,Groundout,Ground Ball,Straightaway,10,0.341282182,0.664108622
+3,2,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Marcus Santos,Nathan Van Putten,R,R,Fastball,Called Strike,,,10,0.839779705,0.277429554
+3,2,0,1,'0-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Marcus Santos,Nathan Van Putten,R,R,Fastball,Ball,,,10,0.28146248,0.088035725
+3,2,1,1,'1-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Marcus Santos,Nathan Van Putten,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,10,-0.416434053,0.600977346
+3,0,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Lucas Rigakos,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.296794647,0.869285271
+3,1,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Lucas Rigakos,R,R,Fastball,Called Strike,,,0,0.540681192,0.35634365
+3,1,0,1,'0-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Lucas Rigakos,R,R,Breaking Ball,Foul,,,0,0.421041786,0.277429554
+3,1,0,2,'0-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Lucas Rigakos,R,R,Fastball,Ball,,,0,0.121943272,1.263855748
+3,1,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Lucas Rigakos,R,R,Fastball,Strikeout Swinging,,,0,-0.615833062,0.364235059
+3,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Lucas Rigakos,L,R,Offspeed,Called Strike,,,0,0.540681192,0.237972506
+3,2,0,1,'0-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Lucas Rigakos,L,R,Offspeed,Ball,,,0,0.779960003,-0.424905896
+3,2,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Lucas Rigakos,L,R,Fastball,Foul,,,0,-0.635772963,0.774588356
+3,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Lucas Rigakos,L,R,Fastball,Foul,,,0,-0.675652765,0.616760165
+3,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Lucas Rigakos,L,R,Breaking Ball,Strikeout Swinging,,,0,-0.316734548,-0.298643343
+4,0,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Nic Bertrand,R,R,Fastball,Ball,,,0,1.118938318,-0.259186295
+4,0,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Nic Bertrand,R,R,Fastball,Foul,,,0,-0.536073458,0.829828223
+4,0,1,1,'1-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Nic Bertrand,R,R,Breaking Ball,Ball,,,0,-1.333669495,0.774588356
+4,0,2,1,'2-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Nic Bertrand,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,0,0.062123569,0.151167001
+4,1,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Elias Rubio Reyes,Nic Bertrand,R,R,Fastball,Ball,,,0,-0.197095143,1.082353329
+4,1,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Elias Rubio Reyes,Nic Bertrand,R,R,Breaking Ball,Flyout,Fly Ball,Pull,0,-0.376554251,0.166949821
+4,2,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nic Bertrand,R,R,Breaking Ball,Ball,,,0,1.019238814,-0.480145763
+4,2,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nic Bertrand,R,R,Fastball,Ball,,,0,1.278457526,0.261646735
+4,2,2,0,'2-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nic Bertrand,R,R,Breaking Ball,Ball,,,0,-1.513128604,-0.235512067
+4,2,3,0,'3-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nic Bertrand,R,R,Fastball,Called Strike,,,0,0.361222083,0.301103783
+4,2,3,1,'3-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nic Bertrand,R,R,Fastball,Foul,,,0,0.520741291,0.687782851
+4,2,3,2,'3-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Ryan Hsu,Nic Bertrand,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.560621092,0.143275592
+4,0,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Fastball,Called Strike,,,0,-0.256914845,0.308995192
+4,0,0,1,'0-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Fastball,Ball,,,0,-0.855111873,1.24018152
+4,0,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Fastball,Foul,,,0,-0.236974945,0.837719632
+4,0,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Offspeed,Ball,,,0,0.660320597,-0.306534753
+4,0,2,2,'2-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Fastball,Ball,,,0,1.358217129,0.490497612
+4,0,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Lucas Rigakos,L,R,Offspeed,Strikeout Swinging,,,0,-1.592888207,0.664108622
+4,1,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Lucas Rigakos,R,R,Breaking Ball,Ball,,,0,-0.595893161,1.098136148
+4,1,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Lucas Rigakos,R,R,Breaking Ball,Ball,,,0,0.93947921,-0.440688715
+4,1,2,0,'2-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Lucas Rigakos,R,R,Fastball,Ball,,,0,1.398096931,0.332669421
+4,1,3,0,'3-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Lucas Rigakos,R,R,Fastball,Walk,,,0,1.218637823,-0.298643343
+4,1,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Rian Malig,Lucas Rigakos,L,R,Offspeed,Ball,,,100,-0.396494152,-0.322317572
+4,1,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Rian Malig,Lucas Rigakos,L,R,Fastball,Ball,,,100,0.341282182,1.137593195
+4,1,2,0,'2-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Rian Malig,Lucas Rigakos,L,R,Fastball,Double,Line Drive,Pull,100,-0.57595326,0.687782851
+4,1,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Ball,,,11,1.37815703,-0.251294886
+4,1,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Called Strike,,,11,0.580560993,0.301103783
+4,1,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Swinging Strike,,,11,0.460921588,0.798262585
+4,1,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Ball,,,11,-0.536073458,-0.35388321
+4,1,2,2,'2-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Breaking Ball,Ball,,,11,0.93947921,-0.227620657
+4,1,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Foul,,,11,-0.496193657,0.750914127
+4,1,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Foul,,,11,0.361222083,0.869285271
+4,1,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Foul,,,11,-0.79529217,0.735131308
+4,1,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Lucas Rigakos,R,R,Fastball,Single,Ground Ball,Straightaway,11,0.640380696,0.372126469
+4,1,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Benji Wdowczyk,Taisei Hihara,R,L,Fastball,Swinging Strike,,,101,0.520741291,0.458931974
+4,1,0,1,'0-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Benji Wdowczyk,Taisei Hihara,R,L,Fastball,Swinging Strike,,,101,-0.755412369,0.640434394
+4,1,0,2,'0-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Benji Wdowczyk,Taisei Hihara,R,L,Fastball,Double Play,Ground Ball,Straightaway,101,0.560621092,0.750914127
+5,0,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Kirk Gibson,Nic Bertrand,R,R,Fastball,Ball,,,0,-0.595893161,1.129701786
+5,0,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Kirk Gibson,Nic Bertrand,R,R,Breaking Ball,Called Strike,,,0,-0.536073458,0.34845224
+5,0,1,1,'1-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Kirk Gibson,Nic Bertrand,R,R,Breaking Ball,Ball,,,0,-0.815232071,1.216507291
+5,0,2,1,'2-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Kirk Gibson,Nic Bertrand,R,R,Fastball,Swinging Strike,,,0,-0.35661435,1.098136148
+5,0,2,2,'2-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Kirk Gibson,Nic Bertrand,R,R,Fastball,Ball,,,0,0.879659507,1.137593195
+5,0,3,2,'3-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Kirk Gibson,Nic Bertrand,R,R,Breaking Ball,Strikeout Swinging,,,0,0.700200399,-0.267077705
+5,1,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Haven Tai,Nic Bertrand,L,R,Offspeed,Ball,,,0,-1.433369,0.261646735
+5,1,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Haven Tai,Nic Bertrand,L,R,Fastball,Popout,Pop Up,Straightaway,0,-0.416434053,0.135384182
+5,2,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Matt Fischer,Nic Bertrand,R,R,Breaking Ball,Ball,,,0,-1.313729594,0.766696947
+5,2,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Matt Fischer,Nic Bertrand,R,R,Fastball,Called Strike,,,0,0.480861489,0.466823384
+5,2,1,1,'1-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Matt Fischer,Nic Bertrand,R,R,Fastball,Ball,,,0,1.37815703,1.066570509
+5,2,2,1,'2-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Matt Fischer,Nic Bertrand,R,R,Breaking Ball,Groundout,Ground Ball,Pull,0,-0.157215341,0.151167001
+5,0,0,0,'0-0,,,,,Dylan Merpaw,Taisei Hihara,R,R,,Ball,,,,-1.413429099,0.727239899
+5,0,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Taisei Hihara,L,L,Fastball,Called Strike,,,0,-0.556013359,0.34845224
+5,0,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Taisei Hihara,L,L,Breaking Ball,Popout,Pop Up,Opposite Field,0,-0.57595326,0.435257745
+5,1,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Taisei Hihara,R,L,Fastball,Called Strike,,,0,-0.296794647,0.514171841
+5,1,0,1,'0-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Taisei Hihara,R,L,Fastball,Called Strike,,,0,0.50080139,0.293212373
+5,1,0,2,'0-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Taisei Hihara,R,L,Breaking Ball,Ball,,,0,0.819839804,-0.322317572
+5,1,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Taisei Hihara,R,L,Fastball,Ball,,,0,0.799899904,1.177050243
+5,1,2,2,'2-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Taisei Hihara,R,L,Breaking Ball,Groundout,Ground Ball,Pull,0,-0.396494152,0.143275592
+5,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Taisei Hihara,R,L,Fastball,Ball,,,0,0.440981687,1.113918967
+5,2,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Taisei Hihara,R,L,Fastball,Called Strike,,,0,0.620440795,0.585194527
+5,2,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Taisei Hihara,R,L,Fastball,Ball,,,0,1.098998417,1.113918967
+5,2,2,1,'2-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Taisei Hihara,R,L,Fastball,Ball,,,0,-1.373549297,0.277429554
+5,2,3,1,'3-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Matt Albert,Taisei Hihara,R,L,Fastball,Walk,,,0,1.358217129,0.616760165
+5,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Taisei Hihara,L,L,Fastball,Foul,,,100,-0.635772963,0.143275592
+5,2,0,1,'0-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Taisei Hihara,L,L,Breaking Ball,Foul,,,100,-0.655712864,0.237972506
+5,2,0,2,'0-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Taisei Hihara,L,L,Breaking Ball,Ball,,,100,-1.393489198,-0.093466695
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Taisei Hihara,L,L,Fastball,Foul,,,100,-0.236974945,0.869285271
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Taisei Hihara,L,L,Fastball,Foul,,,100,-0.57595326,0.837719632
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Taisei Hihara,L,L,Breaking Ball,Foul,,,100,-0.476253756,-0.203946429
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Taisei Hihara,L,L,Breaking Ball,Foul,,,100,-0.99469118,-0.306534753
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Carter Smith,Taisei Hihara,L,L,Fastball,Single,Ground Ball,Straightaway,10,-0.695592666,0.70356567
+5,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Taisei Hihara,L,L,Fastball,Ball,,,100,-1.293789693,0.577303117
+5,2,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Taisei Hihara,L,L,Fastball,Called Strike,,,100,-0.416434053,0.924525138
+5,2,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Taisei Hihara,L,L,Breaking Ball,Ball,,,100,-1.433369,-0.251294886
+5,2,2,1,'2-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Taisei Hihara,L,L,Fastball,Ball,,,100,0.779960003,-0.274969115
+5,2,3,1,'3-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Eric Del Fatti,Taisei Hihara,L,L,Fastball,Walk,,,100,-1.293789693,0.869285271
+5,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Taisei Hihara,R,L,Fastball,Ball,,,110,0.779960003,-0.148706562
+5,2,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Taisei Hihara,R,L,Fastball,Foul,,,110,-0.276854746,0.687782851
+5,2,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Taisei Hihara,R,L,Fastball,Foul,,,110,0.560621092,0.103818544
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Taisei Hihara,R,L,Breaking Ball,Foul,,,110,0.28146248,0.111709954
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Jordan Cruz,Taisei Hihara,R,L,Fastball,Double,Line Drive,Straightaway,110,0.440981687,0.190624049
+5,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Rian Malig,Taisei Hihara,L,L,Fastball,Ball,,,10,-0.99469118,-0.164489381
+5,2,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Rian Malig,Taisei Hihara,L,L,Breaking Ball,Ball,,,10,-1.572948306,-0.203946429
+5,2,2,0,'2-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Rian Malig,Taisei Hihara,L,L,Fastball,Called Strike,,,10,-0.296794647,0.34845224
+5,2,2,1,'2-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Rian Malig,Taisei Hihara,L,L,Fastball,Single,Fly Ball,Opposite Field,10,0.580560993,0.70356567
+5,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Armin Najmaie,R,R,Fastball,Ball,,,101,-0.35661435,-0.235512067
+5,2,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Armin Najmaie,R,R,Fastball,Called Strike,,,101,-0.715532567,0.695674261
+5,2,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Armin Najmaie,R,R,Breaking Ball,Swinging Strike,,,10,0.999298913,-0.203946429
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Armin Najmaie,R,R,Breaking Ball,Ball,,,10,0.779960003,0.214298278
+5,2,2,2,'2-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Armin Najmaie,R,R,Breaking Ball,Ball,,,10,0.760020102,-0.401231667
+5,2,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Thomas Fournier,Armin Najmaie,R,R,Fastball,Walk,,,10,0.640380696,-0.188163609
+5,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Benji Wdowczyk,Armin Najmaie,R,R,Fastball,Foul,,,101,-0.516133557,0.285320964
+5,2,0,1,'0-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Benji Wdowczyk,Armin Najmaie,R,R,Breaking Ball,Ball,,,101,0.50080139,-0.377557439
+5,2,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Benji Wdowczyk,Armin Najmaie,R,R,Fastball,Foul,,,101,-0.755412369,0.17484123
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Benji Wdowczyk,Armin Najmaie,R,R,Fastball,Single,Line Drive,Straightaway,101,-0.655712864,0.380017878
+5,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Armin Najmaie,L,R,Fastball,Ball,,,101,-1.094390684,1.161267424
+5,2,1,0,'1-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Armin Najmaie,L,R,Fastball,Swinging Strike,,,101,-0.416434053,0.111709954
+5,2,1,1,'1-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Armin Najmaie,L,R,Offspeed,Ball,,,101,-1.393489198,-0.219729248
+5,2,2,1,'2-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Armin Najmaie,L,R,Fastball,Foul,,,101,-0.316734548,0.293212373
+5,2,2,2,'2-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Armin Najmaie,L,R,Offspeed,Ball,,,101,-1.732467514,0.198515459
+5,2,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Armin Najmaie,L,R,Offspeed,Foul,,,101,-0.615833062,0.293212373
+5,2,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Dylan Merpaw,Armin Najmaie,L,R,Offspeed,Walk,,,101,0.660320597,-0.314426162
+5,2,0,0,'0-0,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Jonathan Onderisin,R,R,Fastball,Called Strike,,,111,0.540681192,0.261646735
+5,2,0,1,'0-1,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Jonathan Onderisin,R,R,Fastball,Called Strike,,,111,0.460921588,0.135384182
+5,2,0,2,'0-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Jonathan Onderisin,R,R,Fastball,Foul,,,111,-0.436373954,0.861393861
+5,2,0,2,'0-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Jonathan Onderisin,R,R,Fastball,Ball,,,111,0.859719606,-0.148706562
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Jonathan Onderisin,R,R,Breaking Ball,Foul,,,111,-0.735472468,0.301103783
+5,2,1,2,'1-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Jonathan Onderisin,R,R,Fastball,Ball,,,111,1.15881812,-0.274969115
+5,2,2,2,'2-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Jonathan Onderisin,R,R,Fastball,Ball,,,111,0.799899904,0.088035725
+5,2,3,2,'3-2,2026-10-09,Carleton Ravens,U of T Varsity Blues,,Brendan Sotta,Jonathan Onderisin,R,R,Fastball,Strikeout Looking,,,111,0.341282182,0.111709954
+6,0,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nic Bertrand,L,R,Fastball,Ball,,,0,0.93947921,-0.338100391
+6,0,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nic Bertrand,L,R,Offspeed,Called Strike,,,0,-0.416434053,0.940307957
+6,0,1,1,'1-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nic Bertrand,L,R,Fastball,Ball,,,0,-1.672647811,0.245863916
+6,0,2,1,'2-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nic Bertrand,L,R,Fastball,Ball,,,0,0.540681192,-0.298643343
+6,0,3,1,'3-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nic Bertrand,L,R,Fastball,Called Strike,,,0,-0.496193657,0.253755326
+6,0,3,2,'3-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Tomoki Yamamoto,Nic Bertrand,L,R,Fastball,Groundout,Ground Ball,Opposite Field,0,-0.595893161,0.758805537
+6,1,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nic Bertrand,R,R,Breaking Ball,Ball,,,0,1.059118615,-0.267077705
+6,1,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nic Bertrand,R,R,Fastball,Ball,,,0,-1.453308901,0.766696947
+6,1,2,0,'2-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nic Bertrand,R,R,Fastball,Ball,,,0,-1.393489198,0.853502452
+6,1,3,0,'3-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Spenser Ross,Nic Bertrand,R,R,Fastball,Walk,,,0,-1.313729594,0.151167001
+6,1,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Marcus Santos,Robert Forward,R,R,Fastball,Ball,,,100,-0.57595326,1.129701786
+6,1,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Marcus Santos,Robert Forward,R,R,Breaking Ball,Ball,,,100,0.740080201,-0.290751934
+6,1,2,0,'2-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Marcus Santos,Robert Forward,R,R,Fastball,Foul,,,10,-0.496193657,0.285320964
+6,1,2,1,'2-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Marcus Santos,Robert Forward,R,R,Breaking Ball,Ball,,,10,0.760020102,-0.472254353
+6,1,3,1,'3-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Marcus Santos,Robert Forward,R,R,Breaking Ball,Called Strike,,,10,0.700200399,0.143275592
+6,1,3,2,'3-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Marcus Santos,Robert Forward,R,R,Fastball,Groundout,Ground Ball,Pull,10,-0.536073458,0.18273264
+6,2,0,0,'0-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Robert Forward,R,R,Breaking Ball,Ball,,,10,1.278457526,-0.125032333
+6,2,1,0,'1-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Robert Forward,R,R,Fastball,Ball,,,10,1.418036832,0.214298278
+6,2,2,0,'2-0,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Robert Forward,R,R,Fastball,Called Strike,,,10,-0.236974945,0.198515459
+6,2,2,1,'2-1,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Robert Forward,R,R,Breaking Ball,Foul,,,10,0.560621092,-0.164489381
+6,2,2,2,'2-2,2026-10-09,U of T Varsity Blues,Carleton Ravens,,Diego Fuentes,Robert Forward,R,R,Breaking Ball,Single,Ground Ball,Straightaway,10,-0.256914845,0.458931974
+1,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Called Strike,,,0,-0.336674449,1.090244738
+1,0,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Swinging Strike,,,0,0.580560993,0.198515459
+1,0,0,2,'0-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Fastball,Foul,,,0,0.201702876,0.190624049
+1,0,0,2,'0-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Ball,,,0,-0.655712864,1.106027557
+1,0,1,2,'1-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Fastball,Foul,,,0,0.221642777,0.916633728
+1,0,1,2,'1-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Dropped Third Strike Swinging,,,0,0.440981687,-0.290751934
+1,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Luca Valvo,L,R,Fastball,Single,Line Drive,Opposite Field,100,-0.536073458,0.656217213
+1,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Luca Valvo,L,R,Breaking Ball,Called Strike,,,11,-0.456313855,0.214298278
+1,0,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Luca Valvo,L,R,Fastball,Single,Ground Ball,Opposite Field,11,-0.536073458,0.869285271
+1,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Luca Valvo,L,R,Fastball,Foul,,,110,-0.735472468,0.451040564
+1,0,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Luca Valvo,L,R,Breaking Ball,Foul,,,110,0.381161984,0.403692107
+1,0,0,2,'0-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Luca Valvo,L,R,Breaking Ball,Ball,,,110,0.839779705,-0.409123077
+1,0,1,2,'1-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Luca Valvo,L,R,Fastball,Ball,,,11,-0.396494152,1.216507291
+1,0,2,2,'2-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Luca Valvo,R,R,Breaking Ball,Groundout,Ground Ball,Straightaway,11,-0.416434053,0.206406868
+1,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Luca Valvo,R,R,Breaking Ball,Ball,,,1,-0.416434053,-0.196055019
+1,1,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Luca Valvo,R,R,Fastball,Swinging Strike,,,1,-1.014631081,-0.227620657
+1,1,1,1,'1-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Luca Valvo,R,R,Breaking Ball,Single,Line Drive,Pull,1,0.321342281,0.253755326
+1,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Clarke Needles,Luca Valvo,R,R,Breaking Ball,Hit By Pitch,,,10,-1.65270791,0.798262585
+1,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Hardy,Luca Valvo,L,R,Fastball,Popout,Pop Up,Opposite Field,110,-0.655712864,0.18273264
+1,2,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Brannon,Luca Valvo,L,R,Fastball,Single,Ground Ball,Pull,110,-0.376554251,0.143275592
+1,2,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Colby Wilhelm,Luca Valvo,L,R,Fastball,Ball,,,111,-0.914931576,1.145484605
+1,2,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Colby Wilhelm,Luca Valvo,L,R,Fastball,Single,Ground Ball,Pull,111,-0.416434053,0.316886602
+1,2,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Foul,,,110,0.361222083,0.206406868
+1,2,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Swinging Strike,,,110,0.740080201,-0.251294886
+1,2,0,2,'0-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Popout,Pop Up,Opposite Field,110,-0.177155242,0.198515459
+1,0,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Mack Rabeau,R,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.779960003,0.656217213
+1,1,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Ball,,,0,-0.595893161,1.090244738
+1,1,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Called Strike,,,0,-0.396494152,0.664108622
+1,1,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Ball,,,0,-0.79529217,0.451040564
+1,1,2,1,'2-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Ball,,,0,-1.353609396,0.372126469
+1,1,3,1,'3-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Walk,,,0,-1.433369,0.900850909
+1,1,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Ball,,,100,-0.99469118,1.129701786
+1,1,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Ball,,,100,-1.253909892,0.766696947
+1,1,2,0,'2-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Called Strike,,,100,-0.376554251,0.821936813
+1,1,2,1,'2-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Ball,,,100,-0.157215341,1.216507291
+1,1,3,1,'3-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Called Strike,,,100,-0.79529217,0.758805537
+1,1,3,2,'3-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Strikeout Swinging,,,100,-0.13727544,0.88506809
+1,2,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Jai Pawa,Mack Rabeau,R,R,Breaking Ball,Ball,,,100,0.7201403,-0.298643343
+1,2,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Jai Pawa,Mack Rabeau,R,R,Fastball,Ball,,,100,-1.293789693,0.892959499
+1,2,2,0,'2-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Jai Pawa,Mack Rabeau,R,R,Fastball,Called Strike,,,100,0.361222083,0.932416547
+1,2,2,1,'2-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Jai Pawa,Mack Rabeau,R,R,Fastball,Swinging Strike,,,100,-0.556013359,0.70356567
+1,2,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Jai Pawa,Mack Rabeau,R,R,Fastball,Strikeout Looking,,,100,0.421041786,0.159058411
+2,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Luca Valvo,L,R,Breaking Ball,Ball,,,0,0.819839804,0.656217213
+2,0,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Luca Valvo,L,R,Breaking Ball,Ball,,,0,-0.615833062,1.184941653
+2,0,2,0,'2-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Luca Valvo,L,R,Fastball,Ball,,,0,-0.35661435,1.161267424
+2,0,3,0,'3-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Luca Valvo,L,R,Fastball,Called Strike,,,0,0.401101885,0.971873595
+2,0,3,1,'3-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Luca Valvo,L,R,Fastball,Walk,,,0,-1.353609396,1.098136148
+2,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Luca Valvo,L,R,Breaking Ball,Groundout,Ground Ball,Pull,100,0.261522579,0.198515459
+2,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Luca Valvo,L,R,Fastball,Foul,,,10,-0.635772963,0.514171841
+2,1,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Luca Valvo,L,R,Fastball,Called Strike,,,10,0.08206347,0.088035725
+2,1,0,2,'0-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Luca Valvo,L,R,Offspeed,Error,Ground Ball,Pull,10,-0.595893161,0.190624049
+2,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Luca Valvo,R,R,Breaking Ball,Ball,,,10,0.201702876,1.121810376
+2,1,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Luca Valvo,R,R,Fastball,Ball,,,10,-0.177155242,-0.456471534
+2,1,2,0,'2-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Luca Valvo,R,R,Fastball,Called Strike,,,10,0.321342281,0.743022718
+2,1,2,1,'2-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Luca Valvo,R,R,Breaking Ball,Foul,,,10,0.480861489,0.159058411
+2,1,2,2,'2-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Luca Valvo,R,R,Fastball,Ball,,,10,-1.393489198,1.200724472
+2,1,3,2,'3-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Luca Valvo,R,R,Breaking Ball,Groundout,Ground Ball,Opposite Field,10,0.600500894,0.119601363
+2,2,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Clarke Needles,Luca Valvo,R,R,Fastball,Foul,,,1,-0.635772963,0.411583517
+2,2,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Clarke Needles,Luca Valvo,R,R,Breaking Ball,Groundout,Ground Ball,Pull,1,0.660320597,0.245863916
+2,0,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Junichi Yuki,Luca Valvo,R,R,Fastball,Called Strike,,,0,-0.35661435,0.214298278
+2,0,0,1,'0-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Junichi Yuki,Luca Valvo,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.30140238,0.324778012
+2,1,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Rhys Jenkyn,Mack Rabeau,L,R,Offspeed,Ball,,,0,-1.493188703,0.301103783
+2,1,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Rhys Jenkyn,Mack Rabeau,L,R,Fastball,Called Strike,,,0,0.520741291,0.159058411
+2,1,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Rhys Jenkyn,Mack Rabeau,L,R,Fastball,Ball,,,0,0.740080201,-0.274969115
+2,1,2,1,'2-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Rhys Jenkyn,Mack Rabeau,L,R,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.396494152,0.750914127
+2,2,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Mack Rabeau,L,R,Fastball,Called Strike,,,0,-0.296794647,0.088035725
+2,2,0,1,'0-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Mack Rabeau,L,R,Breaking Ball,Ball,,,0,0.899599408,0.380017878
+2,2,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Mack Rabeau,L,R,Fastball,Single,Ground Ball,Straightaway,0,-0.715532567,0.758805537
+2,2,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Sam Shephard,Mack Rabeau,R,R,Fastball,Called Strike,,,100,0.30140238,0.237972506
+2,2,0,1,'0-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Sam Shephard,Mack Rabeau,R,R,Breaking Ball,Swinging Strike,,,100,0.919539309,-0.377557439
+2,2,0,2,'0-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Sam Shephard,Mack Rabeau,R,R,Fastball,Ball,,,100,0.919539309,1.169158834
+2,2,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Sam Shephard,Mack Rabeau,R,R,Breaking Ball,Strikeout Swinging,,,10,0.08206347,1.121810376
+3,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Hardy,Luca Valvo,L,R,Fastball,Ball,,,0,-0.536073458,1.169158834
+3,0,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Hardy,Luca Valvo,L,R,Offspeed,Flyout,Fly Ball,Pull,0,-0.496193657,0.151167001
+3,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Brannon,Luca Valvo,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.341282182,0.593085936
+3,2,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Colby Wilhelm,Luca Valvo,L,R,Breaking Ball,Ball,,,0,-0.496193657,-0.36177462
+3,2,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Colby Wilhelm,Luca Valvo,L,R,Fastball,Lineout,Line Drive,Opposite Field,0,-0.556013359,0.774588356
+3,0,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Mack Rabeau,L,R,Breaking Ball,Ball,,,0,1.118938318,-0.17238079
+3,0,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Mack Rabeau,L,R,Fastball,Called Strike,,,0,-0.416434053,0.490497612
+3,0,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Mack Rabeau,L,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.361222083,0.435257745
+3,1,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Mack Rabeau,R,R,Fastball,Ball,,,0,0.401101885,-0.219729248
+3,1,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Mack Rabeau,R,R,Fastball,Called Strike,,,0,-0.57595326,0.656217213
+3,1,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Mack Rabeau,R,R,Breaking Ball,Foul,,,0,0.50080139,0.616760165
+3,1,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Mack Rabeau,R,R,Breaking Ball,Ball,,,0,1.37815703,1.137593195
+3,1,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Mack Rabeau,R,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.560621092,0.17484123
+3,2,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Breaking Ball,Called Strike,,,0,-0.276854746,0.829828223
+3,2,0,1,'0-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Breaking Ball,Ball,,,0,-1.094390684,-0.345991801
+3,2,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Swinging Strike,,,0,0.620440795,0.821936813
+3,2,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Ball,,,0,-0.615833062,1.200724472
+3,2,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Breaking Ball,Foul,,,0,-0.316734548,-0.1802722
+3,2,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Strikeout Swinging,,,0,-1.413429099,0.782479766
+4,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Ball,,,0,1.138878219,-0.259186295
+4,0,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Called Strike,,,0,-0.296794647,0.656217213
+4,0,1,1,'1-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Called Strike,,,0,-0.177155242,0.166949821
+4,0,1,2,'1-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Fastball,Ball,,,0,-0.35661435,1.208615881
+4,0,2,2,'2-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Ball,,,0,1.996293959,-0.196055019
+4,0,3,2,'3-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Luca Valvo,R,R,Breaking Ball,Walk,,,0,1.398096931,0.277429554
+4,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Luca Valvo,L,R,Fastball,Double,Fly Ball,Pull,100,0.341282182,0.892959499
+4,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Thomas Spencer,L,R,Fastball,Ball,,,10,-1.413429099,0.821936813
+4,0,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Thomas Spencer,L,R,Fastball,Foul,,,10,-0.396494152,0.198515459
+4,0,1,1,'1-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Thomas Spencer,L,R,Offspeed,Popout,Pop Up,Opposite Field,10,-0.57595326,0.166949821
+4,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Thomas Spencer,L,R,Fastball,Ball,,,10,-1.433369,0.253755326
+4,1,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Thomas Spencer,L,R,Fastball,Ball,,,10,-1.632768009,0.52206325
+4,1,2,0,'2-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Thomas Spencer,L,R,Fastball,Ball,,,1,-1.413429099,0.727239899
+4,1,3,0,'3-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Thomas Spencer,L,R,Fastball,Walk,,,1,-1.453308901,-0.101358104
+4,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Thomas Spencer,R,R,Fastball,Called Strike,,,101,0.28146248,0.198515459
+4,1,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Thomas Spencer,R,R,Fastball,Called Strike,,,101,-0.735472468,0.206406868
+4,1,0,2,'0-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Thomas Spencer,R,R,Breaking Ball,Ball,,,101,1.757015148,0.411583517
+4,1,1,2,'1-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Thomas Spencer,R,R,Breaking Ball,Ball,,,101,0.680260498,0.916633728
+4,1,2,2,'2-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Thomas Spencer,R,R,Breaking Ball,Single,Ground Ball,Pull,101,0.600500894,0.608868755
+4,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Clarke Needles,Thomas Spencer,R,R,Breaking Ball,Ball,,,110,0.799899904,-0.290751934
+4,1,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Clarke Needles,Thomas Spencer,R,R,Fastball,Groundout,Ground Ball,Pull,110,0.660320597,0.293212373
+4,2,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Hardy,Thomas Spencer,L,R,Fastball,Groundout,Ground Ball,Straightaway,110,-0.336674449,0.845611042
+4,0,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Ball,,,0,0.440981687,1.121810376
+4,0,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Called Strike,,,0,0.181762975,0.088035725
+4,0,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Swinging Strike,,,0,-0.276854746,0.506280431
+4,0,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Ball,,,0,-0.57595326,1.106027557
+4,0,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Ball,,,0,-0.35661435,1.169158834
+4,0,3,2,'3-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Cole Smart,Mack Rabeau,L,R,Fastball,Strikeout Swinging,,,0,-0.276854746,0.727239899
+4,1,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ben Waddell,Mack Rabeau,L,R,Fastball,Ball,,,0,-1.233969991,0.71145708
+4,1,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ben Waddell,Mack Rabeau,L,R,Fastball,Called Strike,,,0,-0.336674449,0.198515459
+4,1,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ben Waddell,Mack Rabeau,L,R,Fastball,Foul,,,0,-0.516133557,0.758805537
+4,1,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ben Waddell,Mack Rabeau,L,R,Fastball,Foul,,,0,-1.413429099,0.380017878
+4,1,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ben Waddell,Mack Rabeau,L,R,Fastball,Ball,,,0,0.799899904,-0.085575285
+4,1,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ben Waddell,Mack Rabeau,L,R,Fastball,Foul,,,0,0.321342281,0.395800698
+4,1,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ben Waddell,Mack Rabeau,L,R,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.595893161,0.34845224
+4,2,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Junichi Yuki,Mack Rabeau,R,R,Breaking Ball,Ball,,,0,-0.496193657,1.177050243
+4,2,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Junichi Yuki,Mack Rabeau,R,R,Fastball,Ball,,,0,0.540681192,-0.338100391
+4,2,2,0,'2-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Junichi Yuki,Mack Rabeau,R,R,Fastball,Ball,,,0,1.657315643,0.293212373
+4,2,3,0,'3-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Junichi Yuki,Mack Rabeau,R,R,Fastball,Walk,,,0,0.640380696,0.774588356
+4,2,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Rhys Jenkyn,Mack Rabeau,L,R,Fastball,Called Strike,,,100,-0.57595326,0.308995192
+4,2,0,1,'0-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Rhys Jenkyn,Mack Rabeau,L,R,Fastball,Foul,,,100,-0.217035044,0.87717668
+4,2,0,2,'0-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Rhys Jenkyn,Mack Rabeau,L,R,Fastball,Ball,,,100,0.30140238,-0.1802722
+4,2,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Rhys Jenkyn,Mack Rabeau,L,R,Breaking Ball,Error,Ground Ball,Pull,100,-0.436373954,0.103818544
+4,2,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Mack Rabeau,L,R,Fastball,Ball,,,101,-0.57595326,1.066570509
+4,2,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Mack Rabeau,L,R,Fastball,Ball,,,101,-0.894991675,-0.36177462
+4,2,2,0,'2-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Mack Rabeau,L,R,Fastball,Called Strike,,,101,-0.336674449,0.324778012
+4,2,2,1,'2-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Mack Rabeau,L,R,Fastball,Double,Line Drive,Pull,101,,
+4,2,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Sam Shephard,Mack Rabeau,R,R,Fastball,Ball,,,11,0.740080201,0.648325803
+4,2,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Sam Shephard,Mack Rabeau,R,R,Fastball,Called Strike,,,11,0.30140238,0.790371175
+4,2,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Sam Shephard,Mack Rabeau,R,R,Breaking Ball,Ball,,,11,-0.157215341,1.098136148
+4,2,2,1,'2-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Sam Shephard,Mack Rabeau,R,R,Fastball,Swinging Strike,,,11,0.480861489,0.080144315
+4,2,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Sam Shephard,Mack Rabeau,R,R,Fastball,Strikeout Looking,,,11,0.740080201,0.245863916
+5,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Brannon,Thomas Spencer,L,R,Fastball,Swinging Strike,,,0,-0.675652765,0.364235059
+5,0,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Brannon,Thomas Spencer,L,R,Breaking Ball,Ball,,,0,-1.194090189,0.829828223
+5,0,1,1,'1-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Brannon,Thomas Spencer,L,R,,Swinging Strike,,,0,,
+5,0,1,2,'1-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Brannon,Thomas Spencer,L,R,Offspeed,Ball,,,0,-1.592888207,0.340560831
+5,0,2,2,'2-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Brett Brannon,Thomas Spencer,L,R,Offspeed,Strikeout Swinging,,,0,-0.57595326,-0.259186295
+5,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Colby Wilhelm,Thomas Spencer,L,R,Breaking Ball,Ball,,,0,-1.413429099,0.719348489
+5,1,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Colby Wilhelm,Thomas Spencer,L,R,Fastball,Called Strike,,,0,-0.755412369,0.103818544
+5,1,1,1,'1-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Colby Wilhelm,Thomas Spencer,L,R,Fastball,Called Strike,,,0,-0.695592666,0.316886602
+5,1,1,2,'1-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Colby Wilhelm,Thomas Spencer,L,R,Offspeed,Ball,,,0,-1.094390684,-0.267077705
+5,1,2,2,'2-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Colby Wilhelm,Thomas Spencer,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.675652765,0.695674261
+5,2,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Thomas Spencer,R,R,Breaking Ball,Called Strike,,,0,0.321342281,0.774588356
+5,2,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Thomas Spencer,R,R,Breaking Ball,Swinging Strike,,,0,0.062123569,0.861393861
+5,2,0,2,'0-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Sean Skorupski,Thomas Spencer,R,R,Breaking Ball,Double,Line Drive,Pull,0,-0.236974945,0.261646735
+5,2,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Thomas Spencer,L,R,Fastball,Ball,,,10,-0.894991675,0.679891441
+5,2,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Thomas Spencer,L,R,Fastball,Ball,,,10,-1.732467514,0.782479766
+5,2,2,0,'2-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Thomas Spencer,L,R,Fastball,Ball,,,10,-0.675652765,1.098136148
+5,2,3,0,'3-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Thomas Spencer,L,R,Fastball,Called Strike,,,10,-0.456313855,0.190624049
+5,2,3,1,'3-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Thomas Spencer,L,R,Fastball,Foul,,,10,-0.396494152,0.656217213
+5,2,3,2,'3-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jack Angel,Thomas Spencer,L,R,Offspeed,Walk,,,10,-1.313729594,1.066570509
+5,2,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Thomas Spencer,L,R,Fastball,Ball,,,110,-1.174150288,0.380017878
+5,2,1,0,'1-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Thomas Spencer,L,R,Offspeed,Swinging Strike,,,110,-0.476253756,-0.1802722
+5,2,1,1,'1-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Thomas Spencer,L,R,Offspeed,Called Strike,,,110,-0.695592666,0.237972506
+5,2,1,2,'1-2,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Thomas Spencer,L,R,,Additional Out,,,110,,
+5,0,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Mack Rabeau,R,R,Fastball,Ball,,,0,1.956414157,0.750914127
+5,0,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Mack Rabeau,R,R,Fastball,Double,Ground Ball,Pull,0,-0.296794647,0.766696947
+5,0,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Mack Rabeau,R,R,Breaking Ball,Ball,,,10,-0.436373954,1.129701786
+5,0,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Mack Rabeau,R,R,Fastball,Ball,,,10,-1.533068505,0.308995192
+5,0,2,0,'2-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Mack Rabeau,R,R,Fastball,Ball,,,10,0.7201403,-0.219729248
+5,0,3,0,'3-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Mack Rabeau,R,R,Fastball,Walk,,,10,0.680260498,1.177050243
+5,0,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Ball,,,110,0.819839804,-0.290751934
+5,0,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Swinging Strike,,,110,-0.197095143,0.364235059
+5,0,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Leatherland,Mack Rabeau,L,R,Fastball,Lineout,Line Drive,Pull,110,0.401101885,0.782479766
+5,1,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Rusch,Mack Rabeau,R,R,Fastball,Ball,,,110,1.477856535,0.735131308
+5,1,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Rusch,Mack Rabeau,R,R,Fastball,Called Strike,,,110,0.520741291,0.17484123
+5,1,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Rusch,Mack Rabeau,R,R,Fastball,Ball,,,110,1.198697922,-0.046118237
+5,1,2,1,'2-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Rusch,Mack Rabeau,R,R,Fastball,Foul,,,110,0.361222083,0.332669421
+5,1,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Rusch,Mack Rabeau,R,R,Breaking Ball,Foul,,,110,0.321342281,0.190624049
+5,1,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Rusch,Mack Rabeau,R,R,Fastball,Foul,,,110,0.440981687,0.569411708
+5,1,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Rusch,Mack Rabeau,R,R,Breaking Ball,Ball,,,110,-0.316734548,1.106027557
+5,1,3,2,'3-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Rusch,Mack Rabeau,R,R,Fastball,Foul,,,110,0.580560993,0.088035725
+5,1,3,2,'3-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Adam Rusch,Mack Rabeau,R,R,Fastball,Walk,,,110,1.816834851,0.237972506
+5,1,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Jonah Allen,Jacob Finlayson,R,R,Fastball,Ball,,,111,0.241582678,1.145484605
+5,1,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Jonah Allen,Jacob Finlayson,R,R,Fastball,Foul,,,111,-0.197095143,0.829828223
+5,1,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Jonah Allen,Jacob Finlayson,R,R,Breaking Ball,Ball,,,111,0.740080201,1.121810376
+5,1,2,1,'2-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Jonah Allen,Jacob Finlayson,R,R,Fastball,Double,Line Drive,Pull,111,-0.316734548,0.159058411
+5,1,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Junichi Yuki,Jacob Finlayson,R,R,Fastball,Ball,,,11,-1.433369,0.419474926
+5,1,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Junichi Yuki,Jacob Finlayson,R,R,Fastball,Ball,,,11,-0.675652765,1.153376015
+5,1,2,0,'2-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Junichi Yuki,Jacob Finlayson,R,R,Fastball,Foul,,,11,-0.336674449,0.70356567
+5,1,2,1,'2-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Junichi Yuki,Jacob Finlayson,R,R,Fastball,Sacrifice Fly,Fly Ball,Pull,11,-0.496193657,0.600977346
+5,2,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Rhys Jenkyn,Jacob Finlayson,L,R,Fastball,Called Strike,,,1,0.50080139,0.380017878
+5,2,0,1,'0-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Rhys Jenkyn,Jacob Finlayson,L,R,Fastball,Single,Ground Ball,Straightaway,1,-0.536073458,0.774588356
+5,2,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Jacob Finlayson,L,R,Fastball,Called Strike,,,100,-0.615833062,0.435257745
+5,2,0,1,'0-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Jacob Finlayson,L,R,Fastball,Foul,,,100,0.401101885,0.71145708
+5,2,0,2,'0-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Jacob Finlayson,L,R,Offspeed,Ball,,,100,0.381161984,-0.322317572
+5,2,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Jacob Finlayson,L,R,Offspeed,Foul,,,100,-0.695592666,0.190624049
+5,2,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Ty Tinnish,Jacob Finlayson,L,R,Offspeed,Strikeout Swinging,,,100,-0.57595326,-0.314426162
+6,0,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Alex Cole,Thomas Spencer,L,R,Fastball,Flyout,Fly Ball,Straightaway,0,-0.35661435,0.198515459
+6,1,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Thomas Spencer,L,R,Fastball,Called Strike,,,0,-0.57595326,0.419474926
+6,1,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Jonah Brotman,Thomas Spencer,L,R,Offspeed,Popout,Pop Up,Straightaway,0,-0.615833062,0.103818544
+6,2,0,0,'0-0,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Thomas Spencer,R,R,Breaking Ball,Swinging Strike,,,0,0.660320597,0.119601363
+6,2,0,1,'0-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Thomas Spencer,R,R,Breaking Ball,Ball,,,0,1.15881812,-0.282860524
+6,2,1,1,'1-1,2026-10-09,Queen's Gaels,Waterloo Warriors,,Owen Sartor,Thomas Spencer,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.381161984,0.17484123
+6,0,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Nico Valvo,Jacob Finlayson,R,R,Fastball,Called Strike,,,0,0.480861489,0.293212373
+6,0,0,1,'0-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Nico Valvo,Jacob Finlayson,R,R,Fastball,Foul,,,0,0.620440795,0.750914127
+6,0,0,2,'0-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Nico Valvo,Jacob Finlayson,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,-0.536073458,0.190624049
+6,1,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Jacob Finlayson,R,R,,Ball,,,0,,
+6,1,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Jacob Finlayson,R,R,Fastball,Called Strike,,,0,0.620440795,0.190624049
+6,1,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Jacob Finlayson,R,R,Breaking Ball,Called Strike,,,0,0.620440795,0.593085936
+6,1,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Jacob Finlayson,R,R,Breaking Ball,Foul,,,0,0.381161984,0.151167001
+6,1,1,2,'1-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Jacob Finlayson,R,R,Breaking Ball,Ball,,,0,0.381161984,-0.314426162
+6,1,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Jacob Finlayson,R,R,Breaking Ball,Ball,,,0,1.517736337,-0.274969115
+6,1,3,2,'3-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Carter Kipp,Jacob Finlayson,R,R,Fastball,Error,Ground Ball,Pull,0,-0.416434053,0.70356567
+6,1,0,0,'0-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Jacob Finlayson,R,R,Fastball,Ball,,,100,1.039178715,1.129701786
+6,1,1,0,'1-0,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Jacob Finlayson,R,R,Fastball,Called Strike,,,100,-0.256914845,0.072252906
+6,1,1,1,'1-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Jacob Finlayson,R,R,Fastball,Ball,,,100,1.298397427,-0.377557439
+6,1,2,1,'2-1,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Jacob Finlayson,R,R,Fastball,Swinging Strike,,,100,0.141883173,1.224398701
+6,1,2,2,'2-2,2026-10-09,Waterloo Warriors,Queen's Gaels,,Arthur Kowara,Jacob Finlayson,R,R,Breaking Ball,Double Play,Ground Ball,Straightaway,100,0.600500894,0.111709954
+1,0,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Slider,Ball,,,0,0.440981687,1.106027557
+1,0,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Fastball,Error,Ground Ball,Pull,0,-0.436373954,0.198515459
+1,0,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Changeup,Swinging Strike,,,10,-0.79529217,-0.156597971
+1,0,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Changeup,Ball,,,10,-1.253909892,0.821936813
+1,0,1,1,'1-1,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Slider,Swinging Strike,,,10,-0.57595326,0.845611042
+1,0,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Changeup,Strikeout Swinging,,,10,-0.954811378,-0.290751934
+1,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,L,R,Changeup,Called Strike,,,10,-0.256914845,0.790371175
+1,1,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,L,R,Changeup,Foul,,,1,-0.35661435,0.695674261
+1,1,0,2,'0-2,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,L,R,Changeup,Ball,,,1,-1.313729594,0.332669421
+1,1,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,L,R,Changeup,Strikeout Swinging,,,1,-0.635772963,-0.314426162
+1,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Changeup,Foul,,,1,0.401101885,0.18273264
+1,2,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Changeup,Swinging Strike,,,1,-1.273849793,0.427366336
+1,2,0,2,'0-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Fastball,Ball,,,1,-1.114330585,1.192833062
+1,2,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Changeup,Single,Ground Ball,Straightaway,1,0.141883173,0.159058411
+1,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Fastball,Swinging Strike,,,100,0.600500894,0.664108622
+1,2,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Slider,Ball,,,100,1.418036832,1.169158834
+1,2,1,1,'1-1,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Fastball,Ball,,,100,0.520741291,-0.054009647
+1,2,2,1,'2-1,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Splitter,Ball,,,100,-1.393489198,0.18273264
+1,2,3,1,'3-1,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Fastball,Foul,,,100,0.261522579,0.593085936
+1,2,3,2,'3-2,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Fastball,Strikeout Swinging,,,100,0.520741291,1.090244738
+1,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Brett James,L,R,Fastball,Error,Ground Ball,Straightaway,0,-0.476253756,0.806153994
+1,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Called Strike,,,100,0.440981687,0.261646735
+1,0,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Ball,,,100,1.198697922,-0.140815152
+1,0,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Called Strike,,,100,-0.436373954,0.253755326
+1,0,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Foul,,,10,0.440981687,1.090244738
+1,0,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Breaking Ball,Ball,,,10,1.079058516,-0.274969115
+1,0,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Foul,,,10,0.480861489,0.853502452
+1,0,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Breaking Ball,Ball,,,10,0.839779705,-0.448580125
+1,0,3,2,'3-2,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Strikeout Looking,,,0,0.700200399,0.245863916
+1,1,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Brett James,R,R,Fastball,Swinging Strike,,,0,0.640380696,1.090244738
+1,1,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Brett James,R,R,Fastball,Called Strike,,,0,1.278457526,0.790371175
+1,1,0,2,'0-2,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Brett James,R,R,Fastball,Ball,,,0,1.15881812,0.900850909
+1,1,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Brett James,R,R,Breaking Ball,Ball,,,0,1.318337327,-0.36177462
+1,1,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Brett James,R,R,Fastball,Strikeout Swinging,,,0,-0.316734548,0.198515459
+1,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,L,R,Offspeed,Foul,,,0,-0.675652765,0.127492773
+1,2,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,L,R,Fastball,Ball,,,0,-1.453308901,0.277429554
+1,2,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,L,R,Fastball,Ball,,,0,1.318337327,0.743022718
+1,2,2,1,'2-1,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,L,R,Fastball,Foul,,,0,-0.197095143,0.372126469
+1,2,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,L,R,Offspeed,Ball,,,0,0.859719606,-0.227620657
+1,2,3,2,'3-2,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,L,R,Fastball,Foul,,,0,-0.236974945,0.790371175
+1,2,3,2,'3-2,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,L,R,Fastball,Strikeout Looking,,,0,-0.815232071,0.506280431
+2,0,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Slider,Swinging Strike,,,0,0.261522579,0.17484123
+2,0,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Slider,Foul,,,0,0.760020102,0.206406868
+2,0,0,2,'0-2,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Slider,Flyout,Fly Ball,Opposite Field,0,0.421041786,0.766696947
+2,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Brett Hardy,Max Burroughsford,R,R,Changeup,Groundout,Ground Ball,Pull,0,-0.595893161,0.632542984
+2,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Changeup,Called Strike,,,0,-0.556013359,0.18273264
+2,2,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Changeup,Ball,,,0,-0.256914845,-0.101358104
+2,2,1,1,'1-1,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Changeup,Called Strike,,,0,-0.735472468,0.395800698
+2,2,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Fastball,Ball,,,0,-1.473248802,1.121810376
+2,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Changeup,Foul,,,0,-0.775352269,0.269538145
+2,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Fastball,Foul,,,0,-0.396494152,0.806153994
+2,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Changeup,Foul,,,0,0.381161984,0.088035725
+2,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Changeup,Foul,,,0,-0.715532567,0.111709954
+2,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Fastball,Ball,,,0,-1.154210387,0.411583517
+2,2,3,2,'3-2,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Changeup,Foul,,,0,-0.35661435,0.080144315
+2,2,3,2,'3-2,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Fastball,Strikeout Swinging,,,0,-0.476253756,0.719348489
+2,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Brett James,R,R,Fastball,Called Strike,,,0,0.30140238,0.088035725
+2,0,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Brett James,R,R,Breaking Ball,Ball,,,0,0.50080139,-0.385448848
+2,0,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Brett James,R,R,Fastball,Ball,,,0,1.876654553,-0.243403476
+2,0,2,1,'2-1,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Brett James,R,R,Fastball,Swinging Strike,,,0,0.600500894,1.184941653
+2,0,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Brett James,R,R,Fastball,Foul,,,0,0.540681192,0.143275592
+2,0,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Brett James,R,R,Breaking Ball,Ball,,,0,1.776955049,0.072252906
+2,0,3,2,'3-2,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Brett James,R,R,Fastball,Foul,,,0,-1.393489198,0.766696947
+2,0,3,2,'3-2,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Brett James,R,R,Fastball,Foul,,,0,0.799899904,0.214298278
+2,0,3,2,'3-2,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Brett James,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.779960003,0.727239899
+2,1,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Brett James,R,R,Fastball,Swinging Strike,,,0,0.381161984,0.616760165
+2,1,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Brett James,R,R,Fastball,Ball,,,0,1.737075247,0.766696947
+2,1,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Brett James,R,R,Breaking Ball,Error,Ground Ball,Straightaway,0,0.700200399,0.143275592
+2,1,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Brett James,R,R,Fastball,Swinging Strike,,,100,0.480861489,0.821936813
+2,1,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Brett James,R,R,Fastball,Ball,,,100,1.37815703,0.103818544
+2,1,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Brett James,R,R,Fastball,Foul,,,100,-0.57595326,0.18273264
+2,1,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Brett James,R,R,Fastball,Flyout,Fly Ball,Opposite Field,100,0.520741291,0.750914127
+2,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Brett James,R,R,Fastball,Flyout,Fly Ball,Opposite Field,100,0.560621092,0.514171841
+3,0,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Burroughsford,R,R,Slider,Foul,,,0,0.241582678,0.814045404
+3,0,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Burroughsford,R,R,Changeup,Swinging Strike,,,0,-0.217035044,-0.274969115
+3,0,0,2,'0-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Burroughsford,R,R,Changeup,Ball,,,0,-0.456313855,1.216507291
+3,0,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Burroughsford,R,R,Slider,Ball,,,0,2.115933364,0.230081097
+3,0,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Burroughsford,R,R,Fastball,Ball,,,0,-0.615833062,1.177050243
+3,0,3,2,'3-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Burroughsford,R,R,Fastball,Hit By Pitch,,,0,-1.513128604,0.806153994
+3,0,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Slider,Foul,,,100,0.580560993,0.403692107
+3,0,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Fastball,Foul,,,100,-0.476253756,0.735131308
+3,0,0,2,'0-2,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Slider,Ball,,,100,0.979359012,1.192833062
+3,0,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Fastball,Foul,,,100,-0.516133557,0.908742318
+3,0,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Slider,Ball,,,100,0.779960003,0.080144315
+3,0,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Fastball,Foul,,,100,-0.655712864,1.082353329
+3,0,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Fastball,Groundout,Ground Ball,Straightaway,100,0.480861489,0.782479766
+3,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Changeup,Hit By Pitch,,,10,1.418036832,-0.369666029
+3,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,L,R,Changeup,Ball,,,110,0.580560993,0.166949821
+3,1,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,L,R,Changeup,Ball,,,110,-1.074450783,-0.274969115
+3,1,2,0,'2-0,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,L,R,Fastball,Single,Line Drive,Opposite Field,110,-0.296794647,0.845611042
+3,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Changeup,Ball,,,111,-1.513128604,0.119601363
+3,1,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Fastball,Ball,,,111,-1.553008405,1.066570509
+3,1,2,0,'2-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Fastball,Called Strike,,,111,-0.197095143,0.632542984
+3,1,2,1,'2-1,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Changeup,Ball,,,111,0.321342281,0.103818544
+3,1,3,1,'3-1,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Fastball,Swinging Strike,,,111,-0.775352269,1.113918967
+3,1,3,2,'3-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Changeup,Strikeout Looking,,,111,-0.496193657,0.135384182
+3,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Slider,Swinging Strike,,,111,0.341282182,0.340560831
+3,2,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Slider,Foul,,,111,0.779960003,0.87717668
+3,2,0,2,'0-2,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Fastball,Ball,,,111,0.480861489,1.177050243
+3,2,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Changeup,Ball,,,111,0.30140238,-0.424905896
+3,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Fastball,Foul,,,111,-0.276854746,0.948199366
+3,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Fastball,Triple,Fly Ball,Opposite Field,111,0.560621092,0.750914127
+3,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Fastball,Foul,,,1,-1.373549297,0.869285271
+3,2,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Fastball,Ball,,,1,1.59749594,-0.330208981
+3,2,1,1,'1-1,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Slider,Ball,,,1,0.899599408,-0.338100391
+3,2,2,1,'2-1,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Fastball,Swinging Strike,,,1,-0.35661435,1.192833062
+3,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Fastball,Foul,,,1,-1.393489198,0.679891441
+3,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Fastball,Foul,,,1,-0.476253756,0.261646735
+3,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Slider,Foul,,,1,-0.336674449,0.916633728
+3,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Slider,Ball,,,1,1.15881812,-0.440688715
+3,2,3,2,'3-2,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Fastball,Flyout,Fly Ball,Opposite Field,1,0.480861489,0.814045404
+3,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Brett James,R,R,Fastball,Single,Ground Ball,Pull,0,0.50080139,0.624651575
+3,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Brett James,L,R,Fastball,Ball,,,100,-0.556013359,0.080144315
+3,0,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Brett James,L,R,Fastball,Ball,,,100,-0.017636034,-0.267077705
+3,0,2,0,'2-0,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Brett James,L,R,Fastball,Called Strike,,,100,0.201702876,0.143275592
+3,0,2,1,'2-1,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Brett James,L,R,Fastball,Foul,,,100,-0.476253756,0.782479766
+3,0,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Brett James,L,R,Fastball,Foul,,,100,-0.476253756,0.924525138
+3,0,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Brett James,L,R,Breaking Ball,Ball,,,100,1.039178715,-0.259186295
+3,0,3,2,'3-2,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Brett James,L,R,Fastball,Strikeout Looking,,,100,-0.655712864,0.261646735
+3,1,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Ball,,,10,-0.436373954,-0.495928582
+3,1,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Foul,,,10,0.540681192,0.782479766
+3,1,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Breaking Ball,Foul,,,10,0.560621092,0.411583517
+3,1,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Offspeed,Strikeout Swinging,,,10,-0.655712864,0.593085936
+3,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Brett James,R,R,Fastball,Groundout,Ground Ball,Straightaway,10,0.460921588,0.151167001
+4,0,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Brett Hardy,Max Burroughsford,L,R,Changeup,Ball,,,0,0.93947921,-0.251294886
+4,0,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Brett Hardy,Max Burroughsford,L,R,Fastball,Flyout,Fly Ball,Straightaway,0,-0.516133557,0.135384182
+4,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Changeup,Ball,,,0,0.600500894,-0.345991801
+4,1,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Slider,Ball,,,0,1.517736337,0.798262585
+4,1,2,0,'2-0,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Fastball,Called Strike,,,0,-0.276854746,0.135384182
+4,1,2,1,'2-1,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Fastball,Ball,,,0,-1.453308901,0.853502452
+4,1,3,1,'3-1,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Burroughsford,L,R,Changeup,Walk,,,0,-0.675652765,1.161267424
+4,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Burroughsford,R,R,Slider,Flyout,Fly Ball,Straightaway,100,0.620440795,0.277429554
+4,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Slider,Foul,,,100,-0.13727544,0.577303117
+4,2,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Slider,Ball,,,100,-1.473248802,1.169158834
+4,2,1,1,'1-1,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Slider,Called Strike,,,10,0.560621092,0.427366336
+4,2,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Burroughsford,R,R,Slider,Single,Ground Ball,Straightaway,10,0.740080201,0.672000032
+4,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Splitter,Swinging Strike,,,101,-0.695592666,0.214298278
+4,2,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Splitter,Foul,,,101,0.520741291,0.119601363
+4,2,0,2,'0-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Splitter,Ball,,,101,0.560621092,-0.480145763
+4,2,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Fastball,Foul,,,101,0.381161984,0.143275592
+4,2,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Changeup,Foul,,,101,-0.695592666,0.143275592
+4,2,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Max Burroughsford,L,R,Splitter,Strikeout Swinging,,,101,0.341282182,0.372126469
+4,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,L,R,Fastball,Ball,,,0,-1.273849793,0.411583517
+4,0,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,,,Fastball,Foul,,,0,0.241582678,0.135384182
+4,0,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,,,Offspeed,Called Strike,,,0,0.640380696,0.687782851
+4,0,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,,,Offspeed,Flyout,Fly Ball,Straightaway,0,-0.476253756,0.237972506
+4,1,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Brett James,R,R,Fastball,Popout,Pop Up,Pull,0,-0.655712864,0.687782851
+4,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Brett James,R,R,Fastball,Called Strike,,,0,0.580560993,0.17484123
+4,2,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Brett James,R,R,Fastball,Home Run,Fly Ball,Opposite Field,0,0.620440795,0.766696947
+4,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Brett James,R,R,Fastball,Swinging Strike,,,0,0.600500894,0.664108622
+4,2,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Brett James,R,R,Fastball,Foul,,,0,0.30140238,0.166949821
+4,2,0,2,'0-2,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Brett James,R,R,Breaking Ball,Single,Ground Ball,Pull,0,-0.57595326,0.672000032
+4,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Brett James,R,R,Fastball,Called Strike,,,100,0.480861489,0.269538145
+4,2,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Brett James,R,R,Breaking Ball,Called Strike,,,100,1.278457526,0.829828223
+4,2,0,2,'0-2,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Brett James,R,R,Fastball,Ball,,,100,1.298397427,0.948199366
+4,2,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Brett James,R,R,Fastball,Foul,,,100,0.640380696,1.137593195
+4,2,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Brett James,R,R,Breaking Ball,Foul,,,100,0.620440795,0.553628889
+4,2,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Brett James,R,R,Fastball,Ball,,,100,-0.476253756,1.192833062
+4,2,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Brett James,R,R,Breaking Ball,Flyout,Fly Ball,Opposite Field,10,0.660320597,0.798262585
+5,0,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,R,R,Changeup,Ball,,,0,-1.732467514,0.064361496
+5,0,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,R,R,Fastball,Ball,,,0,-0.735472468,-0.1802722
+5,0,2,0,'2-0,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,R,R,Fastball,Called Strike,,,0,-0.256914845,0.18273264
+5,0,2,1,'2-1,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,R,R,Changeup,Foul,,,0,-0.715532567,0.198515459
+5,0,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,R,R,Splitter,Ball,,,0,-1.493188703,-0.259186295
+5,0,3,2,'3-2,2026-10-09,Queen's Gaels,Brock Badgers,,Alex Cole,Max Burroughsford,R,R,Fastball,Popout,Pop Up,Opposite Field,0,-0.496193657,0.814045404
+5,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Fastball,Foul,,,0,-0.556013359,0.427366336
+5,1,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Splitter,Ball,,,0,0.959419111,-0.282860524
+5,1,1,1,'1-1,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Fastball,Swinging Strike,,,0,0.321342281,0.608868755
+5,1,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Splitter,Ball,,,0,0.600500894,-0.290751934
+5,1,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Max Burroughsford,L,R,Fastball,Groundout,Ground Ball,Pull,0,-0.655712864,0.71145708
+5,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Changeup,Foul,,,0,-0.536073458,0.127492773
+5,2,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Changeup,Foul,,,0,-1.293789693,0.261646735
+5,2,0,2,'0-2,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Splitter,Ball,,,0,0.7201403,-0.432797306
+5,2,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Splitter,Ball,,,0,1.637375742,0.316886602
+5,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Fastball,Foul,,,0,-1.393489198,0.782479766
+5,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Owen Sartor,Max Burroughsford,R,R,Slider,Strikeout Swinging,,,0,0.760020102,-0.109249514
+5,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Brett James,R,R,Fastball,Foul,,,0,0.341282182,0.35634365
+5,0,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Brett James,R,R,Breaking Ball,Ball,,,0,1.457916634,0.190624049
+5,0,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Brett James,R,R,Fastball,Home Run,Fly Ball,Opposite Field,0,0.620440795,0.222189687
+5,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Brett James,L,R,Fastball,Double,Line Drive,Straightaway,0,-0.217035044,0.672000032
+5,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Ball,,,10,-0.695592666,0.214298278
+5,0,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Called Strike,,,10,0.760020102,0.679891441
+5,0,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Ball,,,10,1.517736337,1.145484605
+5,0,2,1,'2-1,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Ball,,,10,1.537676238,0.908742318
+5,0,3,1,'3-1,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Brett James,R,R,Fastball,Error,Ground Ball,Straightaway,10,0.201702876,0.088035725
+5,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Brett James,R,R,Fastball,Foul,,,101,-0.35661435,0.34845224
+5,0,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Brett James,R,R,Fastball,Called Strike,,,101,0.440981687,0.340560831
+5,0,0,2,'0-2,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Brett James,R,R,Fastball,Single,Ground Ball,Pull,1,0.221642777,0.135384182
+5,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,L,R,Fastball,Ball,,,1,-0.376554251,-0.259186295
+5,0,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Brett James,L,R,Fastball,Home Run,Fly Ball,Pull,1,-0.396494152,0.293212373
+5,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Jack White,R,R,Fastball,Ball,,,0,-0.396494152,-0.290751934
+5,0,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Jack White,R,R,Fastball,Double,Line Drive,Straightaway,0,0.401101885,0.127492773
+5,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Jack White,R,R,Breaking Ball,Called Strike,,,10,0.161823074,0.080144315
+5,0,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Jack White,R,R,Breaking Ball,Ball,,,10,0.201702876,1.113918967
+5,0,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Jack White,R,R,Breaking Ball,Foul,,,10,-0.35661435,0.159058411
+5,0,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Jack White,R,R,Fastball,Foul,,,10,0.520741291,0.340560831
+5,0,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Jack White,R,R,Breaking Ball,Ball,,,10,0.08206347,-0.480145763
+5,0,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Jack White,R,R,Breaking Ball,Popout,Pop Up,Opposite Field,10,0.421041786,0.664108622
+5,1,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Jack White,R,R,Breaking Ball,Ball,,,10,1.039178715,-0.377557439
+5,1,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Jack White,R,R,Breaking Ball,Swinging Strike,,,10,0.401101885,-0.290751934
+5,1,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Jack White,R,R,Breaking Ball,Swinging Strike,,,10,0.540681192,0.190624049
+5,1,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Jack White,R,R,Breaking Ball,Strikeout Swinging,,,10,0.241582678,0.380017878
+5,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Jack White,R,R,Breaking Ball,Ball,,,1,0.760020102,-0.464362944
+5,2,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Jack White,R,R,Fastball,Ball,,,1,1.517736337,-0.046118237
+5,2,2,0,'2-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Jack White,R,R,Breaking Ball,Ball,,,1,-0.097395638,-0.36177462
+5,2,3,0,'3-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Jack White,R,R,Fastball,Called Strike,,,1,0.560621092,0.151167001
+5,2,3,1,'3-1,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Shannon,Jack White,R,R,Fastball,Walk,,,1,-1.453308901,0.664108622
+5,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Jack White,R,R,Breaking Ball,Ball,,,101,1.298397427,-0.424905896
+5,2,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Jack White,R,R,Fastball,Ball,,,101,-1.473248802,0.18273264
+5,2,2,0,'2-0,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Jack White,R,R,Fastball,Ball,,,101,-0.675652765,-0.385448848
+5,2,3,0,'3-0,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Jack White,R,R,Fastball,Called Strike,,,101,0.799899904,0.095927134
+5,2,3,1,'3-1,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Jack White,R,R,Fastball,Walk,,,101,1.477856535,-0.338100391
+5,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Jack White,L,R,Breaking Ball,Ball,,,101,1.398096931,-0.140815152
+5,2,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Jack White,L,R,Fastball,Ball,,,101,-0.436373954,-0.125032333
+5,2,2,0,'2-0,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Jack White,L,R,Fastball,Ball,,,101,-0.456313855,-0.330208981
+5,2,3,0,'3-0,2026-10-09,Brock Badgers,Queen's Gaels,,Adam Geddes,Jack White,L,R,Fastball,Walk,,,101,-1.373549297,1.027113462
+5,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Russell DuHamel,R,R,Fastball,Ball,,,111,-0.556013359,-0.267077705
+5,2,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Russell DuHamel,R,R,Fastball,Called Strike,,,111,0.440981687,0.70356567
+5,2,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Russell DuHamel,R,R,Breaking Ball,Ball,,,111,1.677255544,-0.251294886
+5,2,2,1,'2-1,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Russell DuHamel,R,R,Breaking Ball,Ball,,,111,1.637375742,-0.046118237
+5,2,3,1,'3-1,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Russell DuHamel,R,R,Fastball,Called Strike,,,111,-0.316734548,0.143275592
+5,2,3,2,'3-2,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Russell DuHamel,R,R,Fastball,Foul,,,111,0.261522579,0.064361496
+5,2,3,2,'3-2,2026-10-09,Brock Badgers,Queen's Gaels,,Kade Falardeau,Russell DuHamel,R,R,Fastball,Single,Line Drive,Straightaway,111,0.241582678,0.88506809
+5,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Russell DuHamel,R,R,Fastball,Called Strike,,,10,0.560621092,0.285320964
+5,2,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Jaden Leeder,Russell DuHamel,R,R,Breaking Ball,Single,Fly Ball,Opposite Field,10,0.660320597,0.719348489
+5,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Russell DuHamel,L,R,Fastball,Ball,,,100,0.321342281,0.111709954
+5,2,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Josh Frazer,Russell DuHamel,L,R,Fastball,Single,Line Drive,Straightaway,100,-0.256914845,0.593085936
+5,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Russell DuHamel,R,R,Breaking Ball,Ball,,,110,1.757015148,0.52995466
+5,2,1,0,'1-0,2026-10-09,Brock Badgers,Queen's Gaels,,Nolan Phelan,Russell DuHamel,R,R,Fastball,Popout,Pop Up,Pull,110,-1.273849793,0.806153994
+6,0,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Fastball,Ball,,,0,0.580560993,-0.267077705
+6,0,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Clarke Needles,Max Burroughsford,R,R,Changeup,Hit By Pitch,,,0,-1.473248802,0.798262585
+6,0,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Brett Hardy,Max Burroughsford,L,R,Fastball,Ball,,,0,-1.493188703,-0.093466695
+6,0,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Brett Hardy,Max Burroughsford,L,R,Fastball,Ball,,,0,-1.233969991,1.145484605
+6,0,2,0,'2-0,2026-10-09,Queen's Gaels,Brock Badgers,,Brett Hardy,Max Burroughsford,L,R,Fastball,Called Strike,,,0,-0.595893161,0.17484123
+6,0,2,1,'2-1,2026-10-09,Queen's Gaels,Brock Badgers,,Brett Hardy,Max Burroughsford,L,R,Changeup,Foul,,,0,-0.177155242,0.151167001
+6,0,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Brett Hardy,Max Burroughsford,L,R,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.416434053,0.814045404
+6,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Van Dam,L,L,Fastball,Ball,,,0,0.580560993,0.088035725
+6,1,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Van Dam,L,L,Fastball,Ball,,,0,1.617435841,0.790371175
+6,1,2,0,'2-0,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Van Dam,L,L,Fastball,Ball,,,0,-1.014631081,-0.345991801
+6,1,3,0,'3-0,2026-10-09,Queen's Gaels,Brock Badgers,,Colby Wilhelm,Max Van Dam,L,L,Fastball,Walk,,,0,-1.313729594,0.245863916
+6,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Van Dam,R,L,Fastball,Ball,,,110,0.740080201,-0.314426162
+6,1,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Van Dam,R,L,Fastball,Called Strike,,,110,-0.236974945,0.814045404
+6,1,1,1,'1-1,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Van Dam,R,L,Fastball,Called Strike,,,110,-0.695592666,0.577303117
+6,1,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Jeffrey Jamieson,Max Van Dam,R,L,Fastball,Strikeout Looking,,,110,-0.79529217,0.679891441
+6,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Van Dam,R,L,Changeup,Swinging Strike,,,110,-0.276854746,-0.211837838
+6,2,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Van Dam,R,L,Changeup,Ball,,,110,-0.077455737,-0.464362944
+6,2,1,1,'1-1,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Van Dam,R,L,Fastball,Foul,,,110,0.341282182,0.695674261
+6,2,1,2,'1-2,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Van Dam,R,L,Fastball,Ball,,,110,0.879659507,0.695674261
+6,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Van Dam,R,L,Changeup,Foul,,,110,-0.236974945,0.577303117
+6,2,2,2,'2-2,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Van Dam,R,L,Changeup,Ball,,,110,-0.556013359,-0.330208981
+6,2,3,2,'3-2,2026-10-09,Queen's Gaels,Brock Badgers,,Sean Skorupski,Max Van Dam,R,L,Fastball,Groundout,Ground Ball,Pull,110,0.241582678,0.151167001
+6,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Russell DuHamel,R,R,Breaking Ball,Called Strike,,,0,0.50080139,0.18273264
+6,0,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Russell DuHamel,R,R,Breaking Ball,Ball,,,0,1.457916634,0.821936813
+6,0,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Flynn Matheson,Russell DuHamel,R,R,Breaking Ball,Home Run,Fly Ball,Straightaway,0,-0.276854746,0.214298278
+6,0,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Russell DuHamel,R,R,Fastball,Called Strike,,,0,-0.316734548,0.316886602
+6,0,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Russell DuHamel,R,R,Breaking Ball,Ball,,,0,0.540681192,1.113918967
+6,0,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Russell DuHamel,R,R,Fastball,Called Strike,,,0,-0.456313855,0.064361496
+6,0,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Russell DuHamel,R,R,Breaking Ball,Ball,,,0,0.819839804,0.35634365
+6,0,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Brady Campbell,Russell DuHamel,R,R,Fastball,Popout,Pop Up,Opposite Field,0,-0.735472468,0.695674261
+6,1,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Cohen,Russell DuHamel,R,R,Breaking Ball,Called Strike,,,0,-0.695592666,0.585194527
+6,1,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Jack Cohen,Russell DuHamel,R,R,Breaking Ball,Flyout,Fly Ball,Opposite Field,0,-0.256914845,0.103818544
+6,2,0,0,'0-0,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Russell DuHamel,R,R,Breaking Ball,Called Strike,,,0,-0.396494152,0.222189687
+6,2,0,1,'0-1,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Russell DuHamel,R,R,Breaking Ball,Ball,,,0,1.138878219,-0.440688715
+6,2,1,1,'1-1,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Russell DuHamel,R,R,Fastball,Foul,,,0,0.30140238,0.735131308
+6,2,1,2,'1-2,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Russell DuHamel,R,R,Breaking Ball,Ball,,,0,1.238577724,0.372126469
+6,2,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Russell DuHamel,R,R,Fastball,Foul,,,0,-0.057515836,0.143275592
+6,2,2,2,'2-2,2026-10-09,Brock Badgers,Queen's Gaels,,Gavin Taylor,Russell DuHamel,R,R,Breaking Ball,Strikeout Swinging,,,0,0.620440795,0.095927134
+7,0,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Nolan McFarlane,L,R,Fastball,Ball,,,0,-0.416434053,-0.345991801
+7,0,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jack Angel,Nolan McFarlane,L,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.560621092,0.214298278
+7,1,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,McDonald,Nolan McFarlane,L,R,Fastball,Called Strike,,,0,-0.655712864,0.70356567
+7,1,0,1,'0-1,2026-10-09,Queen's Gaels,Brock Badgers,,McDonald,Nolan McFarlane,L,R,Fastball,Foul,,,0,-0.35661435,-0.211837838
+7,1,0,2,'0-2,2026-10-09,Queen's Gaels,Brock Badgers,,McDonald,Nolan McFarlane,L,R,Changeup,Strikeout Swinging,,,0,-0.695592666,-0.259186295
+7,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Nolan McFarlane,L,R,Fastball,Ball,,,0,0.341282182,-0.314426162
+7,2,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Nolan McFarlane,,,Fastball,Ball,,,0,0.201702876,0.127492773
+7,2,2,0,'2-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Nolan McFarlane,,,Fastball,Groundout,Ground Ball,Pull,0,-0.57595326,0.230081097
