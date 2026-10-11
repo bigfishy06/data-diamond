@@ -9765,3 +9765,472 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,2,0,0,'0-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Nolan McFarlane,L,R,Fastball,Ball,,,0,0.341282182,-0.314426162
 7,2,1,0,'1-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Nolan McFarlane,,,Fastball,Ball,,,0,0.201702876,0.127492773
 7,2,2,0,'2-0,2026-10-09,Queen's Gaels,Brock Badgers,,Jonah Brotman,Nolan McFarlane,,,Fastball,Groundout,Ground Ball,Pull,0,-0.57595326,0.230081097
+1,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Ravin Yuvarajan,R,R,Fastball,Single,Line Drive,Straightaway,0,-0.177155242,0.35634365
+1,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Ravin Yuvarajan,R,R,Fastball,Ball,,,100,0.879659507,-0.219729248
+1,0,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Ravin Yuvarajan,R,R,Fastball,Ball,,,100,1.019238814,-0.290751934
+1,0,2,0,'2-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Ravin Yuvarajan,R,R,Fastball,Swinging Strike,,,100,0.680260498,0.285320964
+1,0,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Ravin Yuvarajan,R,R,Fastball,Foul,,,100,-0.456313855,0.308995192
+1,0,2,2,'2-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Ravin Yuvarajan,R,R,Fastball,Ball,,,100,0.640380696,1.098136148
+1,0,3,2,'3-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Ravin Yuvarajan,R,R,Fastball,Strikeout Looking,,,100,1.198697922,0.324778012
+1,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Ravin Yuvarajan,R,R,Breaking Ball,Ball,,,100,-1.533068505,1.027113462
+1,1,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Ravin Yuvarajan,R,R,Fastball,Foul,,,100,-0.635772963,0.774588356
+1,1,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Ravin Yuvarajan,R,R,Offspeed,Ball,,,100,-1.413429099,-0.196055019
+1,1,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Ravin Yuvarajan,R,R,Fastball,Ball,,,100,0.620440795,-0.417014486
+1,1,3,1,'3-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Ravin Yuvarajan,R,R,Fastball,Walk,,,100,1.37815703,0.166949821
+1,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Ravin Yuvarajan,R,R,Fastball,Called Strike,,,110,-0.117335539,0.143275592
+1,1,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Ravin Yuvarajan,R,R,Breaking Ball,Foul,,,110,-0.316734548,0.743022718
+1,1,0,2,'0-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Ravin Yuvarajan,R,R,Breaking Ball,Ball,,,110,0.859719606,1.129701786
+1,1,1,2,'1-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Ravin Yuvarajan,R,R,Offspeed,Foul,,,110,-0.655712864,0.119601363
+1,1,1,2,'1-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Ravin Yuvarajan,R,R,Breaking Ball,Strikeout Swinging,,,110,-0.476253756,1.129701786
+1,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Ravin Yuvarajan,L,R,Offspeed,Hit By Pitch,,,110,1.577556039,0.285320964
+1,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Ravin Yuvarajan,R,R,Fastball,Foul,,,111,-0.79529217,0.837719632
+1,2,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Ravin Yuvarajan,R,R,Breaking Ball,Ball,,,111,1.278457526,-0.52749422
+1,2,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Ravin Yuvarajan,R,R,Fastball,Ball,,,111,0.760020102,-0.345991801
+1,2,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Ravin Yuvarajan,R,R,Offspeed,Flyout,Fly Ball,Straightaway,111,-0.396494152,0.837719632
+1,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Cole Geldart,R,R,Fastball,Called Strike,,,0,0.30140238,0.640434394
+1,0,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Cole Geldart,R,R,Breaking Ball,Ball,,,0,1.198697922,-0.495928582
+1,0,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Cole Geldart,R,R,Fastball,Foul,,,0,0.620440795,0.127492773
+1,0,1,2,'1-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Cole Geldart,R,R,Fastball,Ball,,,0,0.620440795,-0.330208981
+1,0,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Cole Geldart,R,R,Breaking Ball,Ball,,,0,-0.516133557,-0.211837838
+1,0,3,2,'3-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Cole Geldart,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.181762975,0.237972506
+1,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Cole Geldart,R,R,Fastball,Ball,,,0,0.779960003,-0.117140923
+1,1,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Cole Geldart,R,R,Fastball,Ball,,,0,-0.735472468,0.095927134
+1,1,2,0,'2-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Cole Geldart,R,R,Breaking Ball,Called Strike,,,0,0.30140238,0.340560831
+1,1,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Cole Geldart,R,R,Breaking Ball,Called Strike,,,0,0.7201403,0.553628889
+1,1,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Cole Geldart,R,R,Breaking Ball,Ball,,,0,1.039178715,-0.330208981
+1,1,3,2,'3-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Cole Geldart,R,R,Fastball,Walk,,,0,-1.433369,0.782479766
+1,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Cole Geldart,R,R,Fastball,Called Strike,,,100,0.181762975,0.135384182
+1,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Cole Geldart,R,R,Fastball,Ball,,,100,1.238577724,-0.140815152
+1,1,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Cole Geldart,R,R,Breaking Ball,Ball,,,100,1.398096931,-0.251294886
+1,1,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Cole Geldart,R,R,Fastball,Ball,,,100,1.437976733,-0.417014486
+1,1,3,1,'3-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Cole Geldart,R,R,Fastball,Walk,,,10,-1.333669495,-0.140815152
+1,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Cole Geldart,R,R,Fastball,Called Strike,,,110,-0.316734548,0.845611042
+1,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Cole Geldart,R,R,Fastball,Ball,,,110,-1.313729594,0.892959499
+1,1,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Cole Geldart,R,R,Breaking Ball,Ball,,,110,1.836774751,-0.17238079
+1,1,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Cole Geldart,R,R,Fastball,Foul,,,110,-0.715532567,1.129701786
+1,1,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Cole Geldart,R,R,Breaking Ball,Ball,,,110,1.637375742,-0.061901057
+1,1,3,2,'3-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Cole Geldart,R,R,Fastball,Walk,,,110,1.059118615,-0.196055019
+1,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Cole Geldart,R,R,Fastball,Called Strike,,,111,-0.236974945,0.285320964
+1,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Cole Geldart,R,R,Fastball,Ball,,,111,1.278457526,0.845611042
+1,1,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Cole Geldart,R,R,Breaking Ball,Ball,,,111,-0.336674449,-0.543277039
+1,1,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Cole Geldart,R,R,Fastball,Ball,,,111,0.381161984,-0.401231667
+1,1,3,1,'3-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Cole Geldart,R,R,Fastball,Walk,,,111,0.819839804,0.743022718
+1,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Cole Geldart,R,R,Fastball,Ball,,,111,0.879659507,-0.35388321
+1,1,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Cole Geldart,R,R,Breaking Ball,Called Strike,,,111,-0.496193657,0.561520298
+1,1,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Cole Geldart,R,R,Fastball,Lineout,Line Drive,Straightaway,111,-0.556013359,0.719348489
+1,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Haven Tai,Cole Geldart,L,R,Fastball,Lineout,Line Drive,Straightaway,111,0.540681192,0.679891441
+2,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Ravin Yuvarajan,L,R,Breaking Ball,Ball,,,0,-1.572948306,0.70356567
+2,0,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Ravin Yuvarajan,L,R,Breaking Ball,Ball,,,0,0.779960003,-0.322317572
+2,0,2,0,'2-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Ravin Yuvarajan,L,R,,Foul,,,0,-1.253909892,0.869285271
+2,0,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Ravin Yuvarajan,L,R,Fastball,Ball,,,0,-1.353609396,0.782479766
+2,0,3,1,'3-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Ravin Yuvarajan,L,R,Fastball,Walk,,,0,-0.536073458,0.569411708
+2,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Ravin Yuvarajan,R,R,Breaking Ball,Called Strike,,,100,-0.615833062,1.145484605
+2,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Ravin Yuvarajan,R,R,Breaking Ball,Ball,,,100,-1.253909892,0.758805537
+2,0,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Ravin Yuvarajan,R,R,Fastball,Ball,,,100,1.278457526,0.237972506
+2,0,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Ravin Yuvarajan,R,R,Fastball,Ball,,,100,-0.735472468,1.082353329
+2,0,3,1,'3-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Ravin Yuvarajan,R,R,Fastball,Walk,,,100,-0.675652765,0.948199366
+2,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Ravin Yuvarajan,R,R,Fastball,Called Strike,,,110,-1.293789693,0.624651575
+2,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Ravin Yuvarajan,R,R,Offspeed,Ball,,,110,0.540681192,0.798262585
+2,0,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Ravin Yuvarajan,R,R,Fastball,Foul,,,110,1.418036832,-0.267077705
+2,0,1,2,'1-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Ravin Yuvarajan,R,R,Breaking Ball,Ball,,,110,-0.556013359,-0.590625497
+2,0,2,2,'2-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Ravin Yuvarajan,R,R,Fastball,Ball,,,110,1.457916634,-0.377557439
+2,0,3,2,'3-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Ravin Yuvarajan,R,R,Fastball,Walk,,,110,1.278457526,-0.306534753
+2,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Ravin Yuvarajan,R,R,Breaking Ball,Ball,,,111,1.677255544,-0.338100391
+2,0,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Ravin Yuvarajan,R,R,Breaking Ball,Ball,,,111,0.919539309,-0.495928582
+2,0,2,0,'2-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Ravin Yuvarajan,R,R,Fastball,Ball,,,111,0.520741291,0.324778012
+2,0,3,0,'3-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Ravin Yuvarajan,R,R,Fastball,Called Strike,,,111,1.59749594,-0.077683876
+2,0,3,1,'3-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Ravin Yuvarajan,R,R,Fastball,Walk,,,111,-0.376554251,-0.211837838
+2,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Ravin Yuvarajan,R,R,Fastball,Foul,,,111,-0.655712864,-0.298643343
+2,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Ravin Yuvarajan,R,R,Fastball,Ball,,,11,-0.436373954,-0.338100391
+2,0,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Taisei Hihara,R,L,Breaking Ball,Ball,,,11,0.779960003,1.177050243
+2,0,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Taisei Hihara,R,L,Fastball,Called Strike,,,11,0.660320597,0.727239899
+2,0,2,2,'2-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Taisei Hihara,R,L,Breaking Ball,Foul,,,11,0.460921588,0.18273264
+2,0,2,2,'2-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Taisei Hihara,R,L,Breaking Ball,Strikeout Looking,,,11,0.540681192,0.892959499
+2,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Taisei Hihara,R,L,Breaking Ball,Flyout,Fly Ball,Straightaway,11,-0.316734548,0.695674261
+2,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Taisei Hihara,R,L,Breaking Ball,Ball,,,11,-0.296794647,1.192833062
+2,2,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Taisei Hihara,R,L,Breaking Ball,Ball,,,11,-0.595893161,-0.267077705
+2,2,2,0,'2-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Taisei Hihara,R,L,Fastball,Swinging Strike,,,11,0.520741291,1.106027557
+2,2,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Taisei Hihara,R,L,Fastball,Foul,,,11,0.221642777,0.214298278
+2,2,2,2,'2-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Taisei Hihara,R,L,Breaking Ball,Ball,,,11,1.298397427,-0.369666029
+2,2,3,2,'3-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Taisei Hihara,R,L,Fastball,Double,Line Drive,Pull,11,-0.336674449,0.18273264
+2,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Taisei Hihara,L,L,Breaking Ball,Ball,,,10,-0.13727544,-0.274969115
+2,2,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Taisei Hihara,L,L,Breaking Ball,Swinging Strike,,,10,-1.373549297,0.340560831
+2,2,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Taisei Hihara,L,L,Breaking Ball,Groundout,Ground Ball,Pull,10,-0.436373954,0.35634365
+2,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Jackson Gannett,Liam Conlin,L,L,Fastball,Called Strike,,,0,-0.35661435,0.111709954
+2,0,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Jackson Gannett,Liam Conlin,L,L,Fastball,Popout,Pop Up,Opposite Field,0,-0.615833062,0.166949821
+2,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Tomoki Yamamoto,Liam Conlin,L,R,Fastball,Called Strike,,,0,-0.476253756,0.35634365
+2,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Tomoki Yamamoto,Liam Conlin,L,R,Fastball,Swinging Strike,,,0,-0.536073458,0.695674261
+2,1,0,2,'0-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Tomoki Yamamoto,Liam Conlin,L,R,Breaking Ball,Strikeout Swinging,,,0,0.580560993,-0.330208981
+2,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Liam Conlin,R,R,Breaking Ball,Called Strike,,,0,0.241582678,0.111709954
+2,2,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Liam Conlin,R,R,Breaking Ball,Ball,,,0,-0.35661435,1.24018152
+2,2,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Liam Conlin,R,R,Breaking Ball,Lineout,Line Drive,Straightaway,0,-0.316734548,0.245863916
+3,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Taisei Hihara,R,L,Breaking Ball,Single,Line Drive,Opposite Field,0,0.421041786,0.71145708
+3,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Taisei Hihara,L,L,Breaking Ball,Called Strike,,,0,0.740080201,0.545737479
+3,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Taisei Hihara,L,L,Breaking Ball,Single,Ground Ball,Opposite Field,0,-0.536073458,0.443149155
+3,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Taisei Hihara,R,L,Fastball,Foul,,,0,0.121943272,0.837719632
+3,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Taisei Hihara,R,L,Breaking Ball,Ball,,,0,-1.453308901,0.269538145
+3,0,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Taisei Hihara,R,L,Fastball,Ball,,,0,1.138878219,-0.211837838
+3,0,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Taisei Hihara,R,L,Fastball,Popout,Pop Up,Opposite Field,0,0.28146248,0.308995192
+3,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Taisei Hihara,R,L,Breaking Ball,Popout,Pop Up,Straightaway,0,-0.516133557,0.624651575
+3,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Taisei Hihara,R,L,Breaking Ball,Groundout,Ground Ball,Pull,0,0.560621092,0.127492773
+3,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Liam Conlin,R,R,Fastball,Ball,,,0,-0.775352269,-0.432797306
+3,0,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Liam Conlin,R,R,Fastball,Foul,,,0,-0.615833062,0.679891441
+3,0,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Liam Conlin,R,R,Fastball,Swinging Strike,,,0,0.28146248,0.206406868
+3,0,1,2,'1-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Liam Conlin,R,R,Breaking Ball,Foul,,,0,0.740080201,0.35634365
+3,0,1,2,'1-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Liam Conlin,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.50080139,0.135384182
+3,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Liam Conlin,R,R,Breaking Ball,Ball,,,0,0.440981687,1.113918967
+3,1,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Liam Conlin,R,R,Fastball,Ball,,,0,-0.396494152,1.090244738
+3,1,2,0,'2-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Liam Conlin,R,R,Fastball,Foul,,,0,-0.396494152,0.111709954
+3,1,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Liam Conlin,R,R,Breaking Ball,Ball,,,0,-1.433369,1.074461919
+3,1,3,1,'3-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Liam Conlin,R,R,Fastball,Foul,,,0,0.28146248,0.648325803
+3,1,3,2,'3-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Liam Conlin,R,R,Fastball,Single,Line Drive,Pull,0,-0.496193657,0.308995192
+3,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Liam Conlin,R,R,Breaking Ball,Ball,,,100,1.457916634,0.237972506
+3,1,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Liam Conlin,R,R,Fastball,Ball,,,100,0.819839804,-0.251294886
+3,1,2,0,'2-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Liam Conlin,R,R,Fastball,Single,Line Drive,Opposite Field,100,0.560621092,0.214298278
+3,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Liam Conlin,R,R,Breaking Ball,Ball,,,110,-0.615833062,1.169158834
+3,1,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Liam Conlin,R,R,Fastball,Foul,,,110,0.321342281,0.111709954
+3,1,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Liam Conlin,R,R,Fastball,Swinging Strike,,,110,-0.735472468,0.419474926
+3,1,1,2,'1-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Liam Conlin,R,R,Breaking Ball,Ball,,,110,-0.695592666,1.098136148
+3,1,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Liam Conlin,R,R,Fastball,Single,Fly Ball,Opposite Field,110,-0.655712864,0.17484123
+3,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Liam Conlin,R,R,Breaking Ball,Foul,,,111,0.30140238,0.301103783
+3,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Liam Conlin,R,R,Fastball,Foul,,,111,-0.655712864,0.261646735
+3,1,0,2,'0-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Liam Conlin,R,R,Breaking Ball,Single,Line Drive,Opposite Field,111,0.381161984,0.18273264
+3,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,,,,,,Additional Out,,,,,
+3,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Haven Tai,Liam Conlin,L,R,Fastball,Called Strike,,,11,-1.21403009,0.364235059
+3,2,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Haven Tai,Liam Conlin,L,R,Fastball,Swinging Strike,,,11,-0.456313855,0.900850909
+3,2,0,2,'0-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Haven Tai,Liam Conlin,L,R,Breaking Ball,Foul,,,11,0.600500894,0.458931974
+3,2,0,2,'0-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Haven Tai,Liam Conlin,L,R,Breaking Ball,Ball,,,11,0.50080139,-0.345991801
+3,2,1,2,'1-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Haven Tai,Liam Conlin,L,R,Fastball,Ball,,,1,-0.695592666,1.121810376
+3,2,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Haven Tai,Liam Conlin,L,R,Breaking Ball,Strikeout Swinging,,,1,0.381161984,0.127492773
+4,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Armin Najmaie,R,R,Fastball,Foul,,,0,-1.553008405,0.443149155
+4,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Armin Najmaie,R,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.520741291,0.151167001
+4,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Armin Najmaie,R,R,Offspeed,Called Strike,,,0,-0.516133557,0.253755326
+4,1,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Armin Najmaie,R,R,Fastball,Called Strike,,,0,0.28146248,0.648325803
+4,1,0,2,'0-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Armin Najmaie,R,R,Fastball,Ball,,,0,-0.715532567,1.192833062
+4,1,1,2,'1-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Armin Najmaie,R,R,Offspeed,Flyout,Fly Ball,Straightaway,0,0.161823074,0.821936813
+4,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Armin Najmaie,R,R,Fastball,Ball,,,0,0.440981687,0.940307957
+4,2,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Armin Najmaie,R,R,Offspeed,Called Strike,,,0,-0.695592666,0.443149155
+4,2,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Armin Najmaie,R,R,Breaking Ball,Ball,,,0,1.497796436,-0.282860524
+4,2,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Armin Najmaie,R,R,Fastball,Ball,,,0,0.799899904,0.364235059
+4,2,3,1,'3-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Armin Najmaie,R,R,Offspeed,Walk,,,0,-1.094390684,1.098136148
+4,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Armin Najmaie,L,R,Fastball,Ball,,,100,-1.373549297,1.184941653
+4,2,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Armin Najmaie,L,R,Fastball,Ball,,,100,-0.835171972,1.161267424
+4,2,2,0,'2-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Armin Najmaie,L,R,Fastball,Swinging Strike,,,100,-1.453308901,0.979765004
+4,2,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Armin Najmaie,L,R,Offspeed,Called Strike,,,100,-0.595893161,0.679891441
+4,2,2,2,'2-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Armin Najmaie,L,R,Offspeed,Single,Line Drive,Pull,100,-0.556013359,0.127492773
+4,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Called Strike,,,101,0.460921588,0.316886602
+4,2,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Fastball,Swinging Strike,,,101,-0.496193657,0.87717668
+4,2,0,2,'0-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Ball,,,101,1.737075247,-0.448580125
+4,2,1,2,'1-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Fastball,Single,Ground Ball,Pull,10,0.540681192,0.750914127
+4,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,L,R,Fastball,Ball,,,101,-1.792287217,0.198515459
+4,2,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,L,R,Offspeed,Foul,,,101,-0.496193657,0.301103783
+4,2,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,L,R,Offspeed,Foul,,,101,-0.655712864,0.435257745
+4,2,1,2,'1-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,L,R,Offspeed,Strikeout Looking,,,101,0.28146248,0.364235059
+4,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Jackson Gannett,Jack Comper,R,R,Fastball,Ball,,,0,-0.177155242,-0.322317572
+4,0,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Jackson Gannett,Jack Comper,R,R,Fastball,Called Strike,,,0,0.421041786,0.593085936
+4,0,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Jackson Gannett,Jack Comper,R,R,Fastball,Error,Ground Ball,Straightaway,0,0.440981687,0.111709954
+4,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Tomoki Yamamoto,Jack Comper,L,R,Fastball,Ball,,,100,0.600500894,-0.227620657
+4,0,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Tomoki Yamamoto,Jack Comper,L,R,Fastball,Sacrifice Bunt,Ground Ball,Pull,100,-0.496193657,0.845611042
+4,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Jack Comper,R,R,Breaking Ball,Called Strike,,,10,0.600500894,0.245863916
+4,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Jack Comper,R,R,Fastball,Ball,,,10,-1.572948306,0.095927134
+4,1,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Jack Comper,R,R,Fastball,Swinging Strike,,,10,-0.595893161,-0.140815152
+4,1,1,2,'1-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Jack Comper,R,R,Breaking Ball,Ball,,,10,0.919539309,-0.369666029
+4,1,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Jack Comper,R,R,Fastball,Groundout,Ground Ball,Pull,10,-0.217035044,0.845611042
+4,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Jack Comper,R,R,Breaking Ball,Ball,,,10,-0.815232071,0.600977346
+4,2,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Jack Comper,R,R,Fastball,Foul,,,10,-0.556013359,0.308995192
+4,2,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Jack Comper,R,R,Fastball,Hit By Pitch,,,10,-1.513128604,0.316886602
+4,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Jack Comper,R,R,Breaking Ball,Ball,,,110,1.637375742,0.166949821
+4,2,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Jack Comper,R,R,Fastball,Single,Line Drive,Opposite Field,110,-0.496193657,0.419474926
+4,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Jack Comper,R,R,Fastball,Ball,,,101,1.477856535,-0.203946429
+4,2,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Jack Comper,R,R,Breaking Ball,Ball,,,101,1.936474256,-0.061901057
+4,2,2,0,'2-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Jack Comper,R,R,Fastball,Ball,,,101,0.660320597,-0.385448848
+4,2,3,0,'3-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Jack Comper,R,R,Fastball,Walk,,,101,-0.456313855,-0.188163609
+4,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Jack Comper,R,R,Fastball,Called Strike,,,111,0.141883173,0.648325803
+4,2,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Jack Comper,R,R,Breaking Ball,Foul,,,111,-0.316734548,0.806153994
+4,2,0,2,'0-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Jack Comper,R,R,Fastball,Foul,,,111,0.361222083,0.166949821
+4,2,0,2,'0-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Jack Comper,R,R,Breaking Ball,Ball,,,111,1.657315643,0.979765004
+4,2,1,2,'1-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Jack Comper,R,R,Breaking Ball,Ball,,,111,1.338277228,0.719348489
+4,2,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Jack Comper,R,R,Fastball,Foul,,,111,0.680260498,0.198515459
+4,2,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Jack Comper,R,R,Fastball,Foul,,,111,0.7201403,-0.188163609
+4,2,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Jack Comper,R,R,Fastball,Foul,,,111,0.600500894,0.70356567
+4,2,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Jack Comper,R,R,Breaking Ball,Ball,,,111,1.637375742,-0.125032333
+4,2,3,2,'3-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Jack Comper,R,R,Fastball,Walk,,,111,1.457916634,0.151167001
+4,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Mattheo Tsebelis,R,R,Breaking Ball,Foul,,,111,-0.217035044,0.230081097
+4,2,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Mattheo Tsebelis,R,R,Fastball,Ball,,,111,0.580560993,-0.36177462
+4,2,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Mattheo Tsebelis,R,R,Breaking Ball,Ball,,,111,1.338277228,0.261646735
+4,2,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Mattheo Tsebelis,R,R,Fastball,Groundout,Ground Ball,Straightaway,111,-0.695592666,0.380017878
+5,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Armin Najmaie,R,R,Fastball,Ball,,,0,-1.433369,1.106027557
+5,0,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Armin Najmaie,R,R,Fastball,Ball,,,0,-0.516133557,-0.306534753
+5,0,2,0,'2-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Armin Najmaie,R,R,Offspeed,Lineout,Line Drive,Pull,0,-0.556013359,0.648325803
+5,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Armin Najmaie,R,R,Offspeed,Ball,,,0,-1.533068505,0.411583517
+5,1,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Armin Najmaie,R,R,Fastball,Popout,Pop Up,Straightaway,0,-0.755412369,0.806153994
+5,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Armin Najmaie,R,R,Offspeed,Called Strike,,,0,0.341282182,0.735131308
+5,2,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Armin Najmaie,R,R,Offspeed,Foul,,,0,-0.675652765,0.743022718
+5,2,0,2,'0-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Armin Najmaie,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.181762975,0.869285271
+5,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elis Johnson,Mattheo Tsebelis,R,R,Fastball,Called Strike,,,0,0.779960003,0.340560831
+5,0,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elis Johnson,Mattheo Tsebelis,R,R,Fastball,Ball,,,0,1.577556039,0.080144315
+5,0,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elis Johnson,Mattheo Tsebelis,R,R,Fastball,Swinging Strike,,,0,0.680260498,0.782479766
+5,0,1,2,'1-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elis Johnson,Mattheo Tsebelis,R,R,Breaking Ball,Ball,,,0,1.238577724,-0.306534753
+5,0,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elis Johnson,Mattheo Tsebelis,R,R,Fastball,Strikeout Looking,,,0,0.540681192,0.190624049
+5,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Jackson Gannett,Mattheo Tsebelis,R,R,Fastball,Called Strike,,,0,0.480861489,0.632542984
+5,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Jackson Gannett,Mattheo Tsebelis,R,R,Breaking Ball,Ball,,,0,1.737075247,-0.377557439
+5,1,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Jackson Gannett,Mattheo Tsebelis,R,R,Fastball,Foul,,,0,-0.456313855,0.190624049
+5,1,1,2,'1-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Jackson Gannett,Mattheo Tsebelis,R,R,Fastball,Strikeout Swinging,,,0,-0.655712864,0.332669421
+5,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Tomoki Yamamoto,Mattheo Tsebelis,L,R,Fastball,Ball,,,0,-0.476253756,1.090244738
+5,2,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Tomoki Yamamoto,Mattheo Tsebelis,L,R,Fastball,Swinging Strike,,,0,0.30140238,0.774588356
+5,2,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Tomoki Yamamoto,Mattheo Tsebelis,L,R,Offspeed,Ball,,,0,-0.556013359,1.137593195
+5,2,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Tomoki Yamamoto,Mattheo Tsebelis,L,R,Fastball,Foul,,,0,-0.376554251,0.545737479
+5,2,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Tomoki Yamamoto,Mattheo Tsebelis,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.316734548,0.293212373
+6,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Armin Najmaie,R,R,Offspeed,Ball,,,0,1.198697922,1.169158834
+6,0,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Armin Najmaie,R,R,Fastball,Popout,Pop Up,Straightaway,0,-0.536073458,0.387909288
+6,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Armin Najmaie,R,R,Offspeed,Single,Ground Ball,Pull,0,0.30140238,0.159058411
+6,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Armin Najmaie,R,R,Offspeed,Swinging Strike,,,100,-0.236974945,-0.125032333
+6,1,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Armin Najmaie,R,R,Offspeed,Ball,,,100,0.480861489,0.87717668
+6,1,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Phil Sephton,Armin Najmaie,R,R,Offspeed,Hit By Pitch,,,100,-1.612828108,1.145484605
+6,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Armin Najmaie,L,R,Offspeed,Swinging Strike,,,110,-0.595893161,-0.164489381
+6,1,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Armin Najmaie,L,R,Offspeed,Lineout,Line Drive,Pull,110,-0.655712864,0.293212373
+6,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Called Strike,,,110,0.680260498,0.119601363
+6,2,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Ball,,,110,1.637375742,-0.377557439
+6,2,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Fastball,Ball,,,110,0.680260498,1.161267424
+6,2,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Foul,,,110,-0.476253756,0.861393861
+6,2,2,2,'2-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Foul,,,110,-1.553008405,0.782479766
+6,2,2,2,'2-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Ball,,,110,0.819839804,-0.306534753
+6,2,3,2,'3-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Walk,,,110,1.497796436,0.34845224
+6,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Armin Najmaie,L,R,Fastball,Ball,,,111,-1.832167018,0.656217213
+6,2,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Armin Najmaie,L,R,Offspeed,Called Strike,,,111,-0.276854746,0.245863916
+6,2,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Armin Najmaie,L,R,Offspeed,Hit By Pitch,,,111,1.59749594,-0.219729248
+6,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Jonathan Onderisin,R,R,Breaking Ball,Ball,,,111,1.59749594,0.766696947
+6,2,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Jonathan Onderisin,R,R,,Additional Out,,,111,,
+6,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Mattheo Tsebelis,R,R,Fastball,Ball,,,0,-0.336674449,1.137593195
+6,0,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Mattheo Tsebelis,R,R,Fastball,Called Strike,,,0,0.440981687,0.080144315
+6,0,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Mattheo Tsebelis,R,R,Fastball,Ball,,,0,1.258517625,0.845611042
+6,0,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Mattheo Tsebelis,R,R,Fastball,Called Strike,,,0,0.321342281,0.308995192
+6,0,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Mattheo Tsebelis,R,R,Fastball,Ball,,,0,1.358217129,-0.274969115
+6,0,3,2,'3-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Mattheo Tsebelis,R,R,Fastball,Walk,,,0,0.919539309,1.098136148
+6,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Mattheo Tsebelis,R,R,Fastball,Ball,,,100,0.421041786,1.106027557
+6,0,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Mattheo Tsebelis,R,R,Fastball,Called Strike,,,100,0.660320597,0.230081097
+6,0,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Marcus Santos,Mattheo Tsebelis,R,R,Fastball,Flyout,Fly Ball,Opposite Field,100,-0.436373954,0.230081097
+6,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Mattheo Tsebelis,R,R,Breaking Ball,Ball,,,100,-0.057515836,-0.196055019
+6,1,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Mattheo Tsebelis,R,R,Fastball,Ball,,,100,1.497796436,-0.132923743
+6,1,2,0,'2-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Mattheo Tsebelis,R,R,Breaking Ball,Called Strike,,,10,0.50080139,0.695674261
+6,1,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Mattheo Tsebelis,R,R,Breaking Ball,Foul,,,10,-0.117335539,0.35634365
+6,1,2,2,'2-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Diego Fuentes,Mattheo Tsebelis,R,R,Fastball,Groundout,Ground Ball,Straightaway,10,-0.376554251,0.135384182
+6,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elias Rubio Reyes,Mattheo Tsebelis,R,R,Breaking Ball,Popout,Pop Up,Opposite Field,1,-0.296794647,0.34845224
+7,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Jonathan Onderisin,R,R,Fastball,Foul,,,0,-0.556013359,0.387909288
+7,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Jonathan Onderisin,R,R,Fastball,Foul,,,0,-0.436373954,0.916633728
+7,0,0,2,'0-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Jonathan Onderisin,R,R,Fastball,Hit By Pitch,,,0,-1.572948306,1.003439233
+7,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Jonathan Onderisin,R,R,Fastball,Ball,,,100,-0.236974945,1.169158834
+7,0,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Jonathan Onderisin,R,R,Fastball,Ball,,,100,1.557616139,0.332669421
+7,0,2,0,'2-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Jonathan Onderisin,R,R,Fastball,Called Strike,,,100,0.660320597,0.395800698
+7,0,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Jonathan Onderisin,R,R,Fastball,Ball,,,100,1.398096931,0.829828223
+7,0,3,1,'3-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Jonathan Onderisin,R,R,Fastball,Foul,,,100,0.50080139,0.806153994
+7,0,3,2,'3-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Kong,Jonathan Onderisin,R,R,Breaking Ball,Groundout,Ground Ball,Pull,100,-0.396494152,0.608868755
+7,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Jonathan Onderisin,R,R,Fastball,Ball,,,100,-1.473248802,0.198515459
+7,1,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Johnny Banks,Jonathan Onderisin,R,R,Breaking Ball,Single,Line Drive,Straightaway,100,0.30140238,0.608868755
+7,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Jonathan Onderisin,R,R,Breaking Ball,Ball,,,110,1.019238814,-0.338100391
+7,1,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Jonathan Onderisin,R,R,Fastball,Called Strike,,,110,0.201702876,0.387909288
+7,1,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Jonathan Onderisin,R,R,Fastball,Ball,,,110,-1.034570981,1.106027557
+7,1,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Jonathan Onderisin,R,R,Fastball,Ball,,,110,0.440981687,1.161267424
+7,1,3,1,'3-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jared Wellman,Jonathan Onderisin,R,R,Fastball,Walk,,,110,0.779960003,-0.448580125
+7,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Jonathan Onderisin,R,R,Breaking Ball,Ball,,,111,0.819839804,0.222189687
+7,1,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Jonathan Onderisin,R,R,Breaking Ball,Ball,,,111,1.79689495,0.103818544
+7,1,2,0,'2-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Lucas Bateman,Jonathan Onderisin,R,R,Offspeed,Single,Ground Ball,Straightaway,111,0.341282182,0.080144315
+7,1,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Tan,Jonathan Onderisin,R,R,Offspeed,Called Strike,,,101,-0.296794647,0.672000032
+7,1,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Tan,Jonathan Onderisin,R,R,Fastball,Foul,,,101,-0.57595326,0.395800698
+7,1,0,2,'0-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Matthew Tan,Jonathan Onderisin,R,R,Breaking Ball,Strikeout Looking,,,101,1.298397427,0.285320964
+7,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Jonathan Onderisin,L,R,Breaking Ball,Foul,,,101,0.620440795,0.293212373
+7,2,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Griffen Duenkler,Jonathan Onderisin,L,R,Offspeed,Groundout,Ground Ball,Pull,101,-0.57595326,0.277429554
+7,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Mattheo Tsebelis,R,R,Fastball,Ball,,,0,-0.376554251,1.129701786
+7,0,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Mattheo Tsebelis,R,R,Fastball,Foul,,,0,-0.615833062,0.750914127
+7,0,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Mattheo Tsebelis,R,R,Fastball,Ball,,,0,0.999298913,-0.1802722
+7,0,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Mattheo Tsebelis,R,R,Fastball,Ball,,,0,1.218637823,1.192833062
+7,0,3,1,'3-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Ryan Hsu,Mattheo Tsebelis,R,R,Fastball,Groundout,Ground Ball,Pull,0,-0.376554251,0.214298278
+7,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Mattheo Tsebelis,R,R,Breaking Ball,Called Strike,,,0,-0.396494152,0.340560831
+7,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Mattheo Tsebelis,R,R,Fastball,Called Strike,,,0,0.480861489,0.285320964
+7,1,0,2,'0-2,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Mattheo Tsebelis,R,R,Breaking Ball,Popout,Pop Up,Opposite Field,0,0.819839804,-0.314426162
+7,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elis Johnson,Mattheo Tsebelis,R,R,Breaking Ball,Ball,,,0,0.819839804,-0.503819992
+7,2,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elis Johnson,Mattheo Tsebelis,R,R,Fastball,Foul,,,0,0.30140238,0.143275592
+7,2,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elis Johnson,Mattheo Tsebelis,R,R,Breaking Ball,Ball,,,0,1.637375742,-0.022444009
+7,2,2,1,'2-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elis Johnson,Mattheo Tsebelis,R,R,Fastball,Ball,,,0,0.879659507,-0.1802722
+7,2,3,1,'3-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Elis Johnson,Mattheo Tsebelis,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.241582678,0.285320964
+1,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Ricky Klimaszewski,L,R,Fastball,Ball,,,0,-0.695592666,-0.338100391
+1,0,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Ricky Klimaszewski,L,R,Fastball,Foul,,,0,-0.536073458,0.790371175
+1,0,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Ricky Klimaszewski,L,R,Fastball,Ball,,,0,0.401101885,1.121810376
+1,0,2,1,'2-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Ricky Klimaszewski,L,R,Offspeed,Error,Ground Ball,Pull,0,-0.695592666,0.18273264
+1,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Fastball,Ball,,,100,1.497796436,1.216507291
+1,0,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Fastball,Called Strike,,,100,0.520741291,0.340560831
+1,0,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Fastball,Foul,,,100,0.580560993,0.672000032
+1,0,1,2,'1-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Fastball,Ball,,,100,1.776955049,0.18273264
+1,0,2,2,'2-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,,Caught Stealing,,,,,
+1,1,2,2,'2-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Breaking Ball,Foul,,,0,-0.516133557,0.103818544
+1,1,2,2,'2-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Fastball,Popout,Pop Up,Opposite Field,0,-0.615833062,0.624651575
+1,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Breaking Ball,Foul,,,0,-0.276854746,0.18273264
+1,2,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,0,-1.513128604,1.003439233
+1,2,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Breaking Ball,Popout,Pop Up,Opposite Field,0,-0.276854746,0.111709954
+1,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Spenser Ross,Charlie Hughes,R,R,Curveball,Ball,,,0,-0.496193657,1.129701786
+1,0,1,0,'1-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Spenser Ross,Charlie Hughes,R,R,Fastball,Called Strike,,,0,0.540681192,0.790371175
+1,0,1,1,'1-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Spenser Ross,Charlie Hughes,R,R,Fastball,Called Strike,,,0,0.460921588,0.380017878
+1,0,1,2,'1-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Spenser Ross,Charlie Hughes,R,R,Curveball,Error,Ground Ball,Straightaway,0,0.121943272,0.821936813
+1,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Marcus Santos,Charlie Hughes,R,R,Fastball,Ball,,,100,-0.615833062,-0.298643343
+1,0,1,0,'1-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Marcus Santos,Charlie Hughes,R,R,Fastball,Groundout,Ground Ball,Straightaway,100,-0.57595326,0.395800698
+1,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Diego Fuentes,Charlie Hughes,R,R,Curveball,Ball,,,100,1.437976733,0.17484123
+1,1,1,0,'1-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Diego Fuentes,Charlie Hughes,R,R,Fastball,Called Strike,,,100,-0.296794647,0.253755326
+1,1,1,1,'1-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Diego Fuentes,Charlie Hughes,R,R,Changeup,Called Strike,,,100,-0.735472468,0.640434394
+1,1,1,2,'1-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Diego Fuentes,Charlie Hughes,R,R,Fastball,Ball,,,100,1.398096931,0.837719632
+1,1,2,2,'2-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Diego Fuentes,Charlie Hughes,R,R,,Caught Stealing,,,0,,
+1,2,2,2,'2-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Diego Fuentes,Charlie Hughes,R,R,Curveball,Ball,,,0,0.839779705,-0.345991801
+1,2,3,2,'3-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Diego Fuentes,Charlie Hughes,R,R,Fastball,Lineout,Line Drive,Straightaway,0,-0.556013359,0.285320964
+2,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Josh Frazer,Ricky Klimaszewski,L,R,Fastball,Single,Ground Ball,Opposite Field,0,-0.536073458,0.293212373
+2,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Flynn Matheson,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,10,1.019238814,-0.290751934
+2,0,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Flynn Matheson,Ricky Klimaszewski,R,R,Fastball,Called Strike,,,10,0.600500894,0.143275592
+2,0,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Flynn Matheson,Ricky Klimaszewski,R,R,Fastball,Groundout,Ground Ball,Straightaway,10,-0.396494152,0.127492773
+2,1,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,1,-0.516133557,1.224398701
+2,1,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,1,-1.333669495,0.766696947
+2,1,2,0,'2-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Ricky Klimaszewski,R,R,Fastball,Single,Ground Ball,Pull,1,0.321342281,0.127492773
+2,1,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Fastball,Ball,,,101,-1.513128604,-0.077683876
+2,1,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Foul,,,10,0.460921588,0.861393861
+2,1,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,10,-1.114330585,-0.1802722
+2,1,2,1,'2-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Swinging Strike,,,10,0.600500894,0.632542984
+2,1,2,2,'2-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,10,0.7201403,-0.377557439
+2,1,3,2,'3-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Fastball,Single,Line Drive,Straightaway,10,0.421041786,0.198515459
+2,1,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Fastball,Called Strike,,,101,0.50080139,0.395800698
+2,1,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Fastball,Ball,,,101,1.537676238,0.88506809
+2,1,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Fastball,Double,Fly Ball,Straightaway,101,0.460921588,0.750914127
+2,1,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Gavin Taylor,Ricky Klimaszewski,R,R,Fastball,Sacrifice Bunt,,,11,0.321342281,0.679891441
+2,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Ricky Klimaszewski,L,R,Fastball,Ball,,,1,1.537676238,-0.243403476
+2,2,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Ricky Klimaszewski,L,R,Fastball,Ball,,,1,0.839779705,-0.219729248
+2,2,2,0,'2-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Ricky Klimaszewski,L,R,Fastball,Ball,,,1,0.919539309,-0.290751934
+2,2,3,0,'3-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Ricky Klimaszewski,L,R,Fastball,Hit By Pitch,,,1,1.717135346,0.198515459
+2,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Fastball,Swinging Strike,,,101,0.460921588,0.332669421
+2,2,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Fastball,Ball,,,101,-0.436373954,-0.369666029
+2,2,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Fastball,Single,Ground Ball,Straightaway,101,0.261522579,0.159058411
+2,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,101,-0.376554251,1.177050243
+2,2,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,101,-0.496193657,1.334878434
+2,2,2,0,'2-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Fastball,Ball,,,101,0.560621092,-0.140815152
+2,2,3,0,'3-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Fastball,Called Strike,,,101,0.401101885,0.427366336
+2,2,3,1,'3-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Fastball,Walk,,,101,1.437976733,-0.235512067
+2,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Josh Frazer,Ricky Klimaszewski,L,R,Offspeed,Single,Ground Ball,Pull,111,-0.516133557,0.166949821
+2,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Flynn Matheson,Ricky Klimaszewski,R,R,Fastball,Ball,,,111,0.460921588,1.145484605
+2,2,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Flynn Matheson,Ricky Klimaszewski,R,R,Fastball,Foul,,,111,-0.197095143,0.135384182
+2,2,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Flynn Matheson,Ricky Klimaszewski,R,R,Breaking Ball,Popout,Pop Up,Straightaway,111,0.660320597,0.790371175
+2,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Elias Rubio Reyes,Charlie Hughes,R,R,Fastball,Foul,,,0,-0.635772963,0.664108622
+2,0,0,1,'0-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Elias Rubio Reyes,Charlie Hughes,R,R,Curveball,Ball,,,0,1.318337327,-0.259186295
+2,0,1,1,'1-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Elias Rubio Reyes,Charlie Hughes,R,R,Fastball,Swinging Strike,,,0,-0.556013359,1.137593195
+2,0,1,2,'1-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Elias Rubio Reyes,Charlie Hughes,R,R,Fastball,Ball,,,0,-0.914931576,1.248072929
+2,0,2,2,'2-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Elias Rubio Reyes,Charlie Hughes,R,R,Changeup,Ball,,,0,0.959419111,-0.148706562
+2,0,3,2,'3-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Elias Rubio Reyes,Charlie Hughes,R,R,Fastball,Ball,,,0,-0.79529217,0.18273264
+2,0,4,2,'4-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Elias Rubio Reyes,Charlie Hughes,R,R,Fastball,Walk,,,0,-0.456313855,1.248072929
+2,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Ryan Hsu,Charlie Hughes,R,R,Fastball,Double,Fly Ball,Opposite Field,100,-0.296794647,0.443149155
+2,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Kirk Gibson,Charlie Hughes,R,R,Curveball,Groundout,Ground Ball,Pull,10,0.560621092,0.143275592
+2,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Jackson Gannett,Charlie Hughes,R,R,Curveball,Called Strike,,,100,0.421041786,0.640434394
+2,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Jackson Gannett,Charlie Hughes,R,R,Curveball,Called Strike,,,100,0.740080201,0.443149155
+2,1,0,2,'0-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Jackson Gannett,Charlie Hughes,R,R,Curveball,Strikeout Swinging,,,100,0.620440795,0.316886602
+2,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Matt Fischer,Charlie Hughes,R,R,Curveball,Ball,,,100,1.059118615,-0.338100391
+2,2,1,0,'1-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Matt Fischer,Charlie Hughes,R,R,Fastball,Ball,,,10,0.660320597,-0.448580125
+2,2,2,0,'2-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Matt Fischer,Charlie Hughes,R,R,Fastball,Ball,,,10,1.517736337,0.853502452
+2,2,3,0,'3-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Matt Fischer,Charlie Hughes,R,R,Fastball,Called Strike,,,10,-0.516133557,0.277429554
+2,2,3,1,'3-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Matt Fischer,Charlie Hughes,R,R,Fastball,Foul,,,10,-0.476253756,0.119601363
+2,2,3,2,'3-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Matt Fischer,Charlie Hughes,R,R,Fastball,Strikeout Looking,,,10,0.779960003,0.380017878
+3,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Ricky Klimaszewski,R,R,Breaking Ball,Called Strike,,,0,0.361222083,0.798262585
+3,0,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Ricky Klimaszewski,R,R,Breaking Ball,Swinging Strike,,,0,0.440981687,0.261646735
+3,0,0,2,'0-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Ricky Klimaszewski,R,R,Breaking Ball,Dropped Third Strike Swinging,,,0,0.919539309,-0.393340258
+3,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,10,0.480861489,0.103818544
+3,0,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Fastball,Ball,,,10,-0.396494152,-0.290751934
+3,0,2,0,'2-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Fastball,Called Strike,,,10,0.480861489,0.695674261
+3,0,2,1,'2-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Fastball,Foul,,,10,-0.316734548,0.237972506
+3,0,2,2,'2-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Strikeout Swinging,,,10,0.540681192,-0.243403476
+3,1,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,10,0.819839804,-0.140815152
+3,1,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Offspeed,Ball,,,10,-1.393489198,0.395800698
+3,1,2,0,'2-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,10,-0.336674449,-0.203946429
+3,1,3,0,'3-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Fastball,Called Strike,,,10,0.321342281,0.151167001
+3,1,3,1,'3-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Fastball,Walk,,,10,1.298397427,-0.219729248
+3,1,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Gavin Taylor,Ricky Klimaszewski,R,R,Fastball,Called Strike,,,101,0.361222083,0.056470087
+3,1,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Gavin Taylor,Ricky Klimaszewski,R,R,Fastball,Ball,,,101,1.079058516,-0.164489381
+3,1,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Gavin Taylor,Ricky Klimaszewski,R,R,Breaking Ball,Single,Fly Ball,Opposite Field,101,-0.595893161,0.35634365
+3,1,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Ricky Klimaszewski,L,R,Offspeed,Foul,,,101,-0.57595326,0.166949821
+3,1,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Ricky Klimaszewski,L,R,Offspeed,Groundout,Ground Ball,Pull,101,-0.316734548,0.798262585
+3,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Breaking Ball,Swinging Strike,,,10,0.620440795,-0.235512067
+3,2,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,10,0.421041786,-0.409123077
+3,2,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Ricky Klimaszewski,R,R,Fastball,Flyout,Fly Ball,Straightaway,10,0.321342281,0.821936813
+3,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Tomoki Yamamoto,Charlie Hughes,L,R,Changeup,Called Strike,,,0,-0.57595326,0.387909288
+3,0,0,1,'0-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Tomoki Yamamoto,Charlie Hughes,L,R,Changeup,Groundout,Ground Ball,Pull,0,-0.416434053,0.18273264
+3,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Spenser Ross,Charlie Hughes,R,R,Fastball,Called Strike,,,0,-0.157215341,0.277429554
+3,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Spenser Ross,Charlie Hughes,R,R,Changeup,Ball,,,0,1.019238814,-0.377557439
+3,1,1,1,'1-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Spenser Ross,Charlie Hughes,R,R,Fastball,Ball,,,0,-0.017636034,1.216507291
+3,1,2,1,'2-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Spenser Ross,Charlie Hughes,R,R,Curveball,Ball,,,0,0.740080201,0.387909288
+3,1,3,1,'3-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Spenser Ross,Charlie Hughes,R,R,Fastball,Walk,,,0,-0.336674449,-0.203946429
+3,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Marcus Santos,Charlie Hughes,R,R,Fastball,Groundout,Ground Ball,Straightaway,100,0.381161984,0.135384182
+3,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Diego Fuentes,Charlie Hughes,R,R,Fastball,Flyout,Fly Ball,Opposite Field,100,0.421041786,0.277429554
+4,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Fastball,Ball,,,0,1.437976733,0.806153994
+4,0,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Breaking Ball,Called Strike,,,0,0.341282182,0.829828223
+4,0,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Fastball,Ball,,,0,-0.456313855,-0.267077705
+4,0,2,1,'2-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Ricky Klimaszewski,R,R,Fastball,Single,Ground Ball,Straightaway,0,-0.476253756,0.103818544
+4,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Josh Frazer,Ricky Klimaszewski,L,R,Fastball,Called Strike,,,100,-0.735472468,0.679891441
+4,0,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Josh Frazer,Ricky Klimaszewski,L,R,Fastball,Swinging Strike,,,100,-0.536073458,0.640434394
+4,0,0,2,'0-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Josh Frazer,Ricky Klimaszewski,L,R,Offspeed,Single,Line Drive,Pull,100,-0.755412369,0.166949821
+4,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Flynn Matheson,Ricky Klimaszewski,R,R,Fastball,Error,Ground Ball,Straightaway,110,0.480861489,0.687782851
+4,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Ricky Klimaszewski,R,R,Breaking Ball,Swinging Strike,,,111,0.660320597,0.750914127
+4,0,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Ricky Klimaszewski,R,R,Breaking Ball,Double,Fly Ball,Pull,111,0.460921588,0.245863916
+4,0,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Fastball,Foul,,,11,-0.316734548,0.261646735
+4,0,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Swinging Strike,,,11,1.37815703,-0.203946429
+4,0,0,2,'0-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,11,1.019238814,-0.188163609
+4,0,1,2,'1-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Foul,,,11,-0.556013359,0.253755326
+4,0,1,2,'1-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Fastball,Foul,,,11,0.480861489,0.395800698
+4,0,1,2,'1-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Foul,,,11,-0.635772963,1.106027557
+4,0,1,2,'1-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Ricky Klimaszewski,R,R,Breaking Ball,Strikeout Swinging,,,11,-0.496193657,0.932416547
+4,1,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Breaking Ball,Called Strike,,,11,-0.296794647,0.18273264
+4,1,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Breaking Ball,Swinging Strike,,,11,0.799899904,0.340560831
+4,1,0,2,'0-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,11,0.760020102,-0.377557439
+4,1,1,2,'1-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Ricky Klimaszewski,R,R,Fastball,Groundout,Ground Ball,Straightaway,11,0.440981687,0.774588356
+4,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Gavin Taylor,Ricky Klimaszewski,R,R,Breaking Ball,Ball,,,1,-0.256914845,1.192833062
+4,2,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Gavin Taylor,Ricky Klimaszewski,R,R,Breaking Ball,Called Strike,,,1,-0.256914845,0.387909288
+4,2,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Gavin Taylor,Ricky Klimaszewski,R,R,Fastball,Ball,,,1,-0.436373954,1.082353329
+4,2,2,1,'2-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Gavin Taylor,Ricky Klimaszewski,R,R,Fastball,Ball,,,1,1.517736337,-0.109249514
+4,2,3,1,'3-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Gavin Taylor,Ricky Klimaszewski,R,R,Fastball,Walk,,,1,0.979359012,-0.330208981
+4,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Kenny Leung,L,R,Breaking Ball,Called Strike,,,101,0.221642777,0.332669421
+4,2,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Kenny Leung,L,R,Fastball,Ball,,,101,0.520741291,-0.322317572
+4,2,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Kenny Leung,L,R,Fastball,Ball,,,11,0.580560993,-0.125032333
+4,2,2,1,'2-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Kenny Leung,L,R,Fastball,Ball,,,11,-1.313729594,-0.1802722
+4,2,3,1,'3-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Kenny Leung,L,R,Fastball,Foul,,,11,0.28146248,0.435257745
+4,2,3,2,'3-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Adam Geddes,Kenny Leung,L,R,Fastball,Walk,,,11,-0.057515836,-0.156597971
+4,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Kade Falardeau,Kenny Leung,R,R,Breaking Ball,Single,Ground Ball,Pull,111,-0.376554251,0.293212373
+4,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Kenny Leung,R,R,Breaking Ball,Ball,,,111,0.640380696,-0.330208981
+4,2,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Kenny Leung,R,R,Breaking Ball,Ball,,,11,0.620440795,-0.164489381
+4,2,2,0,'2-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jaden Leeder,Kenny Leung,R,R,Fastball,Double,Line Drive,Straightaway,11,0.480861489,0.135384182
+4,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Josh Frazer,Kenny Leung,L,R,Fastball,Foul,,,10,-0.595893161,0.111709954
+4,2,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Josh Frazer,Kenny Leung,L,R,Breaking Ball,Hit By Pitch,,,10,1.497796436,-0.188163609
+4,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Flynn Matheson,Kenny Leung,R,R,Breaking Ball,Called Strike,,,110,0.361222083,0.861393861
+4,2,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Flynn Matheson,Kenny Leung,R,R,Fastball,Single,Line Drive,Pull,110,0.460921588,0.766696947
+4,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Kojiro Hirata,R,R,Fastball,Ball,,,110,0.042183668,-0.274969115
+4,2,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Kojiro Hirata,R,R,Fastball,Ball,,,110,0.520741291,-0.330208981
+4,2,2,0,'2-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Kojiro Hirata,R,R,Fastball,Ball,,,110,-1.473248802,0.88506809
+4,2,3,0,'3-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Kojiro Hirata,R,R,Fastball,Called Strike,,,110,0.480861489,0.648325803
+4,2,3,1,'3-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Nolan Phelan,Kojiro Hirata,R,R,Fastball,Walk,,,110,-1.273849793,-0.148706562
+4,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Kojiro Hirata,R,R,Fastball,Called Strike,,,111,0.460921588,0.308995192
+4,2,0,1,'0-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Kojiro Hirata,R,R,Breaking Ball,Ball,,,111,2.095993463,0.18273264
+4,2,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Kojiro Hirata,R,R,Fastball,Called Strike,,,111,0.819839804,0.198515459
+4,2,1,2,'1-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Kojiro Hirata,R,R,Breaking Ball,Ball,,,111,0.7201403,-0.495928582
+4,2,2,2,'2-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Brady Campbell,Kojiro Hirata,R,R,Fastball,Double,Fly Ball,Pull,111,-0.376554251,0.261646735
+4,2,0,0,'0-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Kojiro Hirata,R,R,Fastball,Ball,,,10,1.59749594,0.640434394
+4,2,1,0,'1-0,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Kojiro Hirata,R,R,Fastball,Foul,,,10,0.50080139,0.695674261
+4,2,1,1,'1-1,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Kojiro Hirata,R,R,Breaking Ball,Swinging Strike,,,10,0.760020102,0.166949821
+4,2,1,2,'1-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Kojiro Hirata,R,R,Breaking Ball,Ball,,,10,-0.57595326,-0.36177462
+4,2,2,2,'2-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Kojiro Hirata,R,R,Breaking Ball,Ball,,,1,1.497796436,-0.227620657
+4,2,3,2,'3-2,2026-10-10,Brock Badgers,U of T Varsity Blues,,Jack Shannon,Kojiro Hirata,R,R,Fastball,Flyout,Fly Ball,Straightaway,1,0.121943272,0.387909288
+4,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Elias Rubio Reyes,Charlie Hughes,R,R,Curveball,Error,Ground Ball,Straightaway,0,-0.157215341,0.632542984
+4,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Ryan Hsu,Charlie Hughes,R,R,Fastball,Ball,,,100,0.440981687,1.121810376
+4,0,1,0,'1-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Ryan Hsu,Charlie Hughes,R,R,Fastball,Flyout,Fly Ball,Opposite Field,100,-0.476253756,0.135384182
+4,1,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Kirk Gibson,Charlie Hughes,R,R,Fastball,Called Strike,,,100,0.161823074,0.790371175
+4,1,0,1,'0-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Kirk Gibson,Charlie Hughes,R,R,Curveball,Foul,,,100,-0.456313855,0.308995192
+4,1,0,2,'0-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Kirk Gibson,Charlie Hughes,R,R,Fastball,Strikeout Swinging,,,100,0.580560993,0.70356567
+4,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Jackson Gannett,Charlie Hughes,R,R,Fastball,Called Strike,,,100,0.520741291,0.924525138
+4,2,0,1,'0-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Jackson Gannett,Charlie Hughes,R,R,Curveball,Ball,,,100,0.520741291,-0.385448848
+4,2,1,1,'1-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Jackson Gannett,Charlie Hughes,R,R,Fastball,Ball,,,100,-1.074450783,1.169158834
+4,2,2,1,'2-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Jackson Gannett,Charlie Hughes,R,R,Curveball,Called Strike,,,100,0.261522579,0.87717668
+4,2,2,2,'2-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Jackson Gannett,Charlie Hughes,R,R,Fastball,Ball,,,100,1.37815703,-0.274969115
+4,2,3,2,'3-2,2026-10-10,U of T Varsity Blues,Brock Badgers,,Jackson Gannett,Charlie Hughes,R,R,Fastball,Walk,,,100,-1.592888207,1.145484605
+4,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Paul Verman,Charlie Hughes,L,R,Fastball,Ball,,,110,-0.456313855,1.224398701
+4,2,1,0,'1-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Paul Verman,Charlie Hughes,L,R,Fastball,Ball,,,110,0.321342281,-0.117140923
+4,2,2,0,'2-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Paul Verman,Charlie Hughes,L,R,Fastball,Ball,,,110,0.480861489,-0.267077705
+4,2,3,0,'3-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Paul Verman,Charlie Hughes,L,R,Fastball,Called Strike,,,110,0.760020102,0.790371175
+4,2,3,1,'3-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Paul Verman,Charlie Hughes,L,R,Fastball,Flyout,Fly Ball,Opposite Field,110,-0.615833062,0.253755326
