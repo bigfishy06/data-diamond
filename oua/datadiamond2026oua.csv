@@ -10234,3 +10234,210 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 4,2,2,0,'2-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Paul Verman,Charlie Hughes,L,R,Fastball,Ball,,,110,0.480861489,-0.267077705
 4,2,3,0,'3-0,2026-10-10,U of T Varsity Blues,Brock Badgers,,Paul Verman,Charlie Hughes,L,R,Fastball,Called Strike,,,110,0.760020102,0.790371175
 4,2,3,1,'3-1,2026-10-10,U of T Varsity Blues,Brock Badgers,,Paul Verman,Charlie Hughes,L,R,Fastball,Flyout,Fly Ball,Opposite Field,110,-0.615833062,0.253755326
+1,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Fastball,Ball,,,0,-1.493188703,0.316886602
+1,0,1,0,'1-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Fastball,Error,Ground Ball,Straightaway,0,-0.775352269,0.798262585
+1,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Fastball,Sacrifice Bunt,,,100,0.421041786,0.758805537
+1,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Slider,Ball,,,10,0.799899904,0.166949821
+1,1,1,0,'1-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Slider,Groundout,Ground Ball,Straightaway,10,0.221642777,0.332669421
+1,2,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Fastball,Foul,,,1,-0.835171972,0.695674261
+1,2,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Slider,Swinging Strike,,,1,0.30140238,0.159058411
+1,2,0,2,'0-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Splitter,Ball,,,1,-1.154210387,-0.227620657
+1,2,1,2,'1-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Slider,Strikeout Swinging,,,1,0.660320597,0.664108622
+1,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Fastball,Ball,,,0,-1.333669495,1.042896281
+1,0,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Offspeed,Ball,,,0,-0.715532567,1.121810376
+1,0,2,0,'2-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Fastball,Single,Ground Ball,Straightaway,0,-0.496193657,0.198515459
+1,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Gavin McLean,R,R,Breaking Ball,Ball,,,100,0.002303867,1.106027557
+1,0,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Gavin McLean,R,R,Fastball,Groundout,Ground Ball,Pull,100,0.421041786,0.656217213
+1,1,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Foul,,,10,-0.316734548,0.245863916
+1,1,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Foul,,,10,-0.197095143,0.17484123
+1,1,0,2,'0-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Ball,,,10,-0.396494152,-0.35388321
+1,1,1,2,'1-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Strikeout Looking,,,10,0.7201403,0.608868755
+1,2,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Offspeed,Ball,,,1,-0.954811378,-0.440688715
+1,2,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Fastball,Flyout,,,1,-0.476253756,0.87717668
+2,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Evan Marks,L,R,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.595893161,0.774588356
+2,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Evan Marks,R,R,Slider,Foul,,,0,-0.635772963,0.648325803
+2,1,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Evan Marks,R,R,,Hit By Pitch,,,0,,
+2,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Rosseti,Evan Marks,L,R,Splitter,Called Strike,,,100,-0.35661435,0.585194527
+2,1,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Rosseti,Evan Marks,L,R,Splitter,Foul,,,100,-0.655712864,-0.188163609
+2,1,0,2,'0-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Rosseti,Evan Marks,L,R,Fastball,Foul,,,100,-0.536073458,0.892959499
+2,1,0,2,'0-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Rosseti,Evan Marks,L,R,Fastball,Ball,,,100,-1.393489198,0.230081097
+2,1,1,2,'1-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Rosseti,Evan Marks,L,R,,Caught Stealing,,,100,,
+2,2,1,2,'1-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Rosseti,Evan Marks,L,R,Splitter,Groundout,Ground Ball,Opposite Field,100,-0.57595326,0.135384182
+2,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Swinging Strike,,,0,1.437976733,0.245863916
+2,0,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.520741291,0.766696947
+2,1,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Breaking Ball,Foul,,,0,0.540681192,0.340560831
+2,1,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Breaking Ball,Ball,,,0,1.537676238,0.095927134
+2,1,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Fastball,Ball,,,0,-0.875051774,1.169158834
+2,1,2,1,'2-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Fastball,Groundout,Ground Ball,Straightaway,0,0.580560993,0.640434394
+2,2,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Called Strike,,,0,0.261522579,0.608868755
+2,2,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Groundout,Ground Ball,Pull,0,-0.396494152,0.18273264
+3,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Evan Marks,R,R,Slider,Swinging Strike,,,0,0.421041786,0.380017878
+3,0,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Evan Marks,R,R,Fastball,Ball,,,0,-1.553008405,0.119601363
+3,0,1,1,'1-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Evan Marks,R,R,Slider,Foul,,,0,-0.316734548,0.056470087
+3,0,1,2,'1-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Evan Marks,R,R,Slider,Flyout,Fly Ball,Pull,0,0.600500894,0.190624049
+3,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Evan Marks,R,R,Slider,Popout,Pop Up,Opposite Field,0,0.660320597,0.766696947
+3,2,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Fastball,Error,Ground Ball,Pull,0,-0.595893161,0.70356567
+3,2,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Slider,Called Strike,,,100,0.381161984,0.17484123
+3,2,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Slider,Groundout,Ground Ball,Pull,100,0.580560993,0.285320964
+3,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Fastball,Called Strike,,,0,0.520741291,0.34845224
+3,0,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Breaking Ball,Ball,,,0,1.477856535,0.230081097
+3,0,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Fastball,Ball,,,0,-1.273849793,0.324778012
+3,0,2,1,'2-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Breaking Ball,Ball,,,0,-0.35661435,-0.235512067
+3,0,3,1,'3-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Fastball,Walk,,,0,-0.595893161,1.113918967
+3,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Gavin McLean,R,R,Breaking Ball,Ball,,,100,1.298397427,-0.251294886
+3,0,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Gavin McLean,R,R,Fastball,Ball,,,1,0.50080139,1.287529977
+3,0,2,0,'2-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Gavin McLean,R,R,Breaking Ball,Home Run,Fly Ball,Pull,1,-0.336674449,0.198515459
+3,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Offspeed,Swinging Strike,,,0,-0.775352269,0.593085936
+3,0,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Breaking Ball,Ball,,,0,0.580560993,1.145484605
+3,0,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Fastball,Called Strike,,,0,-0.775352269,0.664108622
+3,0,1,2,'1-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Offspeed,Groundout,Ground Ball,Pull,0,-0.655712864,0.380017878
+3,1,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Gavin McLean,R,R,Fastball,Ball,,,0,1.896594454,0.17484123
+3,1,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Gavin McLean,R,R,Fastball,Foul,,,0,0.560621092,0.845611042
+3,1,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Gavin McLean,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.50080139,0.285320964
+3,2,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Ball,,,0,1.079058516,0.821936813
+3,2,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Ball,,,0,1.059118615,-0.369666029
+3,2,2,0,'2-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Swinging Strike,,,0,0.740080201,0.387909288
+3,2,2,1,'2-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Foul,,,0,-0.396494152,0.324778012
+3,2,2,2,'2-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Ball,,,0,0.341282182,1.208615881
+3,2,3,2,'3-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Popout,Pop Up,Opposite Field,0,0.580560993,0.166949821
+4,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Slider,Ball,,,0,0.600500894,-0.17238079
+4,0,1,0,'1-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Fastball,Popout,Pop Up,Opposite Field,0,0.381161984,0.127492773
+4,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Fastball,Called Strike,,,0,-0.635772963,0.127492773
+4,1,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Splitter,Foul,,,0,-0.35661435,0.829828223
+4,1,0,2,'0-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Splitter,Foul,,,0,0.421041786,0.293212373
+4,1,0,2,'0-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Slider,Ball,,,0,1.437976733,0.679891441
+4,1,1,2,'1-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Splitter,Strikeout Swinging,,,0,0.381161984,-0.267077705
+4,2,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Evan Marks,L,R,Splitter,Single,Line Drive,Straightaway,0,-0.556013359,0.308995192
+4,2,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Evan Marks,R,R,Splitter,Groundout,Ground Ball,Pull,100,0.640380696,0.159058411
+4,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Fastball,Ball,,,0,-1.293789693,1.121810376
+4,0,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Fastball,Ball,,,0,1.457916634,0.419474926
+4,0,2,0,'2-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Fastball,Called Strike,,,0,-0.875051774,0.474714793
+4,0,2,1,'2-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Offspeed,Ball,,,0,-1.493188703,-0.132923743
+4,0,3,1,'3-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Breaking Ball,Walk,,,0,0.859719606,-0.290751934
+4,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Called Strike,,,100,-0.376554251,0.18273264
+4,0,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Called Strike,,,100,-0.775352269,0.237972506
+4,0,0,2,'0-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Foul,,,100,0.28146248,0.474714793
+4,0,0,2,'0-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Fastball,Foul,,,100,1.218637823,1.106027557
+4,0,0,2,'0-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Foul,,,100,-0.556013359,-0.188163609
+4,0,0,2,'0-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Ball,,,100,1.437976733,-0.36177462
+4,0,1,2,'1-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Fastball,Double Play,Ground Ball,Pull,100,-0.416434053,0.127492773
+4,2,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Breaking Ball,Foul,,,0,0.241582678,0.222189687
+4,2,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Fastball,Ball,,,0,-0.436373954,1.169158834
+4,2,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Breaking Ball,Hit By Pitch,,,0,-1.413429099,0.719348489
+4,2,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Called Strike,,,100,0.540681192,0.230081097
+4,2,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,,Truncated Out,,,100,,
+5,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Rosseti,Evan Marks,L,R,Splitter,Groundout,Ground Ball,Pull,0,-0.57595326,0.672000032
+5,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Evan Marks,R,R,Slider,Swinging Strike,,,0,0.540681192,0.151167001
+5,1,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Evan Marks,R,R,Splitter,Swinging Strike,,,0,-0.496193657,-0.164489381
+5,1,0,2,'0-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Evan Marks,R,R,Splitter,Strikeout Swinging,,,0,0.640380696,-0.140815152
+5,2,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Evan Marks,R,R,Splitter,Ball,,,0,0.480861489,1.153376015
+5,2,1,0,'1-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Evan Marks,R,R,Fastball,Called Strike,,,0,-0.35661435,0.080144315
+5,2,1,1,'1-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Evan Marks,R,R,Splitter,Foul,,,0,-0.655712864,0.143275592
+5,2,1,2,'1-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Evan Marks,R,R,Slider,Ball,,,0,1.517736337,0.230081097
+5,2,2,2,'2-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Evan Marks,R,R,Splitter,Foul,,,0,0.022243767,0.198515459
+5,2,2,2,'2-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Evan Marks,R,R,Fastball,Foul,,,0,-0.715532567,0.798262585
+5,2,2,2,'2-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Evan Marks,R,R,Fastball,Foul,,,0,0.480861489,0.853502452
+5,2,2,2,'2-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Preston Vieira,Evan Marks,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.341282182,0.372126469
+5,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Ball,,,0,1.477856535,-0.125032333
+5,0,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Fastball,Ball,,,0,-0.815232071,1.129701786
+5,0,2,0,'2-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Called Strike,,,0,-0.316734548,0.743022718
+5,0,2,1,'2-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Fastball,Ball,,,0,0.580560993,1.169158834
+5,0,3,1,'3-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Called Strike,,,0,0.560621092,0.253755326
+5,0,3,2,'3-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Gavin McLean,R,R,Breaking Ball,Popout,Pop Up,Opposite Field,0,0.341282182,0.18273264
+5,1,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Fastball,Ball,,,0,0.201702876,1.121810376
+5,1,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Fastball,Ball,,,0,0.580560993,-0.282860524
+5,1,2,0,'2-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Breaking Ball,Ball,,,0,-1.473248802,0.387909288
+5,1,3,0,'3-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Fastball,Called Strike,,,0,0.600500894,0.656217213
+5,1,3,1,'3-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Fastball,Called Strike,,,0,-0.416434053,0.293212373
+5,1,3,2,'3-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Gavin McLean,R,R,Breaking Ball,Walk,,,0,0.580560993,1.106027557
+5,1,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Gavin McLean,R,R,Fastball,Ball,,,100,-1.393489198,0.995547824
+5,1,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Gavin McLean,R,R,Fastball,Ball,,,100,0.460921588,-0.409123077
+5,1,2,0,'2-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Gavin McLean,R,R,Fastball,Flyout,Fly Ball,Straightaway,100,0.361222083,0.411583517
+5,2,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Gavin McLean,L,R,Breaking Ball,Groundout,Ground Ball,Pull,100,-0.396494152,0.143275592
+6,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Fastball,Foul,,,0,-0.57595326,0.87717668
+6,0,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Fastball,Called Strike,,,0,-0.496193657,0.143275592
+6,0,0,2,'0-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Splitter,Ball,,,0,0.50080139,-0.495928582
+6,0,1,2,'1-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Slider,Single,Ground Ball,Straightaway,0,0.50080139,0.159058411
+6,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Slider,Foul,,,100,0.760020102,0.103818544
+6,0,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Slider,Foul,,,100,-0.35661435,-0.196055019
+6,0,0,2,'0-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Slider,Ball,,,100,1.497796436,0.71145708
+6,0,1,2,'1-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Splitter,Ball,,,10,0.680260498,-0.393340258
+6,0,2,2,'2-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Fastball,Strikeout Swinging,,,10,0.700200399,0.790371175
+6,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Fastball,Ball,,,10,0.600500894,1.121810376
+6,1,1,0,'1-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Slider,Ball,,,10,1.178758021,-0.369666029
+6,1,2,0,'2-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Slider,Called Strike,,,10,0.560621092,0.080144315
+6,1,2,1,'2-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Splitter,Swinging Strike,,,10,0.640380696,-0.227620657
+6,1,2,2,'2-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Splitter,Strikeout Swinging,,,10,-0.775352269,-0.227620657
+6,2,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Fastball,Called Strike,,,10,-0.655712864,0.585194527
+6,2,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Fastball,Ball,,,10,0.799899904,0.616760165
+6,2,1,1,'1-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Slider,Ball,,,10,1.118938318,-0.259186295
+6,2,2,1,'2-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Splitter,Swinging Strike,,,10,0.161823074,0.119601363
+6,2,2,2,'2-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Phil Sephton,Evan Marks,R,R,Fastball,Popout,Pop Up,Opposite Field,10,0.480861489,0.750914127
+6,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Gavin McLean,R,R,Fastball,Ball,,,0,-1.293789693,1.0586791
+6,0,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Gavin McLean,R,R,Breaking Ball,Called Strike,,,0,0.421041786,0.608868755
+6,0,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Gavin McLean,R,R,Breaking Ball,Lineout,Line Drive,Straightaway,0,-0.536073458,0.585194527
+6,1,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Ball,,,0,0.999298913,-0.369666029
+6,1,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Breaking Ball,Called Strike,,,0,-0.595893161,0.143275592
+6,1,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Gavin McLean,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.361222083,0.222189687
+6,2,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Offspeed,Ball,,,0,-1.453308901,0.316886602
+6,2,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Fastball,Ball,,,0,-0.556013359,1.248072929
+6,2,2,0,'2-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Offspeed,Foul,,,0,-0.655712864,0.387909288
+6,2,2,1,'2-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Fastball,Foul,,,0,-0.416434053,0.758805537
+6,2,2,2,'2-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Gavin McLean,L,R,Offspeed,Strikeout Swinging,,,0,-0.655712864,0.829828223
+7,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Evan Marks,L,R,Splitter,Ball,,,0,0.540681192,-0.259186295
+7,0,1,0,'1-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Evan Marks,L,R,Splitter,Flyout,Fly Ball,Straightaway,0,-0.695592666,0.340560831
+7,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Evan Marks,R,R,Splitter,Called Strike,,,0,0.560621092,0.52995466
+7,1,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Evan Marks,R,R,Splitter,Ball,,,0,0.700200399,-0.456471534
+7,1,1,1,'1-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Evan Marks,R,R,Slider,Single,Ground Ball,Pull,0,0.361222083,1.090244738
+7,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jack Rosseti,Evan Marks,L,R,Fastball,Single,Ground Ball,Straightaway,100,-0.516133557,0.782479766
+7,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Evan Marks,R,R,Slider,Swinging Strike,,,110,1.517736337,0.916633728
+7,1,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Evan Marks,R,R,Slider,Double Play,Line Drive,Pull,110,0.560621092,0.245863916
+7,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Ball,,,0,-0.675652765,1.263855748
+7,0,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Swinging Strike,,,0,0.520741291,-0.235512067
+7,0,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Swinging Strike,,,0,0.7201403,0.648325803
+7,0,1,2,'1-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Ball,,,0,0.321342281,1.121810376
+7,0,2,2,'2-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Gavin McLean,R,R,Breaking Ball,Flyout,Fly Ball,Opposite Field,0,0.321342281,0.577303117
+7,1,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Breaking Ball,Ball,,,0,-1.074450783,-0.243403476
+7,1,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Gavin McLean,R,R,Fastball,Single,Line Drive,Pull,0,0.560621092,0.561520298
+7,1,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Aiden Tonge,R,R,Breaking Ball,Foul,,,100,-0.516133557,-0.196055019
+7,1,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Aiden Tonge,R,R,Breaking Ball,Called Strike,,,100,0.600500894,0.758805537
+7,1,0,2,'0-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Aiden Tonge,R,R,Fastball,Ball,,,100,0.241582678,-0.377557439
+7,1,1,2,'1-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Aiden Tonge,R,R,Breaking Ball,Strikeout Swinging,,,100,-0.316734548,0.245863916
+7,2,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Aiden Tonge,R,R,Fastball,Ball,,,100,0.460921588,-0.148706562
+7,2,1,0,'1-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Aiden Tonge,R,R,Fastball,Called Strike,,,100,0.201702876,0.253755326
+7,2,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Aiden Tonge,R,R,Breaking Ball,Ball,,,100,-0.416434053,-0.243403476
+7,2,2,1,'2-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jack Shannon,Aiden Tonge,R,R,Fastball,Popout,Pop Up,Opposite Field,100,-0.615833062,0.71145708
+8,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cole Geldart,Evan Marks,L,R,Splitter,Swinging Strike,,,0,-0.476253756,0.35634365
+8,0,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cole Geldart,Evan Marks,L,R,Splitter,Single,Ground Ball,Pull,0,-0.456313855,0.18273264
+8,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Fastball,Foul,,,100,0.261522579,0.790371175
+8,0,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Fastball,Foul,,,100,0.600500894,0.774588356
+8,0,0,2,'0-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Splitter,Strikeout Swinging,,,100,-0.516133557,-0.314426162
+8,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Slider,Ball,,,100,0.760020102,0.269538145
+8,1,1,0,'1-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Slider,Single,Ground Ball,Straightaway,100,-0.376554251,0.679891441
+8,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,,,,,,Additional Out,,,100,,
+8,2,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Fastball,Flyout,Fly Ball,Straightaway,10,-0.79529217,0.419474926
+8,0,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Aiden Tonge,R,R,Fastball,Foul,,,0,0.341282182,0.640434394
+8,0,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Aiden Tonge,R,R,Breaking Ball,Ball,,,0,1.398096931,0.151167001
+8,0,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Aiden Tonge,R,R,Breaking Ball,Ball,,,0,0.640380696,-0.401231667
+8,0,2,1,'2-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Aiden Tonge,R,R,Fastball,Lineout,Line Drive,Straightaway,0,0.221642777,0.127492773
+8,1,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Aiden Tonge,L,R,Fastball,Called Strike,,,0,-0.536073458,0.206406868
+8,1,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Aiden Tonge,L,R,Fastball,Swinging Strike,,,0,-0.296794647,0.869285271
+8,1,0,2,'0-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Aiden Tonge,L,R,Fastball,Ball,,,0,-1.313729594,0.277429554
+8,1,1,2,'1-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Aiden Tonge,L,R,Fastball,Ball,,,0,-1.433369,0.435257745
+8,1,2,2,'2-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Aiden Tonge,L,R,Offspeed,Foul,,,0,-0.635772963,0.119601363
+8,1,2,2,'2-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Aiden Tonge,L,R,Offspeed,Ball,,,0,-0.635772963,-0.377557439
+8,1,3,2,'3-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Aiden Tonge,L,R,Fastball,Strikeout Swinging,,,0,-1.413429099,0.892959499
+8,2,0,0,'0-0,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Aiden Tonge,R,R,Fastball,Called Strike,,,0,0.421041786,0.766696947
+8,2,0,1,'0-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Aiden Tonge,R,R,Fastball,Ball,,,0,0.859719606,-0.35388321
+8,2,1,1,'1-1,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Aiden Tonge,R,R,Fastball,Foul,,,0,0.7201403,0.845611042
+8,2,1,2,'1-2,2026-10-11,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Aiden Tonge,R,R,Breaking Ball,Popout,Pop Up,Pull,0,-0.556013359,0.88506809
+9,0,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Gabriel Lopez,Evan Marks,R,R,Fastball,Ball,,,0,-1.493188703,0.222189687
+9,0,1,0,'1-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Gabriel Lopez,Evan Marks,R,R,Fastball,Lineout,Line Drive,Straightaway,0,-0.35661435,0.222189687
+9,1,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Evan Marks,L,R,Splitter,Swinging Strike,,,0,-0.655712864,0.127492773
+9,1,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Evan Marks,L,R,Splitter,Ball,,,0,0.640380696,-0.188163609
+9,1,1,1,'1-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Evan Marks,L,R,Splitter,Swinging Strike,,,0,0.700200399,-0.35388321
+9,1,1,2,'1-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Evan Marks,L,R,Splitter,Strikeout Swinging,,,0,-0.097395638,-0.298643343
+9,2,0,0,'0-0,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Evan Marks,R,R,Slider,Swinging Strike,,,0,0.640380696,0.545737479
+9,2,0,1,'0-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Evan Marks,R,R,Slider,Ball,,,0,1.418036832,-0.401231667
+9,2,1,1,'1-1,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Evan Marks,R,R,Slider,Swinging Strike,,,0,1.418036832,0.34845224
+9,2,1,2,'1-2,2026-10-11,Wilfrid Laurier Golden Hawks,Brock Badgers,,Nolan Goranson,Evan Marks,R,R,Slider,Strikeout Swinging,,,0,1.318337327,0.814045404
