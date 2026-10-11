@@ -47,12 +47,6 @@ pitches <- as.data.frame(read_oua_pitches(
 ))
 colnames(pitches) <- expected_columns
 
-# The rolling export contains prior seasons as well.  This script produces the
-# 2026 dashboard files, so select by the actual game date rather than filename.
-pitches$date <- trimws(as.character(pitches$date))
-pitches <- pitches %>% filter(grepl("^2026-", date))
-if (!nrow(pitches)) stop("No 2026-dated pitches were found in the OUA CSV.")
-
 # ── Clean ──────────────────────────────────────────────────────────────────────
 pitches$pitch_x       <- suppressWarnings(as.numeric(pitches$pitch_x))
 pitches$pitch_y       <- suppressWarnings(as.numeric(pitches$pitch_y))
