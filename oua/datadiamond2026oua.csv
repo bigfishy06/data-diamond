@@ -3411,18 +3411,18 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 7,1,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Nolan McFarlane,L,R,Fastball,Foul,,,100,0.401101885,-0.125032333
 7,1,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Nolan McFarlane,L,R,Fastball,Popout,Pop Up,Opposite Field,100,-0.635772963,0.853502452
 7,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cameron Bendo,Nolan McFarlane,L,R,Fastball,Groundout,Ground Ball,Pull,100,0.321342281,0.750914127
-1,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Fastball,Single,Line Drive,Opposite Field,0,0.30140238,0.316886602
-1,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Ball,,,100,1.398096931,0.159058411
-1,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Ball,,,100,1.178758021,-0.282860524
-1,0,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Ball,,,100,1.477856535,-0.132923743
-1,0,3,0,'3-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Walk,,,100,1.717135346,0.009121629
-1,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Swinging Strike,,,110,-0.615833062,1.082353329
-1,0,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Swinging Strike,,,110,-0.516133557,0.869285271
-1,0,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Breaking Ball,Foul,,,110,0.460921588,0.269538145
-1,0,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Strikeout Swinging,,,110,0.520741291,0.837719632
-1,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Breaking Ball,Swinging Strike,,,110,-0.35661435,0.679891441
-1,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Fastball,Called Strike,,,110,0.361222083,0.222189687
-1,1,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Breaking Ball,Strikeout Swinging,,,110,0.421041786,0.664108622
+1,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Fastball,Single,Line Drive,Opposite Field,0,0.30140238,0.316886602
+1,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Ball,,,100,1.398096931,0.159058411
+1,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Ball,,,100,1.178758021,-0.282860524
+1,0,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Ball,,,100,1.477856535,-0.132923743
+1,0,3,0,'3-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Walk,,,100,1.717135346,0.009121629
+1,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Swinging Strike,,,110,-0.615833062,1.082353329
+1,0,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Swinging Strike,,,110,-0.516133557,0.869285271
+1,0,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Breaking Ball,Foul,,,110,0.460921588,0.269538145
+1,0,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Strikeout Swinging,,,110,0.520741291,0.837719632
+1,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Breaking Ball,Swinging Strike,,,110,-0.35661435,0.679891441
+1,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Fastball,Called Strike,,,110,0.361222083,0.222189687
+1,1,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Breaking Ball,Strikeout Swinging,,,110,0.421041786,0.664108622
 1,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,,,R,R,,Additional Out,,,110,,
 1,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Fastball,Single,Line Drive,Opposite Field,0,0.201702876,0.561520298
 1,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Splitter,Called Strike,,,100,-0.276854746,0.679891441
@@ -3443,30 +3443,30 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 1,2,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cole Geldart,Evan Marks,L,R,Cutter,Foul,,,110,-0.675652765,0.285320964
 1,2,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cole Geldart,Evan Marks,L,R,Splitter,Called Strike,,,110,-0.715532567,0.119601363
 1,2,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cole Geldart,Evan Marks,L,R,Splitter,Strikeout Looking,,,110,0.161823074,0.395800698
-2,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Fastball,Ball,,,0,,
-2,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Offspeed,Ball,,,,-1.553008405,0.009121629
-2,0,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Fastball,Ball,,,,-0.914931576,1.137593195
-2,0,3,0,'3-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Fastball,Called Strike,,,,-0.695592666,0.490497612
-2,0,3,1,'3-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Offspeed,Swinging Strike,,,,-0.914931576,0.798262585
-2,0,3,2,'3-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Offspeed,Single,Ground Ball,Pull,0,-0.675652765,0.324778012
-2,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Breaking Ball,Ball,,,100,0.680260498,-0.503819992
-2,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Fastball,Single,Line Drive,Straightaway,100,0.341282182,0.261646735
-2,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Fastball,Ball,,,110,0.660320597,1.145484605
-2,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Breaking Ball,Foul,,,110,-0.13727544,0.70356567
-2,0,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Breaking Ball,Ball,,,110,-0.296794647,-0.53538563
-2,0,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Fastball,Single,Line Drive,Straightaway,110,-0.376554251,0.656217213
-2,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rossetti,L,R,Fastball,Foul,,,111,-0.476253756,0.143275592
-2,0,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rossetti,L,R,Breaking Ball,Ball,,,111,-0.894991675,-0.472254353
-2,0,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rossetti,L,R,Breaking Ball,Ball,,,111,-1.194090189,-0.338100391
-2,0,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rossetti,L,R,Fastball,Groundout,Ground Ball,Pull,111,-0.516133557,0.253755326
-2,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Jack Rossetti,R,R,Breaking Ball,Called Strike,,,11,0.520741291,0.490497612
-2,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Jack Rossetti,R,R,Fastball,Ball,,,11,1.019238814,1.192833062
-2,1,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Jack Rossetti,R,R,Fastball,Ball,,,11,1.138878219,-0.235512067
-2,1,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Jack Rossetti,R,R,Fastball,Swinging Strike,,,1,0.50080139,0.135384182
-2,1,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Jack Rossetti,R,R,Fastball,Strikeout Swinging,,,1,0.161823074,0.340560831
-2,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Offspeed,Ball,,,1,-0.416434053,-0.424905896
-2,2,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Fastball,Ball,,,1,-0.396494152,1.216507291
-2,2,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Fastball,Popout,Pop Up,Opposite Field,1,-0.296794647,0.482606203
+2,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Fastball,Ball,,,0,,
+2,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Offspeed,Ball,,,,-1.553008405,0.009121629
+2,0,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Fastball,Ball,,,,-0.914931576,1.137593195
+2,0,3,0,'3-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Fastball,Called Strike,,,,-0.695592666,0.490497612
+2,0,3,1,'3-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Offspeed,Swinging Strike,,,,-0.914931576,0.798262585
+2,0,3,2,'3-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Offspeed,Single,Ground Ball,Pull,0,-0.675652765,0.324778012
+2,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Breaking Ball,Ball,,,100,0.680260498,-0.503819992
+2,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Fastball,Single,Line Drive,Straightaway,100,0.341282182,0.261646735
+2,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Fastball,Ball,,,110,0.660320597,1.145484605
+2,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Breaking Ball,Foul,,,110,-0.13727544,0.70356567
+2,0,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Breaking Ball,Ball,,,110,-0.296794647,-0.53538563
+2,0,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Fastball,Single,Line Drive,Straightaway,110,-0.376554251,0.656217213
+2,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rosseti,L,R,Fastball,Foul,,,111,-0.476253756,0.143275592
+2,0,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rosseti,L,R,Breaking Ball,Ball,,,111,-0.894991675,-0.472254353
+2,0,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rosseti,L,R,Breaking Ball,Ball,,,111,-1.194090189,-0.338100391
+2,0,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rosseti,L,R,Fastball,Groundout,Ground Ball,Pull,111,-0.516133557,0.253755326
+2,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Jack Rosseti,R,R,Breaking Ball,Called Strike,,,11,0.520741291,0.490497612
+2,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Jack Rosseti,R,R,Fastball,Ball,,,11,1.019238814,1.192833062
+2,1,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Jack Rosseti,R,R,Fastball,Ball,,,11,1.138878219,-0.235512067
+2,1,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Jack Rosseti,R,R,Fastball,Swinging Strike,,,1,0.50080139,0.135384182
+2,1,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brayden Sowrey,Jack Rosseti,R,R,Fastball,Strikeout Swinging,,,1,0.161823074,0.340560831
+2,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Offspeed,Ball,,,1,-0.416434053,-0.424905896
+2,2,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Fastball,Ball,,,1,-0.396494152,1.216507291
+2,2,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Fastball,Popout,Pop Up,Opposite Field,1,-0.296794647,0.482606203
 2,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Cutter,Called Strike,,,0,0.261522579,0.498389022
 2,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Johnny Banks,Evan Marks,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,-0.595893161,0.261646735
 2,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Evan Marks,R,R,Cutter,Called Strike,,,0,0.401101885,0.798262585
@@ -3476,20 +3476,20 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 2,2,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cameron Bendo,Evan Marks,R,R,Fastball,Swinging Strike,,,0,-1.313729594,0.277429554
 2,2,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cameron Bendo,Evan Marks,R,R,Cutter,Foul,,,0,-0.755412369,0.451040564
 2,2,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cameron Bendo,Evan Marks,R,R,Cutter,Flyout,Fly Ball,Pull,0,0.121943272,0.766696947
-3,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Swinging Strike,,,0,-0.476253756,0.814045404
-3,0,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Foul,,,0,0.580560993,0.324778012
-3,0,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,-0.057515836,0.727239899
-3,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Called Strike,,,0,0.700200399,0.837719632
-3,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Ball,,,0,1.318337327,0.814045404
-3,1,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Breaking Ball,Ball,,,0,-0.695592666,1.098136148
-3,1,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Swinging Strike,,,0,0.341282182,-0.109249514
-3,1,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Strikeout Looking,,,0,0.560621092,0.230081097
-3,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Fastball,Ball,,,0,1.238577724,-0.188163609
-3,2,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Fastball,Ball,,,0,0.919539309,0.261646735
-3,2,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Fastball,Swinging Strike,,,0,-1.233969991,0.253755326
-3,2,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Fastball,Ball,,,0,-1.253909892,0.821936813
-3,2,3,1,'3-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Fastball,Foul,,,0,0.381161984,0.814045404
-3,2,3,2,'3-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.440981687,0.664108622
+3,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Swinging Strike,,,0,-0.476253756,0.814045404
+3,0,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Foul,,,0,0.580560993,0.324778012
+3,0,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,-0.057515836,0.727239899
+3,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Called Strike,,,0,0.700200399,0.837719632
+3,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Ball,,,0,1.318337327,0.814045404
+3,1,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Breaking Ball,Ball,,,0,-0.695592666,1.098136148
+3,1,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Swinging Strike,,,0,0.341282182,-0.109249514
+3,1,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Strikeout Looking,,,0,0.560621092,0.230081097
+3,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Fastball,Ball,,,0,1.238577724,-0.188163609
+3,2,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Fastball,Ball,,,0,0.919539309,0.261646735
+3,2,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Fastball,Swinging Strike,,,0,-1.233969991,0.253755326
+3,2,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Fastball,Ball,,,0,-1.253909892,0.821936813
+3,2,3,1,'3-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Fastball,Foul,,,0,0.381161984,0.814045404
+3,2,3,2,'3-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Fastball,Groundout,Ground Ball,Opposite Field,0,0.440981687,0.664108622
 3,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Evan Marks,L,R,Fastball,Foul,,,0,-0.615833062,0.750914127
 3,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Evan Marks,L,R,Splitter,Double,Fly Ball,Straightaway,0,-0.536073458,0.237972506
 3,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Evan Marks,R,R,Fastball,Single,Line Drive,Straightaway,10,-0.276854746,0.364235059
@@ -3503,23 +3503,23 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 3,2,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Daniel Leonard,Max Van Dam,R,L,Slider,Foul,,,10,-1.194090189,0.372126469
 3,2,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Daniel Leonard,Max Van Dam,R,L,Changeup,Ball,,,10,-0.914931576,-0.251294886
 3,2,2,1,'2-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Daniel Leonard,Max Van Dam,R,L,Fastball,Lineout,Line Drive,Opposite Field,10,0.640380696,0.269538145
-4,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Fastball,Ball,,,0,-0.715532567,1.121810376
-4,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Fastball,Called Strike,,,0,-1.353609396,0.411583517
-4,0,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Fastball,Ball,,,0,-1.353609396,0.916633728
-4,0,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Fastball,Home Run,Fly Ball,Pull,0,-0.197095143,0.814045404
-4,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Fastball,Ball,,,0,1.37815703,0.151167001
-4,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Fastball,Foul,,,0,0.480861489,0.88506809
-4,0,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Breaking Ball,Foul,,,0,-0.516133557,0.545737479
-4,0,1,2,'1-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Fastball,Ball,,,0,1.118938318,1.137593195
-4,0,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Fastball,Foul,,,0,-0.516133557,0.372126469
-4,0,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Breaking Ball,Ball,,,0,-1.194090189,1.177050243
-4,0,3,2,'3-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Fastball,Strikeout Swinging,,,0,0.640380696,1.106027557
-4,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Fastball,Called Strike,,,0,0.560621092,0.632542984
-4,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Fastball,Called Strike,,,0,0.321342281,0.340560831
-4,1,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Fastball,Foul,,,0,0.50080139,0.237972506
-4,1,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Breaking Ball,Flyout,Fly Ball,Pull,0,-0.276854746,0.679891441
-4,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rossetti,L,R,Breaking Ball,Ball,,,0,-1.373549297,0.70356567
-4,2,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rossetti,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.775352269,0.656217213
+4,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Fastball,Ball,,,0,-0.715532567,1.121810376
+4,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Fastball,Called Strike,,,0,-1.353609396,0.411583517
+4,0,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Fastball,Ball,,,0,-1.353609396,0.916633728
+4,0,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Fastball,Home Run,Fly Ball,Pull,0,-0.197095143,0.814045404
+4,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Fastball,Ball,,,0,1.37815703,0.151167001
+4,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Fastball,Foul,,,0,0.480861489,0.88506809
+4,0,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Breaking Ball,Foul,,,0,-0.516133557,0.545737479
+4,0,1,2,'1-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Fastball,Ball,,,0,1.118938318,1.137593195
+4,0,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Fastball,Foul,,,0,-0.516133557,0.372126469
+4,0,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Breaking Ball,Ball,,,0,-1.194090189,1.177050243
+4,0,3,2,'3-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Fastball,Strikeout Swinging,,,0,0.640380696,1.106027557
+4,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Fastball,Called Strike,,,0,0.560621092,0.632542984
+4,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Fastball,Called Strike,,,0,0.321342281,0.340560831
+4,1,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Fastball,Foul,,,0,0.50080139,0.237972506
+4,1,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Breaking Ball,Flyout,Fly Ball,Pull,0,-0.276854746,0.679891441
+4,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rosseti,L,R,Breaking Ball,Ball,,,0,-1.373549297,0.70356567
+4,2,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rosseti,L,R,Fastball,Groundout,Ground Ball,Straightaway,0,-0.775352269,0.656217213
 4,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cole Geldart,Max Van Dam,L,L,Fastball,Foul,,,0,-0.037575935,0.790371175
 4,0,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cole Geldart,Max Van Dam,L,L,Fastball,Ball,,,0,-1.373549297,0.190624049
 4,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cole Geldart,Max Van Dam,L,L,Slider,Ball,,,0,1.398096931,1.042896281
@@ -3529,22 +3529,22 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 4,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Max Van Dam,R,L,Fastball,Ball,,,100,-1.393489198,0.474714793
 4,1,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Max Van Dam,R,L,Fastball,Foul,,,100,0.261522579,0.230081097
 4,1,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Lucas Bateman,Max Van Dam,R,L,Changeup,Double Play,Ground Ball,Pull,100,0.7201403,0.261646735
-5,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rossetti,L,R,Fastball,Ball,,,0,-0.615833062,1.153376015
-5,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rossetti,L,R,Fastball,Ball,,,0,-1.273849793,1.129701786
-5,0,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rossetti,L,R,Offspeed,Foul,,,0,-0.516133557,0.206406868
-5,0,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rossetti,L,R,Fastball,Popout,Pop Up,Opposite Field,0,0.381161984,0.308995192
-5,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Breaking Ball,Swinging Strike,,,0,0.460921588,0.151167001
-5,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Fastball,Ball,,,0,0.899599408,0.427366336
-5,1,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Fastball,Ball,,,0,-1.393489198,0.948199366
-5,1,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Fastball,Swinging Strike,,,0,-0.396494152,0.672000032
-5,1,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Breaking Ball,Ball,,,0,-1.413429099,0.758805537
-5,1,3,2,'3-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Fastball,Foul,,,0,0.421041786,0.806153994
-5,1,3,2,'3-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Fastball,Flyout,Fly Ball,Pull,0,-0.436373954,0.34845224
-5,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Breaking Ball,Ball,,,0,1.398096931,0.088035725
-5,2,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Ball,,,0,0.760020102,-0.306534753
-5,2,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Called Strike,,,0,0.560621092,0.435257745
-5,2,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Foul,,,0,-0.735472468,0.119601363
-5,2,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Strikeout Looking,,,0,0.30140238,0.080144315
+5,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rosseti,L,R,Fastball,Ball,,,0,-0.615833062,1.153376015
+5,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rosseti,L,R,Fastball,Ball,,,0,-1.273849793,1.129701786
+5,0,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rosseti,L,R,Offspeed,Foul,,,0,-0.516133557,0.206406868
+5,0,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rosseti,L,R,Fastball,Popout,Pop Up,Opposite Field,0,0.381161984,0.308995192
+5,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Breaking Ball,Swinging Strike,,,0,0.460921588,0.151167001
+5,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Fastball,Ball,,,0,0.899599408,0.427366336
+5,1,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Fastball,Ball,,,0,-1.393489198,0.948199366
+5,1,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Fastball,Swinging Strike,,,0,-0.396494152,0.672000032
+5,1,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Breaking Ball,Ball,,,0,-1.413429099,0.758805537
+5,1,3,2,'3-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Fastball,Foul,,,0,0.421041786,0.806153994
+5,1,3,2,'3-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Fastball,Flyout,Fly Ball,Pull,0,-0.436373954,0.34845224
+5,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Breaking Ball,Ball,,,0,1.398096931,0.088035725
+5,2,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Ball,,,0,0.760020102,-0.306534753
+5,2,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Called Strike,,,0,0.560621092,0.435257745
+5,2,2,1,'2-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Foul,,,0,-0.735472468,0.119601363
+5,2,2,2,'2-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Strikeout Looking,,,0,0.30140238,0.080144315
 5,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Cameron Bendo,Max Van Dam,R,L,Fastball,Flyout,Fly Ball,Straightaway,0,0.261522579,0.71145708
 5,1,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Max Van Dam,L,L,Slider,Swinging Strike,,,0,-1.453308901,-0.227620657
 5,1,0,1,'0-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Griffen Duenkler,Max Van Dam,L,L,Slider,Groundout,Ground Ball,Straightaway,0,0.201702876,0.466823384
@@ -3555,28 +3555,28 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 5,2,3,1,'3-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Max Van Dam,R,L,Fastball,Foul,,,0,0.580560993,0.253755326
 5,2,3,2,'3-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Max Van Dam,R,L,Fastball,Foul,,,0,0.28146248,0.198515459
 5,2,3,2,'3-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Jared Wellman,Max Van Dam,R,L,Changeup,Groundout,Ground Ball,Pull,0,0.660320597,0.135384182
-6,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Ball,,,0,-0.735472468,1.224398701
-6,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Ball,,,0,0.560621092,1.200724472
-6,0,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Ball,,,0,0.760020102,-0.298643343
-6,0,3,0,'3-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Walk,,,0,-1.493188703,0.064361496
-6,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Fastball,Ball,,,100,1.457916634,0.332669421
-6,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,1.13,Flynn Matheson,Jack Rossetti,R,R,Fastball,Ball,,,100,-1.453308901,0.261646735
-6,0,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rossetti,R,R,Fastball,Single,Ground Ball,Pull,100,0.361222083,0.35634365
-6,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rossetti,L,R,Fastball,Groundout,Ground Ball,Straightaway,110,-0.416434053,0.782479766
-6,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Breaking Ball,Called Strike,,,110,0.241582678,0.774588356
-6,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Fastball,Foul,,,110,0.700200399,0.198515459
-6,1,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rossetti,R,R,Fastball,Single,Line Drive,Opposite Field,110,0.560621092,0.695674261
-6,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Breaking Ball,Foul,,,111,-0.217035044,0.435257745
-6,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Fastball,Foul,,,111,0.201702876,0.419474926
-6,1,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Fastball,Ball,,,111,1.477856535,1.082353329
-6,1,1,2,'1-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rossetti,R,R,Breaking Ball,Sacrifice Fly,Fly Ball,Pull,111,0.421041786,0.18273264
-6,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rossetti,L,R,Breaking Ball,Called Strike,,,110,-0.894991675,0.52995466
-6,2,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rossetti,L,R,Fastball,Called Strike,,,110,0.341282182,1.090244738
-6,2,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rossetti,L,R,Fastball,Single,,,110,-0.35661435,0.735131308
-6,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rossetti,L,R,Fastball,Called Strike,,,110,-0.336674449,0.411583517
-6,2,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rossetti,L,R,Fastball,Ball,,,110,-1.054510882,1.184941653
-6,2,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rossetti,L,R,Breaking Ball,Called Strike,,,110,-1.313729594,0.143275592
-6,2,1,2,'1-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rossetti,L,R,Fastball,Strikeout Swinging,,,110,-0.815232071,-0.219729248
+6,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Ball,,,0,-0.735472468,1.224398701
+6,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Ball,,,0,0.560621092,1.200724472
+6,0,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Ball,,,0,0.760020102,-0.298643343
+6,0,3,0,'3-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Walk,,,0,-1.493188703,0.064361496
+6,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Fastball,Ball,,,100,1.457916634,0.332669421
+6,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,1.13,Flynn Matheson,Jack Rosseti,R,R,Fastball,Ball,,,100,-1.453308901,0.261646735
+6,0,2,0,'2-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Jack Rosseti,R,R,Fastball,Single,Ground Ball,Pull,100,0.361222083,0.35634365
+6,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Jack Rosseti,L,R,Fastball,Groundout,Ground Ball,Straightaway,110,-0.416434053,0.782479766
+6,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Breaking Ball,Called Strike,,,110,0.241582678,0.774588356
+6,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Fastball,Foul,,,110,0.700200399,0.198515459
+6,1,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Jack Rosseti,R,R,Fastball,Single,Line Drive,Opposite Field,110,0.560621092,0.695674261
+6,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Breaking Ball,Foul,,,111,-0.217035044,0.435257745
+6,1,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Fastball,Foul,,,111,0.201702876,0.419474926
+6,1,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Fastball,Ball,,,111,1.477856535,1.082353329
+6,1,1,2,'1-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nolan Phelan,Jack Rosseti,R,R,Breaking Ball,Sacrifice Fly,Fly Ball,Pull,111,0.421041786,0.18273264
+6,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rosseti,L,R,Breaking Ball,Called Strike,,,110,-0.894991675,0.52995466
+6,2,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rosseti,L,R,Fastball,Called Strike,,,110,0.341282182,1.090244738
+6,2,0,2,'0-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Adam Geddes,Jack Rosseti,L,R,Fastball,Single,,,110,-0.35661435,0.735131308
+6,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rosseti,L,R,Fastball,Called Strike,,,110,-0.336674449,0.411583517
+6,2,0,1,'0-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rosseti,L,R,Fastball,Ball,,,110,-1.054510882,1.184941653
+6,2,1,1,'1-1,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rosseti,L,R,Breaking Ball,Called Strike,,,110,-1.313729594,0.143275592
+6,2,1,2,'1-2,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Nate Parsons,Jack Rosseti,L,R,Fastball,Strikeout Swinging,,,110,-0.815232071,-0.219729248
 6,0,0,0,'0-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Max Van Dam,R,L,Fastball,Ball,,,0,0.08206347,1.145484605
 6,0,1,0,'1-0,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Max Van Dam,R,L,Fastball,Swinging Strike,,,0,0.740080201,0.435257745
 6,0,1,1,'1-1,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Brendan Boys,Max Van Dam,R,L,Fastball,Flyout,Fly Ball,Opposite Field,0,0.480861489,0.166949821
@@ -3587,11 +3587,11 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 6,1,0,2,'0-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,1.47,Daniel Leonard,Max Van Dam,R,L,Fastball,Ball,,,100,1.37815703,1.106027557
 6,1,1,2,'1-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,1.54,Daniel Leonard,Max Van Dam,R,L,Changeup,Ball,,,100,-1.572948306,-0.046118237
 6,1,2,2,'2-2,2026-09-05,Wilfrid Laurier Golden Hawks,Brock Badgers,,Daniel Leonard,Max Van Dam,R,L,Fastball,Double Play,Ground Ball,Straightaway,100,0.401101885,0.443149155
-7,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rossetti,R,R,Fastball,Single,Ground Ball,Straightaway,0,0.062123569,0.403692107
-7,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Breaking Ball,Ball,,,100,0.600500894,-0.401231667
-7,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rossetti,R,R,Fastball,Groundout,Ground Ball,Opposite Field,10,0.580560993,0.190624049
-7,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Breaking Ball,Ball,,,1,-0.037575935,-0.338100391
-7,1,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rossetti,R,R,Fastball,Single,Line Drive,Opposite Field,1,0.241582678,0.151167001
+7,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Gavin Taylor,Jack Rosseti,R,R,Fastball,Single,Ground Ball,Straightaway,0,0.062123569,0.403692107
+7,0,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Breaking Ball,Ball,,,100,0.600500894,-0.401231667
+7,0,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Kade Falardeau,Jack Rosseti,R,R,Fastball,Groundout,Ground Ball,Opposite Field,10,0.580560993,0.190624049
+7,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Breaking Ball,Ball,,,1,-0.037575935,-0.338100391
+7,1,1,0,'1-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Jaden Leeder,Jack Rosseti,R,R,Fastball,Single,Line Drive,Opposite Field,1,0.241582678,0.151167001
 7,1,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Flynn Matheson,Mattheo Tsebelis,R,R,Fastball,Flyout,Fly Ball,Straightaway,100,0.28146248,0.285320964
 7,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Josh Frazer,Mattheo Tsebelis,L,R,Fastball,Hit By Pitch,,,100,1.557616139,0.301103783
 7,2,0,0,'0-0,2026-09-05,Brock Badgers,Wilfrid Laurier Golden Hawks,,Brady Campbell,Mattheo Tsebelis,R,R,Fastball,Swinging Strike,,,110,0.341282182,0.71145708
@@ -7957,11 +7957,11 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 1,2,1,0,'1-0,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Julian Fabrizio,Aidan Gelhard,L,R,Breaking Ball,Ball,,,111,0.354194352,0.029325883
 1,2,2,0,'2-0,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Julian Fabrizio,Aidan Gelhard,L,R,Fastball,Groundout,Ground Ball,Pull,111,0.631893688,0.778289095
 2,0,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Daniel Meron,R,R,Fastball,Popout,Pop Up,Opposite Field,0,-0.489188815,0.38752568
-2,1,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Fastball,Foul,,,0,0.230772425,0.367173419
-2,1,0,1,'0-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Fastball,Ball,,,0,-0.880024917,0.806782261
-2,1,1,1,'1-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Breaking Ball,Ball,,,0,-0.921165559,0.770148191
-2,1,2,1,'2-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Fastball,Foul,,,0,0.642178848,0.591048292
-2,1,2,2,'2-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Offspeed,Strikeout Swinging,,,0,-0.499473976,0.269482565
+2,1,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Fastball,Foul,,,0,0.230772425,0.367173419
+2,1,0,1,'0-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Fastball,Ball,,,0,-0.880024917,0.806782261
+2,1,1,1,'1-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Breaking Ball,Ball,,,0,-0.921165559,0.770148191
+2,1,2,1,'2-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Fastball,Foul,,,0,0.642178848,0.591048292
+2,1,2,2,'2-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Offspeed,Strikeout Swinging,,,0,-0.499473976,0.269482565
 2,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Daniel Meron,R,R,Fastball,Ball,,,0,0.909593023,0.155509902
 2,2,1,0,'1-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Daniel Meron,R,R,Breaking Ball,Swinging Strike,,,0,0.467331119,0.322398444
 2,2,1,1,'1-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Daniel Meron,R,R,Fastball,Groundout,Ground Ball,Pull,0,0.570182724,0.391596132
@@ -8028,9 +8028,9 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 4,1,3,1,'3-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Called Strike,,,100,0.621608527,0.27762347
 4,1,3,2,'3-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Griffen Duenkler,Daniel Meron,L,R,Fastball,Single,Line Drive,Straightaway,100,0.611323367,0.306116635
 4,1,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Daniel Meron,R,R,Fastball,Flyout,Fly Ball,Pull,110,0.117635659,0.440441559
-4,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Fastball,Ball,,,110,0.940448505,0.42415975
-4,2,1,0,'1-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,R,R,Fastball,Ball,,,110,0.683319491,0.106664475
-4,2,2,0,'2-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Fastball,Groundout,Ground Ball,Pull,110,0.601038206,0.371243871
+4,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Fastball,Ball,,,110,0.940448505,0.42415975
+4,2,1,0,'1-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,R,R,Fastball,Ball,,,110,0.683319491,0.106664475
+4,2,2,0,'2-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Fastball,Groundout,Ground Ball,Pull,110,0.601038206,0.371243871
 4,0,0,0,'0-0,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Liam Conlin,R,R,Breaking Ball,Swinging Strike,,,0,0.590753045,0.07817131
 4,0,0,1,'0-1,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Liam Conlin,R,R,Breaking Ball,Foul,,,0,0.364479513,0.253200756
 4,0,0,2,'0-2,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Evan Ogston,Liam Conlin,R,R,Offspeed,Ball,,,0,-1.054872647,0.086312214
@@ -8098,10 +8098,10 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 6,2,2,1,'2-1,2026-09-06,Guelph Gryphons,Wilfrid Laurier Golden Hawks,,Jack Gillis,Liam Conlin,L,R,Fastball,Flyout,Fly Ball,Pull,110,0.477616279,0.285764374
 7,0,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Daniel Meron,R,R,Fastball,Foul,,,0,0.518756921,0.216566686
 7,0,0,1,'0-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jared Wellman,Daniel Meron,R,R,Fastball,Flyout,Fly Ball,Straightaway,0,0.405620155,0.367173419
-7,1,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Offspeed,Foul,,,0,0.31305371,0.509639247
-7,1,0,1,'0-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Fastball,Ball,,,0,0.889022702,0.082241762
-7,1,1,1,'1-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Fastball,Foul,,,0,-0.694892027,0.534061961
-7,1,1,2,'1-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rossetti,Daniel Meron,L,R,Fastball,Popout,Pop Up,Opposite Field,0,0.230772425,0.289834826
+7,1,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Offspeed,Foul,,,0,0.31305371,0.509639247
+7,1,0,1,'0-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Fastball,Ball,,,0,0.889022702,0.082241762
+7,1,1,1,'1-1,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Fastball,Foul,,,0,-0.694892027,0.534061961
+7,1,1,2,'1-2,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Jack Rosseti,Daniel Meron,L,R,Fastball,Popout,Pop Up,Opposite Field,0,0.230772425,0.289834826
 7,2,0,0,'0-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Daniel Meron,R,R,Breaking Ball,Ball,,,0,0.806741418,0.094453119
 7,2,1,0,'1-0,2026-09-06,Wilfrid Laurier Golden Hawks,Guelph Gryphons,,Nolan Goranson,Daniel Meron,R,R,Fastball,Flyout,Fly Ball,Pull,0,0.13820598,0.611400553
 1,0,0,0,'0-0,2026-08-30,Queen's Gaels,U of T Varsity Blues,,Colby Wilhelm,Ravin Yuvarajan,L,R,Fastball,Flyout,Fly Ball,Pull,0,,
@@ -8304,9 +8304,9 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 1,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Max Lanoue,R,R,Fastball,Swinging Strike,,,100,0.364479513,0.090382666
 1,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Max Lanoue,R,R,Fastball,Ball,,,100,0.158776301,0.106664475
 1,0,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Max Lanoue,R,R,Breaking Ball,Flyout,Fly Ball,Straightaway,100,-0.921165559,0.892261758
-1,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Breaking Ball,Ball,,,100,0.086780177,0.546273317
-1,1,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Fastball,Called Strike,,,10,-0.509759136,0.367173419
-1,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Fastball,Single,Pop Up,Straightaway,10,0.580467885,0.232848495
+1,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Max Lanoue,L,R,Breaking Ball,Ball,,,100,0.086780177,0.546273317
+1,1,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Max Lanoue,L,R,Fastball,Called Strike,,,10,-0.509759136,0.367173419
+1,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Max Lanoue,L,R,Fastball,Single,Pop Up,Straightaway,10,0.580467885,0.232848495
 1,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Fastball,Called Strike,,,101,0.662749169,0.407877941
 1,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Fastball,Ball,,,101,0.940448505,-0.104999041
 1,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Swinging Strike,,,11,-0.026356589,0.139228093
@@ -8400,9 +8400,9 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 3,1,2,0,'2-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O’Sullivan,Jordan Miller,L,L,Fastball,Called Strike,,,10,-0.705177187,0.5137097
 3,1,2,1,'2-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O’Sullivan,Jordan Miller,L,L,Breaking Ball,Caught Stealing,,,10,-0.622895903,0.245059852
 3,2,2,1,'2-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O’Sullivan,Jordan Miller,L,L,Breaking Ball,Strikeout Swinging,,,0,0.549612403,0.546273317
-4,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Fastball,Called Strike,,,0,0.529042082,0.648034624
-4,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Fastball,Foul,,,0,0.302768549,0.326468896
-4,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Max Lanoue,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.343909192,0.448582464
+4,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Max Lanoue,L,R,Fastball,Called Strike,,,0,0.529042082,0.648034624
+4,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Max Lanoue,L,R,Fastball,Foul,,,0,0.302768549,0.326468896
+4,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Max Lanoue,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.343909192,0.448582464
 4,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Called Strike,,,0,-0.643466224,0.705020955
 4,1,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Ball,,,0,0.878737542,0.814923165
 4,1,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Preston Vieira,Max Lanoue,L,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.415905316,0.367173419
@@ -8449,10 +8449,10 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 5,2,2,0,'2-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Fastball,Called Strike,,,110,0.662749169,0.236918947
 5,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Breaking Ball,Ball,,,110,1.012444629,0.297975731
 5,2,3,1,'3-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Robert Jamieson,R,R,Fastball,Walk,,,110,0.950733666,0.200284877
-5,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Robert Jamieson,L,R,Fastball,Ball,,,111,0.333624031,0.061889501
-5,2,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Robert Jamieson,L,R,Fastball,Ball,,,111,0.652464009,0.07817131
-5,2,2,0,'2-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Robert Jamieson,L,R,Fastball,Called Strike,,,111,-0.5714701,0.562555126
-5,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Robert Jamieson,L,R,Fastball,Popout,Pop Up,Opposite Field,111,0.32333887,0.399737037
+5,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Robert Jamieson,L,R,Fastball,Ball,,,111,0.333624031,0.061889501
+5,2,1,0,'1-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Robert Jamieson,L,R,Fastball,Ball,,,111,0.652464009,0.07817131
+5,2,2,0,'2-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Robert Jamieson,L,R,Fastball,Called Strike,,,111,-0.5714701,0.562555126
+5,2,2,1,'2-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Robert Jamieson,L,R,Fastball,Popout,Pop Up,Opposite Field,111,0.32333887,0.399737037
 5,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Sean Skorupski,Evan Carabetta,R,R,Fastball,Flyout,Fly Ball,Opposite Field,0,0.261627907,0.416018846
 5,1,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Evan Carabetta,L,R,Breaking Ball,Called Strike,,,0,-0.509759136,0.42415975
 5,1,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jonah Brotman,Evan Carabetta,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.405620155,0.326468896
@@ -8486,24 +8486,24 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 6,1,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Aiden Tongue,Robert Jamieson,R,R,Fastball,Strikeout Swinging,,,11,-0.458333333,0.839345879
 6,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Matthew Kong,Robert Jamieson,R,R,Fastball,Called Strike,,,11,0.395334995,0.135157641
 6,2,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Matthew Kong,Robert Jamieson,R,R,Fastball,Popout,Pop Up,Pull,11,-0.684606866,0.574766483
-6,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Philip Sephton,L,R,Fastball,Ball,,,0,0.971303987,0.367173419
-6,0,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Philip Sephton,L,R,Fastball,Called Strike,,,0,-0.520044297,0.31425754
-6,0,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Philip Sephton,L,R,Fastball,Single,,,0,0.251342746,0.391596132
-6,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Philip Sephton,L,R,Fastball,Foul,,,100,0.570182724,0.501498343
-6,0,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,1.21,Liam Smith,Philip Sephton,L,R,Fastball,Ball,,,100,-0.324626246,0.070030405
-6,0,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Philip Sephton,L,R,Fastball,Double Play,Line Drive,Pull,100,0.601038206,0.228778043
-6,2,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O’Sullivan,Philip Sephton,L,R,Fastball,Ball,,,0,0.415905316,0.041537239
-6,2,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O’Sullivan,Philip Sephton,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.395334995,0.35089161
+6,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Phil Sephton,L,R,Fastball,Ball,,,0,0.971303987,0.367173419
+6,0,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Phil Sephton,L,R,Fastball,Called Strike,,,0,-0.520044297,0.31425754
+6,0,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Jack Angel,Phil Sephton,L,R,Fastball,Single,,,0,0.251342746,0.391596132
+6,0,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Phil Sephton,L,R,Fastball,Foul,,,100,0.570182724,0.501498343
+6,0,0,1,'0-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,1.21,Liam Smith,Phil Sephton,L,R,Fastball,Ball,,,100,-0.324626246,0.070030405
+6,0,1,1,'1-1,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Liam Smith,Phil Sephton,L,R,Fastball,Double Play,Line Drive,Pull,100,0.601038206,0.228778043
+6,2,0,0,'0-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O’Sullivan,Phil Sephton,L,R,Fastball,Ball,,,0,0.415905316,0.041537239
+6,2,1,0,'1-0,2026-08-29,Queen's Gaels,Wilfrid Laurier Golden Hawks,,Patrick O’Sullivan,Phil Sephton,L,R,Fastball,Groundout,Ground Ball,Pull,0,0.395334995,0.35089161
 7,0,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Jacob Finlayson,R,R,Fastball,Swinging Strike,,,0,0.477616279,0.269482565
 7,0,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Jacob Finlayson,R,R,Breaking Ball,Called Strike,,,0,0.662749169,0.212496234
 7,0,0,2,'0-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cole Geldart,Jacob Finlayson,R,R,Fastball,Strikeout Swinging,,,0,-0.715462348,0.38752568
 7,1,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Cameron Bendo,Jacob Finlayson,R,R,Breaking Ball,Groundout,Ground Ball,Pull,0,0.436475637,0.436371107
-7,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Breaking Ball,Called Strike,,,0,0.12792082,0.452652916
-7,2,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.921165559,0.802711809
-7,2,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Fastball,Foul,,,0,0.518756921,0.521850604
-7,2,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Breaking Ball,Ball,,,0,0.508471761,0.008973621
-7,2,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.262915282,0.98588216
-7,2,3,2,'3-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rossetti,Jacob Finlayson,L,R,Fastball,Strikeout Swinging,,,0,-0.304055925,0.843416331
+7,2,0,0,'0-0,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Jacob Finlayson,L,R,Breaking Ball,Called Strike,,,0,0.12792082,0.452652916
+7,2,0,1,'0-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.921165559,0.802711809
+7,2,1,1,'1-1,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Jacob Finlayson,L,R,Fastball,Foul,,,0,0.518756921,0.521850604
+7,2,1,2,'1-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Jacob Finlayson,L,R,Breaking Ball,Ball,,,0,0.508471761,0.008973621
+7,2,2,2,'2-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Jacob Finlayson,L,R,Fastball,Ball,,,0,-0.262915282,0.98588216
+7,2,3,2,'3-2,2026-08-29,Wilfrid Laurier Golden Hawks,Queen's Gaels,,Jack Rosseti,Jacob Finlayson,L,R,Fastball,Strikeout Swinging,,,0,-0.304055925,0.843416331
 1,0,0,0,'0-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Ball,,,0,-0.890310078,0.892261758
 1,0,1,0,'1-0,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Swinging Strike,,,0,-0.468618494,0.611400553
 1,0,1,1,'1-1,2026-09-13,Carleton Ravens,Queen's Gaels,,Carter Smith,Brett James,L,R,Fastball,Ball,,,0,0.508471761,0.297975731
@@ -9819,11 +9819,11 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 1,1,1,0,'1-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Cole Geldart,R,R,Breaking Ball,Called Strike,,,111,-0.496193657,0.561520298
 1,1,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Kirk Gibson,Cole Geldart,R,R,Fastball,Lineout,Line Drive,Straightaway,111,-0.556013359,0.719348489
 1,2,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Haven Tai,Cole Geldart,L,R,Fastball,Lineout,Line Drive,Straightaway,111,0.540681192,0.679891441
-2,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Ravin Yuvarajan,L,R,Breaking Ball,Ball,,,0,-1.572948306,0.70356567
-2,0,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Ravin Yuvarajan,L,R,Breaking Ball,Ball,,,0,0.779960003,-0.322317572
-2,0,2,0,'2-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Ravin Yuvarajan,L,R,,Foul,,,0,-1.253909892,0.869285271
-2,0,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Ravin Yuvarajan,L,R,Fastball,Ball,,,0,-1.353609396,0.782479766
-2,0,3,1,'3-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Ravin Yuvarajan,L,R,Fastball,Walk,,,0,-0.536073458,0.569411708
+2,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rosseti,Ravin Yuvarajan,L,R,Breaking Ball,Ball,,,0,-1.572948306,0.70356567
+2,0,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rosseti,Ravin Yuvarajan,L,R,Breaking Ball,Ball,,,0,0.779960003,-0.322317572
+2,0,2,0,'2-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rosseti,Ravin Yuvarajan,L,R,,Foul,,,0,-1.253909892,0.869285271
+2,0,2,1,'2-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rosseti,Ravin Yuvarajan,L,R,Fastball,Ball,,,0,-1.353609396,0.782479766
+2,0,3,1,'3-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rosseti,Ravin Yuvarajan,L,R,Fastball,Walk,,,0,-0.536073458,0.569411708
 2,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Ravin Yuvarajan,R,R,Breaking Ball,Called Strike,,,100,-0.615833062,1.145484605
 2,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Ravin Yuvarajan,R,R,Breaking Ball,Ball,,,100,-1.253909892,0.758805537
 2,0,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Ravin Yuvarajan,R,R,Fastball,Ball,,,100,1.278457526,0.237972506
@@ -9865,8 +9865,8 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 2,2,0,1,'0-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Liam Conlin,R,R,Breaking Ball,Ball,,,0,-0.35661435,1.24018152
 2,2,1,1,'1-1,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Liam Conlin,R,R,Breaking Ball,Lineout,Line Drive,Straightaway,0,-0.316734548,0.245863916
 3,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Taisei Hihara,R,L,Breaking Ball,Single,Line Drive,Opposite Field,0,0.421041786,0.71145708
-3,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Taisei Hihara,L,L,Breaking Ball,Called Strike,,,0,0.740080201,0.545737479
-3,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Taisei Hihara,L,L,Breaking Ball,Single,Ground Ball,Opposite Field,0,-0.536073458,0.443149155
+3,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rosseti,Taisei Hihara,L,L,Breaking Ball,Called Strike,,,0,0.740080201,0.545737479
+3,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rosseti,Taisei Hihara,L,L,Breaking Ball,Single,Ground Ball,Opposite Field,0,-0.536073458,0.443149155
 3,0,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Taisei Hihara,R,L,Fastball,Foul,,,0,0.121943272,0.837719632
 3,0,0,1,'0-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Taisei Hihara,R,L,Breaking Ball,Ball,,,0,-1.453308901,0.269538145
 3,0,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Taisei Hihara,R,L,Fastball,Ball,,,0,1.138878219,-0.211837838
@@ -9996,9 +9996,9 @@ Inning,Outs,Balls,Strikes,Count,Date,Batter_Team,Pitcher_Team,Time To Plate (sec
 6,2,2,2,'2-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Foul,,,110,-1.553008405,0.782479766
 6,2,2,2,'2-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Ball,,,110,0.819839804,-0.306534753
 6,2,3,2,'3-2,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Nolan Goranson,Armin Najmaie,R,R,Offspeed,Walk,,,110,1.497796436,0.34845224
-6,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Armin Najmaie,L,R,Fastball,Ball,,,111,-1.832167018,0.656217213
-6,2,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Armin Najmaie,L,R,Offspeed,Called Strike,,,111,-0.276854746,0.245863916
-6,2,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rossetti,Armin Najmaie,L,R,Offspeed,Hit By Pitch,,,111,1.59749594,-0.219729248
+6,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rosseti,Armin Najmaie,L,R,Fastball,Ball,,,111,-1.832167018,0.656217213
+6,2,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rosseti,Armin Najmaie,L,R,Offspeed,Called Strike,,,111,-0.276854746,0.245863916
+6,2,1,1,'1-1,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Jack Rosseti,Armin Najmaie,L,R,Offspeed,Hit By Pitch,,,111,1.59749594,-0.219729248
 6,2,0,0,'0-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Jonathan Onderisin,R,R,Breaking Ball,Ball,,,111,1.59749594,0.766696947
 6,2,1,0,'1-0,2026-10-10,Wilfrid Laurier Golden Hawks,U of T Varsity Blues,,Brendan Boys,Jonathan Onderisin,R,R,,Additional Out,,,111,,
 6,0,0,0,'0-0,2026-10-10,U of T Varsity Blues,Wilfrid Laurier Golden Hawks,,Spenser Ross,Mattheo Tsebelis,R,R,Fastball,Ball,,,0,-0.336674449,1.137593195
