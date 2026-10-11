@@ -52,10 +52,16 @@ pitches$pitch_x       <- suppressWarnings(as.numeric(pitches$pitch_x))
 pitches$pitch_y       <- suppressWarnings(as.numeric(pitches$pitch_y))
 pitches$time_to_plate <- suppressWarnings(as.numeric(pitches$time_to_plate))
 pitches <- pitches %>% filter(trimws(batter) != "")
+canonical_player_name <- function(x) {
+  x <- trimws(gsub("\\s+", " ", x))
+  x[x == "Ashton Abols"] <- "Ash Abols"
+  x[x == "John Banks"] <- "Johnny Banks"
+  x
+}
 pitches <- pitches %>%
   mutate(
-    batter = trimws(gsub("\\s+", " ", batter)),
-    pitcher = trimws(gsub("\\s+", " ", pitcher)),
+    batter = canonical_player_name(batter),
+    pitcher = canonical_player_name(pitcher),
     batter_team = ifelse(grepl("^Chatham-Kent", trimws(batter_team)),
                          "Chatham-Kent Barnstormers", trimws(batter_team)),
     pitcher_team = ifelse(grepl("^Chatham-Kent", trimws(pitcher_team)),
