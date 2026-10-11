@@ -100,7 +100,11 @@
     (() => {
       const request = window.fetch.bind(window);
       window.fetch = (input, init = {}) => {
-        const url = typeof input === 'string' && input.startsWith('data/')
+        // Some dashboard modules use `data/...`; others use the full site
+        // path from getBase().  Treat both as generated dashboard data.
+        const isDashboardData = typeof input === 'string' &&
+          /(?:^|\/)data\/(?:summary|pitches|pitchers)(?:2025|2026)?\.json(?:[?#]|$)/.test(input);
+        const url = isDashboardData
           ? `${input}${input.includes('?') ? '&' : '?'}v=${Date.now()}`
           : input;
         return request(url, { ...init, cache: 'no-store' });
