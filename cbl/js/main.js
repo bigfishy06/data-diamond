@@ -22,8 +22,9 @@ const AUTH = {
   _user: null,
 
   init: function() {
-    // Load the saved session (survives page refreshes)
-    const saved = localStorage.getItem('dd_user');
+    // Load a saved password session. It can be persistent (localStorage) or
+    // browser-session-only (sessionStorage) when the user did not save it.
+    const saved = localStorage.getItem('dd_user') || sessionStorage.getItem('dd_user');
     if (saved) {
       try { AUTH._user = JSON.parse(saved); } catch(e) {}
     }
@@ -31,7 +32,8 @@ const AUTH = {
     const path = window.location.pathname.split('/').pop() || 'index.html';
     const onLoginPage = path === 'login.html';
 
-    if (!AUTH._user) {
+    const hasPasswordAccess = localStorage.getItem('dd_cbl_password_access') === '1' || sessionStorage.getItem('dd_cbl_password_access') === '1';
+    if (!AUTH._user || !hasPasswordAccess) {
       // Not signed in - send to login page (unless already there)
       if (!onLoginPage) { window.location.href = getBase() + 'login.html'; return false; }
       return false;
@@ -65,6 +67,9 @@ const AUTH = {
 
   signOut: function() {
     localStorage.removeItem('dd_user');
+    sessionStorage.removeItem('dd_user');
+    localStorage.removeItem('dd_cbl_password_access');
+    sessionStorage.removeItem('dd_cbl_password_access');
     AUTH._user = null;
     if (typeof google !== 'undefined') google.accounts.id.disableAutoSelect();
     window.location.href = getBase() + 'login.html';
@@ -604,7 +609,7 @@ const ACCESS = {
   GUELPH_NAMES: ['Guelph Royals', 'guelph royals', 'GUE', 'gue'],
 
   getUser: function() {
-    try { return JSON.parse(localStorage.getItem('dd_user') || '{}'); } catch(e) { return {}; }
+    try { return JSON.parse(localStorage.getItem('dd_user') || sessionStorage.getItem('dd_user') || '{}'); } catch(e) { return {}; }
   },
 
   isGuelph: function(teamName) {

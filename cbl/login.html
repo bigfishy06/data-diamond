@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="/cbl/session-guard.js" data-auth-page="login" data-auth-home="/cbl/index.html"></script>
   <title>Data Diamond — Sign In</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -64,6 +63,12 @@
     #signin-btn:disabled { opacity:0.6; cursor:not-allowed; }
     #login-error { min-height:20px; font-size:13px; color:#ff6b6b; margin-top:8px; font-family:monospace; }
     .login-footer { margin-top:32px; font-size:11px; color:#3a4255; }
+    .password-field { width:100%; margin-bottom:14px; text-align:left; }
+    .password-field label { display:block; margin-bottom:7px; color:#aeb7cb; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+    .password-field input { width:100%; padding:13px 14px; border:1px solid #35405a; border-radius:6px; background:#0e1525; color:#fff; font:15px 'Inter','Segoe UI',sans-serif; outline:none; }
+    .password-field input:focus { border-color:#FFB81C; box-shadow:0 0 0 3px rgba(255,184,28,.12); }
+    .remember-password { display:flex; align-items:center; gap:8px; margin:0 0 18px; color:#aeb7cb; font-size:12px; text-align:left; cursor:pointer; }
+    .remember-password input { width:15px; height:15px; accent-color:#FFB81C; }
   </style>
 </head>
 <body>
@@ -77,94 +82,46 @@
     </div>
     <div class="login-title">Data<em>Diamond</em></div>
     <div class="login-subtitle">CBL Advanced Analytics</div>
-    <div class="divider">sign in to continue</div>
-
-    <button id="signin-btn">
-      <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
-        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
-        <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
-        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
-      </svg>
-      Sign in with Google
-    </button>
+    <div class="divider">enter password to continue</div>
+    <form id="password-form">
+      <div class="password-field">
+        <label for="password">Dashboard password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required autofocus />
+      </div>
+      <label class="remember-password"><input id="remember-password" type="checkbox" checked /> Save this sign-in on this device</label>
+      <button id="signin-btn" type="submit">Sign in</button>
+    </form>
 
     <div id="login-error"></div>
     <div class="login-footer">Access is restricted to authorised users only.</div>
   </div>
 
   <script>
-    var CLIENT_ID    = "348783711243-h0tiqjvdpjclh8t4cj5imqobpskr0c50.apps.googleusercontent.com";
-    var REDIRECT_URI = "https://data-diamond.ca/cbl/login.html";
+    (function () {
+      var accessKey = 'dd_cbl_password_access';
+      var hasAccess = localStorage.getItem(accessKey) === '1' || sessionStorage.getItem(accessKey) === '1';
+      var returnTo = localStorage.getItem('dd_return_to') || 'index.html';
+      if (hasAccess) window.location.replace(returnTo);
 
-    // Handle redirect back from Google (id_token in URL hash)
-    (function handleCallback() {
-      var hash = window.location.hash.substring(1);
-      if (!hash) return;
+      document.getElementById('password-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var password = document.getElementById('password').value;
+        var remember = document.getElementById('remember-password').checked;
+        var error = document.getElementById('login-error');
+        if (password !== 'GUEROYOFFSEASON2027') {
+          error.textContent = 'Incorrect password. Please try again.';
+          document.getElementById('password').select();
+          return;
+        }
 
-      var params  = new URLSearchParams(hash);
-      var idToken = params.get("id_token");
-      var error   = params.get("error");
-
-      // Clean the URL immediately
-      window.history.replaceState({}, '', window.location.pathname);
-
-      if (error || !idToken) {
-        if (error) document.getElementById("login-error").textContent = "Sign-in was cancelled.";
-        return;
-      }
-
-      try {
-        var b64 = idToken.split(".")[1].replace(/-/g,"+").replace(/_/g,"/");
-        while (b64.length % 4) b64 += "=";
-        var payload = JSON.parse(atob(b64));
-        var email   = (payload.email || "").toLowerCase().trim();
-
-        // Fetch allowed list from server then validate
-        fetch("/cbl/allowed.json?_=" + Date.now())
-          .then(function(r) { return r.json(); })
-          .then(function(data) {
-            var users = data.users || [];
-            var match = users.find(function(u){ return (u.email||'').toLowerCase().trim() === email; });
-            if (!match) {
-              document.getElementById("login-error").textContent =
-                "Blocked: " + email + " is not authorised.";
-              return;
-            }
-            localStorage.setItem("dd_user", JSON.stringify({
-              name:    payload.given_name || payload.name || "User",
-              email:   email,
-              picture: payload.picture || "",
-              role:    match.role   || "admin",
-              player:  match.player || null
-            }));
-            setTimeout(function(){ window.location.replace("index.html"); }, 100);
-          })
-          .catch(function() {
-            document.getElementById("login-error").textContent =
-              "Could not verify access. Please try again.";
-          });
-
-      } catch(e) {
-        document.getElementById("login-error").textContent = "Sign-in failed. Please try again.";
-        console.error(e);
-      }
-    })();
-
-    // Sign in button — full page redirect to Google, no iframes, no popups
-    document.getElementById("signin-btn").addEventListener("click", function() {
-      this.disabled = true;
-      localStorage.setItem("dd_return_to", "/cbl/index.html");
-      var params = new URLSearchParams({
-        client_id:     CLIENT_ID,
-        redirect_uri:  REDIRECT_URI,
-        response_type: "id_token",
-        scope:         "openid email profile",
-        nonce:         Math.random().toString(36).slice(2) + Date.now(),
-        prompt:        "select_account"
+        var storage = remember ? localStorage : sessionStorage;
+        (remember ? sessionStorage : localStorage).removeItem(accessKey);
+        storage.setItem(accessKey, '1');
+        storage.setItem('dd_user', JSON.stringify({ name: 'CBL User', role: 'admin', auth: 'password' }));
+        localStorage.removeItem('dd_return_to');
+        window.location.replace(returnTo);
       });
-      window.location.href = "https://accounts.google.com/o/oauth2/v2/auth?" + params.toString();
-    });
+    })();
   </script>
 </body>
 </html>
